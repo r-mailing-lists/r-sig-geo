@@ -1,0 +1,138 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2022-02",
+  "messages": [
+    {
+      "id": "msg-bfe48cacae9e",
+      "message_id": "<CAAcGz99=LYWGFz=bEUMEcczYm_uGXspzUvgKFxzRpZUKqaX0bg@mail.gmail.com>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "ec02820eba6228afb61925d60b233042e6d048081cc8b7f7e46a034ba5ad3d90",
+      "date": "2022-02-01T18:53:53+11:00",
+      "subject": "[R-sig-Geo] How to export a GeoTIFF 8 bit raster",
+      "subject_clean": "How to export a GeoTIFF 8 bit raster",
+      "in_reply_to": "<CAKnqGuQJafTiTT5bugr0293JBaWYR4o1P1pzAE_g869yjCLrSQ@mail.gmail.com>",
+      "references": [
+        "<CAKnqGuQJafTiTT5bugr0293JBaWYR4o1P1pzAE_g869yjCLrSQ@mail.gmail.com>"
+      ],
+      "body_plain": "this might work, your file link doesn't provide access to me so I created a\nguess example\n\nlibrary(terra)\nx <- rast(matrix(sample(0:255, 12), 3))\nfile.tif <- tempfile(fileext = \".tif\")\n#writeRaster(x, file.tif, gdal = \"NBITS=8\", datatype = \"INT1U\")\n#rast(file.tif)\n\nterra has its own controls over the options, some interact/overlap with the\ngdal ones I haven't explored that\n\nHTH,  Mike\n\nOn Mon, Jan 31, 2022 at 5:52 AM Rik Ferreira <rikferreiraalves at gmail.com>\nwrote:\n>\n> Hello!\n>\n> How a raster image can be exported as a 8 bit GeoTIFF image?\n>\n> I'm downloading a 8 bit image from this link:\n> http://geoinfo.cnps.embrapa.br/documents/2918/download, cropping it with a\n> vector mask, treating it, and exporting it with terra package (writeRaster\n> function).\n>\n> However, the original image is a GeoTIFF with 8 bit depth but the output\n> image (terra package, writeRaster function) is a 32 bit image.\n>\n> I can control it with `gdal = \"NBITS=8\"` argument to writeRaster but i get\n> such warning:\n>\n> Warning message:\n> > In x at ptr$writeRaster(opt) :\n> >   GDAL Message 6:\n> > /mnt/HDD/STORAGE/r-projects/raster-bit-depth/output/recorte.tif: Only\n> > NBITS=16 is supported for data type Float32\n> >\n>\n> How can I export this raster as a 8 bit GeoTIFF image with terra package?\n>\n> --\n> Rik Ferreira Alves\n> Graduando em Geografia - Unimontes\n> https://rikferreira.netlify.app/\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n--\nMichael Sumner\nSoftware and Database Engineer\nAustralian Antarctic Division\nHobart, Australia\ne-mail: mdsumner at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "this might work, your file link doesn't provide access to me so I created a\nguess example\n\nlibrary(terra)\nx <- rast(matrix(sample(0:255, 12), 3))\nfile.tif <- tempfile(fileext = \".tif\")\n#writeRaster(x,",
+      "thread_id": "thread-bfe48cacae9e",
+      "thread_depth": 0,
+      "month": "2022-02"
+    },
+    {
+      "id": "msg-c048b0af13a1",
+      "message_id": "<CAGg5H0aqA91W2LQyQT0_j9f5sF6CYg30gx_bn-VS7ft_kWnK4Q@mail.gmail.com>",
+      "from_name": "Nikolaos Tziokas",
+      "from_email_hash": "8312105e7618a0b91bd7038dde37c1862aea2c44337b9a99a2f8e8cdbaab259c",
+      "date": "2022-02-18T16:01:58Z",
+      "subject": "[R-sig-Geo] (no subject)",
+      "subject_clean": "(no subject)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi, I tried to perform *Area-to-Area Regression CoKriging (AtACoK)* for\nraster downscaling using the package *atakrig*. My dataset consists of 1\ndependent variable with spatial resolution 400m and 2 covariates with 100m\npixel size. After performing  *AtACoK* the resulting raster's image values\nare from 0:Infinity (I followed the steps included in the *atakrig*\npackage). Any ideas why those values? For comparison, when I tried\nArea-to-Area Kriging (using 1 independent variable) the downscaled image\nwas fine. Thank you. Here is the code:\n\nlibrary(atakrig)\nlibrary(raster)\nlibrary(beepr)\n\nntl = raster(\"path/atacok/ntl_nov.tif\") #dependent var\nndvi = raster(\"path/ndvi.tif\") #independent var (any combination can be used)\npop = raster(\"path/pop.tif\") #independent var\n\nntl.d <- discretizeRaster(ntl, 100);\nndvi.d <- discretizeRaster(ndvi, 100);\npop.d <- discretizeRaster(pop, 100);\ngrid.pred <- discretizeRaster(ndvi, 100, type = \"value\");\n\npop.d$areaValues$value <- log(pop.d$areaValues$value)\nntl.d$areaValues$value <- log(ntl.d$areaValues$value)\nndvi.d$areaValues$value <- log(ndvi.d$areaValues$value)\n## area-to-area Kriging ----# point-scale variogram from combined ndvi and ntl\naod.combine <- rbindDiscreteArea(ndvi.d, ntl.d)\nsv.ok_combine <- deconvPointVgm(aod.combine,\n                                model = \"Gau\",\n                                rd = 0.5,\n                                maxIter = 20); beep(7)\n# point-scale cross-variogram (for AtACoK)\naod.list <-list(ndvi = ndvi.d, ntl = ntl.d, pop = pop.d)sv.ck\n<-deconvPointVgmForCoKriging(aod.list,\n                                   model = \"Exp\", #Sph, Exp, Gau\n                                   rd = 0.7,\n                                   maxIter = 20); beep(7)\n# prediction\npred.ataok <- ataKriging(ntl.d,\n                         grid.pred,\n                         sv.ck$ntl,\n                         showProgress = TRUE); beep(7)\n\n\npred.atack <- ataCoKriging(aod.list,\n                           unknownVarId = \"ntl\",\n                           unknown = grid.pred,\n                           ptVgms = sv.ck,\n                           oneCondition = F,\n                           auxRatioAdj = F,\n                           showProgress = T); beep(7)\n\n# convert result to raster\npred.ataok.r <-rasterFromXYZ(pred.ataok[,-1]);\nplot(pred.ataok.r)\n\npred.atack.r <-rasterFromXYZ(pred.atack[,-1]);\nplot(pred.atack.r)\n\n\n-- \nTziokas Nikolaos\nGIS Technician\n\nTel:(+44)07561120302\nLinkedIn <http://linkedin.com/in/nikolaos-tziokas-896081130>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi, I tried to perform *Area-to-Area Regression CoKriging (AtACoK)* for\nraster downscaling using the package *atakrig*. My dataset consists of 1\ndependent variable with spatial resolution 400m and 2 c",
+      "thread_id": "thread-c048b0af13a1",
+      "thread_depth": 0,
+      "month": "2022-02"
+    },
+    {
+      "id": "msg-5522a7c765dc",
+      "message_id": "<CAEGXkYV4JT-hY67JeFm=EEHcpo-FxA5AGZ+mFq=2+GOc1fsqVg@mail.gmail.com>",
+      "from_name": "Bhaskar Mitra",
+      "from_email_hash": "f2e1ec595d71ebb310af8718f3dee4dfc599711267e47cbfc04a1c11761bea1f",
+      "date": "2022-02-25T08:23:09-07:00",
+      "subject": "[R-sig-Geo] Request for help on R codes for equivalent QGIS operation",
+      "subject_clean": "Request for help on R codes for equivalent QGIS operation",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello Everyone,\n\nI have two shapefiles :\n\nshp1 has 400 polygons. One of the columns is X.\nshp2 has 10 polygons.\n\nBoth have the same extent and crs. I want to summarize the value of column\nX from shp1 within the\nboundary of each polygons for shp2\n\nCan anyone please suggest to me an equivalent approach in R to join\nattributes by location.\n\nI am using the following approach in QGIS:\n\n1) Under Processing Toolbox, select Vector General\n2) Join attributes by location (summary)\n3) Select shp2 as Input Layer\n4) Select shp1 as Join layer\n5) Under Geometric properties, select intersects, overlaps,\ncontains and within\n4) Fields to summarizse: select X\n5) Summaries to calculate: select sum\n\n\nI would really appreciate some help or suggestions in this regard.\n\nThanks,\nBhaskar\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello Everyone,\n\nI have two shapefiles :\n\nshp1 has 400 polygons. One of the columns is X.\nshp2 has 10 polygons.\n\nBoth have the same extent and crs. I want to summarize the value of column\nX from shp1 ",
+      "thread_id": "thread-5522a7c765dc",
+      "thread_depth": 0,
+      "month": "2022-02"
+    },
+    {
+      "id": "msg-86ffafaae482",
+      "message_id": "<874df921-3481-d200-2954-340a83eff6b5@gmail.com>",
+      "from_name": "Bede-Fazekas Ákos",
+      "from_email_hash": "f2e2e122dfd4dbb8b8973b23d149555486ccb4290cb5f11779739fdbbcf5b93d",
+      "date": "2022-02-25T16:39:05+01:00",
+      "subject": "[R-sig-Geo] Request for help on R codes for equivalent QGIS operation",
+      "subject_clean": "Request for help on R codes for equivalent QGIS operation",
+      "in_reply_to": "<CAEGXkYV4JT-hY67JeFm=EEHcpo-FxA5AGZ+mFq=2+GOc1fsqVg@mail.gmail.com>",
+      "references": [
+        "<CAEGXkYV4JT-hY67JeFm=EEHcpo-FxA5AGZ+mFq=2+GOc1fsqVg@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Bhaskar,\n\nfunction st_join() from package 'sf' is what you are searching for. See \nthe examples in the help page of the function about the aggregation of \nthe spatially joined data:\nhttps://r-spatial.github.io/sf/reference/st_join.html\n\nHTH,\n?kos Bede-Fazekas\nCentre for Ecological Research, Hungary\n\n2022.02.25. 16:23 keltez?ssel, Bhaskar Mitra ?rta:\n> Hello Everyone,\n>\n> I have two shapefiles :\n>\n> shp1 has 400 polygons. One of the columns is X.\n> shp2 has 10 polygons.\n>\n> Both have the same extent and crs. I want to summarize the value of column\n> X from shp1 within the\n> boundary of each polygons for shp2\n>\n> Can anyone please suggest to me an equivalent approach in R to join\n> attributes by location.\n>\n> I am using the following approach in QGIS:\n>\n> 1) Under Processing Toolbox, select Vector General\n> 2) Join attributes by location (summary)\n> 3) Select shp2 as Input Layer\n> 4) Select shp1 as Join layer\n> 5) Under Geometric properties, select intersects, overlaps,\n> contains and within\n> 4) Fields to summarizse: select X\n> 5) Summaries to calculate: select sum\n>\n>\n> I would really appreciate some help or suggestions in this regard.\n>\n> Thanks,\n> Bhaskar\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Dear Bhaskar,\n\nfunction st_join() from package 'sf' is what you are searching for. See \nthe examples in the help page of the function about the aggregation of \nthe spatially joined data:\nhttps://r-spa",
+      "thread_id": "thread-5522a7c765dc",
+      "thread_depth": 1,
+      "month": "2022-02"
+    },
+    {
+      "id": "msg-c9e55e40151d",
+      "message_id": "<CWXP265MB5622CFFD68DDE817C9492C7DD3019@CWXP265MB5622.GBRP265.PROD.OUTLOOK.COM>",
+      "from_name": "PRIS, DEBORAH",
+      "from_email_hash": "48164ac7df420a0e4bf5b4e9388fc12c96c2dc8be2bfac565c1c9f9fd1a553d9",
+      "date": "2022-02-28T15:40:26Z",
+      "subject": "[R-sig-Geo] Retrieve endpoints of MULTILINESTRINGS",
+      "subject_clean": "Retrieve endpoints of MULTILINESTRINGS",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "\"Linestrings.png\": https://acrobat.adobe.com/link/track?uri=urn:aaid:scds:US:8407a39f-a9c6-409c-865e-ebd252316696\n\"Multilinstrings_grouped.png\": https://acrobat.adobe.com/link/track?uri=urn:aaid:scds:US:9058d999-6bd0-4ba2-b308-941287711821\n\"Result_st_line_sample.png\": https://acrobat.adobe.com/link/track?uri=urn:aaid:scds:US:e22f6121-5809-4bf4-88a9-9f39ab6334d2\n\n\nHello everyone, \n\nI have an sf object of multilinestrings (image \"Linestrings\") that I created by closing the gaps between (black) lines, thereby constructing a new set of (red) lines. I merged the two sets of lines into a multilinestring object and now would like to get the endpoints of every multilinestring. I know that there is the st_line_sample for linestrings, but when I st_cast my multilinestrings to linestrings, the function of course returns every endpoint from every linestring (black and red) that are contained in a mulitlinestring (image \"Result_st_line_sample\"). \n\nI grouped the individual linestrings to multilinestrings based on shared endpoints (image \"Mulitlinestrings_grouped\") but I don't know how to go on from there. I also tried to merge the mulitlinestrings into linestrings in various ways to overcome this issue and tested different approaches to get the endpoints, but nothing worked so far. \n\nAny help is much appreciated!\n\nMany thanks,\nDeborah\n\n\n\nDeborah Pri? (she/her/hers)\nEarly Stage Researcher / PhD student\nDepartment of Geography\nDurham University, UK\n\ndeborah.priss at durham.ac.uk\ni-CONN network",
+      "body_snippet": "\"Linestrings.png\": https://acrobat.adobe.com/link/track?uri=urn:aaid:scds:US:8407a39f-a9c6-409c-865e-ebd252316696\n\"Multilinstrings_grouped.png\": https://acrobat.adobe.com/link/track?uri=urn:aaid:scds:",
+      "thread_id": "thread-c9e55e40151d",
+      "thread_depth": 0,
+      "month": "2022-02"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-bfe48cacae9e",
+      "subject": "How to export a GeoTIFF 8 bit raster",
+      "message_count": 1,
+      "participants": [
+        "Michael Sumner"
+      ],
+      "started": "2022-02-01T18:53:53+11:00",
+      "last_reply": "2022-02-01T18:53:53+11:00",
+      "root_message_id": "msg-bfe48cacae9e"
+    },
+    {
+      "id": "thread-c048b0af13a1",
+      "subject": "(no subject)",
+      "message_count": 1,
+      "participants": [
+        "Nikolaos Tziokas"
+      ],
+      "started": "2022-02-18T16:01:58+00:00",
+      "last_reply": "2022-02-18T16:01:58+00:00",
+      "root_message_id": "msg-c048b0af13a1"
+    },
+    {
+      "id": "thread-5522a7c765dc",
+      "subject": "Request for help on R codes for equivalent QGIS operation",
+      "message_count": 2,
+      "participants": [
+        "Bede-Fazekas Ákos",
+        "Bhaskar Mitra"
+      ],
+      "started": "2022-02-25T08:23:09-07:00",
+      "last_reply": "2022-02-25T16:39:05+01:00",
+      "root_message_id": "msg-5522a7c765dc"
+    },
+    {
+      "id": "thread-c9e55e40151d",
+      "subject": "Retrieve endpoints of MULTILINESTRINGS",
+      "message_count": 1,
+      "participants": [
+        "PRIS, DEBORAH"
+      ],
+      "started": "2022-02-28T15:40:26+00:00",
+      "last_reply": "2022-02-28T15:40:26+00:00",
+      "root_message_id": "msg-c9e55e40151d"
+    }
+  ]
+}

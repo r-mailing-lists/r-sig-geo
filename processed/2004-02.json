@@ -1,0 +1,451 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2004-02",
+  "messages": [
+    {
+      "id": "msg-69b99bce8db2",
+      "message_id": "<5.2.1.1.0.20040205114100.012d6568@magellan.umontreal.ca>",
+      "from_name": "Stephane DRAY",
+      "from_email_hash": "09287f24986b683288f8a63c68960d29732fc585b2057343952c19ede9c81031",
+      "date": "2004-02-05T11:44:46-05:00",
+      "subject": "[R-sig-Geo] axes when plotting polys",
+      "subject_clean": "axes when plotting polys",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\nI  would like to plot polylist object without axes. if I use axes=F, it \ndoes not work because the \"...\" are used as arguments of the function \npolygon and not for the initial plot. I have rewrite my own function \n(moving \"...\" argument from polygon to plot) and it works fine but I wonder \nif there is a more \"usual\" way to do that.\n\nThanks.\nSt?phane DRAY\n-------------------------------------------------------------------------------------------------- \n\nD?partement des Sciences Biologiques\nUniversit? de Montr?al, C.P. 6128, succursale centre-ville\nMontr?al, Qu?bec H3C 3J7, Canada\n\nTel : 514 343 6111 poste 1233\nE-mail : stephane.dray at umontreal.ca\n-------------------------------------------------------------------------------------------------- \n\nWeb                                          http://www.steph280.freesurf.fr/",
+      "body_snippet": "Hello,\nI  would like to plot polylist object without axes. if I use axes=F, it \ndoes not work because the \"...\" are used as arguments of the function \npolygon and not for the initial plot. I have rewr",
+      "thread_id": "thread-69b99bce8db2",
+      "thread_depth": 0,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-bf81f9f244ef",
+      "message_id": "<NGBBKLJCOLPAFMJIEMHCOENCCPAA.cdeclercq@nordnet.fr>",
+      "from_name": "Christophe Declercq",
+      "from_email_hash": "27e363af0d562557f7ab3b686d94c14caa8521f70f45c5d6b2c11e16987566ad",
+      "date": "2004-02-05T18:26:42+01:00",
+      "subject": "[R-sig-Geo] axes when plotting polys",
+      "subject_clean": "axes when plotting polys",
+      "in_reply_to": "<5.2.1.1.0.20040205114100.012d6568@magellan.umontreal.ca>",
+      "references": [],
+      "body_plain": "Hi, St?phane\n\nI don't know if it is really 'usual' but I use something like (building on\nthe '?plotpolys' example in the 'maptools' package):\n\n> library(maptools)\n> try2 <- read.shape(system.file(\"shapes/columbus.shp\",\npackage=\"maptools\")[1])\n> mappolys <- Map2poly(try2, as.character(try2$att.data$NEIGNO))\n> plot(attr(mappolys, \"maplim\"), type=\"n\", axes=FALSE, ann=FALSE, asp=1)\n> plotpolys(mappolys, add=TRUE)\n\nHope it helps.\n\nChristophe\n--\nChristophe DECLERCQ, MD\nObservatoire R?gional de la Sant? Nord-Pas-de-Calais\n13, rue Faidherbe 59046 LILLE Cedex FRANCE\nPhone +33 3 20 15 49 24\nFax   +33 3 20 55 92 30\nE-mail c.declercq at orsnpdc.org\n\n\n> -----Message d'origine-----\n> De : r-sig-geo-bounces at stat.math.ethz.ch\n> [mailto:r-sig-geo-bounces at stat.math.ethz.ch]De la part de Stephane DRAY\n> Envoy? : jeudi 5 f?vrier 2004 17:45\n> ? : r-sig-geo at stat.math.ethz.ch\n> Objet : [R-sig-Geo] axes when plotting polys\n>\n>\n> Hello,\n> I  would like to plot polylist object without axes. if I use axes=F, it\n> does not work because the \"...\" are used as arguments of the function\n> polygon and not for the initial plot. I have rewrite my own function\n> (moving \"...\" argument from polygon to plot) and it works fine\n> but I wonder\n> if there is a more \"usual\" way to do that.\n>\n> Thanks.\n> St?phane DRAY\n> ------------------------------------------------------------------\n> --------------------------------\n>\n> D?partement des Sciences Biologiques\n> Universit? de Montr?al, C.P. 6128, succursale centre-ville\n> Montr?al, Qu?bec H3C 3J7, Canada\n>\n> Tel : 514 343 6111 poste 1233\n> E-mail : stephane.dray at umontreal.ca\n> ------------------------------------------------------------------\n> --------------------------------\n>\n> Web\n> http://www.steph280.freesurf.fr/\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_snippet": "Hi, St?phane\n\nI don't know if it is really 'usual' but I use something like (building on\nthe '?plotpolys' example in the 'maptools' package):\n\n> library(maptools)\n> try2 <- read.shape(system.file(\"sha",
+      "thread_id": "thread-69b99bce8db2",
+      "thread_depth": 1,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-dcfb412776e2",
+      "message_id": "<Pine.LNX.4.44.0402062040260.15321-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-02-06T20:46:22+01:00",
+      "subject": "[R-sig-Geo] axes when plotting polys",
+      "subject_clean": "axes when plotting polys",
+      "in_reply_to": "<NGBBKLJCOLPAFMJIEMHCOENCCPAA.cdeclercq@nordnet.fr>",
+      "references": [],
+      "body_plain": "St?phane, Christophe,\n\nI've submitted maptools_0.3-8.tar.gz to CRAN, if it is accepted, it should \nshow up soon. I've moved the ... to the plot function setting the plotting \nregion, removed ... from the polygon() call, but added the specifically \npolygon() arguments to the plot.polylist() method, which now does do \nshading with density and angle properly - the clipping argument is also \npassed to polygon(). Please let me know if this helps (once it shows up).\n\nRoger\n\nOn Thu, 5 Feb 2004, Christophe Declercq wrote:\n\n> Hi, St?phane\n> \n> I don't know if it is really 'usual' but I use something like (building on\n> the '?plotpolys' example in the 'maptools' package):\n> \n> > library(maptools)\n> > try2 <- read.shape(system.file(\"shapes/columbus.shp\",\n> package=\"maptools\")[1])\n> > mappolys <- Map2poly(try2, as.character(try2$att.data$NEIGNO))\n> > plot(attr(mappolys, \"maplim\"), type=\"n\", axes=FALSE, ann=FALSE, asp=1)\n> > plotpolys(mappolys, add=TRUE)\n> \n> Hope it helps.\n> \n> Christophe\n> --\n> Christophe DECLERCQ, MD\n> Observatoire R?gional de la Sant? Nord-Pas-de-Calais\n> 13, rue Faidherbe 59046 LILLE Cedex FRANCE\n> Phone +33 3 20 15 49 24\n> Fax   +33 3 20 55 92 30\n> E-mail c.declercq at orsnpdc.org\n> \n> \n> > -----Message d'origine-----\n> > De : r-sig-geo-bounces at stat.math.ethz.ch\n> > [mailto:r-sig-geo-bounces at stat.math.ethz.ch]De la part de Stephane DRAY\n> > Envoy? : jeudi 5 f?vrier 2004 17:45\n> > ? : r-sig-geo at stat.math.ethz.ch\n> > Objet : [R-sig-Geo] axes when plotting polys\n> >\n> >\n> > Hello,\n> > I  would like to plot polylist object without axes. if I use axes=F, it\n> > does not work because the \"...\" are used as arguments of the function\n> > polygon and not for the initial plot. I have rewrite my own function\n> > (moving \"...\" argument from polygon to plot) and it works fine\n> > but I wonder\n> > if there is a more \"usual\" way to do that.\n> >\n> > Thanks.\n> > St?phane DRAY\n> > ------------------------------------------------------------------\n> > --------------------------------\n> >\n> > D?partement des Sciences Biologiques\n> > Universit? de Montr?al, C.P. 6128, succursale centre-ville\n> > Montr?al, Qu?bec H3C 3J7, Canada\n> >\n> > Tel : 514 343 6111 poste 1233\n> > E-mail : stephane.dray at umontreal.ca\n> > ------------------------------------------------------------------\n> > --------------------------------\n> >\n> > Web\n> > http://www.steph280.freesurf.fr/\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEcononic Geography Section, Department of Economics, Norwegian School of \nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen, \nNorway, voice: +47-55959355, fax: +47-55959393; Roger.Bivand at nhh.no",
+      "body_snippet": "St?phane, Christophe,\n\nI've submitted maptools_0.3-8.tar.gz to CRAN, if it is accepted, it should \nshow up soon. I've moved the ... to the plot function setting the plotting \nregion, removed ... from ",
+      "thread_id": "thread-69b99bce8db2",
+      "thread_depth": 2,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-d5de6681fef2",
+      "message_id": "<Pine.LNX.4.44.0402101820510.27799-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-02-10T18:27:12+01:00",
+      "subject": "[R-sig-Geo] useR! (20-22 May) Vienna deadline approaching!",
+      "subject_clean": "useR! (20-22 May) Vienna deadline approaching!",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "The submission deadline for abstracts (considered for oral or poster\npresentation) for the useR! 2004 is approaching: 2004-02-15.\n\nSo I just wanted to remind those people who want to contribute\npresentations to the useR! to submit their abstract by that date.\n\nSpatial topics remain of interest, and although not much time has passed \nsince the last big effort putting together a spatial session, there is \nprogress to report. Maybe we can also find ways of highlighting work by \npeople who for various reasons can not be present (we can try anyway). The \npaper/poster format may suit this well. In addition, the keynote talks are \nreally attractive, as of course is Vienna in late Spring/early Summer!\n\nPlease submit the abstracts via the web web page at\n  http://www.ci.tuwien.ac.at/Conferences/useR-2004/\n\n\nHope to see you there!\n\nRoger\n\nPS: Is there interest in staying over on Sunday to talk some more?\n\n-- \nRoger Bivand\nEcononic Geography Section, Department of Economics, Norwegian School of \nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen, \nNorway, voice: +47-55959355, fax: +47-55959393; Roger.Bivand at nhh.no",
+      "body_snippet": "The submission deadline for abstracts (considered for oral or poster\npresentation) for the useR! 2004 is approaching: 2004-02-15.\n\nSo I just wanted to remind those people who want to contribute\npresen",
+      "thread_id": "thread-d5de6681fef2",
+      "thread_depth": 0,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-88d1f48c1d27",
+      "message_id": "<1076576696.3338.19.camel@chomsky.estadi.uv.es>",
+      "from_name": "Virgilio Gómez Rubio",
+      "from_email_hash": "3b4123f5c3ff01b6d34830be0726ae099a8f42790bf2cac840611dbd735d6dd0",
+      "date": "2004-02-12T10:04:57+01:00",
+      "subject": "[R-sig-Geo] Weights based on a function and 'listw' object",
+      "subject_clean": "Weights based on a function and 'listw' object",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n\nI am using a 'listw' object (see package spdep) to store weights to\ncompute differentbstatistics, and I wonder whether it is possible to\ndefine weights as, say, the inverse of the distance (or any other\nfunction based on the centroids, for example).\n\nFuthermore, is it efficient to use one of these objects when\nall the areas are linked one another? Is it better to use a square nxn\nmatrix in this case?\n\nThank you for your help.\n\n-- \n             Virgilio G?mez Rubio\n\nGrup d'Estad?stica espacial i temporal \nen Epidemiologia i medi ambient \n\nDpto. Estad?stica e I. O. - Facultat de Matem?tiques\nAvda. Vicent A. Estell?s, 1 - 46100 Burjassot\nValencia - SPAIN\n\nhttp://matheron.uv.es/~virgil\n\nTLF: 00 34 96 354 43 62 - FAX: 00 34 96 354 47 35",
+      "body_snippet": "Hi,\n\nI am using a 'listw' object (see package spdep) to store weights to\ncompute differentbstatistics, and I wonder whether it is possible to\ndefine weights as, say, the inverse of the distance (or an",
+      "thread_id": "thread-88d1f48c1d27",
+      "thread_depth": 0,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-8042333f818d",
+      "message_id": "<Pine.LNX.4.44.0402121615170.30115-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-02-12T16:26:47+01:00",
+      "subject": "[R-sig-Geo] Weights based on a function and 'listw' object",
+      "subject_clean": "Weights based on a function and 'listw' object",
+      "in_reply_to": "<1076576696.3338.19.camel@chomsky.estadi.uv.es>",
+      "references": [],
+      "body_plain": "On Thu, 12 Feb 2004, Virgilio G?mez Rubio wrote:\n\n> Hi,\n> \n> I am using a 'listw' object (see package spdep) to store weights to\n> compute differentbstatistics, and I wonder whether it is possible to\n> define weights as, say, the inverse of the distance (or any other\n> function based on the centroids, for example).\n\nSee the example for nbdists(), and especially for nb2listw(), at the \nbottom, where the output from nbdists() is fed into nb2listw() through the \nglist= argument.\n\n> \n> Futhermore, is it efficient to use one of these objects when\n> all the areas are linked one another? Is it better to use a square nxn\n> matrix in this case?\n> \n\nMaybe, but you do lose the functions requiring a listw object, and you \nneed to define the weighting style yourself (for example row \nstandardised). In any case, weights at greater distances are very close to \nzero, so either distance bands or k-nearest neighbours will give very \nsimilar estimates (prove me wrong!!).\n\nRoger\n\n> Thank you for your help.\n> \n> \n\n-- \nRoger Bivand\nEcononic Geography Section, Department of Economics, Norwegian School of \nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen, \nNorway, voice: +47-55959355, fax: +47-55959393; Roger.Bivand at nhh.no",
+      "body_snippet": "On Thu, 12 Feb 2004, Virgilio G?mez Rubio wrote:\n\n> Hi,\n> \n> I am using a 'listw' object (see package spdep) to store weights to\n> compute differentbstatistics, and I wonder whether it is possible to\n",
+      "thread_id": "thread-88d1f48c1d27",
+      "thread_depth": 1,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-c3fa4270659c",
+      "message_id": "<76A000A82289D411952F001083F9DD06047FE4E8@exsalem4-bu.odot.state.or.us>",
+      "from_name": "Benjamin.STABLER at odot.state.or.us",
+      "from_email_hash": "f3988f2d9007a81e189aed2184879c9a32021dfaaabd6a61ba64fe510e934f68",
+      "date": "2004-02-26T10:11:40-08:00",
+      "subject": "[R-sig-Geo] Re: [R] writing polygons/segments to shapefiles (.shp) or other A rcGIS compatible file",
+      "subject_clean": "writing polygons/segments to shapefiles (.shp) or other A rcGIS compatible file",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "The main limitation of the shapefiles package that I put together is that it\ndoes not create shapefiles from R objects - rather it only writes shapefiles\nthat have been read into R and manipulated within the constraints of the\nexisting file structure.  By this I mean that for example you can change the\ncoordinates of points and write them back out.  Or you can add a bunch of\nblank columns in the DBF outside of R and then fill them in with R.  But I\ndid not write any code to calculate byte offsets and such and that are\nneeded when creating a shapefile from scratch.  \n\nSo what I do when I want to create a new shapefile from within R is write\nout the format required by the ASCII Tool ArcView (Avenue) script.  This\nscript is available at: http://arcscripts.esri.com/details.asp?dbid=11442\nThe format is simple: \n\nWorks for space delimited ascii to point, polygon and polyline. The format\nfor point ascii file is id, x, y (no comma for real data, space delimited).\nFor polygon & polyline ascii files, the format is code (1 for start point, 2\nfor middle points, 3 for end point), x, y (no comma for real data, space\ndelimited). Export shapefile to ascii file works for point, polyline and\npolygon shapefiles. The output format file is id, x, y. For polygon and\npolyline, the id is the sequence id of vertices.\n\nThus all you have to do is write a text file, install the script in ArcView\nand then use the ArcView extension to create a shapefile from the ASCII\nfile.  Unfortunately ASCII tool only works with the geography - you have to\nadd the attributes later.  \n\nWith all of that said, I would like to add to the shapefiles package the\nability to write out shapefiles from scratch.  Since the shapefiles format\nis rather unique, I think it would be best to use the maptools ShapeList/Map\nclass format (or r-spatial's classes).  For starters the package would just\nwrite out the geography (like the ASCII tool Avenue script).  Later would be\nadded the ability to write the dbf data out from the att.data element of the\nMap object.\n\nUnfortunately I don't know when I will have the time to do this.  If anyone\nelse wants to do then please go ahead and I can help via email if needed.\nBut adding the ability to write out shapefiles from scratch is on my list.\nOnce I finish coding our travel demand model and we enter the application\nphase (probably in a few months) then will our demand to output shapefiles\nfrom R increase and I can justify spending the time to write the code.  \n\nI apologize that I have not paid much attention to the r-sig-geo discussion\nor Edzer's r-spatial project.  If there is an effort underway to write out\nshapefiles then can someone please inform me of its status.  If not, then\nmaybe I can help.  Thanks.\n\nBenjamin Stabler\nTransportation Planning Analysis Unit\nOregon Department of Transportation\n555 13th Street NE, Suite 2\nSalem, OR 97301  Ph: 503-986-4104",
+      "body_snippet": "The main limitation of the shapefiles package that I put together is that it\ndoes not create shapefiles from R objects - rather it only writes shapefiles\nthat have been read into R and manipulated wit",
+      "thread_id": "thread-c3fa4270659c",
+      "thread_depth": 0,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-3032336e0062",
+      "message_id": "<001c01c3fca1$46d38f70$7aa3fb51@PC728329681112>",
+      "from_name": "Patrick Giraudoux",
+      "from_email_hash": "ada52e5125646269290cc634dcd24a69afb4b93fb66ae59f0d267942cfdd21ff",
+      "date": "2004-02-26T20:44:56+01:00",
+      "subject": "[R-sig-Geo] Re: [R] writing polygons/segments to shapefiles (.shp) or other ArcGIS compatible file",
+      "subject_clean": "writing polygons/segments to shapefiles (.shp) or other ArcGIS compatible file",
+      "in_reply_to": null,
+      "references": [
+        "<76A000A82289D411952F001083F9DD06047FE4E8@exsalem4-bu.odot.state.or.us>"
+      ],
+      "body_plain": "Hi,\n\nThanks for all those information and the most valuable library you have developed.\n\nIf somebody is to develop something to write shapefiles from polygon coordinates within R (most welcome), I don't think that the\nattribute file (dbf) will be an important issue. If we have got an output with the index to link the dbf records to each shape of a\nshapefile, any text file can be handled in R or Excel to create a dbf. The real issue is the encoding of the *.shp and *.shx  etc..\n(and an index file for the dbf)\n\nMost important is to consider that ESRI has stopped developping ArcView and AVENUE. They have moved to ArGIS and Visual Basic. In\nthis new generation framework, importation is managed with ArcToolBox which, to my knowledge, is very limited considering\nimportation of text objects (actually I even wonder if one can import something but attribute tables without ArcInfo). For instance,\nthe way I found to solve the problem I met was to write a programme in R to wrap the polygon coordinates in a text file readable in\nGRASS (an opensource GIS), to import it into GRASS and to export the shapefile from GRASS. This shapefile was finally imported to\nArcGIS.  I would not insist on ESRI client policy. I just want to say that the more I know corporates the more I love opensource...\n\nAnyway, there are many things that can be made in R which may deserve not only importation to R, but also exportation to many kinds\nof GIS. To write shapefiles from polygon, points or lines created in R would be most useful.\n\nMany thanks for your interest and support,\n\nPatrick Giraudoux\n\n\nUniversit? de Franche-Comt?\nLaboratoire de Biologie environnementale\nEA3184 usc INRA\nF-25030 Besan?on Cedex\n\nt?l.: +33 381 665 745\nfax.: +33 381 665 797\nhttp://lbe.univ-fcomte.fr\n\n\"Ce n'est pas en am?liorant la bougie que l'on a invent? l'?lectricit?\", la recherche fondamentale est indispensable !\n\n\n\n\n----- Original Message ----- \nFrom: <Benjamin.STABLER at odot.state.or.us>\nTo: <patrick.giraudoux at univ-fcomte.fr>\nCc: <r-help at stat.math.ethz.ch>; <r-sig-geo at stat.math.ethz.ch>\nSent: Thursday, February 26, 2004 7:11 PM\nSubject: Re: [R] writing polygons/segments to shapefiles (.shp) or other ArcGIS compatible file\n\n\n> The main limitation of the shapefiles package that I put together is that it\n> does not create shapefiles from R objects - rather it only writes shapefiles\n> that have been read into R and manipulated within the constraints of the\n> existing file structure.  By this I mean that for example you can change the\n> coordinates of points and write them back out.  Or you can add a bunch of\n> blank columns in the DBF outside of R and then fill them in with R.  But I\n> did not write any code to calculate byte offsets and such and that are\n> needed when creating a shapefile from scratch.\n>\n> So what I do when I want to create a new shapefile from within R is write\n> out the format required by the ASCII Tool ArcView (Avenue) script.  This\n> script is available at: http://arcscripts.esri.com/details.asp?dbid=11442\n> The format is simple:\n>\n> Works for space delimited ascii to point, polygon and polyline. The format\n> for point ascii file is id, x, y (no comma for real data, space delimited).\n> For polygon & polyline ascii files, the format is code (1 for start point, 2\n> for middle points, 3 for end point), x, y (no comma for real data, space\n> delimited). Export shapefile to ascii file works for point, polyline and\n> polygon shapefiles. The output format file is id, x, y. For polygon and\n> polyline, the id is the sequence id of vertices.\n>\n> Thus all you have to do is write a text file, install the script in ArcView\n> and then use the ArcView extension to create a shapefile from the ASCII\n> file.  Unfortunately ASCII tool only works with the geography - you have to\n> add the attributes later.\n>\n> With all of that said, I would like to add to the shapefiles package the\n> ability to write out shapefiles from scratch.  Since the shapefiles format\n> is rather unique, I think it would be best to use the maptools ShapeList/Map\n> class format (or r-spatial's classes).  For starters the package would just\n> write out the geography (like the ASCII tool Avenue script).  Later would be\n> added the ability to write the dbf data out from the att.data element of the\n> Map object.\n>\n> Unfortunately I don't know when I will have the time to do this.  If anyone\n> else wants to do then please go ahead and I can help via email if needed.\n> But adding the ability to write out shapefiles from scratch is on my list.\n> Once I finish coding our travel demand model and we enter the application\n> phase (probably in a few months) then will our demand to output shapefiles\n> from R increase and I can justify spending the time to write the code.\n>\n> I apologize that I have not paid much attention to the r-sig-geo discussion\n> or Edzer's r-spatial project.  If there is an effort underway to write out\n> shapefiles then can someone please inform me of its status.  If not, then\n> maybe I can help.  Thanks.\n>\n> Benjamin Stabler\n> Transportation Planning Analysis Unit\n> Oregon Department of Transportation\n> 555 13th Street NE, Suite 2\n> Salem, OR 97301  Ph: 503-986-4104",
+      "body_snippet": "Hi,\n\nThanks for all those information and the most valuable library you have developed.\n\nIf somebody is to develop something to write shapefiles from polygon coordinates within R (most welcome), I don",
+      "thread_id": "thread-c3fa4270659c",
+      "thread_depth": 1,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-62e7b8403bde",
+      "message_id": "<s03f4a62.036@mail2.salisbury.edu>",
+      "from_name": "Jill Caviglia-Harris",
+      "from_email_hash": "4eb80aa392116257673b4355bb5df865ee29a0944294fd1c25d9c55846139bce",
+      "date": "2004-02-27T13:47:10-05:00",
+      "subject": "[R-sig-Geo] LM tests",
+      "subject_clean": "LM tests",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "List members:\n\nI have been using the function lm.LMtests developed using the spdep\npackage to test for spatial lag and error.  My problem is that these\ntests assume that the weights matrix is row standardized, while I have a\nweights matrix that is set up as the inverse distance between neighbors.\n  Converting it into a row standardized matrix would result in the loss\nof important information.  Have there been any functions developed that\nany of you know about that are not dependent upon this assumption? \nThanks.  -Jill\n\n\n***************************************************\nJill L. Caviglia-Harris, Ph.D.\nAssistant Professor\nEconomics and Finance Department\nSalisbury University\nSalisbury, MD 21801-6860\n   phone: (410) 548-5591\n   fax: (410) 546-6208",
+      "body_snippet": "List members:\n\nI have been using the function lm.LMtests developed using the spdep\npackage to test for spatial lag and error.  My problem is that these\ntests assume that the weights matrix is row stan",
+      "thread_id": "thread-62e7b8403bde",
+      "thread_depth": 0,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-e1402e2e1665",
+      "message_id": "<Pine.LNX.4.44.0402272023230.14084-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-02-27T20:40:59+01:00",
+      "subject": "[R-sig-Geo] LM tests",
+      "subject_clean": "LM tests",
+      "in_reply_to": "<s03f4a62.036@mail2.salisbury.edu>",
+      "references": [],
+      "body_plain": "On Fri, 27 Feb 2004, Jill Caviglia-Harris wrote:\n\n> List members:\n> \n> I have been using the function lm.LMtests developed using the spdep\n> package to test for spatial lag and error.  My problem is that these\n> tests assume that the weights matrix is row standardized, while I have a\n> weights matrix that is set up as the inverse distance between neighbors.\n\nCertainly lm.LMtests() prints a warning, and the tradition it comes from \nusually presupposes row standardisation. Curiously, quite a lot of the \ndistribution results in Cliff and Ord actually assume symmetry, which can \nlead to fun with negative variance in Geary's C and join count statistics \neven with row standardised weights.\n\n>   Converting it into a row standardized matrix would result in the loss\n> of important information.  Have there been any functions developed that\n> any of you know about that are not dependent upon this assumption? \n\nHave you tried (probably yes) and does it make a difference? Are the \nresults from a binary IDW and a row standardised IDW very different? Is \nyour IDW matrix full or sparse? Can Moran's I be applied instead (despite \nits covering lots of misspecification problems)? Are the IDW weights \nsymmetric (probably, but not always)?\n\nI'm not sure why distances should be helpful if the data are observed on \nareal units, so that measuring distances is between arbitrarily chosen \npoints in those units, a change of support problem. That may be why there \naren't methods too, though there's no reason not to try to develop things. \nBut error correlation specified by distance does movbe rather close to \ngeostatistics, doesn't it?\n\nAny other views, anyone?\n\nRoger\n\n> Thanks.  -Jill\n> \n> \n> ***************************************************\n> Jill L. Caviglia-Harris, Ph.D.\n> Assistant Professor\n> Economics and Finance Department\n> Salisbury University\n> Salisbury, MD 21801-6860\n>    phone: (410) 548-5591\n>    fax: (410) 546-6208\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Fri, 27 Feb 2004, Jill Caviglia-Harris wrote:\n\n> List members:\n> \n> I have been using the function lm.LMtests developed using the spdep\n> package to test for spatial lag and error.  My problem is t",
+      "thread_id": "thread-62e7b8403bde",
+      "thread_depth": 1,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-1a0e64b6ad40",
+      "message_id": "<33767DC23FBEA24D85477AF575724205166015A8@email.uncc.edu>",
+      "from_name": "Munroe, Darla K",
+      "from_email_hash": "4c3cd90c1b23295551b32ae3997ec38acae9f2d554b2b937cad882c5ca51498e",
+      "date": "2004-02-27T15:03:40-05:00",
+      "subject": "[R-sig-Geo] LM tests",
+      "subject_clean": "LM tests",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I was thinking about this issue, and correct me if I'm wrong - \n\nIf you row-standardize the distance weights, you will in effect rescale\nthem, but you will not change the scale of the weights themselves, correct?\nI.e., row standardization means dividing the weight for each observation by\nthe total # of non-zero elements for that row, correct?  Well, each\nobservation by definition in a distance matrix has the same number of\n\"neighbors\" (i.e., all n-1), correct?  So 1/dij (or whatever your distance\nmatrix is) becomes 1/dij/n.\n\nIs that going to affect your fundamental interpretation of the structure of\nspatial dependence?  Probably not - unless you're trying to interpret rho or\nlambda in terms of the distance units (which I wouldn't presume to do,\nanyway...).\n\nOr am I off base? \n\n-----Original Message-----\nFrom: Roger Bivand\nTo: Jill Caviglia-Harris\nCc: r-sig-geo at stat.math.ethz.ch\nSent: 2/27/04 2:40 PM\nSubject: Re: [R-sig-Geo] LM tests\n\nOn Fri, 27 Feb 2004, Jill Caviglia-Harris wrote:\n\n> List members:\n> \n> I have been using the function lm.LMtests developed using the spdep\n> package to test for spatial lag and error.  My problem is that these\n> tests assume that the weights matrix is row standardized, while I have\na\n> weights matrix that is set up as the inverse distance between\nneighbors.\n\nCertainly lm.LMtests() prints a warning, and the tradition it comes from\n\nusually presupposes row standardisation. Curiously, quite a lot of the \ndistribution results in Cliff and Ord actually assume symmetry, which\ncan \nlead to fun with negative variance in Geary's C and join count\nstatistics \neven with row standardised weights.\n\n>   Converting it into a row standardized matrix would result in the\nloss\n> of important information.  Have there been any functions developed\nthat\n> any of you know about that are not dependent upon this assumption? \n\nHave you tried (probably yes) and does it make a difference? Are the \nresults from a binary IDW and a row standardised IDW very different? Is \nyour IDW matrix full or sparse? Can Moran's I be applied instead\n(despite \nits covering lots of misspecification problems)? Are the IDW weights \nsymmetric (probably, but not always)?\n\nI'm not sure why distances should be helpful if the data are observed on\n\nareal units, so that measuring distances is between arbitrarily chosen \npoints in those units, a change of support problem. That may be why\nthere \naren't methods too, though there's no reason not to try to develop\nthings. \nBut error correlation specified by distance does movbe rather close to \ngeostatistics, doesn't it?\n\nAny other views, anyone?\n\nRoger\n\n> Thanks.  -Jill\n> \n> \n> ***************************************************\n> Jill L. Caviglia-Harris, Ph.D.\n> Assistant Professor\n> Economics and Finance Department\n> Salisbury University\n> Salisbury, MD 21801-6860\n>    phone: (410) 548-5591\n>    fax: (410) 546-6208\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "I was thinking about this issue, and correct me if I'm wrong - \n\nIf you row-standardize the distance weights, you will in effect rescale\nthem, but you will not change the scale of the weights themselv",
+      "thread_id": "thread-1a0e64b6ad40",
+      "thread_depth": 0,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-b4059f828a6c",
+      "message_id": "<33767DC23FBEA24D85477AF575724205166015A9@email.uncc.edu>",
+      "from_name": "Munroe, Darla K",
+      "from_email_hash": "4c3cd90c1b23295551b32ae3997ec38acae9f2d554b2b937cad882c5ca51498e",
+      "date": "2004-02-27T15:06:04-05:00",
+      "subject": "[R-sig-Geo] LM tests",
+      "subject_clean": "LM tests",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "oops - I meant to say - with row-standardization your weights become:\n1/dij/n-1 (with 0 elements on the diagonal).\n\nSo, you've just rescaled dij by n-1 for all i, but you haven't lost the\nranking of the distances from low to high.\n-----Original Message-----\nFrom: Roger Bivand\nTo: Jill Caviglia-Harris\nCc: r-sig-geo at stat.math.ethz.ch\nSent: 2/27/04 2:40 PM\nSubject: Re: [R-sig-Geo] LM tests\n\nOn Fri, 27 Feb 2004, Jill Caviglia-Harris wrote:\n\n> List members:\n> \n> I have been using the function lm.LMtests developed using the spdep\n> package to test for spatial lag and error.  My problem is that these\n> tests assume that the weights matrix is row standardized, while I have\na\n> weights matrix that is set up as the inverse distance between\nneighbors.\n\nCertainly lm.LMtests() prints a warning, and the tradition it comes from\n\nusually presupposes row standardisation. Curiously, quite a lot of the \ndistribution results in Cliff and Ord actually assume symmetry, which\ncan \nlead to fun with negative variance in Geary's C and join count\nstatistics \neven with row standardised weights.\n\n>   Converting it into a row standardized matrix would result in the\nloss\n> of important information.  Have there been any functions developed\nthat\n> any of you know about that are not dependent upon this assumption? \n\nHave you tried (probably yes) and does it make a difference? Are the \nresults from a binary IDW and a row standardised IDW very different? Is \nyour IDW matrix full or sparse? Can Moran's I be applied instead\n(despite \nits covering lots of misspecification problems)? Are the IDW weights \nsymmetric (probably, but not always)?\n\nI'm not sure why distances should be helpful if the data are observed on\n\nareal units, so that measuring distances is between arbitrarily chosen \npoints in those units, a change of support problem. That may be why\nthere \naren't methods too, though there's no reason not to try to develop\nthings. \nBut error correlation specified by distance does movbe rather close to \ngeostatistics, doesn't it?\n\nAny other views, anyone?\n\nRoger\n\n> Thanks.  -Jill\n> \n> \n> ***************************************************\n> Jill L. Caviglia-Harris, Ph.D.\n> Assistant Professor\n> Economics and Finance Department\n> Salisbury University\n> Salisbury, MD 21801-6860\n>    phone: (410) 548-5591\n>    fax: (410) 546-6208\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "oops - I meant to say - with row-standardization your weights become:\n1/dij/n-1 (with 0 elements on the diagonal).\n\nSo, you've just rescaled dij by n-1 for all i, but you haven't lost the\nranking of t",
+      "thread_id": "thread-b4059f828a6c",
+      "thread_depth": 0,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-ace7cc60cc99",
+      "message_id": "<s03f6213.054@mail2.salisbury.edu>",
+      "from_name": "Jill Caviglia-Harris",
+      "from_email_hash": "4eb80aa392116257673b4355bb5df865ee29a0944294fd1c25d9c55846139bce",
+      "date": "2004-02-27T15:28:11-05:00",
+      "subject": "[R-sig-Geo] LM tests",
+      "subject_clean": "LM tests",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Roger:\n\n>Have you tried (probably yes) and does it make a difference? Are the \n> results from a binary IDW and a row standardized IDW very different?\nIs \n> your IDW matrix full or sparse? Can Moran's I be applied instead\n(despite \n> its covering lots of misspecification problems)? Are the IDW weights\n\n> symmetric (probably, but not always)?\n\nYes, the IDW weights are symmetric - each observation in the sample is\nconsidered a neighbor - therefore the inverse distance between the\nneighbors indicates the \"degree of neighborliness\"  I will row\nstandardize these numbers and look into a rule for determining a\nneighbor form a non-neighbor in my sample (for the binary weight matrix)\nand get back to you about the differences.  \n\n> I'm not sure why distances should be helpful if the data are observed\non \n> areal units, so that measuring distances is between arbitrarily\nchosen \n> points in those units, a change of support problem. That may be why\nthere \n> aren't methods too, though there's no reason not to try to develop\nthings. \n> But error correlation specified by distance does movbe rather close\nto \n> geostatistics, doesn't it?\n\nI haven't tried these other ways of defining the weights matrix (as of\nyet) because of Anselin (1988) \"...distance decay has a meaningful\neconomic interpretation, scaling the rows so that the weights sum to one\nmay result in a loss of that interpretation\"\n\n-Jill\n\n\n\n>>> Roger Bivand <Roger.Bivand at nhh.no> 02/27/04 02:40PM >>>\nOn Fri, 27 Feb 2004, Jill Caviglia-Harris wrote:\n\n> List members:\n> \n> I have been using the function lm.LMtests developed using the spdep\n> package to test for spatial lag and error.  My problem is that these\n> tests assume that the weights matrix is row standardized, while I\nhave a\n> weights matrix that is set up as the inverse distance between\nneighbors.\n\nCertainly lm.LMtests() prints a warning, and the tradition it comes\nfrom \nusually presupposes row standardisation. Curiously, quite a lot of the\n\ndistribution results in Cliff and Ord actually assume symmetry, which\ncan \nlead to fun with negative variance in Geary's C and join count\nstatistics \neven with row standardised weights.\n\n>   Converting it into a row standardized matrix would result in the\nloss\n> of important information.  Have there been any functions developed\nthat\n> any of you know about that are not dependent upon this assumption? \n\nHave you tried (probably yes) and does it make a difference? Are the \nresults from a binary IDW and a row standardised IDW very different? Is\n\nyour IDW matrix full or sparse? Can Moran's I be applied instead\n(despite \nits covering lots of misspecification problems)? Are the IDW weights \nsymmetric (probably, but not always)?\n\nI'm not sure why distances should be helpful if the data are observed\non \nareal units, so that measuring distances is between arbitrarily chosen\n\npoints in those units, a change of support problem. That may be why\nthere \naren't methods too, though there's no reason not to try to develop\nthings. \nBut error correlation specified by distance does movbe rather close to\n\ngeostatistics, doesn't it?\n\nAny other views, anyone?\n\nRoger\n\n> Thanks.  -Jill\n> \n> \n> ***************************************************\n> Jill L. Caviglia-Harris, Ph.D.\n> Assistant Professor\n> Economics and Finance Department\n> Salisbury University\n> Salisbury, MD 21801-6860\n>    phone: (410) 548-5591\n>    fax: (410) 546-6208\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch \n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School\nof\nEconomics and Business Administration, Breiviksveien 40, N-5045\nBergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "Roger:\n\n>Have you tried (probably yes) and does it make a difference? Are the \n> results from a binary IDW and a row standardized IDW very different?\nIs \n> your IDW matrix full or sparse? Can Moran's ",
+      "thread_id": "thread-ace7cc60cc99",
+      "thread_depth": 0,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-0aa97065fdf4",
+      "message_id": "<Pine.LNX.4.44.0402272122410.14084-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-02-27T21:33:22+01:00",
+      "subject": "[R-sig-Geo] LM tests",
+      "subject_clean": "LM tests",
+      "in_reply_to": "<33767DC23FBEA24D85477AF575724205166015A8@email.uncc.edu>",
+      "references": [],
+      "body_plain": "On Fri, 27 Feb 2004, Munroe, Darla K wrote:\n\n> I was thinking about this issue, and correct me if I'm wrong - \n> \n> If you row-standardize the distance weights, you will in effect rescale\n> them, but you will not change the scale of the weights themselves, correct?\n> I.e., row standardization means dividing the weight for each observation by\n> the total # of non-zero elements for that row, correct?  Well, each\n> observation by definition in a distance matrix has the same number of\n> \"neighbors\" (i.e., all n-1), correct?  So 1/dij (or whatever your distance\n> matrix is) becomes 1/dij/n.\n> \nI'm not sure about that. What you are dividing by is the row sum:\n\n\\sum_j w_{ij}, and w_{ij} = 1/d_{ij}, so the sum will be smaller for \nplaces a long way from others, and larger for places near most others, \nwon't it?\n\nIn the R spirit, try it out:\n\n> set.seed(1)\n> try <- 1/as.matrix(dist(cbind(rnorm(100), rnorm(100))))\n> diag(try) <- 0\n> summary(rowSums(try))\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n  45.07   68.97   90.05   91.78  113.40  153.10 \n\nSo places with different \"connectedness\" will get \"flattened\", I think. \nBut then I'm not sure that full matrices are so very informative (there is \na literature about reconstructing maps of relative position from neighbour \ngraphs, I think, so the sparse binary weights actually carry quite a lot \nof information - more parsimonious anyway).\n\nRoger\n\n> Is that going to affect your fundamental interpretation of the structure of\n> spatial dependence?  Probably not - unless you're trying to interpret rho or\n> lambda in terms of the distance units (which I wouldn't presume to do,\n> anyway...).\n> \n> Or am I off base? \n> \n> -----Original Message-----\n> From: Roger Bivand\n> To: Jill Caviglia-Harris\n> Cc: r-sig-geo at stat.math.ethz.ch\n> Sent: 2/27/04 2:40 PM\n> Subject: Re: [R-sig-Geo] LM tests\n> \n> On Fri, 27 Feb 2004, Jill Caviglia-Harris wrote:\n> \n> > List members:\n> > \n> > I have been using the function lm.LMtests developed using the spdep\n> > package to test for spatial lag and error.  My problem is that these\n> > tests assume that the weights matrix is row standardized, while I have\n> a\n> > weights matrix that is set up as the inverse distance between\n> neighbors.\n> \n> Certainly lm.LMtests() prints a warning, and the tradition it comes from\n> \n> usually presupposes row standardisation. Curiously, quite a lot of the \n> distribution results in Cliff and Ord actually assume symmetry, which\n> can \n> lead to fun with negative variance in Geary's C and join count\n> statistics \n> even with row standardised weights.\n> \n> >   Converting it into a row standardized matrix would result in the\n> loss\n> > of important information.  Have there been any functions developed\n> that\n> > any of you know about that are not dependent upon this assumption? \n> \n> Have you tried (probably yes) and does it make a difference? Are the \n> results from a binary IDW and a row standardised IDW very different? Is \n> your IDW matrix full or sparse? Can Moran's I be applied instead\n> (despite \n> its covering lots of misspecification problems)? Are the IDW weights \n> symmetric (probably, but not always)?\n> \n> I'm not sure why distances should be helpful if the data are observed on\n> \n> areal units, so that measuring distances is between arbitrarily chosen \n> points in those units, a change of support problem. That may be why\n> there \n> aren't methods too, though there's no reason not to try to develop\n> things. \n> But error correlation specified by distance does movbe rather close to \n> geostatistics, doesn't it?\n> \n> Any other views, anyone?\n> \n> Roger\n> \n> > Thanks.  -Jill\n> > \n> > \n> > ***************************************************\n> > Jill L. Caviglia-Harris, Ph.D.\n> > Assistant Professor\n> > Economics and Finance Department\n> > Salisbury University\n> > Salisbury, MD 21801-6860\n> >    phone: (410) 548-5591\n> >    fax: (410) 546-6208\n> > \n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> > \n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Fri, 27 Feb 2004, Munroe, Darla K wrote:\n\n> I was thinking about this issue, and correct me if I'm wrong - \n> \n> If you row-standardize the distance weights, you will in effect rescale\n> them, but ",
+      "thread_id": "thread-1a0e64b6ad40",
+      "thread_depth": 1,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-9d96bbe7b17c",
+      "message_id": "<s03f6408.075@mail2.salisbury.edu>",
+      "from_name": "Jill Caviglia-Harris",
+      "from_email_hash": "4eb80aa392116257673b4355bb5df865ee29a0944294fd1c25d9c55846139bce",
+      "date": "2004-02-27T15:36:34-05:00",
+      "subject": "[R-sig-Geo] LM tests",
+      "subject_clean": "LM tests",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Actually wouldn't the row standardization imply that the weights become\n(1/dij)/ sum dij)?  The objective is get the rows to sum to 1.  I\nanswered your other question in the last email.  (I won't repeat) It\nappears that row standardizing will change the economics interpretation\n(therefore the coefficient values).  Something that I will find\ninteresting to look into empirically.  I'll get back to you.  -Jill\n\n***************************************************\nJill L. Caviglia-Harris, Ph.D.\nAssistant Professor\nEconomics and Finance Department\nSalisbury University\nSalisbury, MD 21801-6860\n   phone: (410) 548-5591\n   fax: (410) 546-6208\n*********************************************************\n\n>>> \"Munroe, Darla K\" <dkmunroe at email.uncc.edu> 02/27/04 03:06PM >>>\n \noops - I meant to say - with row-standardization your weights become:\n1/dij/n-1 (with 0 elements on the diagonal).\n\nSo, you've just rescaled dij by n-1 for all i, but you haven't lost\nthe\nranking of the distances from low to high.\n-----Original Message-----\nFrom: Roger Bivand\nTo: Jill Caviglia-Harris\nCc: r-sig-geo at stat.math.ethz.ch \nSent: 2/27/04 2:40 PM\nSubject: Re: [R-sig-Geo] LM tests\n\nOn Fri, 27 Feb 2004, Jill Caviglia-Harris wrote:\n\n> List members:\n> \n> I have been using the function lm.LMtests developed using the spdep\n> package to test for spatial lag and error.  My problem is that these\n> tests assume that the weights matrix is row standardized, while I\nhave\na\n> weights matrix that is set up as the inverse distance between\nneighbors.\n\nCertainly lm.LMtests() prints a warning, and the tradition it comes\nfrom\n\nusually presupposes row standardisation. Curiously, quite a lot of the\n\ndistribution results in Cliff and Ord actually assume symmetry, which\ncan \nlead to fun with negative variance in Geary's C and join count\nstatistics \neven with row standardised weights.\n\n>   Converting it into a row standardized matrix would result in the\nloss\n> of important information.  Have there been any functions developed\nthat\n> any of you know about that are not dependent upon this assumption? \n\nHave you tried (probably yes) and does it make a difference? Are the \nresults from a binary IDW and a row standardised IDW very different? Is\n\nyour IDW matrix full or sparse? Can Moran's I be applied instead\n(despite \nits covering lots of misspecification problems)? Are the IDW weights \nsymmetric (probably, but not always)?\n\nI'm not sure why distances should be helpful if the data are observed\non\n\nareal units, so that measuring distances is between arbitrarily chosen\n\npoints in those units, a change of support problem. That may be why\nthere \naren't methods too, though there's no reason not to try to develop\nthings. \nBut error correlation specified by distance does movbe rather close to\n\ngeostatistics, doesn't it?\n\nAny other views, anyone?\n\nRoger\n\n> Thanks.  -Jill\n> \n> \n> ***************************************************\n> Jill L. Caviglia-Harris, Ph.D.\n> Assistant Professor\n> Economics and Finance Department\n> Salisbury University\n> Salisbury, MD 21801-6860\n>    phone: (410) 548-5591\n>    fax: (410) 546-6208\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch \n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School\nof\nEconomics and Business Administration, Breiviksveien 40, N-5045\nBergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no \n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch \nhttps://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo \n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch \nhttps://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Actually wouldn't the row standardization imply that the weights become\n(1/dij)/ sum dij)?  The objective is get the rows to sum to 1.  I\nanswered your other question in the last email.  (I won't repe",
+      "thread_id": "thread-9d96bbe7b17c",
+      "thread_depth": 0,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-a0187828bbdf",
+      "message_id": "<33767DC23FBEA24D85477AF575724205166015AB@email.uncc.edu>",
+      "from_name": "Munroe, Darla K",
+      "from_email_hash": "4c3cd90c1b23295551b32ae3997ec38acae9f2d554b2b937cad882c5ca51498e",
+      "date": "2004-02-27T15:39:05-05:00",
+      "subject": "[R-sig-Geo] LM tests",
+      "subject_clean": "LM tests",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "yes, I'm sorry - you are right - I somehow temporarily forgot what\nrow-standardization exactly does! \n\nBut some of logic still holds - you preserve the ranking from low to high in\ndistance from all j to each individual i; the problem is you will lose the\ndifferences among each of the is - i.e., you'll lose the effect of\nobservations that are relatively far away, and all the dijs are higher, for\nexample.\n\nSo does that make sense - row-standardizing a distance matrix will yield\nsomething more like a k-nearest neighbors matrix?  I.e., for each i, you\nwill just rank the neighbors from low to high, but you will lose the\nvariation to distinguish which observations are more fringe, vs. more\ncentral.\n\nsorry for the confusion - I should think more before I send email.\n\n-----Original Message-----\nFrom: Roger Bivand\nTo: Munroe, Darla K\nCc: 'Jill Caviglia-Harris '; 'r-sig-geo at stat.math.ethz.ch '\nSent: 2/27/04 3:33 PM\nSubject: RE: [R-sig-Geo] LM tests\n\nOn Fri, 27 Feb 2004, Munroe, Darla K wrote:\n\n> I was thinking about this issue, and correct me if I'm wrong - \n> \n> If you row-standardize the distance weights, you will in effect\nrescale\n> them, but you will not change the scale of the weights themselves,\ncorrect?\n> I.e., row standardization means dividing the weight for each\nobservation by\n> the total # of non-zero elements for that row, correct?  Well, each\n> observation by definition in a distance matrix has the same number of\n> \"neighbors\" (i.e., all n-1), correct?  So 1/dij (or whatever your\ndistance\n> matrix is) becomes 1/dij/n.\n> \nI'm not sure about that. What you are dividing by is the row sum:\n\n\\sum_j w_{ij}, and w_{ij} = 1/d_{ij}, so the sum will be smaller for \nplaces a long way from others, and larger for places near most others, \nwon't it?\n\nIn the R spirit, try it out:\n\n> set.seed(1)\n> try <- 1/as.matrix(dist(cbind(rnorm(100), rnorm(100))))\n> diag(try) <- 0\n> summary(rowSums(try))\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n  45.07   68.97   90.05   91.78  113.40  153.10 \n\nSo places with different \"connectedness\" will get \"flattened\", I think. \nBut then I'm not sure that full matrices are so very informative (there\nis \na literature about reconstructing maps of relative position from\nneighbour \ngraphs, I think, so the sparse binary weights actually carry quite a lot\n\nof information - more parsimonious anyway).\n\nRoger\n\n> Is that going to affect your fundamental interpretation of the\nstructure of\n> spatial dependence?  Probably not - unless you're trying to interpret\nrho or\n> lambda in terms of the distance units (which I wouldn't presume to do,\n> anyway...).\n> \n> Or am I off base? \n> \n> -----Original Message-----\n> From: Roger Bivand\n> To: Jill Caviglia-Harris\n> Cc: r-sig-geo at stat.math.ethz.ch\n> Sent: 2/27/04 2:40 PM\n> Subject: Re: [R-sig-Geo] LM tests\n> \n> On Fri, 27 Feb 2004, Jill Caviglia-Harris wrote:\n> \n> > List members:\n> > \n> > I have been using the function lm.LMtests developed using the spdep\n> > package to test for spatial lag and error.  My problem is that these\n> > tests assume that the weights matrix is row standardized, while I\nhave\n> a\n> > weights matrix that is set up as the inverse distance between\n> neighbors.\n> \n> Certainly lm.LMtests() prints a warning, and the tradition it comes\nfrom\n> \n> usually presupposes row standardisation. Curiously, quite a lot of the\n\n> distribution results in Cliff and Ord actually assume symmetry, which\n> can \n> lead to fun with negative variance in Geary's C and join count\n> statistics \n> even with row standardised weights.\n> \n> >   Converting it into a row standardized matrix would result in the\n> loss\n> > of important information.  Have there been any functions developed\n> that\n> > any of you know about that are not dependent upon this assumption? \n> \n> Have you tried (probably yes) and does it make a difference? Are the \n> results from a binary IDW and a row standardised IDW very different?\nIs \n> your IDW matrix full or sparse? Can Moran's I be applied instead\n> (despite \n> its covering lots of misspecification problems)? Are the IDW weights \n> symmetric (probably, but not always)?\n> \n> I'm not sure why distances should be helpful if the data are observed\non\n> \n> areal units, so that measuring distances is between arbitrarily chosen\n\n> points in those units, a change of support problem. That may be why\n> there \n> aren't methods too, though there's no reason not to try to develop\n> things. \n> But error correlation specified by distance does movbe rather close to\n\n> geostatistics, doesn't it?\n> \n> Any other views, anyone?\n> \n> Roger\n> \n> > Thanks.  -Jill\n> > \n> > \n> > ***************************************************\n> > Jill L. Caviglia-Harris, Ph.D.\n> > Assistant Professor\n> > Economics and Finance Department\n> > Salisbury University\n> > Salisbury, MD 21801-6860\n> >    phone: (410) 548-5591\n> >    fax: (410) 546-6208\n> > \n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> > \n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "yes, I'm sorry - you are right - I somehow temporarily forgot what\nrow-standardization exactly does! \n\nBut some of logic still holds - you preserve the ranking from low to high in\ndistance from all j ",
+      "thread_id": "thread-a0187828bbdf",
+      "thread_depth": 0,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-de3d08cd84ce",
+      "message_id": "<0CA56B71-6966-11D8-99AF-000A95CD9D76@uiuc.edu>",
+      "from_name": "Luc Anselin",
+      "from_email_hash": "c6d82da596ca09a2b9fbae90bf1ba49bea97fb0d745f4fd94edca852f282625a",
+      "date": "2004-02-27T14:46:42-06:00",
+      "subject": "[R-sig-Geo] LM tests",
+      "subject_clean": "LM tests",
+      "in_reply_to": "<s03f6213.054@mail2.salisbury.edu>",
+      "references": [
+        "<s03f6213.054@mail2.salisbury.edu>"
+      ],
+      "body_plain": "On Feb 27, 2004, at 2:28 PM, Jill Caviglia-Harris wrote:\n\n> Roger:\n>\n>> Have you tried (probably yes) and does it make a difference? Are the\n>> results from a binary IDW and a row standardized IDW very different?\n> Is\n>> your IDW matrix full or sparse? Can Moran's I be applied instead\n> (despite\n>> its covering lots of misspecification problems)? Are the IDW weights\n>\n>> symmetric (probably, but not always)?\n>\n> Yes, the IDW weights are symmetric - each observation in the sample is\n> considered a neighbor - therefore the inverse distance between the\n> neighbors indicates the \"degree of neighborliness\"  I will row\n> standardize these numbers and look into a rule for determining a\n> neighbor form a non-neighbor in my sample (for the binary weight \n> matrix)\n> and get back to you about the differences.\n>\n>> I'm not sure why distances should be helpful if the data are observed\n> on\n>> areal units, so that measuring distances is between arbitrarily\n> chosen\n>> points in those units, a change of support problem. That may be why\n> there\n>> aren't methods too, though there's no reason not to try to develop\n> things.\n>> But error correlation specified by distance does movbe rather close\n> to\n>> geostatistics, doesn't it?\n>\n> I haven't tried these other ways of defining the weights matrix (as of\n> yet) because of Anselin (1988) \"...distance decay has a meaningful\n> economic interpretation, scaling the rows so that the weights sum to \n> one\n> may result in a loss of that interpretation\"\n\nIf I can pitch in, this is what this means. If you want to relate \nsomething\nto a measure of \"potential\" in the old Isard sense, then the potential\nvariable sum over j of y_j / d_ij is the same as a spatial lag with\n1/d_ij as the weights. Row-standardization would be that each of\nthese 1/d_ij would be rescaled by the sum over j of 1 / d_ij, which\nis not quite the same as what Darla suggested.\nI think in a (much) earlier post Roger made the point that inverse\ndistance may not be that different from contiguity or distance band,\nespecially when d_ij is \"large\" (there is an obvious scale dependence\nhere). For example, if two units are 200 miles apart (e.g., the \ncentroids\nof some counties in Western US), 1/d_ij is 0.005 and 1/ d_ij2 is \n0.000025,\nso much for \"weights\". Rescaling these would make them all relative\nto the sum of the 1/d_ij\nL.\n\n\n\n\n>\n> -Jill\n>\n>\n>\n>>>> Roger Bivand <Roger.Bivand at nhh.no> 02/27/04 02:40PM >>>\n> On Fri, 27 Feb 2004, Jill Caviglia-Harris wrote:\n>\n>> List members:\n>>\n>> I have been using the function lm.LMtests developed using the spdep\n>> package to test for spatial lag and error.  My problem is that these\n>> tests assume that the weights matrix is row standardized, while I\n> have a\n>> weights matrix that is set up as the inverse distance between\n> neighbors.\n>\n> Certainly lm.LMtests() prints a warning, and the tradition it comes\n> from\n> usually presupposes row standardisation. Curiously, quite a lot of the\n>\n> distribution results in Cliff and Ord actually assume symmetry, which\n> can\n> lead to fun with negative variance in Geary's C and join count\n> statistics\n> even with row standardised weights.\n>\n>>   Converting it into a row standardized matrix would result in the\n> loss\n>> of important information.  Have there been any functions developed\n> that\n>> any of you know about that are not dependent upon this assumption?\n>\n> Have you tried (probably yes) and does it make a difference? Are the\n> results from a binary IDW and a row standardised IDW very different? Is\n>\n> your IDW matrix full or sparse? Can Moran's I be applied instead\n> (despite\n> its covering lots of misspecification problems)? Are the IDW weights\n> symmetric (probably, but not always)?\n>\n> I'm not sure why distances should be helpful if the data are observed\n> on\n> areal units, so that measuring distances is between arbitrarily chosen\n>\n> points in those units, a change of support problem. That may be why\n> there\n> aren't methods too, though there's no reason not to try to develop\n> things.\n> But error correlation specified by distance does movbe rather close to\n>\n> geostatistics, doesn't it?\n>\n> Any other views, anyone?\n>\n> Roger\n>\n>> Thanks.  -Jill\n>>\n>>\n>> ***************************************************\n>> Jill L. Caviglia-Harris, Ph.D.\n>> Assistant Professor\n>> Economics and Finance Department\n>> Salisbury University\n>> Salisbury, MD 21801-6860\n>>    phone: (410) 548-5591\n>>    fax: (410) 546-6208\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n> -- \n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School\n> of\n> Economics and Business Administration, Breiviksveien 40, N-5045\n> Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 93 93\n> e-mail: Roger.Bivand at nhh.no\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_snippet": "On Feb 27, 2004, at 2:28 PM, Jill Caviglia-Harris wrote:\n\n> Roger:\n>\n>> Have you tried (probably yes) and does it make a difference? Are the\n>> results from a binary IDW and a row standardized IDW ver",
+      "thread_id": "thread-ace7cc60cc99",
+      "thread_depth": 1,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-32e8df7a5828",
+      "message_id": "<404107F0.2010903@stat.auckland.ac.nz>",
+      "from_name": "Paul Murrell",
+      "from_email_hash": "71bf5cc945d7d1be4a537186b0b66a69b1cc63d99d978b8a16f5750506707116",
+      "date": "2004-02-29T10:28:16+13:00",
+      "subject": "[R-sig-Geo] Re: [R] writing polygons/segments to shapefiles (.shp) or other\tArcGIS compatible file",
+      "subject_clean": "writing polygons/segments to shapefiles (.shp) or other\tArcGIS compatible file",
+      "in_reply_to": null,
+      "references": [
+        "<76A000A82289D411952F001083F9DD06047FE4E8@exsalem4-bu.odot.state.or.us>",
+        "<001c01c3fca1$46d38f70$7aa3fb51@PC728329681112>"
+      ],
+      "body_plain": "Hi\n\n\nPatrick Giraudoux wrote:\n> Hi,\n> \n> Thanks for all those information and the most valuable library you have developed.\n> \n> If somebody is to develop something to write shapefiles from polygon coordinates within R (most welcome), I don't think that the\n> attribute file (dbf) will be an important issue. If we have got an output with the index to link the dbf records to each shape of a\n> shapefile, any text file can be handled in R or Excel to create a dbf. The real issue is the encoding of the *.shp and *.shx  etc..\n> (and an index file for the dbf)\n> \n> Most important is to consider that ESRI has stopped developping ArcView and AVENUE. They have moved to ArGIS and Visual Basic. In\n> this new generation framework, importation is managed with ArcToolBox which, to my knowledge, is very limited considering\n> importation of text objects (actually I even wonder if one can import something but attribute tables without ArcInfo). For instance,\n> the way I found to solve the problem I met was to write a programme in R to wrap the polygon coordinates in a text file readable in\n> GRASS (an opensource GIS), to import it into GRASS and to export the shapefile from GRASS. This shapefile was finally imported to\n> ArcGIS.  I would not insist on ESRI client policy. I just want to say that the more I know corporates the more I love opensource...\n> \n> Anyway, there are many things that can be made in R which may deserve not only importation to R, but also exportation to many kinds\n> of GIS. To write shapefiles from polygon, points or lines created in R would be most useful.\n\n\nI don't know anything about shapefiles, but that's starting to sound \nlike a \"shapefile\" graphics device (c.f. the gtkDevice, RSvgDevice \npackages).\n\nPaul\n\n\n> Many thanks for your interest and support,\n> \n> Patrick Giraudoux\n> \n> \n> Universit? de Franche-Comt?\n> Laboratoire de Biologie environnementale\n> EA3184 usc INRA\n> F-25030 Besan?on Cedex\n> \n> t?l.: +33 381 665 745\n> fax.: +33 381 665 797\n> http://lbe.univ-fcomte.fr\n> \n> \"Ce n'est pas en am?liorant la bougie que l'on a invent? l'?lectricit?\", la recherche fondamentale est indispensable !\n> \n> \n> \n> \n> ----- Original Message ----- \n> From: <Benjamin.STABLER at odot.state.or.us>\n> To: <patrick.giraudoux at univ-fcomte.fr>\n> Cc: <r-help at stat.math.ethz.ch>; <r-sig-geo at stat.math.ethz.ch>\n> Sent: Thursday, February 26, 2004 7:11 PM\n> Subject: Re: [R] writing polygons/segments to shapefiles (.shp) or other ArcGIS compatible file\n> \n> \n> \n>>The main limitation of the shapefiles package that I put together is that it\n>>does not create shapefiles from R objects - rather it only writes shapefiles\n>>that have been read into R and manipulated within the constraints of the\n>>existing file structure.  By this I mean that for example you can change the\n>>coordinates of points and write them back out.  Or you can add a bunch of\n>>blank columns in the DBF outside of R and then fill them in with R.  But I\n>>did not write any code to calculate byte offsets and such and that are\n>>needed when creating a shapefile from scratch.\n>>\n>>So what I do when I want to create a new shapefile from within R is write\n>>out the format required by the ASCII Tool ArcView (Avenue) script.  This\n>>script is available at: http://arcscripts.esri.com/details.asp?dbid=11442\n>>The format is simple:\n>>\n>>Works for space delimited ascii to point, polygon and polyline. The format\n>>for point ascii file is id, x, y (no comma for real data, space delimited).\n>>For polygon & polyline ascii files, the format is code (1 for start point, 2\n>>for middle points, 3 for end point), x, y (no comma for real data, space\n>>delimited). Export shapefile to ascii file works for point, polyline and\n>>polygon shapefiles. The output format file is id, x, y. For polygon and\n>>polyline, the id is the sequence id of vertices.\n>>\n>>Thus all you have to do is write a text file, install the script in ArcView\n>>and then use the ArcView extension to create a shapefile from the ASCII\n>>file.  Unfortunately ASCII tool only works with the geography - you have to\n>>add the attributes later.\n>>\n>>With all of that said, I would like to add to the shapefiles package the\n>>ability to write out shapefiles from scratch.  Since the shapefiles format\n>>is rather unique, I think it would be best to use the maptools ShapeList/Map\n>>class format (or r-spatial's classes).  For starters the package would just\n>>write out the geography (like the ASCII tool Avenue script).  Later would be\n>>added the ability to write the dbf data out from the att.data element of the\n>>Map object.\n>>\n>>Unfortunately I don't know when I will have the time to do this.  If anyone\n>>else wants to do then please go ahead and I can help via email if needed.\n>>But adding the ability to write out shapefiles from scratch is on my list.\n>>Once I finish coding our travel demand model and we enter the application\n>>phase (probably in a few months) then will our demand to output shapefiles\n>>from R increase and I can justify spending the time to write the code.\n>>\n>>I apologize that I have not paid much attention to the r-sig-geo discussion\n>>or Edzer's r-spatial project.  If there is an effort underway to write out\n>>shapefiles then can someone please inform me of its status.  If not, then\n>>maybe I can help.  Thanks.\n>>\n>>Benjamin Stabler\n>>Transportation Planning Analysis Unit\n>>Oregon Department of Transportation\n>>555 13th Street NE, Suite 2\n>>Salem, OR 97301  Ph: 503-986-4104\n> \n> \n> ______________________________________________\n> R-help at stat.math.ethz.ch mailing list\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-help\n> PLEASE do read the posting guide! http://www.R-project.org/posting-guide.html\n\n\n-- \nDr Paul Murrell\nDepartment of Statistics\nThe University of Auckland\nPrivate Bag 92019\nAuckland\nNew Zealand\n64 9 3737599 x85392\npaul at stat.auckland.ac.nz\nhttp://www.stat.auckland.ac.nz/~paul/",
+      "body_snippet": "Hi\n\n\nPatrick Giraudoux wrote:\n> Hi,\n> \n> Thanks for all those information and the most valuable library you have developed.\n> \n> If somebody is to develop something to write shapefiles from polygon co",
+      "thread_id": "thread-c3fa4270659c",
+      "thread_depth": 2,
+      "month": "2004-02"
+    },
+    {
+      "id": "msg-4532ba5fcb22",
+      "message_id": "<1078057374.9549.181835608@webmail.messagingengine.com>",
+      "from_name": "Nicholas Lewin-Koh",
+      "from_email_hash": "ce1a5dad09cdf256c2a72906ae1e563f0d7ec3457957c4a1a53c9b3862a71eac",
+      "date": "2004-02-29T20:22:54+08:00",
+      "subject": "[R-sig-Geo] Re: R-sig-Geo Digest, Vol 6, Issue 8",
+      "subject_clean": "R-sig-Geo Digest, Vol 6, Issue 8",
+      "in_reply_to": "<200402291104.i1TB4dgo009324@hypatia.math.ethz.ch>",
+      "references": [
+        "<200402291104.i1TB4dgo009324@hypatia.math.ethz.ch>"
+      ],
+      "body_plain": "Hi,\nIn maptools I had some exerimental code for writing shape files and dbf\nfiles.\nI know the c code is still there in the distribution (from shapelib) \nand i think the C-R-api wrapper is still there. \nI can look later and see if I can get the functions working again\nsince Roger took it over. Luckily Roger is better than me about\ncommenting code.\n\nNicholas\n\nOn Sun, 29 Feb 2004 12:04:45 +0100 (MET),\nr-sig-geo-request at stat.math.ethz.ch said:\n> Send R-sig-Geo mailing list submissions to\n> \tr-sig-geo at stat.math.ethz.ch\n> \n> To subscribe or unsubscribe via the World Wide Web, visit\n> \thttps://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> or, via email, send a message with subject or body 'help' to\n> \tr-sig-geo-request at stat.math.ethz.ch\n> \n> You can reach the person managing the list at\n> \tr-sig-geo-owner at stat.math.ethz.ch\n> \n> When replying, please edit your Subject line so it is more specific\n> than \"Re: Contents of R-sig-Geo digest...\"\n> \n> \n> Today's Topics:\n> \n>    1. Re: [R] writing polygons/segments to shapefiles (.shp) or\n>       other   ArcGIS compatible file (Paul Murrell)\n> \n> \n> ----------------------------------------------------------------------\n> \n> Message: 1\n> Date: Sun, 29 Feb 2004 10:28:16 +1300\n> From: Paul Murrell <p.murrell at auckland.ac.nz>\n> Subject: [R-sig-Geo] Re: [R] writing polygons/segments to shapefiles\n> \t(.shp) or other\tArcGIS compatible file\n> To: Patrick Giraudoux <patrick.giraudoux at univ-fcomte.fr>\n> Cc: r-sig-geo at stat.math.ethz.ch, r-help at stat.math.ethz.ch,\n> \tBenjamin.STABLER at odot.state.or.us,\tFlorian Tolle\n> \t<florian.tolle at univ-fcomte.fr>,\tFrancis Raoul\n> \t<francis.raoul at univ-fcomte.fr>\n> Message-ID: <404107F0.2010903 at stat.auckland.ac.nz>\n> Content-Type: text/plain; charset=ISO-8859-1; format=flowed\n> \n> Hi\n> \n> \n> Patrick Giraudoux wrote:\n> > Hi,\n> > \n> > Thanks for all those information and the most valuable library you have developed.\n> > \n> > If somebody is to develop something to write shapefiles from polygon coordinates within R (most welcome), I don't think that the\n> > attribute file (dbf) will be an important issue. If we have got an output with the index to link the dbf records to each shape of a\n> > shapefile, any text file can be handled in R or Excel to create a dbf. The real issue is the encoding of the *.shp and *.shx  etc..\n> > (and an index file for the dbf)\n> > \n> > Most important is to consider that ESRI has stopped developping ArcView and AVENUE. They have moved to ArGIS and Visual Basic. In\n> > this new generation framework, importation is managed with ArcToolBox which, to my knowledge, is very limited considering\n> > importation of text objects (actually I even wonder if one can import something but attribute tables without ArcInfo). For instance,\n> > the way I found to solve the problem I met was to write a programme in R to wrap the polygon coordinates in a text file readable in\n> > GRASS (an opensource GIS), to import it into GRASS and to export the shapefile from GRASS. This shapefile was finally imported to\n> > ArcGIS.  I would not insist on ESRI client policy. I just want to say that the more I know corporates the more I love opensource...\n> > \n> > Anyway, there are many things that can be made in R which may deserve not only importation to R, but also exportation to many kinds\n> > of GIS. To write shapefiles from polygon, points or lines created in R would be most useful.\n> \n> \n> I don't know anything about shapefiles, but that's starting to sound \n> like a \"shapefile\" graphics device (c.f. the gtkDevice, RSvgDevice \n> packages).\n> \n> Paul\n> \n> \n> > Many thanks for your interest and support,\n> > \n> > Patrick Giraudoux\n> > \n> > \n> > Universit? de Franche-Comt?\n> > Laboratoire de Biologie environnementale\n> > EA3184 usc INRA\n> > F-25030 Besan?on Cedex\n> > \n> > t?l.: +33 381 665 745\n> > fax.: +33 381 665 797\n> > http://lbe.univ-fcomte.fr\n> > \n> > \"Ce n'est pas en am?liorant la bougie que l'on a invent? l'?lectricit?\", la recherche fondamentale est indispensable !\n> > \n> > \n> > \n> > \n> > ----- Original Message ----- \n> > From: <Benjamin.STABLER at odot.state.or.us>\n> > To: <patrick.giraudoux at univ-fcomte.fr>\n> > Cc: <r-help at stat.math.ethz.ch>; <r-sig-geo at stat.math.ethz.ch>\n> > Sent: Thursday, February 26, 2004 7:11 PM\n> > Subject: Re: [R] writing polygons/segments to shapefiles (.shp) or other ArcGIS compatible file\n> > \n> > \n> > \n> >>The main limitation of the shapefiles package that I put together is that it\n> >>does not create shapefiles from R objects - rather it only writes shapefiles\n> >>that have been read into R and manipulated within the constraints of the\n> >>existing file structure.  By this I mean that for example you can change the\n> >>coordinates of points and write them back out.  Or you can add a bunch of\n> >>blank columns in the DBF outside of R and then fill them in with R.  But I\n> >>did not write any code to calculate byte offsets and such and that are\n> >>needed when creating a shapefile from scratch.\n> >>\n> >>So what I do when I want to create a new shapefile from within R is write\n> >>out the format required by the ASCII Tool ArcView (Avenue) script.  This\n> >>script is available at: http://arcscripts.esri.com/details.asp?dbid=11442\n> >>The format is simple:\n> >>\n> >>Works for space delimited ascii to point, polygon and polyline. The format\n> >>for point ascii file is id, x, y (no comma for real data, space delimited).\n> >>For polygon & polyline ascii files, the format is code (1 for start point, 2\n> >>for middle points, 3 for end point), x, y (no comma for real data, space\n> >>delimited). Export shapefile to ascii file works for point, polyline and\n> >>polygon shapefiles. The output format file is id, x, y. For polygon and\n> >>polyline, the id is the sequence id of vertices.\n> >>\n> >>Thus all you have to do is write a text file, install the script in ArcView\n> >>and then use the ArcView extension to create a shapefile from the ASCII\n> >>file.  Unfortunately ASCII tool only works with the geography - you have to\n> >>add the attributes later.\n> >>\n> >>With all of that said, I would like to add to the shapefiles package the\n> >>ability to write out shapefiles from scratch.  Since the shapefiles format\n> >>is rather unique, I think it would be best to use the maptools ShapeList/Map\n> >>class format (or r-spatial's classes).  For starters the package would just\n> >>write out the geography (like the ASCII tool Avenue script).  Later would be\n> >>added the ability to write the dbf data out from the att.data element of the\n> >>Map object.\n> >>\n> >>Unfortunately I don't know when I will have the time to do this.  If anyone\n> >>else wants to do then please go ahead and I can help via email if needed.\n> >>But adding the ability to write out shapefiles from scratch is on my list.\n> >>Once I finish coding our travel demand model and we enter the application\n> >>phase (probably in a few months) then will our demand to output shapefiles\n> >>from R increase and I can justify spending the time to write the code.\n> >>\n> >>I apologize that I have not paid much attention to the r-sig-geo discussion\n> >>or Edzer's r-spatial project.  If there is an effort underway to write out\n> >>shapefiles then can someone please inform me of its status.  If not, then\n> >>maybe I can help.  Thanks.\n> >>\n> >>Benjamin Stabler\n> >>Transportation Planning Analysis Unit\n> >>Oregon Department of Transportation\n> >>555 13th Street NE, Suite 2\n> >>Salem, OR 97301  Ph: 503-986-4104\n> > \n> > \n> > ______________________________________________\n> > R-help at stat.math.ethz.ch mailing list\n> > https://www.stat.math.ethz.ch/mailman/listinfo/r-help\n> > PLEASE do read the posting guide! http://www.R-project.org/posting-guide.html\n> \n> \n> -- \n> Dr Paul Murrell\n> Department of Statistics\n> The University of Auckland\n> Private Bag 92019\n> Auckland\n> New Zealand\n> 64 9 3737599 x85392\n> paul at stat.auckland.ac.nz\n> http://www.stat.auckland.ac.nz/~paul/\n> \n> \n> \n> ------------------------------\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> \n> \n> End of R-sig-Geo Digest, Vol 6, Issue 8\n> ***************************************",
+      "body_snippet": "Hi,\nIn maptools I had some exerimental code for writing shape files and dbf\nfiles.\nI know the c code is still there in the distribution (from shapelib) \nand i think the C-R-api wrapper is still there.",
+      "thread_id": "thread-4532ba5fcb22",
+      "thread_depth": 0,
+      "month": "2004-02"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-69b99bce8db2",
+      "subject": "axes when plotting polys",
+      "message_count": 3,
+      "participants": [
+        "Christophe Declercq",
+        "Roger Bivand",
+        "Stephane DRAY"
+      ],
+      "started": "2004-02-05T11:44:46-05:00",
+      "last_reply": "2004-02-06T20:46:22+01:00",
+      "root_message_id": "msg-69b99bce8db2"
+    },
+    {
+      "id": "thread-d5de6681fef2",
+      "subject": "useR! (20-22 May) Vienna deadline approaching!",
+      "message_count": 1,
+      "participants": [
+        "Roger Bivand"
+      ],
+      "started": "2004-02-10T18:27:12+01:00",
+      "last_reply": "2004-02-10T18:27:12+01:00",
+      "root_message_id": "msg-d5de6681fef2"
+    },
+    {
+      "id": "thread-88d1f48c1d27",
+      "subject": "Weights based on a function and 'listw' object",
+      "message_count": 2,
+      "participants": [
+        "Roger Bivand",
+        "Virgilio Gómez Rubio"
+      ],
+      "started": "2004-02-12T10:04:57+01:00",
+      "last_reply": "2004-02-12T16:26:47+01:00",
+      "root_message_id": "msg-88d1f48c1d27"
+    },
+    {
+      "id": "thread-c3fa4270659c",
+      "subject": "writing polygons/segments to shapefiles (.shp) or other A rcGIS compatible file",
+      "message_count": 3,
+      "participants": [
+        "Benjamin.STABLER at odot.state.or.us",
+        "Patrick Giraudoux",
+        "Paul Murrell"
+      ],
+      "started": "2004-02-26T10:11:40-08:00",
+      "last_reply": "2004-02-29T10:28:16+13:00",
+      "root_message_id": "msg-c3fa4270659c"
+    },
+    {
+      "id": "thread-62e7b8403bde",
+      "subject": "LM tests",
+      "message_count": 2,
+      "participants": [
+        "Jill Caviglia-Harris",
+        "Roger Bivand"
+      ],
+      "started": "2004-02-27T13:47:10-05:00",
+      "last_reply": "2004-02-27T20:40:59+01:00",
+      "root_message_id": "msg-62e7b8403bde"
+    },
+    {
+      "id": "thread-1a0e64b6ad40",
+      "subject": "LM tests",
+      "message_count": 2,
+      "participants": [
+        "Munroe, Darla K",
+        "Roger Bivand"
+      ],
+      "started": "2004-02-27T15:03:40-05:00",
+      "last_reply": "2004-02-27T21:33:22+01:00",
+      "root_message_id": "msg-1a0e64b6ad40"
+    },
+    {
+      "id": "thread-b4059f828a6c",
+      "subject": "LM tests",
+      "message_count": 1,
+      "participants": [
+        "Munroe, Darla K"
+      ],
+      "started": "2004-02-27T15:06:04-05:00",
+      "last_reply": "2004-02-27T15:06:04-05:00",
+      "root_message_id": "msg-b4059f828a6c"
+    },
+    {
+      "id": "thread-ace7cc60cc99",
+      "subject": "LM tests",
+      "message_count": 2,
+      "participants": [
+        "Jill Caviglia-Harris",
+        "Luc Anselin"
+      ],
+      "started": "2004-02-27T15:28:11-05:00",
+      "last_reply": "2004-02-27T14:46:42-06:00",
+      "root_message_id": "msg-ace7cc60cc99"
+    },
+    {
+      "id": "thread-9d96bbe7b17c",
+      "subject": "LM tests",
+      "message_count": 1,
+      "participants": [
+        "Jill Caviglia-Harris"
+      ],
+      "started": "2004-02-27T15:36:34-05:00",
+      "last_reply": "2004-02-27T15:36:34-05:00",
+      "root_message_id": "msg-9d96bbe7b17c"
+    },
+    {
+      "id": "thread-a0187828bbdf",
+      "subject": "LM tests",
+      "message_count": 1,
+      "participants": [
+        "Munroe, Darla K"
+      ],
+      "started": "2004-02-27T15:39:05-05:00",
+      "last_reply": "2004-02-27T15:39:05-05:00",
+      "root_message_id": "msg-a0187828bbdf"
+    },
+    {
+      "id": "thread-4532ba5fcb22",
+      "subject": "R-sig-Geo Digest, Vol 6, Issue 8",
+      "message_count": 1,
+      "participants": [
+        "Nicholas Lewin-Koh"
+      ],
+      "started": "2004-02-29T20:22:54+08:00",
+      "last_reply": "2004-02-29T20:22:54+08:00",
+      "root_message_id": "msg-4532ba5fcb22"
+    }
+  ]
+}

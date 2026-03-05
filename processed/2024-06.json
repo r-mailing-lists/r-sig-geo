@@ -1,0 +1,212 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2024-06",
+  "messages": [
+    {
+      "id": "msg-e87bd0e6f8d9",
+      "message_id": "<CALrbzg1gwKK-X3sRPy3ryfjoOszb6ggsVNEgJ_OQ3JbG=Cnoow@mail.gmail.com>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "715c796f300568f44190a795995f5d8c66b19c1f8bc2156d2221fcda4991bb5a",
+      "date": "2024-06-05T12:20:51-04:00",
+      "subject": "[R-sig-Geo] ordering points into a line",
+      "subject_clean": "ordering points into a line",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\n\nNOAA's Ocean Prediction Center (https://ocean.weather.gov/) serves the\nUS Navy's almost-daily estimate of the locations of the north and\nsouth walls of the Gulf Stream in the North Atlantic\n(https://ocean.weather.gov/gulf_stream_latest.txt). The also serve an\narchive via a FTP server\n(https://ftp.opc.ncep.noaa.gov/grids/experimental/GStream) for\ndownloads by year.  The dataset provides manually estimated of\nlocations along the so-called north and south walls of the Gulf\nStream, although there is ongoing research and debate about the best\nway to define the Gulf Stream. My colleagues and I have been slowly\npulling together a small package to make working with this data easier\n(https://github.com/BigelowLab/gstream).\n\nThis dataset provides an interesting spatial puzzle because the points\nfor a specific wall on a given date are not ordered.  Assuming that\nthe points could be ordered into LINESTRING, the problem is how to do\nit.\n\nWe probably can use sfnetworks package\n(https://luukvdmeer.github.io/sfnetworks/) extensive tools to follow a\nshortest path... but first one of the two endpoints must be found.\nEeek! How does one do that programmatically?  The plot attached shows\nthe points for the north wall on 2020-12-19.  Also shown are the first\nand last points in the record which are clearly not the endpoints of a\npath we might assemble from the points.\n\n#### START\nsuppressPackageStartupMessages({\n  library(sf)\n  library(readr)\n  library(dplyr)\n})\n\n\nfile = \"https://raw.githubusercontent.com/BigelowLab/gstream/main/inst/examples/2020-12-19-north.csv\"\nx = readr::read_csv(file, col_types = \"nn\") |>\n  sf::st_as_sf(coords = c(\"X\", \"Y\"), crs = 4326) |>\n  sf::st_as_sf()\n\n\np = sf::st_cast(dplyr::select(x, attr(x, \"sf_column\")), \"POINT\")\nplot(sf::st_geometry(x), type = \"b\", axes = TRUE, reset = FALSE)\nplot(dplyr::slice(p,1), col = \"orange\", add = TRUE, pch = 2, cex = 1.5)\nplot(dplyr::slice(p,nrow(x)), col = \"orange\", add = TRUE, pch = 6, cex = 1.5)\n### END\n\n-- \n\nBen Tupper he/him\n\nResearch Associate\n\nBigelow Laboratory for Ocean Sciences\n\n???????????????????????????????????????????????????\n\nE  btupper at bigelow.org\n\nO  207-315-2567\n\n???????????????????????????????????????????????????\n\nBold Science for Our Blue Planet  |  BIGELOW.ORG\n\n60 BIGELOW DRIVE  |  EAST BOOTHBAY, MAINE 04544 USA",
+      "body_snippet": "Hello,\n\nNOAA's Ocean Prediction Center (https://ocean.weather.gov/) serves the\nUS Navy's almost-daily estimate of the locations of the north and\nsouth walls of the Gulf Stream in the North Atlantic\n(h",
+      "thread_id": "thread-e87bd0e6f8d9",
+      "thread_depth": 0,
+      "month": "2024-06"
+    },
+    {
+      "id": "msg-c48fbf7eb220",
+      "message_id": "<96e4dec72f8553ab5c336c79c9d808b7@dunnington.ca>",
+      "from_name": "Dewey Dunnington",
+      "from_email_hash": "b116acc603e3adafad5b9f0d9329462a8d68f850ebadc42d6f34106d41ad9433",
+      "date": "2024-06-05T14:09:41-03:00",
+      "subject": "[R-sig-Geo] ordering points into a line",
+      "subject_clean": "ordering points into a line",
+      "in_reply_to": "<CALrbzg1gwKK-X3sRPy3ryfjoOszb6ggsVNEgJ_OQ3JbG=Cnoow@mail.gmail.com>",
+      "references": [
+        "<CALrbzg1gwKK-X3sRPy3ryfjoOszb6ggsVNEgJ_OQ3JbG=Cnoow@mail.gmail.com>"
+      ],
+      "body_plain": "Hi Ben,\n\nI had a bit of fun with this [1]...the act of following a shortest path \nand finding the endpoints are sort of related (in that if you follow the \nshortest path setting a maximum distance threshold, eventually you will \nfail to find any more points, and you've found (maybe) and endpoint!).\n\nI hope this is helpful!\n\nCheers,\n\n-dewey\n\n[1] https://gist.github.com/paleolimbot/0be47836de5008f308959923dac02c5b\n\nOn 2024-06-05 13:20, Ben Tupper wrote:\n> Hello,\n> \n> NOAA's Ocean Prediction Center (https://ocean.weather.gov/) serves the\n> US Navy's almost-daily estimate of the locations of the north and\n> south walls of the Gulf Stream in the North Atlantic\n> (https://ocean.weather.gov/gulf_stream_latest.txt). The also serve an\n> archive via a FTP server\n> (https://ftp.opc.ncep.noaa.gov/grids/experimental/GStream) for\n> downloads by year.  The dataset provides manually estimated of\n> locations along the so-called north and south walls of the Gulf\n> Stream, although there is ongoing research and debate about the best\n> way to define the Gulf Stream. My colleagues and I have been slowly\n> pulling together a small package to make working with this data easier\n> (https://github.com/BigelowLab/gstream).\n> \n> This dataset provides an interesting spatial puzzle because the points\n> for a specific wall on a given date are not ordered.  Assuming that\n> the points could be ordered into LINESTRING, the problem is how to do\n> it.\n> \n> We probably can use sfnetworks package\n> (https://luukvdmeer.github.io/sfnetworks/) extensive tools to follow a\n> shortest path... but first one of the two endpoints must be found.\n> Eeek! How does one do that programmatically?  The plot attached shows\n> the points for the north wall on 2020-12-19.  Also shown are the first\n> and last points in the record which are clearly not the endpoints of a\n> path we might assemble from the points.\n> \n> #### START\n> suppressPackageStartupMessages({\n>   library(sf)\n>   library(readr)\n>   library(dplyr)\n> })\n> \n> \n> file = \n> \"https://raw.githubusercontent.com/BigelowLab/gstream/main/inst/examples/2020-12-19-north.csv\"\n> x = readr::read_csv(file, col_types = \"nn\") |>\n>   sf::st_as_sf(coords = c(\"X\", \"Y\"), crs = 4326) |>\n>   sf::st_as_sf()\n> \n> \n> p = sf::st_cast(dplyr::select(x, attr(x, \"sf_column\")), \"POINT\")\n> plot(sf::st_geometry(x), type = \"b\", axes = TRUE, reset = FALSE)\n> plot(dplyr::slice(p,1), col = \"orange\", add = TRUE, pch = 2, cex = 1.5)\n> plot(dplyr::slice(p,nrow(x)), col = \"orange\", add = TRUE, pch = 6, cex \n> = 1.5)\n> ### END\n> \n> --\n> \n> Ben Tupper he/him\n> \n> Research Associate\n> \n> Bigelow Laboratory for Ocean Sciences\n> \n> ???????????????????????????????????????????????????\n> \n> E  btupper at bigelow.org\n> \n> O  207-315-2567\n> \n> ???????????????????????????????????????????????????\n> \n> Bold Science for Our Blue Planet  |  BIGELOW.ORG\n> \n> 60 BIGELOW DRIVE  |  EAST BOOTHBAY, MAINE 04544 USA\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hi Ben,\n\nI had a bit of fun with this [1]...the act of following a shortest path \nand finding the endpoints are sort of related (in that if you follow the \nshortest path setting a maximum distance thr",
+      "thread_id": "thread-e87bd0e6f8d9",
+      "thread_depth": 1,
+      "month": "2024-06"
+    },
+    {
+      "id": "msg-94b5dd604499",
+      "message_id": "<CALrbzg1CXKbpA6sjOJrfqX7rHs5CCRsJ+KQ1dm4MV3hb0nRnMw@mail.gmail.com>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "715c796f300568f44190a795995f5d8c66b19c1f8bc2156d2221fcda4991bb5a",
+      "date": "2024-06-05T14:03:03-04:00",
+      "subject": "[R-sig-Geo] ordering points into a line",
+      "subject_clean": "ordering points into a line",
+      "in_reply_to": "<96e4dec72f8553ab5c336c79c9d808b7@dunnington.ca>",
+      "references": [
+        "<CALrbzg1gwKK-X3sRPy3ryfjoOszb6ggsVNEgJ_OQ3JbG=Cnoow@mail.gmail.com>",
+        "<96e4dec72f8553ab5c336c79c9d808b7@dunnington.ca>"
+      ],
+      "body_plain": "You make it look so easy!  That is just what I was trying to noodle\nout.  I need to spend more time digging into the\n[s2](https://r-spatial.github.io/s2/index.html) package.  Thank you!\n\n\nOn Wed, Jun 5, 2024 at 1:09?PM Dewey Dunnington <dewey at dunnington.ca> wrote:\n>\n> Hi Ben,\n>\n> I had a bit of fun with this [1]...the act of following a shortest path\n> and finding the endpoints are sort of related (in that if you follow the\n> shortest path setting a maximum distance threshold, eventually you will\n> fail to find any more points, and you've found (maybe) and endpoint!).\n>\n> I hope this is helpful!\n>\n> Cheers,\n>\n> -dewey\n>\n> [1] https://gist.github.com/paleolimbot/0be47836de5008f308959923dac02c5b\n>\n> On 2024-06-05 13:20, Ben Tupper wrote:\n> > Hello,\n> >\n> > NOAA's Ocean Prediction Center (https://ocean.weather.gov/) serves the\n> > US Navy's almost-daily estimate of the locations of the north and\n> > south walls of the Gulf Stream in the North Atlantic\n> > (https://ocean.weather.gov/gulf_stream_latest.txt). The also serve an\n> > archive via a FTP server\n> > (https://ftp.opc.ncep.noaa.gov/grids/experimental/GStream) for\n> > downloads by year.  The dataset provides manually estimated of\n> > locations along the so-called north and south walls of the Gulf\n> > Stream, although there is ongoing research and debate about the best\n> > way to define the Gulf Stream. My colleagues and I have been slowly\n> > pulling together a small package to make working with this data easier\n> > (https://github.com/BigelowLab/gstream).\n> >\n> > This dataset provides an interesting spatial puzzle because the points\n> > for a specific wall on a given date are not ordered.  Assuming that\n> > the points could be ordered into LINESTRING, the problem is how to do\n> > it.\n> >\n> > We probably can use sfnetworks package\n> > (https://luukvdmeer.github.io/sfnetworks/) extensive tools to follow a\n> > shortest path... but first one of the two endpoints must be found.\n> > Eeek! How does one do that programmatically?  The plot attached shows\n> > the points for the north wall on 2020-12-19.  Also shown are the first\n> > and last points in the record which are clearly not the endpoints of a\n> > path we might assemble from the points.\n> >\n> > #### START\n> > suppressPackageStartupMessages({\n> >   library(sf)\n> >   library(readr)\n> >   library(dplyr)\n> > })\n> >\n> >\n> > file =\n> > \"https://raw.githubusercontent.com/BigelowLab/gstream/main/inst/examples/2020-12-19-north.csv\"\n> > x = readr::read_csv(file, col_types = \"nn\") |>\n> >   sf::st_as_sf(coords = c(\"X\", \"Y\"), crs = 4326) |>\n> >   sf::st_as_sf()\n> >\n> >\n> > p = sf::st_cast(dplyr::select(x, attr(x, \"sf_column\")), \"POINT\")\n> > plot(sf::st_geometry(x), type = \"b\", axes = TRUE, reset = FALSE)\n> > plot(dplyr::slice(p,1), col = \"orange\", add = TRUE, pch = 2, cex = 1.5)\n> > plot(dplyr::slice(p,nrow(x)), col = \"orange\", add = TRUE, pch = 6, cex\n> > = 1.5)\n> > ### END\n> >\n> > --\n> >\n> > Ben Tupper he/him\n> >\n> > Research Associate\n> >\n> > Bigelow Laboratory for Ocean Sciences\n> >\n> > ???????????????????????????????????????????????????\n> >\n> > E  btupper at bigelow.org\n> >\n> > O  207-315-2567\n> >\n> > ???????????????????????????????????????????????????\n> >\n> > Bold Science for Our Blue Planet  |  BIGELOW.ORG\n> >\n> > 60 BIGELOW DRIVE  |  EAST BOOTHBAY, MAINE 04544 USA\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "You make it look so easy!  That is just what I was trying to noodle\nout.  I need to spend more time digging into the\n[s2](https://r-spatial.github.io/s2/index.html) package.  Thank you!\n\n\nOn Wed, Jun ",
+      "thread_id": "thread-e87bd0e6f8d9",
+      "thread_depth": 2,
+      "month": "2024-06"
+    },
+    {
+      "id": "msg-3d990ca098bd",
+      "message_id": "<ME0P300MB0727D3DE1AB3C766EF23309DA4F02@ME0P300MB0727.AUSP300.PROD.OUTLOOK.COM>",
+      "from_name": "Adrian Baddeley",
+      "from_email_hash": "85ec357ba14897ea1485b76adc52e1779ed73429f6a60f2f83ae052c1affd266",
+      "date": "2024-06-06T10:32:07Z",
+      "subject": "[R-sig-Geo] ordering points into a line",
+      "subject_clean": "ordering points into a line",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Ben Tupper writes:\n\n> This dataset provides an interesting spatial puzzle because the points\n> for a specific wall on a given date are not ordered.  Assuming that\n> the points could be ordered into LINESTRING, the problem is how to do it.\n\nThis is a special case of the Travelling Salesman Problem\nand you could use the R package 'TSP' for example..\n\nAdrian Baddeley",
+      "body_snippet": "Ben Tupper writes:\n\n> This dataset provides an interesting spatial puzzle because the points\n> for a specific wall on a given date are not ordered.  Assuming that\n> the points could be ordered into LI",
+      "thread_id": "thread-3d990ca098bd",
+      "thread_depth": 0,
+      "month": "2024-06"
+    },
+    {
+      "id": "msg-149a659af03b",
+      "message_id": "<CALrbzg2U39YdZXiaTB4NRU1wMEjmoXmEsJ6OeD43Lu76wOahcw@mail.gmail.com>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "715c796f300568f44190a795995f5d8c66b19c1f8bc2156d2221fcda4991bb5a",
+      "date": "2024-06-06T10:30:45-04:00",
+      "subject": "[R-sig-Geo] ordering points into a line",
+      "subject_clean": "ordering points into a line",
+      "in_reply_to": "<ME0P300MB0727D3DE1AB3C766EF23309DA4F02@ME0P300MB0727.AUSP300.PROD.OUTLOOK.COM>",
+      "references": [
+        "<ME0P300MB0727D3DE1AB3C766EF23309DA4F02@ME0P300MB0727.AUSP300.PROD.OUTLOOK.COM>"
+      ],
+      "body_plain": "Interesting - thanks for passing that along.\n\nOn Thu, Jun 6, 2024 at 6:32?AM Adrian Baddeley\n<adrian.baddeley at curtin.edu.au> wrote:\n>\n> Ben Tupper writes:\n>\n> > This dataset provides an interesting spatial puzzle because the points\n> > for a specific wall on a given date are not ordered.  Assuming that\n> > the points could be ordered into LINESTRING, the problem is how to do it.\n>\n> This is a special case of the Travelling Salesman Problem\n> and you could use the R package 'TSP' for example..\n>\n> Adrian Baddeley\n>\n>\n>\n>\n>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Interesting - thanks for passing that along.\n\nOn Thu, Jun 6, 2024 at 6:32?AM Adrian Baddeley\n<adrian.baddeley at curtin.edu.au> wrote:\n>\n> Ben Tupper writes:\n>\n> > This dataset provides an interesting",
+      "thread_id": "thread-3d990ca098bd",
+      "thread_depth": 1,
+      "month": "2024-06"
+    },
+    {
+      "id": "msg-e0502525764b",
+      "message_id": "<2739a3db-ab45-d2da-19f0-bb27a01f3a53@binghamton.edu>",
+      "from_name": "Christopher W. Ryan",
+      "from_email_hash": "1713305274d2c1816a07f0aa50c9577759f9e9c6829b63a608da0a2c0dd2c647",
+      "date": "2024-06-21T12:44:14-04:00",
+      "subject": "[R-sig-Geo] simulation envelopes with Kmark(), for an inhomogeneous point pattern",
+      "subject_clean": "simulation envelopes with Kmark(), for an inhomogeneous point pattern",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "It's been a while since I've worked with point patterns.\n\nI have a marked point pattern X consisting of household locations, with\nthe marks being waiting time to get a lab test. I'm interested in the\nspatial distribution of those waiting times. Among other exploratory\nmethods, I'm looking at Kest(), Kinhom(), and Kmark(), all with\nsimulation envelopes.\n\nDisregarding the marks, certainly the points are not CSR. The center of\nour county is urban, the periphery rural.\n\nenvelope(X, Kinhom, nsim = 99)  ## not adjusting other arguments, for\nsake of discussion\n\nis pretty straightforward, but disregards the marks.\n\nenvelope(X, Kmark, nsim = 99)\n\nalso seems useful.  But does it address the inhomogeneity of the\nlocations (considered simply as unmarked points)?\n\nGuess what I'm asking is: Is there an inhomogeneous version of Kmark, or\nis it an inevitable part of how Kmark works? Or are these meaningless\nquestions?\n\nI thought of calculating the (inhomogeneous) density of X first, and\nusing it to generate the 99 simulated patterns in envelope, like this,\nas at top of page 401 in Spatial Point Patterns, Baddeley et al:\n\nD <- density(X)\nenvelope(X, Kmark, simulate = expression(rpoispp(D)), nsim = 5)  ##\nfewer sims while figuring this out\n\nbut it produces an error for each attempted simulation:\n\nError in (function (X, f = NULL, r = NULL, correction = c(\"isotropic\",  :\n  is.ppp(X) && is.marked(X) is not TRUE\n\nI think I'm failing to generate the marks in the simulated patterns?\n\nGrateful for any advice.\n\nThanks.\n\n--Chris Ryan\nSUNY Upstate Medical University\nBinghamton, NY, US",
+      "body_snippet": "It's been a while since I've worked with point patterns.\n\nI have a marked point pattern X consisting of household locations, with\nthe marks being waiting time to get a lab test. I'm interested in the\n",
+      "thread_id": "thread-e0502525764b",
+      "thread_depth": 0,
+      "month": "2024-06"
+    },
+    {
+      "id": "msg-d431ff32c6ea",
+      "message_id": "<SA1PR15MB63970B638E81F39D4DCCD7AEB0CB2@SA1PR15MB6397.namprd15.prod.outlook.com>",
+      "from_name": "Xiang Ye",
+      "from_email_hash": "0e81ff3ad9bdcb6c73b8285dd18c316c310cdb4d01350cb5ac1c7b9774fd356b",
+      "date": "2024-06-23T17:24:10Z",
+      "subject": "[R-sig-Geo] error occured when combining st_sample() with raster::extract()",
+      "subject_clean": "error occured when combining st_sample() with raster::extract()",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear community,\n\nI am exploring the functionality of raster package by following the online textbook Geocomputation with R, 1st ed. (I know the newer version of the textbook is online, I just want to finish what I left). The problem I encountered is associated with the example from Section 5.4.2, raster extraction:\nhttps://bookdown.org/robinlovelace/geocompr/geometric-operations.html#raster-extraction\nWhen I want to combine it with st_sample() from Section 5.2.3, i.e. extract the pixel values from say 15 randomly chosen locations, I met an error.\n\nHere comes the script:\n\nlibrary(sf)\nlibrary(raster)\n\nfilename=system.file('raster/srtm.tif', package='spDataLarge')\nsrtm=raster(filename)\nfilename=system.file('vector/zion.gpkg', package='spDataLarge')\nzion=st_read(filename)\nzion=st_transform(zion, projection(srtm))\n\ndata('zion_points', package='spDataLarge')\nextract(srtm, zion_points) # textbook example, work as expected\n\nsampled_sites=st_sample(zion, 15)\nextract(srtm, sampled_sites) # error occurred.\n\nThe error message says \"????: ??????extract???????x = \"RasterLayer\", y = \"sfc_POINT\"?????????????\"\nThere is Chinese text embedded because my OS is in Chinese. Translated into English, it reads \"ERROR: function 'extract' labelling ??x = \"RasterLayer\", y = \"sfc_POINT\"?? cannot find the inherited methods\".\n\nMy question: what's the reason of this problem, and how to fix it?\n\nThank you in advance!\n\n??? YE, Xiang\nTHINKING SPATIALLY<http://www.linkedin.com/in/spatialyexiang>.\nPh.D. in Spatial Statistics\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear community,\n\nI am exploring the functionality of raster package by following the online textbook Geocomputation with R, 1st ed. (I know the newer version of the textbook is online, I just want to ",
+      "thread_id": "thread-d431ff32c6ea",
+      "thread_depth": 0,
+      "month": "2024-06"
+    },
+    {
+      "id": "msg-da705d20186e",
+      "message_id": "<db937791-dbbb-45dd-8db3-c4085a3b5e94@gmail.com>",
+      "from_name": "Bede-Fazekas Ákos",
+      "from_email_hash": "f2e2e122dfd4dbb8b8973b23d149555486ccb4290cb5f11779739fdbbcf5b93d",
+      "date": "2024-06-23T20:25:40+02:00",
+      "subject": "[R-sig-Geo] error occured when combining st_sample() with raster::extract()",
+      "subject_clean": "error occured when combining st_sample() with raster::extract()",
+      "in_reply_to": "<SA1PR15MB63970B638E81F39D4DCCD7AEB0CB2@SA1PR15MB6397.namprd15.prod.outlook.com>",
+      "references": [
+        "<SA1PR15MB63970B638E81F39D4DCCD7AEB0CB2@SA1PR15MB6397.namprd15.prod.outlook.com>"
+      ],
+      "body_plain": "Dear Xiang,\n\nI guess that the reason for the error is that zion_points is an sf \nobject, while sampled_sites is an sfc object. You should create a \n0-column sf object from the sfc using function st_as_sf().\nPlease try the following code:\nextract(srtm, st_as_sf(sampled_sites))\n\nHTH,\n?kos\n__________\n?kos Bede-Fazekas\nCentre for Ecological Research, Hungary\n\n\n2024. 06. 23. 19:24 keltez?ssel, Xiang Ye via R-sig-Geo ?rta:\n> Dear community,\n>\n> I am exploring the functionality of raster package by following the online textbook Geocomputation with R, 1st ed. (I know the newer version of the textbook is online, I just want to finish what I left). The problem I encountered is associated with the example from Section 5.4.2, raster extraction:\n> https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#raster-extraction\n> When I want to combine it with st_sample() from Section 5.2.3, i.e. extract the pixel values from say 15 randomly chosen locations, I met an error.\n>\n> Here comes the script:\n>\n> library(sf)\n> library(raster)\n>\n> filename=system.file('raster/srtm.tif', package='spDataLarge')\n> srtm=raster(filename)\n> filename=system.file('vector/zion.gpkg', package='spDataLarge')\n> zion=st_read(filename)\n> zion=st_transform(zion, projection(srtm))\n>\n> data('zion_points', package='spDataLarge')\n> extract(srtm, zion_points) # textbook example, work as expected\n>\n> sampled_sites=st_sample(zion, 15)\n> extract(srtm, sampled_sites) # error occurred.\n>\n> The error message says \"????: ??????extract???????x = \"RasterLayer\", y = \"sfc_POINT\"?????????????\"\n> There is Chinese text embedded because my OS is in Chinese. Translated into English, it reads \"ERROR: function 'extract' labelling ??x = \"RasterLayer\", y = \"sfc_POINT\"?? cannot find the inherited methods\".\n>\n> My question: what's the reason of this problem, and how to fix it?\n>\n> Thank you in advance!\n>\n> ??? YE, Xiang\n> THINKING SPATIALLY<http://www.linkedin.com/in/spatialyexiang>.\n> Ph.D. in Spatial Statistics\n>\n> \t[[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Dear Xiang,\n\nI guess that the reason for the error is that zion_points is an sf \nobject, while sampled_sites is an sfc object. You should create a \n0-column sf object from the sfc using function st_as",
+      "thread_id": "thread-d431ff32c6ea",
+      "thread_depth": 1,
+      "month": "2024-06"
+    },
+    {
+      "id": "msg-c7cfffb35117",
+      "message_id": "<SA1PR15MB63970F1D09399B7E9DA5DF49B0D42@SA1PR15MB6397.namprd15.prod.outlook.com>",
+      "from_name": "Xiang Ye",
+      "from_email_hash": "0e81ff3ad9bdcb6c73b8285dd18c316c310cdb4d01350cb5ac1c7b9774fd356b",
+      "date": "2024-06-24T03:40:44Z",
+      "subject": "[R-sig-Geo] error occured when combining st_sample() with raster::extract()",
+      "subject_clean": "error occured when combining st_sample() with raster::extract()",
+      "in_reply_to": "<db937791-dbbb-45dd-8db3-c4085a3b5e94@gmail.com>",
+      "references": [
+        "<SA1PR15MB63970B638E81F39D4DCCD7AEB0CB2@SA1PR15MB6397.namprd15.prod.outlook.com>",
+        "<db937791-dbbb-45dd-8db3-c4085a3b5e94@gmail.com>"
+      ],
+      "body_plain": "Dear ?kos,\n\nThank you so much for the swift reply! Your answer helped me to solve this issue perfectly.\nHave a great one!\n\n?? YE, Xiang\nTHINKING SPATIALLY<http://www.linkedin.com/in/spatialyexiang>.\nPh.D. in Spatial Statistics\n________________________________\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Bede-Fazekas ?kos <bfalevlist at gmail.com>\nSent: Monday, June 24, 2024 2:25\nTo: r-sig-geo at r-project.org <r-sig-geo at r-project.org>\nSubject: Re: [R-sig-Geo] error occured when combining st_sample() with raster::extract()\n\nDear Xiang,\n\nI guess that the reason for the error is that zion_points is an sf\nobject, while sampled_sites is an sfc object. You should create a\n0-column sf object from the sfc using function st_as_sf().\nPlease try the following code:\nextract(srtm, st_as_sf(sampled_sites))\n\nHTH,\n?kos\n__________\n?kos Bede-Fazekas\nCentre for Ecological Research, Hungary\n\n\n2024. 06. 23. 19:24 keltez?ssel, Xiang Ye via R-sig-Geo ?rta:\n> Dear community,\n>\n> I am exploring the functionality of raster package by following the online textbook Geocomputation with R, 1st ed. (I know the newer version of the textbook is online, I just want to finish what I left). The problem I encountered is associated with the example from Section 5.4.2, raster extraction:\n> https://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fbookdown.org%2Frobinlovelace%2Fgeocompr%2Fgeometric-operations.html%23raster-extraction&data=05%7C02%7Cxiangye%40buffalo.edu%7Cb2edba793f3d475bd6c108dc93b1ec03%7C96464a8af8ed40b199e25f6b50a20250%7C0%7C0%7C638547639583101457%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=D7s8aHWKp3D%2FOtHtBbP5m2Yc%2BXbkzFFqV3zYChIJQd8%3D&reserved=0<https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#raster-extraction>\n> When I want to combine it with st_sample() from Section 5.2.3, i.e. extract the pixel values from say 15 randomly chosen locations, I met an error.\n>\n> Here comes the script:\n>\n> library(sf)\n> library(raster)\n>\n> filename=system.file('raster/srtm.tif', package='spDataLarge')\n> srtm=raster(filename)\n> filename=system.file('vector/zion.gpkg', package='spDataLarge')\n> zion=st_read(filename)\n> zion=st_transform(zion, projection(srtm))\n>\n> data('zion_points', package='spDataLarge')\n> extract(srtm, zion_points) # textbook example, work as expected\n>\n> sampled_sites=st_sample(zion, 15)\n> extract(srtm, sampled_sites) # error occurred.\n>\n> The error message says \"????: ??????extract???????x = \"RasterLayer\", y = \"sfc_POINT\"?????????????\"\n> There is Chinese text embedded because my OS is in Chinese. Translated into English, it reads \"ERROR: function 'extract' labelling ??x = \"RasterLayer\", y = \"sfc_POINT\"?? cannot find the inherited methods\".\n>\n> My question: what's the reason of this problem, and how to fix it?\n>\n> Thank you in advance!\n>\n> ??? YE, Xiang\n> THINKING SPATIALLY<https://nam12.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.linkedin.com%2Fin%2Fspatialyexiang&data=05%7C02%7Cxiangye%40buffalo.edu%7Cb2edba793f3d475bd6c108dc93b1ec03%7C96464a8af8ed40b199e25f6b50a20250%7C0%7C0%7C638547639583112207%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=JAsnBDapAm4NYJb6zN5zdpralWRhHD1HA0M46sgwsQ4%3D&reserved=0<http://www.linkedin.com/in/spatialyexiang>>.\n> Ph.D. in Spatial Statistics\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7Cxiangye%40buffalo.edu%7Cb2edba793f3d475bd6c108dc93b1ec03%7C96464a8af8ed40b199e25f6b50a20250%7C0%7C0%7C638547639583115271%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=FQ04KwpzFewolFlX0%2B6rufWKda6jBlcFYugRiiN4N%2BQ%3D&reserved=0<https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7Cxiangye%40buffalo.edu%7Cb2edba793f3d475bd6c108dc93b1ec03%7C96464a8af8ed40b199e25f6b50a20250%7C0%7C0%7C638547639583118082%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=9OB10OER9p16VLRylMER5KlbA%2F7fwN11eEBbFYztkWc%3D&reserved=0<https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear ?kos,\n\nThank you so much for the swift reply! Your answer helped me to solve this issue perfectly.\nHave a great one!\n\n?? YE, Xiang\nTHINKING SPATIALLY<http://www.linkedin.com/in/spatialyexiang>.\nP",
+      "thread_id": "thread-d431ff32c6ea",
+      "thread_depth": 2,
+      "month": "2024-06"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-e87bd0e6f8d9",
+      "subject": "ordering points into a line",
+      "message_count": 3,
+      "participants": [
+        "Ben Tupper",
+        "Dewey Dunnington"
+      ],
+      "started": "2024-06-05T12:20:51-04:00",
+      "last_reply": "2024-06-05T14:03:03-04:00",
+      "root_message_id": "msg-e87bd0e6f8d9"
+    },
+    {
+      "id": "thread-3d990ca098bd",
+      "subject": "ordering points into a line",
+      "message_count": 2,
+      "participants": [
+        "Adrian Baddeley",
+        "Ben Tupper"
+      ],
+      "started": "2024-06-06T10:32:07+00:00",
+      "last_reply": "2024-06-06T10:30:45-04:00",
+      "root_message_id": "msg-3d990ca098bd"
+    },
+    {
+      "id": "thread-e0502525764b",
+      "subject": "simulation envelopes with Kmark(), for an inhomogeneous point pattern",
+      "message_count": 1,
+      "participants": [
+        "Christopher W. Ryan"
+      ],
+      "started": "2024-06-21T12:44:14-04:00",
+      "last_reply": "2024-06-21T12:44:14-04:00",
+      "root_message_id": "msg-e0502525764b"
+    },
+    {
+      "id": "thread-d431ff32c6ea",
+      "subject": "error occured when combining st_sample() with raster::extract()",
+      "message_count": 3,
+      "participants": [
+        "Bede-Fazekas Ákos",
+        "Xiang Ye"
+      ],
+      "started": "2024-06-23T17:24:10+00:00",
+      "last_reply": "2024-06-24T03:40:44+00:00",
+      "root_message_id": "msg-d431ff32c6ea"
+    }
+  ]
+}

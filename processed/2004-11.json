@@ -1,0 +1,202 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2004-11",
+  "messages": [
+    {
+      "id": "msg-e46c8f009d36",
+      "message_id": "<20041101143507.5e21279a.stanimura-ngs@umin.ac.jp>",
+      "from_name": "Susumu Tanimura",
+      "from_email_hash": "c9cad7a77d7512d2d8e67aecb8780c9c60c996929e92e5d28812d5c1af088077",
+      "date": "2004-11-01T14:35:07+09:00",
+      "subject": "[R-sig-Geo] Re: About dealing 2-byte code characters(ex. Japanese) in new maptools",
+      "subject_clean": "About dealing 2-byte code characters(ex. Japanese) in new maptools",
+      "in_reply_to": "<Pine.LNX.4.44.0410290841010.30563-100000@reclus.nhh.no>",
+      "references": [
+        "<20041029032507.29943.qmail@web1702.mail.yahoo.co.jp>",
+        "<Pine.LNX.4.44.0410290841010.30563-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Dear Ono-san and Professor Bivand,\n\nIn my environment, Japanese characters in your example works fine with\nread.dbf() in maptools ver. 0.4-8.\n\nMy environment: VineLinux3.0, R-2.0.0_ja-1vl1, maptools ver. 0.4-8\n\nI am afraid that it is due to EUC-JP encoded DBF file and R localized\ninto Japanese, though. \n\nAvailing myself of this question, let me ask a way to confirm if\nread.dbf() has been surely replaced by maptools.  I have just done\n\"update.packages()\" for obtaining the latest foreign and maptools.\n\n--\nSusumu Tanimura\nDept. of Socio-environmental Medicine\nInst. of Tropical Medicine, Nagasaki University",
+      "body_snippet": "Dear Ono-san and Professor Bivand,\n\nIn my environment, Japanese characters in your example works fine with\nread.dbf() in maptools ver. 0.4-8.\n\nMy environment: VineLinux3.0, R-2.0.0_ja-1vl1, maptools v",
+      "thread_id": "thread-e46c8f009d36",
+      "thread_depth": 0,
+      "month": "2004-11"
+    },
+    {
+      "id": "msg-b6e42ad81834",
+      "message_id": "<Pine.LNX.4.44.0411010938140.11737-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-11-01T09:56:48+01:00",
+      "subject": "[R-sig-Geo] Re: About dealing 2-byte code   characters(ex.Japanese) in new maptools",
+      "subject_clean": "About dealing 2-byte code   characters(ex.Japanese) in new maptools",
+      "in_reply_to": "<20041101143507.5e21279a.stanimura-ngs@umin.ac.jp>",
+      "references": [],
+      "body_plain": "On Mon, 1 Nov 2004, Susumu Tanimura wrote:\n\n> Dear Ono-san and Professor Bivand,\n> \n> In my environment, Japanese characters in your example works fine with\n> read.dbf() in maptools ver. 0.4-8.\n\nThank you for this contribution - it is not easy to debug\nplatform-dependent issues like this. I think having a corpus of files\nwould also help - as you mention below, the coding standard may differ as\ndoes the platform. Having a small collection of DBF files known not to\nbehave the same across platforms should help, I hope - I can host them, or\nmaybe one of those of you close to the 2-byte character problem could host\nthem?\n\n> \n> My environment: VineLinux3.0, R-2.0.0_ja-1vl1, maptools ver. 0.4-8\n> \n\nwhich also means foreign_0.8-0, because maptools_0.4-8 depends on it. Note \nthat the problem was on Windows XP, I think with the standard binary R \nfrom CRAN.\n\n> I am afraid that it is due to EUC-JP encoded DBF file and R localized\n> into Japanese, though. \n> \nThis is possible, but all input is helpful here, also because R will \nmigrate towards multi-character support at some stage. \n\n> Availing myself of this question, let me ask a way to confirm if\n> read.dbf() has been surely replaced by maptools.  I have just done\n> \"update.packages()\" for obtaining the latest foreign and maptools.\n\nThe internal function dbf.read(), accessed as maptools:::dbf.read() in \nmaptools up to 0.4-6, and as dbf.read() in maptools 0.4-7 is not present \nat all in maptools 0.4-8. If you just type the names of the functions at \nthe prompt, the final line shows which namespace they live in:\n\n> library(maptools)\nLoading required package: foreign \n> read.dbf\nfunction (file, as.is = FALSE) \n{\n....\n    df\n}\n<environment: namespace:foreign>\n\nshows that read.dbf() from foreign is being used.\n\nRoger Bivand\n\n> \n> --\n> Susumu Tanimura\n> Dept. of Socio-environmental Medicine\n> Inst. of Tropical Medicine, Nagasaki University\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 1 Nov 2004, Susumu Tanimura wrote:\n\n> Dear Ono-san and Professor Bivand,\n> \n> In my environment, Japanese characters in your example works fine with\n> read.dbf() in maptools ver. 0.4-8.\n\nThank",
+      "thread_id": "thread-e46c8f009d36",
+      "thread_depth": 1,
+      "month": "2004-11"
+    },
+    {
+      "id": "msg-aac126df0dc7",
+      "message_id": "<1099305055.4186105fedc17@webapps.qmul.ac.uk>",
+      "from_name": "Jakob Petersen",
+      "from_email_hash": "515ae1f6324c98337d9b4886a77076960016aba6a7f86d18d33b7acbfe7e5768",
+      "date": "2004-11-01T10:30:55Z",
+      "subject": "[R-sig-Geo] Re: Start-up litterature/webs",
+      "subject_clean": "Start-up litterature/webs",
+      "in_reply_to": "<Pine.LNX.4.44.0411010938140.11737-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0411010938140.11737-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "My name is Jakob Petersen. I am about to prepare a thesis in GISc at Birkbeck,\nUniversity of London, and would like to get started with R. I will be working\nwith the index of multiple deprivation in the UK and some economic indicators\nfrom various sources.\nI would be grateful for any references to R litterature and webs. Thank you.",
+      "body_snippet": "My name is Jakob Petersen. I am about to prepare a thesis in GISc at Birkbeck,\nUniversity of London, and would like to get started with R. I will be working\nwith the index of multiple deprivation in t",
+      "thread_id": "thread-e46c8f009d36",
+      "thread_depth": 2,
+      "month": "2004-11"
+    },
+    {
+      "id": "msg-a18ba5b9559e",
+      "message_id": "<20041102173129.3c8dae4e.stanimura-ngs@umin.ac.jp>",
+      "from_name": "Susumu Tanimura",
+      "from_email_hash": "c9cad7a77d7512d2d8e67aecb8780c9c60c996929e92e5d28812d5c1af088077",
+      "date": "2004-11-02T17:31:29+09:00",
+      "subject": "[R-sig-Geo] Re: About dealing 2-byte code   characters(ex.Japanese) in new maptools",
+      "subject_clean": "About dealing 2-byte code   characters(ex.Japanese) in new maptools",
+      "in_reply_to": "<Pine.LNX.4.44.0411010938140.11737-100000@reclus.nhh.no>",
+      "references": [
+        "<20041101143507.5e21279a.stanimura-ngs@umin.ac.jp>",
+        "<Pine.LNX.4.44.0411010938140.11737-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Dear  Professor Bivand,\n\n> > My environment: VineLinux3.0, R-2.0.0_ja-1vl1, maptools ver. 0.4-8\n> > \n> \n> which also means foreign_0.8-0, because maptools_0.4-8 depends on it.\n> Note that the problem was on Windows XP, I think with the standard\n> binary R from CRAN.\n\nYes, the problem was on WinXP but I wanted to suggest not all platform\nhad the problem.  And I knew Ono-san use Japanized one, too, it may\nnot be always though.\n\n> > Availing myself of this question, let me ask a way to confirm if\n> > read.dbf() has been surely replaced by maptools.  I have just done\n> > \"update.packages()\" for obtaining the latest foreign and maptools.\n> \n> The internal function dbf.read(), accessed as maptools:::dbf.read() in \n> maptools up to 0.4-6, and as dbf.read() in maptools 0.4-7 is not present\n> \n> at all in maptools 0.4-8. If you just type the names of the functions at\n> \n> the prompt, the final line shows which namespace they live in:\n> \n> > library(maptools)\n> Loading required package: foreign \n> > read.dbf\n> function (file, as.is = FALSE) \n> {\n> ....\n>     df\n> }\n> <environment: namespace:foreign>\n> \n> shows that read.dbf() from foreign is being used.\n\nAll right.  I realized my misunderstanding. The old functions such as\ndbf.read() and dbf.write() have gone to the foreign 0.8-0 packages\nwith changing the name as read.dbf() and write.dbf(), haven't they?\n\nThanks.\n\n--\nSusumu Tanimura\nDept. of Socio-environmental Medicine\nInst. of Tropical Medicine, Nagasaki University",
+      "body_snippet": "Dear  Professor Bivand,\n\n> > My environment: VineLinux3.0, R-2.0.0_ja-1vl1, maptools ver. 0.4-8\n> > \n> \n> which also means foreign_0.8-0, because maptools_0.4-8 depends on it.\n> Note that the problem ",
+      "thread_id": "thread-e46c8f009d36",
+      "thread_depth": 2,
+      "month": "2004-11"
+    },
+    {
+      "id": "msg-9b883c393075",
+      "message_id": "<20041102183907.3badb143.stanimura-ngs@umin.ac.jp>",
+      "from_name": "Susumu Tanimura",
+      "from_email_hash": "c9cad7a77d7512d2d8e67aecb8780c9c60c996929e92e5d28812d5c1af088077",
+      "date": "2004-11-02T18:39:07+09:00",
+      "subject": "[R-sig-Geo] Re: About dealing 2-byte code   characters(ex.Japanese) in new maptools",
+      "subject_clean": "About dealing 2-byte code   characters(ex.Japanese) in new maptools",
+      "in_reply_to": "<20041102173129.3c8dae4e.stanimura-ngs@umin.ac.jp>",
+      "references": [
+        "<20041101143507.5e21279a.stanimura-ngs@umin.ac.jp>",
+        "<Pine.LNX.4.44.0411010938140.11737-100000@reclus.nhh.no>",
+        "<20041102173129.3c8dae4e.stanimura-ngs@umin.ac.jp>"
+      ],
+      "body_plain": "Hi there,\n\nExamination of the problem with both Shift-JIS encoded and EUC-JP\nencoded DBF in R-2.0 on win98 reminded me that no Japanese characters\ncan display in the original R for windows from CRAN. \n\nOn R localized to Japanese, downloadable from\nhttp://r.nakama.ne.jp/R-2.0.0/binary/win32/, I succeeded to display\nJapanese characters with read.dbf() from foreign 0.8-0 on R-2.0, win98\nwhen Shift-JIS encoded DBF is tested.  Since we cannot basically deal with EUC-JP\nin windows system, trial with EUC-JP encoded DBF failed.\n\nBecause I do not have WinXP, I could not examine on WinXP.  If WinXP works\nonly with unicode and dose not work with Shit-JIS, conventional\nencoding for windows, this could be essential issue.\n\nI hope this helpful. \n\n\n--\nSusumu Tanimura\nDept. of Socio-environmental Medicine\nInst. of Tropical Medicine, Nagasaki University",
+      "body_snippet": "Hi there,\n\nExamination of the problem with both Shift-JIS encoded and EUC-JP\nencoded DBF in R-2.0 on win98 reminded me that no Japanese characters\ncan display in the original R for windows from CRAN. ",
+      "thread_id": "thread-e46c8f009d36",
+      "thread_depth": 3,
+      "month": "2004-11"
+    },
+    {
+      "id": "msg-143614cf8fee",
+      "message_id": "<6B6649B7F4ECA549A0332CEC519751F30C8EE7@TOLAR.valuta.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-11-02T18:20:38+01:00",
+      "subject": "SV: [R-sig-Geo] Re: About dealing 2-byte code   characters(ex.Japanese) in new maptools",
+      "subject_clean": "SV: [R-sig-Geo] Re: About dealing 2-byte code   characters(ex.Japanese) in new maptools",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20041102/54bf0c1c/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20041102/54bf0c1c/attachment.pl>",
+      "thread_id": "thread-143614cf8fee",
+      "thread_depth": 0,
+      "month": "2004-11"
+    },
+    {
+      "id": "msg-8a7955e4148d",
+      "message_id": "<20041102205042.72609.qmail@web61109.mail.yahoo.com>",
+      "from_name": "Sam R. Smith",
+      "from_email_hash": "e32add1296daec5ac99e994ce766d1d96f5595cc63acb1fcc8d8eb5779c54ed7",
+      "date": "2004-11-02T12:50:42-08:00",
+      "subject": "[R-sig-Geo] coding ",
+      "subject_clean": "coding",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20041102/1079b109/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20041102/1079b109/attachment.pl>",
+      "thread_id": "thread-8a7955e4148d",
+      "thread_depth": 0,
+      "month": "2004-11"
+    },
+    {
+      "id": "msg-4f7257d8b172",
+      "message_id": "<Pine.OSF.3.96.1041102151120.24010K-100000@alpha1.csd.uwm.edu>",
+      "from_name": "Danlin Yu",
+      "from_email_hash": "4f915e68a518939af5a3635130e4f5d4fce8d20a4aa423f20c96efe2c1b26e13",
+      "date": "2004-11-02T15:15:43-06:00",
+      "subject": "[R-sig-Geo] coding ",
+      "subject_clean": "coding",
+      "in_reply_to": "<20041102205042.72609.qmail@web61109.mail.yahoo.com>",
+      "references": [],
+      "body_plain": "Sam:\n\n    The best way of starting to code in R is to read the actual R\nfunctions. In the case of SPDEP, you can simply type the name of a\nfunction (for instance, errorsarlm, moran, etc.) in the R interface. The\ncode will show, you can either read them on the screen or print them out\nfor your convenience - at least, that's how I started to code in R. Wish\nthis helps.\n\nOn Tue, 2 Nov 2004, Sam R. Smith wrote:\n\n> Hi there,\n> I wonder where to start coding and contribute to SPDEP function.\n> I have statistics and planning background. Also, I know VB and some R language.\n> Is there any sample code I can follow? I really want to see something coded in VB or R.\n> Thanks,\n> Sam R. Smith\n> \n> \n> __________________________________________________\n> \n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n    Sincerely,\n    Danlin Yu\n\n----------------------------------\nLecturer, Ph.D. Candidate\nDepartment of Geography\nUniversity of Wisconsin, Milwaukee\nTel: (414)229-3943\nFax: (414)229-3981\nEmail: danlinyu at uwm.edu",
+      "body_snippet": "Sam:\n\n    The best way of starting to code in R is to read the actual R\nfunctions. In the case of SPDEP, you can simply type the name of a\nfunction (for instance, errorsarlm, moran, etc.) in the R int",
+      "thread_id": "thread-8a7955e4148d",
+      "thread_depth": 1,
+      "month": "2004-11"
+    },
+    {
+      "id": "msg-1e51cf501f10",
+      "message_id": "<Pine.LNX.4.44.0411141458560.13663-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-11-14T18:47:45+01:00",
+      "subject": "[R-sig-Geo] coding ",
+      "subject_clean": "coding",
+      "in_reply_to": "<20041102205042.72609.qmail@web61109.mail.yahoo.com>",
+      "references": [],
+      "body_plain": "On Tue, 2 Nov 2004, Sam R. Smith wrote:\n\n> Hi there, I wonder where to start coding and contribute to SPDEP\n> function. I have statistics and planning background. Also, I know VB and\n> some R language. Is there any sample code I can follow? I really want to\n> see something coded in VB or R.\n\nWell, at the moment I run the CVS archive for spdep locally, but at the \nworkshop at Lancaster last week, we talked through putting the CVS archive \non sourceforge, so that development could be opened up a bit more than it \nis now - now contributors email me suggestions, and I commit after \nreviewing. \n\nThe source code is available from CRAN too, so this has worked quite well. \nThere are two areas which need advancing now, and help will be useful in \neither: adapting spdep to use the new S4 classes provided in the \nforthcoming sp package, including adapting the neighbour and weights \nclasses from S3 to S4 and adding rectangular weights (the weights \nrelations between in-set and out-of-set regions when subsetting), and the \nincorporation of CAR models.\n\nWith regard to VB, the ArcGIS link to R is illustrated at:\n\nhttp://perso.univ-lr.fr/csaintje/Recherche/RArcgis/index.html\n\nhosted by Christophe Saint-Jean; and an interesting example:\n\nhttp://www.gisvet.org/Documents/GisVet04/RegularPapers/Tait.pdf\n\nOf course there are other Windows VB clients that can run R as a server, \nlike Excel, but I'm not aware of examples doing spatial work.\n\nI hope these will give you some ideas,\n\nRoger Bivand\n\n\n> Thanks,\n> Sam R. Smith\n> \n> \n> __________________________________________________\n> \n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 2 Nov 2004, Sam R. Smith wrote:\n\n> Hi there, I wonder where to start coding and contribute to SPDEP\n> function. I have statistics and planning background. Also, I know VB and\n> some R language",
+      "thread_id": "thread-8a7955e4148d",
+      "thread_depth": 1,
+      "month": "2004-11"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-e46c8f009d36",
+      "subject": "About dealing 2-byte code characters(ex. Japanese) in new maptools",
+      "message_count": 5,
+      "participants": [
+        "Jakob Petersen",
+        "Roger Bivand",
+        "Susumu Tanimura"
+      ],
+      "started": "2004-11-01T14:35:07+09:00",
+      "last_reply": "2004-11-02T18:39:07+09:00",
+      "root_message_id": "msg-e46c8f009d36"
+    },
+    {
+      "id": "thread-8a7955e4148d",
+      "subject": "coding",
+      "message_count": 3,
+      "participants": [
+        "Danlin Yu",
+        "Roger Bivand",
+        "Sam R. Smith"
+      ],
+      "started": "2004-11-02T12:50:42-08:00",
+      "last_reply": "2004-11-14T18:47:45+01:00",
+      "root_message_id": "msg-8a7955e4148d"
+    },
+    {
+      "id": "thread-143614cf8fee",
+      "subject": "SV: [R-sig-Geo] Re: About dealing 2-byte code   characters(ex.Japanese) in new maptools",
+      "message_count": 1,
+      "participants": [
+        "Roger Bivand"
+      ],
+      "started": "2004-11-02T18:20:38+01:00",
+      "last_reply": "2004-11-02T18:20:38+01:00",
+      "root_message_id": "msg-143614cf8fee"
+    }
+  ]
+}

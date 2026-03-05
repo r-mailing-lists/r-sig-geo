@@ -1,0 +1,716 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2018-10",
+  "messages": [
+    {
+      "id": "msg-1c19ad7120b9",
+      "message_id": "<fcef90d9-f1b3-c1d8-6a83-5de88f689bcc@gmail.com>",
+      "from_name": "Tomislav Hengl",
+      "from_email_hash": "4d003014a4fca340cb2e18fffb24863c9a17ba0b4ab5a61c0bf2cb0b61a7832c",
+      "date": "2018-10-01T10:55:59+02:00",
+      "subject": "[R-sig-Geo]  Video recordings from the OpenGeoHub Summer School IBOT, Prague August 19-25, 2018",
+      "subject_clean": "Video recordings from the OpenGeoHub Summer School IBOT, Prague August 19-25, 2018",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "The video recordings from the OpenGeoHub Summer School IBOT, Prague \nAugust 19-25, 2018 are now available via our youtube channel:\n\nhttps://www.youtube.com/channel/UC6HFFFYiV4zEYJlQMIXemWA\n\nI am trying to organize all current and past materials into a structured \ncourse/archive so that everyone should be able to easier find her/his \ntopics of interest:\n\nhttps://opengeohub.org/course\n\n*this might take me few weeks because we have collected many materials \nover years.\n\nMany many thanks to the lecturers: Edzer Pebesma (IfGI University of \nMuenster, Muenster Germany), Roger Bivand (Department of Economics, \nNorwegian School of Economics, Bergen, Norway), Markus Neteler \n(Mundialis, Bonn, Germany), Tim Appelhans (GfK Geomarketing, Germany),\nRobin Lovelace (University of Leeds, UK), Jannes M?nchow (Geographic \nInformation Science, Friedrich Schiller University Jena, Jena, Germany), \nJakub Nowosad (Space Informatics Lab, University of Cincinnati, Ohio \nUSA), Veronica Andreo (National Institute of Tropical Medicine INMeT, \nArgentina) and Hanna Meyer & Chris Reudenbach (Environmental \nInformatics, Philipps University Marburg, Germany) for coming to Prague \nand for sharing their materials!\n\nAnd many many thanks to IBOT's department of GIS and remote sensing \nMatej Man and Jan Wild for being such excellent hosts!\n\nyours,\n\nTom Hengl\nThe OpenGeoHub Foundation\nhttp://www.opengeohub.org/about",
+      "body_snippet": "The video recordings from the OpenGeoHub Summer School IBOT, Prague \nAugust 19-25, 2018 are now available via our youtube channel:\n\nhttps://www.youtube.com/channel/UC6HFFFYiV4zEYJlQMIXemWA\n\nI am tryin",
+      "thread_id": "thread-1c19ad7120b9",
+      "thread_depth": 0,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-4108d5aa6b84",
+      "message_id": "<CAB1Ewubvp8sbaoQmYD8Bud8OHGL_G-UGTryMBVxbfUhr9GeUJg@mail.gmail.com>",
+      "from_name": "Rubem Dornas",
+      "from_email_hash": "a4322ebb6c64fe8ee66b51090a7420d590797e40b41ca64f325f55b030d6557a",
+      "date": "2018-10-01T11:25:51-03:00",
+      "subject": "[R-sig-Geo] Linear referencing in R",
+      "subject_clean": "Linear referencing in R",
+      "in_reply_to": "<CAPP0wygVnLzik0tt8D+P5M2xLTGtPK=AYBOs4HwK+oQUF2XoPQ@mail.gmail.com>",
+      "references": [
+        "<mailman.26917.5.1538215201.61047.r-sig-geo@r-project.org>",
+        "<CAPP0wygVnLzik0tt8D+P5M2xLTGtPK=AYBOs4HwK+oQUF2XoPQ@mail.gmail.com>"
+      ],
+      "body_plain": "Thank you very much, Kent! This is pretty much what I was looking for. The\nonly problem is that the new shapefile didn't come with the attributes from\nthe topoESQ data frame. I made some adjustments, that probably are not the\nbest ones, but I still made it work.\n\ntopoESQ_comp <- read.csv(\"Files/Topo_estacas_E.csv\") %>%\n  select(-1) %>%\n  rename(height = Altura,\n         side = Lado) %>%\n  filter(to_km <= 871)\n\nEstacas_1m <- st_read(\"Files/ESTACAS_1m_EFC_0-871_Policonic_SIRGAS.shp\")\n\ntopoESQ_comp %>%\n  purrr::pmap(function(from_km, to_km, ...) {\n    st_linestring(do.call(rbind,\nEstacas_1m$geometry[((1000*from_km):(1000*to_km))+1]))\n  }) %>%\n  st_sfc(., crs = 5880) %>%\n  cbind(topoESQ_comp, .) %>%\n  st_as_sf(.) %>%\n  st_write(., dsn = \"Files/Topo_esq.shp\", delete_dsn = T)\n\nBest regards,\n\nRubem Dornas.\n\n\nEm s?b, 29 de set de 2018 ?s 22:17, Kent Johnson <kent3737 at gmail.com>\nescreveu:\n\n> You need to snip out the sections of the railroad file rather than\n> connecting the endpoints. Maybe this is closer to what you want?\n>\n> segments = topoESQ_comp %>%\n>   filter(to_km <= 871) %>%\n>   purrr::pmap(function(from_km, to_km, ...) {\n>     st_linestring(do.call(rbind,\n> Estacas_1m$geometry[((1000*from_km):(1000*to_km))+1]))\n> }) %>%\n>   st_sfc\n>\n> Kent Johnson\n>\n>\n>> Date: Fri, 28 Sep 2018 19:52:03 -0300\n>> From: Rubem Dornas <rapdornas at gmail.com>\n>> To: r-sig-geo at r-project.org\n>> Subject: [R-sig-Geo] Linear referencing in R\n>> Hi, people! I hope I'll be not to speculative in my question and that you\n>> can comprehend my problem.\n>>\n>> Well, I have a railroad shapefile and I have two csv files corresponding\n>> to\n>> the topography in each side of the railroad. The csv are organized in this\n>> way:\n>>\n>> ID_topo, from_km, to_km, height\n>> 1, 0, 1.91, 15\n>> 2, 1.91, 2.23, -3\n>>\n>> I created a point shapefile for each meter of the railroad and then I\n>> proceeded with a join (not spatial) between the from_km of the topography\n>> data frame and the km mark (km_calc) from the point railroad.\n>>\n>> My goal is to create shapefiles for each of the railroadside topography.\n>> The issue is that when I try to make a new line shapefile from topography\n>> based on the points of the railroad, what I get is a line that has doesn't\n>> follow the curvature of the railroad. Using the example of the csv above,\n>> what I get are several straight lines linked by the from_km to to_km.\n>> (Here\n>> is a link to a print screen from QGIS:\n>>\n>> https://www.dropbox.com/s/erfsst8pasoqj64/Captura%20de%20tela%202018-09-28%2019.49.47.png?dl=0\n>> <http://Image>)\n>>\n>>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you very much, Kent! This is pretty much what I was looking for. The\nonly problem is that the new shapefile didn't come with the attributes from\nthe topoESQ data frame. I made some adjustments, ",
+      "thread_id": "thread-4108d5aa6b84",
+      "thread_depth": 0,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-df879f855142",
+      "message_id": "<1538558482789.98560@vlada.gov.sk>",
+      "from_name": "Hulényi Martin",
+      "from_email_hash": "03c511a4ee88852f65c1c53271e70da4c7a348b040b1456da35181759ed08476",
+      "date": "2018-10-03T09:21:22Z",
+      "subject": "[R-sig-Geo] spgm",
+      "subject_clean": "spgm",
+      "in_reply_to": "<alpine.LFD.2.21.1809291433540.16108@reclus.nhh.no>",
+      "references": [
+        "<1eacb0179d5746ac9360f91bfe34fd92@UVEX2.uvsr.sk>",
+        "<alpine.LFD.2.21.1809291433540.16108@reclus.nhh.no>"
+      ],
+      "body_plain": "Thank you very much !\nI have one more question regarding the output. I have also one endogenous variable in the model.  Your code worked, but it did not show me the indirect and direct effects for the\nendogenous varibale. Here is my regex:\nspd_01 <- spgm(gdppcgr~lefpayr+lpopgr+linvr+lagwgipca + laglgdppc,\n             data=esifpdata, listw=dm1.lw,\n             model=\"within\", lag=TRUE, spatial.error= FALSE, endog = ~ lefpayr,\n             instruments=~areaprop,\n             method=\"w2sls\")\nmatrix1 <- kronecker(diag(length(unique(esifpdata$years))), dm1)\nlistw1 <- mat2listw(matrix1, style=\"W\")\ntr <- trW(as(listw1, \"CsparseMatrix\"), m=100)\nimpacts(spd_01, listw=listw1)\nimpacts(spd_01, tr=tr)\nsummary(impacts(spd_01, tr=tr, R=1000), zstats=TRUE, short=TRUE)\n\nBest,\n\nMArtin Hul?nyi\n\n\n________________________________________\nOd: Roger Bivand <Roger.Bivand at nhh.no>\nOdoslan?: 29. septembra 2018 14:52\nKomu: Hul?nyi Martin\nK?pia: r-sig-geo at r-project.org\nPredmet: Re: [R-sig-Geo] spgm\n\nOn Sat, 29 Sep 2018, Hul?nyi Martin wrote:\n\n> Dear all,\n>\n>\n> I would like to ask if there is a possibility to apply something\n> similiar to the \"impacts\" from spdep package for SAR regressions using\n> the spgm function from the splm package.\n>\n\nA reprex would have helped. Here is mine:\n\ndata(Produc, package = \"plm\")\ndata(usaww) # dense row-standardised weights matrix\nGM <- spgm(log(gsp)~log(pcap)+log(pc)+log(emp)+unemp, data=Produc,\n   listw = usaww, moments=\"fullweights\", lag=TRUE, spatial.error = FALSE)\nclass(GM)\n?impacts.stsls # spdep method for stsls objects\nhead(Produc)\nlength(unique(Produc$year)) # T\nbig <- kronecker(diag(length(unique(Produc$year))), usaww)\nlistw <- mat2listw(big, style=\"W\")\ntr <- trW(as(listw, \"CsparseMatrix\"), m=100)\nimpacts(GM, listw=listw)\nimpacts(GM, tr=tr)\nsummary(impacts(GM, tr=tr, R=1000), zstats=TRUE, short=TRUE)\n\nThe splm:::impacts.splm() method cannot dispatch on stsls objects, so they\ntry to use the spdep:::impacts.stsls() method, but there the data rows are\nn x T but listw is only of n rows. Looking inside splm:::impacts.splm(),\nyou see that a sparse kronecker product matrix is constructed - either do\nthe same if your n x T is large, or follow the above using a dense\nkronecker product and cast back to listw representation to create the\ntrace vector.\n\nHope this clarifies,\n\nRoger\n\n>\n> Best regards,\n>\n>\n> Martin Hul???nyi ?\n>\n>\n> [eco.jpg]       Pred vytla???en???m tohto mailu zv???te pros???m vplyv na ???ivotn??? prostredie. ???akujeme.\n> Please consider the environment before printing this e-mail. Thanks\n>\n>       [[alternative HTML version deleted]]\n>\n>\n\n--\nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n[eco.jpg]       Pred vytla?en?m tohto mailu zv??te pros?m vplyv na ?ivotn? prostredie. ?akujeme.\nPlease consider the environment before printing this e-mail. Thanks",
+      "body_snippet": "Thank you very much !\nI have one more question regarding the output. I have also one endogenous variable in the model.  Your code worked, but it did not show me the indirect and direct effects for the",
+      "thread_id": "thread-df879f855142",
+      "thread_depth": 0,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-2c97eb9e529f",
+      "message_id": "<CF511784783D0B52.6663281b-e212-4d6f-8c70-13b86968c136@mail.outlook.com>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-10-03T09:26:28Z",
+      "subject": "[R-sig-Geo] spgm",
+      "subject_clean": "spgm",
+      "in_reply_to": "<1538558482789.98560@vlada.gov.sk>",
+      "references": [
+        "<1eacb0179d5746ac9360f91bfe34fd92@UVEX2.uvsr.sk>",
+        "<alpine.LFD.2.21.1809291433540.16108@reclus.nhh.no>",
+        "<1538558482789.98560@vlada.gov.sk>"
+      ],
+      "body_plain": "Please provide a reproducible example using the Produc dataset, so that it is clearer what the problem is. I do not know that there is any literature on such impacts, please provide references.\n\nRoger\n\nRoger Bivand\nNorwegian School of Economics\nBergen, Norway\n\n\n\n\nOn Wed, Oct 3, 2018 at 11:21 AM +0200, \"Hul?nyi Martin\" <martin.hulenyi at vlada.gov.sk<mailto:martin.hulenyi at vlada.gov.sk>> wrote:\n\n\nThank you very much !\nI have one more question regarding the output. I have also one endogenous variable in the model.  Your code worked, but it did not show me the indirect and direct effects for the\nendogenous varibale. Here is my regex:\nspd_01 <- spgm(gdppcgr~lefpayr+lpopgr+linvr+lagwgipca + laglgdppc,\n             data=esifpdata, listw=dm1.lw,\n             model=\"within\", lag=TRUE, spatial.error= FALSE, endog = ~ lefpayr,\n             instruments=~areaprop,\n             method=\"w2sls\")\nmatrix1 <- kronecker(diag(length(unique(esifpdata$years))), dm1)\nlistw1 <- mat2listw(matrix1, style=\"W\")\ntr <- trW(as(listw1, \"CsparseMatrix\"), m=100)\nimpacts(spd_01, listw=listw1)\nimpacts(spd_01, tr=tr)\nsummary(impacts(spd_01, tr=tr, R=1000), zstats=TRUE, short=TRUE)\n\nBest,\n\nMArtin Hul?nyi\n\n\n________________________________________\nOd: Roger Bivand\nOdoslan?: 29. septembra 2018 14:52\nKomu: Hul?nyi Martin\nK?pia: r-sig-geo at r-project.org\nPredmet: Re: [R-sig-Geo] spgm\n\nOn Sat, 29 Sep 2018, Hul?nyi Martin wrote:\n\n> Dear all,\n>\n>\n> I would like to ask if there is a possibility to apply something\n> similiar to the \"impacts\" from spdep package for SAR regressions using\n> the spgm function from the splm package.\n>\n\nA reprex would have helped. Here is mine:\n\ndata(Produc, package = \"plm\")\ndata(usaww) # dense row-standardised weights matrix\nGM <- spgm(log(gsp)~log(pcap)+log(pc)+log(emp)+unemp, data=Produc,\n   listw = usaww, moments=\"fullweights\", lag=TRUE, spatial.error = FALSE)\nclass(GM)\n?impacts.stsls # spdep method for stsls objects\nhead(Produc)\nlength(unique(Produc$year)) # T\nbig <- kronecker(diag(length(unique(Produc$year))), usaww)\nlistw <- mat2listw(big, style=\"W\")\ntr <- trW(as(listw, \"CsparseMatrix\"), m=100)\nimpacts(GM, listw=listw)\nimpacts(GM, tr=tr)\nsummary(impacts(GM, tr=tr, R=1000), zstats=TRUE, short=TRUE)\n\nThe splm:::impacts.splm() method cannot dispatch on stsls objects, so they\ntry to use the spdep:::impacts.stsls() method, but there the data rows are\nn x T but listw is only of n rows. Looking inside splm:::impacts.splm(),\nyou see that a sparse kronecker product matrix is constructed - either do\nthe same if your n x T is large, or follow the above using a dense\nkronecker product and cast back to listw representation to create the\ntrace vector.\n\nHope this clarifies,\n\nRoger\n\n>\n> Best regards,\n>\n>\n> Martin Hul???nyi ?\n>\n>\n> [eco.jpg]       Pred vytla???en???m tohto mailu zv???te pros???m vplyv na ???ivotn??? prostredie. ???akujeme.\n> Please consider the environment before printing this e-mail. Thanks\n>\n>       [[alternative HTML version deleted]]\n>\n>\n\n--\nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n[eco.jpg]       Pred vytla?en?m tohto mailu zv??te pros?m vplyv na ?ivotn? prostredie. ?akujeme.\nPlease consider the environment before printing this e-mail. Thanks\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Please provide a reproducible example using the Produc dataset, so that it is clearer what the problem is. I do not know that there is any literature on such impacts, please provide references.\n\nRoger",
+      "thread_id": "thread-df879f855142",
+      "thread_depth": 1,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-05218f7a6c9a",
+      "message_id": "<CANR89W8Vc20od1MZwez3PohDXTwp44dksOvXe3LHrap0dU1N4g@mail.gmail.com>",
+      "from_name": "Amir Neto",
+      "from_email_hash": "d7f63cd648817d61c58c18900102fc84bd180bdd9a6bf23861c6d528611574b5",
+      "date": "2018-10-09T08:46:26-04:00",
+      "subject": "[R-sig-Geo] Clustering Sd Error in Spatial Models.",
+      "subject_clean": "Clustering Sd Error in Spatial Models.",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\n\nI am currently working on a project estimating a spatial panel model.\nBecause I also estimate non-spatial models I am computing the clustered\nstandard errors following Stock and Watson (2008).\n\nI tried to do the same for my spatial models however I am running into the\nsome errors (depending if I bootstrap or not my clustered\nvariance-covariance matrix). Below is a reproducible example.\n\n\n#### Example\n> data(Produc, package = \"plm\")\n> data(usaww)\n>\n> fm <- log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp\n>\n> fespaterr <- spml(fm, data = Produc, listw = mat2listw(usaww),\n+                   model=\"within\", spatial.error=\"kkp\")\n>\n> library(lmtest)\n> library(sandwich)\n>\n> vcov_test <- vcov_test <- vcovCL(fespaterr, cluster = Produc$state)\nError in UseMethod(\"estfun\") :\n  no applicable method for 'estfun' applied to an object of class \"splm\"\n\n> vcov_boot <- vcovBS(fespaterr, cluster = Produc$state, R=250)\nError in terms.default(x) : no terms component nor attribute\nError in terms.default(x) : no terms component nor attribute\nError in terms.default(x) : no terms component nor attributebute\n\n#############\n### Non spatial\nlibrary(lfe)\n\nfe_cluster <- felm(log(gsp) ~ log(pcap) + log(pc) + log(emp) +\nunemp|year+state|0|state,data=Produc)\n\n> summary(fe)\n\nCall:\n   felm(formula = log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp |\nyear + state | 0 | state, data = Produc)\n\nResiduals:\n      Min        1Q    Median        3Q       Max\n-0.160369 -0.018026 -0.000859  0.016745  0.170752\n\nCoefficients:\n           Estimate Cluster s.e. t value Pr(>|t|)\nlog(pcap) -0.030176     0.060042  -0.503   0.6154\nlog(pc)    0.168828     0.088331   1.911   0.0563 .\nlog(emp)   0.769306     0.087700   8.772   <2e-16 ***\nunemp     -0.004221     0.003294  -1.281   0.2005\n---\nSignif. codes:  0 ?***? 0.001 ?**? 0.01 ?*? 0.05 ?.? 0.1 ? ? 1\n##########\n\nMy questions are:\n1) Is it possible to cluster the variance-covariance matrix on spatial\nmodels?\n2) If so, what is the correct procedure?\n\n\nThank you for your help,\nAmir\n--\nAmir B Ferreira Neto\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI am currently working on a project estimating a spatial panel model.\nBecause I also estimate non-spatial models I am computing the clustered\nstandard errors following Stock and Watson (2008).",
+      "thread_id": "thread-05218f7a6c9a",
+      "thread_depth": 0,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-ee719851137a",
+      "message_id": "<CAB+U_F0iGjNV1bJJySdroszvfC7_=fQTsCsVfNSTau6Ae82Htg@mail.gmail.com>",
+      "from_name": "DIEGO CEPEDA GOMEZ",
+      "from_email_hash": "68d8fddfc0fd391ba1c75f599cb9be82659f86c3ba2b4cbd7e2fa813eee7c56d",
+      "date": "2018-10-10T09:31:02+02:00",
+      "subject": "[R-sig-Geo] Error when performing a spatial eigenvector selection in R",
+      "subject_clean": "Error when performing a spatial eigenvector selection in R",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\nI am currently trying to do a Gaussian linear regression in R with data\nthat may be spatially autocorrelated. My dataset contains geographic\ncoordinates (value of longitude, value of latitude), species, independent\nvariables (BS and LTS) and some explanatory variables; it looks like:\n\nhead(dataset)\n\ncoordinates SPECIES                BS   LTS  DEPTH OCEAN(155, 47)\nCristaphyes abyssorum  8.66 28.3  5373  WPac(150, 41)    Cristaphyes\nabyssorum  8.66 28.3  5250  WPac (-72, -41)   Cristaphyes anomalus\n8.69   NA    35  EPac(-74, -44)   Cristaphyes anomalus   8.69   NA\n35  EPac(-57, -46)   Cristaphyes anomalus   8.69   NA    NA  WAtl(29,\n80)     Cristaphyes arctous    8.32 27.0   393  EAtl\n\ntail(dataset)\n\ncoordinates SPECIES                  BS   LTS   DEPTH  OCEAN(-80, 27)\n Zelinkaderes brightae    NA   20.1  13.04  WAtl(-80, 27)\nZelinkaderes floridensis 7.10 12.4  140.00 WAtl(35, 25)\nZelinkaderes klepali     NA   25.0  1.00   WInd(9, 57)\nZelinkaderes submersus   7.99 21.4  30.00  EAtl(130, 36)\nZelinkaderes yong        NA   12.7  4.50   WAtl\n\nThe dataset also include the values of latitude and longitude in separated\ncolumns.\n\nI extracted positive eigenvector-based spatial filters from a truncated\nmatrix of geographic distances among sampling sites. I would like to treat\nspatial filters as candidate explanatory variables in my linear regression\nmodel. I did this as following:\n\nFirst of all, I created a neighbor list object (nb). In my case of\nirregular samplings, I used the function knearneight of the R package spdep:\n\nknea8 <-knearneight(coordinates(dataset), longlat=TRUE, k=8)\n\nneib8 <-knn2nb(knea8)\n\nThen, I created a spatial weighting matrix with the function nb2listw of\nthe R package spdep:\n\nnb2listw(neib8)\n\ndistgab8 <- nbdists(neib8, coordinates(dataset))\n\nstr(distgab8)\n\nfdist<-lapply(distgab8, function(x) 1-x/max(dist(coordinates(dataset))))\n\nlistwgab8 <- nb2listw(neib8, glist = fdist8, style = \"B\")\n\nThen, I built spatial predictors to incorporate them in the Gaussian linear\nregression. I did this with the mem function of the R package adespatial,\nas following:\n\nmem.gab8 <- mem(listwgab8)\n\nAdditionally, Moran's I were computed and tested for each eigenvector with\nthe moran.randtest function, as following:\n\nmoranI8 <-moran.randtest(mem.gab8, listwgab8, 99)\n\nI obtained some eigenvectors with significant positive spatial\nautocorrelation. Now, I would like to include them in the Gaussian linear\nregression. I tried to do this with the function ME of spdep, as following:\n\nGLM1 <- ME(BS~LATITUDE, data=dataset, listw=listwgab8,\nfamily=gaussian, nsim=99, alpha=0.05)\n\nUnfortunately, I receive this error:\n\nError in sW %*% var : Cholmod error 'X and/or Y have wrong dimensions' at\nfile ../MatrixOps/cholmod_sdmult.c, line 90\n\n\nWould anybody know how I could solve this error? Or, if is there another\nway to perform a spatial eigenvector selection in a Gaussian linear\nregression?\n\nThank you in advance\n\nBest wishes,\n\nDiego\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nI am currently trying to do a Gaussian linear regression in R with data\nthat may be spatially autocorrelated. My dataset contains geographic\ncoordinates (value of longitude, value of latitu",
+      "thread_id": "thread-ee719851137a",
+      "thread_depth": 0,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-563cd140b508",
+      "message_id": "<alpine.LFD.2.21.1810102143410.10571@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-10-10T21:49:49+02:00",
+      "subject": "[R-sig-Geo]  Error when performing a spatial eigenvector selection in R",
+      "subject_clean": "Error when performing a spatial eigenvector selection in R",
+      "in_reply_to": "<CAB+U_F0iGjNV1bJJySdroszvfC7_=fQTsCsVfNSTau6Ae82Htg@mail.gmail.com>",
+      "references": [
+        "<CAB+U_F0iGjNV1bJJySdroszvfC7_=fQTsCsVfNSTau6Ae82Htg@mail.gmail.com>"
+      ],
+      "body_plain": "On Wed, 10 Oct 2018, DIEGO CEPEDA GOMEZ wrote:\n\n> Dear all,\n>\n> I am currently trying to do a Gaussian linear regression in R with data\n> that may be spatially autocorrelated. My dataset contains geographic\n> coordinates (value of longitude, value of latitude), species, independent\n> variables (BS and LTS) and some explanatory variables; it looks like:\n>\n> head(dataset)\n>\n> coordinates SPECIES                BS   LTS  DEPTH OCEAN(155, 47)\n> Cristaphyes abyssorum  8.66 28.3  5373  WPac(150, 41)    Cristaphyes\n> abyssorum  8.66 28.3  5250  WPac (-72, -41)   Cristaphyes anomalus\n> 8.69   NA    35  EPac(-74, -44)   Cristaphyes anomalus   8.69   NA\n> 35  EPac(-57, -46)   Cristaphyes anomalus   8.69   NA    NA  WAtl(29,\n> 80)     Cristaphyes arctous    8.32 27.0   393  EAtl\n>\n> tail(dataset)\n>\n> coordinates SPECIES                  BS   LTS   DEPTH  OCEAN(-80, 27)\n> Zelinkaderes brightae    NA   20.1  13.04  WAtl(-80, 27)\n> Zelinkaderes floridensis 7.10 12.4  140.00 WAtl(35, 25)\n> Zelinkaderes klepali     NA   25.0  1.00   WInd(9, 57)\n> Zelinkaderes submersus   7.99 21.4  30.00  EAtl(130, 36)\n> Zelinkaderes yong        NA   12.7  4.50   WAtl\n>\n> The dataset also include the values of latitude and longitude in separated\n> columns.\n>\n> I extracted positive eigenvector-based spatial filters from a truncated\n> matrix of geographic distances among sampling sites. I would like to treat\n> spatial filters as candidate explanatory variables in my linear regression\n> model. I did this as following:\n>\n> First of all, I created a neighbor list object (nb). In my case of\n> irregular samplings, I used the function knearneight of the R package spdep:\n>\n> knea8 <-knearneight(coordinates(dataset), longlat=TRUE, k=8)\n>\n> neib8 <-knn2nb(knea8)\n>\n> Then, I created a spatial weighting matrix with the function nb2listw of\n> the R package spdep:\n>\n> nb2listw(neib8)\n>\n> distgab8 <- nbdists(neib8, coordinates(dataset))\n>\n> str(distgab8)\n>\n> fdist<-lapply(distgab8, function(x) 1-x/max(dist(coordinates(dataset))))\n>\n> listwgab8 <- nb2listw(neib8, glist = fdist8, style = \"B\")\n>\n> Then, I built spatial predictors to incorporate them in the Gaussian linear\n> regression. I did this with the mem function of the R package adespatial,\n> as following:\n\nIf you are choosing adespatial::mem(), it will probably work differently \nfrom spdep::SpatialFilering(), based on\n\n      Tiefelsdorf M, Griffith DA. (2007) Semiparametric Filtering of\n      Spatial Autocorrelation: The Eigenvector Approach. Environment and\n      Planning A, 39 (5) 1193 - 1221.\n\nIn that approach, the eigenvectors are chosen to reduce the residual \nspatial autocorrelation.\n\n>\n> mem.gab8 <- mem(listwgab8)\n>\n> Additionally, Moran's I were computed and tested for each eigenvector with\n> the moran.randtest function, as following:\n>\n> moranI8 <-moran.randtest(mem.gab8, listwgab8, 99)\n>\n> I obtained some eigenvectors with significant positive spatial\n> autocorrelation. Now, I would like to include them in the Gaussian linear\n> regression. I tried to do this with the function ME of spdep, as following:\n>\n\nUse spdep::SpatialFilering() rather than spdep::ME() for the Gaussian \ncase. Probably your listwgab8 refers to a different number of observations \nthan dataset (any missing values in your variables?).\n\nRoger\n\n> GLM1 <- ME(BS~LATITUDE, data=dataset, listw=listwgab8,\n> family=gaussian, nsim=99, alpha=0.05)\n>\n> Unfortunately, I receive this error:\n>\n> Error in sW %*% var : Cholmod error 'X and/or Y have wrong dimensions' at\n> file ../MatrixOps/cholmod_sdmult.c, line 90\n>\n>\n> Would anybody know how I could solve this error? Or, if is there another\n> way to perform a spatial eigenvector selection in a Gaussian linear\n> regression?\n>\n> Thank you in advance\n>\n> Best wishes,\n>\n> Diego\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 10 Oct 2018, DIEGO CEPEDA GOMEZ wrote:\n\n> Dear all,\n>\n> I am currently trying to do a Gaussian linear regression in R with data\n> that may be spatially autocorrelated. My dataset contains geog",
+      "thread_id": "thread-ee719851137a",
+      "thread_depth": 1,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-fb636c29512e",
+      "message_id": "<alpine.LFD.2.21.1810110950290.16564@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-10-11T09:59:31+02:00",
+      "subject": "[R-sig-Geo] spgm",
+      "subject_clean": "spgm",
+      "in_reply_to": "<CF511784783D0B52.6663281b-e212-4d6f-8c70-13b86968c136@mail.outlook.com>",
+      "references": [
+        "<1eacb0179d5746ac9360f91bfe34fd92@UVEX2.uvsr.sk>",
+        "<alpine.LFD.2.21.1809291433540.16108@reclus.nhh.no>",
+        "<1538558482789.98560@vlada.gov.sk>",
+        "<CF511784783D0B52.6663281b-e212-4d6f-8c70-13b86968c136@mail.outlook.com>"
+      ],
+      "body_plain": "On Wed, 3 Oct 2018, Roger Bivand wrote:\n\n> Please provide a reproducible example using the Produc dataset, so that \n> it is clearer what the problem is. I do not know that there is any \n> literature on such impacts, please provide references.\n\nMy cut at an example:\n\nlibrary(splm)\ndata(Produc, package=\"plm\")\ndata(usaww)\nmatrix1 <- kronecker(diag(length(unique(Produc$year))), usaww)\nlistw1 <- mat2listw(matrix1, style=\"W\")\ntr <- trW(as(listw1, \"CsparseMatrix\"), m=100)\nGM <- spgm(fm, data=Produc, listw = usaww, moments=\"within\", spatial.error \n= FALSE, lag = TRUE)\nimpacts(GM, listw=listw1)\nimpacts(GM, tr=tr)\nGMi <- spgm(update(fm, . ~ . - unemp), data=Produc, listw = usaww, \nmoments=\"within\", spatial.error = FALSE, lag = TRUE, endog = ~ unemp, \ninstruments = ~ hwy + water + util)\nsummary(GMi)\nGMii <- spgm(update(fm, . ~ . - unemp - log(emp)), data=Produc, listw = \nusaww, moments=\"within\", spatial.error = FALSE, lag = TRUE, endog = ~ \nunemp + log(emp), instruments = ~ hwy + water + util)\nsummary(GMii)\n\nThe summary objects show the coefficients, etc. for endogeneous variables \nfirst, before the spatial coefficient. spdep::impacts.stsls() expects the \nspatial coefficient listed before the variables (dropping the intercept). \nIf you use:\n\nput_endog_last <- function(stsls) {\n   if (is.null(stsls$endog)) stop(\"no endogenous variables in fitted \nmodel\")\n   n_endog <- length(all.vars(stsls$endog))\n   coefs <- stsls$coefficients\n   n_coefs <- length(coefs)\n   flip <- c((n_endog+1):n_coefs, 1:n_endog)\n   stsls$coefficients <- coefs[flip]\n   stsls$var <- stsls$var[flip, flip]\n   stsls\n}\n\nto flip the orderings in the splm::spgm() output object, impacts can be \ncalculated using the spdep::impacts.stsls() method. I've added the splm \nmaintainer to CC - I'm unsure whether other functions in splm (or other \nargument settings when lag = TRUE) would be affected by patching \nsplm::spgm() itself.\n\nHope this helps,\n\nRoger\n\n\n>\n> Roger\n>\n> Roger Bivand\n> Norwegian School of Economics\n> Bergen, Norway\n>\n>\n>\n>\n> On Wed, Oct 3, 2018 at 11:21 AM +0200, \"Hul?nyi Martin\" <martin.hulenyi at vlada.gov.sk<mailto:martin.hulenyi at vlada.gov.sk>> wrote:\n>\n>\n> Thank you very much !\n> I have one more question regarding the output. I have also one endogenous variable in the model.  Your code worked, but it did not show me the indirect and direct effects for the\n> endogenous varibale. Here is my regex:\n> spd_01 <- spgm(gdppcgr~lefpayr+lpopgr+linvr+lagwgipca + laglgdppc,\n>             data=esifpdata, listw=dm1.lw,\n>             model=\"within\", lag=TRUE, spatial.error= FALSE, endog = ~ lefpayr,\n>             instruments=~areaprop,\n>             method=\"w2sls\")\n> matrix1 <- kronecker(diag(length(unique(esifpdata$years))), dm1)\n> listw1 <- mat2listw(matrix1, style=\"W\")\n> tr <- trW(as(listw1, \"CsparseMatrix\"), m=100)\n> impacts(spd_01, listw=listw1)\n> impacts(spd_01, tr=tr)\n> summary(impacts(spd_01, tr=tr, R=1000), zstats=TRUE, short=TRUE)\n>\n> Best,\n>\n> MArtin Hul?nyi\n>\n>\n> ________________________________________\n> Od: Roger Bivand\n> Odoslan?: 29. septembra 2018 14:52\n> Komu: Hul?nyi Martin\n> K?pia: r-sig-geo at r-project.org\n> Predmet: Re: [R-sig-Geo] spgm\n>\n> On Sat, 29 Sep 2018, Hul?nyi Martin wrote:\n>\n>> Dear all,\n>>\n>>\n>> I would like to ask if there is a possibility to apply something\n>> similiar to the \"impacts\" from spdep package for SAR regressions using\n>> the spgm function from the splm package.\n>>\n>\n> A reprex would have helped. Here is mine:\n>\n> data(Produc, package = \"plm\")\n> data(usaww) # dense row-standardised weights matrix\n> GM <- spgm(log(gsp)~log(pcap)+log(pc)+log(emp)+unemp, data=Produc,\n>   listw = usaww, moments=\"fullweights\", lag=TRUE, spatial.error = FALSE)\n> class(GM)\n> ?impacts.stsls # spdep method for stsls objects\n> head(Produc)\n> length(unique(Produc$year)) # T\n> big <- kronecker(diag(length(unique(Produc$year))), usaww)\n> listw <- mat2listw(big, style=\"W\")\n> tr <- trW(as(listw, \"CsparseMatrix\"), m=100)\n> impacts(GM, listw=listw)\n> impacts(GM, tr=tr)\n> summary(impacts(GM, tr=tr, R=1000), zstats=TRUE, short=TRUE)\n>\n> The splm:::impacts.splm() method cannot dispatch on stsls objects, so they\n> try to use the spdep:::impacts.stsls() method, but there the data rows are\n> n x T but listw is only of n rows. Looking inside splm:::impacts.splm(),\n> you see that a sparse kronecker product matrix is constructed - either do\n> the same if your n x T is large, or follow the above using a dense\n> kronecker product and cast back to listw representation to create the\n> trace vector.\n>\n> Hope this clarifies,\n>\n> Roger\n>\n>>\n>> Best regards,\n>>\n>>\n>> Martin Hul???nyi ?\n>>\n>>\n>> [eco.jpg]       Pred vytla???en???m tohto mailu zv???te pros???m vplyv na ???ivotn??? prostredie. ???akujeme.\n>> Please consider the environment before printing this e-mail. Thanks\n>>\n>>       [[alternative HTML version deleted]]\n>>\n>>\n>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics,\n> Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> http://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n> [eco.jpg]       Pred vytla?en?m tohto mailu zv??te pros?m vplyv na ?ivotn? prostredie. ?akujeme.\n> Please consider the environment before printing this e-mail. Thanks\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 3 Oct 2018, Roger Bivand wrote:\n\n> Please provide a reproducible example using the Produc dataset, so that \n> it is clearer what the problem is. I do not know that there is any \n> literature o",
+      "thread_id": "thread-df879f855142",
+      "thread_depth": 2,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-9ab8742de4b9",
+      "message_id": "<alpine.LFD.2.21.1810111004590.16564@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-10-11T10:10:33+02:00",
+      "subject": "[R-sig-Geo] Clustering Sd Error in Spatial Models.",
+      "subject_clean": "Clustering Sd Error in Spatial Models.",
+      "in_reply_to": "<CANR89W8Vc20od1MZwez3PohDXTwp44dksOvXe3LHrap0dU1N4g@mail.gmail.com>",
+      "references": [
+        "<CANR89W8Vc20od1MZwez3PohDXTwp44dksOvXe3LHrap0dU1N4g@mail.gmail.com>"
+      ],
+      "body_plain": "On Tue, 9 Oct 2018, Amir Neto wrote:\n\n> Hello,\n>\n> I am currently working on a project estimating a spatial panel model.\n> Because I also estimate non-spatial models I am computing the clustered\n> standard errors following Stock and Watson (2008).\n>\n> I tried to do the same for my spatial models however I am running into the\n> some errors (depending if I bootstrap or not my clustered\n> variance-covariance matrix). Below is a reproducible example.\n\nAlthough it would be desirable that spatial models matched the \nlmtest/sandwich framework better, are Conway standard errors an \nalternative? See this interesting blog post correcting an implementation:\n\nhttps://darinchristensen.com/post/2017-08-21-correction/\nhttps://darinchristensen.com/post/2015-08-30-conley/\n\nhttps://github.com/darinchristensen/conley-sehttps://github.com/darinchristensen/conley-se\n\nHope this helps,\n\nRoger\n\n>\n>\n> #### Example\n>> data(Produc, package = \"plm\")\n>> data(usaww)\n>>\n>> fm <- log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp\n>>\n>> fespaterr <- spml(fm, data = Produc, listw = mat2listw(usaww),\n> +                   model=\"within\", spatial.error=\"kkp\")\n>>\n>> library(lmtest)\n>> library(sandwich)\n>>\n>> vcov_test <- vcov_test <- vcovCL(fespaterr, cluster = Produc$state)\n> Error in UseMethod(\"estfun\") :\n>  no applicable method for 'estfun' applied to an object of class \"splm\"\n>\n>> vcov_boot <- vcovBS(fespaterr, cluster = Produc$state, R=250)\n> Error in terms.default(x) : no terms component nor attribute\n> Error in terms.default(x) : no terms component nor attribute\n> Error in terms.default(x) : no terms component nor attributebute\n>\n> #############\n> ### Non spatial\n> library(lfe)\n>\n> fe_cluster <- felm(log(gsp) ~ log(pcap) + log(pc) + log(emp) +\n> unemp|year+state|0|state,data=Produc)\n>\n>> summary(fe)\n>\n> Call:\n>   felm(formula = log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp |\n> year + state | 0 | state, data = Produc)\n>\n> Residuals:\n>      Min        1Q    Median        3Q       Max\n> -0.160369 -0.018026 -0.000859  0.016745  0.170752\n>\n> Coefficients:\n>           Estimate Cluster s.e. t value Pr(>|t|)\n> log(pcap) -0.030176     0.060042  -0.503   0.6154\n> log(pc)    0.168828     0.088331   1.911   0.0563 .\n> log(emp)   0.769306     0.087700   8.772   <2e-16 ***\n> unemp     -0.004221     0.003294  -1.281   0.2005\n> ---\n> Signif. codes:  0 ?***? 0.001 ?**? 0.01 ?*? 0.05 ?.? 0.1 ? ? 1\n> ##########\n>\n> My questions are:\n> 1) Is it possible to cluster the variance-covariance matrix on spatial\n> models?\n> 2) If so, what is the correct procedure?\n>\n>\n> Thank you for your help,\n> Amir\n> --\n> Amir B Ferreira Neto\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Tue, 9 Oct 2018, Amir Neto wrote:\n\n> Hello,\n>\n> I am currently working on a project estimating a spatial panel model.\n> Because I also estimate non-spatial models I am computing the clustered\n> sta",
+      "thread_id": "thread-05218f7a6c9a",
+      "thread_depth": 1,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-0c84923883cb",
+      "message_id": "<CA+Y23tauuDxiYxwANSjYN1H4WBq67nS5ex1+DXgd+Pb2SYM7Lw@mail.gmail.com>",
+      "from_name": "Warner, David",
+      "from_email_hash": "74f6460f8902aae1795bfcb5b6c92ccfc352a871fca333579f178a9614a52cd0",
+      "date": "2018-10-11T21:49:09-04:00",
+      "subject": "[R-sig-Geo] addImageQuery() result stops working in shiny app",
+      "subject_clean": "addImageQuery() result stops working in shiny app",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi all\n\nI've put together a shiny app whose ultimate use would be to share\nMODIS-Aqua based estimates of chlorophyll-a concentration in RasterLayer\nform.\n\nI would like the user to be able to select from a list of layers that are\nin a stack and once that layer is displayed I'd like them to be able to see\nthe RasterLayer value wherever the cursor is located.\n\nI have no problems make the shiny app do this consistently for a single\nRasterLayer.  However, once the user switches to a RasterLayer other than\nthe default that is shown when you open the app, the value at the cursor is\nno longer displayed.\n\nDoes anyone know if there is a way to change this behavior by changing my\ncode?  I am guessing that because of my location on the learning curve that\nmy code is the issue.  Somehow I think I have failed to correctly relay the\nchange to addImageQuery().\n\nThe code below should be a reproducible example.  It may not be an ideal\nexample, but it is a self-contained example that will only require that the\nuser has the required packages.  And it is the best I know how to do.\n\nThanks in advance to anyone who reads this!\n\n#The example....\nlibrary(raster)\nlibrary(leaflet)\nlibrary(shiny)\nlibrary(mapview)\n# Create raster data\n# Each raster represents the average of multiple rasters\n# during a weekly period.\n# In this example, there are five weeks represented\n# create an extent object\nmyext <- extent(707900, 980000,540000,1100000)\nmycrs <-  \"+proj=aea +lat_1=42.122774 +lat_2=49.01518 +lat_0=45.568977\n+lon_0=-84.455955 +x_0=1000000 +y_0=1000000 +ellps=GRS80\n+towgs84=0,0,0,0,0,0,0 +units=m +no_defs\"\n\nr1 <- raster(ncol=50, nrow=75, ext=myext, crs=mycrs)\nvalues(r1) <-rnorm(3750, 0, 2)\nr2 <- raster(ncol=50, nrow=75, ext=myext, crs=mycrs)\nvalues(r2) <-rnorm(3750, 0, 2)\nr3 <- raster(ncol=50, nrow=75, ext=myext, crs=mycrs)\nvalues(r3) <-rnorm(3750, 0, 2)\nr4 <- raster(ncol=50, nrow=75, ext=myext, crs=mycrs)\nvalues(r4) <-rnorm(3750, 0, 2)\nr5 <- raster(ncol=50, nrow=75, ext=myext, crs=mycrs)\nvalues(r5) <-rnorm(3750, 0, 2)\n\n# create list of rasters that the user can choose from in the shiny app\nmyras <- list(r1, r2, r3, r4, r5)\nmodis.rasters <- stack(myras)\n\n# set up color display\n# #this sets up the color palette and is the reverse Spectral with 10 levels\nmy.max<- 10\nx <- -10:my.max # this is the observed range for chlorophyll in the data\nnames(modis.rasters) <- c(\"Week of 2016-04-01\", \"Week of 2016-04-08\",\n             \"Week of 2016-04-15\", \"Week of 2016-04-22\", \"Week of\n2016-04-29\")\npal1 <- colorNumeric(palette = c(\"#5E4FA2\", \"#3288BD\", \"#66C2A5\",\n\"#ABDDA4\",\n                                 \"#E6F598\", \"#FEE08B\", \"#FDAE61\",\n\"#F46D43\", \"#D53E4F\", \"#9E0142\" ), domain =\n                       x,na.color = \"transparent\")\n\n# Create a map for use in shiny app\nmap <- leaflet() %>% addTiles() %>%\n  setView(lng = -86.0589, lat = 43, zoom =7) %>%\n  addLegend(pal=pal1, values = values(modis.rasters),\n            title ='Random normal variate (mean=0, SD=2)',\nposition=\"bottomleft\",\n            opacity=1)%>%\n  addMouseCoordinates(style = \"basic\")\n\n\n# Now set up the UI\nui <- shinyUI(fluidPage(\n\n  titlePanel(\"Stuff\"),\n\n  # Generate a row with a sidebar\n  sidebarLayout(\n\n    # Define the sidebar with one input\n    # Here \"period\" is a weekly time period/raster\n    sidebarPanel(\n      selectInput(\"period\", \"Choose a time period:\",\n                  choices=names(modis.rasters)),\n      hr(),\n      helpText(\"Some raster data that I will replace.\",\n               br(),\n               width=8)\n    ),\n    # Create a spot for the map\n    mainPanel(leafletOutput('raster_map', width=800,height=900))\n  )\n)\n)\n\n# Define a server for the Shiny app\nserver <- shinyServer(function(input, output){\n\n  # Fill in the spot we created for a map\n  output$raster_map = renderLeaflet({\n    map %>%\n      addRasterImage(reactiveRaster(), colors=pal1, layerId =input$period,\n                     opacity=0.5)%>%\n      addImageQuery(reactiveRaster(), type=\"mousemove\", digits=2,\n                    position=\"topright\", layerId=input$period)\n  })\n\n  reactiveRaster <- reactive({modis.rasters[[input$period]]})\n  # add the selected raster to the map\n  observe({\n    leafletProxy(\"raster_map\") %>%\n      clearImages() %>%\n      addRasterImage(reactiveRaster(), colors=pal1, layerId =input$period,\n                     opacity=0.5)\n  })\n})\nshinyApp(ui = ui, server = server)\n\n\n\n-- \nDavid Warner\nResearch Fisheries Biologist\nU.S.G.S. Great Lakes Science Center\n1451 Green Road\nAnn Arbor, MI 48105\n734-214-9392\norcid.org/0000-0003-4939-5368\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all\n\nI've put together a shiny app whose ultimate use would be to share\nMODIS-Aqua based estimates of chlorophyll-a concentration in RasterLayer\nform.\n\nI would like the user to be able to select fr",
+      "thread_id": "thread-0c84923883cb",
+      "thread_depth": 0,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-f1966ff371f3",
+      "message_id": "<146cb96f-f0e7-34b2-af8e-91eb7ceeb485@arpat.toscana.it>",
+      "from_name": "Stefano Menichetti",
+      "from_email_hash": "0c6ca06246729601c2b47c71b00527163eefe5f72ac18143d336b3dcd0f2fc93",
+      "date": "2018-10-12T16:36:37+02:00",
+      "subject": "[R-sig-Geo] Problems with gstat gaussian variogram and cross validation when fix nugget at 0",
+      "subject_clean": "Problems with gstat gaussian variogram and cross validation when fix nugget at 0",
+      "in_reply_to": "<839dca1a-08c2-24f9-244b-5d826a4cd01c@arpat.toscana.it>",
+      "references": [
+        "<839dca1a-08c2-24f9-244b-5d826a4cd01c@arpat.toscana.it>"
+      ],
+      "body_plain": "Dear all, I have a question about fixing nugget at 0 in a Gaussian \nvariogram using *gstat *package\n\nI have encountered a serious problem on a variogram of piezometric data \nthat give \"strange\" results if I want to fix nugget to 0.\n\nThis is the file and how to import:\n\n/library(gstat)/\n//file => \nhttps://drive.google.com/open?id=1AOilEhR8G8YANVuFIBUcmEg-6UG1Ajrr//\n\n/lay1 =? read.delim(paste(path,*file*,sep=\"\"),sep=\"\\t\",dec=\",\")//\n//SpData = na.exclude(subset(lay1, select = c(\"X\",\"Y\",\"Observed\"))) //\n//colnames(SpData)=c(\"X\",\"Y\",\"Z\")/\n\nThe initial variogram:\n\n/coordinates(SpData) = ~X+Y//\n//var = variogram(Z~1,SpData)/\n\nshow a slow initial rise and so suggest a *Gaussian *type.\n\nAfter a first variogram with:\n\n/m = vgm(200,\"Gau\",3000,0)//\n//\n//plot(var, model=m, //\n//main = paste(m$model[2],\"//\n//Nug=\",m$psill[1],\", Sill=\",round(m$psill[2]),\", \nRange=\",round(m$range[2]),sep =\"\")//\n//)/\n\nI have obtained a fitted variogram like this,\n\n/m = fit.variogram(var, m)/\n\nwith a reasonable cross-validation results:\n\n/krg_cv = krige.cv(Z~1, SpData, model = m)//\n//plot(krg_cv$observed,krg_cv$var1.pred, xlab=\"Z observed\", ylab=\"Z \npredicted\")//\n//abline(a=0,b=1)//\n//paste(\"media residui =\",mean(krg_cv$residual))//\n//paste(\"RMS residui =\",mean(krg_cv$residual^2)^0.5)/\n\nResulting map it is very smooth, despite the small, it seems, nugget and \nso *I have tried to fix nugget at 0* (exact interpolation).\n\nBut cross validation results with\n\n/m = vgm(216,\"Gau\",3640,*0*)/\n\nare dramatically wrong and also very different from cv results with\n\n/m = vgm(216,\"Gau\",3640,*1e-3*)/\n\nWhat happens ? I wrong in something ? Why nugget paraneter at 0 or at \nsmall value influnce so hard the results ?\n\nThank you very much in advance,\n\n\nStefano\n\n\nDott. Geol. Stefano Menichetti\n=============================================================\nARPAT - Agenzia per la Protezione dell'Ambiente della Toscana\nSettore Tecnico SIRA - Sistema Informativo Regionale Ambientale via Nicola Porpora 22 - 50144 Firenze\ntel. 0553206333 cell. 3668217978 (3383550147) fax 0553206410\ns.menichetti at arpat.toscana.it  http:\\\\www.arpat.toscana.it  http:\\\\sira.arpat.toscana.it\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all, I have a question about fixing nugget at 0 in a Gaussian \nvariogram using *gstat *package\n\nI have encountered a serious problem on a variogram of piezometric data \nthat give \"strange\" result",
+      "thread_id": "thread-f1966ff371f3",
+      "thread_depth": 0,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-fec79e1d1baa",
+      "message_id": "<548D52560D5BDE45AEC4EF876BF2A1940161A26D@S-DC-ESTB01-J.net1.cec.eu.int>",
+      "from_name": "Jo@@SKOIEN m@ili@g off ec@europ@@eu",
+      "from_email_hash": "0f2f9cb520c9ca1a167d5111aa58a26b2d489ae65306e30adc36d6fa09cf9297",
+      "date": "2018-10-16T10:06:51Z",
+      "subject": "[R-sig-Geo] Problems with gstat gaussian variogram and cross validation when fix nugget at 0",
+      "subject_clean": "Problems with gstat gaussian variogram and cross validation when fix nugget at 0",
+      "in_reply_to": "<146cb96f-f0e7-34b2-af8e-91eb7ceeb485@arpat.toscana.it>",
+      "references": [
+        "<839dca1a-08c2-24f9-244b-5d826a4cd01c@arpat.toscana.it>",
+        "<146cb96f-f0e7-34b2-af8e-91eb7ceeb485@arpat.toscana.it>"
+      ],
+      "body_plain": "Stefano,\n\nFixing the nugget at zero for the Gaussian varigoram can often cause numerical problems in kriging. If you have two observations that are close in space, their modelled semivariance will be so small that you get numerical issues with the covariance matrix. In some cases it will be singular, in your case it could be inverted, but the absolute values of the weights will be very high for some of the cross-validation locations. It seems you have two stations that are very close to each other, if you remove one of these, you can see how the results will be more similar (still not the same) to the model with a small nugget effect.\n\nBest,\nJon\n\n--\nJon Olav Sk?ien\n\nEuropean Commission\nJoint Research Centre ? JRC.E.1\nDisaster Risk Management Unit\nBuilding 26b 1/144 | Via E.Fermi 2749, I-21027 Ispra (VA) Italy, TP 267\njon.skoien at ec.europa.eu\nTel:  +39 0332 789205\nDisclaimer: Views expressed in this email are those of the individual and do not necessarily represent official views of the European Commission.\n\n\n________________________________________\nFrom: R-sig-Geo [r-sig-geo-bounces at r-project.org] on behalf of Stefano Menichetti [s.menichetti at arpat.toscana.it]\nSent: 12 October 2018 16:36\nTo: r-sig-geo at r-project.org\nSubject: [R-sig-Geo] Problems with gstat gaussian variogram and cross validation when fix nugget at 0\n\nDear all, I have a question about fixing nugget at 0 in a Gaussian\nvariogram using *gstat *package\n\nI have encountered a serious problem on a variogram of piezometric data\nthat give \"strange\" results if I want to fix nugget to 0.\n\nThis is the file and how to import:\n\n/library(gstat)/\n//file =>\nhttps://drive.google.com/open?id=1AOilEhR8G8YANVuFIBUcmEg-6UG1Ajrr//\n\n/lay1 =? read.delim(paste(path,*file*,sep=\"\"),sep=\"\\t\",dec=\",\")//\n//SpData = na.exclude(subset(lay1, select = c(\"X\",\"Y\",\"Observed\"))) //\n//colnames(SpData)=c(\"X\",\"Y\",\"Z\")/\n\nThe initial variogram:\n\n/coordinates(SpData) = ~X+Y//\n//var = variogram(Z~1,SpData)/\n\nshow a slow initial rise and so suggest a *Gaussian *type.\n\nAfter a first variogram with:\n\n/m = vgm(200,\"Gau\",3000,0)//\n//\n//plot(var, model=m, //\n//main = paste(m$model[2],\"//\n//Nug=\",m$psill[1],\", Sill=\",round(m$psill[2]),\",\nRange=\",round(m$range[2]),sep =\"\")//\n//)/\n\nI have obtained a fitted variogram like this,\n\n/m = fit.variogram(var, m)/\n\nwith a reasonable cross-validation results:\n\n/krg_cv = krige.cv(Z~1, SpData, model = m)//\n//plot(krg_cv$observed,krg_cv$var1.pred, xlab=\"Z observed\", ylab=\"Z\npredicted\")//\n//abline(a=0,b=1)//\n//paste(\"media residui =\",mean(krg_cv$residual))//\n//paste(\"RMS residui =\",mean(krg_cv$residual^2)^0.5)/\n\nResulting map it is very smooth, despite the small, it seems, nugget and\nso *I have tried to fix nugget at 0* (exact interpolation).\n\nBut cross validation results with\n\n/m = vgm(216,\"Gau\",3640,*0*)/\n\nare dramatically wrong and also very different from cv results with\n\n/m = vgm(216,\"Gau\",3640,*1e-3*)/\n\nWhat happens ? I wrong in something ? Why nugget paraneter at 0 or at\nsmall value influnce so hard the results ?\n\nThank you very much in advance,\n\n\nStefano\n\n\nDott. Geol. Stefano Menichetti\n=============================================================\nARPAT - Agenzia per la Protezione dell'Ambiente della Toscana\nSettore Tecnico SIRA - Sistema Informativo Regionale Ambientale via Nicola Porpora 22 - 50144 Firenze\ntel. 0553206333 cell. 3668217978 (3383550147) fax 0553206410\ns.menichetti at arpat.toscana.it  http:\\\\www.arpat.toscana.it  http:\\\\sira.arpat.toscana.it\n\n\n        [[alternative HTML version deleted]]",
+      "body_snippet": "Stefano,\n\nFixing the nugget at zero for the Gaussian varigoram can often cause numerical problems in kriging. If you have two observations that are close in space, their modelled semivariance will be ",
+      "thread_id": "thread-f1966ff371f3",
+      "thread_depth": 1,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-9c9cf02dcb33",
+      "message_id": "<alpine.LFD.2.21.1810220856120.19991@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-10-22T09:29:04+02:00",
+      "subject": "[R-sig-Geo] Unexpected configure error following recent rgeos release?",
+      "subject_clean": "Unexpected configure error following recent rgeos release?",
+      "in_reply_to": "<CAN_1p9xESG0ZG6t0bFp_+yUAH_t8agFMn8y2ueTv2Z28781e0g@mail.gmail.com>",
+      "references": [
+        "<CAN_1p9xESG0ZG6t0bFp_+yUAH_t8agFMn8y2ueTv2Z28781e0g@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Carl,\n\nThanks for reporting this issue. Note that I did post early in September \non https://stat.ethz.ch/pipermail/r-sig-geo/2018-September/026842.html \nabout the possibly breaking changes in this release (not breaking \nconfigure, but changing exception handling to try to free memory properly \non exception (topology exceptions being common).\n\nI think that the underlying issue is as seen in:\n\nhttps://r-forge.r-project.org/scm/viewvc.php/pkg/configure.ac?root=rgeos&r1=553&r2=574\n\nthat is one change in mid August caused by chaos in the GEOS RCs (the \nversion string started including the RC? tag -\n\nhttps://trac.osgeo.org/geos/ticket/917\n\nwhich also led to the second change to rgeos/configure.ac, to use \ngeos-config --cclibs instead of --libs (to avoid the broken version \nnumbers). There was no problem on CRAN's Debian (testing) on submission. I \nassume that this is a GEOS versioning issue, so I've committed a patch to \nR-Forge (r580) to continue to use geos-config --libs for GEOS < 3.7.0, and \nonly use --cclibs >= 3.7.0. Either wait for R-Forge to generate a new \ntarball (tomorrow Monday for you if in California, watching \nhttps://r-forge.r-project.org/R/?group_id=602 for rev: 580, then\ninstall.packages(\"rgeos\", repos=\"http://R-Forge.R-project.org\")), or \ndownload configure, configure.ac and insert into the 0.4-1 tarball if \nyou can test this immediately. I don't have an installed GEOS 3.5.1 (the \nlatest release for stretch, I think), so I can't check the output of \ngeos-config --cclibs.\n\nsf has slightly different configure.ac code for setting up GEOS shared \nobjects, and uses --clibs and --static-clibs, not --libs or --cclibs.\n\nThe underlying problem was GEOS releasing RC bundles with broken \nversioning strings that added RC? to version strings and shared object \nversion strings. Released GEOS seems to be OK, but checking against betas \nand RCs is normal practice to secure forward compatibility.\n\nHope this helps,\n\nRoger\n\nOn Mon, 22 Oct 2018, Carl Boettiger wrote:\n\n> Dear Roger, R-Sig-Geo list,\n>\n> Since the release of rgeos 0.4.1 on Friday, I am now unable to install\n> the package on debian:stretch where previously the package has always\n> installed fine with the standard libgeos-dev libraries.  Installation\n> now throws the following error:\n>\n>    configure: error: initGEOS_r not found in libgeos_c\n>\n> A more complete trace from the installation is pasted below.  I'm\n> building with R 3.5.1; the previous version of rgeos still installs\n> fine on the same system.  Thanks for your help.\n>\n> Sincerely,\n>\n> Carl\n>\n> package ?rgeos? successfully unpacked and MD5 sums checked\n> CC: gcc configure:\n> CXX: g++ configure: rgeos: 0.4-1\n> checking for /usr/bin/svnversion... no configure: svn revision: 579\n> checking for geos-config... /usr/bin/geos-config\n> checking geos-config usability... yes\n> configure: GEOS version: 3.5.1\n> checking geos version at least 3.2.0... yes\n> checking geos-config clibs... yes\n> checking geos_c.h presence and usability... yes\n> checking geos: linking with libgeos_c... no /usr/bin/ld:\n> cannot find -lgeos collect2:\n> error: ld returned 1 exit status configure:\n> Install failure: compilation and/or linkage problems.\n> configure: error: initGEOS_r not found in libgeos_c.\n>\n>\n> ---\n> Carl Boettiger\n> http://carlboettiger.info/\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "Dear Carl,\n\nThanks for reporting this issue. Note that I did post early in September \non https://stat.ethz.ch/pipermail/r-sig-geo/2018-September/026842.html \nabout the possibly breaking changes in thi",
+      "thread_id": "thread-9c9cf02dcb33",
+      "thread_depth": 0,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-1dbb254ff8ee",
+      "message_id": "<c0c1b96568304e73962812a176cb8f21@UVEX2.uvsr.sk>",
+      "from_name": "Hulényi Martin",
+      "from_email_hash": "03c511a4ee88852f65c1c53271e70da4c7a348b040b1456da35181759ed08476",
+      "date": "2018-10-22T14:31:23Z",
+      "subject": "[R-sig-Geo] spgm",
+      "subject_clean": "spgm",
+      "in_reply_to": "<alpine.LFD.2.21.1810110950290.16564@reclus.nhh.no>",
+      "references": [
+        "<1eacb0179d5746ac9360f91bfe34fd92@UVEX2.uvsr.sk>",
+        "<alpine.LFD.2.21.1809291433540.16108@reclus.nhh.no>",
+        "<1538558482789.98560@vlada.gov.sk>",
+        "<CF511784783D0B52.6663281b-e212-4d6f-8c70-13b86968c136@mail.outlook.com>",
+        "<alpine.LFD.2.21.1810110950290.16564@reclus.nhh.no>"
+      ],
+      "body_plain": "Thanks for the help, I appreciate it :). It works quite well.\n\nOne last question, I tried some diagnostics on the spgm models, but it never worked out as it always returned an error. Basically what I would like to do is a test (e.g. LM or information criterion) that would help me to select the proper weight matrix for the model.\n\n\nE.g.:\n\nlibrary(splm)\ndata(Produc, package=\"plm\")\ndata(usaww)\nfm <- log(gsp)~log(pcap)+log(pc)+log(emp)+unemp\nmatrix1 <- kronecker(diag(length(unique(Produc$year))), usaww)\nlistw1 <- mat2listw(matrix1, style=\"W\")\ntr <- trW(as(listw1, \"CsparseMatrix\"), m=100)\nGM <- spgm(fm, data=Produc, listw = usaww, moments=\"within\", spatial.error = FALSE, lag = TRUE)\nGMi <- spgm(update(fm, . ~ . - unemp), data=Produc, listw = usaww, moments=\"within\", spatial.error = FALSE, lag = TRUE, endog = ~ unemp,\n            instruments = ~ hwy + water + util)\nslmtest(GM)\nError in UseMethod(\"slmtest\") :\n  no applicable method for 'slmtest' applied to an object of class \"stsls\"\n\n\nIs it possible to maybe compute the Pseudo-R2?\n\nBest,\n\nMartin\n\n-----Original Message-----\nFrom: Roger Bivand [mailto:Roger.Bivand at nhh.no]\nSent: Thursday, October 11, 2018 10:00 AM\nTo: Hul?nyi Martin <martin.hulenyi at vlada.gov.sk>\nCc: r-sig-geo at r-project.org; Giovanni Millo <giovanni.millo at generali.com>\nSubject: Re: [R-sig-Geo] spgm\n\nOn Wed, 3 Oct 2018, Roger Bivand wrote:\n\n> Please provide a reproducible example using the Produc dataset, so\n> that it is clearer what the problem is. I do not know that there is\n> any literature on such impacts, please provide references.\n\nMy cut at an example:\n\nlibrary(splm)\ndata(Produc, package=\"plm\")\ndata(usaww)\nmatrix1 <- kronecker(diag(length(unique(Produc$year))), usaww)\nlistw1 <- mat2listw(matrix1, style=\"W\")\ntr <- trW(as(listw1, \"CsparseMatrix\"), m=100) GM <- spgm(fm, data=Produc, listw = usaww, moments=\"within\", spatial.error = FALSE, lag = TRUE) impacts(GM, listw=listw1) impacts(GM, tr=tr) GMi <- spgm(update(fm, . ~ . - unemp), data=Produc, listw = usaww, moments=\"within\", spatial.error = FALSE, lag = TRUE, endog = ~ unemp, instruments = ~ hwy + water + util)\nsummary(GMi)\nGMii <- spgm(update(fm, . ~ . - unemp - log(emp)), data=Produc, listw = usaww, moments=\"within\", spatial.error = FALSE, lag = TRUE, endog = ~ unemp + log(emp), instruments = ~ hwy + water + util)\nsummary(GMii)\n\nThe summary objects show the coefficients, etc. for endogeneous variables first, before the spatial coefficient. spdep::impacts.stsls() expects the spatial coefficient listed before the variables (dropping the intercept).\nIf you use:\n\nput_endog_last <- function(stsls) {\n   if (is.null(stsls$endog)) stop(\"no endogenous variables in fitted\nmodel\")\n   n_endog <- length(all.vars(stsls$endog))\n   coefs <- stsls$coefficients\n   n_coefs <- length(coefs)\n   flip <- c((n_endog+1):n_coefs, 1:n_endog)\n   stsls$coefficients <- coefs[flip]\n   stsls$var <- stsls$var[flip, flip]\n   stsls\n}\n\nto flip the orderings in the splm::spgm() output object, impacts can be calculated using the spdep::impacts.stsls() method. I've added the splm maintainer to CC - I'm unsure whether other functions in splm (or other argument settings when lag = TRUE) would be affected by patching\nsplm::spgm() itself.\n\nHope this helps,\n\nRoger\n\n\n>\n> Roger\n>\n> Roger Bivand\n> Norwegian School of Economics\n> Bergen, Norway\n>\n>\n>\n>\n> On Wed, Oct 3, 2018 at 11:21 AM +0200, \"Hul?nyi Martin\" <martin.hulenyi at vlada.gov.sk<mailto:martin.hulenyi at vlada.gov.sk>> wrote:\n>\n>\n> Thank you very much !\n> I have one more question regarding the output. I have also one\n> endogenous variable in the model.  Your code worked, but it did not show me the indirect and direct effects for the endogenous varibale. Here is my regex:\n> spd_01 <- spgm(gdppcgr~lefpayr+lpopgr+linvr+lagwgipca + laglgdppc,\n>             data=esifpdata, listw=dm1.lw,\n>             model=\"within\", lag=TRUE, spatial.error= FALSE, endog = ~ lefpayr,\n>             instruments=~areaprop,\n>             method=\"w2sls\")\n> matrix1 <- kronecker(diag(length(unique(esifpdata$years))), dm1)\n> listw1 <- mat2listw(matrix1, style=\"W\") tr <- trW(as(listw1,\n> \"CsparseMatrix\"), m=100) impacts(spd_01, listw=listw1) impacts(spd_01,\n> tr=tr) summary(impacts(spd_01, tr=tr, R=1000), zstats=TRUE,\n> short=TRUE)\n>\n> Best,\n>\n> MArtin Hul?nyi\n>\n>\n> ________________________________________\n> Od: Roger Bivand\n> Odoslan?: 29. septembra 2018 14:52\n> Komu: Hul?nyi Martin\n> K?pia: r-sig-geo at r-project.org\n> Predmet: Re: [R-sig-Geo] spgm\n>\n> On Sat, 29 Sep 2018, Hul?nyi Martin wrote:\n>\n>> Dear all,\n>>\n>>\n>> I would like to ask if there is a possibility to apply something\n>> similiar to the \"impacts\" from spdep package for SAR regressions\n>> using the spgm function from the splm package.\n>>\n>\n> A reprex would have helped. Here is mine:\n>\n> data(Produc, package = \"plm\")\n> data(usaww) # dense row-standardised weights matrix GM <-\n> spgm(log(gsp)~log(pcap)+log(pc)+log(emp)+unemp, data=Produc,\n>   listw = usaww, moments=\"fullweights\", lag=TRUE, spatial.error =\n> FALSE)\n> class(GM)\n> ?impacts.stsls # spdep method for stsls objects\n> head(Produc)\n> length(unique(Produc$year)) # T\n> big <- kronecker(diag(length(unique(Produc$year))), usaww) listw <-\n> mat2listw(big, style=\"W\") tr <- trW(as(listw, \"CsparseMatrix\"), m=100)\n> impacts(GM, listw=listw) impacts(GM, tr=tr) summary(impacts(GM, tr=tr,\n> R=1000), zstats=TRUE, short=TRUE)\n>\n> The splm:::impacts.splm() method cannot dispatch on stsls objects, so\n> they try to use the spdep:::impacts.stsls() method, but there the data\n> rows are n x T but listw is only of n rows. Looking inside\n> splm:::impacts.splm(), you see that a sparse kronecker product matrix\n> is constructed - either do the same if your n x T is large, or follow\n> the above using a dense kronecker product and cast back to listw\n> representation to create the trace vector.\n>\n> Hope this clarifies,\n>\n> Roger\n>\n>>\n>> Best regards,\n>>\n>>\n>> Martin Hul???nyi ?\n>>\n>>\n>> [eco.jpg]       Pred vytla???en???m tohto mailu zv???te pros???m vplyv na ???ivotn??? prostredie. ???akujeme.\n>> Please consider the environment before printing this e-mail. Thanks\n>>\n>>       [[alternative HTML version deleted]]\n>>\n>>\n>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics, Helleveien 30,\n> N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> http://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n> [eco.jpg]       Pred vytla?en?m tohto mailu zv??te pros?m vplyv na ?ivotn? prostredie. ?akujeme.\n> Please consider the environment before printing this e-mail. Thanks\n>\n>\n> [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n--\nRoger Bivand\nDepartment of Economics, Norwegian School of Economics, Helleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n[eco.jpg]       Pred vytla?en?m tohto mailu zv??te pros?m vplyv na ?ivotn? prostredie. ?akujeme.\nPlease consider the environment before printing this e-mail. Thanks",
+      "body_snippet": "Thanks for the help, I appreciate it :). It works quite well.\n\nOne last question, I tried some diagnostics on the spgm models, but it never worked out as it always returned an error. Basically what I ",
+      "thread_id": "thread-df879f855142",
+      "thread_depth": 3,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-ce80e3af5387",
+      "message_id": "<92164cd4-6b69-2011-c727-344e1a0dffb9@mail.montclair.edu>",
+      "from_name": "Danlin Yu",
+      "from_email_hash": "de8c1837ab8286762632afdc064e45eb916319289e8f348f7b26d55c32fb1151",
+      "date": "2018-10-22T11:37:20-04:00",
+      "subject": "[R-sig-Geo] logLik value of the spml spatial panel model",
+      "subject_clean": "logLik value of the spml spatial panel model",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear List:\n\nIn a recent attempt to compare spatial panel models using splm package, \nI intend to use the logLik value that was produced by the spml() \nroutine. When I ran the model, I realize that the logLik value is not \nalways produced, especially when the spatial.error is set to \"b\", a NULL \nvalue is returned. I know I must have missed something here, but can \nanyone point out why the logLik value is not returned when the \nspatial.error value is set to \"b\" (a spatial panel lag model always \nreturn a logLik value). I tried a bit to dig into the codes, but didn't \nfind much that can answer my question.\n\nThank you.\n\nBest,\n\nDanlin\n\n-- \n___________________________________________\nDanlin Yu, Ph.D.\nProfessor of GIS and Urban Geography\nDepartment of Earth & Environmental Studies\nMontclair State University\nMontclair, NJ, 07043\nTel: 973-655-4313\nFax: 973-655-4072\nemail: yud at mail.montclair.edu\nwebpage: csam.montclair.edu/~yu",
+      "body_snippet": "Dear List:\n\nIn a recent attempt to compare spatial panel models using splm package, \nI intend to use the logLik value that was produced by the spml() \nroutine. When I ran the model, I realize that the",
+      "thread_id": "thread-ce80e3af5387",
+      "thread_depth": 0,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-af15357ee8aa",
+      "message_id": "<C8A58D49-2C98-4176-BBE2-85E05076D987@unimelb.edu.au>",
+      "from_name": "Martin Tomko",
+      "from_email_hash": "6f430526343341068104c88abc55006a659164c43d0996f7cbe68ad400b25c7c",
+      "date": "2018-10-23T02:32:31Z",
+      "subject": "[R-sig-Geo] Sf find number of parts in multigeometry",
+      "subject_clean": "Sf find number of parts in multigeometry",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I am looking for an equivalent to Postgis ST_NumGeometries https://postgis.net/docs/ST_NumGeometries.html\nI have multipolygons in an sf df, where most of them are likely to be single part. I want to identify those that are not single part, and possibly retain only the largest polygon part, and cast all into Polygon.\nAny advice is appreciated, thanks!\n\nMartin\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am looking for an equivalent to Postgis ST_NumGeometries https://postgis.net/docs/ST_NumGeometries.html\nI have multipolygons in an sf df, where most of them are likely to be single part. I want to i",
+      "thread_id": "thread-af15357ee8aa",
+      "thread_depth": 0,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-786f26677c8c",
+      "message_id": "<CALG31BVGTuFMMEr++t7H=qCoj5T6E77185bnvWxr3Mw4zcQBHQ@mail.gmail.com>",
+      "from_name": "obrl soil",
+      "from_email_hash": "dba1d9d35f6940eb75ed920b7f2f0c3b027ba7d4145437bc25336ed8e66f2eb2",
+      "date": "2018-10-23T14:39:43+10:00",
+      "subject": "[R-sig-Geo] Sf find number of parts in multigeometry",
+      "subject_clean": "Sf find number of parts in multigeometry",
+      "in_reply_to": "<C8A58D49-2C98-4176-BBE2-85E05076D987@unimelb.edu.au>",
+      "references": [
+        "<C8A58D49-2C98-4176-BBE2-85E05076D987@unimelb.edu.au>"
+      ],
+      "body_plain": "Hi Martin,\n\nfor a multipolygon geometry column, you're working with a list of\nlists of lists of matrices, so you can iterate over the geometry\ncolumn like\n\n    sapply(st_geometry(x), length)\n\n(or purrr::map_int(), perhaps) to report number of polygon components.\nTo subset the first polygon component and drop the rest,\n\n    st_geometry(x) <- st_sfc(lapply(st_geometry(x), function(y)\nst_polygon(y[[1]])), crs = 4326) # or whatever crs you're using\n\nI would first run st_buffer(x, dist = 0L) and/or\nlwgeom::st_make_valid() to ensure the geometries are properly\nstructured, although this can't solve every problem. Note that AFAIK\nthere's no inherent sorting to multipolygon components, although you\ncould probably reorder them by area or number of vertices before\nsubsetting if you were really keen.\n\ncheers\nL\nOn Tue, Oct 23, 2018 at 12:32 PM Martin Tomko <tomkom at unimelb.edu.au> wrote:\n>\n> I am looking for an equivalent to Postgis ST_NumGeometries https://postgis.net/docs/ST_NumGeometries.html\n> I have multipolygons in an sf df, where most of them are likely to be single part. I want to identify those that are not single part, and possibly retain only the largest polygon part, and cast all into Polygon.\n> Any advice is appreciated, thanks!\n>\n> Martin\n>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hi Martin,\n\nfor a multipolygon geometry column, you're working with a list of\nlists of lists of matrices, so you can iterate over the geometry\ncolumn like\n\n    sapply(st_geometry(x), length)\n\n(or purr",
+      "thread_id": "thread-af15357ee8aa",
+      "thread_depth": 1,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-533996c20cb1",
+      "message_id": "<cf8aaa7e-b1dd-2148-0246-2c8e111a010c@gmail.com>",
+      "from_name": "Tim Appelhans",
+      "from_email_hash": "d51c6935d62cc3cfc5075181d325958ee6968b2a2bafb92844cfcb9c3c0f0dff",
+      "date": "2018-10-23T07:21:10+02:00",
+      "subject": "[R-sig-Geo] Sf find number of parts in multigeometry",
+      "subject_clean": "Sf find number of parts in multigeometry",
+      "in_reply_to": "<CALG31BVGTuFMMEr++t7H=qCoj5T6E77185bnvWxr3Mw4zcQBHQ@mail.gmail.com>",
+      "references": [
+        "<C8A58D49-2C98-4176-BBE2-85E05076D987@unimelb.edu.au>",
+        "<CALG31BVGTuFMMEr++t7H=qCoj5T6E77185bnvWxr3Mw4zcQBHQ@mail.gmail.com>"
+      ],
+      "body_plain": "As an addition to obrl soil's answer, I have come to like\n\nlengths(st_geometry(x)) - mind the s!\n\nBest\nTim\n\n\nOn 10/23/2018 06:39 AM, obrl soil wrote:\n> Hi Martin,\n>\n> for a multipolygon geometry column, you're working with a list of\n> lists of lists of matrices, so you can iterate over the geometry\n> column like\n>\n>      sapply(st_geometry(x), length)\n>\n> (or purrr::map_int(), perhaps) to report number of polygon components.\n> To subset the first polygon component and drop the rest,\n>\n>      st_geometry(x) <- st_sfc(lapply(st_geometry(x), function(y)\n> st_polygon(y[[1]])), crs = 4326) # or whatever crs you're using\n>\n> I would first run st_buffer(x, dist = 0L) and/or\n> lwgeom::st_make_valid() to ensure the geometries are properly\n> structured, although this can't solve every problem. Note that AFAIK\n> there's no inherent sorting to multipolygon components, although you\n> could probably reorder them by area or number of vertices before\n> subsetting if you were really keen.\n>\n> cheers\n> L\n> On Tue, Oct 23, 2018 at 12:32 PM Martin Tomko <tomkom at unimelb.edu.au> wrote:\n>> I am looking for an equivalent to Postgis ST_NumGeometries https://postgis.net/docs/ST_NumGeometries.html\n>> I have multipolygons in an sf df, where most of them are likely to be single part. I want to identify those that are not single part, and possibly retain only the largest polygon part, and cast all into Polygon.\n>> Any advice is appreciated, thanks!\n>>\n>> Martin\n>>\n>>\n>>          [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "As an addition to obrl soil's answer, I have come to like\n\nlengths(st_geometry(x)) - mind the s!\n\nBest\nTim\n\n\nOn 10/23/2018 06:39 AM, obrl soil wrote:\n> Hi Martin,\n>\n> for a multipolygon geometry colum",
+      "thread_id": "thread-af15357ee8aa",
+      "thread_depth": 2,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-1014fbf19def",
+      "message_id": "<CAAcGz98_qb5p404pweudEUY0GJ6fxJZaQHo5LPB=5mpJ8CMfcg@mail.gmail.com>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "2e9e45c3ac94e8a53f5f1e8f75b32f4eb03684a3b062cff1c8e21ee1d824f50f",
+      "date": "2018-10-23T17:59:27+11:00",
+      "subject": "[R-sig-Geo] Sf find number of parts in multigeometry",
+      "subject_clean": "Sf find number of parts in multigeometry",
+      "in_reply_to": "<C8A58D49-2C98-4176-BBE2-85E05076D987@unimelb.edu.au>",
+      "references": [
+        "<C8A58D49-2C98-4176-BBE2-85E05076D987@unimelb.edu.au>"
+      ],
+      "body_plain": "I see perfectly good answers to this, but can't resist sharing my own\napproach.\n\n I use  gibble::gibble for a summary of parts. See how the multi-part\nobject is number 4, and has 3 subobjects (subobject will repeat within\nobject for holes).\n\nlibrary(sf)\nx <- read_sf(system.file(\"gpkg/nc.gpkg\", package = \"sf\"))\ngibble::gibble(x)\n#    A tibble: 108 x 5\n#     nrow  ncol type         subobject object\n#    <int> <int> <chr>            <int>  <int>\n#1    27     2 MULTIPOLYGON         1      1\n#2    26     2 MULTIPOLYGON         1      2\n#3    28     2 MULTIPOLYGON         1      3\n#4    26     2 MULTIPOLYGON         1      4\n#5     7     2 MULTIPOLYGON         2      4\n#6     5     2 MULTIPOLYGON         3      4\n#7    34     2 MULTIPOLYGON         1      5\n#...\n\n(I use that for mapping out set-based operations on geometry data, it\ndoesn't make a huge amount of sense on its own. I suppose a rapply scheme\ncould be constructed to pluck out things, but you'd also want path extents\nand sizes and so forth for greater control).\n\nBut, if the biggest area of each multipolygon is what you want, give each a\nunique ID,  use st_cast to POLYGON, group by parent and slice out the\nlargest.\n\nlibrary(dplyr)\n\nx %>% mutate(ID = row_number()) %>% st_cast(\"POLYGON\") %>%\ngroup_by(ID) %>% arrange(desc(st_area(.))) %>% slice(1) %>% ungroup()\n\nNote that holes within a part might reduce the area logic, but so will\ndetails of the map projection in use and so on. It's helpful to learn the\nstructure of the underlying geometry lists to craft your own rogue\nsolutions.\n\nHTH\n\n\nOn Tue, Oct 23, 2018, 13:32 Martin Tomko <tomkom at unimelb.edu.au> wrote:\n\n> I am looking for an equivalent to Postgis ST_NumGeometries\n> https://postgis.net/docs/ST_NumGeometries.html\n> I have multipolygons in an sf df, where most of them are likely to be\n> single part. I want to identify those that are not single part, and\n> possibly retain only the largest polygon part, and cast all into Polygon.\n> Any advice is appreciated, thanks!\n>\n> Martin\n>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n-- \nDr. Michael Sumner\nSoftware and Database Engineer\nAustralian Antarctic Division\n203 Channel Highway\nKingston Tasmania 7050 Australia\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I see perfectly good answers to this, but can't resist sharing my own\napproach.\n\n I use  gibble::gibble for a summary of parts. See how the multi-part\nobject is number 4, and has 3 subobjects (subobje",
+      "thread_id": "thread-af15357ee8aa",
+      "thread_depth": 1,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-dd86a34e1e3b",
+      "message_id": "<87ftwvkur2.fsf@gmail.com>",
+      "from_name": "Jeremie Juste",
+      "from_email_hash": "7368ac97485baa7149633311d906f8e06b71a0dc74eb31f51fba0da73782ae40",
+      "date": "2018-10-24T21:30:25+02:00",
+      "subject": "[R-sig-Geo] logLik value of the spml spatial panel model",
+      "subject_clean": "logLik value of the spml spatial panel model",
+      "in_reply_to": "<92164cd4-6b69-2011-c727-344e1a0dffb9@mail.montclair.edu> (Danlin Yu's message of \"Mon, 22 Oct 2018 11:37:20 -0400\")",
+      "references": [
+        "<92164cd4-6b69-2011-c727-344e1a0dffb9@mail.montclair.edu>"
+      ],
+      "body_plain": "Danlin Yu <yud at mail.montclair.edu> writes:\n\n\nHello,\n\nCould you post the exact command you have used with all the relevant\noptions? If you dug into the code then you've noticed quite a lot of\nnested control structures so a clear idea of your commands might be\nuseful here.\n\nfor instance\n\n    fm <- logc ~ logp+ logpn + logy\n    sarpool <-  suppressWarnings(splm::spml(fm,cigar,\n                                            listw=lwcig,\n                                            model=\"pooling\",\n    spatial.error=\"none\",lag=TRUE,index=c(\"region\",\"time\")))\n\nWill produce the logLik\n    sarpool$logLik\n\n\n>From what I've understood at some point the function <nlminb> is always\ncalled so a likelihood value is always produced although not always\nreturned.\n\n\nBest regards,\n\nJeremie\n\n\n\n> Dear List:\n>\n> In a recent attempt to compare spatial panel models using splm\n> package, I intend to use the logLik value that was produced by the\n> spml() routine. When I ran the model, I realize that the logLik value\n> is not always produced, especially when the spatial.error is set to\n> \"b\", a NULL value is returned. I know I must have missed something\n> here, but can anyone point out why the logLik value is not returned\n> when the spatial.error value is set to \"b\" (a spatial panel lag model\n> always return a logLik value). I tried a bit to dig into the codes,\n> but didn't find much that can answer my question.\n>\n> Thank you.\n>\n> Best,\n>\n> Danlin",
+      "body_snippet": "Danlin Yu <yud at mail.montclair.edu> writes:\n\n\nHello,\n\nCould you post the exact command you have used with all the relevant\noptions? If you dug into the code then you've noticed quite a lot of\nnested",
+      "thread_id": "thread-ce80e3af5387",
+      "thread_depth": 1,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-df62ca7d08b3",
+      "message_id": "<35561a02-d828-5dee-2419-3675984b160a@mail.montclair.edu>",
+      "from_name": "Danlin Yu",
+      "from_email_hash": "de8c1837ab8286762632afdc064e45eb916319289e8f348f7b26d55c32fb1151",
+      "date": "2018-10-25T00:20:39-04:00",
+      "subject": "[R-sig-Geo] logLik value of the spml spatial panel model",
+      "subject_clean": "logLik value of the spml spatial panel model",
+      "in_reply_to": "<87ftwvkur2.fsf@gmail.com>",
+      "references": [
+        "<92164cd4-6b69-2011-c727-344e1a0dffb9@mail.montclair.edu>",
+        "<87ftwvkur2.fsf@gmail.com>"
+      ],
+      "body_plain": "Dear Jeremie:\n\nThank you for the response. I actually only copied the scripts from the \nspml help page, reproduced here:\n\nfm <- log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp\n## the two standard specifications (SEM and SAR) one with FE\n## and the other with RE:\n## fixed effects panel with spatial errors\nfespaterr <- spml(fm, data = Produc, listw = mat2listw(usaww),\n ?????????????????? model=\"within\", spatial.error=\"b\", Hess = FALSE) # \ndoesn't matter if I set Hess = T or F here, and doesn't matter if I set \nspatial.error = \"b\" or \"kkp\"\n\nAnd when I want to check the logLik value:\n\nfespaterr$logLik\n\nI got the \"NULL\" value\n\nI checked this with some other data sets, and found that if I am using \nthe spatial lag specification, I usually got a value for the logLik \nparameter. If, however, I use the spatial error specification, I usually \ngot the \"NULL\" value for the logLik parameter. I was not able to get to \nthe bottom of the issue by digging into the codes a bit. Any leads would \nbe greatly appreciated.\n\nBest,\n\nDanlin\n\n\nOn 2018/10/24 15:30, Jeremie Juste wrote:\n> Danlin Yu <yud at mail.montclair.edu> writes:\n>\n>\n> Hello,\n>\n> Could you post the exact command you have used with all the relevant\n> options? If you dug into the code then you've noticed quite a lot of\n> nested control structures so a clear idea of your commands might be\n> useful here.\n>\n> for instance\n>\n>      fm <- logc ~ logp+ logpn + logy\n>      sarpool <-  suppressWarnings(splm::spml(fm,cigar,\n>                                              listw=lwcig,\n>                                              model=\"pooling\",\n>      spatial.error=\"none\",lag=TRUE,index=c(\"region\",\"time\")))\n>\n> Will produce the logLik\n>      sarpool$logLik\n>\n>\n>  From what I've understood at some point the function <nlminb> is always\n> called so a likelihood value is always produced although not always\n> returned.\n>\n>\n> Best regards,\n>\n> Jeremie\n>\n>\n>\n>> Dear List:\n>>\n>> In a recent attempt to compare spatial panel models using splm\n>> package, I intend to use the logLik value that was produced by the\n>> spml() routine. When I ran the model, I realize that the logLik value\n>> is not always produced, especially when the spatial.error is set to\n>> \"b\", a NULL value is returned. I know I must have missed something\n>> here, but can anyone point out why the logLik value is not returned\n>> when the spatial.error value is set to \"b\" (a spatial panel lag model\n>> always return a logLik value). I tried a bit to dig into the codes,\n>> but didn't find much that can answer my question.\n>>\n>> Thank you.\n>>\n>> Best,\n>>\n>> Danlin\n\n-- \n___________________________________________\nDanlin Yu, Ph.D.\nProfessor of GIS and Urban Geography\nDepartment of Earth & Environmental Studies\nMontclair State University\nMontclair, NJ, 07043\nTel: 973-655-4313\nFax: 973-655-4072\nOffice: CELS 314\nEmail: yud at mail.montclair.edu\nwebpage: csam.montclair.edu/~yu",
+      "body_snippet": "Dear Jeremie:\n\nThank you for the response. I actually only copied the scripts from the \nspml help page, reproduced here:\n\nfm <- log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp\n## the two standard sp",
+      "thread_id": "thread-ce80e3af5387",
+      "thread_depth": 2,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-5faef5905d51",
+      "message_id": "<87y3amy4sh.fsf@gmail.com>",
+      "from_name": "Jeremie Juste",
+      "from_email_hash": "7368ac97485baa7149633311d906f8e06b71a0dc74eb31f51fba0da73782ae40",
+      "date": "2018-10-25T07:27:26+02:00",
+      "subject": "[R-sig-Geo] logLik value of the spml spatial panel model",
+      "subject_clean": "logLik value of the spml spatial panel model",
+      "in_reply_to": "<35561a02-d828-5dee-2419-3675984b160a@mail.montclair.edu> (Danlin Yu's message of \"Thu, 25 Oct 2018 00:20:39 -0400\")",
+      "references": [
+        "<92164cd4-6b69-2011-c727-344e1a0dffb9@mail.montclair.edu>",
+        "<87ftwvkur2.fsf@gmail.com>",
+        "<35561a02-d828-5dee-2419-3675984b160a@mail.montclair.edu>"
+      ],
+      "body_plain": "Hello,\n\nIndeed the Loglik was not returned here by the function sarpanelerror\nhere. I have provided a patch (attached). It's an ugly one but better\nthan nothing. So instead of running spml you could run test..spml after\nsourcing the file to obtain the fespaterr$logLik. \n\nfespaterr <- test..spml(fm, data = Produc, listw = mat2listw(usaww),\n                   model=\"within\", spatial.error=\"b\", Hess = FALSE)\n\n\nThe only modification I've made is in the function test..(sperrorlm)\nwhere I've added ll=LL in the list returned.\n\n\nHope it helps,\n\nJeremie\n\n\n\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: test.R\nType: application/octet-stream\nSize: 33277 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20181025/a28b6639/attachment.obj>\n\n-------------- next part --------------\n\n\n> Dear Jeremie:\n>\n> Thank you for the response. I actually only copied the scripts from\n> the spml help page, reproduced here:\n>\n> fm <- log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp\n> ## the two standard specifications (SEM and SAR) one with FE\n> ## and the other with RE:\n> ## fixed effects panel with spatial errors\n> fespaterr <- spml(fm, data = Produc, listw = mat2listw(usaww),\n> ?????????????????? model=\"within\", spatial.error=\"b\", Hess = FALSE) #\n> doesn't matter if I set Hess = T or F here, and doesn't matter if I\n> set spatial.error = \"b\" or \"kkp\"\n>\n> And when I want to check the logLik value:\n>\n> fespaterr$logLik\n>\n> I got the \"NULL\" value\n>\n> I checked this with some other data sets, and found that if I am using\n> the spatial lag specification, I usually got a value for the logLik\n> parameter. If, however, I use the spatial error specification, I\n> usually got the \"NULL\" value for the logLik parameter. I was not able\n> to get to the bottom of the issue by digging into the codes a bit. Any\n> leads would be greatly appreciated.\n>\n> Best,\n>\n> Danlin\n>\n> On 2018/10/24 15:30, Jeremie Juste wrote:\n>> Danlin Yu <yud at mail.montclair.edu> writes:\n>>\n>>\n>> Hello,\n>>\n>> Could you post the exact command you have used with all the relevant\n>> options? If you dug into the code then you've noticed quite a lot of\n>> nested control structures so a clear idea of your commands might be\n>> useful here.\n>>\n>> for instance\n>>\n>>      fm <- logc ~ logp+ logpn + logy\n>>      sarpool <-  suppressWarnings(splm::spml(fm,cigar,\n>>                                              listw=lwcig,\n>>                                              model=\"pooling\",\n>>      spatial.error=\"none\",lag=TRUE,index=c(\"region\",\"time\")))\n>>\n>> Will produce the logLik\n>>      sarpool$logLik\n>>\n>>\n>>  From what I've understood at some point the function <nlminb> is always\n>> called so a likelihood value is always produced although not always\n>> returned.\n>>\n>>\n>> Best regards,\n>>\n>> Jeremie\n>>\n>>\n>>\n>>> Dear List:\n>>>\n>>> In a recent attempt to compare spatial panel models using splm\n>>> package, I intend to use the logLik value that was produced by the\n>>> spml() routine. When I ran the model, I realize that the logLik value\n>>> is not always produced, especially when the spatial.error is set to\n>>> \"b\", a NULL value is returned. I know I must have missed something\n>>> here, but can anyone point out why the logLik value is not returned\n>>> when the spatial.error value is set to \"b\" (a spatial panel lag model\n>>> always return a logLik value). I tried a bit to dig into the codes,\n>>> but didn't find much that can answer my question.\n>>>\n>>> Thank you.\n>>>\n>>> Best,\n>>>\n>>> Danlin",
+      "body_snippet": "Hello,\n\nIndeed the Loglik was not returned here by the function sarpanelerror\nhere. I have provided a patch (attached). It's an ugly one but better\nthan nothing. So instead of running spml you could r",
+      "thread_id": "thread-ce80e3af5387",
+      "thread_depth": 3,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-4716ec60e02d",
+      "message_id": "<bc82fb6e-a6d4-16e8-3ce6-35b565f8a383@mail.montclair.edu>",
+      "from_name": "Danlin Yu",
+      "from_email_hash": "de8c1837ab8286762632afdc064e45eb916319289e8f348f7b26d55c32fb1151",
+      "date": "2018-10-25T01:39:42-04:00",
+      "subject": "[R-sig-Geo] logLik value of the spml spatial panel model",
+      "subject_clean": "logLik value of the spml spatial panel model",
+      "in_reply_to": "<87y3amy4sh.fsf@gmail.com>",
+      "references": [
+        "<92164cd4-6b69-2011-c727-344e1a0dffb9@mail.montclair.edu>",
+        "<87ftwvkur2.fsf@gmail.com>",
+        "<35561a02-d828-5dee-2419-3675984b160a@mail.montclair.edu>",
+        "<87y3amy4sh.fsf@gmail.com>"
+      ],
+      "body_plain": "Dear Jeremie:\n\nThat worked! Thank you very much for the addition.\n\nBest,\n\nDanlin\n\n\nOn 2018/10/25 1:27, Jeremie Juste wrote:\n> Hello,\n>\n> Indeed the Loglik was not returned here by the function sarpanelerror\n> here. I have provided a patch (attached). It's an ugly one but better\n> than nothing. So instead of running spml you could run test..spml after\n> sourcing the file to obtain the fespaterr$logLik.\n>\n> fespaterr <- test..spml(fm, data = Produc, listw = mat2listw(usaww),\n>                     model=\"within\", spatial.error=\"b\", Hess = FALSE)\n>\n>\n> The only modification I've made is in the function test..(sperrorlm)\n> where I've added ll=LL in the list returned.\n>\n>\n> Hope it helps,\n>\n> Jeremie\n>\n>\n>\n>\n>\n>\n>> Dear Jeremie:\n>>\n>> Thank you for the response. I actually only copied the scripts from\n>> the spml help page, reproduced here:\n>>\n>> fm <- log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp\n>> ## the two standard specifications (SEM and SAR) one with FE\n>> ## and the other with RE:\n>> ## fixed effects panel with spatial errors\n>> fespaterr <- spml(fm, data = Produc, listw = mat2listw(usaww),\n>>  ?????????????????? model=\"within\", spatial.error=\"b\", Hess = FALSE) #\n>> doesn't matter if I set Hess = T or F here, and doesn't matter if I\n>> set spatial.error = \"b\" or \"kkp\"\n>>\n>> And when I want to check the logLik value:\n>>\n>> fespaterr$logLik\n>>\n>> I got the \"NULL\" value\n>>\n>> I checked this with some other data sets, and found that if I am using\n>> the spatial lag specification, I usually got a value for the logLik\n>> parameter. If, however, I use the spatial error specification, I\n>> usually got the \"NULL\" value for the logLik parameter. I was not able\n>> to get to the bottom of the issue by digging into the codes a bit. Any\n>> leads would be greatly appreciated.\n>>\n>> Best,\n>>\n>> Danlin\n>>\n>> On 2018/10/24 15:30, Jeremie Juste wrote:\n>>> Danlin Yu <yud at mail.montclair.edu> writes:\n>>>\n>>>\n>>> Hello,\n>>>\n>>> Could you post the exact command you have used with all the relevant\n>>> options? If you dug into the code then you've noticed quite a lot of\n>>> nested control structures so a clear idea of your commands might be\n>>> useful here.\n>>>\n>>> for instance\n>>>\n>>>       fm <- logc ~ logp+ logpn + logy\n>>>       sarpool <-  suppressWarnings(splm::spml(fm,cigar,\n>>>                                               listw=lwcig,\n>>>                                               model=\"pooling\",\n>>>       spatial.error=\"none\",lag=TRUE,index=c(\"region\",\"time\")))\n>>>\n>>> Will produce the logLik\n>>>       sarpool$logLik\n>>>\n>>>\n>>>   From what I've understood at some point the function <nlminb> is always\n>>> called so a likelihood value is always produced although not always\n>>> returned.\n>>>\n>>>\n>>> Best regards,\n>>>\n>>> Jeremie\n>>>\n>>>\n>>>\n>>>> Dear List:\n>>>>\n>>>> In a recent attempt to compare spatial panel models using splm\n>>>> package, I intend to use the logLik value that was produced by the\n>>>> spml() routine. When I ran the model, I realize that the logLik value\n>>>> is not always produced, especially when the spatial.error is set to\n>>>> \"b\", a NULL value is returned. I know I must have missed something\n>>>> here, but can anyone point out why the logLik value is not returned\n>>>> when the spatial.error value is set to \"b\" (a spatial panel lag model\n>>>> always return a logLik value). I tried a bit to dig into the codes,\n>>>> but didn't find much that can answer my question.\n>>>>\n>>>> Thank you.\n>>>>\n>>>> Best,\n>>>>\n>>>> Danlin\n\n-- \n___________________________________________\nDanlin Yu, Ph.D.\nProfessor of GIS and Urban Geography\nDepartment of Earth & Environmental Studies\nMontclair State University\nMontclair, NJ, 07043\nTel: 973-655-4313\nFax: 973-655-4072\nOffice: CELS 314\nEmail: yud at mail.montclair.edu\nwebpage: csam.montclair.edu/~yu\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Jeremie:\n\nThat worked! Thank you very much for the addition.\n\nBest,\n\nDanlin\n\n\nOn 2018/10/25 1:27, Jeremie Juste wrote:\n> Hello,\n>\n> Indeed the Loglik was not returned here by the function sarpane",
+      "thread_id": "thread-ce80e3af5387",
+      "thread_depth": 4,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-074fe87b3595",
+      "message_id": "<alpine.LFD.2.21.1810251020210.10346@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-10-25T10:27:19+02:00",
+      "subject": "[R-sig-Geo] logLik value of the spml spatial panel model",
+      "subject_clean": "logLik value of the spml spatial panel model",
+      "in_reply_to": "<87y3amy4sh.fsf@gmail.com>",
+      "references": [
+        "<92164cd4-6b69-2011-c727-344e1a0dffb9@mail.montclair.edu>",
+        "<87ftwvkur2.fsf@gmail.com>",
+        "<35561a02-d828-5dee-2419-3675984b160a@mail.montclair.edu>",
+        "<87y3amy4sh.fsf@gmail.com>"
+      ],
+      "body_plain": "On Thu, 25 Oct 2018, Jeremie Juste wrote:\n\n> Hello,\n>\n> Indeed the Loglik was not returned here by the function sarpanelerror\n> here. I have provided a patch (attached). It's an ugly one but better\n> than nothing. So instead of running spml you could run test..spml after\n> sourcing the file to obtain the fespaterr$logLik.\n>\n> fespaterr <- test..spml(fm, data = Produc, listw = mat2listw(usaww),\n>                   model=\"within\", spatial.error=\"b\", Hess = FALSE)\n>\n>\n> The only modification I've made is in the function test..(sperrorlm)\n> where I've added ll=LL in the list returned.\n\nGood, thanks! And good that Danlin reported that your addition of the \nvalue to the returned object appeared to work for him. I've added the splm \nmaintainers to this reply. If you can produce a patch file using diff, it \nwould be easier to add the extra returned value. It may be, however, that \nthere was a reason for omitting it, so checks to verify that it actually \nis a logLik value on the same basis as other logLik values (not from an \nabbreviated log-likelihood function used for fitting by omitting \nconstants) would be helpful. It would be good to provide logLik methods \nfor the ML fitted model objects.\n\nAgain thanks for a good example of collaboration to benifit us all.\n\nRoger\n\n>\n>\n> Hope it helps,\n>\n> Jeremie\n>\n>\n>\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Thu, 25 Oct 2018, Jeremie Juste wrote:\n\n> Hello,\n>\n> Indeed the Loglik was not returned here by the function sarpanelerror\n> here. I have provided a patch (attached). It's an ugly one but better\n> ",
+      "thread_id": "thread-ce80e3af5387",
+      "thread_depth": 4,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-01022ee8477c",
+      "message_id": "<CADvFi5o4ed7LYrEtEwnnt-DMzD3N+yH3KTDJP=wvs3-dH2PHEg@mail.gmail.com>",
+      "from_name": "Hugo Costa",
+      "from_email_hash": "4c64adf5443e1d2e49325008067c38549c59ed94523300817f82fea6c728309e",
+      "date": "2018-10-25T12:36:33+02:00",
+      "subject": "[R-sig-Geo] where is my raster stack? filename=\"\" and inMemory=FALSE",
+      "subject_clean": "where is my raster stack? filename=\"\" and inMemory=FALSE",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list,\n\nI imported a raster stack and made some processing (crop, reclassify). I\ncan plot the stack and all looks fine. However, I don't know any more where\nthe file is. Namely\n\nfromDisk(raster) retrieves FALSE\nfilename(raster) retrieves \"\"\ninMemory(raster) retrieves FALSE\nhasValues(raster) retrieves TRUE\n\nprinting out the raster gives me this:\nclass       : RasterStack\ndimensions  : 7041, 7221, 50843061, 11  (nrow, ncol, ncell, nlayers)\nresolution  : 0.00015, 0.00015  (x, y)\nextent      : -10.04175, -8.9586, 37.972, 39.02815  (xmin, xmax, ymin, ymax)\ncoord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84\n+towgs84=0,0,0\nnames       : X10, X20, X30, X40, X50, X60, X70, X80, X90, X100, layer\nmin values  :   0,   0,   0,   0,   0,   0,   0,   0,   0,    0,     0\nmax values  :   1,   1,   1,   1,   0,   1,   0,   1,   1,    0,     1\n\nI want to do everything in memory, but now I need to use gdalwarp, and\ndon't know how to define the argument srcfile. I can write my stack to\nsomewhere using writeRaster and get a filename, but that is too slow for my\nneeds and I'm looking for an alternative.\n\nThank you\nHugo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list,\n\nI imported a raster stack and made some processing (crop, reclassify). I\ncan plot the stack and all looks fine. However, I don't know any more where\nthe file is. Namely\n\nfromDisk(raster) r",
+      "thread_id": "thread-01022ee8477c",
+      "thread_depth": 0,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-6e0d318eee86",
+      "message_id": "<37413062-5c75-0ee4-c568-544726683f19@uni-wuerzburg.de>",
+      "from_name": "Benjamin Leutner",
+      "from_email_hash": "116ab0f342bce49f47565767ad294d064d2d51a562fbc415074f2f8784a047b6",
+      "date": "2018-10-25T13:00:20+02:00",
+      "subject": "[R-sig-Geo] where is my raster stack? filename=\"\" and inMemory=FALSE",
+      "subject_clean": "where is my raster stack? filename=\"\" and inMemory=FALSE",
+      "in_reply_to": "<CADvFi5o4ed7LYrEtEwnnt-DMzD3N+yH3KTDJP=wvs3-dH2PHEg@mail.gmail.com>",
+      "references": [
+        "<CADvFi5o4ed7LYrEtEwnnt-DMzD3N+yH3KTDJP=wvs3-dH2PHEg@mail.gmail.com>"
+      ],
+      "body_plain": "For a RasterStack the internal organisation is a list of RasterLayers.\nHence you can retrieve the filenames like this, for example:\n\nsapply(1:nlayers(raster), function(f) filename(raster[[f]]))\n\n\nOn 10/25/18 12:36 PM, Hugo Costa wrote:\n> Dear list,\n>\n> I imported a raster stack and made some processing (crop, reclassify). I\n> can plot the stack and all looks fine. However, I don't know any more where\n> the file is. Namely\n>\n> fromDisk(raster) retrieves FALSE\n> filename(raster) retrieves \"\"\n> inMemory(raster) retrieves FALSE\n> hasValues(raster) retrieves TRUE\n>\n> printing out the raster gives me this:\n> class       : RasterStack\n> dimensions  : 7041, 7221, 50843061, 11  (nrow, ncol, ncell, nlayers)\n> resolution  : 0.00015, 0.00015  (x, y)\n> extent      : -10.04175, -8.9586, 37.972, 39.02815  (xmin, xmax, ymin, ymax)\n> coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84\n> +towgs84=0,0,0\n> names       : X10, X20, X30, X40, X50, X60, X70, X80, X90, X100, layer\n> min values  :   0,   0,   0,   0,   0,   0,   0,   0,   0,    0,     0\n> max values  :   1,   1,   1,   1,   0,   1,   0,   1,   1,    0,     1\n>\n> I want to do everything in memory, but now I need to use gdalwarp, and\n> don't know how to define the argument srcfile. I can write my stack to\n> somewhere using writeRaster and get a filename, but that is too slow for my\n> needs and I'm looking for an alternative.\n>\n> Thank you\n> Hugo\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nBenjamin Leutner\n\nDepartment of Remote Sensing\nUniversity of W?rzburg",
+      "body_snippet": "For a RasterStack the internal organisation is a list of RasterLayers.\nHence you can retrieve the filenames like this, for example:\n\nsapply(1:nlayers(raster), function(f) filename(raster[[f]]))\n\n\nOn 1",
+      "thread_id": "thread-01022ee8477c",
+      "thread_depth": 1,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-2026d6b125cf",
+      "message_id": "<6f478054-474b-52a7-6a83-2a3df5eb7566@mail.montclair.edu>",
+      "from_name": "Danlin Yu",
+      "from_email_hash": "de8c1837ab8286762632afdc064e45eb916319289e8f348f7b26d55c32fb1151",
+      "date": "2018-10-25T10:54:22-04:00",
+      "subject": "[R-sig-Geo] R:  logLik value of the spml spatial panel model",
+      "subject_clean": "R:  logLik value of the spml spatial panel model",
+      "in_reply_to": "<DB36B6DC36CFD746A374F62BE5B5C5BD06C29E0F@D3MBXSRVTV3.corp.generali.net>",
+      "references": [
+        "<92164cd4-6b69-2011-c727-344e1a0dffb9@mail.montclair.edu>",
+        "<87ftwvkur2.fsf@gmail.com>",
+        "<35561a02-d828-5dee-2419-3675984b160a@mail.montclair.edu>",
+        "<87y3amy4sh.fsf@gmail.com>",
+        "<alpine.LFD.2.21.1810251020210.10346@reclus.nhh.no>",
+        "<87d0ryxtyh.fsf@gmail.com>",
+        "<DB36B6DC36CFD746A374F62BE5B5C5BD06C29E0F@D3MBXSRVTV3.corp.generali.net>"
+      ],
+      "body_plain": "This is great response. Thank you all, Giovanni, Roger and Jeremie. \nBased on the response, it seems that the LL element for fixed effect \nmodel is only useful for optimization, but not cross model comparison? \nThe fixed effect spatial lag panel model, however, does produce the LL \nvalue. Does that mean this LL value shall not be used for model \ncomparison purpose as well?\n\nThank you all.\n\nBest,\n\nDanlin\n\n\nOn 2018/10/25 8:46, Millo Giovanni wrote:\n> Hello. Thanks for keeping us posted.\n>\n> As was aptly observed, while RE and pooled models do actually have a logLik element, FE ones don't but there's a reason. While it is not difficult to output the  LL for the FE models too, like Jeremie did (or perhaps even setting quiet=FALSE and taking the last loglikelihood value from optimization), we never managed to decide whether outputting this is appropriate or not. In fact the LL element from the procedure is relative to the \"pooled\" model on demeaned data, so it is sort of a crossbred likelihood; most people asking for it want it to compare to the LL of the random effects model or similar uses, which I would not advise.\n>\n> Gianfranco (author of the FE stuff) do please step in if appropriate.\n> Best,\n> Giovanni\n>\n> -----Messaggio originale-----\n> Da: Jeremie Juste [mailto:jeremiejuste at gmail.com]\n> Inviato: gioved? 25 ottobre 2018 11:21\n> A: Roger Bivand\n> Cc: Danlin Yu; r-sig-geo at r-project.org; Millo Giovanni; Gianfranco Piras\n> Oggetto: Re: [R-sig-Geo] logLik value of the spml spatial panel model\n>\n>\n> Hello,\n>\n> Thanks for the feedback.\n>\n> Here is the diff. It is my first one so I'm not sure I'm doing everything right. :-)\n>\n>\n> modified   R/likelihoodsFE.R\n> @@ -459,7 +459,7 @@ if(Hess) asyv <- NULL  else asyv <- asyv\n>\n>\n> -       return<-list(coeff=betas, rho = rho, s2 = s2, rest.se = rest.se, rho.se = rho.se, s2.se = s2.se, asyvar1=asyvar1, residuals = r, asyv = asyv)\n> +    return<-list(coeff=betas, rho = rho, s2 = s2, rest.se = rest.se,\n> + rho.se = rho.se, s2.se = s2.se, ll=LL, asyvar1=asyvar1, residuals = r,\n> + asyv = asyv)\n>   }\n>\n> I have compressed splm with the modification with the .git inside. I have installed the modified package again and checked that the modification worked.\n>\n>> fespaterr <- spml(fm, data = Produc, listw = mat2listw(usaww),\n>> model=\"within\", spatial.error=\"b\", Hess = FALSE) fespaterr$logLik\n>\n>> It may be,however, that there was a reason for omitting it, so checks\n>> to verify that it actually is a logLik value on the same basis as\n>> other logLik values (not from an abbreviated log-likelihood function\n>> used for fitting by omitting constants) would be helpful. It would be\n>> good to provide logLik methods for the ML fitted model objects.\n> I have checked that it is the logLik that correspond to the estimation of the rho.\n>\n> Best regards,\n>\n> Jeremie\n>\n>\n>\n>\n> Ai sensi del Reg. UE 2016/679 e normativa vigente si precisa che le informazioni contenute in questo messaggio sono riservate ed a uso esclusivo del destinatario. Qualora il messaggio in parola Le fosse pervenuto per errore, La invitiamo ad eliminarlo senza copiarlo e a non inoltrarlo a terzi, dandocene gentilmente comunicazione. Grazie.\n>\n> Pursuant to Italian Law and EU Reg. 2016/679, you are hereby informed that this message contains confidential information intended only for the use of the addressee. If you are not the addressee, and have received this message by mistake, please delete it and immediately notify us. You may not copy or disseminate this message to anyone. Thank you.\n\n-- \n___________________________________________\nDanlin Yu, Ph.D.\nProfessor of GIS and Urban Geography\nDepartment of Earth & Environmental Studies\nMontclair State University\nMontclair, NJ, 07043\nTel: 973-655-4313\nFax: 973-655-4072\nOffice: CELS 314\nEmail: yud at mail.montclair.edu\nwebpage: csam.montclair.edu/~yu",
+      "body_snippet": "This is great response. Thank you all, Giovanni, Roger and Jeremie. \nBased on the response, it seems that the LL element for fixed effect \nmodel is only useful for optimization, but not cross model co",
+      "thread_id": "thread-2026d6b125cf",
+      "thread_depth": 0,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-2f0874c0bc66",
+      "message_id": "<C7E64ADF-2B18-4C82-A9D9-87999B403F81@unimelb.edu.au>",
+      "from_name": "Martin Tomko",
+      "from_email_hash": "6f430526343341068104c88abc55006a659164c43d0996f7cbe68ad400b25c7c",
+      "date": "2018-10-26T02:37:38Z",
+      "subject": "[R-sig-Geo] Sf find number of parts in multigeometry",
+      "subject_clean": "Sf find number of parts in multigeometry",
+      "in_reply_to": "<CAAcGz98_qb5p404pweudEUY0GJ6fxJZaQHo5LPB=5mpJ8CMfcg@mail.gmail.com>",
+      "references": [
+        "<C8A58D49-2C98-4176-BBE2-85E05076D987@unimelb.edu.au>",
+        "<CAAcGz98_qb5p404pweudEUY0GJ6fxJZaQHo5LPB=5mpJ8CMfcg@mail.gmail.com>"
+      ],
+      "body_plain": "Dear all,\nThank you for the hints ? I will test and report any surprises ?\nMartin\n\nFrom: Michael Sumner <mdsumner at gmail.com>\nDate: Tuesday, 23 October 2018 at 5:59 pm\nTo: Martin Tomko <tomkom at unimelb.edu.au>\nCc: \"r-sig-geo at r-project.org\" <r-sig-geo at r-project.org>\nSubject: Re: [R-sig-Geo] Sf find number of parts in multigeometry\n\nI see perfectly good answers to this, but can't resist sharing my own approach.\n\n I use  gibble::gibble for a summary of parts. See how the multi-part object is number 4, and has 3 subobjects (subobject will repeat within object for holes).\n\nlibrary(sf)\nx <- read_sf(system.file(\"gpkg/nc.gpkg\", package = \"sf\"))\ngibble::gibble(x)\n#    A tibble: 108 x 5\n#     nrow  ncol type         subobject object\n#    <int> <int> <chr>            <int>  <int>\n#1    27     2 MULTIPOLYGON         1      1\n#2    26     2 MULTIPOLYGON         1      2\n#3    28     2 MULTIPOLYGON         1      3\n#4    26     2 MULTIPOLYGON         1      4\n#5     7     2 MULTIPOLYGON         2      4\n#6     5     2 MULTIPOLYGON         3      4\n#7    34     2 MULTIPOLYGON         1      5\n#...\n\n(I use that for mapping out set-based operations on geometry data, it doesn't make a huge amount of sense on its own. I suppose a rapply scheme could be constructed to pluck out things, but you'd also want path extents and sizes and so forth for greater control).\n\nBut, if the biggest area of each multipolygon is what you want, give each a unique ID,  use st_cast to POLYGON, group by parent and slice out the largest.\n\nlibrary(dplyr)\n\nx %>% mutate(ID = row_number()) %>% st_cast(\"POLYGON\") %>%\ngroup_by(ID) %>% arrange(desc(st_area(.))) %>% slice(1) %>% ungroup()\n\nNote that holes within a part might reduce the area logic, but so will details of the map projection in use and so on. It's helpful to learn the structure of the underlying geometry lists to craft your own rogue solutions.\n\nHTH\n\nOn Tue, Oct 23, 2018, 13:32 Martin Tomko <tomkom at unimelb.edu.au<mailto:tomkom at unimelb.edu.au>> wrote:\nI am looking for an equivalent to Postgis ST_NumGeometries https://postgis.net/docs/ST_NumGeometries.html<https://postgis.net/docs/ST_NumGeometries.html>\nI have multipolygons in an sf df, where most of them are likely to be single part. I want to identify those that are not single part, and possibly retain only the largest polygon part, and cast all into Polygon.\nAny advice is appreciated, thanks!\n\nMartin\n\n\n        [[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org<mailto:R-sig-Geo at r-project.org>\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo<https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n--\nDr. Michael Sumner\nSoftware and Database Engineer\nAustralian Antarctic Division\n203 Channel Highway\nKingston Tasmania 7050 Australia\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\nThank you for the hints ? I will test and report any surprises ?\nMartin\n\nFrom: Michael Sumner <mdsumner at gmail.com>\nDate: Tuesday, 23 October 2018 at 5:59 pm\nTo: Martin Tomko <tomkom at un",
+      "thread_id": "thread-af15357ee8aa",
+      "thread_depth": 2,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-313e936b9e0d",
+      "message_id": "<CAH-s5PM4GJ1Y92QMyYEUv4AS9gVS2SnL1zhNCTOpOTbsd2hQQw@mail.gmail.com>",
+      "from_name": "Roozbeh Valavi",
+      "from_email_hash": "197a111215a18d9e14eeb6a6cef38093eb77860791b93744aff46723e26d75e9",
+      "date": "2018-10-29T23:42:06+11:00",
+      "subject": "[R-sig-Geo] Cost distance in spatial weight matrix",
+      "subject_clean": "Cost distance in spatial weight matrix",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list,\n\nI wonder if it is possible to add some kind of cost/weighting when creating\na spatial weight matrix to be used in a spatial lag model? I want to\nconsider the effect of elevation as a cost for calculating distance to the\nneighbours.\nI am using spdep for creating the W and splm for the model.\n\nThank you in advance,\nRoozbeh\n-- \n*Roozbeh Valavi*\nPhD Candidate\nThe Quantitative & Applied Ecology Group <http://qaeco.com/>\nSchool of BioSciences | Faculty of Science\nThe University of Melbourne, VIC 3010, Australia\nMobile: +61 423 283 238\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list,\n\nI wonder if it is possible to add some kind of cost/weighting when creating\na spatial weight matrix to be used in a spatial lag model? I want to\nconsider the effect of elevation as a cost ",
+      "thread_id": "thread-313e936b9e0d",
+      "thread_depth": 0,
+      "month": "2018-10"
+    },
+    {
+      "id": "msg-bf930ac9124a",
+      "message_id": "<692c3f9c-38e1-9428-8de7-8f573d10ee29@cirad.fr>",
+      "from_name": "Facundo Muñoz",
+      "from_email_hash": "141a0886ba1f3a394b1c381260ae4bb94a52ae6f11894208d144908297556cc2",
+      "date": "2018-10-29T14:48:43+01:00",
+      "subject": "[R-sig-Geo] Cost distance in spatial weight matrix",
+      "subject_clean": "Cost distance in spatial weight matrix",
+      "in_reply_to": "<CAH-s5PM4GJ1Y92QMyYEUv4AS9gVS2SnL1zhNCTOpOTbsd2hQQw@mail.gmail.com>",
+      "references": [
+        "<CAH-s5PM4GJ1Y92QMyYEUv4AS9gVS2SnL1zhNCTOpOTbsd2hQQw@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Roozbeh,\n\npackage geoRcb [1]* provides function distmatGen() [2], which computes a\ncost-based distance matrix between any two sets of locations, given a\nraster cost surface (such as elevation). The function uses package\ngdistance to actually perform the computations, and it does not depend\non anything else in the package, so you can simply copy it to your code\nbase.\n\nIs that what you were looking for?\n\n?acu.-\n\n\n\n[1] https://github.com/famuvie/geoRcb/\n\n[2] https://github.com/famuvie/geoRcb/blob/master/R/distmatGen.R\n\n* Disclaimer: I'm the author.\n\n\nOn 10/29/18 1:42 PM, Roozbeh Valavi wrote:\n> Dear list,\n>\n> I wonder if it is possible to add some kind of cost/weighting when creating\n> a spatial weight matrix to be used in a spatial lag model? I want to\n> consider the effect of elevation as a cost for calculating distance to the\n> neighbours.\n> I am using spdep for creating the W and splm for the model.\n>\n> Thank you in advance,\n> Roozbeh\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Roozbeh,\n\npackage geoRcb [1]* provides function distmatGen() [2], which computes a\ncost-based distance matrix between any two sets of locations, given a\nraster cost surface (such as elevation). T",
+      "thread_id": "thread-313e936b9e0d",
+      "thread_depth": 1,
+      "month": "2018-10"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-1c19ad7120b9",
+      "subject": "Video recordings from the OpenGeoHub Summer School IBOT, Prague August 19-25, 2018",
+      "message_count": 1,
+      "participants": [
+        "Tomislav Hengl"
+      ],
+      "started": "2018-10-01T10:55:59+02:00",
+      "last_reply": "2018-10-01T10:55:59+02:00",
+      "root_message_id": "msg-1c19ad7120b9"
+    },
+    {
+      "id": "thread-4108d5aa6b84",
+      "subject": "Linear referencing in R",
+      "message_count": 1,
+      "participants": [
+        "Rubem Dornas"
+      ],
+      "started": "2018-10-01T11:25:51-03:00",
+      "last_reply": "2018-10-01T11:25:51-03:00",
+      "root_message_id": "msg-4108d5aa6b84"
+    },
+    {
+      "id": "thread-df879f855142",
+      "subject": "spgm",
+      "message_count": 4,
+      "participants": [
+        "Hulényi Martin",
+        "Roger Bivand"
+      ],
+      "started": "2018-10-03T09:21:22+00:00",
+      "last_reply": "2018-10-22T14:31:23+00:00",
+      "root_message_id": "msg-df879f855142"
+    },
+    {
+      "id": "thread-05218f7a6c9a",
+      "subject": "Clustering Sd Error in Spatial Models.",
+      "message_count": 2,
+      "participants": [
+        "Amir Neto",
+        "Roger Bivand"
+      ],
+      "started": "2018-10-09T08:46:26-04:00",
+      "last_reply": "2018-10-11T10:10:33+02:00",
+      "root_message_id": "msg-05218f7a6c9a"
+    },
+    {
+      "id": "thread-ee719851137a",
+      "subject": "Error when performing a spatial eigenvector selection in R",
+      "message_count": 2,
+      "participants": [
+        "DIEGO CEPEDA GOMEZ",
+        "Roger Bivand"
+      ],
+      "started": "2018-10-10T09:31:02+02:00",
+      "last_reply": "2018-10-10T21:49:49+02:00",
+      "root_message_id": "msg-ee719851137a"
+    },
+    {
+      "id": "thread-0c84923883cb",
+      "subject": "addImageQuery() result stops working in shiny app",
+      "message_count": 1,
+      "participants": [
+        "Warner, David"
+      ],
+      "started": "2018-10-11T21:49:09-04:00",
+      "last_reply": "2018-10-11T21:49:09-04:00",
+      "root_message_id": "msg-0c84923883cb"
+    },
+    {
+      "id": "thread-f1966ff371f3",
+      "subject": "Problems with gstat gaussian variogram and cross validation when fix nugget at 0",
+      "message_count": 2,
+      "participants": [
+        "Jo@@SKOIEN m@ili@g off ec@europ@@eu",
+        "Stefano Menichetti"
+      ],
+      "started": "2018-10-12T16:36:37+02:00",
+      "last_reply": "2018-10-16T10:06:51+00:00",
+      "root_message_id": "msg-f1966ff371f3"
+    },
+    {
+      "id": "thread-9c9cf02dcb33",
+      "subject": "Unexpected configure error following recent rgeos release?",
+      "message_count": 1,
+      "participants": [
+        "Roger Bivand"
+      ],
+      "started": "2018-10-22T09:29:04+02:00",
+      "last_reply": "2018-10-22T09:29:04+02:00",
+      "root_message_id": "msg-9c9cf02dcb33"
+    },
+    {
+      "id": "thread-ce80e3af5387",
+      "subject": "logLik value of the spml spatial panel model",
+      "message_count": 6,
+      "participants": [
+        "Danlin Yu",
+        "Jeremie Juste",
+        "Roger Bivand"
+      ],
+      "started": "2018-10-22T11:37:20-04:00",
+      "last_reply": "2018-10-25T10:27:19+02:00",
+      "root_message_id": "msg-ce80e3af5387"
+    },
+    {
+      "id": "thread-af15357ee8aa",
+      "subject": "Sf find number of parts in multigeometry",
+      "message_count": 5,
+      "participants": [
+        "Martin Tomko",
+        "Michael Sumner",
+        "Tim Appelhans",
+        "obrl soil"
+      ],
+      "started": "2018-10-23T02:32:31+00:00",
+      "last_reply": "2018-10-26T02:37:38+00:00",
+      "root_message_id": "msg-af15357ee8aa"
+    },
+    {
+      "id": "thread-2026d6b125cf",
+      "subject": "R:  logLik value of the spml spatial panel model",
+      "message_count": 1,
+      "participants": [
+        "Danlin Yu"
+      ],
+      "started": "2018-10-25T10:54:22-04:00",
+      "last_reply": "2018-10-25T10:54:22-04:00",
+      "root_message_id": "msg-2026d6b125cf"
+    },
+    {
+      "id": "thread-01022ee8477c",
+      "subject": "where is my raster stack? filename=\"\" and inMemory=FALSE",
+      "message_count": 2,
+      "participants": [
+        "Benjamin Leutner",
+        "Hugo Costa"
+      ],
+      "started": "2018-10-25T12:36:33+02:00",
+      "last_reply": "2018-10-25T13:00:20+02:00",
+      "root_message_id": "msg-01022ee8477c"
+    },
+    {
+      "id": "thread-313e936b9e0d",
+      "subject": "Cost distance in spatial weight matrix",
+      "message_count": 2,
+      "participants": [
+        "Facundo Muñoz",
+        "Roozbeh Valavi"
+      ],
+      "started": "2018-10-29T23:42:06+11:00",
+      "last_reply": "2018-10-29T14:48:43+01:00",
+      "root_message_id": "msg-313e936b9e0d"
+    }
+  ]
+}

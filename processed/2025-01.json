@@ -1,0 +1,223 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2025-01",
+  "messages": [
+    {
+      "id": "msg-65fc0b5ff490",
+      "message_id": "<SFgzJWhOQdGPbTzV8T-uVg@geopod-ismtpd-13>",
+      "from_name": "mzyphur m@iii@g oii i@st@ts@org",
+      "from_email_hash": "252b54e096b1cc2b7cae76e00ed703f3596525227cfc47687b655cf5c7e64f69",
+      "date": "2025-01-02T11:47:32Z",
+      "subject": "[R-sig-Geo] Introduction to Social Network Analysis - Free Seminar",
+      "subject_clean": "Introduction to Social Network Analysis - Free Seminar",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi everyone\n\nInstats is offering a new free seminar Introduction to Social Network Analysis <https://instats.org/seminar/introduction-to-social-network-analysis>, running Jan 17 by professor Ran Xu <https://alliedhealth.uconn.edu/person/ran-xu-phd/> from the University of Connecticut's Department of Allied Health Sciences. This seminar provides an introduction to social network analysis (SNA), equipping researchers in social sciences, population health science, and systems science with essential tools to examine relationships and behaviors in varied contexts, including mHealth and social media. Attendees will gain a practical understanding of the basics of network theory, data analysis, visualization methods, and real-world applications of SNA.\n\nSign up today <https://instats.org/seminar/introduction-to-social-network-analysis> to secure your spot, and please feel free to tell your colleagues and students about this unique opportunity!\n\n\nBest wishes\n\nMichael Zyphur\nDirector\nInstitute for Statistical and Data Science\ninstats.org <http://instats.org>\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi everyone\n\nInstats is offering a new free seminar Introduction to Social Network Analysis <https://instats.org/seminar/introduction-to-social-network-analysis>, running Jan 17 by professor Ran Xu <h",
+      "thread_id": "thread-65fc0b5ff490",
+      "thread_depth": 0,
+      "month": "2025-01"
+    },
+    {
+      "id": "msg-0e07b12f6941",
+      "message_id": "<CAGg5H0ZNrA5E+hVw7K2NTBYr0nY1qJF+S85gn1FKGp491MKz0A@mail.gmail.com>",
+      "from_name": "Nikolaos Tziokas",
+      "from_email_hash": "8312105e7618a0b91bd7038dde37c1862aea2c44337b9a99a2f8e8cdbaab259c",
+      "date": "2025-01-13T14:19:23Z",
+      "subject": "[R-sig-Geo] Mathematical (geometric) relationship to transform the nadir-PSF to an off-nadir-PSF for any known viewing angle when downscaling a satellite imagery",
+      "subject_clean": "Mathematical (geometric) relationship to transform the nadir-PSF to an off-nadir-PSF for any known viewing angle when downscaling a satellite imagery",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "*The problem*\n\nMy goal is to use a geometric relation to calculate the support and use\nthis to guide the DS (downscaling) in some way (e.g., to allow a single DS\nmodel to estimate a range of supports across an image, and thereby remove\none of the confounding factors in DS, which is that there is never a single\ntransform PSF. The PSF always varies across the image, i.e., a variable\nPSF. From Wang et al. (2020), I quote (The effect of the point spread\nfunction on downscaling continua):\n\nIn downscaling, the PSF of interest is not the measurement PSF, but rather\nthe transfer function between images at the original coarse and target fine\nspatial resolutions.\n\n>From a literature review perspective, most researchers apply a single\ntransform parameter (usually the StD of a Gaussian filter) without taking\ninto account the sensor's VA (viewing anlge). I haven't found anything\nonline that could get me started, either practically (code) or\ntheoretically (a research paper).\n\nTo provide the whole context of the issue, the other thing is that the PSF,\nwhen accounting for the sensor's VA, can no longer be approximated by a\nGaussian. So the big question that needs to be answered is what is the\ntransfer function that can approximate the PSF between the image to be\ndownscaled at the original coarse and target fine spatial resolution?\n\n*The dataset*\n\nThe imagery to be downscaled is the VNP46A2, DNB_BRDF_Corrected_NTL, nighty\nimagery. I made sure to select an image for an area at (near) nadir. How do\nI know that? I used the Sensor_Zenith raster from the VNP46A1 product from\nthe same area and date and checked the sensor's VA. Based on Li et al.\n(2022), (near) nadir VAs are considered angles up to 20 degrees.\n\nSome extra info that might be useful: VIIRS is a whiskbroom sensor (scans\nacross-track), the swath of the sensor is 3000km and the IFOV is constant\nat 742m (both in along and across track directions).\n\n*Code*\n\nAlthough not relevant, nevertheless it might provide some insights as to\nwhat I am trying to do. The below code uses area-to-point regression\nKriging (ATPRK) to DS a NTL image using only one covariate and without\naccounting for the sensor's VA.\n\npacman::p_load(terra, atakrig, spatialEco)\n\nwd = \"path/\"\n\n# raster to be downscaled\nntl <- rast(paste0(wd, \"ntl.tif\"))\n\n# high resolution covariate\npop <- rast(paste0(wd, \"pop.tif\"))\n\n# apply gaussian filter to simulate the PSF\npop.psf <- raster.gaussian.smooth(pop, s = 2.5, n = 5, scale = TRUE)\n\n# aggregate the filtered covariate to match NTL's pixel size\npop.agg <- aggregate(pop.psf, 4, \"mean\", na.rm = TRUE)\n\n# stack the aggregated covariate and the NTL\ns <- c(ntl, pop.agg)\nnames(s) <- c(\"ntl\", \"pop\")\n\n# linear model\nm <- lm(ntl ~ ., s)\n\n# extract lm residuals to DS them using ATPK\nrsds <- terra::predict(s, m, na.rm = TRUE)\n\n# predict the NTL at the target high spatial resolution\nnames(pop) <- \"pop\"\npred <- predict(pop, m, na.rm = TRUE)\n\n# ATPK\ncoords <- as.data.frame(xyFromCell(pred, 1:ncell(pred)), na.rm = TRUE)\n\npixelsize <- res(pred)[1]\n\n# discretize raster. here I set the Gaussian's StD\nrsds.d = discretizeRaster(rsds,\n                          pixelsize,\n                          psf = \"gau\",\n                          sigma = 2.5)\n\nsv.ck <- deconvPointVgm(rsds.d,\n                       model = \"Sph\",\n                       rd = seq(0.6, 0.9, by = 0.1),\n                       maxIter = 70,\n                       nopar = FALSE)\n\nataStartCluster(3)\npred.atpok <- atpKriging(rsds.d,\n                         coords,\n                         sv.ck,\n                         showProgress = TRUE,\n                         nopar = FALSE)\nataStopCluster()\n\n# convert result to raster for atp\npred.atpok.r <-  rast(pred.atpok[,2:4])\nterra::crs(pred.atpok.r) <- \"epsg:3309\"\n\nntl_atprk = pred + pred.atpok.r$pred\n\nntl_atprk[ntl_atprk <= 0] <- 0\n\nterra::crs(ntl_atprk) <- \"epsg:3309\"\n\nwriteRaster(ntl_atprk,\n            paste0(wd, \"ds_ntl.tif\"),\n            overwrite = TRUE)\nAs you can see from the code, the steps where:\n\n\n   1. filter the covariate using a (single) Gaussian filter\n   2. aggregate the filtered covariate to the NTL's pixel size\n   3. linear model\n   4. predict the NTL at the target spatial scale using the lm\n   5. ATPK to DS the regression residuals\n   6. add back the DS residuals to the predicted NTL from (4)\n\nAs you can see, I used a single transfer function (Gaussian filter) for the\nentire image and I completely neglected the sensor's VA. That is the\n\"standard\" approach when DS an image using a geostatistical method.\n\nWhat I am interested in is, instead of a Gaussian filter, what other\ntransfer function can I use that takes into account the VA so I can model\nthe PSF per pixel.\n\nI apologize in advance if the question does not fit on this site 100%, but\nI am really stuck with this issue for several weeks now.\n\n> sessionInfo()\nR version 4.4.2 (2024-10-31 ucrt)\nPlatform: x86_64-w64-mingw32/x64\nRunning under: Windows 10 x64 (build 19045)\n\nMatrix products: default\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base\n\nother attached packages:\n[1] spatialEco_2.0-3 atakrig_0.9.8.1  terra_1.8-5\n\n*Sample dataset*\n\npacman::p_load(terra, atakrig, spatialEco)\n\nwd = \"path/\"\n\n# raster to be downscaled\nntl <- rast(paste0(wd, \"ntl.tif\"))\n\n# high resolution covariate\npop <- rast(paste0(wd, \"pop.tif\"))\n\n# sensor's VA\nva <- rast(paste0(wd, \"va.tif\"))\n\npop.agg <- aggregate(pop, 4, \"mean\", na.rm = TRUE)\n\ns <- c(ntl, va, pop.agg)\nnames(s) <- c(\"ntl\", \"va\", \"pop.agg\")\n\ns\n\n> s\nclass       : SpatRaster\ndimensions  : 10, 10, 3  (nrow, ncol, nlyr)\nresolution  : 520, 520  (x, y)\nextent      : 144820, 150020, -428610, -423410  (xmin, xmax, ymin, ymax)\ncoord. ref. : NAD27 / California Albers (EPSG:3309)\nsources     : ntl.tif\n              va.tif\n              memory\nnames       :       ntl,       va, pop.agg\nmin values  :  26.46015, 7.929712,   3.500\nmax values  : 190.10309, 8.404581,  92.875\n\npop\n> pop\nclass       : SpatRaster\ndimensions  : 40, 40, 1  (nrow, ncol, nlyr)\nresolution  : 130, 130  (x, y)\nextent      : 144820, 150020, -428610, -423410  (xmin, xmax, ymin, ymax)\ncoord. ref. : NAD27 / California Albers (EPSG:3309)\nsource      : pop.tif\nname        : pop\nmin value   :   0\nmax value   : 190\n\nI also posted the same question on GIS SE using the same title. There you\ncan see an image of the NTL imagery and the VA raster. Not the best\npractice, but since there nobody replied there I thought to try here as\nwell.\n\n-- \nTziokas Nikolaos\nResearcher\n\nTel:(+44)07561120302\nLinkedIn <http://linkedin.com/in/nikolaos-tziokas-896081130>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "*The problem*\n\nMy goal is to use a geometric relation to calculate the support and use\nthis to guide the DS (downscaling) in some way (e.g., to allow a single DS\nmodel to estimate a range of supports ",
+      "thread_id": "thread-0e07b12f6941",
+      "thread_depth": 0,
+      "month": "2025-01"
+    },
+    {
+      "id": "msg-914cddbd846e",
+      "message_id": "<a-45HjlxRc-9-bQdZyQHcQ@geopod-ismtpd-4>",
+      "from_name": "mzyphur m@iii@g oii i@st@ts@org",
+      "from_email_hash": "252b54e096b1cc2b7cae76e00ed703f3596525227cfc47687b655cf5c7e64f69",
+      "date": "2025-01-15T07:20:00Z",
+      "subject": "[R-sig-Geo] Free Seminars: Machine Learning and Data Visualization",
+      "subject_clean": "Free Seminars: Machine Learning and Data Visualization",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi everyone\n\nInstats is pleased to be offering free introductions to Advanced Data Visualization and Machine Learning in February -- we hope to see you there:\n\nAdvanced Data Visualizations in R: <https://instats.org/seminar/advanced-data-visualizations-in-r-free->\nOffered by the Statistical Society of Canada (Biostatistics Section) and McGill University, this 2-hour seminar running February 21st is perfect for anyone interested in learning more about creating publication-ready graphics and exploring interactive visualizations. Ideal for experienced R users looking to take their skills to the next level. \n\nMachine Learning Essentials: <https://instats.org/seminar/machine-learning-essentials-free-semina2>\nJoin Dr. Kimberly Fessel on February 5th for a concise introduction to machine learning fundamentals, including supervised and unsupervised learning, model evaluation, and real-world applications. This 1-hour seminar is perfect for beginners or anyone seeking a quick refresher on machine learning methods.\n\nSign up today to secure your spot and please feel free to share with colleagues and students who might benefit.\n\n\nBest wishes\n\nMichael Zyphur\nDirector\nInstitute for Statistical and Data Science\ninstats.org <http://instats.org>\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi everyone\n\nInstats is pleased to be offering free introductions to Advanced Data Visualization and Machine Learning in February -- we hope to see you there:\n\nAdvanced Data Visualizations in R: <http",
+      "thread_id": "thread-914cddbd846e",
+      "thread_depth": 0,
+      "month": "2025-01"
+    },
+    {
+      "id": "msg-934fa6266bd9",
+      "message_id": "<1736946765.401225298@webmail.jimdo.com>",
+      "from_name": "i@io m@iii@g oii phys@ii@-courses@org",
+      "from_email_hash": "ca8ae7fca04226cbf7116003b962efbd86b9ffdf6a68e1a8cee80f656f89cb9c",
+      "date": "2025-01-15T14:12:45+01:00",
+      "subject": "[R-sig-Geo] Advanced Remote Sensing in R course",
+      "subject_clean": "Advanced Remote Sensing in R course",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n \nif you are interested in Remote Sensing data analysis in R, I just wanted to inform you that we have ONE last seat for our 4-day online course starting next week.\n \nIf you are interested, you can find all the information about the course here: [ https://www.physalia-courses.org/courses-workshops/remote-sensing-in-r/ ]( https://www.physalia-courses.org/courses-workshops/remote-sensing-in-r/ )\n \nBest regards,\nCarlo\n \n \n\n--------------------\n\nCarlo Pecoraro, Ph.D\n\n\nPhysalia-courses DIRECTOR\n\ninfo at physalia-courses.org\n\n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n \nif you are interested in Remote Sensing data analysis in R, I just wanted to inform you that we have ONE last seat for our 4-day online course starting next week.\n \nIf you are interested, ",
+      "thread_id": "thread-934fa6266bd9",
+      "thread_depth": 0,
+      "month": "2025-01"
+    },
+    {
+      "id": "msg-5f90ebf41352",
+      "message_id": "<CAHrPugLpx_f8gM+Xs--Q_WZTLpWEgUQsn6q5wtr2PFmfRoTqhA@mail.gmail.com>",
+      "from_name": "Guilherme Kenji Chihaya",
+      "from_email_hash": "8574ec657e8fd7ec30a796620c993f386147b22aa6ab0481c20c01f22dff3842",
+      "date": "2025-01-15T16:43:30+01:00",
+      "subject": "[R-sig-Geo] Checking for interest in taking over the development of the seg package",
+      "subject_clean": "Checking for interest in taking over the development of the seg package",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi all\nThe seg package, that implements spatial segregation measures of various\nkinds has been abandoned by its previous developer and kicked out from CRAN\nfor not passing its tests. Worse yet, other packages that implemented the\nsame segregation indices (like OasisR) depend on seg.\n\nThe previous maintainer does not respond anymore to the issue threads on\ngithub and Roger Bivand suggested to me that I ask here if anyone is\ninterested in taking over the maintenance.\n\nThe main issue with the package is that it relied on spgrass6. That has\nbeen fixed since then by the former maintainer but it still doesn't pass\nthe checks at CRAN. It also looks like it could use changing documentation\nto Roxygen and finalizing its transition from using sp to using sf objects.\n\n\nI am up to helping out with these tasks but my R skills are not the most\nadvanced, and would prefer to do it with someone more knowledgeable. Is\nthere anybody interested in joining me for that?\n\nCheers\nGuilherme Chihaya\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all\nThe seg package, that implements spatial segregation measures of various\nkinds has been abandoned by its previous developer and kicked out from CRAN\nfor not passing its tests. Worse yet, other ",
+      "thread_id": "thread-5f90ebf41352",
+      "thread_depth": 0,
+      "month": "2025-01"
+    },
+    {
+      "id": "msg-ee92a9112a0c",
+      "message_id": "<45e3d70d-8ab5-4b1a-8385-07070904710d@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2025-01-16T09:55:15+01:00",
+      "subject": "[R-sig-Geo]  Checking for interest in taking over the development of the seg package",
+      "subject_clean": "Checking for interest in taking over the development of the seg package",
+      "in_reply_to": "<CAHrPugLpx_f8gM+Xs--Q_WZTLpWEgUQsn6q5wtr2PFmfRoTqhA@mail.gmail.com>",
+      "references": [
+        "<CAHrPugLpx_f8gM+Xs--Q_WZTLpWEgUQsn6q5wtr2PFmfRoTqhA@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Guilherme, I made a minimal PR here:\n\nhttps://github.com/syunhong/seg/pull/3\n\nwhich makes the package pass R CMD check again; it needs some more work \nto clean examples. I'd be willing to help with the sp -> sf transition.\n\nThe maintainer (Cc:) seems unresponsive on GH, how do you want to deal \nwith that? Maybe give them a call?\n\nMany regards,\n\nOn 15/01/2025 16:43, Guilherme Kenji Chihaya wrote:\n> Hi all\n> The seg package, that implements spatial segregation measures of various\n> kinds has been abandoned by its previous developer and kicked out from CRAN\n> for not passing its tests. Worse yet, other packages that implemented the\n> same segregation indices (like OasisR) depend on seg.\n> \n> The previous maintainer does not respond anymore to the issue threads on\n> github and Roger Bivand suggested to me that I ask here if anyone is\n> interested in taking over the maintenance.\n> \n> The main issue with the package is that it relied on spgrass6. That has\n> been fixed since then by the former maintainer but it still doesn't pass\n> the checks at CRAN. It also looks like it could use changing documentation\n> to Roxygen and finalizing its transition from using sp to using sf objects.\n> \n> \n> I am up to helping out with these tasks but my R skills are not the most\n> advanced, and would prefer to do it with someone more knowledgeable. Is\n> there anybody interested in joining me for that?\n> \n> Cheers\n> Guilherme Chihaya\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma (he/him)\nUniversit?t M?nster, Institute for Geoinformatics\nHeisenbergstrasse 2, 48149 M?nster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "Dear Guilherme, I made a minimal PR here:\n\nhttps://github.com/syunhong/seg/pull/3\n\nwhich makes the package pass R CMD check again; it needs some more work \nto clean examples. I'd be willing to help wi",
+      "thread_id": "thread-5f90ebf41352",
+      "thread_depth": 1,
+      "month": "2025-01"
+    },
+    {
+      "id": "msg-5e05e9ac2e73",
+      "message_id": "<CAHrPug+EJZe9ih6NfG3RL9Tt3hNr7LsPCR4__fYoCHVpUOeX6g@mail.gmail.com>",
+      "from_name": "Guilherme Kenji Chihaya",
+      "from_email_hash": "8574ec657e8fd7ec30a796620c993f386147b22aa6ab0481c20c01f22dff3842",
+      "date": "2025-01-16T22:17:40+01:00",
+      "subject": "[R-sig-Geo]  Checking for interest in taking over the development of the seg package",
+      "subject_clean": "Checking for interest in taking over the development of the seg package",
+      "in_reply_to": "<45e3d70d-8ab5-4b1a-8385-07070904710d@uni-muenster.de>",
+      "references": [
+        "<CAHrPugLpx_f8gM+Xs--Q_WZTLpWEgUQsn6q5wtr2PFmfRoTqhA@mail.gmail.com>",
+        "<45e3d70d-8ab5-4b1a-8385-07070904710d@uni-muenster.de>"
+      ],
+      "body_plain": "Dear professor Pebesma,\nThank you for responding to my request. I don't know how to reach Seong-yun\n outside of github and his email. I hope that he sees this thread and lets\nus know if he agrees with us taking over maintenance or if he has other\nwishes.\n\nI see your PR on GH but I don't seem to have write access to merge it. What\nwould be the correct way of continue the work? Could we work from a\nforked repo?\n\nKind regards\nGuilherme\n\n2025?1?16?(?) 9:55 Edzer Pebesma <edzer.pebesma at uni-muenster.de>:\n\n> Dear Guilherme, I made a minimal PR here:\n>\n> https://github.com/syunhong/seg/pull/3\n>\n> which makes the package pass R CMD check again; it needs some more work\n> to clean examples. I'd be willing to help with the sp -> sf transition.\n>\n> The maintainer (Cc:) seems unresponsive on GH, how do you want to deal\n> with that? Maybe give them a call?\n>\n> Many regards,\n>\n> On 15/01/2025 16:43, Guilherme Kenji Chihaya wrote:\n> > Hi all\n> > The seg package, that implements spatial segregation measures of various\n> > kinds has been abandoned by its previous developer and kicked out from\n> CRAN\n> > for not passing its tests. Worse yet, other packages that implemented the\n> > same segregation indices (like OasisR) depend on seg.\n> >\n> > The previous maintainer does not respond anymore to the issue threads on\n> > github and Roger Bivand suggested to me that I ask here if anyone is\n> > interested in taking over the maintenance.\n> >\n> > The main issue with the package is that it relied on spgrass6. That has\n> > been fixed since then by the former maintainer but it still doesn't pass\n> > the checks at CRAN. It also looks like it could use changing\n> documentation\n> > to Roxygen and finalizing its transition from using sp to using sf\n> objects.\n> >\n> >\n> > I am up to helping out with these tasks but my R skills are not the most\n> > advanced, and would prefer to do it with someone more knowledgeable. Is\n> > there anybody interested in joining me for that?\n> >\n> > Cheers\n> > Guilherme Chihaya\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> --\n> Edzer Pebesma (he/him)\n> Universit?t M?nster, Institute for Geoinformatics\n> Heisenbergstrasse 2, 48149 M?nster, Germany\n> Phone: +49 251 8333081\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear professor Pebesma,\nThank you for responding to my request. I don't know how to reach Seong-yun\n outside of github and his email. I hope that he sees this thread and lets\nus know if he agrees with",
+      "thread_id": "thread-5f90ebf41352",
+      "thread_depth": 2,
+      "month": "2025-01"
+    },
+    {
+      "id": "msg-479ede97d2f1",
+      "message_id": "<914d784f-c190-4062-b157-4141007a87ed@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2025-01-17T09:06:54+01:00",
+      "subject": "[R-sig-Geo]  Checking for interest in taking over the development of the seg package",
+      "subject_clean": "Checking for interest in taking over the development of the seg package",
+      "in_reply_to": "<CAHrPug+EJZe9ih6NfG3RL9Tt3hNr7LsPCR4__fYoCHVpUOeX6g@mail.gmail.com>",
+      "references": [
+        "<CAHrPugLpx_f8gM+Xs--Q_WZTLpWEgUQsn6q5wtr2PFmfRoTqhA@mail.gmail.com>",
+        "<45e3d70d-8ab5-4b1a-8385-07070904710d@uni-muenster.de>",
+        "<CAHrPug+EJZe9ih6NfG3RL9Tt3hNr7LsPCR4__fYoCHVpUOeX6g@mail.gmail.com>"
+      ],
+      "body_plain": "On 16/01/2025 22:17, Guilherme Kenji Chihaya wrote:\n> Dear professor Pebesma,\n> Thank you for responding to my request. I don't know how to reach Seong-yun\n>   outside of github and his email. I hope that he sees this thread and lets\n> us know if he agrees with us taking over maintenance or if he has other\n> wishes.\n> \n> I see your PR on GH but I don't seem to have write access to merge it. What\n> would be the correct way of continue the work? Could we work from a\n> forked repo?\n\nYes; the code is GPL so that is allowed.\n\nIf someone different from the current maintainer would want to submit it \nto CRAN then they should give the package a different name; see \nhttps://cran.r-project.org/web/packages/policies.html\n\n> \n> Kind regards\n> Guilherme\n> \n> 2025?1?16?(?) 9:55 Edzer Pebesma <edzer.pebesma at uni-muenster.de>:\n> \n>> Dear Guilherme, I made a minimal PR here:\n>>\n>> https://github.com/syunhong/seg/pull/3\n>>\n>> which makes the package pass R CMD check again; it needs some more work\n>> to clean examples. I'd be willing to help with the sp -> sf transition.\n>>\n>> The maintainer (Cc:) seems unresponsive on GH, how do you want to deal\n>> with that? Maybe give them a call?\n>>\n>> Many regards,\n>>\n>> On 15/01/2025 16:43, Guilherme Kenji Chihaya wrote:\n>>> Hi all\n>>> The seg package, that implements spatial segregation measures of various\n>>> kinds has been abandoned by its previous developer and kicked out from\n>> CRAN\n>>> for not passing its tests. Worse yet, other packages that implemented the\n>>> same segregation indices (like OasisR) depend on seg.\n>>>\n>>> The previous maintainer does not respond anymore to the issue threads on\n>>> github and Roger Bivand suggested to me that I ask here if anyone is\n>>> interested in taking over the maintenance.\n>>>\n>>> The main issue with the package is that it relied on spgrass6. That has\n>>> been fixed since then by the former maintainer but it still doesn't pass\n>>> the checks at CRAN. It also looks like it could use changing\n>> documentation\n>>> to Roxygen and finalizing its transition from using sp to using sf\n>> objects.\n>>>\n>>>\n>>> I am up to helping out with these tasks but my R skills are not the most\n>>> advanced, and would prefer to do it with someone more knowledgeable. Is\n>>> there anybody interested in joining me for that?\n>>>\n>>> Cheers\n>>> Guilherme Chihaya\n>>>\n>>>        [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>> --\n>> Edzer Pebesma (he/him)\n>> Universit?t M?nster, Institute for Geoinformatics\n>> Heisenbergstrasse 2, 48149 M?nster, Germany\n>> Phone: +49 251 8333081\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma (he/him)\nUniversit?t M?nster, Institute for Geoinformatics\nHeisenbergstrasse 2, 48149 M?nster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "On 16/01/2025 22:17, Guilherme Kenji Chihaya wrote:\n> Dear professor Pebesma,\n> Thank you for responding to my request. I don't know how to reach Seong-yun\n>   outside of github and his email. I hope ",
+      "thread_id": "thread-5f90ebf41352",
+      "thread_depth": 3,
+      "month": "2025-01"
+    },
+    {
+      "id": "msg-b5bbeefbeca6",
+      "message_id": "<CAHrPugLN=22cevmgEDi7iE-BE-TT-Gxfip-m4x9_SzKkUKn6QQ@mail.gmail.com>",
+      "from_name": "Guilherme Kenji Chihaya",
+      "from_email_hash": "8574ec657e8fd7ec30a796620c993f386147b22aa6ab0481c20c01f22dff3842",
+      "date": "2025-01-17T14:50:42+01:00",
+      "subject": "[R-sig-Geo]  Checking for interest in taking over the development of the seg package",
+      "subject_clean": "Checking for interest in taking over the development of the seg package",
+      "in_reply_to": "<914d784f-c190-4062-b157-4141007a87ed@uni-muenster.de>",
+      "references": [
+        "<CAHrPugLpx_f8gM+Xs--Q_WZTLpWEgUQsn6q5wtr2PFmfRoTqhA@mail.gmail.com>",
+        "<45e3d70d-8ab5-4b1a-8385-07070904710d@uni-muenster.de>",
+        "<CAHrPug+EJZe9ih6NfG3RL9Tt3hNr7LsPCR4__fYoCHVpUOeX6g@mail.gmail.com>",
+        "<914d784f-c190-4062-b157-4141007a87ed@uni-muenster.de>"
+      ],
+      "body_plain": "I merged your PR into my fork of seg. I suggest that we continue working on\nseg while we wait for Seong-yun's response.\nKind regards,\nGuilherme\n\n2025?1?17?(?) 9:06 Edzer Pebesma <edzer.pebesma at uni-muenster.de>:\n\n>\n>\n> On 16/01/2025 22:17, Guilherme Kenji Chihaya wrote:\n> > Dear professor Pebesma,\n> > Thank you for responding to my request. I don't know how to reach\n> Seong-yun\n> >   outside of github and his email. I hope that he sees this thread and\n> lets\n> > us know if he agrees with us taking over maintenance or if he has other\n> > wishes.\n> >\n> > I see your PR on GH but I don't seem to have write access to merge it.\n> What\n> > would be the correct way of continue the work? Could we work from a\n> > forked repo?\n>\n> Yes; the code is GPL so that is allowed.\n>\n> If someone different from the current maintainer would want to submit it\n> to CRAN then they should give the package a different name; see\n> https://cran.r-project.org/web/packages/policies.html\n>\n> >\n> > Kind regards\n> > Guilherme\n> >\n> > 2025?1?16?(?) 9:55 Edzer Pebesma <edzer.pebesma at uni-muenster.de>:\n> >\n> >> Dear Guilherme, I made a minimal PR here:\n> >>\n> >> https://github.com/syunhong/seg/pull/3\n> >>\n> >> which makes the package pass R CMD check again; it needs some more work\n> >> to clean examples. I'd be willing to help with the sp -> sf transition.\n> >>\n> >> The maintainer (Cc:) seems unresponsive on GH, how do you want to deal\n> >> with that? Maybe give them a call?\n> >>\n> >> Many regards,\n> >>\n> >> On 15/01/2025 16:43, Guilherme Kenji Chihaya wrote:\n> >>> Hi all\n> >>> The seg package, that implements spatial segregation measures of\n> various\n> >>> kinds has been abandoned by its previous developer and kicked out from\n> >> CRAN\n> >>> for not passing its tests. Worse yet, other packages that implemented\n> the\n> >>> same segregation indices (like OasisR) depend on seg.\n> >>>\n> >>> The previous maintainer does not respond anymore to the issue threads\n> on\n> >>> github and Roger Bivand suggested to me that I ask here if anyone is\n> >>> interested in taking over the maintenance.\n> >>>\n> >>> The main issue with the package is that it relied on spgrass6. That has\n> >>> been fixed since then by the former maintainer but it still doesn't\n> pass\n> >>> the checks at CRAN. It also looks like it could use changing\n> >> documentation\n> >>> to Roxygen and finalizing its transition from using sp to using sf\n> >> objects.\n> >>>\n> >>>\n> >>> I am up to helping out with these tasks but my R skills are not the\n> most\n> >>> advanced, and would prefer to do it with someone more knowledgeable. Is\n> >>> there anybody interested in joining me for that?\n> >>>\n> >>> Cheers\n> >>> Guilherme Chihaya\n> >>>\n> >>>        [[alternative HTML version deleted]]\n> >>>\n> >>> _______________________________________________\n> >>> R-sig-Geo mailing list\n> >>> R-sig-Geo at r-project.org\n> >>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>\n> >> --\n> >> Edzer Pebesma (he/him)\n> >> Universit?t M?nster, Institute for Geoinformatics\n> >> Heisenbergstrasse 2, 48149 M?nster, Germany\n> >> Phone: +49 251 8333081\n> >>\n> >> _______________________________________________\n> >> R-sig-Geo mailing list\n> >> R-sig-Geo at r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> --\n> Edzer Pebesma (he/him)\n> Universit?t M?nster, Institute for Geoinformatics\n> Heisenbergstrasse 2, 48149 M?nster, Germany\n> Phone: +49 251 8333081\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I merged your PR into my fork of seg. I suggest that we continue working on\nseg while we wait for Seong-yun's response.\nKind regards,\nGuilherme\n\n2025?1?17?(?) 9:06 Edzer Pebesma <edzer.pebesma at uni-",
+      "thread_id": "thread-5f90ebf41352",
+      "thread_depth": 4,
+      "month": "2025-01"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-65fc0b5ff490",
+      "subject": "Introduction to Social Network Analysis - Free Seminar",
+      "message_count": 1,
+      "participants": [
+        "mzyphur m@iii@g oii i@st@ts@org"
+      ],
+      "started": "2025-01-02T11:47:32+00:00",
+      "last_reply": "2025-01-02T11:47:32+00:00",
+      "root_message_id": "msg-65fc0b5ff490"
+    },
+    {
+      "id": "thread-0e07b12f6941",
+      "subject": "Mathematical (geometric) relationship to transform the nadir-PSF to an off-nadir-PSF for any known viewing angle when downscaling a satellite imagery",
+      "message_count": 1,
+      "participants": [
+        "Nikolaos Tziokas"
+      ],
+      "started": "2025-01-13T14:19:23+00:00",
+      "last_reply": "2025-01-13T14:19:23+00:00",
+      "root_message_id": "msg-0e07b12f6941"
+    },
+    {
+      "id": "thread-914cddbd846e",
+      "subject": "Free Seminars: Machine Learning and Data Visualization",
+      "message_count": 1,
+      "participants": [
+        "mzyphur m@iii@g oii i@st@ts@org"
+      ],
+      "started": "2025-01-15T07:20:00+00:00",
+      "last_reply": "2025-01-15T07:20:00+00:00",
+      "root_message_id": "msg-914cddbd846e"
+    },
+    {
+      "id": "thread-934fa6266bd9",
+      "subject": "Advanced Remote Sensing in R course",
+      "message_count": 1,
+      "participants": [
+        "i@io m@iii@g oii phys@ii@-courses@org"
+      ],
+      "started": "2025-01-15T14:12:45+01:00",
+      "last_reply": "2025-01-15T14:12:45+01:00",
+      "root_message_id": "msg-934fa6266bd9"
+    },
+    {
+      "id": "thread-5f90ebf41352",
+      "subject": "Checking for interest in taking over the development of the seg package",
+      "message_count": 5,
+      "participants": [
+        "Edzer Pebesma",
+        "Guilherme Kenji Chihaya"
+      ],
+      "started": "2025-01-15T16:43:30+01:00",
+      "last_reply": "2025-01-17T14:50:42+01:00",
+      "root_message_id": "msg-5f90ebf41352"
+    }
+  ]
+}

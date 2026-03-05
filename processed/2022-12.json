@@ -1,0 +1,231 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2022-12",
+  "messages": [
+    {
+      "id": "msg-b564b0436a5c",
+      "message_id": "<CAGg5H0Yd24gppWR4fni9GkdpY90YRL=mHhO0A1u50ZmyFotwCg@mail.gmail.com>",
+      "from_name": "Nikolaos Tziokas",
+      "from_email_hash": "8312105e7618a0b91bd7038dde37c1862aea2c44337b9a99a2f8e8cdbaab259c",
+      "date": "2022-12-04T15:10:36Z",
+      "subject": "[R-sig-Geo] Apply geographically weighted regression's model parameters to a finer spatial scale",
+      "subject_clean": "Apply geographically weighted regression's model parameters to a finer spatial scale",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I have two raster layers, one coarse resolution and one fine resolution. My\ngoal is to extract GWR's coefficients (intercept and slope) and apply them\nto my fine resolution raster.\n\nI can do this easily when I perform simple linear regression. For example:\n\nlibrary(terra)\nlibrary(sp)\n# focal terra\ntirs = rast(\"path/tirs.tif\") # fine res raster\nntl = rast(\"path/ntl.tif\") # coarse res raster\n    # fill null values\ntirs = focal(tirs,\n             w = 9,\n             fun = mean,\n             na.policy = \"only\",\n             na.rm = TRUE)\n\ngf <- focalMat(tirs, 0.10*400, \"Gauss\", 11)\nr_gf <- focal(tirs, w = gf, na.rm = TRUE)\n\nr_gf = resample(r_gf, ntl, method = \"bilinear\")\n\ns = c(ntl, r_gf)names(s) = c('ntl', 'r_gf')\n\nmodel <- lm(formula = ntl ~ tirs, data = s)\n# apply the lm coefficients to the fine res raster\nlm_pred = model$coefficients[1] + model$coefficients[2] * tirs\n\nBut when I run GWR, the slope and intercept are not just two numbers (like\nin linear model) but it's a range. For example, below are the results of\nthe GWR:\n*Summary of GWR coefficient estimates*:\n\n                Min.     1st Qu.      Median     3rd Qu.     Max.\n\nIntercept -1632.61196   -55.79680   -15.99683    15.01596 1133.299\n\ntirs20      -42.43020     0.43446     1.80026     3.75802   70.987\n\n\nMy question is how can extract GWR model parameters (intercept and slope)\nand apply them to my fine resolution raster? In the end I would like to do\nthe same thing as I did with the linear model, that is, *GWR_intercept +\nGWR_slope * fine resolution raster*.\n\nHere is the code of GWR:\n\nlibrary(GWmodel)\nlibrary(raster)\n\nblock.data = read.csv(file = \"path/block.data00.csv\")\n#create mararate df for the x & y coords\nx = as.data.frame(block.data$x)\ny = as.data.frame(block.data$y)\nsint = as.matrix(cbind(x, y))\n#convert the data to spatialPointsdf and then to spatialPixelsdf\ncoordinates(block.data) = c(\"x\", \"y\")#gridded(block.data) <- TRUE\n# specify a model equation\neq1 <- ntl ~ tirs\n\ndist = GWmodel::gw.dist(dp.locat = sint, focus = 0, longlat = FALSE)\n\nabw = bw.gwr(eq1,\n       data = block.data,\n       approach = \"AIC\",\n       kernel = \"tricube\",\n       adaptive = TRUE,\n       p = 2,\n       longlat = F,\n       dMat = dist,\n       parallel.method = \"omp\",\n       parallel.arg = \"omp\")\n\nab_gwr = gwr.basic(eq1,\n          data = block.data,\n          bw = abw,\n          kernel = \"tricube\",\n          adaptive = TRUE,\n          p = 2,\n          longlat = FALSE,\n          dMat = dist,\n          F123.test = FALSE,\n          cv = FALSE,\n          parallel.method = \"omp\",\n          parallel.arg = \"omp\")\n\nab_gwr\n\nYou can download the csv from here\n<https://drive.google.com/drive/folders/1V115zpdU2-5fXssI6iWv_F6aNu4E5qA7?usp=sharing>.\nThe fine resolution raster I am using:\n\ntirs = rast(ncols=407, nrows=342, nlyrs=1, xmin=509600, xmax=550300,\nymin=161800, ymax=196000, names=c('tirs'), crs='EPSG:27700')\n\n-- \nTziokas Nikolaos\nCartographer\n\nTel:(+44)07561120302\nLinkedIn <http://linkedin.com/in/nikolaos-tziokas-896081130>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I have two raster layers, one coarse resolution and one fine resolution. My\ngoal is to extract GWR's coefficients (intercept and slope) and apply them\nto my fine resolution raster.\n\nI can do this easi",
+      "thread_id": "thread-b564b0436a5c",
+      "thread_depth": 0,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-7893ab25b59b",
+      "message_id": "<1f092d9-b7f0-218e-f142-16b3c1f9821e@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2022-12-04T20:23:58+01:00",
+      "subject": "[R-sig-Geo] Apply geographically weighted regression's model parameters to a finer spatial scale",
+      "subject_clean": "Apply geographically weighted regression's model parameters to a finer spatial scale",
+      "in_reply_to": "<CAGg5H0Yd24gppWR4fni9GkdpY90YRL=mHhO0A1u50ZmyFotwCg@mail.gmail.com>",
+      "references": [
+        "<CAGg5H0Yd24gppWR4fni9GkdpY90YRL=mHhO0A1u50ZmyFotwCg@mail.gmail.com>"
+      ],
+      "body_plain": "On Sun, 4 Dec 2022, Nikolaos Tziokas wrote:\n\n> I have two raster layers, one coarse resolution and one fine resolution. My\n> goal is to extract GWR's coefficients (intercept and slope) and apply them\n> to my fine resolution raster.\n\nYou are making life too complicated, just use the regression.points = \nargument to gwr.basic():\n\nlibrary(GWmodel)\nlibrary(raster)\ntirs0 = terra::rast(ncols=407, nrows=342, nlyrs=1, xmin=509600,\n  xmax=550300, ymin=161800, ymax=196000, names=c('tirs0'),\n  crs='EPSG:27700')\ntirs1 <- raster(tirs0)\nregpoints <- as(tirs1, \"SpatialPoints\")\nsummary(regpoints)\nblock.data = read.csv(file = \"block.data00.csv\")\ncoordinates(block.data) <- c(\"x\", \"y\")\nproj4string(block.data) <- \"EPSG:27700\"\nsummary(block.data)\neq1 <- ntl ~ tirs\nabw = bw.gwr(eq1, data = block.data, approach = \"AIC\", kernel = \"tricube\",\n  adaptive = TRUE, p = 2)\nab_gwr = gwr.basic(eq1, data = block.data, regression.points = regpoints,\n  bw = abw, kernel = \"tricube\", adaptive = TRUE, p = 2, F123.test = FALSE,\n  cv = FALSE)\nab_gwr\nsummary(ab_gwr$SDF)\n\nThe final multiplication can be done with your actual tirs raster, which \nwas not provided.\n\nWith the small number of input points, a geostatistical approach to \nprediction would be preferable to GWR, giving well-founded prediction \nstandard errors.\n\nHope this clarifies,\n\nRoger\n\n>\n> I can do this easily when I perform simple linear regression. For example:\n>\n> library(terra)\n> library(sp)\n> # focal terra\n> tirs = rast(\"path/tirs.tif\") # fine res raster\n> ntl = rast(\"path/ntl.tif\") # coarse res raster\n>    # fill null values\n> tirs = focal(tirs,\n>             w = 9,\n>             fun = mean,\n>             na.policy = \"only\",\n>             na.rm = TRUE)\n>\n> gf <- focalMat(tirs, 0.10*400, \"Gauss\", 11)\n> r_gf <- focal(tirs, w = gf, na.rm = TRUE)\n>\n> r_gf = resample(r_gf, ntl, method = \"bilinear\")\n>\n> s = c(ntl, r_gf)names(s) = c('ntl', 'r_gf')\n>\n> model <- lm(formula = ntl ~ tirs, data = s)\n> # apply the lm coefficients to the fine res raster\n> lm_pred = model$coefficients[1] + model$coefficients[2] * tirs\n>\n> But when I run GWR, the slope and intercept are not just two numbers (like\n> in linear model) but it's a range. For example, below are the results of\n> the GWR:\n> *Summary of GWR coefficient estimates*:\n>\n>                Min.     1st Qu.      Median     3rd Qu.     Max.\n>\n> Intercept -1632.61196   -55.79680   -15.99683    15.01596 1133.299\n>\n> tirs20      -42.43020     0.43446     1.80026     3.75802   70.987\n>\n>\n> My question is how can extract GWR model parameters (intercept and slope)\n> and apply them to my fine resolution raster? In the end I would like to do\n> the same thing as I did with the linear model, that is, *GWR_intercept +\n> GWR_slope * fine resolution raster*.\n>\n> Here is the code of GWR:\n>\n> library(GWmodel)\n> library(raster)\n>\n> block.data = read.csv(file = \"path/block.data00.csv\")\n> #create mararate df for the x & y coords\n> x = as.data.frame(block.data$x)\n> y = as.data.frame(block.data$y)\n> sint = as.matrix(cbind(x, y))\n> #convert the data to spatialPointsdf and then to spatialPixelsdf\n> coordinates(block.data) = c(\"x\", \"y\")#gridded(block.data) <- TRUE\n> # specify a model equation\n> eq1 <- ntl ~ tirs\n>\n> dist = GWmodel::gw.dist(dp.locat = sint, focus = 0, longlat = FALSE)\n>\n> abw = bw.gwr(eq1,\n>       data = block.data,\n>       approach = \"AIC\",\n>       kernel = \"tricube\",\n>       adaptive = TRUE,\n>       p = 2,\n>       longlat = F,\n>       dMat = dist,\n>       parallel.method = \"omp\",\n>       parallel.arg = \"omp\")\n>\n> ab_gwr = gwr.basic(eq1,\n>          data = block.data,\n>          bw = abw,\n>          kernel = \"tricube\",\n>          adaptive = TRUE,\n>          p = 2,\n>          longlat = FALSE,\n>          dMat = dist,\n>          F123.test = FALSE,\n>          cv = FALSE,\n>          parallel.method = \"omp\",\n>          parallel.arg = \"omp\")\n>\n> ab_gwr\n>\n> You can download the csv from here\n> <https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdrive.google.com%2Fdrive%2Ffolders%2F1V115zpdU2-5fXssI6iWv_F6aNu4E5qA7%3Fusp%3Dsharing&amp;data=05%7C01%7CRoger.Bivand%40nhh.no%7C6855c5767a894cdb4edf08dad609d991%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638057635036324587%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&amp;sdata=ROLhw75M%2BvWhGOIT7mlyPfNZX2W0Ub4gMHgrTBVsd8A%3D&amp;reserved=0>.\n> The fine resolution raster I am using:\n>\n> tirs = rast(ncols=407, nrows=342, nlyrs=1, xmin=509600, xmax=550300,\n> ymin=161800, ymax=196000, names=c('tirs'), crs='EPSG:27700')\n>\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Sun, 4 Dec 2022, Nikolaos Tziokas wrote:\n\n> I have two raster layers, one coarse resolution and one fine resolution. My\n> goal is to extract GWR's coefficients (intercept and slope) and apply them\n",
+      "thread_id": "thread-b564b0436a5c",
+      "thread_depth": 1,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-0492886c0d99",
+      "message_id": "<CAKoiDHLh9FeGDrQ5Fe=8_aXxX3pVHOxWZ42Mp6=nQR=fkCNLbQ@mail.gmail.com>",
+      "from_name": "Giuseppe Amatulli",
+      "from_email_hash": "a3b558e08aa6c2768dc80229110721cce180703cfba6412f7aaba244fe49e280",
+      "date": "2022-12-05T20:29:54+01:00",
+      "subject": "[R-sig-Geo] Course: Geocomputation and Machine Learning for Environmental Applications -2023",
+      "subject_clean": "Course: Geocomputation and Machine Learning for Environmental Applications -2023",
+      "in_reply_to": "<CAKoiDH+SxkHWsFVTKqp8c=zaHjBTBH3Zx57hkA2gtrUjX0JS3Q@mail.gmail.com>",
+      "references": [
+        "<CAKoiDHJj9JS0XKNApe32ECXO7WWhympSvi_0cAZCt8WR=JnTeg@mail.gmail.com>",
+        "<CAKoiDH+OAWuSWVzoFywt9bQCMCYwwRZ-DB8NP_uHvREqmYLyoA@mail.gmail.com>",
+        "<CAKoiDH+SxkHWsFVTKqp8c=zaHjBTBH3Zx57hkA2gtrUjX0JS3Q@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Colleagues,\n\nIn view of enhancing computation skills in the geographic domain, Spatial\nEcology <http://spatial-ecology.net/>  is organising a two-month training\ncourse: Geocomputation and Machine Learning for Environmental Applications\n<http://spatial-ecology.net/course-geocomputation-machine-learning-for-environmental-applications-intermediate-level-2023/>\n.\n\nThe course will be offered on-line with a supplementary 5-day (or 10-day)\nin-person segment at the University of Basilicata, in the magnificent town\nof Matera\n<https://www.google.com/maps/place/75100+Matera,+Province+of+Matera,+Italy/@40.6646012,16.5651092,13z/data=!3m1!4b1!4m5!3m4!1s0x13477ee2482b152b:0x8f6a4ae10da9360!8m2!3d40.666379!4d16.6043199>,\nItaly. This is a wonderful opportunity for PhD students, Post-Docs and\nprofessionals to acquire advanced computational skills with a Linux\ncomputer.\n\nPlease forward to announce this opportunity within your network.\n\nSincerely, Giuseppe Amatulli  & Spatial Ecology ? Team\n\n*Geocomputation and Machine Learning for Environmental Applications\n<http://spatial-ecology.net/course-geocomputation-machine-learning-for-environmental-applications-intermediate-level-2023/>.**\n(April,\nMay, June, 2023)*\n\nIn this course, students will be introduced to an array of powerful\nopen-source geocomputation tools and machine learning methodologies under\nLinux environment. Students who have never been exposed to programming\nunder Linux are expected to reach the stage where they feel confident in\nusing very advanced open source data processing routines. Students with a\nprecedent programming background will find the course beneficial in\nenhancing their programming skills for better modelling and coding\nproficiency. Our dual teaching aim is to equip attendees with powerful\ntools as well as rendering their abilities of continuing independent\ndevelopment afterwards. The acquired skills will be beneficial, not only\nfor GIS related applications, but also for general data processing and\napplied statistical computing in a number of fields. These essentially lay\nthe foundation for career development as a data scientist in the geographic\ndomain.\n\nMore information and registration:\n\nwww.spatial-ecology.net\ntwitter: @BigDataEcology\n\n-- \nGiuseppe Amatulli, Ph.D.\n\nResearch scientist at\nSchool of the Environment\nYale University\nNew Haven, CT, USA\n06511\nTwitter: @BigDataEcology\nTeaching: http://spatial-ecology.net\nWork:  https://environment.yale.edu/profile/giuseppe-amatulli/\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Colleagues,\n\nIn view of enhancing computation skills in the geographic domain, Spatial\nEcology <http://spatial-ecology.net/>  is organising a two-month training\ncourse: Geocomputation and Machine",
+      "thread_id": "thread-0492886c0d99",
+      "thread_depth": 0,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-24863ef1a7ec",
+      "message_id": "<CAC4wKHk5Q5GLy=V=5q7txLALVdU4kwAN2=f3MzH1Cq_2kRLruw@mail.gmail.com>",
+      "from_name": "Tomislav Hengl",
+      "from_email_hash": "1c592038322bbeaa3bb702d8d64ab9c83a31b70d7020477c6836f5af383d3072",
+      "date": "2022-12-10T11:43:00+02:00",
+      "subject": "[R-sig-Geo] The Open-Earth Monitor Global Workshop 2023 at Eurac 4–8 September",
+      "subject_clean": "The Open-Earth Monitor Global Workshop 2023 at Eurac 4–8 September",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "This is the first public call for abstracts / workshop proposals for the\nOpen-Earth Monitor Global Workshop.\n\nOrganized by OpenGeoHub foundation in collaboration with Eurac Research,\nthe Open-Earth-Monitor Global Workshop 2023 will bring together European\nand global actors in the field of open-source Earth Observation\napplications in policy, business, research and for society.\n\n4?8 September 2023, Eurac Earth Observations Institute, Bolzano (Italy)\nGlobal Workshop for Open Source development communities\n\"Connecting open EO solutions to boost European and global goals\"\nNote the abstract submission deadline: 1st of March 2023.\n\nFor more info:\nhttps://earthmonitor.org/gw2023/\n\nThis is a not-for-profit event partially sponsored by various Horizon\nEurope projects and with registrations fees based on a cost-recovery\nestimate.\n\nPS: Without any special sentiment towards Twitter and its new owner\n(personally I plan to stay present on Twitter), we are in process of\nmigrating public discussions to **Mastodon** i.e. our channels on\nhttps://fosstodon.org/@opengeohub/. fosstodon.org is part of the\ndecentralized social network powered by Mastodon. Mastodon is a major\ninspiration for our OEMC project (https://earthmonitor.org) aiming at\ndecentralized, federated but seamlessly integrated platform, hence there\nare many reasons for you to also open an account on Mastodon (you need to\napply for an account, then once approved you can customize it download an\napp on your phone) and connect with everyone you are already probably\nconnected via Twitter. Read more about Mastodon in e.g.:\nhttps://euobserver.com/opinion/156395\n\nUnfortunately mastodon does not support markdown or similar (well, you can\nshare screenshots) so def not a place for debugging but there is plenty of\nother functionality that open source devs could profit from:\nhttps://docs.joinmastodon.org/\n\nHope to see you in Bolzano and (in the meantime) on Mastodon!\nhttps://fosstodon.org/@tomhengl\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "This is the first public call for abstracts / workshop proposals for the\nOpen-Earth Monitor Global Workshop.\n\nOrganized by OpenGeoHub foundation in collaboration with Eurac Research,\nthe Open-Earth-Mo",
+      "thread_id": "thread-24863ef1a7ec",
+      "thread_depth": 0,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-26508ab67f4e",
+      "message_id": "<CAGg5H0YmNfMvOk7otpcO-Rfe8shzg6B2c19uTF1j7w4GaDATPQ@mail.gmail.com>",
+      "from_name": "Nikolaos Tziokas",
+      "from_email_hash": "8312105e7618a0b91bd7038dde37c1862aea2c44337b9a99a2f8e8cdbaab259c",
+      "date": "2022-12-10T10:56:10Z",
+      "subject": "[R-sig-Geo] package spgwr: apply model parameters to a finer spatial scale",
+      "subject_clean": "package spgwr: apply model parameters to a finer spatial scale",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I using the *R* package *spgwr *to perform geographically weighted\nregression (GWR). I want to apply the model parameters to a finer spatial\nscale but I am receiving this error: *Error in validObject(.Object):\ninvalid class ?SpatialPointsDataFrame? object: number of rows in data.frame\nand SpatialPoints don't match*.\n\nWhen I use another package for GWR, called *GWmodel*, I do not have this\nissue. For example using the *GWmodel*, I do:\n\nlibrary(GWmodel)\nlibrary(sp)\nlibrary(raster)\n\nghs = raster(\"path/ghs.tif\") # fine resolution raster\nregpoints <- as(ghs, \"SpatialPoints\")\n\nblock.data = read.csv(file = \"path/block.data.csv\")\n\ncoordinates(block.data) <- c(\"x\", \"y\")\nproj4string(block.data) <- \"EPSG:7767\"\n\neq1 <- ntl ~ ghs\nabw = bw.gwr(eq1,\n             data = block.data,\n             approach = \"AIC\",\n             kernel = \"gaussian\",\n             adaptive = TRUE,\n             p = 2,\n             parallel.method = \"omp\",\n             parallel.arg = \"omp\")\n\nab_gwr = gwr.basic(eq1,\n                   data = block.data,\n                   regression.points = regpoints,\n                   bw = abw,\n                   kernel = \"gaussian\",\n                   adaptive = TRUE,\n                   p = 2,\n                   F123.test = FALSE,\n                   cv = FALSE,\n                   parallel.method = \"omp\",\n                   parallel.arg = \"omp\")\n\nab_gwr\n\nsp <- ab_gwr$SDF\nsf <- st_as_sf(sp)\n\n# intercept\nintercept = as.data.frame(sf$Intercept)\nintercept = SpatialPointsDataFrame(data = intercept, coords = regpoints)\ngridded(intercept) <- TRUE\nintercept <- raster(intercept)\nraster::crs(intercept) <- \"EPSG:7767\"\n\nintercept = resample(intercept, ghs, method = \"bilinear\")\n\n# slope\nslope = as.data.frame(sf$ghs)\nslope = SpatialPointsDataFrame(data = slope, coords = regpoints)\ngridded(slope) <- TRUE\nslope <- raster(slope)\nraster::crs(slope) <- \"EPSG:7767\"\n\nslope = resample(slope, ghs, method = \"bilinear\")\n\ngwr_pred = intercept + slope * ghs\n\nwriteRaster(gwr_pred,\n            \"path/gwr_pred.tif\",\n            overwrite = TRUE)\n\nHow can I apply the GWR model parameters to a finer spatial scale, using\nthe spgwr package?\n\nHere is the code, using the *spgwr *package:\n\nlibrary(spgwr)\nlibrary(sf)\nlibrary(raster)\nlibrary(parallel)\n\nghs = raster(\"path/ghs.tif\") # fine resolution raster\nregpoints <- as(ghs, \"SpatialPoints\")\n\nblock.data = read.csv(file = \"path/block.data.csv\")\n\n#create mararate df for the x & y coords\nx = as.data.frame(block.data$x)\ny = as.data.frame(block.data$y)\n\n#convert the data to spatialPointsdf and then to spatialPixelsdf\ncoordinates(block.data) = c(\"x\", \"y\")\n\n# specify a model equation\neq1 <- ntl ~ ghs\n\n# find optimal ADAPTIVE kernel bandwidth using cross validation\nabw <- gwr.sel(eq1,\n               data = block.data,\n               adapt = TRUE,\n               gweight = gwr.Gauss)\n\n# fit a gwr based on adaptive bandwidth\ncl <- makeCluster(detectCores())\nab_gwr <- gwr(eq1,\n              data = block.data,\n              adapt = abw,\n              gweight = gwr.Gauss,\n              hatmatrix = TRUE,\n              regpoints,\n              predictions = TRUE,\n              se.fit = TRUE,\n              cl = cl)\nstopCluster(cl)\n\n#print the results of the model\nab_gwr\n\nsp <- ab_gwr$SDF\nsf <- st_as_sf(sp)\n\n# intercept\nintercept = as.data.frame(sf$Intercept)\nintercept = SpatialPointsDataFrame(data = intercept, coords = regpoints)\ngridded(intercept) <- TRUE\nintercept <- raster(intercept)\nraster::crs(intercept) <- \"EPSG:7767\"\n\nintercept = resample(intercept, ghs, method = \"bilinear\")\n\n# slope\nslope = as.data.frame(sf$ghs)\nslope = SpatialPointsDataFrame(data = slope, coords = regpoints)\ngridded(slope) <- TRUE\nslope <- raster(slope)\nraster::crs(slope) <- \"EPSG:7767\"\n\nslope = resample(slope, ghs, method = \"bilinear\")\n\ngwr_pred = intercept + slope * ghs\n\nwriteRaster(gwr_pred,\n            \"path/gwr_pred.tif\",\n            overwrite = TRUE)\n\nThe fine resolution raster:\nghs = raster(ncols=47, nrows=92, xmn=582216.388, xmx=603366.388,\nymn=1005713.0202, ymx=1047113.0202, crs='+proj=lcc +lat_0=18.88015774\n+lon_0=76.75 +lat_1=16.625 +lat_2=21.125 +x_0=1000000 +y_0=1000000\n+datum=WGS84 +units=m +no_defs')\n\nThe csv can be downloaded from here\n<https://drive.google.com/drive/folders/1V115zpdU2-5fXssI6iWv_F6aNu4E5qA7?usp=sharing>\n.\n\n-- \nTziokas Nikolaos\nCartographer\n\nTel:(+44)07561120302\nLinkedIn <http://linkedin.com/in/nikolaos-tziokas-896081130>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I using the *R* package *spgwr *to perform geographically weighted\nregression (GWR). I want to apply the model parameters to a finer spatial\nscale but I am receiving this error: *Error in validObject(",
+      "thread_id": "thread-26508ab67f4e",
+      "thread_depth": 0,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-cb6a1cbffc43",
+      "message_id": "<CAGg5H0YxCTQB9pWbwfoeCZP=h_8nKy9cDW7R2xNgyHfvaH0cuA@mail.gmail.com>",
+      "from_name": "Nikolaos Tziokas",
+      "from_email_hash": "8312105e7618a0b91bd7038dde37c1862aea2c44337b9a99a2f8e8cdbaab259c",
+      "date": "2022-12-10T18:11:34Z",
+      "subject": "[R-sig-Geo] package spgwr: apply model parameters to a finer spatial scale",
+      "subject_clean": "package spgwr: apply model parameters to a finer spatial scale",
+      "in_reply_to": "<CAGg5H0YmNfMvOk7otpcO-Rfe8shzg6B2c19uTF1j7w4GaDATPQ@mail.gmail.com>",
+      "references": [
+        "<CAGg5H0YmNfMvOk7otpcO-Rfe8shzg6B2c19uTF1j7w4GaDATPQ@mail.gmail.com>"
+      ],
+      "body_plain": "In order to apply *GWR*'s model parameters to a finer spatial scale using\nthe *spgwr *package:\n\n\n   1. calculate *GWR *at the coarse scale\n   2. apply step 1 again using the parameters* fit.points*, *predictions *and\n   *fittedGWRobject*.\n\nThe code:\n\nlibrary(spgwr)\nlibrary(sf)\nlibrary(raster)\nlibrary(parallel)\n\nghs = raster(\"path/ghs.tif\") # fine res raster\nregpoints <- as.data.frame(ghs[[1]], xy = TRUE)\nregpoints = na.omit(regpoints)\ncoordinates(regpoints) <- c(\"x\", \"y\")\ngridded(regpoints) <- TRUE\n\nblock.data = read.csv(file = \"path/block.data.csv\") # df containing the\ndependent and independent coarse variables\n\n#convert the data to spatialPointsdf\ncoordinates(block.data) = c(\"x\", \"y\")\n\n# specify a model equation\neq1 <- ntl ~ ghs\n\n# find optimal ADAPTIVE kernel bandwidth using cross validation\nabw <- gwr.sel(eq1,\n               data = block.data,\n               adapt = TRUE,\n               gweight = gwr.Gauss)\n\n# fit a gwr based on adaptive bandwidth\ncl <- makeCluster(detectCores())\nxx <- gwr(eq1,\n              data = block.data,\n              adapt = abw,\n              gweight = gwr.Gauss,\n              hatmatrix = TRUE,\n              se.fit = TRUE,\n              cl = cl)\nstopCluster(cl)\n\n# predict to a fine spatial scale\ncl <- makeCluster(detectCores())\nab_gwr <- gwr(eq1,\n              data = block.data,\n              adapt = abw,\n              gweight = gwr.Gauss,\n              fit.points = regpoints,\n              predictions = TRUE,\n              se.fit = TRUE,\n              fittedGWRobject = xx,\n              cl = cl)\nstopCluster(cl)\n\n#print the results of the model\nab_gwr\n\nsp <- ab_gwr$SDF\nsf <- st_as_sf(sp)\n\n# intercept\nintercept = as.data.frame(sf$`(Intercept)`)\nintercept = SpatialPointsDataFrame(data = intercept, coords = regpoints)\ngridded(intercept) <- TRUE\nintercept <- raster(intercept)\nraster::crs(intercept) <- \"EPSG:7767\"\n\n# slope\nslope = as.data.frame(sf$ghs)\nslope = SpatialPointsDataFrame(data = slope, coords = regpoints)\ngridded(slope) <- TRUE\nslope <- raster(slope)\nraster::crs(slope) <- \"EPSG:7767\"\n\n\ngwr_pred = intercept + slope * ghs\n\nwriteRaster(gwr_pred,\n            \"path/gwr_pred.tif\",\n            overwrite = TRUE)\n\n???? ??? 10 ??? 2022 ???? 10:56 ?.?., ?/? Nikolaos Tziokas <\nnikos.tziokas at gmail.com> ??????:\n\n> I using the *R* package *spgwr *to perform geographically weighted\n> regression (GWR). I want to apply the model parameters to a finer spatial\n> scale but I am receiving this error: *Error in validObject(.Object):\n> invalid class ?SpatialPointsDataFrame? object: number of rows in data.frame\n> and SpatialPoints don't match*.\n>\n> When I use another package for GWR, called *GWmodel*, I do not have this\n> issue. For example using the *GWmodel*, I do:\n>\n> library(GWmodel)\n> library(sp)\n> library(raster)\n>\n> ghs = raster(\"path/ghs.tif\") # fine resolution raster\n> regpoints <- as(ghs, \"SpatialPoints\")\n>\n> block.data = read.csv(file = \"path/block.data.csv\")\n>\n> coordinates(block.data) <- c(\"x\", \"y\")\n> proj4string(block.data) <- \"EPSG:7767\"\n>\n> eq1 <- ntl ~ ghs\n> abw = bw.gwr(eq1,\n>              data = block.data,\n>              approach = \"AIC\",\n>              kernel = \"gaussian\",\n>              adaptive = TRUE,\n>              p = 2,\n>              parallel.method = \"omp\",\n>              parallel.arg = \"omp\")\n>\n> ab_gwr = gwr.basic(eq1,\n>                    data = block.data,\n>                    regression.points = regpoints,\n>                    bw = abw,\n>                    kernel = \"gaussian\",\n>                    adaptive = TRUE,\n>                    p = 2,\n>                    F123.test = FALSE,\n>                    cv = FALSE,\n>                    parallel.method = \"omp\",\n>                    parallel.arg = \"omp\")\n>\n> ab_gwr\n>\n> sp <- ab_gwr$SDF\n> sf <- st_as_sf(sp)\n>\n> # intercept\n> intercept = as.data.frame(sf$Intercept)\n> intercept = SpatialPointsDataFrame(data = intercept, coords = regpoints)\n> gridded(intercept) <- TRUE\n> intercept <- raster(intercept)\n> raster::crs(intercept) <- \"EPSG:7767\"\n>\n> intercept = resample(intercept, ghs, method = \"bilinear\")\n>\n> # slope\n> slope = as.data.frame(sf$ghs)\n> slope = SpatialPointsDataFrame(data = slope, coords = regpoints)\n> gridded(slope) <- TRUE\n> slope <- raster(slope)\n> raster::crs(slope) <- \"EPSG:7767\"\n>\n> slope = resample(slope, ghs, method = \"bilinear\")\n>\n> gwr_pred = intercept + slope * ghs\n>\n> writeRaster(gwr_pred,\n>             \"path/gwr_pred.tif\",\n>             overwrite = TRUE)\n>\n> How can I apply the GWR model parameters to a finer spatial scale, using\n> the spgwr package?\n>\n> Here is the code, using the *spgwr *package:\n>\n> library(spgwr)\n> library(sf)\n> library(raster)\n> library(parallel)\n>\n> ghs = raster(\"path/ghs.tif\") # fine resolution raster\n> regpoints <- as(ghs, \"SpatialPoints\")\n>\n> block.data = read.csv(file = \"path/block.data.csv\")\n>\n> #create mararate df for the x & y coords\n> x = as.data.frame(block.data$x)\n> y = as.data.frame(block.data$y)\n>\n> #convert the data to spatialPointsdf and then to spatialPixelsdf\n> coordinates(block.data) = c(\"x\", \"y\")\n>\n> # specify a model equation\n> eq1 <- ntl ~ ghs\n>\n> # find optimal ADAPTIVE kernel bandwidth using cross validation\n> abw <- gwr.sel(eq1,\n>                data = block.data,\n>                adapt = TRUE,\n>                gweight = gwr.Gauss)\n>\n> # fit a gwr based on adaptive bandwidth\n> cl <- makeCluster(detectCores())\n> ab_gwr <- gwr(eq1,\n>               data = block.data,\n>               adapt = abw,\n>               gweight = gwr.Gauss,\n>               hatmatrix = TRUE,\n>               regpoints,\n>               predictions = TRUE,\n>               se.fit = TRUE,\n>               cl = cl)\n> stopCluster(cl)\n>\n> #print the results of the model\n> ab_gwr\n>\n> sp <- ab_gwr$SDF\n> sf <- st_as_sf(sp)\n>\n> # intercept\n> intercept = as.data.frame(sf$Intercept)\n> intercept = SpatialPointsDataFrame(data = intercept, coords = regpoints)\n> gridded(intercept) <- TRUE\n> intercept <- raster(intercept)\n> raster::crs(intercept) <- \"EPSG:7767\"\n>\n> intercept = resample(intercept, ghs, method = \"bilinear\")\n>\n> # slope\n> slope = as.data.frame(sf$ghs)\n> slope = SpatialPointsDataFrame(data = slope, coords = regpoints)\n> gridded(slope) <- TRUE\n> slope <- raster(slope)\n> raster::crs(slope) <- \"EPSG:7767\"\n>\n> slope = resample(slope, ghs, method = \"bilinear\")\n>\n> gwr_pred = intercept + slope * ghs\n>\n> writeRaster(gwr_pred,\n>             \"path/gwr_pred.tif\",\n>             overwrite = TRUE)\n>\n> The fine resolution raster:\n> ghs = raster(ncols=47, nrows=92, xmn=582216.388, xmx=603366.388,\n> ymn=1005713.0202, ymx=1047113.0202, crs='+proj=lcc +lat_0=18.88015774\n> +lon_0=76.75 +lat_1=16.625 +lat_2=21.125 +x_0=1000000 +y_0=1000000\n> +datum=WGS84 +units=m +no_defs')\n>\n> The csv can be downloaded from here\n> <https://drive.google.com/drive/folders/1V115zpdU2-5fXssI6iWv_F6aNu4E5qA7?usp=sharing>\n> .\n>\n> --\n> Tziokas Nikolaos\n> Cartographer\n>\n> Tel:(+44)07561120302\n> LinkedIn <http://linkedin.com/in/nikolaos-tziokas-896081130>\n>\n\n\n-- \nTziokas Nikolaos\nCartographer\n\nTel:(+44)07561120302\nLinkedIn <http://linkedin.com/in/nikolaos-tziokas-896081130>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "In order to apply *GWR*'s model parameters to a finer spatial scale using\nthe *spgwr *package:\n\n\n   1. calculate *GWR *at the coarse scale\n   2. apply step 1 again using the parameters* fit.points*, *",
+      "thread_id": "thread-26508ab67f4e",
+      "thread_depth": 1,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-f3bd7dcbe899",
+      "message_id": "<CAEQQd3K-=LSr-9Cr7N2t1g2cW8a8o7fw_D=DKyZmWZVVtPwjsg@mail.gmail.com>",
+      "from_name": "PAMELLA KAGELIZA KILAVI",
+      "from_email_hash": "750ad47abc05870d34dc26768cb418e57d9e77ae444a6b6067e504c0318a1b09",
+      "date": "2022-12-13T07:41:26+03:00",
+      "subject": "[R-sig-Geo] Human health risk assessment - dermal exposure to heavy metals in water",
+      "subject_clean": "Human health risk assessment - dermal exposure to heavy metals in water",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear All\n\nI have been using EnviroPRA to assess the health risk from exposure to\nheavy metals via inhalation, ingestion and dermal contact pathways.\nUnfortunately I have hit a dead end for evaluation of the risk from dermal\nexposure to heavy metals in water (showering, bathing or swimming).\n\nAny assistance will highly be appreciaitied.\n\nThank you\n\n-- \nPamella Kageliza Kilavi-Ndege\nPh.D. Student\nUniversity of Nairobi\nDepartment of Physics\n\n-- \n\n\n----------------------------------------------------------------------------------\n\nThe University of Nairobi is ISO 9001:2015 certified.\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear All\n\nI have been using EnviroPRA to assess the health risk from exposure to\nheavy metals via inhalation, ingestion and dermal contact pathways.\nUnfortunately I have hit a dead end for evaluation ",
+      "thread_id": "thread-f3bd7dcbe899",
+      "thread_depth": 0,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-196a885dca93",
+      "message_id": "<21d1a29f-af77-88d6-e39f-853424dfe551@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2022-12-14T17:19:42+01:00",
+      "subject": "[R-sig-Geo] retirement of rgdal, rgeos and maptools: second blog post",
+      "subject_clean": "retirement of rgdal, rgeos and maptools: second blog post",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "News and developments with regard to the retirement of R packages rgdal, \nrgeos and maptools (scheduled 2023) is found in the following blog post:\n\nhttps://r-spatial.org/r/2022/12/14/evolution2.html\n\nFollow-up questions can be directed to Roger or me, or to this list, or \nraised as issues on https://github.com/r-spatial/evolution\n\nMany regards,\n-- \nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48151 Muenster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "News and developments with regard to the retirement of R packages rgdal, \nrgeos and maptools (scheduled 2023) is found in the following blog post:\n\nhttps://r-spatial.org/r/2022/12/14/evolution2.html\n\n",
+      "thread_id": "thread-196a885dca93",
+      "thread_depth": 0,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-b7886d503d52",
+      "message_id": "<963e643-d2f8-92ae-51d-95ccbd373584@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2022-12-15T10:09:02+01:00",
+      "subject": "[R-sig-Geo] retirement of rgdal, rgeos and maptools: second blog post",
+      "subject_clean": "retirement of rgdal, rgeos and maptools: second blog post",
+      "in_reply_to": "<21d1a29f-af77-88d6-e39f-853424dfe551@uni-muenster.de>",
+      "references": [
+        "<21d1a29f-af77-88d6-e39f-853424dfe551@uni-muenster.de>"
+      ],
+      "body_plain": "And there will be a session on moving forward from rgdal, rgeos and \nmaptools at \nhttps://opengeohub.org/summer-school/opengeohub-summer-school-poznan-2023/\n\n\nOn Wed, 14 Dec 2022, Edzer Pebesma wrote:\n\n> News and developments with regard to the retirement of R packages rgdal, \n> rgeos and maptools (scheduled 2023) is found in the following blog post:\n>\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fr-spatial.org%2Fr%2F2022%2F12%2F14%2Fevolution2.html&data=05%7C01%7CRoger.Bivand%40nhh.no%7Caa95db4f8639447a40a908daddef041c%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638066315998006184%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000%7C%7C%7C&sdata=jwnCDgrpx8VTjocvC8HUIzGhK22cJFywBOAR2tQ%2F%2BdE%3D&reserved=0\n>\n> Follow-up questions can be directed to Roger or me, or to this list, or \n> raised as issues on \n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2Fr-spatial%2Fevolution&data=05%7C01%7CRoger.Bivand%40nhh.no%7Caa95db4f8639447a40a908daddef041c%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638066315998006184%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000%7C%7C%7C&sdata=5mN0v7QngAqC1uwyiWDkXbR4mhkAV%2Fm%2Fb73A6tTMAjU%3D&reserved=0\n>\n> Many regards,\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "And there will be a session on moving forward from rgdal, rgeos and \nmaptools at \nhttps://opengeohub.org/summer-school/opengeohub-summer-school-poznan-2023/\n\n\nOn Wed, 14 Dec 2022, Edzer Pebesma wrote:",
+      "thread_id": "thread-196a885dca93",
+      "thread_depth": 1,
+      "month": "2022-12"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-b564b0436a5c",
+      "subject": "Apply geographically weighted regression's model parameters to a finer spatial scale",
+      "message_count": 2,
+      "participants": [
+        "Nikolaos Tziokas",
+        "Roger Bivand"
+      ],
+      "started": "2022-12-04T15:10:36+00:00",
+      "last_reply": "2022-12-04T20:23:58+01:00",
+      "root_message_id": "msg-b564b0436a5c"
+    },
+    {
+      "id": "thread-0492886c0d99",
+      "subject": "Course: Geocomputation and Machine Learning for Environmental Applications -2023",
+      "message_count": 1,
+      "participants": [
+        "Giuseppe Amatulli"
+      ],
+      "started": "2022-12-05T20:29:54+01:00",
+      "last_reply": "2022-12-05T20:29:54+01:00",
+      "root_message_id": "msg-0492886c0d99"
+    },
+    {
+      "id": "thread-26508ab67f4e",
+      "subject": "package spgwr: apply model parameters to a finer spatial scale",
+      "message_count": 2,
+      "participants": [
+        "Nikolaos Tziokas"
+      ],
+      "started": "2022-12-10T10:56:10+00:00",
+      "last_reply": "2022-12-10T18:11:34+00:00",
+      "root_message_id": "msg-26508ab67f4e"
+    },
+    {
+      "id": "thread-24863ef1a7ec",
+      "subject": "The Open-Earth Monitor Global Workshop 2023 at Eurac 4–8 September",
+      "message_count": 1,
+      "participants": [
+        "Tomislav Hengl"
+      ],
+      "started": "2022-12-10T11:43:00+02:00",
+      "last_reply": "2022-12-10T11:43:00+02:00",
+      "root_message_id": "msg-24863ef1a7ec"
+    },
+    {
+      "id": "thread-f3bd7dcbe899",
+      "subject": "Human health risk assessment - dermal exposure to heavy metals in water",
+      "message_count": 1,
+      "participants": [
+        "PAMELLA KAGELIZA KILAVI"
+      ],
+      "started": "2022-12-13T07:41:26+03:00",
+      "last_reply": "2022-12-13T07:41:26+03:00",
+      "root_message_id": "msg-f3bd7dcbe899"
+    },
+    {
+      "id": "thread-196a885dca93",
+      "subject": "retirement of rgdal, rgeos and maptools: second blog post",
+      "message_count": 2,
+      "participants": [
+        "Edzer Pebesma",
+        "Roger Bivand"
+      ],
+      "started": "2022-12-14T17:19:42+01:00",
+      "last_reply": "2022-12-15T10:09:02+01:00",
+      "root_message_id": "msg-196a885dca93"
+    }
+  ]
+}

@@ -1,0 +1,339 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2004-01",
+  "messages": [
+    {
+      "id": "msg-582aedf8e1eb",
+      "message_id": "<Pine.LNX.4.44.0401111832320.20286-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-01-11T18:42:44+01:00",
+      "subject": "[R-sig-Geo] Re: SpatialCls",
+      "subject_clean": "SpatialCls",
+      "in_reply_to": "<3FC77530.60205@geog.uu.nl>",
+      "references": [],
+      "body_plain": "Dear Edzer,\n\nHappy New Year!\n\nI'm just muddling, but would it be OK to try to put my proj4R CRS class in \nSpatialCls for proj4string? This may mean setting proj4string as NA until \nthe CRS has been set, and as.projected as NULL until proj4string is \nidentified as latlong or !latlong? How should we handle this with regard \nto commiting to sourceforge, is this a situation where I need to do this \nlocally, and send you a tarball to avoid introducing changes you'd prefer \nnot to have?\n\nA little question - does coordinates() preserve sdf row names as a way of \nkeeping point IDs stuck to both objects?\n\nI'm a bit worried about holes too in the polygon setting, the original\ncompiled code in maptools for finding ring direction seems buggy, and ring\ndirection seems to be a typical way of flagging holes as against\nboundaries for fill.\n\nBest wishes,\n\nRoger\n\nOn Fri, 28 Nov 2003, Edzer J. Pebesma wrote:\n\n> Hi Barry, Roger, r-sig-geo gang,\n> \n> I just checked in updates to SpatialCls on\n> http://sourceforge.net/projects/r-spatial/ --\n> I completed documentation, added tests and examples. The\n> whole package should pass R CMD check. Even the S4 classes\n> are now documented, slots and all. No vignettes yet,\n> still have to get into them.\n> \n> The interfaces used so far are:\n> \n> # The following three promote a data.frame to a SpatialDataFrame\n> \n> coordinates(meuse) = ~x+y # or\n> coordinates(meuse) = c(\"x\", \"y\") # or\n> coordinates(meuse) = cbind(x,y)\n> \n> # after which\n> \n> coordinates(meuse)\n> \n> # retrieves coordinates; also:\n> \n> coordinates(meuse.grid) = ~x+y # followed by\n> gridded(meuse.grid) = TRUE\n> \n> # promotes meuse.grid to a SpatialDataFrameGrid, which has\n> # (and auto-detects) grid topology; it has an image method.\n> \n> # then,\n> \n> polygons(x) = list(pol1, pol2, pol3)\n> \n> # promotes data.frame x to a SpatialPolygons, adding the\n> # polygon information to it, doing some basic checks\n> # (e.g. pol1..3 should be 2column matrix with at least 4 points,\n> # first and last being the same);\n> \n> polygons(x)     # retrieves the polygon list\n> data.frame(x)    # retrieves the attribute values data.frame\n> \n> # some elementary plot, show, formula and summary methods are present.\n> \n> What else do we need, when it comes to interfaces/methods?\n> \n> Enjoy the weekend,\n> --\n> Edzer\n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "Dear Edzer,\n\nHappy New Year!\n\nI'm just muddling, but would it be OK to try to put my proj4R CRS class in \nSpatialCls for proj4string? This may mean setting proj4string as NA until \nthe CRS has been se",
+      "thread_id": "thread-582aedf8e1eb",
+      "thread_depth": 0,
+      "month": "2004-01"
+    },
+    {
+      "id": "msg-4a69ef58f9e8",
+      "message_id": "<40027EC3.9050506@lancaster.ac.uk>",
+      "from_name": "Barry Rowlingson",
+      "from_email_hash": "0a612c58e84a470ea72c786929abc7840353b66d3dc7ac5e89e505330f3012a0",
+      "date": "2004-01-12T11:02:27Z",
+      "subject": "[R-sig-Geo] Re: Holes",
+      "subject_clean": "Holes",
+      "in_reply_to": "<Pine.LNX.4.44.0401111832320.20286-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0401111832320.20286-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "> I'm a bit worried about holes too in the polygon setting, the original\n> compiled code in maptools for finding ring direction seems buggy, and ring\n> direction seems to be a typical way of flagging holes as against\n> boundaries for fill.\n\n  Typical it may be, but I think its the wrong way of doing things! This \nsort of complex geometry would be better represented as a tree of rings. \n  Each ring may have child rings that represent islands or holes within \nthe parent (depending on whether the parent is a hole or an island). In \nthis way both the island/hole nature is preserved as well as the way \neach is embedded in the other.\n\n  I think you can reconstruct this tree from the rings+holeflag form, \nbut it involves doing point-in-poly tests using generated points \nguaranteed to be in a given ring.\n\n  The tree structure leads to nice simple calculation of various \nproperties of the rings. Consider a lake with islands with perhaps lakes \n- the area of water of the outer lake is the area(lake ring) minus \narea(child rings), whereas the amount of water within the outer lake is \narea(lake ring) minus amount of water within(child rings), a neat \ntree-based algorithm.\n\n  Given that the tree can be reconstructed from the ring+holeflag \nrepresentation, I'd settle for that if a method for constructing the \ntree is made available.\n\n  Of course in an object-oriented sense, the users shouldn't see the \nrepresentation - there shouldn't be a method for 'area' that returns a \nnegative number if the thing is a hole - there should be an \n'isHole(x,y)' method or similar...\n\n  Anyone notice a typo in a recent R-news posting that referred to \n'objection orientation' :)\n\nBaz",
+      "body_snippet": "> I'm a bit worried about holes too in the polygon setting, the original\n> compiled code in maptools for finding ring direction seems buggy, and ring\n> direction seems to be a typical way of flagging ",
+      "thread_id": "thread-582aedf8e1eb",
+      "thread_depth": 1,
+      "month": "2004-01"
+    },
+    {
+      "id": "msg-42c262c63da7",
+      "message_id": "<OFA14AD050.0A53A95D-ON88256E19.0075ADAD-88256E19.0076D9DC@epamail.epa.gov>",
+      "from_name": "White.Denis at epamail.epa.gov",
+      "from_email_hash": "16ee480d874c5ee3c0b0c97bcdbbca111811e4431c2a806cee0092c240eacedb",
+      "date": "2004-01-12T13:38:27-08:00",
+      "subject": "[R-sig-Geo] Re: Holes",
+      "subject_clean": "Holes",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "> I'm a bit worried about holes too in the polygon setting, the original\n> compiled code in maptools for finding ring direction seems buggy, and\nring\n> direction seems to be a typical way of flagging holes as against\n> boundaries for fill.\n\nIf filling is the main concern, then it may not matter (which direction\ninner polygons are recorded).  If, in this script,\n\np <- c(\n  1,1,\n  8,1,\n  8,8,\n  1,8,\n  1,1,\n      2,2,\n      7,2,\n      7,7,\n      2,7,\n      2,2,\n  1,1,\n          3,3,\n          6,3,\n          6,6,\n          3,6,\n          3,3,\n  1,1,\n              4,4,\n              5,4,\n              5,5,\n              4,5,\n              4,4,\n  1,1,\n  NA,NA)\np <- matrix (p, nrow=2, ncol=length(p)/2)\nplot (p[1,], p[2,], type=\"n\", axes=FALSE, xlab=\"\", ylab=\"\")\npolygon (p[1,], p[2,], col=1)\n\nthe directions of the successive inner polygons are reversed, the\ngraphic result is the same.  The fill algorithm evidently uses the\nparity feature (fill on, fill off, while crossing successive boundaries\nin the direction of shading).  The diagonal line showing from (2,2) to\n(3,3) is another matter.  I wrote Paul Murrell about this a couple of\nyears ago and he referred me to Ross Ihaka who, Paul said, was working\non new polygon routines.\n\nFor topological applications, the tree structure suggested by Barry\nRowlingson seems like an elegant method.\n\nDenis",
+      "body_snippet": "> I'm a bit worried about holes too in the polygon setting, the original\n> compiled code in maptools for finding ring direction seems buggy, and\nring\n> direction seems to be a typical way of flagging ",
+      "thread_id": "thread-42c262c63da7",
+      "thread_depth": 0,
+      "month": "2004-01"
+    },
+    {
+      "id": "msg-589d3c09ce07",
+      "message_id": "<20040113141133.28BF44623D@server1.messagingengine.com>",
+      "from_name": "Nicholas Lewin-Koh",
+      "from_email_hash": "ce1a5dad09cdf256c2a72906ae1e563f0d7ec3457957c4a1a53c9b3862a71eac",
+      "date": "2004-01-13T22:11:33+08:00",
+      "subject": "[R-sig-Geo] Re: holes",
+      "subject_clean": "holes",
+      "in_reply_to": "<200401131115.i0DBFKki028347@hypatia.math.ethz.ch>",
+      "references": [
+        "<200401131115.i0DBFKki028347@hypatia.math.ethz.ch>"
+      ],
+      "body_plain": "Hi Roger,\nI thought I fixed the polygon direction code, but I may not have worked\nit in to the version\nI passed over to you. Sorry. I rember that the original code that came\nwith the shapelib library\nin the contrib section did not work properly, and gave screwy results. I\nremember replacing it with an algorithm from O'Rourke (Comp Geom in C)\nthat worked much better. Let me look in my backups (I think that was 3\ncomputers and 2 jobs ago) and compare with the current maptools. If I\ndidn't work it in I will send you the code.\n\nI think Barry's idea is great and not hard to implement. Essentially he\nis suggesting to store the polygons  ' parts in a red-black tree. You can\nrefrence the polygon parts by id's and just suck them right out of the\narray when plotting.\n\nNicholas \n> \n> Today's Topics:\n> \n>    1. Re: Re: Holes (White.Denis at epamail.epa.gov)\n> \n> \n> ----------------------------------------------------------------------\n> \n> Message: 1\n> Date: Mon, 12 Jan 2004 13:38:27 -0800\n> From: White.Denis at epamail.epa.gov\n> Subject: Re: [R-sig-Geo] Re: Holes\n> To: Roger.Bivand at nhh.no\n> Cc: r-sig-geo at stat.math.ethz.ch\n> Message-ID:\n> \t<OFA14AD050.0A53A95D-ON88256E19.0075ADAD-88256E19.0076D9DC at epamail.epa.gov>\n> \t\n> Content-Type: text/plain; charset=US-ASCII\n> \n> \n> \n> \n> \n> > I'm a bit worried about holes too in the polygon setting, the original\n> > compiled code in maptools for finding ring direction seems buggy, and\n> ring\n> > direction seems to be a typical way of flagging holes as against\n> > boundaries for fill.\n> \n> If filling is the main concern, then it may not matter (which direction\n> inner polygons are recorded).  If, in this script,\n> \n> p <- c(\n>   1,1,\n>   8,1,\n>   8,8,\n>   1,8,\n>   1,1,\n>       2,2,\n>       7,2,\n>       7,7,\n>       2,7,\n>       2,2,\n>   1,1,\n>           3,3,\n>           6,3,\n>           6,6,\n>           3,6,\n>           3,3,\n>   1,1,\n>               4,4,\n>               5,4,\n>               5,5,\n>               4,5,\n>               4,4,\n>   1,1,\n>   NA,NA)\n> p <- matrix (p, nrow=2, ncol=length(p)/2)\n> plot (p[1,], p[2,], type=\"n\", axes=FALSE, xlab=\"\", ylab=\"\")\n> polygon (p[1,], p[2,], col=1)\n> \n> the directions of the successive inner polygons are reversed, the\n> graphic result is the same.  The fill algorithm evidently uses the\n> parity feature (fill on, fill off, while crossing successive boundaries\n> in the direction of shading).  The diagonal line showing from (2,2) to\n> (3,3) is another matter.  I wrote Paul Murrell about this a couple of\n> years ago and he referred me to Ross Ihaka who, Paul said, was working\n> on new polygon routines.\n> \n> For topological applications, the tree structure suggested by Barry\n> Rowlingson seems like an elegant method.\n> \n> Denis\n> \n> \n> \n> ------------------------------\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> \n> \n> End of R-sig-Geo Digest, Vol 5, Issue 2\n> ***************************************",
+      "body_snippet": "Hi Roger,\nI thought I fixed the polygon direction code, but I may not have worked\nit in to the version\nI passed over to you. Sorry. I rember that the original code that came\nwith the shapelib library\n",
+      "thread_id": "thread-589d3c09ce07",
+      "thread_depth": 0,
+      "month": "2004-01"
+    },
+    {
+      "id": "msg-679d5c41b8fa",
+      "message_id": "<40040227.4040408@geog.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "a7fb0ca623e251a5aff6aa466eb7f50e3c643594fe03e3232d546a007043eef0",
+      "date": "2004-01-13T15:35:19+01:00",
+      "subject": "[R-sig-Geo] Re: SpatialCls",
+      "subject_clean": "SpatialCls",
+      "in_reply_to": "<Pine.LNX.4.44.0401111832320.20286-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0401111832320.20286-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Roger Bivand wrote:\n\n>Dear Edzer,\n>\n>Happy New Year!\n>\n>I'm just muddling, but would it be OK to try to put my proj4R CRS class in \n>SpatialCls for proj4string? This may mean setting proj4string as NA until \n>the CRS has been set, and as.projected as NULL until proj4string is \n>identified as latlong or !latlong? How should we handle this with regard \n>to commiting to sourceforge, is this a situation where I need to do this \n>locally, and send you a tarball to avoid introducing changes you'd prefer \n>not to have?\n>  \n>\nPlease go ahead and commit; that's the idea of you being a developer.\nThe idea of using cvs is that you can go back to previous versions.\n\n>A little question - does coordinates() preserve sdf row names as a way of \n>keeping point IDs stuck to both objects?\n>\nYes; it returns a data frame with only the (2 or 3) coordinate columns \nselected.\n--\nEdzer",
+      "body_snippet": "Roger Bivand wrote:\n\n>Dear Edzer,\n>\n>Happy New Year!\n>\n>I'm just muddling, but would it be OK to try to put my proj4R CRS class in \n>SpatialCls for proj4string? This may mean setting proj4string as NA",
+      "thread_id": "thread-582aedf8e1eb",
+      "thread_depth": 1,
+      "month": "2004-01"
+    },
+    {
+      "id": "msg-7101cee22c7a",
+      "message_id": "<40040E70.2000201@netscape.net>",
+      "from_name": "Marcelo Bruno",
+      "from_email_hash": "b19eaf47e716cd5668ae2b01fd597565990baebd69dede7f8722c5c2d289ed4e",
+      "date": "2004-01-13T13:27:44-02:00",
+      "subject": "[R-sig-Geo] output gstat and maps",
+      "subject_clean": "output gstat and maps",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi, members\n\nI'm Marcelo, oceanographer from Brazil\nand actually work with fishery acoustical data\nof brazilian shelf. I'm using R, GMT, ArcView (windows)\nin Linux redhat 9.0 (Athlon Xp 1.6Ghz, 20Gb 540mb mem).\nI run kriging analysis using gstat (R1.8.1) in\nfishery acoustic data:\n\nx     y     sa (backscatering acoustic parameter)\n\nthe output is ordinary kriging surface.\nI need overlap these output to a map of\nBrazil coastal shelf and slope but i don't\nmake this. I have a file (ascii) of Brazil coastal,\nand shapefile. Someone can helps me with this\nproblem? I try in gimp, kpaint and others but i\nneed a better solution to learn more in R.\n\nThanks in advance!\nMarcelo",
+      "body_snippet": "Hi, members\n\nI'm Marcelo, oceanographer from Brazil\nand actually work with fishery acoustical data\nof brazilian shelf. I'm using R, GMT, ArcView (windows)\nin Linux redhat 9.0 (Athlon Xp 1.6Ghz, 20Gb 5",
+      "thread_id": "thread-7101cee22c7a",
+      "thread_depth": 0,
+      "month": "2004-01"
+    },
+    {
+      "id": "msg-f1509ef6a184",
+      "message_id": "<1074083954.4799.74.camel@gandalf.local>",
+      "from_name": "Ernesto Jardim",
+      "from_email_hash": "78dbd6123bf5d01c3b94604fe1906c80b548e2c8744c1a2713176af9b3a996a9",
+      "date": "2004-01-14T12:39:14Z",
+      "subject": "[R-sig-Geo] output gstat and maps",
+      "subject_clean": "output gstat and maps",
+      "in_reply_to": "<40040E70.2000201@netscape.net>",
+      "references": [
+        "<40040E70.2000201@netscape.net>"
+      ],
+      "body_plain": "Hi Marcelo,\n\nIf you have everything on the same coordenate system you can just plot\nthe Brasilian coast with plot(..., type=\"l\") and add kriging surface\nwith points or something similar.\n\nHope this helps\n\nEJ\n\n\nOn Tue, 2004-01-13 at 15:27, Marcelo Bruno wrote:\n> Hi, members\n> \n> I'm Marcelo, oceanographer from Brazil\n> and actually work with fishery acoustical data\n> of brazilian shelf. I'm using R, GMT, ArcView (windows)\n> in Linux redhat 9.0 (Athlon Xp 1.6Ghz, 20Gb 540mb mem).\n> I run kriging analysis using gstat (R1.8.1) in\n> fishery acoustic data:\n> \n> x     y     sa (backscatering acoustic parameter)\n> \n> the output is ordinary kriging surface.\n> I need overlap these output to a map of\n> Brazil coastal shelf and slope but i don't\n> make this. I have a file (ascii) of Brazil coastal,\n> and shapefile. Someone can helps me with this\n> problem? I try in gimp, kpaint and others but i\n> need a better solution to learn more in R.\n> \n> Thanks in advance!\n> Marcelo\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hi Marcelo,\n\nIf you have everything on the same coordenate system you can just plot\nthe Brasilian coast with plot(..., type=\"l\") and add kriging surface\nwith points or something similar.\n\nHope this he",
+      "thread_id": "thread-7101cee22c7a",
+      "thread_depth": 1,
+      "month": "2004-01"
+    },
+    {
+      "id": "msg-8b040f5c9996",
+      "message_id": "<003701c3dac3$f3ae7340$818001db@webgis>",
+      "from_name": "Hisaji Ono",
+      "from_email_hash": "4857db17b7e848ab1379157d08a470dfc3f16a2fe4d02ed4b21725afd9ea2f9d",
+      "date": "2004-01-15T02:29:23+09:00",
+      "subject": "[R-sig-Geo] About adaptive spatial kernel for spgwr",
+      "subject_clean": "About adaptive spatial kernel for spgwr",
+      "in_reply_to": null,
+      "references": [
+        "<Pine.LNX.4.44.0401111832320.20286-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Hello, Professor Bivand.\n\nCurrently I summaries GWR using Fotheringham et al. 's GWR book(Wiley).\n\nAlthough current spgwr has no support of adaptive spatial kernel, I'd like\nto add this kernel in it.\n\nBut for me it's not enough to implement this only reading page 46's footnote\nin this books\n\nCould you give any hint for implementing adaptive spatial kernel to me?\n\n Regards.",
+      "body_snippet": "Hello, Professor Bivand.\n\nCurrently I summaries GWR using Fotheringham et al. 's GWR book(Wiley).\n\nAlthough current spgwr has no support of adaptive spatial kernel, I'd like\nto add this kernel in it.\n",
+      "thread_id": "thread-582aedf8e1eb",
+      "thread_depth": 1,
+      "month": "2004-01"
+    },
+    {
+      "id": "msg-16556ec41a5e",
+      "message_id": "<Pine.OSF.3.96.1040114152034.24387A-100000@alpha1.csd.uwm.edu>",
+      "from_name": "Danlin Yu",
+      "from_email_hash": "4f915e68a518939af5a3635130e4f5d4fce8d20a4aa423f20c96efe2c1b26e13",
+      "date": "2004-01-14T15:39:32-06:00",
+      "subject": "[R-sig-Geo] About adaptive spatial kernel for spgwr",
+      "subject_clean": "About adaptive spatial kernel for spgwr",
+      "in_reply_to": "<003701c3dac3$f3ae7340$818001db@webgis>",
+      "references": [],
+      "body_plain": "Hi, Mr. Hisaji Ono and all:\n\n    I think Fortheringham and collegues are using the cross-validation to\nobtain an optimal number of nearest neighbor to replace the optimal\nbandwidth. This way, every data point will have the same number of\nobservations participating the locally weighted regression.\n    I cannot actually implement the code in R myself, but I would like to\nlist my understanding of using the cross-validation procedure to obtain\nthe optimal number of nearest neighbors. If I am wrong in any aspect,\nplease correct me:\n    1. Choose the weighting scheme (bi-squre, or similar ones like\ntri-cube);\n    2. Set the minimum number of nearest neighbor as the number of\nexplanatory variables plus 2, and the maximum number as the number of\nobservations (I guess for large number of observations, this may be very\ncomputational intensive);\n    3. Loop through the minimum to the maximum, and obtain a CV score for\neach number of nearest neighbor;\n    4. The smallest CV yields the optimal number of nearest neighbor.\n\n    I hope this will help.\n    \n\nOn Thu, 15 Jan 2004, Hisaji Ono wrote:\n\n> Hello, Professor Bivand.\n> \n> Currently I summaries GWR using Fotheringham et al. 's GWR book(Wiley).\n> \n> Although current spgwr has no support of adaptive spatial kernel, I'd like\n> to add this kernel in it.\n> \n> But for me it's not enough to implement this only reading page 46's footnote\n> in this books\n> \n> Could you give any hint for implementing adaptive spatial kernel to me?\n> \n>  Regards.\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n    Sincerely,\n    Danlin Yu, Ph.D. Candidate\n    Department of Geography\n    University of Wisconsin, Milwaukee\n    Tel: (414)229-5818\n    Fax: (414)229-3981\n    Email: danlinyu at uwm.edu",
+      "body_snippet": "Hi, Mr. Hisaji Ono and all:\n\n    I think Fortheringham and collegues are using the cross-validation to\nobtain an optimal number of nearest neighbor to replace the optimal\nbandwidth. This way, every da",
+      "thread_id": "thread-582aedf8e1eb",
+      "thread_depth": 2,
+      "month": "2004-01"
+    },
+    {
+      "id": "msg-7bf2e6f84112",
+      "message_id": "<62413.129.177.44.24.1074150618.squirrel@webmail.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-01-15T08:10:18+01:00",
+      "subject": "[R-sig-Geo] Re: About adaptive spatial kernel for spgwr",
+      "subject_clean": "About adaptive spatial kernel for spgwr",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "> Hello, Professor Bivand.\n>\n> Currently I summaries GWR using Fotheringham et al. 's GWR\n> book(Wiley).\n>\n> Although current spgwr has no support of adaptive spatial kernel, I'd\n> like to add this kernel in it.\n>\n> But for me it's not enough to implement this only reading page 46's\n> footnote in this books\n>\n\nWhen Chris Brunsdon and I were in Lucca last September, some coding was\ndone, although it isn't yet ready for release. Some more work needs to\nbe done, also to introduce geographically weighted statistical summary\nmeasures. The code does include the k-nearest neighbours adaptive kernel\nused in GWR in some cases. If others would like to join in, I could\nstart a sourceforge project if you like.\n\nRoger\n\n\n\n> Could you give any hint for implementing adaptive spatial kernel to\n> me?\n>\n>  Regards.\n\n\n-- \nRoger Bivand\nNHH, Breiviksveien 40, N-5045 Bergen, Norway",
+      "body_snippet": "> Hello, Professor Bivand.\n>\n> Currently I summaries GWR using Fotheringham et al. 's GWR\n> book(Wiley).\n>\n> Although current spgwr has no support of adaptive spatial kernel, I'd\n> like to add this ke",
+      "thread_id": "thread-7bf2e6f84112",
+      "thread_depth": 0,
+      "month": "2004-01"
+    },
+    {
+      "id": "msg-231bc28590ad",
+      "message_id": "<40066958.7080105@geog.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "a7fb0ca623e251a5aff6aa466eb7f50e3c643594fe03e3232d546a007043eef0",
+      "date": "2004-01-15T11:20:08+01:00",
+      "subject": "[R-sig-Geo] output gstat and maps",
+      "subject_clean": "output gstat and maps",
+      "in_reply_to": "<40040E70.2000201@netscape.net>",
+      "references": [
+        "<40040E70.2000201@netscape.net>"
+      ],
+      "body_plain": "Mmm, yeah, the trouble is that R is not a GIS, and\nGMT and ArcView are no statistics packages.\n\nI think you can import shapefiles using packages\nmaptools, and perhaps Rmap (not on CRAN?).\nI imaging you can then plot the values with\n\nimage(values.krige)\n\nand add polygons to the plot with the plot\ncommands in maptools, using the add=TRUE\nargument.\n\nlevelplot, which I like much more because it\ndraws a legend, can currently not do this\neasily (i.e., without customizing panel functions);\nhas anyone looked into this?\n--\nEdzer\n\nMarcelo Bruno wrote:\n\n> Hi, members\n>\n> I'm Marcelo, oceanographer from Brazil\n> and actually work with fishery acoustical data\n> of brazilian shelf. I'm using R, GMT, ArcView (windows)\n> in Linux redhat 9.0 (Athlon Xp 1.6Ghz, 20Gb 540mb mem).\n> I run kriging analysis using gstat (R1.8.1) in\n> fishery acoustic data:\n>\n> x     y     sa (backscatering acoustic parameter)\n>\n> the output is ordinary kriging surface.\n> I need overlap these output to a map of\n> Brazil coastal shelf and slope but i don't\n> make this. I have a file (ascii) of Brazil coastal,\n> and shapefile. Someone can helps me with this\n> problem? I try in gimp, kpaint and others but i\n> need a better solution to learn more in R.\n>\n> Thanks in advance!\n> Marcelo\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Mmm, yeah, the trouble is that R is not a GIS, and\nGMT and ArcView are no statistics packages.\n\nI think you can import shapefiles using packages\nmaptools, and perhaps Rmap (not on CRAN?).\nI imaging yo",
+      "thread_id": "thread-7101cee22c7a",
+      "thread_depth": 1,
+      "month": "2004-01"
+    },
+    {
+      "id": "msg-f1faaa847531",
+      "message_id": "<009801c3dc5b$c5715760$818001db@webgis>",
+      "from_name": "Hisaji Ono",
+      "from_email_hash": "4857db17b7e848ab1379157d08a470dfc3f16a2fe4d02ed4b21725afd9ea2f9d",
+      "date": "2004-01-17T03:08:40+09:00",
+      "subject": "[R-sig-Geo] About adaptive spatial kernel for spgwr",
+      "subject_clean": "About adaptive spatial kernel for spgwr",
+      "in_reply_to": null,
+      "references": [
+        "<Pine.OSF.3.96.1040114152034.24387A-100000@alpha1.csd.uwm.edu>"
+      ],
+      "body_plain": "Thank you very much, Mr. Yu.\n\n> \n>     I think Fortheringham and collegues are using the cross-validation to\n> obtain an optimal number of nearest neighbor to replace the optimal\n> bandwidth. This way, every data point will have the same number of\n> observations participating the locally weighted regression.\n>     I cannot actually implement the code in R myself, but I would like to\n> list my understanding of using the cross-validation procedure to obtain\n> the optimal number of nearest neighbors. If I am wrong in any aspect,\n> please correct me:\n>     1. Choose the weighting scheme (bi-squre, or similar ones like\n> tri-cube);\n>     2. Set the minimum number of nearest neighbor as the number of\n> explanatory variables plus 2, and the maximum number as the number of\n> observations (I guess for large number of observations, this may be very\n> computational intensive);\n>     3. Loop through the minimum to the maximum, and obtain a CV score for\n> each number of nearest neighbor;\n>     4. The smallest CV yields the optimal number of nearest neighbor.\n> \n>     I hope this will help.\n\n It's very helpful.",
+      "body_snippet": "Thank you very much, Mr. Yu.\n\n> \n>     I think Fortheringham and collegues are using the cross-validation to\n> obtain an optimal number of nearest neighbor to replace the optimal\n> bandwidth. This way",
+      "thread_id": "thread-582aedf8e1eb",
+      "thread_depth": 3,
+      "month": "2004-01"
+    },
+    {
+      "id": "msg-b70a9b4a06ff",
+      "message_id": "<008801c3dcc1$4c9974b0$818001db@webgis>",
+      "from_name": "Hisaji Ono",
+      "from_email_hash": "4857db17b7e848ab1379157d08a470dfc3f16a2fe4d02ed4b21725afd9ea2f9d",
+      "date": "2004-01-17T15:15:26+09:00",
+      "subject": "[R-sig-Geo] RGDAl & Map Algebra or Cartographic Modelling",
+      "subject_clean": "RGDAl & Map Algebra or Cartographic Modelling",
+      "in_reply_to": null,
+      "references": [
+        "<40040E70.2000201@netscape.net>",
+        "<40066958.7080105@geog.uu.nl>"
+      ],
+      "body_plain": "Hi.\n\n Against images imported by RGDAL, can R execute?Tomlin's Map Algebra or\nCartographic\nModelling(http://mutate.echiron.com/doc_center/library/pcraster/x30.htm)?\n\n Regards.",
+      "body_snippet": "Hi.\n\n Against images imported by RGDAL, can R execute?Tomlin's Map Algebra or\nCartographic\nModelling(http://mutate.echiron.com/doc_center/library/pcraster/x30.htm)?\n\n Regards.",
+      "thread_id": "thread-7101cee22c7a",
+      "thread_depth": 2,
+      "month": "2004-01"
+    },
+    {
+      "id": "msg-b84d7d2d73a3",
+      "message_id": "<61645.129.177.44.69.1074339371.squirrel@webmail.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-01-17T12:36:11+01:00",
+      "subject": "[R-sig-Geo] RGDAl & Map Algebra or Cartographic Modelling",
+      "subject_clean": "RGDAl & Map Algebra or Cartographic Modelling",
+      "in_reply_to": "<008801c3dcc1$4c9974b0$818001db@webgis>",
+      "references": [
+        "<40040E70.2000201@netscape.net>",
+        "<40066958.7080105@geog.uu.nl>",
+        "<008801c3dcc1$4c9974b0$818001db@webgis>"
+      ],
+      "body_plain": "> Hi.\n>\n>  Against images imported by RGDAL, can R execute???Tomlin's Map Algebra\n> or\n> Cartographic\n> Modelling(http://mutate.echiron.com/doc_center/library/pcraster/x30.htm)?\n\nCell by cell operations would work, because then you don't need to know\nwhere you are. Any other operations do need to know, and wouldn't work\nwithout functions being written. Maybe these are best handled in GIS - you\nrefer to PCRaster, which is downloadable, although closed source, for\nWindows. GRASS is a cross-platform alternative, and its r.mapcalc gets you\na long way - my choice would be to write a wrapper to convert the image to\nthe structure needed to output to a GRASS raster, and do the work there.\nPerhaps it would help to be able to create a new GRASS LOCATION from\nwithin R running within GRASS?\n\nRoger\n\n>\n>  Regards.\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n-- \nRoger Bivand\nNHH, Breiviksveien 40, N-5045 Bergen, Norway",
+      "body_snippet": "> Hi.\n>\n>  Against images imported by RGDAL, can R execute???Tomlin's Map Algebra\n> or\n> Cartographic\n> Modelling(http://mutate.echiron.com/doc_center/library/pcraster/x30.htm)?\n\nCell by cell operatio",
+      "thread_id": "thread-7101cee22c7a",
+      "thread_depth": 3,
+      "month": "2004-01"
+    },
+    {
+      "id": "msg-8f24e04366b1",
+      "message_id": "<40097258.1040609@geog.uu.nl>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "a7fb0ca623e251a5aff6aa466eb7f50e3c643594fe03e3232d546a007043eef0",
+      "date": "2004-01-17T18:35:20+01:00",
+      "subject": "[R-sig-Geo] RGDAl & Map Algebra or Cartographic Modelling",
+      "subject_clean": "RGDAl & Map Algebra or Cartographic Modelling",
+      "in_reply_to": "<61645.129.177.44.69.1074339371.squirrel@webmail.nhh.no>",
+      "references": [
+        "<40040E70.2000201@netscape.net>",
+        "<40066958.7080105@geog.uu.nl>",
+        "<008801c3dcc1$4c9974b0$818001db@webgis>",
+        "<61645.129.177.44.69.1074339371.squirrel@webmail.nhh.no>"
+      ],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20040117/adbb5e52/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20040117/adbb5e52/attachment.pl>",
+      "thread_id": "thread-7101cee22c7a",
+      "thread_depth": 4,
+      "month": "2004-01"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-582aedf8e1eb",
+      "subject": "SpatialCls",
+      "message_count": 6,
+      "participants": [
+        "Barry Rowlingson",
+        "Danlin Yu",
+        "Edzer J. Pebesma",
+        "Hisaji Ono",
+        "Roger Bivand"
+      ],
+      "started": "2004-01-11T18:42:44+01:00",
+      "last_reply": "2004-01-17T03:08:40+09:00",
+      "root_message_id": "msg-582aedf8e1eb"
+    },
+    {
+      "id": "thread-42c262c63da7",
+      "subject": "Holes",
+      "message_count": 1,
+      "participants": [
+        "White.Denis at epamail.epa.gov"
+      ],
+      "started": "2004-01-12T13:38:27-08:00",
+      "last_reply": "2004-01-12T13:38:27-08:00",
+      "root_message_id": "msg-42c262c63da7"
+    },
+    {
+      "id": "thread-7101cee22c7a",
+      "subject": "output gstat and maps",
+      "message_count": 6,
+      "participants": [
+        "Edzer J. Pebesma",
+        "Edzer Pebesma",
+        "Ernesto Jardim",
+        "Hisaji Ono",
+        "Marcelo Bruno",
+        "Roger Bivand"
+      ],
+      "started": "2004-01-13T13:27:44-02:00",
+      "last_reply": "2004-01-17T18:35:20+01:00",
+      "root_message_id": "msg-7101cee22c7a"
+    },
+    {
+      "id": "thread-589d3c09ce07",
+      "subject": "holes",
+      "message_count": 1,
+      "participants": [
+        "Nicholas Lewin-Koh"
+      ],
+      "started": "2004-01-13T22:11:33+08:00",
+      "last_reply": "2004-01-13T22:11:33+08:00",
+      "root_message_id": "msg-589d3c09ce07"
+    },
+    {
+      "id": "thread-7bf2e6f84112",
+      "subject": "About adaptive spatial kernel for spgwr",
+      "message_count": 1,
+      "participants": [
+        "Roger Bivand"
+      ],
+      "started": "2004-01-15T08:10:18+01:00",
+      "last_reply": "2004-01-15T08:10:18+01:00",
+      "root_message_id": "msg-7bf2e6f84112"
+    }
+  ]
+}

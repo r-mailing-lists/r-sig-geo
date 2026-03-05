@@ -1,0 +1,944 @@
+From mzyphur m@iii@g oii i@st@ts@org  Mon Dec  2 21:57:24 2024
+From: mzyphur m@iii@g oii i@st@ts@org (mzyphur m@iii@g oii i@st@ts@org)
+Date: Mon, 02 Dec 2024 20:57:24 +0000 (UTC)
+Subject: [R-sig-Geo] Online Seminar: Introduction to Git
+Message-ID: <tz-5aZ62R_KtPk_YpCqqqg@geopod-ismtpd-15>
+
+Hi everyone
+
+Instats is pleased to be co-hosting a free seminar Introduction to Git <https://instats.org/seminar/introduction-to-git-free-seminar2>, running Dec 10th. Git is the quintessential version control software used by developers to collaborate and manage projects. Discover some fundamental concepts, explore its practical applications, and learn how to efficiently use both the command line and the Visual Studio Code graphical user interface (GUI). Whether you're a seasoned developer or just starting your coding journey, this webinar will equip you with essential skills to use Git for software / package development in your field of research.
+
+
+Best wishes
+
+Michael Zyphur
+Director
+Institute for Statistical and Data Science
+instats.org <http://instats.org>
+	[[alternative HTML version deleted]]
+
+
+From @erv|ce @end|ng |rom @hd@w@on@com  Wed Dec  4 13:28:27 2024
+From: @erv|ce @end|ng |rom @hd@w@on@com (Stephen H. Dawson, DSL)
+Date: Wed, 4 Dec 2024 07:28:27 -0500
+Subject: [R-sig-Geo] Online Seminar: Introduction to Git
+In-Reply-To: <tz-5aZ62R_KtPk_YpCqqqg@geopod-ismtpd-15>
+References: <tz-5aZ62R_KtPk_YpCqqqg@geopod-ismtpd-15>
+Message-ID: <fb982dc7-3706-6372-c5a8-d56a931b7c93@shdawson.com>
+
+Thank you, Michael. Much appreciated.
+
+
+Kindest Regards,
+*Stephen Dawson, DSL*
+/Executive Strategy Consultant/
+Business & Technology
++1 (865) 804-3454
+http://www.shdawson.com
+
+
+On 12/2/24 15:57, Michael Zyphur via R-sig-Geo wrote:
+> Hi everyone
+>
+> Instats is pleased to be co-hosting a free seminar Introduction to Git <https://instats.org/seminar/introduction-to-git-free-seminar2>, running Dec 10th. Git is the quintessential version control software used by developers to collaborate and manage projects. Discover some fundamental concepts, explore its practical applications, and learn how to efficiently use both the command line and the Visual Studio Code graphical user interface (GUI). Whether you're a seasoned developer or just starting your coding journey, this webinar will equip you with essential skills to use Git for software / package development in your field of research.
+>
+>
+> Best wishes
+>
+> Michael Zyphur
+> Director
+> Institute for Statistical and Data Science
+> instats.org <http://instats.org>
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-sig-Geo mailing list
+> R-sig-Geo at r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+
+
+From i@io m@iii@g oii phys@ii@-courses@org  Tue Dec 17 11:06:56 2024
+From: i@io m@iii@g oii phys@ii@-courses@org (i@io m@iii@g oii phys@ii@-courses@org)
+Date: Tue, 17 Dec 2024 11:06:56 +0100 (CET)
+Subject: [R-sig-Geo] =?utf-8?q?Generalised_Linear_Models_in_R_=E2=80=93_O?=
+ =?utf-8?q?nline_Course_=2824-28_February_2025=29?=
+Message-ID: <1734430016.545623772@webmail.jimdo.com>
+
+
+Dear all,
+
+We are pleased to announce our upcoming online course: Generalised Linear Models in R, taking place from 24-28 February 2025.
+ 
+Course website: [ https://www.physalia-courses.org/courses-workshops/glm-in-r-1/ ]( https://www.physalia-courses.org/courses-workshops/glm-in-r-1/ ) 
+
+Participants will gain hands-on experience applying GLMs to a variety of data types, including normal, binary, and count data, using R.
+
+Course Highlights:
+
+  - Specification and fitting of GLMs with appropriate distributions and link functions
+  - Interpretation of model outputs, including categorical predictors and predictions
+  - Model selection principles to answer research questions effectively
+  - Visualization and validation of models to communicate results clearly
+  - Foundations for advancing to GLMMs, GAMs, and other complex regression models
+
+Target Audience:
+
+Graduate students and researchers with basic statistical knowledge and prior experience in R programming (e.g., data import, manipulation, and visualization).
+
+
+By the end of this course, participants will be equipped to confidently analyse experimental and observational data using GLMs, ensuring a robust and coherent approach to statistical analysis.
+ 
+Best regards,
+Carlo
+ 
+ 
+
+--------------------
+
+Carlo Pecoraro, Ph.D
+
+
+Physalia-courses DIRECTOR
+
+info at physalia-courses.org
+
+mobile: +49 17645230846
+
+
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From hongyun@w@ng@ext @end|ng |rom b@yer@com  Wed Dec 18 23:26:02 2024
+From: hongyun@w@ng@ext @end|ng |rom b@yer@com (Hongyun Wang)
+Date: Wed, 18 Dec 2024 22:26:02 +0000
+Subject: [R-sig-Geo] Spatial autocorrelation test in a dataset with multiple
+ observations per region
+Message-ID: <AM8PR05MB808438B2317521D962499980C2052@AM8PR05MB8084.eurprd05.prod.outlook.com>
+
+Hello Everyone,
+
+I have one question on the spatial autoregression tests on primary variables or residuals of linear regression models of a dataset that has multiple observations per region. Here I use columbus dataset and moran.test() on a primary variable CRIME as illustration.
+
+I modified the dataset to have only 7 regions, not 49 regions in original dataset, and each region has 7 observations. I used poly2nb() and nb2listw() to create neighbors and weights list of each region. But after examining the list carefully, I found that two observations within the same region have weight 1. This looks not right. I think poly2nb function treats each observation (a row in the dataset) as a region. Then I modified the neighbors and weights list to have weight 0 for two observations that are in the same region. The moran.test results from original listw object (listw0) and modified listw object (listw) have different Z-scores and p-values. The which moran.test is correct, or are both incorrect?
+
+> library(dplyr)
+> library(spdep)
+>
+> # read dataset and modify it: only 7 regions, 7 observations per region.
+> columbus <- st_read(system.file("shapes/columbus.shp", package="spData")[1], quiet=TRUE) %>%
++   mutate(regionId = rep(LETTERS[1:7], each = 7),
++          geometry = rep(.$geometry[1:7], each = 7))
+> columbus %>% as.data.frame() %>% select(regionId,geometry) %>% unique() %>% dim()
+[1] 7 2
+>
+> # neighbor list and weights
+> nblist <- poly2nb(as(columbus, "Spatial"))
+> listw0 <- listw <-  nb2listw(nblist, zero.policy=T, style="B")
+>
+> # 1.Moran I test on primary variable CRIME using original weights list
+> (m.test <- moran.test(columbus$CRIME, listw0,
++                       randomisation=FALSE, alternative="greater"))
+
+     Moran I test under normality
+
+data:  columbus$CRIME
+weights: listw0
+
+Moran I statistic standard deviate = 2.6121, p-value = 0.004499
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance
+     0.0497371251     -0.0208333333      0.0007298841
+
+>
+> # change weights in listw: two observations within the same region have weight 0.
+> columbus$ID = seq(nrow(columbus))
+> for (i in seq_along(listw$neighbours)){
++   listw$neighbours[[i]] = setdiff(listw$neighbours[[i]],  subset(as.data.frame(columbus), regionId == as.data.frame(columbus)[i, "regionId"])$ID)
++   listw$weights[[i]] = rep(1, length(listw$neighbours[[i]]))
++
++   if (length(listw$neighbours[[i]]) == 0) {
++     listw$neighbours[[i]] = 0L
++     listw$weights[i] = list(NULL)
++   }
++ }
+>
+> # 2.Moran I test on primary variable CRIME using modified weights list
+> (m.test <- moran.test(columbus$CRIME, listw,
++                       randomisation=FALSE, alternative="greater"))
+
+     Moran I test under normality
+
+data:  columbus$CRIME
+weights: listw  n reduced by no-neighbour observations
+
+
+Moran I statistic standard deviate = 1.1726, p-value = 0.1205
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance
+      0.014619659      -0.024390244       0.001106761
+
+>
+> # the neighbors and weights of the first observation
+> ## original listw
+> card(listw0$neighbours)[[1]]
+[1] 20
+> listw0$neighbours[[1]]
+[1]  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21
+> listw0$weights[[1]]
+[1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+>
+> ## modified listw
+> card(listw$neighbours)[[1]]
+[1] 14
+> listw$neighbours[[1]]
+[1]  8  9 10 11 12 13 14 15 16 17 18 19 20 21
+> listw$weights[[1]]
+[1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+>
+> # overview of listw0 and listw
+> listw0
+Characteristics of weights list object:
+Neighbour list object:
+Number of regions: 49
+Number of nonzero links: 1078
+Percentage nonzero weights: 44.89796
+Average number of links: 22
+2 disjoint connected subgraphs
+
+Weights style: B
+Weights constants summary:
+   n   nn   S0   S1     S2
+B 49 2401 1078 2156 110544
+> listw
+Characteristics of weights list object:
+Neighbour list object:
+Number of regions: 49
+Number of nonzero links: 784
+Percentage nonzero weights: 32.65306
+Average number of links: 16
+7 regions with no links:
+43 44 45 46 47 48 49
+8 disjoint connected subgraphs
+
+Weights style: B
+Weights constants summary:
+   n   nn  S0   S1    S2
+B 42 1764 784 1568 65856
+
+Thank you in advance and sorry for the inconvenience.
+
+Hongyun Wang
+
+Sr. Data Scientist ? Contracted
+Bayer AG
+hongyun.wang.ext at bayer.com
+
+________________________________
+
+The information contained in this e-mail is for the excl...{{dropped:14}}
+
+
+From Roger@B|v@nd @end|ng |rom nhh@no  Thu Dec 19 10:22:41 2024
+From: Roger@B|v@nd @end|ng |rom nhh@no (Roger Bivand)
+Date: Thu, 19 Dec 2024 09:22:41 +0000
+Subject: [R-sig-Geo] 
+ Spatial autocorrelation test in a dataset with multiple
+ observations per region
+In-Reply-To: <AM8PR05MB808438B2317521D962499980C2052@AM8PR05MB8084.eurprd05.prod.outlook.com>
+References: <AM8PR05MB808438B2317521D962499980C2052@AM8PR05MB8084.eurprd05.prod.outlook.com>
+Message-ID: <OSWP279MB0471D0B5782E8818A97E5529EE062@OSWP279MB0471.NORP279.PROD.OUTLOOK.COM>
+
+This is not easy to disambiguate. 
+
+First, you have copied from the output to your email, so that replicating your code is contorted - provide the code, either instead of, or in addition to the output. 
+
+Second, shapes/columbus.shp is deprecated, soon to be defunct, use shapes/columbus.gpkg. 
+
+Third, you use pipes and dplyr, so that examining intermediate objects is not possible; I would be most grateful if you avoided dplyr::mutate, as sf objects are spatial, not general. I do not think that you have created the object you describe. I also fail to grasp your motivation, do you have multiple observations with unknown position within larger enclosing polygons, as in ?nb2blocknb?
+
+Roger
+
+--
+Roger Bivand
+Emeritus Professor
+Norwegian School of Economics
+Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway
+Roger.Bivand at nhh.no
+
+________________________________________
+From: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Hongyun Wang <hongyun.wang.ext at bayer.com>
+Sent: 18 December 2024 23:26
+To: r-sig-geo at r-project.org
+Subject: [R-sig-Geo] Spatial autocorrelation test in a dataset with multiple observations per region
+
+[You don't often get email from hongyun.wang.ext at bayer.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+
+Hello Everyone,
+
+I have one question on the spatial autoregression tests on primary variables or residuals of linear regression models of a dataset that has multiple observations per region. Here I use columbus dataset and moran.test() on a primary variable CRIME as illustration.
+
+I modified the dataset to have only 7 regions, not 49 regions in original dataset, and each region has 7 observations. I used poly2nb() and nb2listw() to create neighbors and weights list of each region. But after examining the list carefully, I found that two observations within the same region have weight 1. This looks not right. I think poly2nb function treats each observation (a row in the dataset) as a region. Then I modified the neighbors and weights list to have weight 0 for two observations that are in the same region. The moran.test results from original listw object (listw0) and modified listw object (listw) have different Z-scores and p-values. The which moran.test is correct, or are both incorrect?
+
+> library(dplyr)
+> library(spdep)
+>
+> # read dataset and modify it: only 7 regions, 7 observations per region.
+> columbus <- st_read(system.file("shapes/columbus.shp", package="spData")[1], quiet=TRUE) %>%
++   mutate(regionId = rep(LETTERS[1:7], each = 7),
++          geometry = rep(.$geometry[1:7], each = 7))
+> columbus %>% as.data.frame() %>% select(regionId,geometry) %>% unique() %>% dim()
+[1] 7 2
+>
+> # neighbor list and weights
+> nblist <- poly2nb(as(columbus, "Spatial"))
+> listw0 <- listw <-  nb2listw(nblist, zero.policy=T, style="B")
+>
+> # 1.Moran I test on primary variable CRIME using original weights list
+> (m.test <- moran.test(columbus$CRIME, listw0,
++                       randomisation=FALSE, alternative="greater"))
+
+     Moran I test under normality
+
+data:  columbus$CRIME
+weights: listw0
+
+Moran I statistic standard deviate = 2.6121, p-value = 0.004499
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance
+     0.0497371251     -0.0208333333      0.0007298841
+
+>
+> # change weights in listw: two observations within the same region have weight 0.
+> columbus$ID = seq(nrow(columbus))
+> for (i in seq_along(listw$neighbours)){
++   listw$neighbours[[i]] = setdiff(listw$neighbours[[i]],  subset(as.data.frame(columbus), regionId == as.data.frame(columbus)[i, "regionId"])$ID)
++   listw$weights[[i]] = rep(1, length(listw$neighbours[[i]]))
++
++   if (length(listw$neighbours[[i]]) == 0) {
++     listw$neighbours[[i]] = 0L
++     listw$weights[i] = list(NULL)
++   }
++ }
+>
+> # 2.Moran I test on primary variable CRIME using modified weights list
+> (m.test <- moran.test(columbus$CRIME, listw,
++                       randomisation=FALSE, alternative="greater"))
+
+     Moran I test under normality
+
+data:  columbus$CRIME
+weights: listw  n reduced by no-neighbour observations
+
+
+Moran I statistic standard deviate = 1.1726, p-value = 0.1205
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance
+      0.014619659      -0.024390244       0.001106761
+
+>
+> # the neighbors and weights of the first observation
+> ## original listw
+> card(listw0$neighbours)[[1]]
+[1] 20
+> listw0$neighbours[[1]]
+[1]  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21
+> listw0$weights[[1]]
+[1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+>
+> ## modified listw
+> card(listw$neighbours)[[1]]
+[1] 14
+> listw$neighbours[[1]]
+[1]  8  9 10 11 12 13 14 15 16 17 18 19 20 21
+> listw$weights[[1]]
+[1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+>
+> # overview of listw0 and listw
+> listw0
+Characteristics of weights list object:
+Neighbour list object:
+Number of regions: 49
+Number of nonzero links: 1078
+Percentage nonzero weights: 44.89796
+Average number of links: 22
+2 disjoint connected subgraphs
+
+Weights style: B
+Weights constants summary:
+   n   nn   S0   S1     S2
+B 49 2401 1078 2156 110544
+> listw
+Characteristics of weights list object:
+Neighbour list object:
+Number of regions: 49
+Number of nonzero links: 784
+Percentage nonzero weights: 32.65306
+Average number of links: 16
+7 regions with no links:
+43 44 45 46 47 48 49
+8 disjoint connected subgraphs
+
+Weights style: B
+Weights constants summary:
+   n   nn  S0   S1    S2
+B 42 1764 784 1568 65856
+
+Thank you in advance and sorry for the inconvenience.
+
+Hongyun Wang
+
+Sr. Data Scientist ? Contracted
+Bayer AG
+hongyun.wang.ext at bayer.com
+
+________________________________
+
+The information contained in this e-mail is for the excl...{{dropped:14}}
+
+
+From hongyun@w@ng@ext @end|ng |rom b@yer@com  Sat Dec 21 05:03:40 2024
+From: hongyun@w@ng@ext @end|ng |rom b@yer@com (Hongyun Wang)
+Date: Sat, 21 Dec 2024 04:03:40 +0000
+Subject: [R-sig-Geo] 
+ Spatial autocorrelation test in a dataset with multiple
+ observations per region
+In-Reply-To: <OSWP279MB0471D0B5782E8818A97E5529EE062@OSWP279MB0471.NORP279.PROD.OUTLOOK.COM>
+References: <AM8PR05MB808438B2317521D962499980C2052@AM8PR05MB8084.eurprd05.prod.outlook.com>
+ <OSWP279MB0471D0B5782E8818A97E5529EE062@OSWP279MB0471.NORP279.PROD.OUTLOOK.COM>
+Message-ID: <AM8PR05MB8084756C7089049A2EE803BFC2072@AM8PR05MB8084.eurprd05.prod.outlook.com>
+
+Prof. Bivand,
+
+Thank you for your response. I changed data source and data manipulation methods and copied only codes to this email. I also checked that the modified columbus is still a sf/data.frame object.
+
+My motivation using modified columbus dataset that has multiple observations per region/polygon is to find correct ways to complete following two tasks:
+
+  1.  Creation of neighbors list and weights list.
+  2.  Moran?s I test for spatial autocorrelation for: 1) a primary variable, 2) residuals from an estimated linear model.
+
+I looked at nb2blocknb function?s details and examples and thought this function can be used to create blocked up neighbors list in my case, because this modified dataset is like the post codes example described in function?s details. On the other hand, as stated in the documentation: ?observations belonging to each unique location are observation neighbours?, and observation ids will be added to the neighbors list as attribute region.id. I think modifying the neighbors lists and weights list is not necessary, because two observations within a unique location can be ?observation neighbours?.
+
+In the codes below, I also compared two weights list objects: listw.block and listw0. They are not identical, but they have the same neighbors list and weights list. And when they were used in Moran?s I tests, the tests returned same z-scores/p-values. Is listw.block object created correctly? Can listw0 replace listw.block?
+
+library(spdep)
+
+# read dataset and modify it: only 7 regions, variable observations per region.
+columbus <- st_read(system.file("shapes/columbus.gpkg", package="spData")[1], quiet=TRUE)
+columbus$regionId <- rep(as.character(1:7), 4:10)
+columbus$geom <- rep(columbus$geom[1:7], 4:10)
+
+# check class of object columbus
+class(columbus)
+columbus_ <- st_make_valid(st_as_sf(columbus, wkt = "geom"))
+class(columbus_)
+identical(columbus, columbus_)
+
+# create neighbor list using 7 unique regions/polygons
+nb7 <- poly2nb(as(unique(columbus[, "geom"]), "Spatial"))
+
+# block up neighbor list for location-less observations
+if (all(sort(as.character(attr(nb7, "region.id"))) == sort(unique(as.character(columbus$regionId))))) {
+  block.nb <- nb2blocknb(nb7, columbus$regionId)
+} else {
+  stop("ID tags don't match!")
+}
+
+# create spatial weights for neighbor list
+(listw.block <-  nb2listw(block.nb, zero.policy=T, style="B"))
+
+# check number of neighbors of each observation
+card(listw.block$neighbours)
+
+# the neighbors and weights of the first observation
+card(listw.block$neighbours)[[1]]
+listw.block$neighbours[[1]]
+listw.block$weights[[1]]
+
+# Moran's I test for spatial autocorrelation in a primary variable CRIME
+(m.test <- moran.test(columbus$CRIME, listw.block,
+                      randomisation=FALSE, alternative="greater"))
+
+# Moran's I test for spatial autocorrelation in residuals from an estimated linear model
+crime.lm <- lm(CRIME ~ HOVAL + INC, data = columbus)
+(m.test_ <- lm.morantest(crime.lm, listw.block, alternative="greater"))
+
+########################################################################################
+
+# create neighbor list directly from full columbus dataset
+nblist <- poly2nb(as(columbus, "Spatial"))
+listw0 <- nb2listw(nblist, zero.policy=T, style="B")
+
+# Moran's I test for spatial autocorrelation in a primary variable CRIME
+(m.test <- moran.test(columbus$CRIME, listw0,
+                      randomisation=FALSE, alternative="greater"))
+
+# Moran's I test for spatial autocorrelation in residuals from an estimated linear model
+crime.lm <- lm(CRIME ~ HOVAL + INC, data = columbus)
+(m.test_ <- lm.morantest(crime.lm, listw0, alternative="greater"))
+
+# list.block and list0 have same neighbors and weights, although they are not identical
+all(card(listw0$neighbours) == card(listw.block$neighbours))
+do.call(all, lapply(seq(length(listw0$neighbours)), function(x) all(listw0$neighbours[[x]] == listw.block$neighbours[[x]])))
+do.call(all, lapply(seq(length(listw0$neighbours)), function(x) all(listw0$weights[[x]] == listw.block$weights[[x]])))
+identical(listw.block, listw0)
+
+Thank you for your help.
+
+Hongyun
+
+
+From: Roger Bivand <Roger.Bivand at nhh.no>
+Date: Thursday, December 19, 2024 at 3:22?AM
+To: Hongyun Wang <hongyun.wang.ext at bayer.com>, r-sig-geo at r-project.org <r-sig-geo at r-project.org>
+Subject: Re: Spatial autocorrelation test in a dataset with multiple observations per region
+[You don't often get email from roger.bivand at nhh.no. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+
+This is not easy to disambiguate.
+
+First, you have copied from the output to your email, so that replicating your code is contorted - provide the code, either instead of, or in addition to the output.
+
+Second, shapes/columbus.shp is deprecated, soon to be defunct, use shapes/columbus.gpkg.
+
+Third, you use pipes and dplyr, so that examining intermediate objects is not possible; I would be most grateful if you avoided dplyr::mutate, as sf objects are spatial, not general. I do not think that you have created the object you describe. I also fail to grasp your motivation, do you have multiple observations with unknown position within larger enclosing polygons, as in ?nb2blocknb?
+
+Roger
+
+--
+Roger Bivand
+Emeritus Professor
+Norwegian School of Economics
+Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway
+Roger.Bivand at nhh.no
+
+________________________________________
+From: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Hongyun Wang <hongyun.wang.ext at bayer.com>
+Sent: 18 December 2024 23:26
+To: r-sig-geo at r-project.org
+Subject: [R-sig-Geo] Spatial autocorrelation test in a dataset with multiple observations per region
+
+[You don't often get email from hongyun.wang.ext at bayer.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+
+Hello Everyone,
+
+I have one question on the spatial autoregression tests on primary variables or residuals of linear regression models of a dataset that has multiple observations per region. Here I use columbus dataset and moran.test() on a primary variable CRIME as illustration.
+
+I modified the dataset to have only 7 regions, not 49 regions in original dataset, and each region has 7 observations. I used poly2nb() and nb2listw() to create neighbors and weights list of each region. But after examining the list carefully, I found that two observations within the same region have weight 1. This looks not right. I think poly2nb function treats each observation (a row in the dataset) as a region. Then I modified the neighbors and weights list to have weight 0 for two observations that are in the same region. The moran.test results from original listw object (listw0) and modified listw object (listw) have different Z-scores and p-values. The which moran.test is correct, or are both incorrect?
+
+> library(dplyr)
+> library(spdep)
+>
+> # read dataset and modify it: only 7 regions, 7 observations per region.
+> columbus <- st_read(system.file("shapes/columbus.shp", package="spData")[1], quiet=TRUE) %>%
++   mutate(regionId = rep(LETTERS[1:7], each = 7),
++          geometry = rep(.$geometry[1:7], each = 7))
+> columbus %>% as.data.frame() %>% select(regionId,geometry) %>% unique() %>% dim()
+[1] 7 2
+>
+> # neighbor list and weights
+> nblist <- poly2nb(as(columbus, "Spatial"))
+> listw0 <- listw <-  nb2listw(nblist, zero.policy=T, style="B")
+>
+> # 1.Moran I test on primary variable CRIME using original weights list
+> (m.test <- moran.test(columbus$CRIME, listw0,
++                       randomisation=FALSE, alternative="greater"))
+
+     Moran I test under normality
+
+data:  columbus$CRIME
+weights: listw0
+
+Moran I statistic standard deviate = 2.6121, p-value = 0.004499
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance
+     0.0497371251     -0.0208333333      0.0007298841
+
+>
+> # change weights in listw: two observations within the same region have weight 0.
+> columbus$ID = seq(nrow(columbus))
+> for (i in seq_along(listw$neighbours)){
++   listw$neighbours[[i]] = setdiff(listw$neighbours[[i]],  subset(as.data.frame(columbus), regionId == as.data.frame(columbus)[i, "regionId"])$ID)
++   listw$weights[[i]] = rep(1, length(listw$neighbours[[i]]))
++
++   if (length(listw$neighbours[[i]]) == 0) {
++     listw$neighbours[[i]] = 0L
++     listw$weights[i] = list(NULL)
++   }
++ }
+>
+> # 2.Moran I test on primary variable CRIME using modified weights list
+> (m.test <- moran.test(columbus$CRIME, listw,
++                       randomisation=FALSE, alternative="greater"))
+
+     Moran I test under normality
+
+data:  columbus$CRIME
+weights: listw  n reduced by no-neighbour observations
+
+
+Moran I statistic standard deviate = 1.1726, p-value = 0.1205
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance
+      0.014619659      -0.024390244       0.001106761
+
+>
+> # the neighbors and weights of the first observation
+> ## original listw
+> card(listw0$neighbours)[[1]]
+[1] 20
+> listw0$neighbours[[1]]
+[1]  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21
+> listw0$weights[[1]]
+[1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+>
+> ## modified listw
+> card(listw$neighbours)[[1]]
+[1] 14
+> listw$neighbours[[1]]
+[1]  8  9 10 11 12 13 14 15 16 17 18 19 20 21
+> listw$weights[[1]]
+[1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+>
+> # overview of listw0 and listw
+> listw0
+Characteristics of weights list object:
+Neighbour list object:
+Number of regions: 49
+Number of nonzero links: 1078
+Percentage nonzero weights: 44.89796
+Average number of links: 22
+2 disjoint connected subgraphs
+
+Weights style: B
+Weights constants summary:
+   n   nn   S0   S1     S2
+B 49 2401 1078 2156 110544
+> listw
+Characteristics of weights list object:
+Neighbour list object:
+Number of regions: 49
+Number of nonzero links: 784
+Percentage nonzero weights: 32.65306
+Average number of links: 16
+7 regions with no links:
+43 44 45 46 47 48 49
+8 disjoint connected subgraphs
+
+Weights style: B
+Weights constants summary:
+   n   nn  S0   S1    S2
+B 42 1764 784 1568 65856
+
+Thank you in advance and sorry for the inconvenience.
+
+Hongyun Wang
+
+Sr. Data Scientist ? Contracted
+Bayer AG
+hongyun.wang.ext at bayer.com
+
+________________________________
+
+The information contained in this e-mail is for the excl...{{dropped:14}}
+
+________________________________
+
+The information contained in this e-mail is for the exclusive use of the intended recipient(s) and may be confidential, proprietary, and/or legally privileged.  Inadvertent disclosure of this message does not constitute a waiver of any privilege.  If you receive this message in error, please do not directly or indirectly use, print, copy, forward, or disclose any part of this message.  Please also delete this e-mail and all copies and notify the sender.  Thank you.
+
+________________________________
+
+
+	[[alternative HTML version deleted]]
+
+
+From Roger@B|v@nd @end|ng |rom nhh@no  Mon Dec 23 17:13:11 2024
+From: Roger@B|v@nd @end|ng |rom nhh@no (Roger Bivand)
+Date: Mon, 23 Dec 2024 16:13:11 +0000
+Subject: [R-sig-Geo] 
+ Spatial autocorrelation test in a dataset with multiple
+ observations per region
+In-Reply-To: <AM8PR05MB8084756C7089049A2EE803BFC2072@AM8PR05MB8084.eurprd05.prod.outlook.com>
+References: <AM8PR05MB808438B2317521D962499980C2052@AM8PR05MB8084.eurprd05.prod.outlook.com>
+ <OSWP279MB0471D0B5782E8818A97E5529EE062@OSWP279MB0471.NORP279.PROD.OUTLOOK.COM>
+ <AM8PR05MB8084756C7089049A2EE803BFC2072@AM8PR05MB8084.eurprd05.prod.outlook.com>
+Message-ID: <OSWP279MB0471407DD910D721CFD56C04EE022@OSWP279MB0471.NORP279.PROD.OUTLOOK.COM>
+
+In an off-list description of the motivation for your question, you wrote:
+
+The motivation is to test for spatial autocorrelation in residuals from a fitted linear model on a plant breeding multi-environment trials (MET) dataset. Generally, there are thousands of testing plots, hundreds of filed locations, and less than 20 regions (represented by multipolygons). One region has multiple field locations, and one field location has multiple testing plots. The objective is to use testing plots as datapoints to run a linear model, then check whether the residuals have spatial autocorrelations. 
+
+The following doesn't answer your practical question, but I think that your sample design is intended in itself to remove both the risk of omitted covariates as a source of spatial autocorrelation, and any residual spatial autocorrelation when using linear mixed models with individual or group random effects. 
+
+I am sure that in a mixed effects model setting, using Moran's I will not give reliable guidance, either ignoring covariates (moran.test) or including covariates in a linear model (lm.morantest). 
+
+You should rather attempt to fit models with spatially structured random effects, and pick up any (grouped) residual autocorrelation in the model. The absence of important contributions from such SSRE would suggest that the model as fitted did not show residual autocorrelation.
+
+See for example model fitting functions in the mgcv and hglm packages for examples. In those cases, you also need to formalise the group membership structures. I'm thinking that each testing plot is sown with the same variety, but that plots within a field might exhibit spillover, but that fields in a region are distant from each other. You could also consult the spmodel package.
+
+Hope this helps,
+
+Roger
+
+--
+Roger Bivand
+Emeritus Professor
+Norwegian School of Economics
+Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway
+Roger.Bivand at nhh.no
+
+________________________________________
+From: Hongyun Wang <hongyun.wang.ext at bayer.com>
+Sent: 21 December 2024 05:03
+To: Roger Bivand; r-sig-geo at r-project.org
+Subject: Re: Spatial autocorrelation test in a dataset with multiple observations per region
+
+Prof. Bivand,
+
+Thank you for your response. I changed data source and data manipulation methods and copied only codes to this email. I also checked that the modified columbus is still a sf/data.frame object.
+
+My motivation using modified columbus dataset that has multiple observations per region/polygon is to find correct ways to complete following two tasks:
+
+  1.  Creation of neighbors list and weights list.
+  2.  Moran?s I test for spatial autocorrelation for: 1) a primary variable, 2) residuals from an estimated linear model.
+
+I looked at nb2blocknb function?s details and examples and thought this function can be used to create blocked up neighbors list in my case, because this modified dataset is like the post codes example described in function?s details. On the other hand, as stated in the documentation: ?observations belonging to each unique location are observation neighbours?, and observation ids will be added to the neighbors list as attribute region.id. I think modifying the neighbors lists and weights list is not necessary, because two observations within a unique location can be ?observation neighbours?.
+
+In the codes below, I also compared two weights list objects: listw.block and listw0. They are not identical, but they have the same neighbors list and weights list. And when they were used in Moran?s I tests, the tests returned same z-scores/p-values. Is listw.block object created correctly? Can listw0 replace listw.block?
+
+library(spdep)
+
+# read dataset and modify it: only 7 regions, variable observations per region.
+columbus <- st_read(system.file("shapes/columbus.gpkg", package="spData")[1], quiet=TRUE)
+columbus$regionId <- rep(as.character(1:7), 4:10)
+columbus$geom <- rep(columbus$geom[1:7], 4:10)
+
+# check class of object columbus
+class(columbus)
+columbus_ <- st_make_valid(st_as_sf(columbus, wkt = "geom"))
+class(columbus_)
+identical(columbus, columbus_)
+
+# create neighbor list using 7 unique regions/polygons
+nb7 <- poly2nb(as(unique(columbus[, "geom"]), "Spatial"))
+
+# block up neighbor list for location-less observations
+if (all(sort(as.character(attr(nb7, "region.id"))) == sort(unique(as.character(columbus$regionId))))) {
+  block.nb <- nb2blocknb(nb7, columbus$regionId)
+} else {
+  stop("ID tags don't match!")
+}
+
+# create spatial weights for neighbor list
+(listw.block <-  nb2listw(block.nb, zero.policy=T, style="B"))
+
+# check number of neighbors of each observation
+card(listw.block$neighbours)
+
+# the neighbors and weights of the first observation
+card(listw.block$neighbours)[[1]]
+listw.block$neighbours[[1]]
+listw.block$weights[[1]]
+
+# Moran's I test for spatial autocorrelation in a primary variable CRIME
+(m.test <- moran.test(columbus$CRIME, listw.block,
+                      randomisation=FALSE, alternative="greater"))
+
+# Moran's I test for spatial autocorrelation in residuals from an estimated linear model
+crime.lm <- lm(CRIME ~ HOVAL + INC, data = columbus)
+(m.test_ <- lm.morantest(crime.lm, listw.block, alternative="greater"))
+
+########################################################################################
+
+# create neighbor list directly from full columbus dataset
+nblist <- poly2nb(as(columbus, "Spatial"))
+listw0 <- nb2listw(nblist, zero.policy=T, style="B")
+
+# Moran's I test for spatial autocorrelation in a primary variable CRIME
+(m.test <- moran.test(columbus$CRIME, listw0,
+                      randomisation=FALSE, alternative="greater"))
+
+# Moran's I test for spatial autocorrelation in residuals from an estimated linear model
+crime.lm <- lm(CRIME ~ HOVAL + INC, data = columbus)
+(m.test_ <- lm.morantest(crime.lm, listw0, alternative="greater"))
+
+# list.block and list0 have same neighbors and weights, although they are not identical
+all(card(listw0$neighbours) == card(listw.block$neighbours))
+do.call(all, lapply(seq(length(listw0$neighbours)), function(x) all(listw0$neighbours[[x]] == listw.block$neighbours[[x]])))
+do.call(all, lapply(seq(length(listw0$neighbours)), function(x) all(listw0$weights[[x]] == listw.block$weights[[x]])))
+identical(listw.block, listw0)
+
+Thank you for your help.
+
+Hongyun
+
+
+From: Roger Bivand <Roger.Bivand at nhh.no>
+Date: Thursday, December 19, 2024 at 3:22?AM
+To: Hongyun Wang <hongyun.wang.ext at bayer.com>, r-sig-geo at r-project.org <r-sig-geo at r-project.org>
+Subject: Re: Spatial autocorrelation test in a dataset with multiple observations per region
+[You don't often get email from roger.bivand at nhh.no. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+
+This is not easy to disambiguate.
+
+First, you have copied from the output to your email, so that replicating your code is contorted - provide the code, either instead of, or in addition to the output.
+
+Second, shapes/columbus.shp is deprecated, soon to be defunct, use shapes/columbus.gpkg.
+
+Third, you use pipes and dplyr, so that examining intermediate objects is not possible; I would be most grateful if you avoided dplyr::mutate, as sf objects are spatial, not general. I do not think that you have created the object you describe. I also fail to grasp your motivation, do you have multiple observations with unknown position within larger enclosing polygons, as in ?nb2blocknb?
+
+Roger
+
+--
+Roger Bivand
+Emeritus Professor
+Norwegian School of Economics
+Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway
+Roger.Bivand at nhh.no
+
+________________________________________
+From: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Hongyun Wang <hongyun.wang.ext at bayer.com>
+Sent: 18 December 2024 23:26
+To: r-sig-geo at r-project.org
+Subject: [R-sig-Geo] Spatial autocorrelation test in a dataset with multiple observations per region
+
+[You don't often get email from hongyun.wang.ext at bayer.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+
+Hello Everyone,
+
+I have one question on the spatial autoregression tests on primary variables or residuals of linear regression models of a dataset that has multiple observations per region. Here I use columbus dataset and moran.test() on a primary variable CRIME as illustration.
+
+I modified the dataset to have only 7 regions, not 49 regions in original dataset, and each region has 7 observations. I used poly2nb() and nb2listw() to create neighbors and weights list of each region. But after examining the list carefully, I found that two observations within the same region have weight 1. This looks not right. I think poly2nb function treats each observation (a row in the dataset) as a region. Then I modified the neighbors and weights list to have weight 0 for two observations that are in the same region. The moran.test results from original listw object (listw0) and modified listw object (listw) have different Z-scores and p-values. The which moran.test is correct, or are both incorrect?
+
+> library(dplyr)
+> library(spdep)
+>
+> # read dataset and modify it: only 7 regions, 7 observations per region.
+> columbus <- st_read(system.file("shapes/columbus.shp", package="spData")[1], quiet=TRUE) %>%
++   mutate(regionId = rep(LETTERS[1:7], each = 7),
++          geometry = rep(.$geometry[1:7], each = 7))
+> columbus %>% as.data.frame() %>% select(regionId,geometry) %>% unique() %>% dim()
+[1] 7 2
+>
+> # neighbor list and weights
+> nblist <- poly2nb(as(columbus, "Spatial"))
+> listw0 <- listw <-  nb2listw(nblist, zero.policy=T, style="B")
+>
+> # 1.Moran I test on primary variable CRIME using original weights list
+> (m.test <- moran.test(columbus$CRIME, listw0,
++                       randomisation=FALSE, alternative="greater"))
+
+     Moran I test under normality
+
+data:  columbus$CRIME
+weights: listw0
+
+Moran I statistic standard deviate = 2.6121, p-value = 0.004499
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance
+     0.0497371251     -0.0208333333      0.0007298841
+
+>
+> # change weights in listw: two observations within the same region have weight 0.
+> columbus$ID = seq(nrow(columbus))
+> for (i in seq_along(listw$neighbours)){
++   listw$neighbours[[i]] = setdiff(listw$neighbours[[i]],  subset(as.data.frame(columbus), regionId == as.data.frame(columbus)[i, "regionId"])$ID)
++   listw$weights[[i]] = rep(1, length(listw$neighbours[[i]]))
++
++   if (length(listw$neighbours[[i]]) == 0) {
++     listw$neighbours[[i]] = 0L
++     listw$weights[i] = list(NULL)
++   }
++ }
+>
+> # 2.Moran I test on primary variable CRIME using modified weights list
+> (m.test <- moran.test(columbus$CRIME, listw,
++                       randomisation=FALSE, alternative="greater"))
+
+     Moran I test under normality
+
+data:  columbus$CRIME
+weights: listw  n reduced by no-neighbour observations
+
+
+Moran I statistic standard deviate = 1.1726, p-value = 0.1205
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance
+      0.014619659      -0.024390244       0.001106761
+
+>
+> # the neighbors and weights of the first observation
+> ## original listw
+> card(listw0$neighbours)[[1]]
+[1] 20
+> listw0$neighbours[[1]]
+[1]  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21
+> listw0$weights[[1]]
+[1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+>
+> ## modified listw
+> card(listw$neighbours)[[1]]
+[1] 14
+> listw$neighbours[[1]]
+[1]  8  9 10 11 12 13 14 15 16 17 18 19 20 21
+> listw$weights[[1]]
+[1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+>
+> # overview of listw0 and listw
+> listw0
+Characteristics of weights list object:
+Neighbour list object:
+Number of regions: 49
+Number of nonzero links: 1078
+Percentage nonzero weights: 44.89796
+Average number of links: 22
+2 disjoint connected subgraphs
+
+Weights style: B
+Weights constants summary:
+   n   nn   S0   S1     S2
+B 49 2401 1078 2156 110544
+> listw
+Characteristics of weights list object:
+Neighbour list object:
+Number of regions: 49
+Number of nonzero links: 784
+Percentage nonzero weights: 32.65306
+Average number of links: 16
+7 regions with no links:
+43 44 45 46 47 48 49
+8 disjoint connected subgraphs
+
+Weights style: B
+Weights constants summary:
+   n   nn  S0   S1    S2
+B 42 1764 784 1568 65856
+
+Thank you in advance and sorry for the inconvenience.
+
+Hongyun Wang
+
+Sr. Data Scientist ? Contracted
+Bayer AG
+hongyun.wang.ext at bayer.com
+
+________________________________
+
+The information contained in this e-mail is for the excl...{{dropped:14}}
+
+________________________________
+
+The information contained in this e-mail is for the exclusive use of the intended recipient(s) and may be confidential, proprietary, and/or legally privileged.  Inadvertent disclosure of this message does not constitute a waiver of any privilege.  If you receive this message in error, please do not directly or indirectly use, print, copy, forward, or disclose any part of this message.  Please also delete this e-mail and all copies and notify the sender.  Thank you.
+
+________________________________
+
+

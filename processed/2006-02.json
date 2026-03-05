@@ -1,0 +1,1006 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2006-02",
+  "messages": [
+    {
+      "id": "msg-efb45b2d54ad",
+      "message_id": "<062AE320EF971E40ACD0F6C93391D7697E1AB9@exqld1-tsv.nexus.csiro.au>",
+      "from_name": "Alexander.Herr at csiro.au",
+      "from_email_hash": "7f2342112a3342caca1299bf19c35d30e525db8b463fb7c281b9529a30760f13",
+      "date": "2006-02-01T15:43:00+10:00",
+      "subject": "[R-sig-Geo] ?Plotting line segments of shapefile in different color",
+      "subject_clean": "?Plotting line segments of shapefile in different color",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi List,\n\nI am unsuccessfully trying to plot line segments of a shapefile with\ndifferent colors. Does anyone have a working example for segmented\nlines?\n\nThanks\nHerry",
+      "body_snippet": "Hi List,\n\nI am unsuccessfully trying to plot line segments of a shapefile with\ndifferent colors. Does anyone have a working example for segmented\nlines?\n\nThanks\nHerry",
+      "thread_id": "thread-efb45b2d54ad",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-7b089564856f",
+      "message_id": "<Pine.LNX.4.44.0602010821010.5933-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-02-01T08:36:25+01:00",
+      "subject": "[R-sig-Geo] ?Plotting line segments of shapefile in different color",
+      "subject_clean": "?Plotting line segments of shapefile in different color",
+      "in_reply_to": "<062AE320EF971E40ACD0F6C93391D7697E1AB9@exqld1-tsv.nexus.csiro.au>",
+      "references": [],
+      "body_plain": "On Wed, 1 Feb 2006 Alexander.Herr at csiro.au wrote:\n\n> Hi List,\n> \n> I am unsuccessfully trying to plot line segments of a shapefile with\n> different colors. Does anyone have a working example for segmented\n> lines?\n\nIf each line to be coloured is a separate Lines object:\n\nlibrary(maptools)\nfn <- system.file(\"shapes/fylk-val.shp\", package=\"maptools\")[1]\nxx <- readShapeLines(fn, proj4string=CRS(\"+proj=utm +zone=33 +datum=WGS84\"))\nplot(xx, col=\"blue\") # all one colour\nlength(slot(xx, \"lines\")) # 97\nplot(xx, col=colorRampPalette(c(\"green\", \"blue\", \"black\"))(97))\nlength(colorRampPalette(c(\"green\", \"blue\", \"black\"))(97)) # 97 colours\n\nThe col= argument is used if it is the same length as the number of \nlines; if the lengths differ, the first colour value is used for all \nlines.\n\nIf the shapes are not organised as separate Lines objects, then they will \nneed to be cut up and re-created as such.\n\nRoger\n\n\n> \n> Thanks\n> Herry\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Wed, 1 Feb 2006 Alexander.Herr at csiro.au wrote:\n\n> Hi List,\n> \n> I am unsuccessfully trying to plot line segments of a shapefile with\n> different colors. Does anyone have a working example for se",
+      "thread_id": "thread-efb45b2d54ad",
+      "thread_depth": 1,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-f656977bf845",
+      "message_id": "<Pine.LNX.4.62.0602010302430.13284@egor.unm.edu>",
+      "from_name": "A Horacio Samaniego",
+      "from_email_hash": "bc68c9168e9f8106be339dc0100a8fb4b75c29fdd375dc94bc1d933325cdc292",
+      "date": "2006-02-01T03:03:54-07:00",
+      "subject": "[R-sig-Geo] how to go from SpatialGrid to SpatialGridDataFrame ?",
+      "subject_clean": "how to go from SpatialGrid to SpatialGridDataFrame ?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I wonder how I should go from a SpatialGrid to a SpatialGridDataFrame.\n\nI have defined a grid using the functions from the sp, gstat and spgrass6 \npackages:\n\nG<-gmeta6()\nkk<-SpatialGrid(GridTopology(c(G$south,G$west),c(G$nsres,G$ewres),c(G$rows,G$cols)),alb.proj)\n> str(kk)\nFormal class 'SpatialGrid' [package \"sp\"] with 5 slots\n   ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3 slots\n   .. .. ..@ cellcentre.offset: num [1:2] -1333373 -2356259\n   .. .. ..@ cellsize         : num [1:2] 1000 1000\n   .. .. ..@ cells.dim        : int [1:2] 2899 4615\n   ..@ grid.index : int(0)\n   ..@ coords     : num [1:2, 1:2] -1333373  1564162 -2356259  2257928\n   .. ..- attr(*, \"dimnames\")=List of 2\n   .. .. ..$ : NULL\n   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n   ..@ bbox       : num [1:2, 1:2] -1333872 -2356759  1564662  2258428\n   .. ..- attr(*, \"dimnames\")=List of 2\n   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n   .. .. ..$ : chr [1:2] \"min\" \"max\"\n   ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n   .. .. ..@ projargs: chr \"+proj=aea +lat_1=29.75 +lat_2=45.25 +lat_0=37.5 \n+lon_0=-96 +x_0=0 +y_0=0 +no_defs +a=6378137 +rf=298.257222101 \n+towgs84=0.000,0\"| __truncated__\n\nNow I try to interpolate on that grid, with no success:\ninterp.vals<-idw(var1~1,data,newdata=kk)\nError in idw(corrext ~ 1, data = data.new_alb[gd.glm, ], newdata = \ndata.grd) :\n \tno direct or inherited method for function 'idw' for this call\n\nSo, I guess that I need to have a 'SpatialGridDataFrame' instead of just \n'SpatialGrid' as the interpolation needs to be assigned to a spatial \nlocation\n\nkk2<-as(kk,'SpatialGridDataFrame');\nFormal class 'SpatialGridDataFrame' [package \"sp\"] with 6 slots\n   ..@ data       :Formal class 'AttributeList' [package \"sp\"] with 1 slots\n   .. .. ..@ att: list()\n   ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3 slots\n   .. .. ..@ cellcentre.offset: num [1:2] -1333373 -2356259\n   .. .. ..@ cellsize         : num [1:2] 1000 1000\n   .. .. ..@ cells.dim        : int [1:2] 2899 4615\n   ..@ grid.index : int(0)\n   ..@ coords     : num [1:2, 1:2] -1333373  1564162 -2356259  2257928\n   .. ..- attr(*, \"dimnames\")=List of 2\n   .. .. ..$ : NULL\n   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n   ..@ bbox       : num [1:2, 1:2] -1333872 -2356759  1564662  2258428\n   .. ..- attr(*, \"dimnames\")=List of 2\n   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n   .. .. ..$ : chr [1:2] \"min\" \"max\"\n   ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n   .. .. ..@ projargs: chr \"+proj=aea +lat_1=29.75 +lat_2=45.25 +lat_0=37.5 \n+lon_0=-96 +x_0=0 +y_0=0 +no_defs +a=6378137 +rf=298.257222101 \n+towgs84=0.000,0\"| __truncated__\n\npromotes the grid to the correct class SpatialGridDataFrame but do not \nassign to space for the variable. Is there any way to assign an empty \n\"slot\" just as we would do for a data.frame?\n\nTo sum.  I cant seem to be able to create a \"slot\" (or z dimension) to \nhold the output of my interpolation. Is there any trick out there that I \nam missing? Any help will be appreciated.\n\nthanks,\n\nH",
+      "body_snippet": "I wonder how I should go from a SpatialGrid to a SpatialGridDataFrame.\n\nI have defined a grid using the functions from the sp, gstat and spgrass6 \npackages:\n\nG<-gmeta6()\nkk<-SpatialGrid(GridTopology(c",
+      "thread_id": "thread-f656977bf845",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-547ab92764d8",
+      "message_id": "<43E0A15E.7080703@geog.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "a7fb0ca623e251a5aff6aa466eb7f50e3c643594fe03e3232d546a007043eef0",
+      "date": "2006-02-01T12:54:06+01:00",
+      "subject": "[R-sig-Geo] how to go from SpatialGrid to SpatialGridDataFrame ?",
+      "subject_clean": "how to go from SpatialGrid to SpatialGridDataFrame ?",
+      "in_reply_to": "<Pine.LNX.4.62.0602010302430.13284@egor.unm.edu>",
+      "references": [
+        "<Pine.LNX.4.62.0602010302430.13284@egor.unm.edu>"
+      ],
+      "body_plain": "A Horacio Samaniego wrote:\n\n>I wonder how I should go from a SpatialGrid to a SpatialGridDataFrame.\n>\n>  \n>\nUsing for example the function SpatialGridDataFrame()\n\n>I have defined a grid using the functions from the sp, gstat and spgrass6 \n>packages:\n>\n>G<-gmeta6()\n>kk<-SpatialGrid(GridTopology(c(G$south,G$west),c(G$nsres,G$ewres),c(G$rows,G$cols)),alb.proj)\n>  \n>\n>>str(kk)\n>>    \n>>\n>Formal class 'SpatialGrid' [package \"sp\"] with 5 slots\n>   ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3 slots\n>   .. .. ..@ cellcentre.offset: num [1:2] -1333373 -2356259\n>   .. .. ..@ cellsize         : num [1:2] 1000 1000\n>   .. .. ..@ cells.dim        : int [1:2] 2899 4615\n>   ..@ grid.index : int(0)\n>   ..@ coords     : num [1:2, 1:2] -1333373  1564162 -2356259  2257928\n>   .. ..- attr(*, \"dimnames\")=List of 2\n>   .. .. ..$ : NULL\n>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>   ..@ bbox       : num [1:2, 1:2] -1333872 -2356759  1564662  2258428\n>   .. ..- attr(*, \"dimnames\")=List of 2\n>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>   .. .. ..$ : chr [1:2] \"min\" \"max\"\n>   ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n>   .. .. ..@ projargs: chr \"+proj=aea +lat_1=29.75 +lat_2=45.25 +lat_0=37.5 \n>+lon_0=-96 +x_0=0 +y_0=0 +no_defs +a=6378137 +rf=298.257222101 \n>+towgs84=0.000,0\"| __truncated__\n>\n>Now I try to interpolate on that grid, with no success:\n>interp.vals<-idw(var1~1,data,newdata=kk)\n>Error in idw(corrext ~ 1, data = data.new_alb[gd.glm, ], newdata = \n>data.grd) :\n> \tno direct or inherited method for function 'idw' for this call\n>\n>So, I guess that I need to have a 'SpatialGridDataFrame' instead of just \n>'SpatialGrid' as the interpolation needs to be assigned to a spatial \n>location\n>  \n>\nnewdata can be of class SpatialGrid; probably idw fails because\nof the data argument. What is the class of data.new_alb[gd.glm,] ?\n\n>kk2<-as(kk,'SpatialGridDataFrame');\n>Formal class 'SpatialGridDataFrame' [package \"sp\"] with 6 slots\n>   ..@ data       :Formal class 'AttributeList' [package \"sp\"] with 1 slots\n>   .. .. ..@ att: list()\n>   ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3 slots\n>   .. .. ..@ cellcentre.offset: num [1:2] -1333373 -2356259\n>   .. .. ..@ cellsize         : num [1:2] 1000 1000\n>   .. .. ..@ cells.dim        : int [1:2] 2899 4615\n>   ..@ grid.index : int(0)\n>   ..@ coords     : num [1:2, 1:2] -1333373  1564162 -2356259  2257928\n>   .. ..- attr(*, \"dimnames\")=List of 2\n>   .. .. ..$ : NULL\n>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>   ..@ bbox       : num [1:2, 1:2] -1333872 -2356759  1564662  2258428\n>   .. ..- attr(*, \"dimnames\")=List of 2\n>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>   .. .. ..$ : chr [1:2] \"min\" \"max\"\n>   ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n>   .. .. ..@ projargs: chr \"+proj=aea +lat_1=29.75 +lat_2=45.25 +lat_0=37.5 \n>+lon_0=-96 +x_0=0 +y_0=0 +no_defs +a=6378137 +rf=298.257222101 \n>+towgs84=0.000,0\"| __truncated__\n>\n>promotes the grid to the correct class SpatialGridDataFrame but do not \n>assign to space for the variable. Is there any way to assign an empty \n>\"slot\" just as we would do for a data.frame?\n>\n>To sum.  I cant seem to be able to create a \"slot\" (or z dimension) to \n>hold the output of my interpolation. Is there any trick out there that I \n>am missing? Any help will be appreciated.\n>\n>thanks,\n>\n>H\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>  \n>",
+      "body_snippet": "A Horacio Samaniego wrote:\n\n>I wonder how I should go from a SpatialGrid to a SpatialGridDataFrame.\n>\n>  \n>\nUsing for example the function SpatialGridDataFrame()\n\n>I have defined a grid using the func",
+      "thread_id": "thread-f656977bf845",
+      "thread_depth": 1,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-e0598fbcc203",
+      "message_id": "<9CF9FC28-8B39-4AFD-9596-F5F75C8A5A09@unm.edu>",
+      "from_name": "Horacio Samaniego",
+      "from_email_hash": "5c8acaa52c9445b323caa14805ca3a97a6767e8177c5bb74cc830b9dde128f33",
+      "date": "2006-02-01T13:33:20+01:00",
+      "subject": "[R-sig-Geo] how to go from SpatialGrid to SpatialGridDataFrame ?",
+      "subject_clean": "how to go from SpatialGrid to SpatialGridDataFrame ?",
+      "in_reply_to": "<43E0A15E.7080703@geog.uu.nl>",
+      "references": [
+        "<Pine.LNX.4.62.0602010302430.13284@egor.unm.edu>",
+        "<43E0A15E.7080703@geog.uu.nl>"
+      ],
+      "body_plain": "Edzer,\n\nthe class is:\n\n > class(data.new_alb[gd.glm,])\n[1] \"SpatialPointsDataFrame\"\nattr(,\"package\")\n[1] \"sp\"\n > class(data.grd)\n[1] \"SpatialGrid\"\nattr(,\"package\")\n[1] \"sp\"\n\nI use the [gd.glm,] to avoid the NA in the datasets for that  \nvariable. However, I get the same results when omitted\n > krige(glmpred~1,data=data.new_alb,newd=data.grd)\nError in krige(glmpred ~ 1, data = data.new_alb, newd = data.grd) :\n\tno direct or inherited method for function 'krige' for this call\n\nthis indicates that the problem is elsewhere.\n\n\nIf newdata accepts SpatialGrids will it output a SpatialGridDataFrame  \nwith the prediction as a dataframe of that?\n\n\nRegarding the example, I am not quite sure that I understand how to  \nadapt the example to my data. I have a generated a grid based on my  \ngrass extend, and I need the predictions from my model (idw in this  \n'toy' example) to go in that grid. In the meuse.grid example, you  \nhave a regular grid of samples and make a grid based on that, I have  \nirregular samples and need to create a continuous surface of those  \nvalues. So, I chose to build the GridTopology from my grass location.\n\nthanks\n\nHoracio\n\n\n\nOn Feb 1, 2006, at 12:54 PM, Edzer J. Pebesma wrote:\n\nA Horacio Samaniego wrote:\n\n> I wonder how I should go from a SpatialGrid to a SpatialGridDataFrame.\n>\n>\nUsing for example the function SpatialGridDataFrame()\n\n> I have defined a grid using the functions from the sp, gstat and  \n> spgrass6 packages:\n>\n> G<-gmeta6()\n> kk<-SpatialGrid(GridTopology(c(G$south,G$west),c(G$nsres,G$ewres),c \n> (G$rows,G$cols)),alb.proj)\n>\n>> str(kk)\n>>\n> Formal class 'SpatialGrid' [package \"sp\"] with 5 slots\n>   ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3  \n> slots\n>   .. .. ..@ cellcentre.offset: num [1:2] -1333373 -2356259\n>   .. .. ..@ cellsize         : num [1:2] 1000 1000\n>   .. .. ..@ cells.dim        : int [1:2] 2899 4615\n>   ..@ grid.index : int(0)\n>   ..@ coords     : num [1:2, 1:2] -1333373  1564162 -2356259  2257928\n>   .. ..- attr(*, \"dimnames\")=List of 2\n>   .. .. ..$ : NULL\n>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>   ..@ bbox       : num [1:2, 1:2] -1333872 -2356759  1564662  2258428\n>   .. ..- attr(*, \"dimnames\")=List of 2\n>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>   .. .. ..$ : chr [1:2] \"min\" \"max\"\n>   ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n>   .. .. ..@ projargs: chr \"+proj=aea +lat_1=29.75 +lat_2=45.25  \n> +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +no_defs +a=6378137  \n> +rf=298.257222101 +towgs84=0.000,0\"| __truncated__\n>\n> Now I try to interpolate on that grid, with no success:\n> interp.vals<-idw(var1~1,data,newdata=kk)\n> Error in idw(corrext ~ 1, data = data.new_alb[gd.glm, ], newdata =  \n> data.grd) :\n> \tno direct or inherited method for function 'idw' for this call\n>\n> So, I guess that I need to have a 'SpatialGridDataFrame' instead of  \n> just 'SpatialGrid' as the interpolation needs to be assigned to a  \n> spatial location\n>\nnewdata can be of class SpatialGrid; probably idw fails because\nof the data argument. What is the class of data.new_alb[gd.glm,] ?\n\n> kk2<-as(kk,'SpatialGridDataFrame');\n> Formal class 'SpatialGridDataFrame' [package \"sp\"] with 6 slots\n>   ..@ data       :Formal class 'AttributeList' [package \"sp\"] with  \n> 1 slots\n>   .. .. ..@ att: list()\n>   ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3  \n> slots\n>   .. .. ..@ cellcentre.offset: num [1:2] -1333373 -2356259\n>   .. .. ..@ cellsize         : num [1:2] 1000 1000\n>   .. .. ..@ cells.dim        : int [1:2] 2899 4615\n>   ..@ grid.index : int(0)\n>   ..@ coords     : num [1:2, 1:2] -1333373  1564162 -2356259  2257928\n>   .. ..- attr(*, \"dimnames\")=List of 2\n>   .. .. ..$ : NULL\n>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>   ..@ bbox       : num [1:2, 1:2] -1333872 -2356759  1564662  2258428\n>   .. ..- attr(*, \"dimnames\")=List of 2\n>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>   .. .. ..$ : chr [1:2] \"min\" \"max\"\n>   ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n>   .. .. ..@ projargs: chr \"+proj=aea +lat_1=29.75 +lat_2=45.25  \n> +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +no_defs +a=6378137  \n> +rf=298.257222101 +towgs84=0.000,0\"| __truncated__\n>\n> promotes the grid to the correct class SpatialGridDataFrame but do  \n> not assign to space for the variable. Is there any way to assign an  \n> empty \"slot\" just as we would do for a data.frame?\n>\n> To sum.  I cant seem to be able to create a \"slot\" (or z dimension)  \n> to hold the output of my interpolation. Is there any trick out  \n> there that I am missing? Any help will be appreciated.\n>\n> thanks,\n>\n> H\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_snippet": "Edzer,\n\nthe class is:\n\n > class(data.new_alb[gd.glm,])\n[1] \"SpatialPointsDataFrame\"\nattr(,\"package\")\n[1] \"sp\"\n > class(data.grd)\n[1] \"SpatialGrid\"\nattr(,\"package\")\n[1] \"sp\"\n\nI use the [gd.glm,] to avo",
+      "thread_id": "thread-f656977bf845",
+      "thread_depth": 2,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-0f5734fbbc90",
+      "message_id": "<43E0AC84.4080505@geog.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "a7fb0ca623e251a5aff6aa466eb7f50e3c643594fe03e3232d546a007043eef0",
+      "date": "2006-02-01T13:41:40+01:00",
+      "subject": "[R-sig-Geo] how to go from SpatialGrid to SpatialGridDataFrame ?",
+      "subject_clean": "how to go from SpatialGrid to SpatialGridDataFrame ?",
+      "in_reply_to": "<9CF9FC28-8B39-4AFD-9596-F5F75C8A5A09@unm.edu>",
+      "references": [
+        "<Pine.LNX.4.62.0602010302430.13284@egor.unm.edu>",
+        "<43E0A15E.7080703@geog.uu.nl>",
+        "<9CF9FC28-8B39-4AFD-9596-F5F75C8A5A09@unm.edu>"
+      ],
+      "body_plain": "Horacio Samaniego wrote:\n\n> Edzer,\n>\n> the class is:\n>\n> > class(data.new_alb[gd.glm,])\n> [1] \"SpatialPointsDataFrame\"\n> attr(,\"package\")\n> [1] \"sp\"\n> > class(data.grd)\n> [1] \"SpatialGrid\"\n> attr(,\"package\")\n> [1] \"sp\"\n>\n> I use the [gd.glm,] to avoid the NA in the datasets for that  \n> variable. However, I get the same results when omitted\n> >\n\n> Error in krige(glmpred ~ 1, data = data.new_alb, newd = data.grd) :\n>     no direct or inherited method for function 'krige' for this call\n>\n> this indicates that the problem is elsewhere.\n\nYes; sorry it took me a while to recognize.\nYou should omit the \"data =\" in the call, i.e.\nkrige(glmpred~1,data.new_alb[gd.glm,],newd=data.grd)\nwill work. This is a change in interface, which I recently\nposted to R-pkgs:\nhttps://stat.ethz.ch/pipermail/r-packages/2006/000154.html\n\n>\n>\n> If newdata accepts SpatialGrids will it output a SpatialGridDataFrame  \n> with the prediction as a dataframe of that?\n\nYes.\n\n>\n>\n> Regarding the example, I am not quite sure that I understand how to  \n> adapt the example to my data. I have a generated a grid based on my  \n> grass extend, and I need the predictions from my model (idw in this  \n> 'toy' example) to go in that grid. In the meuse.grid example, you  \n> have a regular grid of samples and make a grid based on that, I have  \n> irregular samples and need to create a continuous surface of those  \n> values. So, I chose to build the GridTopology from my grass location.\n\nShould work.\n--\nEdzer\n\n>\n> thanks\n>\n> Horacio\n>\n>\n>\n> On Feb 1, 2006, at 12:54 PM, Edzer J. Pebesma wrote:\n>\n> A Horacio Samaniego wrote:\n>\n>> I wonder how I should go from a SpatialGrid to a SpatialGridDataFrame.\n>>\n>>\n> Using for example the function SpatialGridDataFrame()\n>\n>> I have defined a grid using the functions from the sp, gstat and  \n>> spgrass6 packages:\n>>\n>> G<-gmeta6()\n>> kk<-SpatialGrid(GridTopology(c(G$south,G$west),c(G$nsres,G$ewres),c \n>> (G$rows,G$cols)),alb.proj)\n>>\n>>> str(kk)\n>>>\n>> Formal class 'SpatialGrid' [package \"sp\"] with 5 slots\n>>   ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3  \n>> slots\n>>   .. .. ..@ cellcentre.offset: num [1:2] -1333373 -2356259\n>>   .. .. ..@ cellsize         : num [1:2] 1000 1000\n>>   .. .. ..@ cells.dim        : int [1:2] 2899 4615\n>>   ..@ grid.index : int(0)\n>>   ..@ coords     : num [1:2, 1:2] -1333373  1564162 -2356259  2257928\n>>   .. ..- attr(*, \"dimnames\")=List of 2\n>>   .. .. ..$ : NULL\n>>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>>   ..@ bbox       : num [1:2, 1:2] -1333872 -2356759  1564662  2258428\n>>   .. ..- attr(*, \"dimnames\")=List of 2\n>>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>>   .. .. ..$ : chr [1:2] \"min\" \"max\"\n>>   ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n>>   .. .. ..@ projargs: chr \"+proj=aea +lat_1=29.75 +lat_2=45.25  \n>> +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +no_defs +a=6378137  \n>> +rf=298.257222101 +towgs84=0.000,0\"| __truncated__\n>>\n>> Now I try to interpolate on that grid, with no success:\n>> interp.vals<-idw(var1~1,data,newdata=kk)\n>> Error in idw(corrext ~ 1, data = data.new_alb[gd.glm, ], newdata =  \n>> data.grd) :\n>>     no direct or inherited method for function 'idw' for this call\n>>\n>> So, I guess that I need to have a 'SpatialGridDataFrame' instead of  \n>> just 'SpatialGrid' as the interpolation needs to be assigned to a  \n>> spatial location\n>>\n> newdata can be of class SpatialGrid; probably idw fails because\n> of the data argument. What is the class of data.new_alb[gd.glm,] ?\n>\n>> kk2<-as(kk,'SpatialGridDataFrame');\n>> Formal class 'SpatialGridDataFrame' [package \"sp\"] with 6 slots\n>>   ..@ data       :Formal class 'AttributeList' [package \"sp\"] with  1 \n>> slots\n>>   .. .. ..@ att: list()\n>>   ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3  \n>> slots\n>>   .. .. ..@ cellcentre.offset: num [1:2] -1333373 -2356259\n>>   .. .. ..@ cellsize         : num [1:2] 1000 1000\n>>   .. .. ..@ cells.dim        : int [1:2] 2899 4615\n>>   ..@ grid.index : int(0)\n>>   ..@ coords     : num [1:2, 1:2] -1333373  1564162 -2356259  2257928\n>>   .. ..- attr(*, \"dimnames\")=List of 2\n>>   .. .. ..$ : NULL\n>>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>>   ..@ bbox       : num [1:2, 1:2] -1333872 -2356759  1564662  2258428\n>>   .. ..- attr(*, \"dimnames\")=List of 2\n>>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>>   .. .. ..$ : chr [1:2] \"min\" \"max\"\n>>   ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n>>   .. .. ..@ projargs: chr \"+proj=aea +lat_1=29.75 +lat_2=45.25  \n>> +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +no_defs +a=6378137  \n>> +rf=298.257222101 +towgs84=0.000,0\"| __truncated__\n>>\n>> promotes the grid to the correct class SpatialGridDataFrame but do  \n>> not assign to space for the variable. Is there any way to assign an  \n>> empty \"slot\" just as we would do for a data.frame?\n>>\n>> To sum.  I cant seem to be able to create a \"slot\" (or z dimension)  \n>> to hold the output of my interpolation. Is there any trick out  there \n>> that I am missing? Any help will be appreciated.\n>>\n>> thanks,\n>>\n>> H\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>",
+      "body_snippet": "Horacio Samaniego wrote:\n\n> Edzer,\n>\n> the class is:\n>\n> > class(data.new_alb[gd.glm,])\n> [1] \"SpatialPointsDataFrame\"\n> attr(,\"package\")\n> [1] \"sp\"\n> > class(data.grd)\n> [1] \"SpatialGrid\"\n> attr(,\"pa",
+      "thread_id": "thread-f656977bf845",
+      "thread_depth": 3,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-72c0ff996c89",
+      "message_id": "<CCF7318B-D646-4A87-8CBF-5591D777F354@unm.edu>",
+      "from_name": "Horacio Samaniego",
+      "from_email_hash": "5c8acaa52c9445b323caa14805ca3a97a6767e8177c5bb74cc830b9dde128f33",
+      "date": "2006-02-01T14:18:39+01:00",
+      "subject": "[R-sig-Geo] how to go from SpatialGrid to SpatialGridDataFrame ?",
+      "subject_clean": "how to go from SpatialGrid to SpatialGridDataFrame ?",
+      "in_reply_to": "<43E0AC84.4080505@geog.uu.nl>",
+      "references": [
+        "<Pine.LNX.4.62.0602010302430.13284@egor.unm.edu>",
+        "<43E0A15E.7080703@geog.uu.nl>",
+        "<9CF9FC28-8B39-4AFD-9596-F5F75C8A5A09@unm.edu>",
+        "<43E0AC84.4080505@geog.uu.nl>"
+      ],
+      "body_plain": "good, thanks...\n\nhowever,  there seemed to be another problem.. of a different kind I  \nfear...\n\nI got:\n\n > kkp=idw(glmpred~1,data.new_alb[gd.glm,],data.grd)\nError in predict.gstat(g, newdata = newdata, block = block, nsim =  \nnsim,  :\n\tdata items in gstat object and newdata have different coordinate  \nreference systems\n\nDue to a simple space in the first coord definition... (perhaps easy  \nto fix... by some string processing?)\n > rbind(proj4string(data.new_alb),proj4string(data.grd))\n      [,1]\n[1,] \" +proj=aea +lat_1=29.75 +lat_2=45.25 +lat_0=37.5 +lon_0=-96  \n+x_0=0 +y_0=0 +no_defs +a=6378137 +rf=298.257222101  \n+towgs84=0.000,0.000,0.000\"\n[2,] \"+proj=aea +lat_1=29.75 +lat_2=45.25 +lat_0=37.5 +lon_0=-96  \n+x_0=0 +y_0=0 +no_defs +a=6378137 +rf=298.257222101  \n+towgs84=0.000,0.000,0.000\"\n\n\n\nThis was an easy problem that got solved using\n\n > proj4string(data.new_alb)<- CRS(proj4string(data.grd))\n > rbind(proj4string(data.new_alb),proj4string(data.grd))\n      [,1]\n[1,] \"+proj=aea +lat_1=29.75 +lat_2=45.25 +lat_0=37.5 +lon_0=-96  \n+x_0=0 +y_0=0 +no_defs +a=6378137 +rf=298.257222101  \n+towgs84=0.000,0.000,0.000\"\n[2,] \"+proj=aea +lat_1=29.75 +lat_2=45.25 +lat_0=37.5 +lon_0=-96  \n+x_0=0 +y_0=0 +no_defs +a=6378137 +rf=298.257222101  \n+towgs84=0.000,0.000,0.000\"\n\n\nThanks Edzer!\n--\nHoracio Samaniego\nDept. Biology\nUniversity of New Mexico\nAlbuquerque 87106, NM\n\nhttp://www.unm.edu/~horacio\n\n\n\nOn Feb 1, 2006, at 1:41 PM, Edzer J. Pebesma wrote:\n\nHoracio Samaniego wrote:\n\n> Edzer,\n>\n> the class is:\n>\n> > class(data.new_alb[gd.glm,])\n> [1] \"SpatialPointsDataFrame\"\n> attr(,\"package\")\n> [1] \"sp\"\n> > class(data.grd)\n> [1] \"SpatialGrid\"\n> attr(,\"package\")\n> [1] \"sp\"\n>\n> I use the [gd.glm,] to avoid the NA in the datasets for that   \n> variable. However, I get the same results when omitted\n> >\n\n> Error in krige(glmpred ~ 1, data = data.new_alb, newd = data.grd) :\n>     no direct or inherited method for function 'krige' for this call\n>\n> this indicates that the problem is elsewhere.\n\nYes; sorry it took me a while to recognize.\nYou should omit the \"data =\" in the call, i.e.\nkrige(glmpred~1,data.new_alb[gd.glm,],newd=data.grd)\nwill work. This is a change in interface, which I recently\nposted to R-pkgs:\nhttps://stat.ethz.ch/pipermail/r-packages/2006/000154.html\n\n>\n>\n> If newdata accepts SpatialGrids will it output a  \n> SpatialGridDataFrame  with the prediction as a dataframe of that?\n\nYes.\n\n>\n>\n> Regarding the example, I am not quite sure that I understand how  \n> to  adapt the example to my data. I have a generated a grid based  \n> on my  grass extend, and I need the predictions from my model (idw  \n> in this  'toy' example) to go in that grid. In the meuse.grid  \n> example, you  have a regular grid of samples and make a grid based  \n> on that, I have  irregular samples and need to create a continuous  \n> surface of those  values. So, I chose to build the GridTopology  \n> from my grass location.\n\nShould work.\n--\nEdzer\n\n>\n> thanks\n>\n> Horacio\n>\n>\n>\n> On Feb 1, 2006, at 12:54 PM, Edzer J. Pebesma wrote:\n>\n> A Horacio Samaniego wrote:\n>\n>> I wonder how I should go from a SpatialGrid to a  \n>> SpatialGridDataFrame.\n>>\n>>\n> Using for example the function SpatialGridDataFrame()\n>\n>> I have defined a grid using the functions from the sp, gstat and   \n>> spgrass6 packages:\n>>\n>> G<-gmeta6()\n>> kk<-SpatialGrid(GridTopology(c(G$south,G$west),c(G$nsres,G \n>> $ewres),c (G$rows,G$cols)),alb.proj)\n>>\n>>> str(kk)\n>>>\n>> Formal class 'SpatialGrid' [package \"sp\"] with 5 slots\n>>   ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with  \n>> 3  slots\n>>   .. .. ..@ cellcentre.offset: num [1:2] -1333373 -2356259\n>>   .. .. ..@ cellsize         : num [1:2] 1000 1000\n>>   .. .. ..@ cells.dim        : int [1:2] 2899 4615\n>>   ..@ grid.index : int(0)\n>>   ..@ coords     : num [1:2, 1:2] -1333373  1564162 -2356259  2257928\n>>   .. ..- attr(*, \"dimnames\")=List of 2\n>>   .. .. ..$ : NULL\n>>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>>   ..@ bbox       : num [1:2, 1:2] -1333872 -2356759  1564662  2258428\n>>   .. ..- attr(*, \"dimnames\")=List of 2\n>>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>>   .. .. ..$ : chr [1:2] \"min\" \"max\"\n>>   ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n>>   .. .. ..@ projargs: chr \"+proj=aea +lat_1=29.75 +lat_2=45.25   \n>> +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +no_defs +a=6378137   \n>> +rf=298.257222101 +towgs84=0.000,0\"| __truncated__\n>>\n>> Now I try to interpolate on that grid, with no success:\n>> interp.vals<-idw(var1~1,data,newdata=kk)\n>> Error in idw(corrext ~ 1, data = data.new_alb[gd.glm, ], newdata  \n>> =  data.grd) :\n>>     no direct or inherited method for function 'idw' for this call\n>>\n>> So, I guess that I need to have a 'SpatialGridDataFrame' instead  \n>> of  just 'SpatialGrid' as the interpolation needs to be assigned  \n>> to a  spatial location\n>>\n> newdata can be of class SpatialGrid; probably idw fails because\n> of the data argument. What is the class of data.new_alb[gd.glm,] ?\n>\n>> kk2<-as(kk,'SpatialGridDataFrame');\n>> Formal class 'SpatialGridDataFrame' [package \"sp\"] with 6 slots\n>>   ..@ data       :Formal class 'AttributeList' [package \"sp\"]  \n>> with  1 slots\n>>   .. .. ..@ att: list()\n>>   ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with  \n>> 3  slots\n>>   .. .. ..@ cellcentre.offset: num [1:2] -1333373 -2356259\n>>   .. .. ..@ cellsize         : num [1:2] 1000 1000\n>>   .. .. ..@ cells.dim        : int [1:2] 2899 4615\n>>   ..@ grid.index : int(0)\n>>   ..@ coords     : num [1:2, 1:2] -1333373  1564162 -2356259  2257928\n>>   .. ..- attr(*, \"dimnames\")=List of 2\n>>   .. .. ..$ : NULL\n>>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>>   ..@ bbox       : num [1:2, 1:2] -1333872 -2356759  1564662  2258428\n>>   .. ..- attr(*, \"dimnames\")=List of 2\n>>   .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n>>   .. .. ..$ : chr [1:2] \"min\" \"max\"\n>>   ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n>>   .. .. ..@ projargs: chr \"+proj=aea +lat_1=29.75 +lat_2=45.25   \n>> +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +no_defs +a=6378137   \n>> +rf=298.257222101 +towgs84=0.000,0\"| __truncated__\n>>\n>> promotes the grid to the correct class SpatialGridDataFrame but  \n>> do  not assign to space for the variable. Is there any way to  \n>> assign an  empty \"slot\" just as we would do for a data.frame?\n>>\n>> To sum.  I cant seem to be able to create a \"slot\" (or z  \n>> dimension)  to hold the output of my interpolation. Is there any  \n>> trick out  there that I am missing? Any help will be appreciated.\n>>\n>> thanks,\n>>\n>> H\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>",
+      "body_snippet": "good, thanks...\n\nhowever,  there seemed to be another problem.. of a different kind I  \nfear...\n\nI got:\n\n > kkp=idw(glmpred~1,data.new_alb[gd.glm,],data.grd)\nError in predict.gstat(g, newdata = newdat",
+      "thread_id": "thread-f656977bf845",
+      "thread_depth": 4,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-d91e3cfb3d6c",
+      "message_id": "<cb44df220602010827i15dd5786tc9f887c0b46bccfc@mail.gmail.com>",
+      "from_name": "Martin Reismann",
+      "from_email_hash": "875bd8c7ccbeb38ac24d78b036a8ce3ff619fb1d45767db854fe70fb6b3f2063",
+      "date": "2006-02-01T17:27:40+01:00",
+      "subject": "[R-sig-Geo] 2 problems with errorsarlm(method=\"SparseM\")",
+      "subject_clean": "2 problems with errorsarlm(method=\"SparseM\")",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060201/47b67718/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060201/47b67718/attachment.pl>",
+      "thread_id": "thread-d91e3cfb3d6c",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-bdea6e3beacc",
+      "message_id": "<Pine.A32.3.96.1060201173231.179736A-100000@isis.wu-wien.ac.at>",
+      "from_name": "Martin Reismann",
+      "from_email_hash": "875bd8c7ccbeb38ac24d78b036a8ce3ff619fb1d45767db854fe70fb6b3f2063",
+      "date": "2006-02-01T17:34:26+01:00",
+      "subject": "[R-sig-Geo] 2 problems with errorsarlm(method=\"SparseM\")",
+      "subject_clean": "2 problems with errorsarlm(method=\"SparseM\")",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "(1) When running a large SAR (weight matrix 12544 * 12544) with errorsarlm\nand SparseM-method I ran into this error message:\n \n> Error in .local(x, ...) : Increase nnzlmax\n> Error in det(chol((I - lambda * csrw), tmpmax = tmpmax)) :\n>         unable to find the argument 'x' in selecting a method for\nfunction 'det' \n \nThe listw-object stems from nb2listw and is style=\"W\".\nIt happens on both Linux (32 bit, 4GB RAM) and Solaris (64 bit, 8GB RAM)\n \n(2) Being able to use mat2listw instead of nb2listw would be preferable\nbecause mat2listw allows matrix elements different from 0 and 1.\n \nUnfortunately errorsarlm(..., method=\"SparseM\") on a listw-object made by\nmat2listw crashed in an early stage.\n \nError message:\n> Error in validObject(.Object) : invalid class \"matrix.csr\" object:\n> invalid object for slot \"ja\" in class \"matrix.csr\": \n> got class \"numeric\", should be or extend class \"integer\"\n\nIt might be because mat2listw creates listw-objects of weights style=\"M\"\n(underlying style unknown).\nIs there a way to transform a listw-object created by mat2listw into a\n\"clean\" one with proper weights style set?\n \n \nI appreciate your help!\n \nMartin\n\n\n-- \nMag. Martin Reismann\nc/o\nInstitut fuer Wirtschaftsgeographie und Geoinformatik\nWirtschaftsuniversitaet Wien\nNordbergstrasse 15, 4. Stock, Kern A\nA-1090 Wien\n\nEMail: Martin.Reismann at wu-wien.ac.at\nTel +43-(0)-1-31336-5720\nFax +43-(0)-1-31336-703",
+      "body_snippet": "(1) When running a large SAR (weight matrix 12544 * 12544) with errorsarlm\nand SparseM-method I ran into this error message:\n \n> Error in .local(x, ...) : Increase nnzlmax\n> Error in det(chol((I - lam",
+      "thread_id": "thread-bdea6e3beacc",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-ff99719f1d5a",
+      "message_id": "<Pine.LNX.4.44.0602012004320.7295-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-02-01T20:32:32+01:00",
+      "subject": "[R-sig-Geo] 2 problems with errorsarlm(method=\"SparseM\")",
+      "subject_clean": "2 problems with errorsarlm(method=\"SparseM\")",
+      "in_reply_to": "<Pine.A32.3.96.1060201173231.179736A-100000@isis.wu-wien.ac.at>",
+      "references": [],
+      "body_plain": "On Wed, 1 Feb 2006, Martin Reismann wrote:\n\n> (1) When running a large SAR (weight matrix 12544 * 12544) with errorsarlm\n> and SparseM-method I ran into this error message:\n>  \n> > Error in .local(x, ...) : Increase nnzlmax\n> > Error in det(chol((I - lambda * csrw), tmpmax = tmpmax)) :\n> >         unable to find the argument 'x' in selecting a method for\n> function 'det' \n>  \n> The listw-object stems from nb2listw and is style=\"W\".\n> It happens on both Linux (32 bit, 4GB RAM) and Solaris (64 bit, 8GB RAM)\n\nWhen in doubt, immediately after the error exit from an R function, type\n\n> traceback()\n\nwhich will list out the function calls back to the function in error. I \nthink that the problem is that because of the density of your spatial \nweights matrix, chol() for sparse matrices is running out of working \nspace, and that nnzlmax now needs setting (Danlin Yu reported a similar \nproblem with tmpmax over a year ago).\n\nCould you repeat the problem and then run and report traceback()? Could\nyou also report sum(card()) for your list of neighbours? I think your\nmatrix is quite dense, and knowing how dense it is will help work out how\nbig nnzlmax needs to be.\n\n>  \n> (2) Being able to use mat2listw instead of nb2listw would be preferable\n> because mat2listw allows matrix elements different from 0 and 1.\n>  \n\nWhy can't you use the glist= argument to nb2listw()?\n\nAlso note that method=\"SparseM\" should only work with weights that are \neither symmetric or similar to symmetric - I'll make this clearer on the \nhelp page, and block style=\"M\" for that method.\n\nThis means that symmetric general weights, like inverse distance, may be \npossible, but that both asymmetric neighbours and asymmetric general \nweights for symmetric neighbours are banned for method=\"SparseM\" - \nobviously because chol() for sparse matrices only works when they are \nsymmetric (row standardised symmetric neighbours are asymmetric weights, \nbut the determinant is the same for the similar-to-symmetric version.\n\nI guess the problem below will go away when I block the entrance.\n\nPossibly the only weights matrix that could be tolerated is a fully \nsymmetric neighbours matrix with symmetric general weights. There is \ndifferent code in spautolm() doing much the same as errorsarlm(), but I'm \nnot sure that both problems will not re-occur there until they are fixed. \nGetting nnzlmax right is possible, but chol() is just not going to work if \nthe weights are neither symmetric nor similar-to-symmetric.\n\nRoger\n\nPS. Access to your data would speed up finding a solution, then I can run \ntraceback() myself.\n\n> Unfortunately errorsarlm(..., method=\"SparseM\") on a listw-object made by\n> mat2listw crashed in an early stage.\n>  \n\nPPS. In R, \"crash\" is reserved for R itself terminating and exiting with\ndata loss. Here, it just reported something wrong and returned to the\nprompt, so the function did its best, with no \"crash\" as such.\n\n> Error message:\n> > Error in validObject(.Object) : invalid class \"matrix.csr\" object:\n> > invalid object for slot \"ja\" in class \"matrix.csr\": \n> > got class \"numeric\", should be or extend class \"integer\"\n> \n> It might be because mat2listw creates listw-objects of weights style=\"M\"\n> (underlying style unknown).\n> Is there a way to transform a listw-object created by mat2listw into a\n> \"clean\" one with proper weights style set?\n>  \n>  \n> I appreciate your help!\n>  \n> Martin\n> \n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Wed, 1 Feb 2006, Martin Reismann wrote:\n\n> (1) When running a large SAR (weight matrix 12544 * 12544) with errorsarlm\n> and SparseM-method I ran into this error message:\n>  \n> > Error in .local(x, ",
+      "thread_id": "thread-bdea6e3beacc",
+      "thread_depth": 1,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-a6f8f9680193",
+      "message_id": "<062AE320EF971E40ACD0F6C93391D7697E1B94@exqld1-tsv.nexus.csiro.au>",
+      "from_name": "Alexander.Herr at csiro.au",
+      "from_email_hash": "7f2342112a3342caca1299bf19c35d30e525db8b463fb7c281b9529a30760f13",
+      "date": "2006-02-02T12:20:36+10:00",
+      "subject": "[R-sig-Geo] ?Plotting line segments of shapefile in different color",
+      "subject_clean": "?Plotting line segments of shapefile in different color",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Thanks Roger,\n\nColorRampPalette only allows for 255 colors, but since I want to show\nonly the difference between each adjacent segment, a few colors will do.\nSo the way to do this is\n\na) use readShapelines and repeat the color listing for the number of\nline segments (ie length(slot(s2,\"lines\")/number of colors) and plot the\nreadShapeline object\nlibrary(maptools)\nfn<-system.file(\"shapes/fylk-val.shp\", package=\"maptools\")\ns2 <- readShapeLines(fn, proj4string=CRS(\"+proj=utm +zone=33\n+datum=WGS84\"))\nlength(slot(s2,\"lines\"))->len1\nrep(c(\"green\", \"blue\", \"black\", \"red\"), len=len1)->cols1\nplot(s2, col=cols1)\n\n\nb)use Map2lines and run a for loop on the length of the Map2lines object\nand circle through the colors\nlibrary(maptools)\nfn<-system.file(\"shapes/fylk-val.shp\", package=\"maptools\")\nread.shape(fn)->xx\nMap2lines(xx)->s3\nxylims<-attr(s3, \"maplim\")\nplot(xylims$x, xylims$y, asp=1, type='n', xlab=\"\", ylab=\"\")\ncols1<-c(\"green\", \"blue\", \"black\", \"red\")\nj=0\nfor (i in 1:length(s3)) {\n  if (j < 5) j = j+1 else j = 0\n   lines(s3[[i]], col=cols1[j])\n }\n\n\nCheers\nHerry\n \n-----Original Message-----\nFrom: Roger Bivand [mailto:Roger.Bivand at nhh.no] \nSent: Wednesday, 1 February 2006 5:36 PM\nTo: Herr, Alexander Herr - Herry (CSE, Townsville)\nCc: r-sig-geo at stat.math.ethz.ch\nSubject: Re: [R-sig-Geo] ?Plotting line segments of shapefile in\ndifferent color\n\nOn Wed, 1 Feb 2006 Alexander.Herr at csiro.au wrote:\n\n> Hi List,\n> \n> I am unsuccessfully trying to plot line segments of a shapefile with \n> different colors. Does anyone have a working example for segmented \n> lines?\n\nIf each line to be coloured is a separate Lines object:\n\nlibrary(maptools)\nfn <- system.file(\"shapes/fylk-val.shp\", package=\"maptools\")[1] xx <-\nreadShapeLines(fn, proj4string=CRS(\"+proj=utm +zone=33 +datum=WGS84\"))\nplot(xx, col=\"blue\") # all one colour length(slot(xx, \"lines\")) # 97\nplot(xx, col=colorRampPalette(c(\"green\", \"blue\", \"black\"))(97))\nlength(colorRampPalette(c(\"green\", \"blue\", \"black\"))(97)) # 97 colours\n\nThe col= argument is used if it is the same length as the number of\nlines; if the lengths differ, the first colour value is used for all\nlines.\n\nIf the shapes are not organised as separate Lines objects, then they\nwill need to be cut up and re-created as such.\n\nRoger\n\n\n> \n> Thanks\n> Herry\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n--\nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "Thanks Roger,\n\nColorRampPalette only allows for 255 colors, but since I want to show\nonly the difference between each adjacent segment, a few colors will do.\nSo the way to do this is\n\na) use readShape",
+      "thread_id": "thread-a6f8f9680193",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-b944142a24cb",
+      "message_id": "<062AE320EF971E40ACD0F6C93391D7697E1B97@exqld1-tsv.nexus.csiro.au>",
+      "from_name": "Alexander.Herr at csiro.au",
+      "from_email_hash": "7f2342112a3342caca1299bf19c35d30e525db8b463fb7c281b9529a30760f13",
+      "date": "2006-02-02T12:27:25+10:00",
+      "subject": "[R-sig-Geo] ?Plotting line segments of shapefile in different color",
+      "subject_clean": "?Plotting line segments of shapefile in different color",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Oops, option b should read\n\nb)use Map2lines and run a for loop on the length of the Map2lines object\nand circle through the colors\nlibrary(maptools)\nfn<-system.file(\"shapes/fylk-val.shp\", package=\"maptools\") \nread.shape(fn)->xx\nMap2lines(xx)->s3\nxylims<-attr(s3, \"maplim\")\nplot(xylims$x, xylims$y, asp=1, type='n', xlab=\"\", ylab=\"\") \ncols1<-c(\"green\", \"blue\", \"black\", \"red\") \nj=0 \nfor (i in 1:length(s3)) {\n   if (j < 4) j = j+1 else j = 1\n  lines(s3[[i]], col=cols1[j])\n }\n \nHerry\n\n-----Original Message-----\nFrom: Herr, Alexander Herr - Herry (CSE, Townsville) \nSent: Thursday, 2 February 2006 12:21 PM\nTo: 'r-sig-geo at stat.math.ethz.ch'\nCc: 'Roger.Bivand at nhh.no'\nSubject: RE: [R-sig-Geo] ?Plotting line segments of shapefile in\ndifferent color\n\nThanks Roger,\n\nColorRampPalette only allows for 255 colors, but since I want to show\nonly the difference between each adjacent segment, a few colors will do.\nSo the way to do this is\n\na) use readShapelines and repeat the color listing for the number of\nline segments (ie length(slot(s2,\"lines\")/number of colors) and plot the\nreadShapeline object\nlibrary(maptools)\nfn<-system.file(\"shapes/fylk-val.shp\", package=\"maptools\")\ns2 <- readShapeLines(fn, proj4string=CRS(\"+proj=utm +zone=33\n+datum=WGS84\"))\nlength(slot(s2,\"lines\"))->len1\nrep(c(\"green\", \"blue\", \"black\", \"red\"), len=len1)->cols1 plot(s2,\ncol=cols1)\n\n\nb)use Map2lines and run a for loop on the length of the Map2lines object\nand circle through the colors\nlibrary(maptools)\nfn<-system.file(\"shapes/fylk-val.shp\", package=\"maptools\")\nread.shape(fn)->xx\nMap2lines(xx)->s3\nxylims<-attr(s3, \"maplim\")\nplot(xylims$x, xylims$y, asp=1, type='n', xlab=\"\", ylab=\"\")\ncols1<-c(\"green\", \"blue\", \"black\", \"red\") j=0 for (i in 1:length(s3)) {\n  if (j < 5) j = j+1 else j = 0\n   lines(s3[[i]], col=cols1[j])\n }\n\n\nCheers\nHerry\n \n-----Original Message-----\nFrom: Roger Bivand [mailto:Roger.Bivand at nhh.no]\nSent: Wednesday, 1 February 2006 5:36 PM\nTo: Herr, Alexander Herr - Herry (CSE, Townsville)\nCc: r-sig-geo at stat.math.ethz.ch\nSubject: Re: [R-sig-Geo] ?Plotting line segments of shapefile in\ndifferent color\n\nOn Wed, 1 Feb 2006 Alexander.Herr at csiro.au wrote:\n\n> Hi List,\n> \n> I am unsuccessfully trying to plot line segments of a shapefile with \n> different colors. Does anyone have a working example for segmented \n> lines?\n\nIf each line to be coloured is a separate Lines object:\n\nlibrary(maptools)\nfn <- system.file(\"shapes/fylk-val.shp\", package=\"maptools\")[1] xx <-\nreadShapeLines(fn, proj4string=CRS(\"+proj=utm +zone=33 +datum=WGS84\"))\nplot(xx, col=\"blue\") # all one colour length(slot(xx, \"lines\")) # 97\nplot(xx, col=colorRampPalette(c(\"green\", \"blue\", \"black\"))(97))\nlength(colorRampPalette(c(\"green\", \"blue\", \"black\"))(97)) # 97 colours\n\nThe col= argument is used if it is the same length as the number of\nlines; if the lengths differ, the first colour value is used for all\nlines.\n\nIf the shapes are not organised as separate Lines objects, then they\nwill need to be cut up and re-created as such.\n\nRoger\n\n\n> \n> Thanks\n> Herry\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n--\nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "Oops, option b should read\n\nb)use Map2lines and run a for loop on the length of the Map2lines object\nand circle through the colors\nlibrary(maptools)\nfn<-system.file(\"shapes/fylk-val.shp\", package=\"map",
+      "thread_id": "thread-b944142a24cb",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-b4ca37e77686",
+      "message_id": "<Pine.LNX.4.62.0602060433440.13589@egor.unm.edu>",
+      "from_name": "A Horacio Samaniego",
+      "from_email_hash": "bc68c9168e9f8106be339dc0100a8fb4b75c29fdd375dc94bc1d933325cdc292",
+      "date": "2006-02-06T04:46:39-07:00",
+      "subject": "[R-sig-Geo] dumping interpolated results into grass6...",
+      "subject_clean": "dumping interpolated results into grass6...",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I wonder if there are any Xtra trick to dump a SpatialPixelDataFrame into \ngrass6? I get the following error. (I seem to have rgdal up and running.)\n\n> writeRast6sp(kk,\"idw_hs\",zcol=\"var1.pred\",NODATA=-9999.99)\nError in writeRast6sp(kk, \"idw_hs\", zcol = \"var1.pred\", NODATA = -9999.99)\n:\n         only numeric columns may be exported\n\n\nI have read the vignettes and \nhttp://grass.gdf-hannover.de/twiki/bin/view/GRASS/GrassSixTutorial#Mini_How_to_interpolate_using_kr \ncarefully... And I'm not sure where ( and if?) I'm doing this wrong...\n\n\nthanks!\n\nH\n\n\nHere is the full command sequence and checks:\n\n\n> library(gstat)\nLoading required package: sp\n> library(spgrass6)\nLoading required package: rgdal\nLoading required package: abind\nLoading required package: pixmap\nGeospatial Data Abstraction Library extensions to R successfully loaded\n> kk<-idw(glmpred~1,data.new_alb[gd.glm,],data.grd)\n[inverse distance weighted interpolation]\n> writeRast6sp(kk,\"idw_hs\",zcol=\"var1.pred\",NODATA=-9999.99)\nError in writeRast6sp(kk, \"idw_hs\", zcol = \"var1.pred\", NODATA = -9999.99) \n:\n \tonly numeric columns may be exported\n> str(kk)\nFormal class 'SpatialPixelsDataFrame' [package \"sp\"] with 7 slots\n   ..@ data       :Formal class 'AttributeList' [package \"sp\"] with 1 slots\n   .. .. ..@ att:List of 2\n   .. .. .. ..$ var1.pred: num [1:208874] 0.503 0.503 0.504 0.504 0.504 ...\n   .. .. .. ..$ var1.var : num [1:208874] NA NA NA NA NA NA NA NA NA NA ...\n   ..@ coords.nrs : num(0)\n   ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3 slots\n   .. .. ..@ cellcentre.offset: Named num [1:2] -1333373 -2356259\n   .. .. .. ..- attr(*, \"names\")= chr [1:2] \"s1\" \"s2\"\n   .. .. ..@ cellsize         : Named num [1:2] 8007 7999\n   .. .. .. ..- attr(*, \"names\")= chr [1:2] \"s1\" \"s2\"\n   .. .. ..@ cells.dim        : Named int [1:2] 362 577\n   .. .. .. ..- attr(*, \"names\")= chr [1:2] \"s1\" \"s2\"\n   ..@ grid.index : int [1:208874] 1 2 3 4 5 6 7 8 9 10 ...\n   ..@ coords     : num [1:208874, 1:2] -1333373 -1325366 -1317359 -1309352 \n-1301345 ...\n   .. ..- attr(*, \"dimnames\")=List of 2\n   .. .. ..$ : NULL\n   .. .. ..$ : chr [1:2] \"s1\" \"s2\"\n   ..@ bbox       : num [1:2, 1:2] -1337376 -2360258  1561158  2254928\n   .. ..- attr(*, \"dimnames\")=List of 2\n   .. .. ..$ : chr [1:2] \"s1\" \"s2\"\n   .. .. ..$ : chr [1:2] \"min\" \"max\"\n   ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n   .. .. ..@ projargs: chr NA\n>\n\n> getGDALDriverNames()\n  [1] \"GRASS\"     \"VRT\"       \"GTiff\"     \"NITF\"      \"HFA\"       \"SAR_CEOS\"\n  [7] \"CEOS\"      \"ELAS\"      \"AIG\"       \"AAIGrid\"   \"SDTS\"      \"OGDI\"\n[13] \"DTED\"      \"PNG\"       \"JPEG\"      \"MEM\"       \"JDEM\"      \"GIF\"\n[19] \"ESAT\"      \"BSB\"       \"XPM\"       \"BMP\"       \"AirSAR\"    \"RS2\"\n[25] \"PCIDSK\"    \"PCRaster\"  \"ILWIS\"     \"RIK\"       \"GMT\"       \"netCDF\"\n[31] \"HDF4\"      \"HDF4Image\" \"PNM\"       \"DOQ1\"      \"DOQ2\"      \"ENVI\"\n[37] \"EHdr\"      \"PAux\"      \"MFF\"       \"MFF2\"      \"FujiBAS\"   \"GSC\"\n[43] \"FAST\"      \"BT\"        \"LAN\"       \"CPG\"       \"IDA\"       \"NDF\"\n[49] \"JPEG2000\"  \"L1B\"       \"FIT\"       \"RMF\"       \"USGSDEM\"   \"GXF\"",
+      "body_snippet": "I wonder if there are any Xtra trick to dump a SpatialPixelDataFrame into \ngrass6? I get the following error. (I seem to have rgdal up and running.)\n\n> writeRast6sp(kk,\"idw_hs\",zcol=\"var1.pred\",NODATA",
+      "thread_id": "thread-b4ca37e77686",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-1dcd318d300f",
+      "message_id": "<Pine.LNX.4.44.0602061339510.3877-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-02-06T13:45:41+01:00",
+      "subject": "[R-sig-Geo] dumping interpolated results into grass6...",
+      "subject_clean": "dumping interpolated results into grass6...",
+      "in_reply_to": "<Pine.LNX.4.62.0602060433440.13589@egor.unm.edu>",
+      "references": [],
+      "body_plain": "On Mon, 6 Feb 2006, A Horacio Samaniego wrote:\n\n> I wonder if there are any Xtra trick to dump a SpatialPixelDataFrame into \n> grass6? I get the following error. (I seem to have rgdal up and running.)\n> \n> > writeRast6sp(kk,\"idw_hs\",zcol=\"var1.pred\",NODATA=-9999.99)\n> Error in writeRast6sp(kk, \"idw_hs\", zcol = \"var1.pred\", NODATA = -9999.99)\n> :\n>          only numeric columns may be exported\n> \n> \n> I have read the vignettes and \n> http://grass.gdf-hannover.de/twiki/bin/view/GRASS/GrassSixTutorial#Mini_How_to_interpolate_using_kr \n> carefully... And I'm not sure where ( and if?) I'm doing this wrong...\n> \n\nThanks for a full report. Could you attach (or put on a website) the file \nresulting from:\n\nsave(kk, file=\"kk.RData\", compress=TRUE) \n\nto me *off* the list, please? str() below indicates that var1.pred is \npresent, so the test inside writeRast6sp() seems to be getting things \nwrong.\n\nRoger\n\n> \n> thanks!\n> \n> H\n> \n> \n> Here is the full command sequence and checks:\n> \n> \n> > library(gstat)\n> Loading required package: sp\n> > library(spgrass6)\n> Loading required package: rgdal\n> Loading required package: abind\n> Loading required package: pixmap\n> Geospatial Data Abstraction Library extensions to R successfully loaded\n> > kk<-idw(glmpred~1,data.new_alb[gd.glm,],data.grd)\n> [inverse distance weighted interpolation]\n> > writeRast6sp(kk,\"idw_hs\",zcol=\"var1.pred\",NODATA=-9999.99)\n> Error in writeRast6sp(kk, \"idw_hs\", zcol = \"var1.pred\", NODATA = -9999.99) \n> :\n>  \tonly numeric columns may be exported\n> > str(kk)\n> Formal class 'SpatialPixelsDataFrame' [package \"sp\"] with 7 slots\n>    ..@ data       :Formal class 'AttributeList' [package \"sp\"] with 1 slots\n>    .. .. ..@ att:List of 2\n>    .. .. .. ..$ var1.pred: num [1:208874] 0.503 0.503 0.504 0.504 0.504 ...\n>    .. .. .. ..$ var1.var : num [1:208874] NA NA NA NA NA NA NA NA NA NA ...\n>    ..@ coords.nrs : num(0)\n>    ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3 slots\n>    .. .. ..@ cellcentre.offset: Named num [1:2] -1333373 -2356259\n>    .. .. .. ..- attr(*, \"names\")= chr [1:2] \"s1\" \"s2\"\n>    .. .. ..@ cellsize         : Named num [1:2] 8007 7999\n>    .. .. .. ..- attr(*, \"names\")= chr [1:2] \"s1\" \"s2\"\n>    .. .. ..@ cells.dim        : Named int [1:2] 362 577\n>    .. .. .. ..- attr(*, \"names\")= chr [1:2] \"s1\" \"s2\"\n>    ..@ grid.index : int [1:208874] 1 2 3 4 5 6 7 8 9 10 ...\n>    ..@ coords     : num [1:208874, 1:2] -1333373 -1325366 -1317359 -1309352 \n> -1301345 ...\n>    .. ..- attr(*, \"dimnames\")=List of 2\n>    .. .. ..$ : NULL\n>    .. .. ..$ : chr [1:2] \"s1\" \"s2\"\n>    ..@ bbox       : num [1:2, 1:2] -1337376 -2360258  1561158  2254928\n>    .. ..- attr(*, \"dimnames\")=List of 2\n>    .. .. ..$ : chr [1:2] \"s1\" \"s2\"\n>    .. .. ..$ : chr [1:2] \"min\" \"max\"\n>    ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n>    .. .. ..@ projargs: chr NA\n> >\n> \n> > getGDALDriverNames()\n>   [1] \"GRASS\"     \"VRT\"       \"GTiff\"     \"NITF\"      \"HFA\"       \"SAR_CEOS\"\n>   [7] \"CEOS\"      \"ELAS\"      \"AIG\"       \"AAIGrid\"   \"SDTS\"      \"OGDI\"\n> [13] \"DTED\"      \"PNG\"       \"JPEG\"      \"MEM\"       \"JDEM\"      \"GIF\"\n> [19] \"ESAT\"      \"BSB\"       \"XPM\"       \"BMP\"       \"AirSAR\"    \"RS2\"\n> [25] \"PCIDSK\"    \"PCRaster\"  \"ILWIS\"     \"RIK\"       \"GMT\"       \"netCDF\"\n> [31] \"HDF4\"      \"HDF4Image\" \"PNM\"       \"DOQ1\"      \"DOQ2\"      \"ENVI\"\n> [37] \"EHdr\"      \"PAux\"      \"MFF\"       \"MFF2\"      \"FujiBAS\"   \"GSC\"\n> [43] \"FAST\"      \"BT\"        \"LAN\"       \"CPG\"       \"IDA\"       \"NDF\"\n> [49] \"JPEG2000\"  \"L1B\"       \"FIT\"       \"RMF\"       \"USGSDEM\"   \"GXF\"\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 6 Feb 2006, A Horacio Samaniego wrote:\n\n> I wonder if there are any Xtra trick to dump a SpatialPixelDataFrame into \n> grass6? I get the following error. (I seem to have rgdal up and running.)",
+      "thread_id": "thread-b4ca37e77686",
+      "thread_depth": 1,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-46a285d78a3f",
+      "message_id": "<NEBBIPHDAMMOKDKPOFFIGEENDPAA.abunn@whrc.org>",
+      "from_name": "Andy Bunn",
+      "from_email_hash": "6f9417c871d55572bb1393f13ea28441cbe599554127261ade40301525fa27da",
+      "date": "2006-02-07T10:08:37-05:00",
+      "subject": "[R-sig-Geo] Writing a tif using rgdal",
+      "subject_clean": "Writing a tif using rgdal",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Howdy List:\n\nI'm reading in a large number of satellite images and analyzing them in R. I\nknow how to read a tif into R using rgdal and manipulate it. Is there a good\nway to write a new tif out using the projection data from the original?\n\nSo in the example below how can I write out z as a jpg using the metadata\nand such from x?\n\n-Andy\n\n\nlibrary(rgdal)\nlogo <- system.file(\"pictures/Rlogo.jpg\", package=\"rgdal\")[1]\nx <- new(\"GDALReadOnlyDataset\", logo)\ndisplayDataset(x)\ny <- getRasterData(x)\nz <- rowMeans(y, dims=2)\ndim(z)\n\n> version\n         _\nplatform i386-pc-mingw32\narch     i386\nos       mingw32\nsystem   i386, mingw32\nstatus\nmajor    2\nminor    2.0\nyear     2005\nmonth    10\nday      06\nsvn rev  35749\nlanguage R",
+      "body_snippet": "Howdy List:\n\nI'm reading in a large number of satellite images and analyzing them in R. I\nknow how to read a tif into R using rgdal and manipulate it. Is there a good\nway to write a new tif out using ",
+      "thread_id": "thread-46a285d78a3f",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-c6bb0a01c134",
+      "message_id": "<Pine.LNX.4.44.0602071954020.5276-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-02-07T20:19:40+01:00",
+      "subject": "[R-sig-Geo] Writing a tif using rgdal",
+      "subject_clean": "Writing a tif using rgdal",
+      "in_reply_to": "<NEBBIPHDAMMOKDKPOFFIGEENDPAA.abunn@whrc.org>",
+      "references": [],
+      "body_plain": "On Tue, 7 Feb 2006, Andy Bunn wrote:\n\n> Howdy List:\n> \n> I'm reading in a large number of satellite images and analyzing them in R. I\n> know how to read a tif into R using rgdal and manipulate it. Is there a good\n> way to write a new tif out using the projection data from the original?\n> \n> So in the example below how can I write out z as a jpg using the metadata\n> and such from x?\n> \n> -Andy\n> \n> \n> library(rgdal)\n> logo <- system.file(\"pictures/Rlogo.jpg\", package=\"rgdal\")[1]\n> x <- new(\"GDALReadOnlyDataset\", logo)\n> displayDataset(x)\n> y <- getRasterData(x)\n> z <- rowMeans(y, dims=2)\n> dim(z)\n\nTaking a deep breath and remembering to do save.image() frequently \n[overwriting GDAL handles can give seg.faults]:\n\nlibrary(rgdal)\nlogo <- system.file(\"pictures/Rlogo.jpg\", package=\"rgdal\")[1]\nx <- new(\"GDALReadOnlyDataset\", logo)\ndisplayDataset(x)\ny <- getRasterData(x)\nz <- rowMeans(y, dims=2)\ndim(z)\nGDAL.close(x)\n\ntif_driver <- new(\"GDALDriver\", \"GTiff\")\ngetDriverLongName(tif_driver)\ntif2 <- new(\"GDALTransientDataset\", tif_driver, 77, 101, 1, 'Float64')\nbnd1 <- putRasterData(tif2, z)\ndisplayDataset(tif2)\ntif_file <- tempfile()\nsaveDataset(tif2, tif_file)\nGDAL.close(tif2)\nGDAL.close(tif_driver)\ntif3 <- GDAL.open(tif_file)\ndisplayDataset(tif3)\nGDAL.close(tif3)\n\n$ gdalinfo zlogo.tif\nDriver: GTiff/GeoTIFF\nSize is 101, 77\nCoordinate System is `'\nCorner Coordinates:\nUpper Left  (    0.0,    0.0)\nLower Left  (    0.0,   77.0)\nUpper Right (  101.0,    0.0)\nLower Right (  101.0,   77.0)\nCenter      (   50.5,   38.5)\nBand 1 Block=101x10 Type=Float64, ColorInterp=Gray\n\n(I was playing with filename zlogo.tif, it reads into GRASS OK, but \nthat's using the same GDAL drivers.)\n\nWell, it works, though it's a bit too exciting dodging the seg.faults \ncoming from over-writing live object handles while experimenting. For \ndetermined users, deleteDataset() works too (oh yes!). I'll try to wrap it \nup to be a bit smoother. No world file yet, but I guess that could just be \ncopied? Suggestions welcome.\n\nRoger\n\n> \n> > version\n>          _\n> platform i386-pc-mingw32\n> arch     i386\n> os       mingw32\n> system   i386, mingw32\n> status\n> major    2\n> minor    2.0\n> year     2005\n> month    10\n> day      06\n> svn rev  35749\n> language R\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 7 Feb 2006, Andy Bunn wrote:\n\n> Howdy List:\n> \n> I'm reading in a large number of satellite images and analyzing them in R. I\n> know how to read a tif into R using rgdal and manipulate it. Is ",
+      "thread_id": "thread-46a285d78a3f",
+      "thread_depth": 1,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-e8dc1bb8b253",
+      "message_id": "<1139344082.28915.14.camel@patagonicus.keittlab.net>",
+      "from_name": "Tim Keitt",
+      "from_email_hash": "2d8d5b8050425938214c3a77d47a2be0916edb7058260fe8211414af4058ae13",
+      "date": "2006-02-07T14:28:02-06:00",
+      "subject": "[R-sig-Geo] Writing a tif using rgdal",
+      "subject_clean": "Writing a tif using rgdal",
+      "in_reply_to": "<Pine.LNX.4.44.0602071954020.5276-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0602071954020.5276-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "I seem to remember writing a wrapper for the gdal copy function,\nalthough none of that has be extensively tested. If you copy an existing\ndataset to a writable dataset, you could then retrieve the data, operate\non it and write back to the new dataset. It should (?) then have all the\nmetadata copied from the original. Sorry, I didn't see in your code\nwhere you were overwriting gdal pointers.\n\nTHK\n\nOn Tue, 2006-02-07 at 20:19 +0100, Roger Bivand wrote:\n> On Tue, 7 Feb 2006, Andy Bunn wrote:\n> \n> > Howdy List:\n> > \n> > I'm reading in a large number of satellite images and analyzing them in R. I\n> > know how to read a tif into R using rgdal and manipulate it. Is there a good\n> > way to write a new tif out using the projection data from the original?\n> > \n> > So in the example below how can I write out z as a jpg using the metadata\n> > and such from x?\n> > \n> > -Andy\n> > \n> > \n> > library(rgdal)\n> > logo <- system.file(\"pictures/Rlogo.jpg\", package=\"rgdal\")[1]\n> > x <- new(\"GDALReadOnlyDataset\", logo)\n> > displayDataset(x)\n> > y <- getRasterData(x)\n> > z <- rowMeans(y, dims=2)\n> > dim(z)\n> \n> Taking a deep breath and remembering to do save.image() frequently \n> [overwriting GDAL handles can give seg.faults]:\n> \n> library(rgdal)\n> logo <- system.file(\"pictures/Rlogo.jpg\", package=\"rgdal\")[1]\n> x <- new(\"GDALReadOnlyDataset\", logo)\n> displayDataset(x)\n> y <- getRasterData(x)\n> z <- rowMeans(y, dims=2)\n> dim(z)\n> GDAL.close(x)\n> \n> tif_driver <- new(\"GDALDriver\", \"GTiff\")\n> getDriverLongName(tif_driver)\n> tif2 <- new(\"GDALTransientDataset\", tif_driver, 77, 101, 1, 'Float64')\n> bnd1 <- putRasterData(tif2, z)\n> displayDataset(tif2)\n> tif_file <- tempfile()\n> saveDataset(tif2, tif_file)\n> GDAL.close(tif2)\n> GDAL.close(tif_driver)\n> tif3 <- GDAL.open(tif_file)\n> displayDataset(tif3)\n> GDAL.close(tif3)\n> \n> $ gdalinfo zlogo.tif\n> Driver: GTiff/GeoTIFF\n> Size is 101, 77\n> Coordinate System is `'\n> Corner Coordinates:\n> Upper Left  (    0.0,    0.0)\n> Lower Left  (    0.0,   77.0)\n> Upper Right (  101.0,    0.0)\n> Lower Right (  101.0,   77.0)\n> Center      (   50.5,   38.5)\n> Band 1 Block=101x10 Type=Float64, ColorInterp=Gray\n> \n> (I was playing with filename zlogo.tif, it reads into GRASS OK, but \n> that's using the same GDAL drivers.)\n> \n> Well, it works, though it's a bit too exciting dodging the seg.faults \n> coming from over-writing live object handles while experimenting. For \n> determined users, deleteDataset() works too (oh yes!). I'll try to wrap it \n> up to be a bit smoother. No world file yet, but I guess that could just be \n> copied? Suggestions welcome.\n> \n> Roger\n> \n> > \n> > > version\n> >          _\n> > platform i386-pc-mingw32\n> > arch     i386\n> > os       mingw32\n> > system   i386, mingw32\n> > status\n> > major    2\n> > minor    2.0\n> > year     2005\n> > month    10\n> > day      06\n> > svn rev  35749\n> > language R\n> > \n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > \n> \n-- \nTimothy H. Keitt\nAssistant Professor\nhttp://www.keittlab.org/\nhttp://www.utexas.edu/directory/index.php?q=Keitt",
+      "body_snippet": "I seem to remember writing a wrapper for the gdal copy function,\nalthough none of that has be extensively tested. If you copy an existing\ndataset to a writable dataset, you could then retrieve the dat",
+      "thread_id": "thread-46a285d78a3f",
+      "thread_depth": 2,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-78d5dca946fd",
+      "message_id": "<Pine.LNX.4.44.0602072200320.5276-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-02-07T22:25:41+01:00",
+      "subject": "[R-sig-Geo] Writing a tif using rgdal",
+      "subject_clean": "Writing a tif using rgdal",
+      "in_reply_to": "<1139344082.28915.14.camel@patagonicus.keittlab.net>",
+      "references": [],
+      "body_plain": "On Tue, 7 Feb 2006, Tim Keitt wrote:\n\n> I seem to remember writing a wrapper for the gdal copy function,\n> although none of that has be extensively tested. If you copy an existing\n> dataset to a writable dataset, you could then retrieve the data, operate\n> on it and write back to the new dataset. It should (?) then have all the\n> metadata copied from the original. \n\nYes, copyDataset() is there, but won't it expect the type= argument to \nsuit the data? My route as below lets you set up a transient dataset and \nthen save it to a file, but I hadn't got the:\n\n.Call(\"RGDAL_SetGeoTransform\", dataset, numericvectorof6, PACKAGE=\"rgdal\")\n\nto set the starting point and cell sizes. I'll carry on trying.\n\n> Sorry, I didn't see in your code\n> where you were overwriting gdal pointers.\n> \n\nNo trouble - I think this hits me when I'm hurrying and I re-use a \nnot-closed handle, filling it with another handle. I can't replicate now.\n\nRoger\n\n> THK\n> \n> On Tue, 2006-02-07 at 20:19 +0100, Roger Bivand wrote:\n> > On Tue, 7 Feb 2006, Andy Bunn wrote:\n> > \n> > > Howdy List:\n> > > \n> > > I'm reading in a large number of satellite images and analyzing them in R. I\n> > > know how to read a tif into R using rgdal and manipulate it. Is there a good\n> > > way to write a new tif out using the projection data from the original?\n> > > \n> > > So in the example below how can I write out z as a jpg using the metadata\n> > > and such from x?\n> > > \n> > > -Andy\n> > > \n> > > \n> > > library(rgdal)\n> > > logo <- system.file(\"pictures/Rlogo.jpg\", package=\"rgdal\")[1]\n> > > x <- new(\"GDALReadOnlyDataset\", logo)\n> > > displayDataset(x)\n> > > y <- getRasterData(x)\n> > > z <- rowMeans(y, dims=2)\n> > > dim(z)\n> > \n> > Taking a deep breath and remembering to do save.image() frequently \n> > [overwriting GDAL handles can give seg.faults]:\n> > \n> > library(rgdal)\n> > logo <- system.file(\"pictures/Rlogo.jpg\", package=\"rgdal\")[1]\n> > x <- new(\"GDALReadOnlyDataset\", logo)\n> > displayDataset(x)\n> > y <- getRasterData(x)\n> > z <- rowMeans(y, dims=2)\n> > dim(z)\n> > GDAL.close(x)\n> > \n> > tif_driver <- new(\"GDALDriver\", \"GTiff\")\n> > getDriverLongName(tif_driver)\n> > tif2 <- new(\"GDALTransientDataset\", tif_driver, 77, 101, 1, 'Float64')\n> > bnd1 <- putRasterData(tif2, z)\n> > displayDataset(tif2)\n> > tif_file <- tempfile()\n> > saveDataset(tif2, tif_file)\n> > GDAL.close(tif2)\n> > GDAL.close(tif_driver)\n> > tif3 <- GDAL.open(tif_file)\n> > displayDataset(tif3)\n> > GDAL.close(tif3)\n> > \n> > $ gdalinfo zlogo.tif\n> > Driver: GTiff/GeoTIFF\n> > Size is 101, 77\n> > Coordinate System is `'\n> > Corner Coordinates:\n> > Upper Left  (    0.0,    0.0)\n> > Lower Left  (    0.0,   77.0)\n> > Upper Right (  101.0,    0.0)\n> > Lower Right (  101.0,   77.0)\n> > Center      (   50.5,   38.5)\n> > Band 1 Block=101x10 Type=Float64, ColorInterp=Gray\n> > \n> > (I was playing with filename zlogo.tif, it reads into GRASS OK, but \n> > that's using the same GDAL drivers.)\n> > \n> > Well, it works, though it's a bit too exciting dodging the seg.faults \n> > coming from over-writing live object handles while experimenting. For \n> > determined users, deleteDataset() works too (oh yes!). I'll try to wrap it \n> > up to be a bit smoother. No world file yet, but I guess that could just be \n> > copied? Suggestions welcome.\n> > \n> > Roger\n> > \n> > > \n> > > > version\n> > >          _\n> > > platform i386-pc-mingw32\n> > > arch     i386\n> > > os       mingw32\n> > > system   i386, mingw32\n> > > status\n> > > major    2\n> > > minor    2.0\n> > > year     2005\n> > > month    10\n> > > day      06\n> > > svn rev  35749\n> > > language R\n> > > \n> > > _______________________________________________\n> > > R-sig-Geo mailing list\n> > > R-sig-Geo at stat.math.ethz.ch\n> > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > > \n> > \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 7 Feb 2006, Tim Keitt wrote:\n\n> I seem to remember writing a wrapper for the gdal copy function,\n> although none of that has be extensively tested. If you copy an existing\n> dataset to a writa",
+      "thread_id": "thread-46a285d78a3f",
+      "thread_depth": 3,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-8ec8efc1fdfd",
+      "message_id": "<43E9352E.8070504@hsph.harvard.edu>",
+      "from_name": "Meredith Franklin",
+      "from_email_hash": "a5db41e658d8ca8abfd473a9885b57206b20daa4cd1306530e8841c3f2d482ac",
+      "date": "2006-02-07T19:02:54-05:00",
+      "subject": "[R-sig-Geo] problem with 'islands' in neighbourhood matrix",
+      "subject_clean": "problem with 'islands' in neighbourhood matrix",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I created a neighbourhood matrix in GeoDa and have read it into R using \nread.gal (spdep package).  I have a few zero-neighbour polygons and as a \nresult I cannot apply nb2listw to my nb object.  Is there a way to get \naround this problem when reading in the .gal file or do these islands \nneed to be removed before creating the matrix?\nThanks,\nMeredith Franklin",
+      "body_snippet": "I created a neighbourhood matrix in GeoDa and have read it into R using \nread.gal (spdep package).  I have a few zero-neighbour polygons and as a \nresult I cannot apply nb2listw to my nb object.  Is t",
+      "thread_id": "thread-8ec8efc1fdfd",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-4928fbbb5007",
+      "message_id": "<Pine.LNX.4.44.0602080912150.6235-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-02-08T09:17:39+01:00",
+      "subject": "[R-sig-Geo] problem with 'islands' in neighbourhood matrix",
+      "subject_clean": "problem with 'islands' in neighbourhood matrix",
+      "in_reply_to": "<43E9352E.8070504@hsph.harvard.edu>",
+      "references": [],
+      "body_plain": "On Tue, 7 Feb 2006, Meredith Franklin wrote:\n\n> I created a neighbourhood matrix in GeoDa and have read it into R using \n> read.gal (spdep package).  I have a few zero-neighbour polygons and as a \n> result I cannot apply nb2listw to my nb object.  Is there a way to get \n> around this problem when reading in the .gal file or do these islands \n> need to be removed before creating the matrix?\n\nFunctions in spdep use an argument called zero.policy=, set by default to \nFALSE, which stop you using neighbour or weights lists with zero-neighbour \nentities. You override this by saying zero.policy=TRUE.\n\nAn alternative is to subset your data and the neighbour list:\n\nhave_neighbours <- card(nb) > 0\nsub_nb <- subset(nb, have_neighbours)\nsub_data <- subset(data, have_neighbours)\n\nSo the problem can be handled internally. Finally, if you want to stitch \nthem onto the graph of neighbours, have a look at ?edit.nb (you'll need \nthe centroids of the polygons for this).\n\n> Thanks,\n> Meredith Franklin\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 7 Feb 2006, Meredith Franklin wrote:\n\n> I created a neighbourhood matrix in GeoDa and have read it into R using \n> read.gal (spdep package).  I have a few zero-neighbour polygons and as a \n> r",
+      "thread_id": "thread-8ec8efc1fdfd",
+      "thread_depth": 1,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-aa6bf906230d",
+      "message_id": "<1139411817.4510.6.camel@patagonicus.keittlab.net>",
+      "from_name": "Tim Keitt",
+      "from_email_hash": "2d8d5b8050425938214c3a77d47a2be0916edb7058260fe8211414af4058ae13",
+      "date": "2006-02-08T09:16:57-06:00",
+      "subject": "[R-sig-Geo] Writing a tif using rgdal",
+      "subject_clean": "Writing a tif using rgdal",
+      "in_reply_to": "<Pine.LNX.4.44.0602072200320.5276-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0602072200320.5276-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "On Tue, 2006-02-07 at 22:25 +0100, Roger Bivand wrote:\n> No trouble - I think this hits me when I'm hurrying and I re-use a \n> not-closed handle, filling it with another handle. I can't replicate now.\n\nHmmm... I just realized that creating a raster band object and then\nclosing the associated dataset object might lead to all sorts of\nfireworks. We may need some reference counting to avoid dereferencing\nfree'd pointers.\n\nTHK\n\n-- \nTimothy H. Keitt\nAssistant Professor\nhttp://www.keittlab.org/\nhttp://www.utexas.edu/directory/index.php?q=Keitt",
+      "body_snippet": "On Tue, 2006-02-07 at 22:25 +0100, Roger Bivand wrote:\n> No trouble - I think this hits me when I'm hurrying and I re-use a \n> not-closed handle, filling it with another handle. I can't replicate now.",
+      "thread_id": "thread-46a285d78a3f",
+      "thread_depth": 4,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-60b1de0d902f",
+      "message_id": "<172918418.20060208192308@eimb.ru>",
+      "from_name": "Wladimir Eremeev",
+      "from_email_hash": "16cb9319acbc3ed70b8630ce73f264603d000f139e466a6ad60fad8ec507fd44",
+      "date": "2006-02-08T19:23:08+03:00",
+      "subject": "[R-sig-Geo] envi clone in R",
+      "subject_clean": "envi clone in R",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello all,\n\n  Research Systems (www.rsinc.com) have developed and distributes the language IDL,\n  and the GIS ENVI, written in IDL.\n\n  To my oppinion, R language is superior, compared to IDL, in all aspects.\n  However, ENVI is the rather convenient and feature rich tool.\n\n  Is anyone aware about any work, dedicated to the creation of\n  something, similar to the ENVI, but in R?\n  \n  Also, recently, the R bindings to the GTK library have appeared...\n\n---\nBest regards,\nWladimir                mailto:wl at eimb.ru",
+      "body_snippet": "Hello all,\n\n  Research Systems (www.rsinc.com) have developed and distributes the language IDL,\n  and the GIS ENVI, written in IDL.\n\n  To my oppinion, R language is superior, compared to IDL, in all a",
+      "thread_id": "thread-60b1de0d902f",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-8e7389558bba",
+      "message_id": "<43EA33CF.3080605@lancaster.ac.uk>",
+      "from_name": "Barry Rowlingson",
+      "from_email_hash": "0a612c58e84a470ea72c786929abc7840353b66d3dc7ac5e89e505330f3012a0",
+      "date": "2006-02-08T18:09:19Z",
+      "subject": "[R-sig-Geo] envi clone in R",
+      "subject_clean": "envi clone in R",
+      "in_reply_to": "<172918418.20060208192308@eimb.ru>",
+      "references": [
+        "<172918418.20060208192308@eimb.ru>"
+      ],
+      "body_plain": "Wladimir Eremeev wrote:\n> Hello all,\n> \n>   Research Systems (www.rsinc.com) have developed and distributes the language IDL,\n>   and the GIS ENVI, written in IDL.\n\n  I find it hard to believe they wrote it all in IDL! I'm guessing its \nprobably scriptable in IDL, but underneath its written in something \nelse... I could be wrong though!\n\n>   To my oppinion, R language is superior, compared to IDL, in all aspects.\n>   However, ENVI is the rather convenient and feature rich tool.\n\n  I clicked on 'Product Documentation' on the ENVI site and it wanted me \nto log in or create a new user. To see the documentation? To find out \nwhat the program is about?\n\n  Oh, what I really wanted was the Feature Tour..\n\n>   Is anyone aware about any work, dedicated to the creation of\n>   something, similar to the ENVI, but in R?\n\n  Last year I looked at GIS-R linkages, with the added criteria of being \nopen source and cross-platform. There are now a few free GIS packages \nthat can do this kind of thing, with a little added glue.\n\n  I settled on OpenEV - it has vector and raster support, its extensible \nin Python and uses Gtk for dialogs which you can customise. All I needed \nwas to get Python talking to R, so I wrote some Python bindings to \nRserve. Now I've got a GIS with a menu that drops down, you choose the \npoint layers you want to work on, click 'Go', and R does some analysis \nthat ends up as a raster layer back in the GIS. The user doesnt care \nthat R did it.\n\nOther GIS solutions are available!\n\nBarry",
+      "body_snippet": "Wladimir Eremeev wrote:\n> Hello all,\n> \n>   Research Systems (www.rsinc.com) have developed and distributes the language IDL,\n>   and the GIS ENVI, written in IDL.\n\n  I find it hard to believe they wr",
+      "thread_id": "thread-60b1de0d902f",
+      "thread_depth": 1,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-ad963be6bd9f",
+      "message_id": "<43EA4D43.7070701@tkk.fi>",
+      "from_name": "Ari Jolma",
+      "from_email_hash": "02cd38aeb4c46fb77b8f6a01eccda409874a1c60c9f07bc6d5ef2fb86945a937",
+      "date": "2006-02-08T21:57:55+02:00",
+      "subject": "[R-sig-Geo] Writing a tif using rgdal",
+      "subject_clean": "Writing a tif using rgdal",
+      "in_reply_to": "<1139411817.4510.6.camel@patagonicus.keittlab.net>",
+      "references": [
+        "<Pine.LNX.4.44.0602072200320.5276-100000@reclus.nhh.no>",
+        "<1139411817.4510.6.camel@patagonicus.keittlab.net>"
+      ],
+      "body_plain": "Tim Keitt kirjoitti:\n> On Tue, 2006-02-07 at 22:25 +0100, Roger Bivand wrote:\n>   \n>> No trouble - I think this hits me when I'm hurrying and I re-use a \n>> not-closed handle, filling it with another handle. I can't replicate now.\n>>     \n>\n> Hmmm... I just realized that creating a raster band object and then\n> closing the associated dataset object might lead to all sorts of\n> fireworks. We may need some reference counting to avoid dereferencing\n> free'd pointers.\n>   \n\nI guess the fireworks is caused by gdal? This was discussed at length on \nthe gdal-dev list in the fall. There is no easy way the fix this. \nCurrently the best solution is to be careful with things like this.\n\nAri Jolma\n\n> THK\n>\n>   \n\n\n-- \nProf. Ari Jolma\nKartografia ja Geoinformatiikka / Cartography and Geoinformatics\nTeknillinen Korkeakoulu / Helsinki University of Technology\nPOBox 1200, 02015 TKK, Finland\nEmail: ari.jolma at tkk.fi URL: http://www.tkk.fi/~jolma",
+      "body_snippet": "Tim Keitt kirjoitti:\n> On Tue, 2006-02-07 at 22:25 +0100, Roger Bivand wrote:\n>   \n>> No trouble - I think this hits me when I'm hurrying and I re-use a \n>> not-closed handle, filling it with another ",
+      "thread_id": "thread-46a285d78a3f",
+      "thread_depth": 5,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-aee96f6cf31e",
+      "message_id": "<000801c62cf3$b908e200$babe0b18@Maelstrom>",
+      "from_name": "Steven J. Pierce",
+      "from_email_hash": "cfa170d5e813922b812c7d2d4205c56815f9beeaa2467d055a6b6c29f747b1ff",
+      "date": "2006-02-08T16:07:48-05:00",
+      "subject": "[R-sig-Geo] Small sample sizes & Bayesian rates for zonal data",
+      "subject_clean": "Small sample sizes & Bayesian rates for zonal data",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060208/2d2f3351/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060208/2d2f3351/attachment.pl>",
+      "thread_id": "thread-aee96f6cf31e",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-01fb1f7a5fcb",
+      "message_id": "<1139432943.10999.21.camel@patagonicus.keittlab.net>",
+      "from_name": "Tim Keitt",
+      "from_email_hash": "2d8d5b8050425938214c3a77d47a2be0916edb7058260fe8211414af4058ae13",
+      "date": "2006-02-08T15:09:03-06:00",
+      "subject": "[R-sig-Geo] Writing a tif using rgdal",
+      "subject_clean": "Writing a tif using rgdal",
+      "in_reply_to": "<43EA4D43.7070701@tkk.fi>",
+      "references": [
+        "<Pine.LNX.4.44.0602072200320.5276-100000@reclus.nhh.no>",
+        "<1139411817.4510.6.camel@patagonicus.keittlab.net>",
+        "<43EA4D43.7070701@tkk.fi>"
+      ],
+      "body_plain": "I'm holding out for the Boost Geospatial Library... :-)\n\nTHK\n\nOn Wed, 2006-02-08 at 21:57 +0200, Ari Jolma wrote:\n> Tim Keitt kirjoitti:\n> > On Tue, 2006-02-07 at 22:25 +0100, Roger Bivand wrote:\n> >   \n> >> No trouble - I think this hits me when I'm hurrying and I re-use a \n> >> not-closed handle, filling it with another handle. I can't replicate now.\n> >>     \n> >\n> > Hmmm... I just realized that creating a raster band object and then\n> > closing the associated dataset object might lead to all sorts of\n> > fireworks. We may need some reference counting to avoid dereferencing\n> > free'd pointers.\n> >   \n> \n> I guess the fireworks is caused by gdal? This was discussed at length on \n> the gdal-dev list in the fall. There is no easy way the fix this. \n> Currently the best solution is to be careful with things like this.\n> \n> Ari Jolma\n> \n> > THK\n> >\n> >   \n> \n> \n-- \nTimothy H. Keitt\nAssistant Professor\nhttp://www.keittlab.org/\nhttp://www.utexas.edu/directory/index.php?q=Keitt",
+      "body_snippet": "I'm holding out for the Boost Geospatial Library... :-)\n\nTHK\n\nOn Wed, 2006-02-08 at 21:57 +0200, Ari Jolma wrote:\n> Tim Keitt kirjoitti:\n> > On Tue, 2006-02-07 at 22:25 +0100, Roger Bivand wrote:\n> > ",
+      "thread_id": "thread-46a285d78a3f",
+      "thread_depth": 6,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-e18919efd2bd",
+      "message_id": "<1139433224.10999.26.camel@patagonicus.keittlab.net>",
+      "from_name": "Tim Keitt",
+      "from_email_hash": "2d8d5b8050425938214c3a77d47a2be0916edb7058260fe8211414af4058ae13",
+      "date": "2006-02-08T15:13:44-06:00",
+      "subject": "[R-sig-Geo] envi clone in R",
+      "subject_clean": "envi clone in R",
+      "in_reply_to": "<43EA33CF.3080605@lancaster.ac.uk>",
+      "references": [
+        "<172918418.20060208192308@eimb.ru>",
+        "<43EA33CF.3080605@lancaster.ac.uk>"
+      ],
+      "body_plain": "Barry,\n\nI hope you will share your code! We've been using QGIS and I have in\nmind just such an interface to R.\n\nWe have ENVI in the lab and it is very powerful for image processing. It\nwould take many many person years to reproduce all of the advanced\nalgorithms in that package. (It does a lot of simple operations as well\nand those could easily be recoded in R.)\n\nTHK\n\nOn Wed, 2006-02-08 at 18:09 +0000, Barry Rowlingson wrote:\n> Wladimir Eremeev wrote:\n> > Hello all,\n> > \n> >   Research Systems (www.rsinc.com) have developed and distributes the language IDL,\n> >   and the GIS ENVI, written in IDL.\n> \n>   I find it hard to believe they wrote it all in IDL! I'm guessing its \n> probably scriptable in IDL, but underneath its written in something \n> else... I could be wrong though!\n> \n> >   To my oppinion, R language is superior, compared to IDL, in all aspects.\n> >   However, ENVI is the rather convenient and feature rich tool.\n> \n>   I clicked on 'Product Documentation' on the ENVI site and it wanted me \n> to log in or create a new user. To see the documentation? To find out \n> what the program is about?\n> \n>   Oh, what I really wanted was the Feature Tour..\n> \n> >   Is anyone aware about any work, dedicated to the creation of\n> >   something, similar to the ENVI, but in R?\n> \n>   Last year I looked at GIS-R linkages, with the added criteria of being \n> open source and cross-platform. There are now a few free GIS packages \n> that can do this kind of thing, with a little added glue.\n> \n>   I settled on OpenEV - it has vector and raster support, its extensible \n> in Python and uses Gtk for dialogs which you can customise. All I needed \n> was to get Python talking to R, so I wrote some Python bindings to \n> Rserve. Now I've got a GIS with a menu that drops down, you choose the \n> point layers you want to work on, click 'Go', and R does some analysis \n> that ends up as a raster layer back in the GIS. The user doesnt care \n> that R did it.\n> \n> Other GIS solutions are available!\n> \n> Barry\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n-- \nTimothy H. Keitt\nAssistant Professor\nhttp://www.keittlab.org/\nhttp://www.utexas.edu/directory/index.php?q=Keitt",
+      "body_snippet": "Barry,\n\nI hope you will share your code! We've been using QGIS and I have in\nmind just such an interface to R.\n\nWe have ENVI in the lab and it is very powerful for image processing. It\nwould take many",
+      "thread_id": "thread-60b1de0d902f",
+      "thread_depth": 2,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-7750175f796d",
+      "message_id": "<cb44df220602081438p6ee88030ja1e3d43ebf8f2109@mail.gmail.com>",
+      "from_name": "Martin Reismann",
+      "from_email_hash": "875bd8c7ccbeb38ac24d78b036a8ce3ff619fb1d45767db854fe70fb6b3f2063",
+      "date": "2006-02-08T23:38:14+01:00",
+      "subject": "[R-sig-Geo] 2 problems with errorsarlm(method=\"SparseM\")",
+      "subject_clean": "2 problems with errorsarlm(method=\"SparseM\")",
+      "in_reply_to": "<Pine.LNX.4.44.0602012004320.7295-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.A32.3.96.1060201173231.179736A-100000@isis.wu-wien.ac.at>",
+        "<Pine.LNX.4.44.0602012004320.7295-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Roger kindly provided solutions for both problems.\nI write a short summary for the interested public:\n\n> (1) When running a large SAR (weight matrix 12544 * 12544) with errorsarlm\n> and SparseM-method I ran into this error message:\n>\n> > Error in .local(x, ...) : Increase nnzlmax\n> > Error in det(chol((I - lambda * csrw), tmpmax = tmpmax)) :\n> >         unable to find the argument 'x' in selecting a method for function 'det'\n\nQuoting Roger Bivand:\n> After making changes, the ML functions have a new argument allowing the\n> memory allocation arguments for sparse Cholesky can be passed through and\n> the defaults have been made larger.\n> ...\n> I'm attaching a draft source package for you to try out - see the help\n> page for details on passing the arguments through cholAlloc=; in the\n> defaults I've used multiples of sum(card(listw$neighbours)), the number of\n> non-zero elements in the matrix.\n\nThe draft source package is spdep_0.3-20.tar.gz and most likely available\nfrom Roger.\n\n\n> (2) Being able to use mat2listw instead of nb2listw would be preferable\n> because mat2listw allows matrix elements different from 0 and 1.\n\nthe glist= argument to nb2listw() allows to assign a weight to every\n2-tuple of neighbours. Thus it can be used instead of mat2listw() for\npreparing listw-objects for errorsarlm.\n\n--\nMag. Martin Reismann\nc/o\nInstitut fuer Wirtschaftsgeographie und Geoinformatik\nWirtschaftsuniversitaet Wien\nNordbergstrasse 15, 4. Stock, Kern A\nA-1090 Wien\n\nEMail: Martin.Reismann at wu-wien.ac.at\nTel +43-(0)-1-31336-5720\nFax +43-(0)-1-31336-703",
+      "body_snippet": "Roger kindly provided solutions for both problems.\nI write a short summary for the interested public:\n\n> (1) When running a large SAR (weight matrix 12544 * 12544) with errorsarlm\n> and SparseM-method",
+      "thread_id": "thread-bdea6e3beacc",
+      "thread_depth": 2,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-8deea09dd2c5",
+      "message_id": "<5810595588.20060209105828@eimb.ru>",
+      "from_name": "Wladimir Eremeev",
+      "from_email_hash": "16cb9319acbc3ed70b8630ce73f264603d000f139e466a6ad60fad8ec507fd44",
+      "date": "2006-02-09T10:58:28+03:00",
+      "subject": "[R-sig-Geo] envi clone in R",
+      "subject_clean": "envi clone in R",
+      "in_reply_to": "<43EA33CF.3080605@lancaster.ac.uk>",
+      "references": [
+        "<172918418.20060208192308@eimb.ru>",
+        "<43EA33CF.3080605@lancaster.ac.uk>"
+      ],
+      "body_plain": "Dear Barry,\n\nWednesday, February 8, 2006, 9:09:19 PM, you wrote:\n\nBR> Wladimir Eremeev wrote:\n>> Hello all,\n>> \n>>   Research Systems (www.rsinc.com) have developed and distributes the language IDL,\n>>   and the GIS ENVI, written in IDL.\n\nBR>   I find it hard to believe they wrote it all in IDL! I'm guessing its\nBR> probably scriptable in IDL, but underneath its written in something\nBR> else... I could be wrong though!\n\nWell, not in IDL completely, I think, there is also C and Fortran code\nunderneath.\n\n>>   To my oppinion, R language is superior, compared to IDL, in all aspects.\n>>   However, ENVI is the rather convenient and feature rich tool.\n\nBy the way, even the interface to an external code is implemented in R\nmuch more conveniently, compared to IDL.\nIt took me several hours to make IDL to call my C functions from DLL.\nI have read the documentation carefully 2 or 3 times...\n\nAnd I have done the same task in R in several minutes.\n\n---\nBest regards,\nWladimir                mailto:wl at eimb.ru",
+      "body_snippet": "Dear Barry,\n\nWednesday, February 8, 2006, 9:09:19 PM, you wrote:\n\nBR> Wladimir Eremeev wrote:\n>> Hello all,\n>> \n>>   Research Systems (www.rsinc.com) have developed and distributes the language IDL,\n>",
+      "thread_id": "thread-60b1de0d902f",
+      "thread_depth": 2,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-2b349725198e",
+      "message_id": "<1574214371.20060209115111@eimb.ru>",
+      "from_name": "Wladimir Eremeev",
+      "from_email_hash": "16cb9319acbc3ed70b8630ce73f264603d000f139e466a6ad60fad8ec507fd44",
+      "date": "2006-02-09T11:51:11+03:00",
+      "subject": "[R-sig-Geo] envi clone in R",
+      "subject_clean": "envi clone in R",
+      "in_reply_to": "<43EA33CF.3080605@lancaster.ac.uk>",
+      "references": [
+        "<172918418.20060208192308@eimb.ru>",
+        "<43EA33CF.3080605@lancaster.ac.uk>"
+      ],
+      "body_plain": "Dear Barry,\n\nBy the way...\nBR>   I settled on OpenEV - it has vector and raster support, its extensible\nBR> in Python and uses Gtk for dialogs which you can customise.\n\nI have seen OpenEV.\nUnfortunately, I could not find a documentation or user guide for\nquick start and had not too much time to realize what is what and\nhow to use its features with 'mouse point-and-click' :)\n\nDo you have a link to such a document?\n\n---\nBest regards,\nWladimir                mailto:wl at eimb.ru",
+      "body_snippet": "Dear Barry,\n\nBy the way...\nBR>   I settled on OpenEV - it has vector and raster support, its extensible\nBR> in Python and uses Gtk for dialogs which you can customise.\n\nI have seen OpenEV.\nUnfortunate",
+      "thread_id": "thread-60b1de0d902f",
+      "thread_depth": 2,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-c5ae41b860b9",
+      "message_id": "<IHEPIDGPPELJMBFKIEBAEEPOCAAA.creemts@tnc.org>",
+      "from_name": "Charlotte Reemts",
+      "from_email_hash": "77dd8f3a66975dc3986fd2e378a67b93a13140edf1779c198a502337056847d7",
+      "date": "2006-02-10T14:52:45-06:00",
+      "subject": "[R-sig-Geo] envelopes for Kcross",
+      "subject_clean": "envelopes for Kcross",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060210/8f00d3bc/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060210/8f00d3bc/attachment.pl>",
+      "thread_id": "thread-c5ae41b860b9",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-670584c49a03",
+      "message_id": "<17391.61308.580246.549960@maths.uwa.edu.au>",
+      "from_name": "Adrian Baddeley",
+      "from_email_hash": "0a0e76f6b108d4a1bad3941837d331be1eae194226d8adc0ceddc0672c5984c8",
+      "date": "2006-02-13T10:31:24+08:00",
+      "subject": "[R-sig-Geo] R-sig-Geo Digest, Vol 30, Issue 6",
+      "subject_clean": "R-sig-Geo Digest, Vol 30, Issue 6",
+      "in_reply_to": "<mailman.15.1139655604.32453.r-sig-geo@stat.math.ethz.ch>",
+      "references": [
+        "<mailman.15.1139655604.32453.r-sig-geo@stat.math.ethz.ch>"
+      ],
+      "body_plain": "Charlotte Reemts writes:\n\n > I am conducting an analysis on disease spread in oak trees.  I have the\n > locations of symptomatic trees for two years (2004 and 2005) in an\n > irregularly-shaped polygon and want to know whether there is attraction or\n > repulsion between the two years.  The symptomatic trees are clustered within\n > a year.\n\n > I used Kcross to calculate the K statistic for my data\n\n     First a warning. The usual interpretation of the bivariate K function is\n     probably not appropriate in this application.\n     It would not be appropriate to draw conclusions by \n     comparing the computed Kcross function with the curve K(r) = pi r^2.\n     The trees do not move from year to year (oder?). \n     Presumably it is possible for a given tree to be symptomatic \n     in both years. So the two point patterns may share points in common.\n     So the usual assumptions for the bivariate K function are false.\n     \n > and would like to calculate simulation/confidence envelopes (for\n > the univariate data, I used Kenv). \n\n     OK, you can of course do a Monte Carlo test (using the envelopes)\n\n > I tried using Kenv.label, but based on my reading of the\n > literature, random labelling is not the appropriate test (see\n > Goreaud and Pelissier, 2003, Journal of Vegetation Science).\n > I cannot use Kenv.tor because my study area is not rectangular.\n\n > Next, I tried using this code:\n > kcross.envelope<-envelope(my.data, Kcross, correction=\"translate\", nsim=99)\n\n > The result I get is reasonable, but I would like more information on how\n > 'envelope' generates the envelopes (and how it labels the points) and\n > whether this is an appropriate test for my data.\n\n   envelope() is a function in the library `spatstat'. \n\n   help(envelope) explains that the random patterns used to calculate\n   the envelopes are, **by default**, generated from a Poisson process\n   with the same intensity as the data point pattern. If the data are\n   a marked point pattern, this means that the random patterns are\n   realisations of a Poisson MARKED point process - in other words,\n   the locations of the points are Poisson (CSR), and their marks are\n   independent random marks. The random patterns are\n   randomly-labelled, completely random patterns.\n\n   If this default behaviour is not what you want,\n   then use the argument 'simulate' (of the envelope() function)\n   to specify how you want the random patterns to be generated. \n\n   For example, if you wanted to randomly relabel the existing data pattern\n   without changing the point locations, \n\n\t   envelope(mydata, Kcross, simulate=expression(rlabel(mydata)))\n\n   [Warning: this is in spatstat - be careful of the conflict with the \n   command 'rlabel' in splancs]\n\n   > I cannot use Kenv.tor because my\n   > study area is not rectangular.\n\n   Apparently you want to generate envelopes based on randomly shifting\n   the existing data pattern (points of each type shifted separately).\n\n   The following will work (in spatstat). \n\n          rsh <- function(X, d) {\n\t      W <- X$window\n\t      B <- bounding.box(W)\n\t      XB <- X[,B]\n\t      Y <- rtoro(XB, radius=d)\n\t      Be <- erode.owin(W, d)\n\t      Y <- Y[,Be]\n\t      return(Y)\n\t      }\n\n          rad <- 25\n\t  W <- rsh(mydata, rad)$window\n\t  M <- mydata[,W]\n\n\t  envelope(M, Kcross, simulate=expression(rsh(mydata, rad)))\n\n   The new function rsh(X, d) applies random shifts\n   to the sub-patterns of points of each type, with a maximum shift\n   distance of d units (change this value 'rad' to a reasonable distance\n   for your data). It returns a point pattern whose observation window\n   has been eroded by a distance of d units. Thus, no toroidal wrapping\n   is needed, and this function works even if X has a non-rectangular window.\n\n   The point pattern M is just the restriction of 'mydata' to the \n   same eroded window, so that comparisons of the Kcross values are\n   meaningful.\n\n   This will become easier in spatstat 1.9.\n\nHTH\nAdrian Baddeley",
+      "body_snippet": "Charlotte Reemts writes:\n\n > I am conducting an analysis on disease spread in oak trees.  I have the\n > locations of symptomatic trees for two years (2004 and 2005) in an\n > irregularly-shaped polygon",
+      "thread_id": "thread-670584c49a03",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-422bea2fd291",
+      "message_id": "<43F06BB2.31705.1FECE9@localhost>",
+      "from_name": "W. Daniel Kissling",
+      "from_email_hash": "5301f544d733df7a921e0dc1e476c8b5e3c3a6a939b74d666390836c2de141f9",
+      "date": "2006-02-13T11:21:22+01:00",
+      "subject": "[R-sig-Geo] envelopes for Kcross",
+      "subject_clean": "envelopes for Kcross",
+      "in_reply_to": "<IHEPIDGPPELJMBFKIEBAEEPOCAAA.creemts@tnc.org>",
+      "references": [],
+      "body_plain": "Dear Charlotte Reemts & R users,\n\nI have not used R to analyse point pattern, but I have done point pattern analyses with \nanother free software called \"Programita\". If you are interested in it, see\n\nhttp://www.thorsten-wiegand.de/towi_programita.html\n\nThere are also two articles I would recommend to read:\n\nWiegand T., and K. A. Moloney 2004. Rings, circles and null-models for point pattern \nanalysis in ecology. Oikos 104: 209-229.\n\nWiegand, T., Kissling, W.D., Cipriotti, P.A., and Aguiar, M.R. 2006. Extending point \npattern analysis to objects of finite size and irregular shape. Journal of Ecology, in \npress.\n\nThe latter one is in press in the Journal of Ecology. I can provide a preprint if you are \ninterested in it.\n\nBest regards\nDaniel\n\n\n--------------------------------------------------------------------\nW. Daniel Kissling\nCommunity & Macroecology Group\nInstitut f?r Zoologie, Abteilung ?kologie\nJohannes Gutenberg-Universit?t Mainz\nD-55099 Mainz, Germany\n\nTel. +49 (0)6131 3925200; Fax +49 (0)6131 3923731\ne-mail: kissling at uni-mainz.de\nweb: http://www.oekologie.biologie.uni-mainz.de/people/daniel/main.html",
+      "body_snippet": "Dear Charlotte Reemts & R users,\n\nI have not used R to analyse point pattern, but I have done point pattern analyses with \nanother free software called \"Programita\". If you are interested in it, see\n\n",
+      "thread_id": "thread-c5ae41b860b9",
+      "thread_depth": 1,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-710d1ccd8174",
+      "message_id": "<BAY105-F15AB778D608A8F3108E5E4F8FB0@phx.gbl>",
+      "from_name": "Mihai Nica",
+      "from_email_hash": "31bc1f6598f4485757043d15243be5e520858a811350856dadb463fe84dea24b",
+      "date": "2006-02-16T05:16:53-06:00",
+      "subject": "[R-sig-Geo] Map legend",
+      "subject_clean": "Map legend",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Greetings:\n\nI am unable to change the color to some sort of a gray scale in a map. Also, \nI have a hard time adding a meaningful legend to it. These must be ?for \ndummies? question. Looked it up everywhere, but could not find a solution \n(not even a similar question). The map is:\n\n\na=read.shape(\"Density.shp\", dbf.data=TRUE, verbose=TRUE)\nplot.Map(a, auxvar=pidg$AVG_IGR, xlab=\"AVG_IGR quintiles\", ylab=\" \",ol=\"NA\", \ncolor=\"blue\", nclass=4)\n\nif I change:\n\ncolor=?gray? or ?black?\n\nError in hsv(rep(color.list$hsvcol[cind], nclass), c(pr, 1)) :\n        bad hsv to rgb color conversion\n\nI am running last R in XP updated.\n\nIf anybody has a moment, I appreciate it a lot,\n\n\nMihai Nica\n\n_________________________________________________________________\nDon?t just search. Find. Check out the new MSN Search!",
+      "body_snippet": "Greetings:\n\nI am unable to change the color to some sort of a gray scale in a map. Also, \nI have a hard time adding a meaningful legend to it. These must be ?for \ndummies? question. Looked it up every",
+      "thread_id": "thread-710d1ccd8174",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-d60196de794c",
+      "message_id": "<Pine.LNX.4.44.0602161252040.813-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-02-16T13:18:45+01:00",
+      "subject": "[R-sig-Geo] Map legend",
+      "subject_clean": "Map legend",
+      "in_reply_to": "<BAY105-F15AB778D608A8F3108E5E4F8FB0@phx.gbl>",
+      "references": [],
+      "body_plain": "On Thu, 16 Feb 2006, Mihai Nica wrote:\n\n> Greetings:\n> \n> I am unable to change the color to some sort of a gray scale in a map. Also, \n> I have a hard time adding a meaningful legend to it. These must be ?for \n> dummies? question. Looked it up everywhere, but could not find a solution \n> (not even a similar question). The map is:\n> \n> \n> a=read.shape(\"Density.shp\", dbf.data=TRUE, verbose=TRUE)\n> plot.Map(a, auxvar=pidg$AVG_IGR, xlab=\"AVG_IGR quintiles\", ylab=\" \",ol=\"NA\", \n> color=\"blue\", nclass=4)\n> \n> if I change:\n> \n> color=?gray? or ?black?\n> \n> Error in hsv(rep(color.list$hsvcol[cind], nclass), c(pr, 1)) :\n>         bad hsv to rgb color conversion\n\nIt is much easier to use plot() methods for SpatialPolygon objects, and\nthose methods will be maintained, but plot.Map() isn't going anywhere - \nit tries to do too much with the wrong kinds of objects. \n\nThe help page even explains that you can pass a vector of arbitrary\ncolours through the fg= argument. The reason for the color argument not\nworking is that only c(\"blue\", \"green\", \"yellow\", \"red\") are allowed in\nits internal color.ramp() function - it is hardcoded, and unnecessary now\nthat alternatives are available.\n\nHere are the problems:\n\nlibrary(maptools)\nx <- read.shape(system.file(\"shapes/sids.shp\", package=\"maptools\")[1])\nplot.Map(x, auxvar=x$att.data$BIR74, ol=NA, color=\"blue\", nclass=4) \nplot.Map(x, auxvar=x$att.data$BIR74, ol=NA, color=\"grey\", nclass=4) \n\nbecause \"grey\" isn't in the hardwired list. But using the wonderful\ncolorRampPalette() function, rolling your own colours is easy, here 100\nfor one per county:\n\ngrays <- colorRampPalette(c(\"grey90\", \"grey10\"))(100)\nplot.Map(x, fg=grays[rank(x$att.data$BIR74)], ol=NA)\n\nor four classes:\n\nmoregrays <- colorRampPalette(c(\"grey90\", \"grey10\"))(4)\nbrks <- quantile(x$att.data$BIR74)\nplot.Map(x, fg=moregrays[findInterval(x$att.data$BIR74, brks, \n  all.inside=TRUE)], ol=NA)\n\nAll of the maintained plot() methods - for old-style polylists and new \nstyle SpatialPolygons use external breaks and colours, because user needs \ndiffer and advances in R itself (like colorRampPalette()) mean that \nhardwiring things is not a robust option.\n\nIf maps need to be re-created often from the same arguments, a custom\nfunction (placing the legend, choosing label sizes and placings, etc.) is\nthw way to go using the ingredients above - a custom palette, custom\nbreaks - for instance using the same breaks on many different data sets,\nand findInterval() for continuous-valued variables, and (with care)\nas.integer() of factors for categorical variables.\n\nHope this helps - I think plot.Map will get a \"deprecated\" warning fairly \nsoon!\n\n> \n> I am running last R in XP updated.\n> \n> If anybody has a moment, I appreciate it a lot,\n> \n> \n> Mihai Nica\n> \n> _________________________________________________________________\n> Don?t just search. Find. Check out the new MSN Search!\n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Thu, 16 Feb 2006, Mihai Nica wrote:\n\n> Greetings:\n> \n> I am unable to change the color to some sort of a gray scale in a map. Also, \n> I have a hard time adding a meaningful legend to it. These mus",
+      "thread_id": "thread-710d1ccd8174",
+      "thread_depth": 1,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-748704d3c864",
+      "message_id": "<144818660459.XAA13898Asset_Ratio_golds@gmail.com>",
+      "from_name": "Garland Pearson",
+      "from_email_hash": "0cd1f18e6ea599f82c6d83866b8ed98994098a2a6702bedad6a90b6ac7dbfb3a",
+      "date": "2006-02-22T11:14:41-06:00",
+      "subject": "[R-sig-Geo] HRVEW  Harvey Electronics",
+      "subject_clean": "HRVEW  Harvey Electronics",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Mikel,\n\nHRVEW  Harvey Electronics - http://in.geocities.com/gradus71582\n\nGarland Pearson\nAcct. Rep. v5089984",
+      "body_snippet": "Mikel,\n\nHRVEW  Harvey Electronics - http://in.geocities.com/gradus71582\n\nGarland Pearson\nAcct. Rep. v5089984",
+      "thread_id": "thread-748704d3c864",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-5adcff8b502a",
+      "message_id": "<web-7555935@atmos.uiuc.edu>",
+      "from_name": "Anne Hertel",
+      "from_email_hash": "b9913f90f4b7d72938b3fb07afd68dccadce6a28f86123e3bcde8541a3018c71",
+      "date": "2006-02-22T11:21:34-06:00",
+      "subject": "[R-sig-Geo] Polar mapping",
+      "subject_clean": "Polar mapping",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n\nI have some geographical data for the Northern Hemisphere. It is a rectangular matrix with longitudes and latitudes. I would like to plot that so the resulting plot is a circle centered on the North Pole with contours, so you only see the Northern Hemisphere. Also I would like to overlay that with a map of the Northern Hemisphere continents.\nDoes anybody know if it is possible to create plots like that in R?\n\nThanks Anne Hertel\n\n\n------------------------------------------------------------\nAnne M. K. Hertel\nGrad. Student & Research Assistant\nDepartment of Atmospheric Sciences\nUniversity of Illinois at Urbana-Champaign\nAnnex II, room 204\nPhone: (217) 333 6296",
+      "body_snippet": "Hi,\n\nI have some geographical data for the Northern Hemisphere. It is a rectangular matrix with longitudes and latitudes. I would like to plot that so the resulting plot is a circle centered on the No",
+      "thread_id": "thread-5adcff8b502a",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-032f49010c8a",
+      "message_id": "<Pine.LNX.4.44.0602221923370.30068-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-02-22T19:49:17+01:00",
+      "subject": "[R-sig-Geo] Polar mapping",
+      "subject_clean": "Polar mapping",
+      "in_reply_to": "<web-7555935@atmos.uiuc.edu>",
+      "references": [],
+      "body_plain": "On Wed, 22 Feb 2006, Anne Hertel wrote:\n\n> Hi,\n> \n> I have some geographical data for the Northern Hemisphere. It is a\n> rectangular matrix with longitudes and latitudes. I would like to plot\n> that so the resulting plot is a circle centered on the North Pole with\n> contours, so you only see the Northern Hemisphere. Also I would like to\n> overlay that with a map of the Northern Hemisphere continents. Does\n> anybody know if it is possible to create plots like that in R?\n\nIf the image at the foot of the spproj section of this:\n\nhttp://r-spatial.sourceforge.net/xtra/xtra.RHnw.html\n\nis anything like what you need, you'll see some code there for projecting \nan image (by making the rectangular grid cells into polygons). Projecting \ncontours should work too - create them as a SpatialLinesDataFrame first \nwith for example sp function contourLines2SLDF().\n\nWhich platform are you using? The spproj functions will soon(ish) become \navailable in the rgdal package, which may make things easier.\n\n> \n> Thanks Anne Hertel\n> \n> \n> ------------------------------------------------------------\n> Anne M. K. Hertel\n> Grad. Student & Research Assistant\n> Department of Atmospheric Sciences\n> University of Illinois at Urbana-Champaign\n> Annex II, room 204\n> Phone: (217) 333 6296\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Wed, 22 Feb 2006, Anne Hertel wrote:\n\n> Hi,\n> \n> I have some geographical data for the Northern Hemisphere. It is a\n> rectangular matrix with longitudes and latitudes. I would like to plot\n> that s",
+      "thread_id": "thread-5adcff8b502a",
+      "thread_depth": 1,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-81a80372cfbf",
+      "message_id": "<71c3c6c50602241108p53a65c4bv7f2894c0b4310b60@mail.gmail.com>",
+      "from_name": "David Bitner",
+      "from_email_hash": "4ac3ce246142405275212d36387b3f1cc0944f2cda5c16f6235023b9de6ac381",
+      "date": "2006-02-24T13:08:50-06:00",
+      "subject": "[R-sig-Geo] Natural Breaks Classification",
+      "subject_clean": "Natural Breaks Classification",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I am trying to create some type of a Natural Breaks Classification in\nPL/R  to classify data that I have in a PostgreSQL/PostGIS database. \nAll that I really need so that I can pass information on to Mapserver\nto display this data is the class break values (ie an array [3,5,7,9]\nwould mean show values 1-3 in blue, 4-5 in red, etc.).  I am\ncompletely new to R, but have a fair bit of experience with the other\nPL's in PostgreSQL, so the PL part shouldn't be too hard to figure\nout.\n\nI am thinking that kmeans should give me something close to what I\nwant.  My problem is that I am not quite sure to massage the output to\nget my class breaks or what format to input the data.\n\nFor arguments, kmeans takes a matrix, number of classes, and a max\nnumber of iterations --\nlast two are easy, but how do I convert (do I need to convert) an\narray into a matrix (is matrix just R speak for an array?)  I will be\nstarting with a one dimension array ie ([1,4,1,1,1,6,4,9,9]).\n\nThe next issue is spitting the data out.  The docs tell me that I get\nthe centers of the clusters where what I really want are the\nboundaries of the clusters, how could I get at the \"break points\" that\nI am after?\n\nAny help is appreciated,\nDavid",
+      "body_snippet": "I am trying to create some type of a Natural Breaks Classification in\nPL/R  to classify data that I have in a PostgreSQL/PostGIS database. \nAll that I really need so that I can pass information on to ",
+      "thread_id": "thread-81a80372cfbf",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-f59ba7b689ea",
+      "message_id": "<Pine.LNX.4.44.0602242051430.14105-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-02-24T21:03:46+01:00",
+      "subject": "[R-sig-Geo] Natural Breaks Classification",
+      "subject_clean": "Natural Breaks Classification",
+      "in_reply_to": "<71c3c6c50602241108p53a65c4bv7f2894c0b4310b60@mail.gmail.com>",
+      "references": [],
+      "body_plain": "On Fri, 24 Feb 2006, David Bitner wrote:\n\n> I am trying to create some type of a Natural Breaks Classification in\n> PL/R  to classify data that I have in a PostgreSQL/PostGIS database. \n> All that I really need so that I can pass information on to Mapserver\n> to display this data is the class break values (ie an array [3,5,7,9]\n> would mean show values 1-3 in blue, 4-5 in red, etc.).  I am\n> completely new to R, but have a fair bit of experience with the other\n> PL's in PostgreSQL, so the PL part shouldn't be too hard to figure\n> out.\n> \n> I am thinking that kmeans should give me something close to what I\n> want.  My problem is that I am not quite sure to massage the output to\n> get my class breaks or what format to input the data.\n> \n> For arguments, kmeans takes a matrix, number of classes, and a max\n> number of iterations --\n> last two are easy, but how do I convert (do I need to convert) an\n> array into a matrix (is matrix just R speak for an array?)  I will be\n> starting with a one dimension array ie ([1,4,1,1,1,6,4,9,9]).\n> \n> The next issue is spitting the data out.  The docs tell me that I get\n> the centers of the clusters where what I really want are the\n> boundaries of the clusters, how could I get at the \"break points\" that\n> I am after?\n\nI think you may find some of the code in:\n\nhttp://spatial.nhh.no/papers/aag04.pdf\n\nuseful (though dated). kmeans() and - my preference - bclust() in the \ne1071 package may fail when given too few values, but there are ways round \nthat. You'll see code (for example at the top of p. 15) on how to get the \nclass centres out - but they - as done there - still leave gaps between \nclasses as can be seen from the ECDF plot below. As you can see, kmeans() \nmanages with a vector OK.\n\nIt would be nice to follow this up as a single function - input the data \nvector and some preferences wrt. number of classes, and output as a number \nof (list of) class intervals with some fitness criterion, something like \nthat?\n\nI guess your colour palette is on the PL side?\n\nRoger\n\n> \n> Any help is appreciated,\n> David\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Fri, 24 Feb 2006, David Bitner wrote:\n\n> I am trying to create some type of a Natural Breaks Classification in\n> PL/R  to classify data that I have in a PostgreSQL/PostGIS database. \n> All that I r",
+      "thread_id": "thread-81a80372cfbf",
+      "thread_depth": 1,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-1015662d8749",
+      "message_id": "<71c3c6c50602241227m57a5d62bie12e75089c755d53@mail.gmail.com>",
+      "from_name": "David Bitner",
+      "from_email_hash": "4ac3ce246142405275212d36387b3f1cc0944f2cda5c16f6235023b9de6ac381",
+      "date": "2006-02-24T14:27:41-06:00",
+      "subject": "[R-sig-Geo] Natural Breaks Classification",
+      "subject_clean": "Natural Breaks Classification",
+      "in_reply_to": "<Pine.LNX.4.44.0602242051430.14105-100000@reclus.nhh.no>",
+      "references": [
+        "<71c3c6c50602241108p53a65c4bv7f2894c0b4310b60@mail.gmail.com>",
+        "<Pine.LNX.4.44.0602242051430.14105-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "I was actually already using that paper as a resource, but I am still\nnot quite understanding how to get just the breaks that I can use for\nclassification in an external mapping application.\n\nRight now I am trying out some samples just to understand what's going on.\n\nUsing this array:\na<-c(11,1,3,3,4,4,4,4,4,4,5)\nThis gives me the vector (3,1,1,1,2,2,2,2,2,2,2)\n\nideally I want the output for this to be just (3,5,11)\n\nTaking this with the min/max of my data I can create the classes\n1-3,4-5,6-11\n\n\n\nOn 2/24/06, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> On Fri, 24 Feb 2006, David Bitner wrote:\n>\n> > I am trying to create some type of a Natural Breaks Classification in\n> > PL/R  to classify data that I have in a PostgreSQL/PostGIS database.\n> > All that I really need so that I can pass information on to Mapserver\n> > to display this data is the class break values (ie an array [3,5,7,9]\n> > would mean show values 1-3 in blue, 4-5 in red, etc.).  I am\n> > completely new to R, but have a fair bit of experience with the other\n> > PL's in PostgreSQL, so the PL part shouldn't be too hard to figure\n> > out.\n> >\n> > I am thinking that kmeans should give me something close to what I\n> > want.  My problem is that I am not quite sure to massage the output to\n> > get my class breaks or what format to input the data.\n> >\n> > For arguments, kmeans takes a matrix, number of classes, and a max\n> > number of iterations --\n> > last two are easy, but how do I convert (do I need to convert) an\n> > array into a matrix (is matrix just R speak for an array?)  I will be\n> > starting with a one dimension array ie ([1,4,1,1,1,6,4,9,9]).\n> >\n> > The next issue is spitting the data out.  The docs tell me that I get\n> > the centers of the clusters where what I really want are the\n> > boundaries of the clusters, how could I get at the \"break points\" that\n> > I am after?\n>\n> I think you may find some of the code in:\n>\n> http://spatial.nhh.no/papers/aag04.pdf\n>\n> useful (though dated). kmeans() and - my preference - bclust() in the\n> e1071 package may fail when given too few values, but there are ways round\n> that. You'll see code (for example at the top of p. 15) on how to get the\n> class centres out - but they - as done there - still leave gaps between\n> classes as can be seen from the ECDF plot below. As you can see, kmeans()\n> manages with a vector OK.\n>\n> It would be nice to follow this up as a single function - input the data\n> vector and some preferences wrt. number of classes, and output as a number\n> of (list of) class intervals with some fitness criterion, something like\n> that?\n>\n> I guess your colour palette is on the PL side?\n>\n> Roger\n>\n> >\n> > Any help is appreciated,\n> > David\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n> --\n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>\n>",
+      "body_snippet": "I was actually already using that paper as a resource, but I am still\nnot quite understanding how to get just the breaks that I can use for\nclassification in an external mapping application.\n\nRight no",
+      "thread_id": "thread-81a80372cfbf",
+      "thread_depth": 2,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-9c74afd468c6",
+      "message_id": "<Pine.LNX.4.44.0602242232350.14105-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-02-24T22:49:51+01:00",
+      "subject": "[R-sig-Geo] Natural Breaks Classification",
+      "subject_clean": "Natural Breaks Classification",
+      "in_reply_to": "<71c3c6c50602241227m57a5d62bie12e75089c755d53@mail.gmail.com>",
+      "references": [],
+      "body_plain": "On Fri, 24 Feb 2006, David Bitner wrote:\n\n> I was actually already using that paper as a resource, but I am still\n> not quite understanding how to get just the breaks that I can use for\n> classification in an external mapping application.\n> \n> Right now I am trying out some samples just to understand what's going on.\n> \n> Using this array:\n> a<-c(11,1,3,3,4,4,4,4,4,4,5)\n> This gives me the vector (3,1,1,1,2,2,2,2,2,2,2)\n> \n> ideally I want the output for this to be just (3,5,11)\n> \n> Taking this with the min/max of my data I can create the classes\n> 1-3,4-5,6-11\n> \n\nNext line on p. 15:\n\n> a<-c(11,1,3,3,4,4,4,4,4,4,5)\n> av <- kmeans(a, 3)\n> str(av)\nList of 4\n $ cluster : int [1:11] 3 1 1 1 2 2 2 2 2 2 ...\n $ centers : num [1:3, 1]  2.33  4.14 11.00\n  ..- attr(*, \"dimnames\")=List of 2\n  .. ..$ : chr [1:3] \"1\" \"2\" \"3\"\n  .. ..$ : NULL\n $ withinss: num [1:3] 2.667 0.857 0.000\n $ size    : int [1:3] 3 7 1\n - attr(*, \"class\")= chr \"kmeans\"\n> cols <- match(av$cluster, order(av$centers))\n> cols\n [1] 3 1 1 1 2 2 2 2 2 2 2\n> stbrks <- matrix(unlist(tapply(a, factor(cols), range)), ncol = 2, \n+ byrow = TRUE)\n> stbrks\n     [,1] [,2]\n[1,]    1    3\n[2,]    4    5\n[3,]   11   11\n\nwhich then needs unpacking:\n\n> apply(stbrks, 1, function(x) paste(x, collapse=\"-\"))\n[1] \"1-3\"   \"4-5\"   \"11-11\"\n\nbut which isn't pretty, because there is a gap. As plot(ecdf(jitter(a)),\nverticals=TRUE) shows, the gap is there in the data, so it is only a\nmatter of convention that class intervals are shown for values that are\nnot in the data, and my preference is to let the data do the talking (but\nI'm in a minority!), and cartographic convention will probably mean\nshifting the internal gaps to \"look\" smaller, and rounding the values to \nmake them easier to handle. For larger numbers of data items, it may be \nnecessary to get the breaks and re-assign the cols because of rounding.\n\nThe stbrks matrix is just the range within the class for each class for \nthe cols resulting from the classification.\n\nWith kmeans, note that it can get stuck, so I'd put it inside try() and\ncopy jittered values onto the end of the data vector if it fails - simply\nbecause kmeans seeds its classes at random first, and can be unlucky.\n\nPlease let the list know how you get on, I'm sure class intervals are an \ninteresting topic.\n\nRoger\n\n> \n> \n> On 2/24/06, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> > On Fri, 24 Feb 2006, David Bitner wrote:\n> >\n> > > I am trying to create some type of a Natural Breaks Classification in\n> > > PL/R  to classify data that I have in a PostgreSQL/PostGIS database.\n> > > All that I really need so that I can pass information on to Mapserver\n> > > to display this data is the class break values (ie an array [3,5,7,9]\n> > > would mean show values 1-3 in blue, 4-5 in red, etc.).  I am\n> > > completely new to R, but have a fair bit of experience with the other\n> > > PL's in PostgreSQL, so the PL part shouldn't be too hard to figure\n> > > out.\n> > >\n> > > I am thinking that kmeans should give me something close to what I\n> > > want.  My problem is that I am not quite sure to massage the output to\n> > > get my class breaks or what format to input the data.\n> > >\n> > > For arguments, kmeans takes a matrix, number of classes, and a max\n> > > number of iterations --\n> > > last two are easy, but how do I convert (do I need to convert) an\n> > > array into a matrix (is matrix just R speak for an array?)  I will be\n> > > starting with a one dimension array ie ([1,4,1,1,1,6,4,9,9]).\n> > >\n> > > The next issue is spitting the data out.  The docs tell me that I get\n> > > the centers of the clusters where what I really want are the\n> > > boundaries of the clusters, how could I get at the \"break points\" that\n> > > I am after?\n> >\n> > I think you may find some of the code in:\n> >\n> > http://spatial.nhh.no/papers/aag04.pdf\n> >\n> > useful (though dated). kmeans() and - my preference - bclust() in the\n> > e1071 package may fail when given too few values, but there are ways round\n> > that. You'll see code (for example at the top of p. 15) on how to get the\n> > class centres out - but they - as done there - still leave gaps between\n> > classes as can be seen from the ECDF plot below. As you can see, kmeans()\n> > manages with a vector OK.\n> >\n> > It would be nice to follow this up as a single function - input the data\n> > vector and some preferences wrt. number of classes, and output as a number\n> > of (list of) class intervals with some fitness criterion, something like\n> > that?\n> >\n> > I guess your colour palette is on the PL side?\n> >\n> > Roger\n> >\n> > >\n> > > Any help is appreciated,\n> > > David\n> > >\n> > > _______________________________________________\n> > > R-sig-Geo mailing list\n> > > R-sig-Geo at stat.math.ethz.ch\n> > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > >\n> >\n> > --\n> > Roger Bivand\n> > Economic Geography Section, Department of Economics, Norwegian School of\n> > Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> > Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> > e-mail: Roger.Bivand at nhh.no\n> >\n> >\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Fri, 24 Feb 2006, David Bitner wrote:\n\n> I was actually already using that paper as a resource, but I am still\n> not quite understanding how to get just the breaks that I can use for\n> classificati",
+      "thread_id": "thread-81a80372cfbf",
+      "thread_depth": 3,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-93c8a90d27c4",
+      "message_id": "<71c3c6c50602241428g4f722449p26e59c3839e4f63b@mail.gmail.com>",
+      "from_name": "David Bitner",
+      "from_email_hash": "4ac3ce246142405275212d36387b3f1cc0944f2cda5c16f6235023b9de6ac381",
+      "date": "2006-02-24T16:28:53-06:00",
+      "subject": "[R-sig-Geo] Natural Breaks Classification",
+      "subject_clean": "Natural Breaks Classification",
+      "in_reply_to": "<Pine.LNX.4.44.0602242232350.14105-100000@reclus.nhh.no>",
+      "references": [
+        "<71c3c6c50602241227m57a5d62bie12e75089c755d53@mail.gmail.com>",
+        "<Pine.LNX.4.44.0602242232350.14105-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Most of my problem is that this is my first time using R, so I just\ndon't know the functions (or even really the semantic differences) for\ndealing with vectors,arrays, and matrices.\n\nThank you very much for the code sample.  I have been looking around,\nis there a good basic reference online to find out basic function\ninformation so I can reference what things like order, match, unlist,\ntapply, etc. are doing?  I have yet to find just a good functional\nreference doc for R.\n\nGiven that I am not plotting my data in R, I think that you are going\nfurther than what I actually need.  Given the small example data set,\nall that I really need is just the two numbers 4 and 11 (before I had\nsaid 3, but I realized the third is unnecessary). From these I plan to\nconstruct my classes as <4,>=4 and <11, >=11 when I create my\nclassification in MapServer where I am doing the plotting.\n\nDavid\n\n\n\nOn 2/24/06, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> On Fri, 24 Feb 2006, David Bitner wrote:\n>\n> > I was actually already using that paper as a resource, but I am still\n> > not quite understanding how to get just the breaks that I can use for\n> > classification in an external mapping application.\n> >\n> > Right now I am trying out some samples just to understand what's going on.\n> >\n> > Using this array:\n> > a<-c(11,1,3,3,4,4,4,4,4,4,5)\n> > This gives me the vector (3,1,1,1,2,2,2,2,2,2,2)\n> >\n> > ideally I want the output for this to be just (3,5,11)\n> >\n> > Taking this with the min/max of my data I can create the classes\n> > 1-3,4-5,6-11\n> >\n>\n> Next line on p. 15:\n>\n> > a<-c(11,1,3,3,4,4,4,4,4,4,5)\n> > av <- kmeans(a, 3)\n> > str(av)\n> List of 4\n>  $ cluster : int [1:11] 3 1 1 1 2 2 2 2 2 2 ...\n>  $ centers : num [1:3, 1]  2.33  4.14 11.00\n>   ..- attr(*, \"dimnames\")=List of 2\n>   .. ..$ : chr [1:3] \"1\" \"2\" \"3\"\n>   .. ..$ : NULL\n>  $ withinss: num [1:3] 2.667 0.857 0.000\n>  $ size    : int [1:3] 3 7 1\n>  - attr(*, \"class\")= chr \"kmeans\"\n> > cols <- match(av$cluster, order(av$centers))\n> > cols\n>  [1] 3 1 1 1 2 2 2 2 2 2 2\n> > stbrks <- matrix(unlist(tapply(a, factor(cols), range)), ncol = 2,\n> + byrow = TRUE)\n> > stbrks\n>      [,1] [,2]\n> [1,]    1    3\n> [2,]    4    5\n> [3,]   11   11\n>\n> which then needs unpacking:\n>\n> > apply(stbrks, 1, function(x) paste(x, collapse=\"-\"))\n> [1] \"1-3\"   \"4-5\"   \"11-11\"\n>\n> but which isn't pretty, because there is a gap. As plot(ecdf(jitter(a)),\n> verticals=TRUE) shows, the gap is there in the data, so it is only a\n> matter of convention that class intervals are shown for values that are\n> not in the data, and my preference is to let the data do the talking (but\n> I'm in a minority!), and cartographic convention will probably mean\n> shifting the internal gaps to \"look\" smaller, and rounding the values to\n> make them easier to handle. For larger numbers of data items, it may be\n> necessary to get the breaks and re-assign the cols because of rounding.\n>\n> The stbrks matrix is just the range within the class for each class for\n> the cols resulting from the classification.\n>\n> With kmeans, note that it can get stuck, so I'd put it inside try() and\n> copy jittered values onto the end of the data vector if it fails - simply\n> because kmeans seeds its classes at random first, and can be unlucky.\n>\n> Please let the list know how you get on, I'm sure class intervals are an\n> interesting topic.\n>\n> Roger\n>\n> >\n> >\n> > On 2/24/06, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> > > On Fri, 24 Feb 2006, David Bitner wrote:\n> > >\n> > > > I am trying to create some type of a Natural Breaks Classification in\n> > > > PL/R  to classify data that I have in a PostgreSQL/PostGIS database.\n> > > > All that I really need so that I can pass information on to Mapserver\n> > > > to display this data is the class break values (ie an array [3,5,7,9]\n> > > > would mean show values 1-3 in blue, 4-5 in red, etc.).  I am\n> > > > completely new to R, but have a fair bit of experience with the other\n> > > > PL's in PostgreSQL, so the PL part shouldn't be too hard to figure\n> > > > out.\n> > > >\n> > > > I am thinking that kmeans should give me something close to what I\n> > > > want.  My problem is that I am not quite sure to massage the output to\n> > > > get my class breaks or what format to input the data.\n> > > >\n> > > > For arguments, kmeans takes a matrix, number of classes, and a max\n> > > > number of iterations --\n> > > > last two are easy, but how do I convert (do I need to convert) an\n> > > > array into a matrix (is matrix just R speak for an array?)  I will be\n> > > > starting with a one dimension array ie ([1,4,1,1,1,6,4,9,9]).\n> > > >\n> > > > The next issue is spitting the data out.  The docs tell me that I get\n> > > > the centers of the clusters where what I really want are the\n> > > > boundaries of the clusters, how could I get at the \"break points\" that\n> > > > I am after?\n> > >\n> > > I think you may find some of the code in:\n> > >\n> > > http://spatial.nhh.no/papers/aag04.pdf\n> > >\n> > > useful (though dated). kmeans() and - my preference - bclust() in the\n> > > e1071 package may fail when given too few values, but there are ways round\n> > > that. You'll see code (for example at the top of p. 15) on how to get the\n> > > class centres out - but they - as done there - still leave gaps between\n> > > classes as can be seen from the ECDF plot below. As you can see, kmeans()\n> > > manages with a vector OK.\n> > >\n> > > It would be nice to follow this up as a single function - input the data\n> > > vector and some preferences wrt. number of classes, and output as a number\n> > > of (list of) class intervals with some fitness criterion, something like\n> > > that?\n> > >\n> > > I guess your colour palette is on the PL side?\n> > >\n> > > Roger\n> > >\n> > > >\n> > > > Any help is appreciated,\n> > > > David\n> > > >\n> > > > _______________________________________________\n> > > > R-sig-Geo mailing list\n> > > > R-sig-Geo at stat.math.ethz.ch\n> > > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > > >\n> > >\n> > > --\n> > > Roger Bivand\n> > > Economic Geography Section, Department of Economics, Norwegian School of\n> > > Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> > > Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> > > e-mail: Roger.Bivand at nhh.no\n> > >\n> > >\n> >\n>\n> --\n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>\n>",
+      "body_snippet": "Most of my problem is that this is my first time using R, so I just\ndon't know the functions (or even really the semantic differences) for\ndealing with vectors,arrays, and matrices.\n\nThank you very mu",
+      "thread_id": "thread-81a80372cfbf",
+      "thread_depth": 4,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-a10c88fb6fda",
+      "message_id": "<Pine.LNX.4.44.0602250954050.14729-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-02-25T10:04:55+01:00",
+      "subject": "[R-sig-Geo] Natural Breaks Classification",
+      "subject_clean": "Natural Breaks Classification",
+      "in_reply_to": "<71c3c6c50602241428g4f722449p26e59c3839e4f63b@mail.gmail.com>",
+      "references": [],
+      "body_plain": "On Fri, 24 Feb 2006, David Bitner wrote:\n\n> Most of my problem is that this is my first time using R, so I just\n> don't know the functions (or even really the semantic differences) for\n> dealing with vectors,arrays, and matrices.\n\nThey are all vectors, but arrays and matrices have dimension attributes.\n\n> \n> Thank you very much for the code sample.  I have been looking around,\n> is there a good basic reference online to find out basic function\n> information so I can reference what things like order, match, unlist,\n> tapply, etc. are doing?  I have yet to find just a good functional\n> reference doc for R.\n\nhttp://cran.r-project.org/doc/manuals/R-lang.html\n\nFor the functions themselves, see their help pages. Of these four, only \norder is often used interactively, the others are usually within \nfunctions. match() is a well-written table look-up, unlist() turns a list \nof objects into a flat vector, and tapply() applies a function (defined \nhere on the fly to a \"ragged\" array - the list made by choosing values of \na for each separate index of cols. So order is fixing the arbitrary \nordering of the cluster centres for matching with the cluster membership \nto get out cols ordered from lowest class to highest rather than in the \narbitrary order (cluster numbering) output by kmeans. This is sensible \nbecause kmeans doesn't know that a has only one column and a natural \nodering - if a was k-dimensional, there would be no natural cluster \nordering. From that we retrieve the min and max (range) for each cluster \nby using tapply(), and flatten the list it returns.\n\nHope this helps - I think you'll need a bit more than two numbers out - \npreferably a string saying how you found the breaks.\n\nRoger\n\n> \n> Given that I am not plotting my data in R, I think that you are going\n> further than what I actually need.  Given the small example data set,\n> all that I really need is just the two numbers 4 and 11 (before I had\n> said 3, but I realized the third is unnecessary). From these I plan to\n> construct my classes as <4,>=4 and <11, >=11 when I create my\n> classification in MapServer where I am doing the plotting.\n> \n> David\n> \n> \n> \n> On 2/24/06, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> > On Fri, 24 Feb 2006, David Bitner wrote:\n> >\n> > > I was actually already using that paper as a resource, but I am still\n> > > not quite understanding how to get just the breaks that I can use for\n> > > classification in an external mapping application.\n> > >\n> > > Right now I am trying out some samples just to understand what's going on.\n> > >\n> > > Using this array:\n> > > a<-c(11,1,3,3,4,4,4,4,4,4,5)\n> > > This gives me the vector (3,1,1,1,2,2,2,2,2,2,2)\n> > >\n> > > ideally I want the output for this to be just (3,5,11)\n> > >\n> > > Taking this with the min/max of my data I can create the classes\n> > > 1-3,4-5,6-11\n> > >\n> >\n> > Next line on p. 15:\n> >\n> > > a<-c(11,1,3,3,4,4,4,4,4,4,5)\n> > > av <- kmeans(a, 3)\n> > > str(av)\n> > List of 4\n> >  $ cluster : int [1:11] 3 1 1 1 2 2 2 2 2 2 ...\n> >  $ centers : num [1:3, 1]  2.33  4.14 11.00\n> >   ..- attr(*, \"dimnames\")=List of 2\n> >   .. ..$ : chr [1:3] \"1\" \"2\" \"3\"\n> >   .. ..$ : NULL\n> >  $ withinss: num [1:3] 2.667 0.857 0.000\n> >  $ size    : int [1:3] 3 7 1\n> >  - attr(*, \"class\")= chr \"kmeans\"\n> > > cols <- match(av$cluster, order(av$centers))\n> > > cols\n> >  [1] 3 1 1 1 2 2 2 2 2 2 2\n> > > stbrks <- matrix(unlist(tapply(a, factor(cols), range)), ncol = 2,\n> > + byrow = TRUE)\n> > > stbrks\n> >      [,1] [,2]\n> > [1,]    1    3\n> > [2,]    4    5\n> > [3,]   11   11\n> >\n> > which then needs unpacking:\n> >\n> > > apply(stbrks, 1, function(x) paste(x, collapse=\"-\"))\n> > [1] \"1-3\"   \"4-5\"   \"11-11\"\n> >\n> > but which isn't pretty, because there is a gap. As plot(ecdf(jitter(a)),\n> > verticals=TRUE) shows, the gap is there in the data, so it is only a\n> > matter of convention that class intervals are shown for values that are\n> > not in the data, and my preference is to let the data do the talking (but\n> > I'm in a minority!), and cartographic convention will probably mean\n> > shifting the internal gaps to \"look\" smaller, and rounding the values to\n> > make them easier to handle. For larger numbers of data items, it may be\n> > necessary to get the breaks and re-assign the cols because of rounding.\n> >\n> > The stbrks matrix is just the range within the class for each class for\n> > the cols resulting from the classification.\n> >\n> > With kmeans, note that it can get stuck, so I'd put it inside try() and\n> > copy jittered values onto the end of the data vector if it fails - simply\n> > because kmeans seeds its classes at random first, and can be unlucky.\n> >\n> > Please let the list know how you get on, I'm sure class intervals are an\n> > interesting topic.\n> >\n> > Roger\n> >\n> > >\n> > >\n> > > On 2/24/06, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> > > > On Fri, 24 Feb 2006, David Bitner wrote:\n> > > >\n> > > > > I am trying to create some type of a Natural Breaks Classification in\n> > > > > PL/R  to classify data that I have in a PostgreSQL/PostGIS database.\n> > > > > All that I really need so that I can pass information on to Mapserver\n> > > > > to display this data is the class break values (ie an array [3,5,7,9]\n> > > > > would mean show values 1-3 in blue, 4-5 in red, etc.).  I am\n> > > > > completely new to R, but have a fair bit of experience with the other\n> > > > > PL's in PostgreSQL, so the PL part shouldn't be too hard to figure\n> > > > > out.\n> > > > >\n> > > > > I am thinking that kmeans should give me something close to what I\n> > > > > want.  My problem is that I am not quite sure to massage the output to\n> > > > > get my class breaks or what format to input the data.\n> > > > >\n> > > > > For arguments, kmeans takes a matrix, number of classes, and a max\n> > > > > number of iterations --\n> > > > > last two are easy, but how do I convert (do I need to convert) an\n> > > > > array into a matrix (is matrix just R speak for an array?)  I will be\n> > > > > starting with a one dimension array ie ([1,4,1,1,1,6,4,9,9]).\n> > > > >\n> > > > > The next issue is spitting the data out.  The docs tell me that I get\n> > > > > the centers of the clusters where what I really want are the\n> > > > > boundaries of the clusters, how could I get at the \"break points\" that\n> > > > > I am after?\n> > > >\n> > > > I think you may find some of the code in:\n> > > >\n> > > > http://spatial.nhh.no/papers/aag04.pdf\n> > > >\n> > > > useful (though dated). kmeans() and - my preference - bclust() in the\n> > > > e1071 package may fail when given too few values, but there are ways round\n> > > > that. You'll see code (for example at the top of p. 15) on how to get the\n> > > > class centres out - but they - as done there - still leave gaps between\n> > > > classes as can be seen from the ECDF plot below. As you can see, kmeans()\n> > > > manages with a vector OK.\n> > > >\n> > > > It would be nice to follow this up as a single function - input the data\n> > > > vector and some preferences wrt. number of classes, and output as a number\n> > > > of (list of) class intervals with some fitness criterion, something like\n> > > > that?\n> > > >\n> > > > I guess your colour palette is on the PL side?\n> > > >\n> > > > Roger\n> > > >\n> > > > >\n> > > > > Any help is appreciated,\n> > > > > David\n> > > > >\n> > > > > _______________________________________________\n> > > > > R-sig-Geo mailing list\n> > > > > R-sig-Geo at stat.math.ethz.ch\n> > > > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > > > >\n> > > >\n> > > > --\n> > > > Roger Bivand\n> > > > Economic Geography Section, Department of Economics, Norwegian School of\n> > > > Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> > > > Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> > > > e-mail: Roger.Bivand at nhh.no\n> > > >\n> > > >\n> > >\n> >\n> > --\n> > Roger Bivand\n> > Economic Geography Section, Department of Economics, Norwegian School of\n> > Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> > Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> > e-mail: Roger.Bivand at nhh.no\n> >\n> >\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Fri, 24 Feb 2006, David Bitner wrote:\n\n> Most of my problem is that this is my first time using R, so I just\n> don't know the functions (or even really the semantic differences) for\n> dealing with ",
+      "thread_id": "thread-81a80372cfbf",
+      "thread_depth": 5,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-52bd583953bc",
+      "message_id": "<20060227194756.67045.qmail@web25414.mail.ukl.yahoo.com>",
+      "from_name": "Miha Staut",
+      "from_email_hash": "07283ed7d344ad402b4e018527d846aa26154940be1842b60c226af5467b273a",
+      "date": "2006-02-27T19:47:56Z",
+      "subject": "[R-sig-Geo] Area cartograms",
+      "subject_clean": "Area cartograms",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear listers,\n\nDoes anybody know if any command is implemented in R for creating cartograms\nwhere the area of the polygon reflects the size of the variable in question.\nE.g. in a map of the countries of the world (projection should be equivalent of\ncourse), the area of the country would indicate the size of the population of\nthe country, not the actual area. I would be happy with either contiguous\npolygons with distortion of the shape or non contiguous polygons without shape\ndistortion.\n\nThanks,\nMiha",
+      "body_snippet": "Dear listers,\n\nDoes anybody know if any command is implemented in R for creating cartograms\nwhere the area of the polygon reflects the size of the variable in question.\nE.g. in a map of the countries ",
+      "thread_id": "thread-52bd583953bc",
+      "thread_depth": 0,
+      "month": "2006-02"
+    },
+    {
+      "id": "msg-c38b0f4d8e89",
+      "message_id": "<Pine.LNX.4.44.0602272152210.699-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-02-27T22:05:18+01:00",
+      "subject": "[R-sig-Geo] Area cartograms",
+      "subject_clean": "Area cartograms",
+      "in_reply_to": "<20060227194756.67045.qmail@web25414.mail.ukl.yahoo.com>",
+      "references": [],
+      "body_plain": "On Mon, 27 Feb 2006, Miha Staut wrote:\n\n> Dear listers,\n> \n> Does anybody know if any command is implemented in R for creating\n> cartograms where the area of the polygon reflects the size of the\n> variable in question. E.g. in a map of the countries of the world\n> (projection should be equivalent of course), the area of the country\n> would indicate the size of the population of the country, not the actual\n> area. I would be happy with either contiguous polygons with distortion\n> of the shape or non contiguous polygons without shape distortion.\n\nhttp://www.okada.jp.org/RWiki/index.php?Rmap%A4%F2%BB%C8%A4%C3%A4%BF%C3%CF%BF%DE%C9%BD%BC%A8\n\ntowards the bottom of the page is about what is known at the moment, it \nscales the polygon coordinates towards the centroid (assuming in the \nexample that each data row is a single polygon). Has anyone any more ideas \nor code? The example is nice, and could be generalised for SpatialPolygons \nobjects quite easily (because they have centroids and areas \npre-calculated. \n\nRoger\n\n> \n> Thanks,\n> Miha\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 27 Feb 2006, Miha Staut wrote:\n\n> Dear listers,\n> \n> Does anybody know if any command is implemented in R for creating\n> cartograms where the area of the polygon reflects the size of the\n> var",
+      "thread_id": "thread-52bd583953bc",
+      "thread_depth": 1,
+      "month": "2006-02"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-f656977bf845",
+      "subject": "how to go from SpatialGrid to SpatialGridDataFrame ?",
+      "message_count": 5,
+      "participants": [
+        "A Horacio Samaniego",
+        "Edzer J. Pebesma",
+        "Horacio Samaniego"
+      ],
+      "started": "2006-02-01T03:03:54-07:00",
+      "last_reply": "2006-02-01T14:18:39+01:00",
+      "root_message_id": "msg-f656977bf845"
+    },
+    {
+      "id": "thread-efb45b2d54ad",
+      "subject": "?Plotting line segments of shapefile in different color",
+      "message_count": 2,
+      "participants": [
+        "Alexander.Herr at csiro.au",
+        "Roger Bivand"
+      ],
+      "started": "2006-02-01T15:43:00+10:00",
+      "last_reply": "2006-02-01T08:36:25+01:00",
+      "root_message_id": "msg-efb45b2d54ad"
+    },
+    {
+      "id": "thread-d91e3cfb3d6c",
+      "subject": "2 problems with errorsarlm(method=\"SparseM\")",
+      "message_count": 1,
+      "participants": [
+        "Martin Reismann"
+      ],
+      "started": "2006-02-01T17:27:40+01:00",
+      "last_reply": "2006-02-01T17:27:40+01:00",
+      "root_message_id": "msg-d91e3cfb3d6c"
+    },
+    {
+      "id": "thread-bdea6e3beacc",
+      "subject": "2 problems with errorsarlm(method=\"SparseM\")",
+      "message_count": 3,
+      "participants": [
+        "Martin Reismann",
+        "Roger Bivand"
+      ],
+      "started": "2006-02-01T17:34:26+01:00",
+      "last_reply": "2006-02-08T23:38:14+01:00",
+      "root_message_id": "msg-bdea6e3beacc"
+    },
+    {
+      "id": "thread-a6f8f9680193",
+      "subject": "?Plotting line segments of shapefile in different color",
+      "message_count": 1,
+      "participants": [
+        "Alexander.Herr at csiro.au"
+      ],
+      "started": "2006-02-02T12:20:36+10:00",
+      "last_reply": "2006-02-02T12:20:36+10:00",
+      "root_message_id": "msg-a6f8f9680193"
+    },
+    {
+      "id": "thread-b944142a24cb",
+      "subject": "?Plotting line segments of shapefile in different color",
+      "message_count": 1,
+      "participants": [
+        "Alexander.Herr at csiro.au"
+      ],
+      "started": "2006-02-02T12:27:25+10:00",
+      "last_reply": "2006-02-02T12:27:25+10:00",
+      "root_message_id": "msg-b944142a24cb"
+    },
+    {
+      "id": "thread-b4ca37e77686",
+      "subject": "dumping interpolated results into grass6...",
+      "message_count": 2,
+      "participants": [
+        "A Horacio Samaniego",
+        "Roger Bivand"
+      ],
+      "started": "2006-02-06T04:46:39-07:00",
+      "last_reply": "2006-02-06T13:45:41+01:00",
+      "root_message_id": "msg-b4ca37e77686"
+    },
+    {
+      "id": "thread-46a285d78a3f",
+      "subject": "Writing a tif using rgdal",
+      "message_count": 7,
+      "participants": [
+        "Andy Bunn",
+        "Ari Jolma",
+        "Roger Bivand",
+        "Tim Keitt"
+      ],
+      "started": "2006-02-07T10:08:37-05:00",
+      "last_reply": "2006-02-08T15:09:03-06:00",
+      "root_message_id": "msg-46a285d78a3f"
+    },
+    {
+      "id": "thread-8ec8efc1fdfd",
+      "subject": "problem with 'islands' in neighbourhood matrix",
+      "message_count": 2,
+      "participants": [
+        "Meredith Franklin",
+        "Roger Bivand"
+      ],
+      "started": "2006-02-07T19:02:54-05:00",
+      "last_reply": "2006-02-08T09:17:39+01:00",
+      "root_message_id": "msg-8ec8efc1fdfd"
+    },
+    {
+      "id": "thread-aee96f6cf31e",
+      "subject": "Small sample sizes & Bayesian rates for zonal data",
+      "message_count": 1,
+      "participants": [
+        "Steven J. Pierce"
+      ],
+      "started": "2006-02-08T16:07:48-05:00",
+      "last_reply": "2006-02-08T16:07:48-05:00",
+      "root_message_id": "msg-aee96f6cf31e"
+    },
+    {
+      "id": "thread-60b1de0d902f",
+      "subject": "envi clone in R",
+      "message_count": 5,
+      "participants": [
+        "Barry Rowlingson",
+        "Tim Keitt",
+        "Wladimir Eremeev"
+      ],
+      "started": "2006-02-08T19:23:08+03:00",
+      "last_reply": "2006-02-09T11:51:11+03:00",
+      "root_message_id": "msg-60b1de0d902f"
+    },
+    {
+      "id": "thread-c5ae41b860b9",
+      "subject": "envelopes for Kcross",
+      "message_count": 2,
+      "participants": [
+        "Charlotte Reemts",
+        "W. Daniel Kissling"
+      ],
+      "started": "2006-02-10T14:52:45-06:00",
+      "last_reply": "2006-02-13T11:21:22+01:00",
+      "root_message_id": "msg-c5ae41b860b9"
+    },
+    {
+      "id": "thread-670584c49a03",
+      "subject": "R-sig-Geo Digest, Vol 30, Issue 6",
+      "message_count": 1,
+      "participants": [
+        "Adrian Baddeley"
+      ],
+      "started": "2006-02-13T10:31:24+08:00",
+      "last_reply": "2006-02-13T10:31:24+08:00",
+      "root_message_id": "msg-670584c49a03"
+    },
+    {
+      "id": "thread-710d1ccd8174",
+      "subject": "Map legend",
+      "message_count": 2,
+      "participants": [
+        "Mihai Nica",
+        "Roger Bivand"
+      ],
+      "started": "2006-02-16T05:16:53-06:00",
+      "last_reply": "2006-02-16T13:18:45+01:00",
+      "root_message_id": "msg-710d1ccd8174"
+    },
+    {
+      "id": "thread-748704d3c864",
+      "subject": "HRVEW  Harvey Electronics",
+      "message_count": 1,
+      "participants": [
+        "Garland Pearson"
+      ],
+      "started": "2006-02-22T11:14:41-06:00",
+      "last_reply": "2006-02-22T11:14:41-06:00",
+      "root_message_id": "msg-748704d3c864"
+    },
+    {
+      "id": "thread-5adcff8b502a",
+      "subject": "Polar mapping",
+      "message_count": 2,
+      "participants": [
+        "Anne Hertel",
+        "Roger Bivand"
+      ],
+      "started": "2006-02-22T11:21:34-06:00",
+      "last_reply": "2006-02-22T19:49:17+01:00",
+      "root_message_id": "msg-5adcff8b502a"
+    },
+    {
+      "id": "thread-81a80372cfbf",
+      "subject": "Natural Breaks Classification",
+      "message_count": 6,
+      "participants": [
+        "David Bitner",
+        "Roger Bivand"
+      ],
+      "started": "2006-02-24T13:08:50-06:00",
+      "last_reply": "2006-02-25T10:04:55+01:00",
+      "root_message_id": "msg-81a80372cfbf"
+    },
+    {
+      "id": "thread-52bd583953bc",
+      "subject": "Area cartograms",
+      "message_count": 2,
+      "participants": [
+        "Miha Staut",
+        "Roger Bivand"
+      ],
+      "started": "2006-02-27T19:47:56+00:00",
+      "last_reply": "2006-02-27T22:05:18+01:00",
+      "root_message_id": "msg-52bd583953bc"
+    }
+  ]
+}

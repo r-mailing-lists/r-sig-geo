@@ -1,0 +1,38 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2010-12",
+  "messages": [
+    {
+      "id": "msg-6317e883fa13",
+      "message_id": "<4D1EA64E.8090502@berkeley.edu>",
+      "from_name": "Nick Matzke",
+      "from_email_hash": "721d27a7bb8f9433b91d6d557039a92d0dd5388a1d6154d095572c90c92a3365",
+      "date": "2010-12-31T19:58:06-08:00",
+      "subject": "[R-sig-Geo] image classification with GRASS",
+      "subject_clean": "image classification with GRASS",
+      "in_reply_to": "<4D1D653E.6040106@berkeley.edu>",
+      "references": [
+        "<4D1D653E.6040106@berkeley.edu>"
+      ],
+      "body_plain": "After great struggles, this is what I got to work...thanks!\nNick\n\n================\nOpen GRASS.app\n(last step was huge manual compile *after* the app had been \ncreated)\n(need to update libpng)\n\n# For some reason this works even though I UNINSTALLED wxpython\ng.gui wxpython\n\n\nGRASS commands\n\n# Load via File --> Import Raster Map\n\n\n# i.group group=lsat7_2002 subgroup=lsat7_2002 \\\n \ninput=lsat7_2002_10,lsat7_2002_20,lsat7_2002_30,lsat7_2002_40,lsat7_2002_50,lsat7_2002_70\n\n\n# make group and subgroup\ni.group group=gp1 subgroup=gp1 \ninput=betm.1,betm.2,betm.3,betm.4,betm.5,betm.6\n\n# make unsupervised clustering\ni.cluster group=gp1 subgroup=gp1 sigfile=unsup1 classes=2\n\n# assign pixels to classes\ni.maxlik group=gp1 subgroup=gp1 sigfile=unsup1 \nclass=unsup1_class reject=unsup1_reject\n\n# unsupervised classification puts pixels into class #1 \n(ocean) or #2 (land/cloud);\n# we need to multiply by 100 to make it a big difference\nRaster --> Map Calculator\nnew: unsup_x10\nexisting: edges3 at PERMANENT\nedges3 at PERMANENT * 100\n\n# identify edge pixels\ni.zc --overwrite input=unsup_x10 output=edges3 width=3 \nthreshold=1\n\n# Set the #1 pixels (the edges) to a mask\nr.mask -o input=edges3 maskcats=1\n\n# drag up the RGB image, now it is limited to just the mask\n\n\n# unsupervised clustering, 4 classes, of just (?) edge pixels\ni.cluster group=gp1 subgroup=gp1 sigfile=edges_unsup1 \nclasses=4 reportfile=edges_unsup1_report.txt\n\n# assign pixels to classes\ni.maxlik --overwrite group=gp1 subgroup=gp1 \nsigfile=edges_unsup1 class=edges_unsup1_class \nreject=edges_unsup1_reject\n================\n\nOn 12/30/10 9:08 PM, Nick Matzke wrote:\n> Hi all,\n>\n> I've got R (with spgrass6) and GRASS installed on my Mac OS\n> X machine.\n>\n> My goal is to load and classify a .img file that was clipped\n> out of a Landsat 7 ETM image in ERDAS.\n>\n> However, GRASS seems to have a huge learning curve to even\n> get started. Could I beg some GRASS wizard to post the very\n> basic commands that one would typically use to:\n>\n> 1. load a .img file into GRASS\n> 2. Display it\n> 3. Conduct a classification of the pixels (any sort of\n> classification would be fine, even a simple 2-class\n> unsupervised classification).\n>\n> Thanks *very much* if you are able to help! Normally I'm\n> pretty good at this sort of thing, but GRASS is\n> extra-intimidating to newbies.\n>\n> Thanks, and cheers!\n> Nick\n>\n>\n>\n\n-- \n====================================================\nNicholas J. Matzke\nPh.D. Candidate, Graduate Student Researcher\nHuelsenbeck Lab\nCenter for Theoretical Evolutionary Genomics\n4151 VLSB (Valley Life Sciences Building)\nDepartment of Integrative Biology\nUniversity of California, Berkeley\n\nGraduate Student Instructor, IB200A\nPrinciples of Phylogenetics: Systematics\nhttp://ib.berkeley.edu/courses/ib200a/index.shtml\n\nLab websites:\nhttp://ib.berkeley.edu/people/lab_detail.php?lab=54\nhttp://fisher.berkeley.edu/cteg/hlab.html\nDept. personal page: \nhttp://ib.berkeley.edu/people/students/person_detail.php?person=370\nLab personal page: \nhttp://fisher.berkeley.edu/cteg/members/matzke.html\nLab phone: 510-643-6299\nDept. fax: 510-643-6264\nCell phone: 510-301-0179\nEmail: matzke at berkeley.edu\n\nMailing address:\nDepartment of Integrative Biology\n3060 VLSB #3140\nBerkeley, CA 94720-3140\n\n-----------------------------------------------------\n\"[W]hen people thought the earth was flat, they were wrong. \nWhen people thought the earth was spherical, they were \nwrong. But if you think that thinking the earth is spherical \nis just as wrong as thinking the earth is flat, then your \nview is wronger than both of them put together.\"\n\nIsaac Asimov (1989). \"The Relativity of Wrong.\" The \nSkeptical Inquirer, 14(1), 35-44. Fall 1989.\nhttp://chem.tufts.edu/AnswersInScience/RelativityofWrong.htm",
+      "body_snippet": "After great struggles, this is what I got to work...thanks!\nNick\n\n================\nOpen GRASS.app\n(last step was huge manual compile *after* the app had been \ncreated)\n(need to update libpng)\n\n# For s",
+      "thread_id": "thread-6317e883fa13",
+      "thread_depth": 0,
+      "month": "2010-12"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-6317e883fa13",
+      "subject": "image classification with GRASS",
+      "message_count": 1,
+      "participants": [
+        "Nick Matzke"
+      ],
+      "started": "2010-12-31T19:58:06-08:00",
+      "last_reply": "2010-12-31T19:58:06-08:00",
+      "root_message_id": "msg-6317e883fa13"
+    }
+  ]
+}

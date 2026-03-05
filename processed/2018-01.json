@@ -1,0 +1,979 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2018-01",
+  "messages": [
+    {
+      "id": "msg-d371a12f526e",
+      "message_id": "<CY4PR05MB335104F3206B22159143D215B1190@CY4PR05MB3351.namprd05.prod.outlook.com>",
+      "from_name": "bernard julien",
+      "from_email_hash": "56364ea63e0e0180aff770c898b57c6a93ea43ad1b33d977df5984170ec1f1aa",
+      "date": "2018-01-02T17:08:35Z",
+      "subject": "[R-sig-Geo] how to access source code to the 'variogramLine' function in Gstat ?",
+      "subject_clean": "how to access source code to the 'variogramLine' function in Gstat ?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Good day all,\n\n\nI would like to access the source code used by the 'variogramLine' function  (Gstat package) to compute covariance matrices.\n\nThere is the following which I found : https://github.com/edzer/gstat/blob/master/R/variogramLine.R\n\nHowever, I am looking for the direct code used to define the covariance computations.\n\n\ncheers\n\nBernard\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Good day all,\n\n\nI would like to access the source code used by the 'variogramLine' function  (Gstat package) to compute covariance matrices.\n\nThere is the following which I found : https://github.com/",
+      "thread_id": "thread-d371a12f526e",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-b72939cac456",
+      "message_id": "<06324077-dd4f-d33b-7807-e2fb8725172f@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "8c6adbfb13cc921a8bb8e1cfb02264929bbf4044d8ad148cd40d1f2dc9c49259",
+      "date": "2018-01-02T18:28:21+01:00",
+      "subject": "[R-sig-Geo] how to access source code to the 'variogramLine' function in Gstat ?",
+      "subject_clean": "how to access source code to the 'variogramLine' function in Gstat ?",
+      "in_reply_to": "<CY4PR05MB335104F3206B22159143D215B1190@CY4PR05MB3351.namprd05.prod.outlook.com>",
+      "references": [
+        "<CY4PR05MB335104F3206B22159143D215B1190@CY4PR05MB3351.namprd05.prod.outlook.com>"
+      ],
+      "body_plain": "Bernard,\n\nhttps://github.com/edzer/gstat/blob/master/src/vario_fn.c\n\ngets you all the unit functions; they get multiplied by their partial\nsill value, and added up here:\n\nhttps://github.com/edzer/gstat/blob/master/src/vario.c#L286-L308\n\nthe C function interfacing R is here:\n\nhttps://github.com/edzer/gstat/blob/master/src/s.c#L709\n\n\n\nOn 01/02/2018 06:08 PM, bernard julien wrote:\n> Good day all,\n> \n> \n> I would like to access the source code used by the 'variogramLine' function  (Gstat package) to compute covariance matrices.\n> \n> There is the following which I found : https://github.com/edzer/gstat/blob/master/R/variogramLine.R\n> \n> However, I am looking for the direct code used to define the covariance computations.\n> \n> \n> cheers\n> \n> Bernard\n> \n> \n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48151 Muenster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "Bernard,\n\nhttps://github.com/edzer/gstat/blob/master/src/vario_fn.c\n\ngets you all the unit functions; they get multiplied by their partial\nsill value, and added up here:\n\nhttps://github.com/edzer/gsta",
+      "thread_id": "thread-d371a12f526e",
+      "thread_depth": 1,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-e70fe7fd039a",
+      "message_id": "<CY4PR05MB335181A3076D44B4CDFADF53B1190@CY4PR05MB3351.namprd05.prod.outlook.com>",
+      "from_name": "bernard julien",
+      "from_email_hash": "56364ea63e0e0180aff770c898b57c6a93ea43ad1b33d977df5984170ec1f1aa",
+      "date": "2018-01-02T18:12:54Z",
+      "subject": "[R-sig-Geo] how to access source code to the 'variogramLine' function in Gstat ?",
+      "subject_clean": "how to access source code to the 'variogramLine' function in Gstat ?",
+      "in_reply_to": "<06324077-dd4f-d33b-7807-e2fb8725172f@uni-muenster.de>",
+      "references": [
+        "<CY4PR05MB335104F3206B22159143D215B1190@CY4PR05MB3351.namprd05.prod.outlook.com>",
+        "<06324077-dd4f-d33b-7807-e2fb8725172f@uni-muenster.de>"
+      ],
+      "body_plain": "Edzer,\n\nthank you.\n\n________________________________\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Edzer Pebesma <edzer.pebesma at uni-muenster.de>\nSent: Tuesday, January 2, 2018 9:28:21 AM\nTo: r-sig-geo at r-project.org\nSubject: Re: [R-sig-Geo] how to access source code to the 'variogramLine' function in Gstat ?\n\nBernard,\n\nhttps://github.com/edzer/gstat/blob/master/src/vario_fn.c\n\ngets you all the unit functions; they get multiplied by their partial\nsill value, and added up here:\n\nhttps://github.com/edzer/gstat/blob/master/src/vario.c#L286-L308\n\nthe C function interfacing R is here:\n\nhttps://github.com/edzer/gstat/blob/master/src/s.c#L709\n\n\n\nOn 01/02/2018 06:08 PM, bernard julien wrote:\n> Good day all,\n>\n>\n> I would like to access the source code used by the 'variogramLine' function  (Gstat package) to compute covariance matrices.\n>\n> There is the following which I found : https://github.com/edzer/gstat/blob/master/R/variogramLine.R\n>\n> However, I am looking for the direct code used to define the covariance computations.\n>\n>\n> cheers\n>\n> Bernard\n>\n>\n>\n>\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n--\nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48151 Muenster, Germany\nPhone: +49 251 8333081\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Edzer,\n\nthank you.\n\n________________________________\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Edzer Pebesma <edzer.pebesma at uni-muenster.de>\nSent: Tuesday, January 2, 2018 9",
+      "thread_id": "thread-d371a12f526e",
+      "thread_depth": 2,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-8a2880a8287a",
+      "message_id": "<CAA42DGkS345AxhdhsXcsQ4MwQO2kMkKcERU7knBd2Ou2=bmbHg@mail.gmail.com>",
+      "from_name": "Rafael Pereira",
+      "from_email_hash": "8036bd764b6872628213bea1b12849437b17b01bf5b5d72388d38145c2dee6f4",
+      "date": "2018-01-03T09:37:04-02:00",
+      "subject": "[R-sig-Geo] standard errors of total impacts in a spatial lag regression model lagsarlm",
+      "subject_clean": "standard errors of total impacts in a spatial lag regression model lagsarlm",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\nI am using a spatial lag regression model in a paper. I know already how to\nget the total impacts of the model, but I don't know how to generate the\nstandard errors of the total impacts.\n\nIn this paper by Roger Bivand here*, these SE were \"calculated using the\n'estimable' function in the R gmodels package.\" I've checked the function\ndocumentation but I couldn't really get my head around how to use it on\na lagsarlm lag model.\n\nCan someone give me hand? There is a reproducible example below, but if any\nof you could share a snippet of code you have already used this would be\nvery helpful already.\n\n# reproducible example\ndata(oldcol)\nCOL.lag.eig <- lagsarlm(CRIME ~ INC + HOVAL, data=COL.OLD, type=\"lag\",\n                        nb2listw(COL.nb, style=\"W\"), method=\"eigen\",\nquiet=FALSE)\nsummary(COL.lag.eig, correlation=TRUE)\n\n\n\n* http://openjournals.wu.ac.at/region/paper_107/107.html\n\nbest wishes,\n\nRafael H M Pereira\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nI am using a spatial lag regression model in a paper. I know already how to\nget the total impacts of the model, but I don't know how to generate the\nstandard errors of the total impacts.\n\nI",
+      "thread_id": "thread-8a2880a8287a",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-c15a99b4f7ba",
+      "message_id": "<alpine.LFD.2.21.1801031326300.30685@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2018-01-03T13:32:47+01:00",
+      "subject": "[R-sig-Geo] standard errors of total impacts in a spatial lag regression model lagsarlm",
+      "subject_clean": "standard errors of total impacts in a spatial lag regression model lagsarlm",
+      "in_reply_to": "<CAA42DGkS345AxhdhsXcsQ4MwQO2kMkKcERU7knBd2Ou2=bmbHg@mail.gmail.com>",
+      "references": [
+        "<CAA42DGkS345AxhdhsXcsQ4MwQO2kMkKcERU7knBd2Ou2=bmbHg@mail.gmail.com>"
+      ],
+      "body_plain": "On Wed, 3 Jan 2018, Rafael Pereira wrote:\n\n> Dear all,\n>\n> I am using a spatial lag regression model in a paper. I know already how to\n> get the total impacts of the model, but I don't know how to generate the\n> standard errors of the total impacts.\n>\n> In this paper by Roger Bivand here*, these SE were \"calculated using the\n> 'estimable' function in the R gmodels package.\" I've checked the function\n> documentation but I couldn't really get my head around how to use it on\n> a lagsarlm lag model.\n\nWrong reference - those are for SLX and SDEM models, but use the \nappropriate impacts() methods. See ?impacts. Remember to create a vector \nof traces, and help your head by (re)-reading LeSage & Pace 2009, and \nhttps://www.jstatsoft.org/index.php/jss/article/view/v063i18, p. 8 and \nsection 5.\n\nHope this helps,\n\nRoger\n\n>\n> Can someone give me hand? There is a reproducible example below, but if any\n> of you could share a snippet of code you have already used this would be\n> very helpful already.\n>\n> # reproducible example\n> data(oldcol)\n> COL.lag.eig <- lagsarlm(CRIME ~ INC + HOVAL, data=COL.OLD, type=\"lag\",\n>                        nb2listw(COL.nb, style=\"W\"), method=\"eigen\",\n> quiet=FALSE)\n> summary(COL.lag.eig, correlation=TRUE)\n>\n>\n>\n> * http://openjournals.wu.ac.at/region/paper_107/107.html\n>\n> best wishes,\n>\n> Rafael H M Pereira\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nEditor-in-Chief of The R Journal, https://journal.r-project.org/index.html\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 3 Jan 2018, Rafael Pereira wrote:\n\n> Dear all,\n>\n> I am using a spatial lag regression model in a paper. I know already how to\n> get the total impacts of the model, but I don't know how to gen",
+      "thread_id": "thread-8a2880a8287a",
+      "thread_depth": 1,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-0f8126e35a77",
+      "message_id": "<CAA42DG=tjzc32dqs19V4g-t0OLp4vmPcJDrz5wALBJWe9G-w-Q@mail.gmail.com>",
+      "from_name": "Rafael Pereira",
+      "from_email_hash": "8036bd764b6872628213bea1b12849437b17b01bf5b5d72388d38145c2dee6f4",
+      "date": "2018-01-04T10:17:50-02:00",
+      "subject": "[R-sig-Geo] standard errors of total impacts in a spatial lag regression model lagsarlm",
+      "subject_clean": "standard errors of total impacts in a spatial lag regression model lagsarlm",
+      "in_reply_to": "<alpine.LFD.2.21.1801031326300.30685@reclus.nhh.no>",
+      "references": [
+        "<CAA42DGkS345AxhdhsXcsQ4MwQO2kMkKcERU7knBd2Ou2=bmbHg@mail.gmail.com>",
+        "<alpine.LFD.2.21.1801031326300.30685@reclus.nhh.no>"
+      ],
+      "body_plain": "Thank you, Roger!\n\nI will look into this .\n\nbest wishes,\n\nRafael H M Pereira\n\nOn Wed, Jan 3, 2018 at 10:32 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Wed, 3 Jan 2018, Rafael Pereira wrote:\n>\n> Dear all,\n>>\n>> I am using a spatial lag regression model in a paper. I know already how\n>> to\n>> get the total impacts of the model, but I don't know how to generate the\n>> standard errors of the total impacts.\n>>\n>> In this paper by Roger Bivand here*, these SE were \"calculated using the\n>> 'estimable' function in the R gmodels package.\" I've checked the function\n>> documentation but I couldn't really get my head around how to use it on\n>> a lagsarlm lag model.\n>>\n>\n> Wrong reference - those are for SLX and SDEM models, but use the\n> appropriate impacts() methods. See ?impacts. Remember to create a vector of\n> traces, and help your head by (re)-reading LeSage & Pace 2009, and\n> https://www.jstatsoft.org/index.php/jss/article/view/v063i18, p. 8 and\n> section 5.\n>\n> Hope this helps,\n>\n> Roger\n>\n>\n>> Can someone give me hand? There is a reproducible example below, but if\n>> any\n>> of you could share a snippet of code you have already used this would be\n>> very helpful already.\n>>\n>> # reproducible example\n>> data(oldcol)\n>> COL.lag.eig <- lagsarlm(CRIME ~ INC + HOVAL, data=COL.OLD, type=\"lag\",\n>>                        nb2listw(COL.nb, style=\"W\"), method=\"eigen\",\n>> quiet=FALSE)\n>> summary(COL.lag.eig, correlation=TRUE)\n>>\n>>\n>>\n>> * http://openjournals.wu.ac.at/region/paper_107/107.html\n>>\n>> best wishes,\n>>\n>> Rafael H M Pereira\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics,\n> Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> Editor-in-Chief of The R Journal, https://journal.r-project.org/index.html\n> http://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you, Roger!\n\nI will look into this .\n\nbest wishes,\n\nRafael H M Pereira\n\nOn Wed, Jan 3, 2018 at 10:32 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Wed, 3 Jan 2018, Rafael Pereira wrote:",
+      "thread_id": "thread-8a2880a8287a",
+      "thread_depth": 2,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-f90df754e064",
+      "message_id": "<CAKmfgFNf6+Tj=-q1idQqD0VVcP-=_1Vrbyi_t3M2bQCqdZ6=_A@mail.gmail.com>",
+      "from_name": "Laura Poggio",
+      "from_email_hash": "99efcc0a631e17a74b1790fcaf23ae99547227123bf17b1e9eb8627d2686760a",
+      "date": "2018-01-04T14:08:03Z",
+      "subject": "[R-sig-Geo] error when using fit.variogram.gls",
+      "subject_clean": "error when using fit.variogram.gls",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\nI was trying to use the function fit.variogram.gls from gstat package, and\nI got the error below:\n\"Error in gamfn(h0, theta) : could not find function \"gamfn\"\"\n\nBelow some lines of code that trigger the error:\nlibrary(gstat)\nlibrary(sp)\ndata(meuse)\ncoordinates(meuse) = ~x+y\nfit.variogram.gls(log(zinc)~1, meuse[1:40,], vgm(1, \"Sph\", 900,1))\n\nMy sessionInfo():\nR version 3.4.2 (2017-09-28)\nPlatform: x86_64-redhat-linux-gnu (64-bit)\nRunning under: CentOS Linux 7 (Core)\n\nMatrix products: default\nBLAS/LAPACK: /usr/lib64/R/lib/libRblas.so\n\nlocale:\n [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C\n [3] LC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8\n [5] LC_MONETARY=en_GB.UTF-8    LC_MESSAGES=en_GB.UTF-8\n [7] LC_PAPER=en_GB.UTF-8       LC_NAME=C\n [9] LC_ADDRESS=C               LC_TELEPHONE=C\n[11] LC_MEASUREMENT=en_GB.UTF-8 LC_IDENTIFICATION=C\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base\n\nother attached packages:\n[1] gstat_1.1-5 sp_1.2-5\n\nloaded via a namespace (and not attached):\n[1] zoo_1.8-0        compiler_3.4.2   tools_3.4.2      xts_0.10-0\n[5] spacetime_1.2-1  grid_3.4.2       FNN_1.1          intervals_0.15.1\n[9] lattice_0.20-35\n\nThe same is happening also under Fedora 27 (Workstation Edition).\n\nThank you in advance and best wishes\n\nLaura\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\nI was trying to use the function fit.variogram.gls from gstat package, and\nI got the error below:\n\"Error in gamfn(h0, theta) : could not find function \"gamfn\"\"\n\nBelow some lines of code that",
+      "thread_id": "thread-f90df754e064",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-c65448c5815e",
+      "message_id": "<CABf+oy4-=LCog1w1V8nr3JHHy3skSqRZG21Wf-FXe4_Tr9PsRQ@mail.gmail.com>",
+      "from_name": "Rodrigo Lilla Manzione",
+      "from_email_hash": "32e57d3464a6e6a2117ca91bbf31bd1ee00b1922b3a6556fcf3735b7d069c891",
+      "date": "2018-01-05T16:15:03-02:00",
+      "subject": "[R-sig-Geo] STKriging export",
+      "subject_clean": "STKriging export",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list,\n\nI am facing a doubt about what I am producing when performing STKriging.\nProbably my mistake is when setting ST prediction frame.\n\nI have groundwater monitoring time series from Sep 2014 to Sep 207 in a\nsemi-monthly observed frequency at 56 wells. I would like to have a\nprediction in the end of the series and a forecast  about 100 days in\nadvance.\n\nThis is my code and data can be found at:\nhttps://www.dropbox.com/sh/tz3lufzaup677aa/AAAC6CgkZ_XrIM2-8jvS1VbFa?dl=0\n\n##############\nlibrary(gstat)\nlibrary(sp)\nlibrary(spacetime)\n\n#data load#\n#input data, space and time#\nlevel <- read.table(\"water_level_up.csv\", header=T)\ns <- read.table(\"UTM_up.csv\", header=T, row.names=1, sep=\",\")\nd = read.table(\"dates_up.csv\",sep=\",\", header=T)\n\n#set time#\nnr = nrow(d)\ndates <- as.Date(d[1,1])\nfor (i in 2:nr){\ndates[i]<- as.Date(d[i,1])\n}\n\n#set space#\nstations <- SpatialPoints(s, proj4string=CRS(as.character(NA)), bbox = NULL)\n\n#merge time, space and data#\nwater = STFDF(stations, dates, data.frame(level = as.vector(level)))\n\n\n#GIS#\n#load area mask#\nmask = read.asciigrid(\"g_50.asc\", as.image=F, plot.image=T)\nimage(mask, col=\"black\")\n\n#shows area and sample points#\nspplot(mask, scales = list(draw=T), sp.layout=list(\"sp.points\", stations,\npch=\"+\"))\n\n\n#ST modelling#\n#empirical st-variogram#\nempVgm <- variogramST(level~1, water, tlags=0:38,cutoff=2400)\nplot(empVgm, wireframe=T,\nscales=list(arrows=F),zlab=list(rot=90),zlim=c(0,3))\n\n#covariance functions#\n#product-sum model#\nprodSumModel <- vgmST(\"productSum\",\nspace = vgm(0.75, \"Sph\", 1250, 0.05),\ntime = vgm(1.45, \"Sph\", 120, 0.0),\nk = 2)\npsFit <- fit.StVariogram(empVgm, prodSumModel, fit.method = 7,\nstAni = 117, method = \"L-BFGS-B\",\ncontrol = list(parscale=c(1,10,1,1,0.1,1,10)),\nlower = rep(0.0001,7))\n\nplot(empVgm, psFit)\nplot(empVgm, psFit, wireframe=TRUE, all=TRUE)\n\n\n#ST prediction#\n#ST kriging#\n#setting ST prediction frame#\nt <- water[,\"2017-09-04/2017-12-13\"]\ntt <- as.Date(\"2017-09-04\")\ntt[2] <- as.Date(\"2017-12-13\")\npred <- STF(sp=as(mask,\"SpatialPoints\"), time=tt)\n\n#Product-Sum model prediction#\npredPS <- krigeST(level~1, as(t,'STSDF'), pred, psFit)\nstplot(predPS)\n\n#Data export#\n#'*.csv'#\nwrite.csv(predPS, \"STkrigePS.csv\")\n############\n\nWhen I plot the maps I have one map for Sep 13 and another on for Dec 13.\nPerfect. When I export it, I have in the .cvs file two sequences of data,\none with time starting at Sep 04 and time ending at Dec13 and another one\nstarting at Dec 13 and ending at March 13.\n\nMy question is, whay am I exporting? Is these layers predictions for the\nending date based on the set up period variability? Or it is something\nelse? Of course I can have predictions for the date I choose setting the\nrigth period if that is the case, but I would like to understand better\nwhat I am missing when setting the ST prediction frame\n\nThanks in advance,\n\nRodrigo Manzione, PhD\nAssociate professor\nUNESP/FCE-Tup?\nBrazil\n\n<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\nLivre\nde v?rus. www.avast.com\n<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>.\n<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list,\n\nI am facing a doubt about what I am producing when performing STKriging.\nProbably my mistake is when setting ST prediction frame.\n\nI have groundwater monitoring time series from Sep 2014 t",
+      "thread_id": "thread-c65448c5815e",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-8cc0ce9ef532",
+      "message_id": "<9d186927-6b99-8f7b-c2ce-8212786363e4@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "8c6adbfb13cc921a8bb8e1cfb02264929bbf4044d8ad148cd40d1f2dc9c49259",
+      "date": "2018-01-06T20:11:24+01:00",
+      "subject": "[R-sig-Geo] EGU session: R’s deliberate role in Earth sciences; abstract deadline Jan 10",
+      "subject_clean": "EGU session: R’s deliberate role in Earth sciences; abstract deadline Jan 10",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Last year this session was held for the first time, and it was a lot of\nfun; although it started 8:15 we had around 250 visitors pretty soon,\nand a lot of good discussions.\n\nThis year the session is again organized:\n\nhttp://meetingorganizer.copernicus.org/EGU2018/session/27584\n\nNote that you can submit to a PICO session in addition to an oral\npreference in another session.\n\nI hope to see you in Vienna!\n-- \nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48151 Muenster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "Last year this session was held for the first time, and it was a lot of\nfun; although it started 8:15 we had around 250 visitors pretty soon,\nand a lot of good discussions.\n\nThis year the session is a",
+      "thread_id": "thread-8cc0ce9ef532",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-6938eb81b388",
+      "message_id": "<CAFGTTqTvUfdnZEn9LxHL=wwwr8GykffPsf81kF1nOniUP9GLvg@mail.gmail.com>",
+      "from_name": "Sima Usvyatsov",
+      "from_email_hash": "76ec0fe19a781e0860c9c72e02535948c22cbfffed9791758577e751499f73d4",
+      "date": "2018-01-10T12:32:36-04:00",
+      "subject": "[R-sig-Geo] Spatial filtering with glm with grid sampling",
+      "subject_clean": "Spatial filtering with glm with grid sampling",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\n\nI am running a negative binomial model (MASS) on count data collected on a\ngrid. The dataset is large - ~4,000 points, with many predictors. Being\ncounts, there are a lot of zeroes. All data are collected on a grid with 20\npoints, with high spatial autocorrelation.\n\nI would like to filter out the spatial autocorrelation. My question is:\nsince I have very limited spatial info (only 20 distinct spatial\nlocations), is it possible to simplify ME() so that I don't have to run it\non the whole dataset? When I try to run ME() on a 100-point subset of the\ndata, I get error in glm.fit: NA/NaN/Inf in 'x'. When I run it on a single\ninstance of the grid, I \"get away\" with a warning (\"algorithm did not\nconverge\").\n\nHere's a fake dataset. It was grinding for a while but not throwing errors\n(like my original data would). Regardless, it demonstrates the repeated\nsampling at the same points and the large number of zeroes.\n\nAny advice would be most welcome.\n\nlibrary(spdep)\nlibrary(MASS)\n\ndf <- data.frame(Loc = as.factor(rep(1:20, each = 5)), Lat = rnorm(100, 30,\n0.1), Lon = rnorm(1000, -75, 1), x = rnegbin(100, 1, 1))\ncoordinates(df) <- ~Lon + Lat\nproj4string(df) <- CRS(\"+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs\")\nnb <- dnearneigh(x=coordinates(df), d1=0, d2=200,longlat = TRUE)\ndists <- nbdists(nb, coordinates(df), longlat=TRUE)\nglist <- lapply(dists, function(x) 1/x)\nlw <- nb2listw(nb, glist, style=\"W\")\nme <- ME(x ~ 1, data = df, family = \"quasipoisson\", listw = lw, alpha = 0.5)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI am running a negative binomial model (MASS) on count data collected on a\ngrid. The dataset is large - ~4,000 points, with many predictors. Being\ncounts, there are a lot of zeroes. All data a",
+      "thread_id": "thread-6938eb81b388",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-176c50f76e13",
+      "message_id": "<alpine.LFD.2.21.1801110944550.22121@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2018-01-11T10:01:13+01:00",
+      "subject": "[R-sig-Geo] Spatial filtering with glm with grid sampling",
+      "subject_clean": "Spatial filtering with glm with grid sampling",
+      "in_reply_to": "<CAFGTTqTvUfdnZEn9LxHL=wwwr8GykffPsf81kF1nOniUP9GLvg@mail.gmail.com>",
+      "references": [
+        "<CAFGTTqTvUfdnZEn9LxHL=wwwr8GykffPsf81kF1nOniUP9GLvg@mail.gmail.com>"
+      ],
+      "body_plain": "On Wed, 10 Jan 2018, Sima Usvyatsov wrote:\n\n> Hello,\n>\n> I am running a negative binomial model (MASS) on count data collected on a\n> grid. The dataset is large - ~4,000 points, with many predictors. Being\n> counts, there are a lot of zeroes. All data are collected on a grid with 20\n> points, with high spatial autocorrelation.\n>\n> I would like to filter out the spatial autocorrelation. My question is:\n> since I have very limited spatial info (only 20 distinct spatial\n> locations), is it possible to simplify ME() so that I don't have to run it\n> on the whole dataset? When I try to run ME() on a 100-point subset of the\n> data, I get error in glm.fit: NA/NaN/Inf in 'x'. When I run it on a single\n> instance of the grid, I \"get away\" with a warning (\"algorithm did not\n> converge\").\n>\n> Here's a fake dataset. It was grinding for a while but not throwing errors\n> (like my original data would). Regardless, it demonstrates the repeated\n> sampling at the same points and the large number of zeroes.\n\nThe data set has 1000 values in Lon, so is probably bigger than you \nintended, and when 100 is used is not autocorrelated. You seem to have a \nhierarchical model, with repeated measurements at the locations, so a \nmulti-level treatment of some kind may be sensible. If you want to stay \nwith ME-based spatial filtering, maybe look at the literature on spatial \npanel (repeated measurements are in time) with ME/SF, and on network \nautocorrelation (dyadic relationships with autocorrelation among origins \nand/or destinations). Both these cases use Kronecker products on the \nselected eigenvectors, I think.\n\nAlternatively, use a standard GLMM with a grouped iid random effect and/or \na spatially structured random effect at the 20 location level. If the \ngroups are repeated observations in time, you should model the whole \n(non-)separable space-time process.\n\nHope this helps,\n\nRoger\n\n>\n> Any advice would be most welcome.\n>\n> library(spdep)\n> library(MASS)\n>\n> df <- data.frame(Loc = as.factor(rep(1:20, each = 5)), Lat = rnorm(100, 30,\n> 0.1), Lon = rnorm(1000, -75, 1), x = rnegbin(100, 1, 1))\n> coordinates(df) <- ~Lon + Lat\n> proj4string(df) <- CRS(\"+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs\")\n> nb <- dnearneigh(x=coordinates(df), d1=0, d2=200,longlat = TRUE)\n> dists <- nbdists(nb, coordinates(df), longlat=TRUE)\n> glist <- lapply(dists, function(x) 1/x)\n> lw <- nb2listw(nb, glist, style=\"W\")\n> me <- ME(x ~ 1, data = df, family = \"quasipoisson\", listw = lw, alpha = 0.5)\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nEditor-in-Chief of The R Journal, https://journal.r-project.org/index.html\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 10 Jan 2018, Sima Usvyatsov wrote:\n\n> Hello,\n>\n> I am running a negative binomial model (MASS) on count data collected on a\n> grid. The dataset is large - ~4,000 points, with many predictors. ",
+      "thread_id": "thread-6938eb81b388",
+      "thread_depth": 1,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-54e8192588a2",
+      "message_id": "<CAFGTTqTE_rbUMm4G1N1G4u_Ajoq+wLmUQa4fAxx2eMRswJ+hYw@mail.gmail.com>",
+      "from_name": "Sima Usvyatsov",
+      "from_email_hash": "76ec0fe19a781e0860c9c72e02535948c22cbfffed9791758577e751499f73d4",
+      "date": "2018-01-11T06:57:22-04:00",
+      "subject": "[R-sig-Geo] Spatial filtering with glm with grid sampling",
+      "subject_clean": "Spatial filtering with glm with grid sampling",
+      "in_reply_to": "<alpine.LFD.2.21.1801110944550.22121@reclus.nhh.no>",
+      "references": [
+        "<CAFGTTqTvUfdnZEn9LxHL=wwwr8GykffPsf81kF1nOniUP9GLvg@mail.gmail.com>",
+        "<alpine.LFD.2.21.1801110944550.22121@reclus.nhh.no>"
+      ],
+      "body_plain": "Thank you so much for your response.\n\nYes, I managed to muck up the fake data in 2 (!) ways - the 1,000 lons and\nthe fact that the lon/lats weren't repeated. Here's the correct structure.\n\ndf <- data.frame(Loc = as.factor(rep(1:20, each = 5)), Lat = rep(rnorm(20,\n30, 0.1), each = 5), Lon = rep(rnorm(20, -75, 1), each = 5), x =\nrnegbin(100, 1, 1),\nStratum = rep(1:5, each = 20))\n\nIn the meantime, I (somewhat) resolved the issue with the glmmPQL fixed\neffects - my fault, of course.\n\nMy current model is set up as follows:\n\nmod1 <- glmmPQL(Count ~ Stratum + SiteInStratum + ...other predictors,\nrandom = ~ 1 |RoundStart,\nfamily = quasipoisson,\ncorrelation = corExp(form=~site.Easting + site.Northing + RoundStart)\n\nwhere RoundStart is the date/time of starting each count. I'm assuming that\nby \"using a standard GLMM\" you were thinking of MASS's glmmPQL()?\nDoes this look correct for specifying the full space/time dependence? The\nvariogram and pacf look very decent, but one can never have too many\nchecks...\n\nOn Thu, Jan 11, 2018 at 5:01 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Wed, 10 Jan 2018, Sima Usvyatsov wrote:\n>\n> Hello,\n>>\n>> I am running a negative binomial model (MASS) on count data collected on a\n>> grid. The dataset is large - ~4,000 points, with many predictors. Being\n>> counts, there are a lot of zeroes. All data are collected on a grid with\n>> 20\n>> points, with high spatial autocorrelation.\n>>\n>> I would like to filter out the spatial autocorrelation. My question is:\n>> since I have very limited spatial info (only 20 distinct spatial\n>> locations), is it possible to simplify ME() so that I don't have to run it\n>> on the whole dataset? When I try to run ME() on a 100-point subset of the\n>> data, I get error in glm.fit: NA/NaN/Inf in 'x'. When I run it on a single\n>> instance of the grid, I \"get away\" with a warning (\"algorithm did not\n>> converge\").\n>>\n>> Here's a fake dataset. It was grinding for a while but not throwing errors\n>> (like my original data would). Regardless, it demonstrates the repeated\n>> sampling at the same points and the large number of zeroes.\n>>\n>\n> The data set has 1000 values in Lon, so is probably bigger than you\n> intended, and when 100 is used is not autocorrelated. You seem to have a\n> hierarchical model, with repeated measurements at the locations, so a\n> multi-level treatment of some kind may be sensible. If you want to stay\n> with ME-based spatial filtering, maybe look at the literature on spatial\n> panel (repeated measurements are in time) with ME/SF, and on network\n> autocorrelation (dyadic relationships with autocorrelation among origins\n> and/or destinations). Both these cases use Kronecker products on the\n> selected eigenvectors, I think.\n>\n> Alternatively, use a standard GLMM with a grouped iid random effect and/or\n> a spatially structured random effect at the 20 location level. If the\n> groups are repeated observations in time, you should model the whole\n> (non-)separable space-time process.\n>\n> Hope this helps,\n>\n> Roger\n>\n>\n>> Any advice would be most welcome.\n>>\n>> library(spdep)\n>> library(MASS)\n>>\n>> df <- data.frame(Loc = as.factor(rep(1:20, each = 5)), Lat = rnorm(100,\n>> 30,\n>> 0.1), Lon = rnorm(1000, -75, 1), x = rnegbin(100, 1, 1))\n>> coordinates(df) <- ~Lon + Lat\n>> proj4string(df) <- CRS(\"+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs\")\n>> nb <- dnearneigh(x=coordinates(df), d1=0, d2=200,longlat = TRUE)\n>> dists <- nbdists(nb, coordinates(df), longlat=TRUE)\n>> glist <- lapply(dists, function(x) 1/x)\n>> lw <- nb2listw(nb, glist, style=\"W\")\n>> me <- ME(x ~ 1, data = df, family = \"quasipoisson\", listw = lw, alpha =\n>> 0.5)\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics,\n> Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> Editor-in-Chief of The R Journal, https://journal.r-project.org/index.html\n> http://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you so much for your response.\n\nYes, I managed to muck up the fake data in 2 (!) ways - the 1,000 lons and\nthe fact that the lon/lats weren't repeated. Here's the correct structure.\n\ndf <- data.",
+      "thread_id": "thread-6938eb81b388",
+      "thread_depth": 2,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-eb65cc42def3",
+      "message_id": "<alpine.LFD.2.21.1801111317310.22716@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2018-01-11T13:18:48+01:00",
+      "subject": "[R-sig-Geo] Spatial filtering with glm with grid sampling",
+      "subject_clean": "Spatial filtering with glm with grid sampling",
+      "in_reply_to": "<CAFGTTqTE_rbUMm4G1N1G4u_Ajoq+wLmUQa4fAxx2eMRswJ+hYw@mail.gmail.com>",
+      "references": [
+        "<CAFGTTqTvUfdnZEn9LxHL=wwwr8GykffPsf81kF1nOniUP9GLvg@mail.gmail.com>",
+        "<alpine.LFD.2.21.1801110944550.22121@reclus.nhh.no>",
+        "<CAFGTTqTE_rbUMm4G1N1G4u_Ajoq+wLmUQa4fAxx2eMRswJ+hYw@mail.gmail.com>"
+      ],
+      "body_plain": "On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n\n> Thank you so much for your response.\n>\n> Yes, I managed to muck up the fake data in 2 (!) ways - the 1,000 lons and\n> the fact that the lon/lats weren't repeated. Here's the correct structure.\n>\n> df <- data.frame(Loc = as.factor(rep(1:20, each = 5)), Lat = rep(rnorm(20,\n> 30, 0.1), each = 5), Lon = rep(rnorm(20, -75, 1), each = 5), x =\n> rnegbin(100, 1, 1),\n> Stratum = rep(1:5, each = 20))\n>\n> In the meantime, I (somewhat) resolved the issue with the glmmPQL fixed\n> effects - my fault, of course.\n>\n> My current model is set up as follows:\n>\n> mod1 <- glmmPQL(Count ~ Stratum + SiteInStratum + ...other predictors,\n> random = ~ 1 |RoundStart,\n> family = quasipoisson,\n> correlation = corExp(form=~site.Easting + site.Northing + RoundStart)\n>\n> where RoundStart is the date/time of starting each count. I'm assuming that\n> by \"using a standard GLMM\" you were thinking of MASS's glmmPQL()?\n> Does this look correct for specifying the full space/time dependence? The\n> variogram and pacf look very decent, but one can never have too many\n> checks...\n\nI can't judge whether it really makes sense, but I think this is much more \nrobust. I'd explore some other GLMMs too, to see what they contribute.\n\nRoger\n\n>\n> On Thu, Jan 11, 2018 at 5:01 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n>\n>> On Wed, 10 Jan 2018, Sima Usvyatsov wrote:\n>>\n>> Hello,\n>>>\n>>> I am running a negative binomial model (MASS) on count data collected on a\n>>> grid. The dataset is large - ~4,000 points, with many predictors. Being\n>>> counts, there are a lot of zeroes. All data are collected on a grid with\n>>> 20\n>>> points, with high spatial autocorrelation.\n>>>\n>>> I would like to filter out the spatial autocorrelation. My question is:\n>>> since I have very limited spatial info (only 20 distinct spatial\n>>> locations), is it possible to simplify ME() so that I don't have to run it\n>>> on the whole dataset? When I try to run ME() on a 100-point subset of the\n>>> data, I get error in glm.fit: NA/NaN/Inf in 'x'. When I run it on a single\n>>> instance of the grid, I \"get away\" with a warning (\"algorithm did not\n>>> converge\").\n>>>\n>>> Here's a fake dataset. It was grinding for a while but not throwing errors\n>>> (like my original data would). Regardless, it demonstrates the repeated\n>>> sampling at the same points and the large number of zeroes.\n>>>\n>>\n>> The data set has 1000 values in Lon, so is probably bigger than you\n>> intended, and when 100 is used is not autocorrelated. You seem to have a\n>> hierarchical model, with repeated measurements at the locations, so a\n>> multi-level treatment of some kind may be sensible. If you want to stay\n>> with ME-based spatial filtering, maybe look at the literature on spatial\n>> panel (repeated measurements are in time) with ME/SF, and on network\n>> autocorrelation (dyadic relationships with autocorrelation among origins\n>> and/or destinations). Both these cases use Kronecker products on the\n>> selected eigenvectors, I think.\n>>\n>> Alternatively, use a standard GLMM with a grouped iid random effect and/or\n>> a spatially structured random effect at the 20 location level. If the\n>> groups are repeated observations in time, you should model the whole\n>> (non-)separable space-time process.\n>>\n>> Hope this helps,\n>>\n>> Roger\n>>\n>>\n>>> Any advice would be most welcome.\n>>>\n>>> library(spdep)\n>>> library(MASS)\n>>>\n>>> df <- data.frame(Loc = as.factor(rep(1:20, each = 5)), Lat = rnorm(100,\n>>> 30,\n>>> 0.1), Lon = rnorm(1000, -75, 1), x = rnegbin(100, 1, 1))\n>>> coordinates(df) <- ~Lon + Lat\n>>> proj4string(df) <- CRS(\"+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs\")\n>>> nb <- dnearneigh(x=coordinates(df), d1=0, d2=200,longlat = TRUE)\n>>> dists <- nbdists(nb, coordinates(df), longlat=TRUE)\n>>> glist <- lapply(dists, function(x) 1/x)\n>>> lw <- nb2listw(nb, glist, style=\"W\")\n>>> me <- ME(x ~ 1, data = df, family = \"quasipoisson\", listw = lw, alpha =\n>>> 0.5)\n>>>\n>>>         [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>>\n>> --\n>> Roger Bivand\n>> Department of Economics, Norwegian School of Economics,\n>> Helleveien 30, N-5045 Bergen, Norway.\n>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n>> Editor-in-Chief of The R Journal, https://journal.r-project.org/index.html\n>> http://orcid.org/0000-0003-2392-6140\n>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>>\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nEditor-in-Chief of The R Journal, https://journal.r-project.org/index.html\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n\n> Thank you so much for your response.\n>\n> Yes, I managed to muck up the fake data in 2 (!) ways - the 1,000 lons and\n> the fact that the lon/lats weren't r",
+      "thread_id": "thread-6938eb81b388",
+      "thread_depth": 3,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-836f4d3949fa",
+      "message_id": "<CAFGTTqQY+ov3Y6SBTqTQhq4xP5dfi_OFzt=UOBSB0eUq+nX4RA@mail.gmail.com>",
+      "from_name": "Sima Usvyatsov",
+      "from_email_hash": "76ec0fe19a781e0860c9c72e02535948c22cbfffed9791758577e751499f73d4",
+      "date": "2018-01-11T08:22:21-04:00",
+      "subject": "[R-sig-Geo] Spatial filtering with glm with grid sampling",
+      "subject_clean": "Spatial filtering with glm with grid sampling",
+      "in_reply_to": "<alpine.LFD.2.21.1801111317310.22716@reclus.nhh.no>",
+      "references": [
+        "<CAFGTTqTvUfdnZEn9LxHL=wwwr8GykffPsf81kF1nOniUP9GLvg@mail.gmail.com>",
+        "<alpine.LFD.2.21.1801110944550.22121@reclus.nhh.no>",
+        "<CAFGTTqTE_rbUMm4G1N1G4u_Ajoq+wLmUQa4fAxx2eMRswJ+hYw@mail.gmail.com>",
+        "<alpine.LFD.2.21.1801111317310.22716@reclus.nhh.no>"
+      ],
+      "body_plain": "What other GLMM options do I have, under the restrictions of count data\nwith lots of zeroes and spatial autocorrelation? I was under the impression\nthat glmmPQL was my only choice?\n\nOn Thu, Jan 11, 2018 at 8:18 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n>\n> Thank you so much for your response.\n>>\n>> Yes, I managed to muck up the fake data in 2 (!) ways - the 1,000 lons and\n>> the fact that the lon/lats weren't repeated. Here's the correct structure.\n>>\n>> df <- data.frame(Loc = as.factor(rep(1:20, each = 5)), Lat = rep(rnorm(20,\n>> 30, 0.1), each = 5), Lon = rep(rnorm(20, -75, 1), each = 5), x =\n>> rnegbin(100, 1, 1),\n>> Stratum = rep(1:5, each = 20))\n>>\n>> In the meantime, I (somewhat) resolved the issue with the glmmPQL fixed\n>> effects - my fault, of course.\n>>\n>> My current model is set up as follows:\n>>\n>> mod1 <- glmmPQL(Count ~ Stratum + SiteInStratum + ...other predictors,\n>> random = ~ 1 |RoundStart,\n>> family = quasipoisson,\n>> correlation = corExp(form=~site.Easting + site.Northing + RoundStart)\n>>\n>> where RoundStart is the date/time of starting each count. I'm assuming\n>> that\n>> by \"using a standard GLMM\" you were thinking of MASS's glmmPQL()?\n>> Does this look correct for specifying the full space/time dependence? The\n>> variogram and pacf look very decent, but one can never have too many\n>> checks...\n>>\n>\n> I can't judge whether it really makes sense, but I think this is much more\n> robust. I'd explore some other GLMMs too, to see what they contribute.\n>\n> Roger\n>\n>\n>\n>> On Thu, Jan 11, 2018 at 5:01 AM, Roger Bivand <Roger.Bivand at nhh.no>\n>> wrote:\n>>\n>> On Wed, 10 Jan 2018, Sima Usvyatsov wrote:\n>>>\n>>> Hello,\n>>>\n>>>>\n>>>> I am running a negative binomial model (MASS) on count data collected\n>>>> on a\n>>>> grid. The dataset is large - ~4,000 points, with many predictors. Being\n>>>> counts, there are a lot of zeroes. All data are collected on a grid with\n>>>> 20\n>>>> points, with high spatial autocorrelation.\n>>>>\n>>>> I would like to filter out the spatial autocorrelation. My question is:\n>>>> since I have very limited spatial info (only 20 distinct spatial\n>>>> locations), is it possible to simplify ME() so that I don't have to run\n>>>> it\n>>>> on the whole dataset? When I try to run ME() on a 100-point subset of\n>>>> the\n>>>> data, I get error in glm.fit: NA/NaN/Inf in 'x'. When I run it on a\n>>>> single\n>>>> instance of the grid, I \"get away\" with a warning (\"algorithm did not\n>>>> converge\").\n>>>>\n>>>> Here's a fake dataset. It was grinding for a while but not throwing\n>>>> errors\n>>>> (like my original data would). Regardless, it demonstrates the repeated\n>>>> sampling at the same points and the large number of zeroes.\n>>>>\n>>>>\n>>> The data set has 1000 values in Lon, so is probably bigger than you\n>>> intended, and when 100 is used is not autocorrelated. You seem to have a\n>>> hierarchical model, with repeated measurements at the locations, so a\n>>> multi-level treatment of some kind may be sensible. If you want to stay\n>>> with ME-based spatial filtering, maybe look at the literature on spatial\n>>> panel (repeated measurements are in time) with ME/SF, and on network\n>>> autocorrelation (dyadic relationships with autocorrelation among origins\n>>> and/or destinations). Both these cases use Kronecker products on the\n>>> selected eigenvectors, I think.\n>>>\n>>> Alternatively, use a standard GLMM with a grouped iid random effect\n>>> and/or\n>>> a spatially structured random effect at the 20 location level. If the\n>>> groups are repeated observations in time, you should model the whole\n>>> (non-)separable space-time process.\n>>>\n>>> Hope this helps,\n>>>\n>>> Roger\n>>>\n>>>\n>>> Any advice would be most welcome.\n>>>>\n>>>> library(spdep)\n>>>> library(MASS)\n>>>>\n>>>> df <- data.frame(Loc = as.factor(rep(1:20, each = 5)), Lat = rnorm(100,\n>>>> 30,\n>>>> 0.1), Lon = rnorm(1000, -75, 1), x = rnegbin(100, 1, 1))\n>>>> coordinates(df) <- ~Lon + Lat\n>>>> proj4string(df) <- CRS(\"+proj=longlat +ellps=WGS84 +datum=WGS84\n>>>> +no_defs\")\n>>>> nb <- dnearneigh(x=coordinates(df), d1=0, d2=200,longlat = TRUE)\n>>>> dists <- nbdists(nb, coordinates(df), longlat=TRUE)\n>>>> glist <- lapply(dists, function(x) 1/x)\n>>>> lw <- nb2listw(nb, glist, style=\"W\")\n>>>> me <- ME(x ~ 1, data = df, family = \"quasipoisson\", listw = lw, alpha =\n>>>> 0.5)\n>>>>\n>>>>         [[alternative HTML version deleted]]\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>\n>>>>\n>>>> --\n>>> Roger Bivand\n>>> Department of Economics, Norwegian School of Economics,\n>>> Helleveien 30, N-5045 Bergen, Norway.\n>>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n>>> Editor-in-Chief of The R Journal, https://journal.r-project.org/\n>>> index.html\n>>> http://orcid.org/0000-0003-2392-6140\n>>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>>>\n>>>\n>>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics,\n> Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> Editor-in-Chief of The R Journal, https://journal.r-project.org/index.html\n> http://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "What other GLMM options do I have, under the restrictions of count data\nwith lots of zeroes and spatial autocorrelation? I was under the impression\nthat glmmPQL was my only choice?\n\nOn Thu, Jan 11, 20",
+      "thread_id": "thread-6938eb81b388",
+      "thread_depth": 4,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-037da5712158",
+      "message_id": "<alpine.LFD.2.21.1801111331170.22716@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2018-01-11T13:33:38+01:00",
+      "subject": "[R-sig-Geo] Spatial filtering with glm with grid sampling",
+      "subject_clean": "Spatial filtering with glm with grid sampling",
+      "in_reply_to": "<CAFGTTqQY+ov3Y6SBTqTQhq4xP5dfi_OFzt=UOBSB0eUq+nX4RA@mail.gmail.com>",
+      "references": [
+        "<CAFGTTqTvUfdnZEn9LxHL=wwwr8GykffPsf81kF1nOniUP9GLvg@mail.gmail.com>",
+        "<alpine.LFD.2.21.1801110944550.22121@reclus.nhh.no>",
+        "<CAFGTTqTE_rbUMm4G1N1G4u_Ajoq+wLmUQa4fAxx2eMRswJ+hYw@mail.gmail.com>",
+        "<alpine.LFD.2.21.1801111317310.22716@reclus.nhh.no>",
+        "<CAFGTTqQY+ov3Y6SBTqTQhq4xP5dfi_OFzt=UOBSB0eUq+nX4RA@mail.gmail.com>"
+      ],
+      "body_plain": "On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n\n> What other GLMM options do I have, under the restrictions of count data\n> with lots of zeroes and spatial autocorrelation? I was under the impression\n> that glmmPQL was my only choice?\n\nSee for example:\n\nhttps://www.fromthebottomoftheheap.net/2017/05/04/compare-mgcv-with-glmmTMB/\n\nhttps://rjournal.github.io/archive/2017/RJ-2017-066/index.html \n(forthcoming)\n\nfor surveys and discussions; maybe your current choice is the best bet for \nnegbin.\n\nRoger\n\n>\n> On Thu, Jan 11, 2018 at 8:18 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n>\n>> On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n>>\n>> Thank you so much for your response.\n>>>\n>>> Yes, I managed to muck up the fake data in 2 (!) ways - the 1,000 lons and\n>>> the fact that the lon/lats weren't repeated. Here's the correct structure.\n>>>\n>>> df <- data.frame(Loc = as.factor(rep(1:20, each = 5)), Lat = rep(rnorm(20,\n>>> 30, 0.1), each = 5), Lon = rep(rnorm(20, -75, 1), each = 5), x =\n>>> rnegbin(100, 1, 1),\n>>> Stratum = rep(1:5, each = 20))\n>>>\n>>> In the meantime, I (somewhat) resolved the issue with the glmmPQL fixed\n>>> effects - my fault, of course.\n>>>\n>>> My current model is set up as follows:\n>>>\n>>> mod1 <- glmmPQL(Count ~ Stratum + SiteInStratum + ...other predictors,\n>>> random = ~ 1 |RoundStart,\n>>> family = quasipoisson,\n>>> correlation = corExp(form=~site.Easting + site.Northing + RoundStart)\n>>>\n>>> where RoundStart is the date/time of starting each count. I'm assuming\n>>> that\n>>> by \"using a standard GLMM\" you were thinking of MASS's glmmPQL()?\n>>> Does this look correct for specifying the full space/time dependence? The\n>>> variogram and pacf look very decent, but one can never have too many\n>>> checks...\n>>>\n>>\n>> I can't judge whether it really makes sense, but I think this is much more\n>> robust. I'd explore some other GLMMs too, to see what they contribute.\n>>\n>> Roger\n>>\n>>\n>>\n>>> On Thu, Jan 11, 2018 at 5:01 AM, Roger Bivand <Roger.Bivand at nhh.no>\n>>> wrote:\n>>>\n>>> On Wed, 10 Jan 2018, Sima Usvyatsov wrote:\n>>>>\n>>>> Hello,\n>>>>\n>>>>>\n>>>>> I am running a negative binomial model (MASS) on count data collected\n>>>>> on a\n>>>>> grid. The dataset is large - ~4,000 points, with many predictors. Being\n>>>>> counts, there are a lot of zeroes. All data are collected on a grid with\n>>>>> 20\n>>>>> points, with high spatial autocorrelation.\n>>>>>\n>>>>> I would like to filter out the spatial autocorrelation. My question is:\n>>>>> since I have very limited spatial info (only 20 distinct spatial\n>>>>> locations), is it possible to simplify ME() so that I don't have to run\n>>>>> it\n>>>>> on the whole dataset? When I try to run ME() on a 100-point subset of\n>>>>> the\n>>>>> data, I get error in glm.fit: NA/NaN/Inf in 'x'. When I run it on a\n>>>>> single\n>>>>> instance of the grid, I \"get away\" with a warning (\"algorithm did not\n>>>>> converge\").\n>>>>>\n>>>>> Here's a fake dataset. It was grinding for a while but not throwing\n>>>>> errors\n>>>>> (like my original data would). Regardless, it demonstrates the repeated\n>>>>> sampling at the same points and the large number of zeroes.\n>>>>>\n>>>>>\n>>>> The data set has 1000 values in Lon, so is probably bigger than you\n>>>> intended, and when 100 is used is not autocorrelated. You seem to have a\n>>>> hierarchical model, with repeated measurements at the locations, so a\n>>>> multi-level treatment of some kind may be sensible. If you want to stay\n>>>> with ME-based spatial filtering, maybe look at the literature on spatial\n>>>> panel (repeated measurements are in time) with ME/SF, and on network\n>>>> autocorrelation (dyadic relationships with autocorrelation among origins\n>>>> and/or destinations). Both these cases use Kronecker products on the\n>>>> selected eigenvectors, I think.\n>>>>\n>>>> Alternatively, use a standard GLMM with a grouped iid random effect\n>>>> and/or\n>>>> a spatially structured random effect at the 20 location level. If the\n>>>> groups are repeated observations in time, you should model the whole\n>>>> (non-)separable space-time process.\n>>>>\n>>>> Hope this helps,\n>>>>\n>>>> Roger\n>>>>\n>>>>\n>>>> Any advice would be most welcome.\n>>>>>\n>>>>> library(spdep)\n>>>>> library(MASS)\n>>>>>\n>>>>> df <- data.frame(Loc = as.factor(rep(1:20, each = 5)), Lat = rnorm(100,\n>>>>> 30,\n>>>>> 0.1), Lon = rnorm(1000, -75, 1), x = rnegbin(100, 1, 1))\n>>>>> coordinates(df) <- ~Lon + Lat\n>>>>> proj4string(df) <- CRS(\"+proj=longlat +ellps=WGS84 +datum=WGS84\n>>>>> +no_defs\")\n>>>>> nb <- dnearneigh(x=coordinates(df), d1=0, d2=200,longlat = TRUE)\n>>>>> dists <- nbdists(nb, coordinates(df), longlat=TRUE)\n>>>>> glist <- lapply(dists, function(x) 1/x)\n>>>>> lw <- nb2listw(nb, glist, style=\"W\")\n>>>>> me <- ME(x ~ 1, data = df, family = \"quasipoisson\", listw = lw, alpha =\n>>>>> 0.5)\n>>>>>\n>>>>>         [[alternative HTML version deleted]]\n>>>>>\n>>>>> _______________________________________________\n>>>>> R-sig-Geo mailing list\n>>>>> R-sig-Geo at r-project.org\n>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>>\n>>>>>\n>>>>> --\n>>>> Roger Bivand\n>>>> Department of Economics, Norwegian School of Economics,\n>>>> Helleveien 30, N-5045 Bergen, Norway.\n>>>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n>>>> Editor-in-Chief of The R Journal, https://journal.r-project.org/\n>>>> index.html\n>>>> http://orcid.org/0000-0003-2392-6140\n>>>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>>>>\n>>>>\n>>>\n>> --\n>> Roger Bivand\n>> Department of Economics, Norwegian School of Economics,\n>> Helleveien 30, N-5045 Bergen, Norway.\n>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n>> Editor-in-Chief of The R Journal, https://journal.r-project.org/index.html\n>> http://orcid.org/0000-0003-2392-6140\n>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>>\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nEditor-in-Chief of The R Journal, https://journal.r-project.org/index.html\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n\n> What other GLMM options do I have, under the restrictions of count data\n> with lots of zeroes and spatial autocorrelation? I was under the impression\n> th",
+      "thread_id": "thread-6938eb81b388",
+      "thread_depth": 5,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-7ea0c5537e88",
+      "message_id": "<CAFGTTqScbgFzmAyEAN27mymsHM8o4PfnZC9sAzeOeVrKVCTfiw@mail.gmail.com>",
+      "from_name": "Sima Usvyatsov",
+      "from_email_hash": "76ec0fe19a781e0860c9c72e02535948c22cbfffed9791758577e751499f73d4",
+      "date": "2018-01-11T12:53:27-04:00",
+      "subject": "[R-sig-Geo] Spatial filtering with glm with grid sampling",
+      "subject_clean": "Spatial filtering with glm with grid sampling",
+      "in_reply_to": "<alpine.LFD.2.21.1801111331170.22716@reclus.nhh.no>",
+      "references": [
+        "<CAFGTTqTvUfdnZEn9LxHL=wwwr8GykffPsf81kF1nOniUP9GLvg@mail.gmail.com>",
+        "<alpine.LFD.2.21.1801110944550.22121@reclus.nhh.no>",
+        "<CAFGTTqTE_rbUMm4G1N1G4u_Ajoq+wLmUQa4fAxx2eMRswJ+hYw@mail.gmail.com>",
+        "<alpine.LFD.2.21.1801111317310.22716@reclus.nhh.no>",
+        "<CAFGTTqQY+ov3Y6SBTqTQhq4xP5dfi_OFzt=UOBSB0eUq+nX4RA@mail.gmail.com>",
+        "<alpine.LFD.2.21.1801111331170.22716@reclus.nhh.no>"
+      ],
+      "body_plain": "I had no idea this was coming up - can't believe it didn't come up in any\nof my searches. Looks super useful, and I'm sure I'll be using it sooner\nthan later, whether on this analysis or not. The worked example is\nridiculously useful - so glad to have it.\n\nIf I'm reading the help page correctly (the autocorrelation bits,\nstruc(terms|group)) - to replicate the spatial autocorrelation within\nRound, would I add this?\n\nexp(site.Easting + site.Northing | RoundStart)\n\nSo something like this:\n\nmod1 <- glmmTMB(Count ~ Stratum + SiteInStratum + ...other predictors +\n# random variable\n(1 | RoundStart) +\n# autocorrelation\nexp(site.Easting + site.Northing | RoundStart),\n\nfamily = nbinom2, # or nbinom1 - I guess decide based on residuals?\ncorrelation = corExp(form=~site.Easting + site.Northing + RoundStart)\n\nDoes that look like the twin of the glmmPQL specification I had (other than\nfamily)? I can also email sig-ME if it's a better forum for this.\n\nOn Thu, Jan 11, 2018 at 8:33 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n>\n> What other GLMM options do I have, under the restrictions of count data\n>> with lots of zeroes and spatial autocorrelation? I was under the\n>> impression\n>> that glmmPQL was my only choice?\n>>\n>\n> See for example:\n>\n> https://www.fromthebottomoftheheap.net/2017/05/04/compare-\n> mgcv-with-glmmTMB/\n>\n> https://rjournal.github.io/archive/2017/RJ-2017-066/index.html\n> (forthcoming)\n>\n> for surveys and discussions; maybe your current choice is the best bet for\n> negbin.\n>\n>\n> Roger\n>\n>\n>> On Thu, Jan 11, 2018 at 8:18 AM, Roger Bivand <Roger.Bivand at nhh.no>\n>> wrote:\n>>\n>> On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n>>>\n>>> Thank you so much for your response.\n>>>\n>>>>\n>>>> Yes, I managed to muck up the fake data in 2 (!) ways - the 1,000 lons\n>>>> and\n>>>> the fact that the lon/lats weren't repeated. Here's the correct\n>>>> structure.\n>>>>\n>>>> df <- data.frame(Loc = as.factor(rep(1:20, each = 5)), Lat =\n>>>> rep(rnorm(20,\n>>>> 30, 0.1), each = 5), Lon = rep(rnorm(20, -75, 1), each = 5), x =\n>>>> rnegbin(100, 1, 1),\n>>>> Stratum = rep(1:5, each = 20))\n>>>>\n>>>> In the meantime, I (somewhat) resolved the issue with the glmmPQL fixed\n>>>> effects - my fault, of course.\n>>>>\n>>>> My current model is set up as follows:\n>>>>\n>>>> mod1 <- glmmPQL(Count ~ Stratum + SiteInStratum + ...other predictors,\n>>>> random = ~ 1 |RoundStart,\n>>>> family = quasipoisson,\n>>>> correlation = corExp(form=~site.Easting + site.Northing + RoundStart)\n>>>>\n>>>> where RoundStart is the date/time of starting each count. I'm assuming\n>>>> that\n>>>> by \"using a standard GLMM\" you were thinking of MASS's glmmPQL()?\n>>>> Does this look correct for specifying the full space/time dependence?\n>>>> The\n>>>> variogram and pacf look very decent, but one can never have too many\n>>>> checks...\n>>>>\n>>>>\n>>> I can't judge whether it really makes sense, but I think this is much\n>>> more\n>>> robust. I'd explore some other GLMMs too, to see what they contribute.\n>>>\n>>> Roger\n>>>\n>>>\n>>>\n>>> On Thu, Jan 11, 2018 at 5:01 AM, Roger Bivand <Roger.Bivand at nhh.no>\n>>>> wrote:\n>>>>\n>>>> On Wed, 10 Jan 2018, Sima Usvyatsov wrote:\n>>>>\n>>>>>\n>>>>> Hello,\n>>>>>\n>>>>>\n>>>>>> I am running a negative binomial model (MASS) on count data collected\n>>>>>> on a\n>>>>>> grid. The dataset is large - ~4,000 points, with many predictors.\n>>>>>> Being\n>>>>>> counts, there are a lot of zeroes. All data are collected on a grid\n>>>>>> with\n>>>>>> 20\n>>>>>> points, with high spatial autocorrelation.\n>>>>>>\n>>>>>> I would like to filter out the spatial autocorrelation. My question\n>>>>>> is:\n>>>>>> since I have very limited spatial info (only 20 distinct spatial\n>>>>>> locations), is it possible to simplify ME() so that I don't have to\n>>>>>> run\n>>>>>> it\n>>>>>> on the whole dataset? When I try to run ME() on a 100-point subset of\n>>>>>> the\n>>>>>> data, I get error in glm.fit: NA/NaN/Inf in 'x'. When I run it on a\n>>>>>> single\n>>>>>> instance of the grid, I \"get away\" with a warning (\"algorithm did not\n>>>>>> converge\").\n>>>>>>\n>>>>>> Here's a fake dataset. It was grinding for a while but not throwing\n>>>>>> errors\n>>>>>> (like my original data would). Regardless, it demonstrates the\n>>>>>> repeated\n>>>>>> sampling at the same points and the large number of zeroes.\n>>>>>>\n>>>>>>\n>>>>>> The data set has 1000 values in Lon, so is probably bigger than you\n>>>>> intended, and when 100 is used is not autocorrelated. You seem to have\n>>>>> a\n>>>>> hierarchical model, with repeated measurements at the locations, so a\n>>>>> multi-level treatment of some kind may be sensible. If you want to stay\n>>>>> with ME-based spatial filtering, maybe look at the literature on\n>>>>> spatial\n>>>>> panel (repeated measurements are in time) with ME/SF, and on network\n>>>>> autocorrelation (dyadic relationships with autocorrelation among\n>>>>> origins\n>>>>> and/or destinations). Both these cases use Kronecker products on the\n>>>>> selected eigenvectors, I think.\n>>>>>\n>>>>> Alternatively, use a standard GLMM with a grouped iid random effect\n>>>>> and/or\n>>>>> a spatially structured random effect at the 20 location level. If the\n>>>>> groups are repeated observations in time, you should model the whole\n>>>>> (non-)separable space-time process.\n>>>>>\n>>>>> Hope this helps,\n>>>>>\n>>>>> Roger\n>>>>>\n>>>>>\n>>>>> Any advice would be most welcome.\n>>>>>\n>>>>>>\n>>>>>> library(spdep)\n>>>>>> library(MASS)\n>>>>>>\n>>>>>> df <- data.frame(Loc = as.factor(rep(1:20, each = 5)), Lat =\n>>>>>> rnorm(100,\n>>>>>> 30,\n>>>>>> 0.1), Lon = rnorm(1000, -75, 1), x = rnegbin(100, 1, 1))\n>>>>>> coordinates(df) <- ~Lon + Lat\n>>>>>> proj4string(df) <- CRS(\"+proj=longlat +ellps=WGS84 +datum=WGS84\n>>>>>> +no_defs\")\n>>>>>> nb <- dnearneigh(x=coordinates(df), d1=0, d2=200,longlat = TRUE)\n>>>>>> dists <- nbdists(nb, coordinates(df), longlat=TRUE)\n>>>>>> glist <- lapply(dists, function(x) 1/x)\n>>>>>> lw <- nb2listw(nb, glist,\n>>>>>> <https://maps.google.com/?q=tw(nb,+glist,&entry=gmail&source=g>\n>>>>>> style=\"W\")\n>>>>>> me <- ME(x ~ 1, data = df, family = \"quasipoisson\", listw = lw, alpha\n>>>>>> =\n>>>>>> 0.5)\n>>>>>>\n>>>>>>         [[alternative HTML version deleted]]\n>>>>>>\n>>>>>> _______________________________________________\n>>>>>> R-sig-Geo mailing list\n>>>>>> R-sig-Geo at r-project.org\n>>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>>>\n>>>>>>\n>>>>>> --\n>>>>>>\n>>>>> Roger Bivand\n>>>>> Department of Economics, Norwegian School of Economics,\n>>>>> Helleveien 30, N-5045 Bergen, Norway.\n>>>>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n>>>>> Editor-in-Chief of The R Journal, https://journal.r-project.org/\n>>>>> index.html\n>>>>> http://orcid.org/0000-0003-2392-6140\n>>>>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>>>>>\n>>>>>\n>>>>>\n>>>> --\n>>> Roger Bivand\n>>> Department of Economics, Norwegian School of Economics,\n>>> Helleveien 30, N-5045 Bergen, Norway.\n>>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n>>> Editor-in-Chief of The R Journal, https://journal.r-project.org/\n>>> index.html\n>>> http://orcid.org/0000-0003-2392-6140\n>>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>>>\n>>>\n>>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics,\n> Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> Editor-in-Chief of The R Journal, https://journal.r-project.org/index.html\n> http://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I had no idea this was coming up - can't believe it didn't come up in any\nof my searches. Looks super useful, and I'm sure I'll be using it sooner\nthan later, whether on this analysis or not. The work",
+      "thread_id": "thread-6938eb81b388",
+      "thread_depth": 6,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-884476c571c3",
+      "message_id": "<alpine.LFD.2.21.1801121345000.5376@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2018-01-12T13:45:53+01:00",
+      "subject": "[R-sig-Geo] Spatial filtering with glm with grid sampling",
+      "subject_clean": "Spatial filtering with glm with grid sampling",
+      "in_reply_to": "<CAFGTTqScbgFzmAyEAN27mymsHM8o4PfnZC9sAzeOeVrKVCTfiw@mail.gmail.com>",
+      "references": [
+        "<CAFGTTqTvUfdnZEn9LxHL=wwwr8GykffPsf81kF1nOniUP9GLvg@mail.gmail.com>",
+        "<alpine.LFD.2.21.1801110944550.22121@reclus.nhh.no>",
+        "<CAFGTTqTE_rbUMm4G1N1G4u_Ajoq+wLmUQa4fAxx2eMRswJ+hYw@mail.gmail.com>",
+        "<alpine.LFD.2.21.1801111317310.22716@reclus.nhh.no>",
+        "<CAFGTTqQY+ov3Y6SBTqTQhq4xP5dfi_OFzt=UOBSB0eUq+nX4RA@mail.gmail.com>",
+        "<alpine.LFD.2.21.1801111331170.22716@reclus.nhh.no>",
+        "<CAFGTTqScbgFzmAyEAN27mymsHM8o4PfnZC9sAzeOeVrKVCTfiw@mail.gmail.com>"
+      ],
+      "body_plain": "On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n\n> I had no idea this was coming up - can't believe it didn't come up in any\n> of my searches. Looks super useful, and I'm sure I'll be using it sooner\n> than later, whether on this analysis or not. The worked example is\n> ridiculously useful - so glad to have it.\n>\n> If I'm reading the help page correctly (the autocorrelation bits,\n> struc(terms|group)) - to replicate the spatial autocorrelation within\n> Round, would I add this?\n\nNot sure - please report back if you find an equivalent to the glmmPQL \napproach.\n\nRoger\n\n>\n> exp(site.Easting + site.Northing | RoundStart)\n>\n> So something like this:\n>\n> mod1 <- glmmTMB(Count ~ Stratum + SiteInStratum + ...other predictors +\n> # random variable\n> (1 | RoundStart) +\n> # autocorrelation\n> exp(site.Easting + site.Northing | RoundStart),\n>\n> family = nbinom2, # or nbinom1 - I guess decide based on residuals?\n> correlation = corExp(form=~site.Easting + site.Northing + RoundStart)\n>\n> Does that look like the twin of the glmmPQL specification I had (other than\n> family)? I can also email sig-ME if it's a better forum for this.\n>\n> On Thu, Jan 11, 2018 at 8:33 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n>\n>> On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n>>\n>> What other GLMM options do I have, under the restrictions of count data\n>>> with lots of zeroes and spatial autocorrelation? I was under the\n>>> impression\n>>> that glmmPQL was my only choice?\n>>>\n>>\n>> See for example:\n>>\n>> https://www.fromthebottomoftheheap.net/2017/05/04/compare-\n>> mgcv-with-glmmTMB/\n>>\n>> https://rjournal.github.io/archive/2017/RJ-2017-066/index.html\n>> (forthcoming)\n>>\n>> for surveys and discussions; maybe your current choice is the best bet for\n>> negbin.\n>>\n>>\n>> Roger\n>>\n>>\n>>> On Thu, Jan 11, 2018 at 8:18 AM, Roger Bivand <Roger.Bivand at nhh.no>\n>>> wrote:\n>>>\n>>> On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n>>>>\n>>>> Thank you so much for your response.\n>>>>\n>>>>>\n>>>>> Yes, I managed to muck up the fake data in 2 (!) ways - the 1,000 lons\n>>>>> and\n>>>>> the fact that the lon/lats weren't repeated. Here's the correct\n>>>>> structure.\n>>>>>\n>>>>> df <- data.frame(Loc = as.factor(rep(1:20, each = 5)), Lat =\n>>>>> rep(rnorm(20,\n>>>>> 30, 0.1), each = 5), Lon = rep(rnorm(20, -75, 1), each = 5), x =\n>>>>> rnegbin(100, 1, 1),\n>>>>> Stratum = rep(1:5, each = 20))\n>>>>>\n>>>>> In the meantime, I (somewhat) resolved the issue with the glmmPQL fixed\n>>>>> effects - my fault, of course.\n>>>>>\n>>>>> My current model is set up as follows:\n>>>>>\n>>>>> mod1 <- glmmPQL(Count ~ Stratum + SiteInStratum + ...other predictors,\n>>>>> random = ~ 1 |RoundStart,\n>>>>> family = quasipoisson,\n>>>>> correlation = corExp(form=~site.Easting + site.Northing + RoundStart)\n>>>>>\n>>>>> where RoundStart is the date/time of starting each count. I'm assuming\n>>>>> that\n>>>>> by \"using a standard GLMM\" you were thinking of MASS's glmmPQL()?\n>>>>> Does this look correct for specifying the full space/time dependence?\n>>>>> The\n>>>>> variogram and pacf look very decent, but one can never have too many\n>>>>> checks...\n>>>>>\n>>>>>\n>>>> I can't judge whether it really makes sense, but I think this is much\n>>>> more\n>>>> robust. I'd explore some other GLMMs too, to see what they contribute.\n>>>>\n>>>> Roger\n>>>>\n>>>>\n>>>>\n>>>> On Thu, Jan 11, 2018 at 5:01 AM, Roger Bivand <Roger.Bivand at nhh.no>\n>>>>> wrote:\n>>>>>\n>>>>> On Wed, 10 Jan 2018, Sima Usvyatsov wrote:\n>>>>>\n>>>>>>\n>>>>>> Hello,\n>>>>>>\n>>>>>>\n>>>>>>> I am running a negative binomial model (MASS) on count data collected\n>>>>>>> on a\n>>>>>>> grid. The dataset is large - ~4,000 points, with many predictors.\n>>>>>>> Being\n>>>>>>> counts, there are a lot of zeroes. All data are collected on a grid\n>>>>>>> with\n>>>>>>> 20\n>>>>>>> points, with high spatial autocorrelation.\n>>>>>>>\n>>>>>>> I would like to filter out the spatial autocorrelation. My question\n>>>>>>> is:\n>>>>>>> since I have very limited spatial info (only 20 distinct spatial\n>>>>>>> locations), is it possible to simplify ME() so that I don't have to\n>>>>>>> run\n>>>>>>> it\n>>>>>>> on the whole dataset? When I try to run ME() on a 100-point subset of\n>>>>>>> the\n>>>>>>> data, I get error in glm.fit: NA/NaN/Inf in 'x'. When I run it on a\n>>>>>>> single\n>>>>>>> instance of the grid, I \"get away\" with a warning (\"algorithm did not\n>>>>>>> converge\").\n>>>>>>>\n>>>>>>> Here's a fake dataset. It was grinding for a while but not throwing\n>>>>>>> errors\n>>>>>>> (like my original data would). Regardless, it demonstrates the\n>>>>>>> repeated\n>>>>>>> sampling at the same points and the large number of zeroes.\n>>>>>>>\n>>>>>>>\n>>>>>>> The data set has 1000 values in Lon, so is probably bigger than you\n>>>>>> intended, and when 100 is used is not autocorrelated. You seem to have\n>>>>>> a\n>>>>>> hierarchical model, with repeated measurements at the locations, so a\n>>>>>> multi-level treatment of some kind may be sensible. If you want to stay\n>>>>>> with ME-based spatial filtering, maybe look at the literature on\n>>>>>> spatial\n>>>>>> panel (repeated measurements are in time) with ME/SF, and on network\n>>>>>> autocorrelation (dyadic relationships with autocorrelation among\n>>>>>> origins\n>>>>>> and/or destinations). Both these cases use Kronecker products on the\n>>>>>> selected eigenvectors, I think.\n>>>>>>\n>>>>>> Alternatively, use a standard GLMM with a grouped iid random effect\n>>>>>> and/or\n>>>>>> a spatially structured random effect at the 20 location level. If the\n>>>>>> groups are repeated observations in time, you should model the whole\n>>>>>> (non-)separable space-time process.\n>>>>>>\n>>>>>> Hope this helps,\n>>>>>>\n>>>>>> Roger\n>>>>>>\n>>>>>>\n>>>>>> Any advice would be most welcome.\n>>>>>>\n>>>>>>>\n>>>>>>> library(spdep)\n>>>>>>> library(MASS)\n>>>>>>>\n>>>>>>> df <- data.frame(Loc = as.factor(rep(1:20, each = 5)), Lat =\n>>>>>>> rnorm(100,\n>>>>>>> 30,\n>>>>>>> 0.1), Lon = rnorm(1000, -75, 1), x = rnegbin(100, 1, 1))\n>>>>>>> coordinates(df) <- ~Lon + Lat\n>>>>>>> proj4string(df) <- CRS(\"+proj=longlat +ellps=WGS84 +datum=WGS84\n>>>>>>> +no_defs\")\n>>>>>>> nb <- dnearneigh(x=coordinates(df), d1=0, d2=200,longlat = TRUE)\n>>>>>>> dists <- nbdists(nb, coordinates(df), longlat=TRUE)\n>>>>>>> glist <- lapply(dists, function(x) 1/x)\n>>>>>>> lw <- nb2listw(nb, glist,\n>>>>>>> <https://maps.google.com/?q=tw(nb,+glist,&entry=gmail&source=g>\n>>>>>>> style=\"W\")\n>>>>>>> me <- ME(x ~ 1, data = df, family = \"quasipoisson\", listw = lw, alpha\n>>>>>>> =\n>>>>>>> 0.5)\n>>>>>>>\n>>>>>>>         [[alternative HTML version deleted]]\n>>>>>>>\n>>>>>>> _______________________________________________\n>>>>>>> R-sig-Geo mailing list\n>>>>>>> R-sig-Geo at r-project.org\n>>>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>>>>\n>>>>>>>\n>>>>>>> --\n>>>>>>>\n>>>>>> Roger Bivand\n>>>>>> Department of Economics, Norwegian School of Economics,\n>>>>>> Helleveien 30, N-5045 Bergen, Norway.\n>>>>>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n>>>>>> Editor-in-Chief of The R Journal, https://journal.r-project.org/\n>>>>>> index.html\n>>>>>> http://orcid.org/0000-0003-2392-6140\n>>>>>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>>>>>>\n>>>>>>\n>>>>>>\n>>>>> --\n>>>> Roger Bivand\n>>>> Department of Economics, Norwegian School of Economics,\n>>>> Helleveien 30, N-5045 Bergen, Norway.\n>>>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n>>>> Editor-in-Chief of The R Journal, https://journal.r-project.org/\n>>>> index.html\n>>>> http://orcid.org/0000-0003-2392-6140\n>>>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>>>>\n>>>>\n>>>\n>> --\n>> Roger Bivand\n>> Department of Economics, Norwegian School of Economics,\n>> Helleveien 30, N-5045 Bergen, Norway.\n>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n>> Editor-in-Chief of The R Journal, https://journal.r-project.org/index.html\n>> http://orcid.org/0000-0003-2392-6140\n>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>>\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nEditor-in-Chief of The R Journal, https://journal.r-project.org/index.html\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n\n> I had no idea this was coming up - can't believe it didn't come up in any\n> of my searches. Looks super useful, and I'm sure I'll be using it sooner\n> tha",
+      "thread_id": "thread-6938eb81b388",
+      "thread_depth": 7,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-8ed7b2fae565",
+      "message_id": "<8B435C9568170B469AE31E8891E8CC4F471E8488@ESINO.regionemarche.intra>",
+      "from_name": "Stefano Sofia",
+      "from_email_hash": "ad844ad91e261422fdc90fb0d69f16f08797c9ee791fca7060ffa26b82b0561f",
+      "date": "2018-01-18T08:11:44Z",
+      "subject": "[R-sig-Geo] R code for rainfall isohyet map",
+      "subject_clean": "R code for rainfall isohyet map",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear R-sig-geo list users,\ngiven n meteorological automatic stations with rain gouge, I need to produce an image with the isohyets of the rainfall values of my region (Italy, Marche region, on the Adriatic Sea in front of Croatia).\nFor each station the available coordinates are in Gauss Boaga, Long and Lat in degrees, minutes and seconds and Long and Lat in degrees and decimals.\nIn the code below reported Long and Lat in degrees and decimals have been used.\n\nThis is an example of the input file called in the code \"pointfile.csv\":\n\nStation_code, Rainfall_value, GaussBoaga_EST, GaussBoaga_NORD, Long_degrees, Long_minutes, Long_seconds, Lat_degrees, Lat_minutes, Lat_seconds, Long_Cent, Lat_Cent\n1056, 11.8, 2328427, 4851813, 12, 37, 7.45291, 43, 47, 40.09906, 12.618737, 43.794472\n\nThe code below reported (with the precious support of Micha Silver) does compile, but the final image reports some numerical values (isohjet_map.png).\nWould please somebody be able and help me to see where the code can be improved?\n\nThank you for your help\nStefano\n\nCode:\n\nlibrary(automap)\nlibrary(ggplot2)\nlibrary(gstat)\nlibrary(rasterVis)\nlibrary(rgdal)\n\n## READ INPUT FILE\nrain_data <- read.csv(file=\"pointfile.csv\")\nstr(rain_data)\n\npoint_coords <- rain_data[c(\"Long_Cent\",\"Lat_Cent\")]\ncoordinates(rain_data) <- point_coords\np4str <- CRS(\"+init=epsg:4326\")\nproj4string(rain_data) <- p4str\n\n## CONVERTION TO UTM\np4str_UTM <- CRS(\"+init=epsg:32633\")\nrain_data_UTM <- spTransform(rain_data, p4str_UTM)\n\n## CHECK THAT THIS IS A SPDF IN THE UTM COORDINATE SYSTEM\nstr(rain_data_UTM)\n\n## CREATE GRID FOR KRIGING OUTPUT, USING THE EXTENT OF THE RAIN DATA SPDF\nminx <-  rain_data_UTM at bbox[1,1]\nmaxx <- rain_data_UTM at bbox[1,2]\nminy <- rain_data_UTM at bbox[2,1]\nmaxy <- rain_data_UTM at bbox[2,2]\n## EACH PIXEL WILL BE 1000 METERS\npixel <- 1000\ngrd <- expand.grid(x=seq(minx, maxx, by=pixel), y=seq(miny, maxy, by=pixel))\ncoordinates(grd) <- ~x+y\ngridded(grd) <- TRUE\nproj4string(grd) <- p4str_UTM\n\n## KRIGING, USING AUTOKRIGE WHICH CREATES A BEST GUESS VARIOGRAM\nOK_rain <- autoKrige(Rainfall_value ~ 1, rain_data_UTM, grd)\n\n## TRASFORM TO RASTER\nrain_rast <- raster(OK_rain$krige_output)\n\n## READ THE MARCHE BOUNDARY SHAPEFILE\nMarche_shape <- readOGR(dsn=\"Lim_reg_2012_wgs32633.shp\", layer=\"Lim_reg_2012_wgs32633\")\n\n##PLOT\npng(file=\"isohyet_map.png\")\ngplot(rain_rast) + geom_tile(aes(fill=factor(value),alpha=0.8)) + geom_polygon(data=Marche_shape, aes(x=long, y=lat, group=group), fill=NA, color=\"grey50\", size=1) + coord_equal()\ndev.off()\n\n\n\n\n         (oo)\n--oOO--( )--OOo----------------\nStefano Sofia PhD\nArea Meteorologica e  Area nivologica - Centro Funzionale\nServizio Protezione Civile - Regione Marche\nVia del Colle Ameno 5\n60126 Torrette di Ancona, Ancona\nUff: 071 806 7743\nE-mail: stefano.sofia at regione.marche.it\n---Oo---------oO----------------\n\n________________________________\n\nAVVISO IMPORTANTE: Questo messaggio di posta elettronica pu? contenere informazioni confidenziali, pertanto ? destinato solo a persone autorizzate alla ricezione. I messaggi di posta elettronica per i client di Regione Marche possono contenere informazioni confidenziali e con privilegi legali. Se non si ? il destinatario specificato, non leggere, copiare, inoltrare o archiviare questo messaggio. Se si ? ricevuto questo messaggio per errore, inoltrarlo al mittente ed eliminarlo completamente dal sistema del proprio computer. Ai sensi dell?art. 6 della DGR n. 1394/2008 si segnala che, in caso di necessit? ed urgenza, la risposta al presente messaggio di posta elettronica pu? essere visionata da persone estranee al destinatario.\nIMPORTANT NOTICE: This e-mail message is intended to be received only by persons entitled to receive the confidential information it may contain. E-mail messages to clients of Regione Marche may contain information that is confidential and legally privileged. Please do not read, copy, forward, or store this message unless you are an intended recipient of it. If you have received this message in error, please forward it to the sender and delete it completely from your computer system.\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: winmail.dat\nType: application/ms-tnef\nSize: 19973 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20180118/2c606d58/attachment.bin>",
+      "body_snippet": "Dear R-sig-geo list users,\ngiven n meteorological automatic stations with rain gouge, I need to produce an image with the isohyets of the rainfall values of my region (Italy, Marche region, on the Adr",
+      "thread_id": "thread-8ed7b2fae565",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-ad880e15247f",
+      "message_id": "<5cee39aabe224969ab6d4670b54d7de2@EXCHCS32.ornl.gov>",
+      "from_name": "Peterson, Steven K.",
+      "from_email_hash": "eb9209ece04e0899c7f3345feb110e2351d78fc5405f47873dce95d098b843d8",
+      "date": "2018-01-22T20:22:01Z",
+      "subject": "[R-sig-Geo] Updated Text of Applied Spatial Data Analysis with R?",
+      "subject_clean": "Updated Text of Applied Spatial Data Analysis with R?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\n\nApologies if I missed the subject in this thread, but I was wondering if there was an updated version of Applied Spatial Data Analysis with R, Bivand et al, that would reference the sf package, or if there are some existing reference works for using the sf package that are recommended by the group.\n\nThanks,\n\nSteve\n\nOAK RIDGE NATIONAL LABORATORY\nMANAGED BY UT-BATTELLE FOR U.S. DOE\n\nSteven Peterson, Ph.D.\nEconomic and Transportation Geography\nGeographic Information Sciences and Technology Group\nComputational Sciences and Engineering  Division\n\n(865) 574-4676           office\n(865) 399-2464           cell\n\nOne Bethel Valley Road\nP.O. Box 2008, MS-6017\nOak Ridge, TN 37831\npetersonsk at ornl.gov<mailto:petersonsk at ornl.gov>\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nApologies if I missed the subject in this thread, but I was wondering if there was an updated version of Applied Spatial Data Analysis with R, Bivand et al, that would reference the sf package",
+      "thread_id": "thread-ad880e15247f",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-2ed484d433ed",
+      "message_id": "<local-34f0276c-0b3b@pjs-PRO2>",
+      "from_name": "Patrick Schratz",
+      "from_email_hash": "56837c0fe8dbb3ca74e5869de129af76ddd3c78409a2635de445e5dc56a2d8df",
+      "date": "2018-01-22T23:14:13+01:00",
+      "subject": "[R-sig-Geo] Updated Text of Applied Spatial Data Analysis with R?",
+      "subject_clean": "Updated Text of Applied Spatial Data Analysis with R?",
+      "in_reply_to": "<5cee39aabe224969ab6d4670b54d7de2@EXCHCS32.ornl.gov>",
+      "references": [
+        "<5cee39aabe224969ab6d4670b54d7de2@EXCHCS32.ornl.gov>"
+      ],
+      "body_plain": "Dear Steven,\n\nyou might wanna take a look at https://geocompr.robinlovelace.net/index.html\nFurthermore, make sure to read the vignettes (articles) of the sf package: https://r-spatial.github.io/sf/\nCheers, Patrick\n\nPatrick Schratz\nPhD Student at Department of Geography, GIScience group, University of Jena\n\nW: http://pats-s.github.io\n\nOn Jan 22 2018, at 9:22 pm, Peterson, Steven K. <petersonsk at ornl.gov> wrote:\n>\n> Hello,\n> Apologies if I missed the subject in this thread, but I was wondering if there was an updated version of Applied Spatial Data Analysis with R, Bivand et al, that would reference the sf package, or if there are some existing reference works for using the sf package that are recommended by the group.\n> Thanks,\n> Steve\n> OAK RIDGE NATIONAL LABORATORY\n> MANAGED BY UT-BATTELLE FOR U.S. DOE\n>\n> Steven Peterson, Ph.D.\n> Economic and Transportation Geography\n> Geographic Information Sciences and Technology Group\n> Computational Sciences and Engineering Division\n>\n> (865) 574-4676 office\n> (865) 399-2464 cell\n>\n> One Bethel Valley Road\n> P.O. Box 2008, MS-6017\n> Oak Ridge, TN 37831\n> petersonsk at ornl.gov<mailto:petersonsk at ornl.gov>\n>\n>\n> [[alternative HTML version deleted]]\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Steven,\n\nyou might wanna take a look at https://geocompr.robinlovelace.net/index.html\nFurthermore, make sure to read the vignettes (articles) of the sf package: https://r-spatial.github.io/sf/\nCh",
+      "thread_id": "thread-ad880e15247f",
+      "thread_depth": 1,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-02f4db44c68f",
+      "message_id": "<CAGVoNq24Tmz5x=1r7ZvhY7ONx7rSYwvLDiFb_1r37FNqbbUvwQ@mail.gmail.com>",
+      "from_name": "Egge-Jan Pollé",
+      "from_email_hash": "b12499b3d14aa135201e1546ed75ca0cbc05b577a388af73de1d78fd2ff674f1",
+      "date": "2018-01-23T20:49:03Z",
+      "subject": "[R-sig-Geo] Issue with st_read sf with Encoding for MapInfo file (Frisian municipality name)",
+      "subject_clean": "Issue with st_read sf with Encoding for MapInfo file (Frisian municipality name)",
+      "in_reply_to": "<CAGVoNq2ZNXNB8btCt_pXwuWVNCY=H4wQD1W+yzW_tmq2k0aK3Q@mail.gmail.com>",
+      "references": [
+        "<CAGVoNq2ZNXNB8btCt_pXwuWVNCY=H4wQD1W+yzW_tmq2k0aK3Q@mail.gmail.com>"
+      ],
+      "body_plain": "Hello,\n\nWould someone know a solution for this issue:\n\nWhen I load a MapInfo file with st_read (sf) I have an issue with the\nFrisian municipality name 'S?dwest-Frysl?n'; it shows as\n'S<fa>dwest-Frysl<e2>n' :-( Some issue with the encoding...\n\nBelow you will find a reproducible example, which will also download the\ndata set used.\n\nIf I load the same data with readOGR, everything is fine.\n\nAnd if I load a comparable data set in ESRI SHP file format with st_read\n(sf) there is no issue either.\n\nSo it really has something to do with the MapInfo driver. I did not find a\nsolution yet, so any help would be appreciated.\n\nCheers,\n\nEgge-Jan Poll?\n\n\nREPRODUCIBLE EXAMPLE:\n# Download and read the data\n#\n# Make sure you have your Working Directory properly set, e.g.:\n# setwd(\"C:/RMOOC\")\n#\n# Download\nURL <- \"http://www.twiav.nl/files/NL_Municipalities2017.zip\"\ndatafile <- file.path(basename(URL))\ndir.create(\"./Data\", showWarnings = FALSE)\nworkingdirectory <- getwd()\nsetwd(\"./Data\")\ndownload.file(URL, destfile = datafile, mode = \"wb\")\nunzip(datafile)\nunlink(datafile)\nrm(URL, datafile)\nsetwd(workingdirectory)\nrm(workingdirectory)\n\n# Read\n# Make sure the package \"sf\" is properly installed:\n# install.packages(\"sf\")\nlibrary(sf)\nNL_Municipalities2017 <-\nst_read(\"Data/NL_Municipalities2017/NL_Municipalities2017.TAB\")\nView(NL_Municipalities2017)\nplot(st_geometry(NL_Municipalities2017),col = \"darkgreen\", border =\n\"lightgray\")\nView(NL_Municipalities2017) # issue with 'S?dwest-Frysl?n'; it shows as\n'S<fa>dwest-Frysl<e2>n'\n\n# Using rgdal everything is fine...\nlibrary(rgdal)\nnl2 <- readOGR(dsn = \"Data/NL_Municipalities2017\", layer =\n\"NL_Municipalities2017\")\nView(as.data.frame(nl2))\nlibrary(mapview)\nmapview(nl2)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nWould someone know a solution for this issue:\n\nWhen I load a MapInfo file with st_read (sf) I have an issue with the\nFrisian municipality name 'S?dwest-Frysl?n'; it shows as\n'S<fa>dwest-Frysl<",
+      "thread_id": "thread-02f4db44c68f",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-9d535aea2fd3",
+      "message_id": "<f3573fe2-a295-6d33-ef31-a48fed379bcd@wxs.nl>",
+      "from_name": "Peter van Horssen",
+      "from_email_hash": "204e96e6ee334f68a3a03f2a6a34e21a3b4a12ae871608f78adbcec11274dab3",
+      "date": "2018-01-23T22:20:10+01:00",
+      "subject": "[R-sig-Geo] Issue with st_read sf with Encoding for MapInfo file (Frisian municipality name)",
+      "subject_clean": "Issue with st_read sf with Encoding for MapInfo file (Frisian municipality name)",
+      "in_reply_to": "<CAGVoNq24Tmz5x=1r7ZvhY7ONx7rSYwvLDiFb_1r37FNqbbUvwQ@mail.gmail.com>",
+      "references": [
+        "<CAGVoNq2ZNXNB8btCt_pXwuWVNCY=H4wQD1W+yzW_tmq2k0aK3Q@mail.gmail.com>",
+        "<CAGVoNq24Tmz5x=1r7ZvhY7ONx7rSYwvLDiFb_1r37FNqbbUvwQ@mail.gmail.com>"
+      ],
+      "body_plain": "try here:\nhttps://github.com/r-spatial/sf/issues/5\na similar issue with a solution ...\n\ngreetings , Peter\n\n\n\n\nOp 23-1-2018 om 21:49 schreef Egge-Jan Poll?:\n> Hello,\n>\n> Would someone know a solution for this issue:\n>\n> When I load a MapInfo file with st_read (sf) I have an issue with the\n> Frisian municipality name 'S?dwest-Frysl?n'; it shows as\n> 'S<fa>dwest-Frysl<e2>n' :-( Some issue with the encoding...\n>\n> Below you will find a reproducible example, which will also download the\n> data set used.\n>\n> If I load the same data with readOGR, everything is fine.\n>\n> And if I load a comparable data set in ESRI SHP file format with st_read\n> (sf) there is no issue either.\n>\n> So it really has something to do with the MapInfo driver. I did not find a\n> solution yet, so any help would be appreciated.\n>\n> Cheers,\n>\n> Egge-Jan Poll?\n>\n>\n> REPRODUCIBLE EXAMPLE:\n> # Download and read the data\n> #\n> # Make sure you have your Working Directory properly set, e.g.:\n> # setwd(\"C:/RMOOC\")\n> #\n> # Download\n> URL <- \"http://www.twiav.nl/files/NL_Municipalities2017.zip\"\n> datafile <- file.path(basename(URL))\n> dir.create(\"./Data\", showWarnings = FALSE)\n> workingdirectory <- getwd()\n> setwd(\"./Data\")\n> download.file(URL, destfile = datafile, mode = \"wb\")\n> unzip(datafile)\n> unlink(datafile)\n> rm(URL, datafile)\n> setwd(workingdirectory)\n> rm(workingdirectory)\n>\n> # Read\n> # Make sure the package \"sf\" is properly installed:\n> # install.packages(\"sf\")\n> library(sf)\n> NL_Municipalities2017 <-\n> st_read(\"Data/NL_Municipalities2017/NL_Municipalities2017.TAB\")\n> View(NL_Municipalities2017)\n> plot(st_geometry(NL_Municipalities2017),col = \"darkgreen\", border =\n> \"lightgray\")\n> View(NL_Municipalities2017) # issue with 'S?dwest-Frysl?n'; it shows as\n> 'S<fa>dwest-Frysl<e2>n'\n>\n> # Using rgdal everything is fine...\n> library(rgdal)\n> nl2 <- readOGR(dsn = \"Data/NL_Municipalities2017\", layer =\n> \"NL_Municipalities2017\")\n> View(as.data.frame(nl2))\n> library(mapview)\n> mapview(nl2)\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "try here:\nhttps://github.com/r-spatial/sf/issues/5\na similar issue with a solution ...\n\ngreetings , Peter\n\n\n\n\nOp 23-1-2018 om 21:49 schreef Egge-Jan Poll?:\n> Hello,\n>\n> Would someone know a solution f",
+      "thread_id": "thread-02f4db44c68f",
+      "thread_depth": 1,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-14f8ae838c83",
+      "message_id": "<CAGVoNq198FvmTHyG7jakKHrXk6ZsQtRrFx=AfDeGNYYeD7hLwg@mail.gmail.com>",
+      "from_name": "Egge-Jan Pollé",
+      "from_email_hash": "b12499b3d14aa135201e1546ed75ca0cbc05b577a388af73de1d78fd2ff674f1",
+      "date": "2018-01-24T22:09:05+01:00",
+      "subject": "[R-sig-Geo] Issue with st_read sf with Encoding for MapInfo file (Frisian municipality name)",
+      "subject_clean": "Issue with st_read sf with Encoding for MapInfo file (Frisian municipality name)",
+      "in_reply_to": "<f3573fe2-a295-6d33-ef31-a48fed379bcd@wxs.nl>",
+      "references": [
+        "<CAGVoNq2ZNXNB8btCt_pXwuWVNCY=H4wQD1W+yzW_tmq2k0aK3Q@mail.gmail.com>",
+        "<CAGVoNq24Tmz5x=1r7ZvhY7ONx7rSYwvLDiFb_1r37FNqbbUvwQ@mail.gmail.com>",
+        "<f3573fe2-a295-6d33-ef31-a48fed379bcd@wxs.nl>"
+      ],
+      "body_plain": "Hi Peter,\n\nThanks for your swift reaction. I followed the link you suggested and tried\nto extent my st_read statement with an encoding parameter, but\nunfortunately to no avail...\n\nThe issue has been solved, though, by following Edzer's suggestion to\nabandon the shapefile (or - in my case - the MapInfo file) and to look for\nan alternative. I have asked FME to output my sample data set to a GeoJSON\nfile, and now everything works fine in R :-)\n\nTnx again,\n\nEgge-Jan\n\n2018-01-23 22:20 GMT+01:00 Peter van Horssen <peter.vanhorssen at wxs.nl>:\n\n> try here:\n> https://github.com/r-spatial/sf/issues/5\n> a similar issue with a solution ...\n>\n> greetings , Peter\n>\n>\n>\n>\n> Op 23-1-2018 om 21:49 schreef Egge-Jan Poll?:\n>\n>> Hello,\n>>\n>> Would someone know a solution for this issue:\n>>\n>> When I load a MapInfo file with st_read (sf) I have an issue with the\n>> Frisian municipality name 'S?dwest-Frysl?n'; it shows as\n>> 'S<fa>dwest-Frysl<e2>n' :-( Some issue with the encoding...\n>>\n>> Below you will find a reproducible example, which will also download the\n>> data set used.\n>>\n>> If I load the same data with readOGR, everything is fine.\n>>\n>> And if I load a comparable data set in ESRI SHP file format with st_read\n>> (sf) there is no issue either.\n>>\n>> So it really has something to do with the MapInfo driver. I did not find a\n>> solution yet, so any help would be appreciated.\n>>\n>> Cheers,\n>>\n>> Egge-Jan Poll?\n>>\n>>\n>> REPRODUCIBLE EXAMPLE:\n>> # Download and read the data\n>> #\n>> # Make sure you have your Working Directory properly set, e.g.:\n>> # setwd(\"C:/RMOOC\")\n>> #\n>> # Download\n>> URL <- \"http://www.twiav.nl/files/NL_Municipalities2017.zip\"\n>> datafile <- file.path(basename(URL))\n>> dir.create(\"./Data\", showWarnings = FALSE)\n>> workingdirectory <- getwd()\n>> setwd(\"./Data\")\n>> download.file(URL, destfile = datafile, mode = \"wb\")\n>> unzip(datafile)\n>> unlink(datafile)\n>> rm(URL, datafile)\n>> setwd(workingdirectory)\n>> rm(workingdirectory)\n>>\n>> # Read\n>> # Make sure the package \"sf\" is properly installed:\n>> # install.packages(\"sf\")\n>> library(sf)\n>> NL_Municipalities2017 <-\n>> st_read(\"Data/NL_Municipalities2017/NL_Municipalities2017.TAB\")\n>> View(NL_Municipalities2017)\n>> plot(st_geometry(NL_Municipalities2017),col = \"darkgreen\", border =\n>> \"lightgray\")\n>> View(NL_Municipalities2017) # issue with 'S?dwest-Frysl?n'; it shows as\n>> 'S<fa>dwest-Frysl<e2>n'\n>>\n>> # Using rgdal everything is fine...\n>> library(rgdal)\n>> nl2 <- readOGR(dsn = \"Data/NL_Municipalities2017\", layer =\n>> \"NL_Municipalities2017\")\n>> View(as.data.frame(nl2))\n>> library(mapview)\n>> mapview(nl2)\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Peter,\n\nThanks for your swift reaction. I followed the link you suggested and tried\nto extent my st_read statement with an encoding parameter, but\nunfortunately to no avail...\n\nThe issue has been s",
+      "thread_id": "thread-02f4db44c68f",
+      "thread_depth": 2,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-1b9e64d030a7",
+      "message_id": "<8B435C9568170B469AE31E8891E8CC4F471EB3BB@ESINO.regionemarche.intra>",
+      "from_name": "Stefano Sofia",
+      "from_email_hash": "ad844ad91e261422fdc90fb0d69f16f08797c9ee791fca7060ffa26b82b0561f",
+      "date": "2018-01-25T08:55:40Z",
+      "subject": "[R-sig-Geo] Plot a raster behind a shapefile",
+      "subject_clean": "Plot a raster behind a shapefile",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear  list users,\nI need to plot a raster behind a shapefile. Both the raster and the shapefile have been built correctly, I checked it.\n\nI created a raster called rain_rast through the command\n\nrain_rast <- raster(OK_rain$krige_output)\n\nwith the characteristics here reported\n# output:\n#class       : RasterLayer\n#dimensions  : 151, 125, 18875  (nrow, ncol, ncell)\n#resolution  : 1000, 1000  (x, y)\n#extent      : 284845.9, 409845.9, 4712479, 4863479  (xmin, xmax, ymin, ymax)\n#coord. ref. : +init=epsg:32633 +proj=utm +zone=33 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0\n#data source : in memory\n#names       : var1.pred\n#values      : 0.8162388, 46.54594  (min, max)\n\nand I loaded a shapefile  called Marche_shape through the command\n\nMarche_shape <- readOGR(dsn=\"Shapefile_regione_Marche\", layer=\"Lim_reg_2012_wgs32633\")\n\nwhich is a shapefile with reference system EPSG:32633 - WGS 84 / UTM zone 33N and a unique layer called Lim_reg_2012_wgs32633.\n\nCould somebody show me how to plot the raster behind the shapefile? (plot alone does not work, I tried with gplot but with no success).\nMaybe gglopt2? I tried to study some examples found in the web, but again I could not let them work for me.\n\nThank you for your help\nStefano\n\n\n\n         (oo)\n--oOO--( )--OOo----------------\nStefano Sofia PhD\nArea Meteorologica e  Area nivologica - Centro Funzionale\nServizio Protezione Civile - Regione Marche\nVia del Colle Ameno 5\n60126 Torrette di Ancona, Ancona\nUff: 071 806 7743\nE-mail: stefano.sofia at regione.marche.it\n---Oo---------oO----------------\n\n________________________________\n\nAVVISO IMPORTANTE: Questo messaggio di posta elettronica pu? contenere informazioni confidenziali, pertanto ? destinato solo a persone autorizzate alla ricezione. I messaggi di posta elettronica per i client di Regione Marche possono contenere informazioni confidenziali e con privilegi legali. Se non si ? il destinatario specificato, non leggere, copiare, inoltrare o archiviare questo messaggio. Se si ? ricevuto questo messaggio per errore, inoltrarlo al mittente ed eliminarlo completamente dal sistema del proprio computer. Ai sensi dell?art. 6 della DGR n. 1394/2008 si segnala che, in caso di necessit? ed urgenza, la risposta al presente messaggio di posta elettronica pu? essere visionata da persone estranee al destinatario.\nIMPORTANT NOTICE: This e-mail message is intended to be received only by persons entitled to receive the confidential information it may contain. E-mail messages to clients of Regione Marche may contain information that is confidential and legally privileged. Please do not read, copy, forward, or store this message unless you are an intended recipient of it. If you have received this message in error, please forward it to the sender and delete it completely from your computer system.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear  list users,\nI need to plot a raster behind a shapefile. Both the raster and the shapefile have been built correctly, I checked it.\n\nI created a raster called rain_rast through the command\n\nrain_",
+      "thread_id": "thread-1b9e64d030a7",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-8d5e8c1769f6",
+      "message_id": "<CAP9xbzyxEd2oiJyiQuhBbFdMTvYGV6W3dJnhtgzoYEuCN=RoCw@mail.gmail.com>",
+      "from_name": "A. Marcia BARBOSA",
+      "from_email_hash": "6d4ca67842bce12a2e3b5e8e599305edf65fa6be1bebfd751238d22c5e773120",
+      "date": "2018-01-25T09:06:25Z",
+      "subject": "[R-sig-Geo] Plot a raster behind a shapefile",
+      "subject_clean": "Plot a raster behind a shapefile",
+      "in_reply_to": "<8B435C9568170B469AE31E8891E8CC4F471EB3BB@ESINO.regionemarche.intra>",
+      "references": [
+        "<8B435C9568170B469AE31E8891E8CC4F471EB3BB@ESINO.regionemarche.intra>"
+      ],
+      "body_plain": "Hi,\nHave you tried this?\n\nplot(rain_rast)\nplot(Marche_shape, add = TRUE)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\nHave you tried this?\n\nplot(rain_rast)\nplot(Marche_shape, add = TRUE)\n\n\t[[alternative HTML version deleted]]",
+      "thread_id": "thread-1b9e64d030a7",
+      "thread_depth": 1,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-f08f5b8f7d7c",
+      "message_id": "<48c0ac53-785b-2301-be3c-e00f45befa91@web.de>",
+      "from_name": "Florian Betz",
+      "from_email_hash": "079b66412a9f7a75d2d5f7485ab5c1f60259ee18500f95087969574814bbd8b5",
+      "date": "2018-01-25T10:07:00+01:00",
+      "subject": "[R-sig-Geo] Plot a raster behind a shapefile",
+      "subject_clean": "Plot a raster behind a shapefile",
+      "in_reply_to": "<8B435C9568170B469AE31E8891E8CC4F471EB3BB@ESINO.regionemarche.intra>",
+      "references": [
+        "<8B435C9568170B469AE31E8891E8CC4F471EB3BB@ESINO.regionemarche.intra>"
+      ],
+      "body_plain": "You can try the following:\n\nplot(rain_rast)\nplot(Marche_shape, add=TRUE)\n\nGood luck!\n\nFlo\n\nAm 25.01.2018 um 09:55 schrieb Stefano Sofia:\n> Dear  list users,\n> I need to plot a raster behind a shapefile. Both the raster and the shapefile have been built correctly, I checked it.\n>\n> I created a raster called rain_rast through the command\n>\n> rain_rast <- raster(OK_rain$krige_output)\n>\n> with the characteristics here reported\n> # output:\n> #class       : RasterLayer\n> #dimensions  : 151, 125, 18875  (nrow, ncol, ncell)\n> #resolution  : 1000, 1000  (x, y)\n> #extent      : 284845.9, 409845.9, 4712479, 4863479  (xmin, xmax, ymin, ymax)\n> #coord. ref. : +init=epsg:32633 +proj=utm +zone=33 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0\n> #data source : in memory\n> #names       : var1.pred\n> #values      : 0.8162388, 46.54594  (min, max)\n>\n> and I loaded a shapefile  called Marche_shape through the command\n>\n> Marche_shape <- readOGR(dsn=\"Shapefile_regione_Marche\", layer=\"Lim_reg_2012_wgs32633\")\n>\n> which is a shapefile with reference system EPSG:32633 - WGS 84 / UTM zone 33N and a unique layer called Lim_reg_2012_wgs32633.\n>\n> Could somebody show me how to plot the raster behind the shapefile? (plot alone does not work, I tried with gplot but with no success).\n> Maybe gglopt2? I tried to study some examples found in the web, but again I could not let them work for me.\n>\n> Thank you for your help\n> Stefano\n>\n>\n>\n>           (oo)\n> --oOO--( )--OOo----------------\n> Stefano Sofia PhD\n> Area Meteorologica e  Area nivologica - Centro Funzionale\n> Servizio Protezione Civile - Regione Marche\n> Via del Colle Ameno 5\n> 60126 Torrette di Ancona, Ancona\n> Uff: 071 806 7743\n> E-mail: stefano.sofia at regione.marche.it\n> ---Oo---------oO----------------\n>\n> ________________________________\n>\n> AVVISO IMPORTANTE: Questo messaggio di posta elettronica pu? contenere informazioni confidenziali, pertanto ? destinato solo a persone autorizzate alla ricezione. I messaggi di posta elettronica per i client di Regione Marche possono contenere informazioni confidenziali e con privilegi legali. Se non si ? il destinatario specificato, non leggere, copiare, inoltrare o archiviare questo messaggio. Se si ? ricevuto questo messaggio per errore, inoltrarlo al mittente ed eliminarlo completamente dal sistema del proprio computer. Ai sensi dell?art. 6 della DGR n. 1394/2008 si segnala che, in caso di necessit? ed urgenza, la risposta al presente messaggio di posta elettronica pu? essere visionata da persone estranee al destinatario.\n> IMPORTANT NOTICE: This e-mail message is intended to be received only by persons entitled to receive the confidential information it may contain. E-mail messages to clients of Regione Marche may contain information that is confidential and legally privileged. Please do not read, copy, forward, or store this message unless you are an intended recipient of it. If you have received this message in error, please forward it to the sender and delete it completely from your computer system.\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nFlorian Betz\nGartenstra?e 13\n86152 Augsburg, Deutschland\n\nTel.: 0176 20344096\nMail: flobetz at web.de",
+      "body_snippet": "You can try the following:\n\nplot(rain_rast)\nplot(Marche_shape, add=TRUE)\n\nGood luck!\n\nFlo\n\nAm 25.01.2018 um 09:55 schrieb Stefano Sofia:\n> Dear  list users,\n> I need to plot a raster behind a shapefil",
+      "thread_id": "thread-1b9e64d030a7",
+      "thread_depth": 1,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-d5acf4d5c4ae",
+      "message_id": "<006801d3962b$9059f110$b10dd330$@gmail.com>",
+      "from_name": "Glenn Stauffer",
+      "from_email_hash": "d6b71de33a59a82424aed4dd9d5eb5a1f2b5da4323eba8888da5c0f43cddc89a",
+      "date": "2018-01-25T16:26:35-06:00",
+      "subject": "[R-sig-Geo] Splitting spatial lines at self intersections (line crossings)",
+      "subject_clean": "Splitting spatial lines at self intersections (line crossings)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I have a Spatial Lines object I would like to split at every point where the\nline self-intersects (crosses or touches itself), or anywhere lines touch\neach other, if there are multiple lines. \n\nI've tried using spatstat to convert the SpatialLines to a psp object and\nthen use the selfcrossing.psp function to find the intersection points (see\nexample below). But that seems to identify all the nodes, not just the\npoints where the line crosses. Also, even if it identified only the\ncrossings (which is what I want), I am not sure how to perform the next step\nand split the lines at those points.\n\nSo, 1) I need to identify the crossings/touches, and 2) split the lines at\nthose points.\n\n \n\nEssentially, what I am looking for is an R equivalent to the planarize\nfunction in ArgGIS. Is there a relatively easy way to do this in R?\n\n \n\nThanks,\n\nGlenn\n\n \n\nHere is an example of what I have tried.\n\n \n\n \n\npts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\n\npt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,104,106,110))\n\nprojstr <- \"+init=epsg:3071\"         # make everything in meters\n\nL <- SpatialLines(list(Lines(list(Line(pts),Line(pt2)),\"X\")),proj4string =\nCRS(projstr)) \n\nplot(L)\n\nPSP <- as.psp.SpatialLines(L)\n\nint <- selfcrossing.psp(PSP)\n\nplot(int,add=TRUE,col=\"red\") # identifies more than just the crossings\n\n                                \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I have a Spatial Lines object I would like to split at every point where the\nline self-intersects (crosses or touches itself), or anywhere lines touch\neach other, if there are multiple lines. \n\nI've t",
+      "thread_id": "thread-d5acf4d5c4ae",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-47389c1b9abf",
+      "message_id": "<2a963040-f346-22c3-f373-8e90f84e823d@math.aau.dk>",
+      "from_name": "Ege Rubak",
+      "from_email_hash": "806e7065d6e3b37ef13d5d0c1f652d37abc4d6c6040b062b11dd924fdfd86d88",
+      "date": "2018-01-26T07:48:30+01:00",
+      "subject": "[R-sig-Geo] Splitting spatial lines at self intersections (line crossings)",
+      "subject_clean": "Splitting spatial lines at self intersections (line crossings)",
+      "in_reply_to": "<006801d3962b$9059f110$b10dd330$@gmail.com>",
+      "references": [
+        "<006801d3962b$9059f110$b10dd330$@gmail.com>"
+      ],
+      "body_plain": "The `psp` class in spatstat consists of individual line segments and \n`selfcrossing.psp` checks whether each individual line intersects one of \nthe other lines, which happens at all the points in your plot.\n\nIf instead you treat each of the two line sequences as a `psp` you can \ncheck find the crossings of the two `psp` objects. I.e., continuing your \ncode (with `spatstat` and `maptools` loaded):\n\nL1 <- SpatialLines(list(Lines(list(Line(pts)), \"X\")))\nL2 <- SpatialLines(list(Lines(list(Line(pt2)), \"X\")))\nl1 <- as.psp(L1)\nl2 <- as.psp(L2)\nint <- crossing.psp(l1, l2)\n\nThis gives you the four intersections between the lines. I don't know of \na simple way to do the next task in `spatstat`. A useful function if you \nare going to try to write some code is `test.crossing.psp` which gives \nyou a logical matrix indicating which segments cross.\n\nCheers,\nEge\n\nOn 01/25/2018 11:26 PM, Glenn Stauffer wrote:\n> I have a Spatial Lines object I would like to split at every point where the\n> line self-intersects (crosses or touches itself), or anywhere lines touch\n> each other, if there are multiple lines.\n> \n> I've tried using spatstat to convert the SpatialLines to a psp object and\n> then use the selfcrossing.psp function to find the intersection points (see\n> example below). But that seems to identify all the nodes, not just the\n> points where the line crosses. Also, even if it identified only the\n> crossings (which is what I want), I am not sure how to perform the next step\n> and split the lines at those points.\n> \n> So, 1) I need to identify the crossings/touches, and 2) split the lines at\n> those points.\n> \n>   \n> \n> Essentially, what I am looking for is an R equivalent to the planarize\n> function in ArgGIS. Is there a relatively easy way to do this in R?\n> \n>   \n> \n> Thanks,\n> \n> Glenn\n> \n>   \n> \n> Here is an example of what I have tried.\n> \n>   \n> \n>   \n> \n> pts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\n> \n> pt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,104,106,110))\n> \n> projstr <- \"+init=epsg:3071\"         # make everything in meters\n> \n> L <- SpatialLines(list(Lines(list(Line(pts),Line(pt2)),\"X\")),proj4string =\n> CRS(projstr))\n> \n> plot(L)\n> \n> PSP <- as.psp.SpatialLines(L)\n> \n> int <- selfcrossing.psp(PSP)\n> \n> plot(int,add=TRUE,col=\"red\") # identifies more than just the crossings\n> \n>                                  \n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_snippet": "The `psp` class in spatstat consists of individual line segments and \n`selfcrossing.psp` checks whether each individual line intersects one of \nthe other lines, which happens at all the points in your",
+      "thread_id": "thread-d5acf4d5c4ae",
+      "thread_depth": 1,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-09fb40d3ae2b",
+      "message_id": "<CAAcGz9-PihNn=OrrZU1-b4gh9L7TgBLsa_1SduK_tS785Vyc-g@mail.gmail.com>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "acd579fb79d1a9375bc76a80cfcc85617e73f5138102204ab0c04aca43dd7766",
+      "date": "2018-01-26T12:12:44Z",
+      "subject": "[R-sig-Geo] Splitting spatial lines at self intersections (line crossings)",
+      "subject_clean": "Splitting spatial lines at self intersections (line crossings)",
+      "in_reply_to": "<2a963040-f346-22c3-f373-8e90f84e823d@math.aau.dk>",
+      "references": [
+        "<006801d3962b$9059f110$b10dd330$@gmail.com>",
+        "<2a963040-f346-22c3-f373-8e90f84e823d@math.aau.dk>"
+      ],
+      "body_plain": "Ege: I don't believe that this code is enough to get coercion between sp\nand spatstat:\n\npts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\npt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,104,106,110))\nlibrary(sp)\nlibrary(spatstat)\nL1 <- SpatialLines(list(Lines(list(Line(pts)), \"X\")))\nL2 <- SpatialLines(list(Lines(list(Line(pt2)), \"X\")))\nl1 <- as.psp(L1)\nl2 <- as.psp(L2)\nint <- crossing.psp(l1, l2)\n\nAre we relying on some other code, or perhaps a specific version of\nspatstat or its family?  (I know ways to convert from Spatial to psp, but I\nwas taken by this apparent lack of infrastructure - and I'm very keen on\nseeing more bridges between these rich worlds).\n\nCheers, Mike\n\n\nOn Fri, 26 Jan 2018 at 17:48 Ege Rubak <rubak at math.aau.dk> wrote:\n\n> The `psp` class in spatstat consists of individual line segments and\n> `selfcrossing.psp` checks whether each individual line intersects one of\n> the other lines, which happens at all the points in your plot.\n>\n> If instead you treat each of the two line sequences as a `psp` you can\n> check find the crossings of the two `psp` objects. I.e., continuing your\n> code (with `spatstat` and `maptools` loaded):\n>\n> L1 <- SpatialLines(list(Lines(list(Line(pts)), \"X\")))\n> L2 <- SpatialLines(list(Lines(list(Line(pt2)), \"X\")))\n> l1 <- as.psp(L1)\n> l2 <- as.psp(L2)\n> int <- crossing.psp(l1, l2)\n>\n> This gives you the four intersections between the lines. I don't know of\n> a simple way to do the next task in `spatstat`. A useful function if you\n> are going to try to write some code is `test.crossing.psp` which gives\n> you a logical matrix indicating which segments cross.\n>\n> Cheers,\n> Ege\n>\n> On 01/25/2018 11:26 PM, Glenn Stauffer wrote:\n> > I have a Spatial Lines object I would like to split at every point where\n> the\n> > line self-intersects (crosses or touches itself), or anywhere lines touch\n> > each other, if there are multiple lines.\n> >\n> > I've tried using spatstat to convert the SpatialLines to a psp object and\n> > then use the selfcrossing.psp function to find the intersection points\n> (see\n> > example below). But that seems to identify all the nodes, not just the\n> > points where the line crosses. Also, even if it identified only the\n> > crossings (which is what I want), I am not sure how to perform the next\n> step\n> > and split the lines at those points.\n> >\n> > So, 1) I need to identify the crossings/touches, and 2) split the lines\n> at\n> > those points.\n> >\n> >\n> >\n> > Essentially, what I am looking for is an R equivalent to the planarize\n> > function in ArgGIS. Is there a relatively easy way to do this in R?\n> >\n> >\n> >\n> > Thanks,\n> >\n> > Glenn\n> >\n> >\n> >\n> > Here is an example of what I have tried.\n> >\n> >\n> >\n> >\n> >\n> > pts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\n> >\n> > pt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,104,106,110))\n> >\n> > projstr <- \"+init=epsg:3071\"         # make everything in meters\n> >\n> > L <- SpatialLines(list(Lines(list(Line(pts),Line(pt2)),\"X\")),proj4string\n> =\n> > CRS(projstr))\n> >\n> > plot(L)\n> >\n> > PSP <- as.psp.SpatialLines(L)\n> >\n> > int <- selfcrossing.psp(PSP)\n> >\n> > plot(int,add=TRUE,col=\"red\") # identifies more than just the crossings\n> >\n> >\n> >\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n-- \nDr. Michael Sumner\nSoftware and Database Engineer\nAustralian Antarctic Division\n203 Channel Highway\nKingston Tasmania 7050 Australia\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Ege: I don't believe that this code is enough to get coercion between sp\nand spatstat:\n\npts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\npt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,1",
+      "thread_id": "thread-d5acf4d5c4ae",
+      "thread_depth": 2,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-840845961aaf",
+      "message_id": "<CY4PR07MB30478F6DCB8E299C08C9A713CFE00@CY4PR07MB3047.namprd07.prod.outlook.com>",
+      "from_name": "Rathore, Saubhagya Singh",
+      "from_email_hash": "1de7b24d5afb34cd05a42a9a9683ea4aec50a32d8b1a144406261c3821741a0d",
+      "date": "2018-01-26T16:42:35Z",
+      "subject": "[R-sig-Geo] R version 3.3.2, Windows 10: gstat package: Defining new correlation model in gstat package?",
+      "subject_clean": "R version 3.3.2, Windows 10: gstat package: Defining new correlation model in gstat package?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello Everyone,\n\nIs it possible to define and use the new correlation model in `vgm` function of `gstat` package in R, in order to simulate random fields? I need to use correlation function (as suggested here[1] ) for the log-transformed exponentially correlated spatial data. The options available in `vgm` are \"Exp\", \"Sph\", \"Gau\", \"Mat\"\n\n  [1]: https://stats.stackexchange.com/questions/325052/how-is-spatial-correlation-for-a-normally-distributed-data-related-to-spatial-co\n\nAny suggestion/help would be appreciated.\n\nThanks\n\nSaubhagya Singh Rathore\nPhD Candidate\nCivil and Environmental Engineering\n[logos]\n\n-------------- next part --------------\nAn HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20180126/4e4d7303/attachment.html>\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: image001.jpg\nType: image/jpeg\nSize: 2207 bytes\nDesc: image001.jpg\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20180126/4e4d7303/attachment.jpg>",
+      "body_snippet": "Hello Everyone,\n\nIs it possible to define and use the new correlation model in `vgm` function of `gstat` package in R, in order to simulate random fields? I need to use correlation function (as sugges",
+      "thread_id": "thread-840845961aaf",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-80e599db2235",
+      "message_id": "<13bbe92b-5c4d-a4dc-3a42-ca372af6db50@urjc.es>",
+      "from_name": "Marcelino de la Cruz Rot",
+      "from_email_hash": "3e1866a450ef2dad7a2bd8a915a5e0e429ecd64510281e1568aa2cccf6abdedb",
+      "date": "2018-01-26T18:04:01+01:00",
+      "subject": "[R-sig-Geo] Splitting spatial lines at self intersections (line crossings)",
+      "subject_clean": "Splitting spatial lines at self intersections (line crossings)",
+      "in_reply_to": "<CAAcGz9-PihNn=OrrZU1-b4gh9L7TgBLsa_1SduK_tS785Vyc-g@mail.gmail.com>",
+      "references": [
+        "<006801d3962b$9059f110$b10dd330$@gmail.com>",
+        "<2a963040-f346-22c3-f373-8e90f84e823d@math.aau.dk>",
+        "<CAAcGz9-PihNn=OrrZU1-b4gh9L7TgBLsa_1SduK_tS785Vyc-g@mail.gmail.com>"
+      ],
+      "body_plain": "You should load before library(maptools) and the coercion is done.\n\nCheers\n\nMarcelino\n\n\n\n\nEl 26/01/2018 a las 13:12, Michael Sumner escribi?:\n> Ege: I don't believe that this code is enough to get coercion between sp\n> and spatstat:\n>\n> pts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\n> pt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,104,106,110))\n> library(sp)\n> library(spatstat)\n> L1 <- SpatialLines(list(Lines(list(Line(pts)), \"X\")))\n> L2 <- SpatialLines(list(Lines(list(Line(pt2)), \"X\")))\n> l1 <- as.psp(L1)\n> l2 <- as.psp(L2)\n> int <- crossing.psp(l1, l2)\n>\n> Are we relying on some other code, or perhaps a specific version of\n> spatstat or its family?  (I know ways to convert from Spatial to psp, but I\n> was taken by this apparent lack of infrastructure - and I'm very keen on\n> seeing more bridges between these rich worlds).\n>\n> Cheers, Mike\n>\n>\n> On Fri, 26 Jan 2018 at 17:48 Ege Rubak <rubak at math.aau.dk> wrote:\n>\n>> The `psp` class in spatstat consists of individual line segments and\n>> `selfcrossing.psp` checks whether each individual line intersects one of\n>> the other lines, which happens at all the points in your plot.\n>>\n>> If instead you treat each of the two line sequences as a `psp` you can\n>> check find the crossings of the two `psp` objects. I.e., continuing your\n>> code (with `spatstat` and `maptools` loaded):\n>>\n>> L1 <- SpatialLines(list(Lines(list(Line(pts)), \"X\")))\n>> L2 <- SpatialLines(list(Lines(list(Line(pt2)), \"X\")))\n>> l1 <- as.psp(L1)\n>> l2 <- as.psp(L2)\n>> int <- crossing.psp(l1, l2)\n>>\n>> This gives you the four intersections between the lines. I don't know of\n>> a simple way to do the next task in `spatstat`. A useful function if you\n>> are going to try to write some code is `test.crossing.psp` which gives\n>> you a logical matrix indicating which segments cross.\n>>\n>> Cheers,\n>> Ege\n>>\n>> On 01/25/2018 11:26 PM, Glenn Stauffer wrote:\n>>> I have a Spatial Lines object I would like to split at every point where\n>> the\n>>> line self-intersects (crosses or touches itself), or anywhere lines touch\n>>> each other, if there are multiple lines.\n>>>\n>>> I've tried using spatstat to convert the SpatialLines to a psp object and\n>>> then use the selfcrossing.psp function to find the intersection points\n>> (see\n>>> example below). But that seems to identify all the nodes, not just the\n>>> points where the line crosses. Also, even if it identified only the\n>>> crossings (which is what I want), I am not sure how to perform the next\n>> step\n>>> and split the lines at those points.\n>>>\n>>> So, 1) I need to identify the crossings/touches, and 2) split the lines\n>> at\n>>> those points.\n>>>\n>>>\n>>>\n>>> Essentially, what I am looking for is an R equivalent to the planarize\n>>> function in ArgGIS. Is there a relatively easy way to do this in R?\n>>>\n>>>\n>>>\n>>> Thanks,\n>>>\n>>> Glenn\n>>>\n>>>\n>>>\n>>> Here is an example of what I have tried.\n>>>\n>>>\n>>>\n>>>\n>>>\n>>> pts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\n>>>\n>>> pt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,104,106,110))\n>>>\n>>> projstr <- \"+init=epsg:3071\"         # make everything in meters\n>>>\n>>> L <- SpatialLines(list(Lines(list(Line(pts),Line(pt2)),\"X\")),proj4string\n>> =\n>>> CRS(projstr))\n>>>\n>>> plot(L)\n>>>\n>>> PSP <- as.psp.SpatialLines(L)\n>>>\n>>> int <- selfcrossing.psp(PSP)\n>>>\n>>> plot(int,add=TRUE,col=\"red\") # identifies more than just the crossings\n>>>\n>>>\n>>>\n>>>\n>>>        [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n\n-- \nMarcelino de la Cruz Rot\nDepto. de Biolog?a y Geolog?a\nF?sica y Qu?mica Inorg?nica\nUniversidad Rey Juan Carlos\nM?stoles Espa?a",
+      "body_snippet": "You should load before library(maptools) and the coercion is done.\n\nCheers\n\nMarcelino\n\n\n\n\nEl 26/01/2018 a las 13:12, Michael Sumner escribi?:\n> Ege: I don't believe that this code is enough to get coe",
+      "thread_id": "thread-d5acf4d5c4ae",
+      "thread_depth": 3,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-97073c1d1068",
+      "message_id": "<008001d396db$037aa590$0a6ff0b0$@gmail.com>",
+      "from_name": "Glenn Stauffer",
+      "from_email_hash": "d6b71de33a59a82424aed4dd9d5eb5a1f2b5da4323eba8888da5c0f43cddc89a",
+      "date": "2018-01-26T13:22:30-06:00",
+      "subject": "[R-sig-Geo] Error in file.exists(params[[i]]) : invalid 'file' argument when using v.clean function in RQGIS",
+      "subject_clean": "Error in file.exists(params[[i]]) : invalid 'file' argument when using v.clean function in RQGIS",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I am working with SpatialLines in R, and want to split lines at every point\nwhere lines cross (like the Planarize function in ArcGIS). The R package\nRQGIS makes QGIS functionality accessible in R (see example from Jannes\nMuenchow at\nhttp://r-sig-geo.2731867.n2.nabble.com/v-split-length-GRASS-in-R-td7590611.h\ntml ), and the GRASS function v.clean should do exactly what I want.\nHowever, I have not been able to get it to work, and have run into two\nproblems.\n\n \n\nFirst, when I run the get_args_man() function I apparently a window that\npops up and says \"\n\nRuntime Error! \n\nProgram: C\\Program Files\\R\\R-3.4.0\\bin\\x64\\RGui.exe\n\nR6034\n\nAn application has made an attempt to load the C runtime library in\ncorrectly.\n\nPlease contact the application's support team for more information.\"\n\n \n\nI only get this the first time I run try running the get_args_man()\nfunction, and despite the popup, the arguments are retrieved (the function\nseems to work). Subsequent calls to the function do not generate the\nmessage.\n\n \n\nSecondly, when I call the run_qgi()s function, with 'alg=\"grass7:v.clean\"',\nI always get the error message \"Error in file.exists(params[[i]]) : invalid\n'file' argument\". This does not happen when I run the example from the link\nI referenced above (with alg=\"v.split\"). I've tried running the function\nline-by-line, and it trips at the following line within the run_qgis()\nfunction:\n\n\"params <- pass_args(alg, params = params, NA_flag = NA_flag,qgis_env =\nqgis_env)\"\n\n \n\nCan anyone suggest a cause or solution for either of these problems (but\nespecially the latter)? On the first problem, could this be related to a\npermissions issue? \n\n \n\nBelow is a contrived example that should illustrate what I am talking about\n(unless the problems are specific to my computer). \n\n \n\nThanks,\n\nGlenn\n\n \n\n#################\n\n# Example Code\n\n#################\n\n \n\nlibrary(sp)\n\nlibrary(RQGIS)\n\n \n\npts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\n\npt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,104,106,110))\n\nprojstr <- \"+init=epsg:3071\"         # make everything in meters\n\nL <- SpatialLines(list(Lines(list(Line(pts),Line(pt2)),\"X\")),proj4string =\nCRS(projstr)) \n\nplot(L)\n\n# indicate where QGIS is installed on your computer\n\nqgis_env <- set_env(\"C:/Program Files/QGIS 2.14\")\n\n# get args for GRASS function (generates runtime error when first called)\n\nargs <- get_args_man(\"grass7:v.clean\", qgis_env = qgis_env, options = TRUE)\n\n# have a look at the GRASS online help\n\nopen_help(\"grass7:v.clean\", qgis_env = qgis_env)\n\n \n\n# specify the necessary arguments\n\nargs$input <- L\n\nargs$tool <- \"break\"\n\nargs$output <- file.path(tempdir(), \"out.shp\")\n\n# load the output directly into R again\n\nout <- run_qgis(alg = \"grass7:v.clean\", params = args,\n\n                load_output = TRUE,\n\n                qgis_env = qgis_env)\n\n \n\n \n\n \n\n \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am working with SpatialLines in R, and want to split lines at every point\nwhere lines cross (like the Planarize function in ArcGIS). The R package\nRQGIS makes QGIS functionality accessible in R (see",
+      "thread_id": "thread-97073c1d1068",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-b46a6f33ee92",
+      "message_id": "<CA+ZRYj_c_LT8WYU+UEgmg-OZrNsXhTVT1jjZT0LXcDNf-R=HHg@mail.gmail.com>",
+      "from_name": "Fischbach, Anthony",
+      "from_email_hash": "7bb5e930306dd63e701422268e359e243cf3cb85a6b4b4fa6a2afa4c2b01ecd9",
+      "date": "2018-01-26T11:23:04-09:00",
+      "subject": "[R-sig-Geo] accessing spatial imagery via rgdal's web map tile service driver",
+      "subject_clean": "accessing spatial imagery via rgdal's web map tile service driver",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I see that WMS (\"OGC Web Map Service\") and WMTS (\"OGC Web Mab Tile\nService\") are supported within my rgdal installation , however, it is\nunclear how to call for WMTS imagery.\nPlease advise on how to access geo-referenced imagery through a web map\ntile service, such as described here\n(\nhttps://wiki.earthdata.nasa.gov/display/GIBS/Map+Library+Usage#expand-GDALBasics\n)\nfor gdal using the current rgdal version (under R version 3.4.3 rgdal\nversion 1.2-16)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I see that WMS (\"OGC Web Map Service\") and WMTS (\"OGC Web Mab Tile\nService\") are supported within my rgdal installation , however, it is\nunclear how to call for WMTS imagery.\nPlease advise on how to a",
+      "thread_id": "thread-b46a6f33ee92",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-0e70fc5a6ab0",
+      "message_id": "<00a001d396ef$cc6caa20$6545fe60$@gmail.com>",
+      "from_name": "Glenn Stauffer",
+      "from_email_hash": "d6b71de33a59a82424aed4dd9d5eb5a1f2b5da4323eba8888da5c0f43cddc89a",
+      "date": "2018-01-26T15:51:18-06:00",
+      "subject": "[R-sig-Geo] Error in file.exists(params[[i]]) : invalid 'file' argument when using v.clean function in RQGIS",
+      "subject_clean": "Error in file.exists(params[[i]]) : invalid 'file' argument when using v.clean function in RQGIS",
+      "in_reply_to": "<008001d396db$037aa590$0a6ff0b0$@gmail.com>",
+      "references": [
+        "<008001d396db$037aa590$0a6ff0b0$@gmail.com>"
+      ],
+      "body_plain": "I still don't know why I get the Runtime Error the first time I call the\nfunction get_args_man(). \n\n \n\nBut, more importantly, it looks my issue with the second problem was as\nsimple as the fact that I was trying to apply v.clean to a SpatialLines\nfeature instead of the required SpatialLinesDataFrame feature. It seems to\nwork now, and I'm pretty happy about that!\n\n \n\nGlenn\n\n \n\nFrom: Glenn Stauffer [mailto:gestauffer at gmail.com] \nSent: Friday, January 26, 2018 1:23 PM\nTo: r-sig-geo at r-project.org\nSubject: Error in file.exists(params[[i]]) : invalid 'file' argument when\nusing v.clean function in RQGIS\n\n \n\nI am working with SpatialLines in R, and want to split lines at every point\nwhere lines cross (like the Planarize function in ArcGIS). The R package\nRQGIS makes QGIS functionality accessible in R (see example from Jannes\nMuenchow at\nhttp://r-sig-geo.2731867.n2.nabble.com/v-split-length-GRASS-in-R-td7590611.h\ntml ), and the GRASS function v.clean should do exactly what I want.\nHowever, I have not been able to get it to work, and have run into two\nproblems.\n\n \n\nFirst, when I run the get_args_man() function I apparently a window that\npops up and says \"\n\nRuntime Error! \n\nProgram: C\\Program Files\\R\\R-3.4.0\\bin\\x64\\RGui.exe\n\nR6034\n\nAn application has made an attempt to load the C runtime library in\ncorrectly.\n\nPlease contact the application's support team for more information.\"\n\n \n\nI only get this the first time I run try running the get_args_man()\nfunction, and despite the popup, the arguments are retrieved (the function\nseems to work). Subsequent calls to the function do not generate the\nmessage.\n\n \n\nSecondly, when I call the run_qgi()s function, with 'alg=\"grass7:v.clean\"',\nI always get the error message \"Error in file.exists(params[[i]]) : invalid\n'file' argument\". This does not happen when I run the example from the link\nI referenced above (with alg=\"v.split\"). I've tried running the function\nline-by-line, and it trips at the following line within the run_qgis()\nfunction:\n\n\"params <- pass_args(alg, params = params, NA_flag = NA_flag,qgis_env =\nqgis_env)\"\n\n \n\nCan anyone suggest a cause or solution for either of these problems (but\nespecially the latter)? On the first problem, could this be related to a\npermissions issue? \n\n \n\nBelow is a contrived example that should illustrate what I am talking about\n(unless the problems are specific to my computer). \n\n \n\nThanks,\n\nGlenn\n\n \n\n#################\n\n# Example Code\n\n#################\n\n \n\nlibrary(sp)\n\nlibrary(RQGIS)\n\n \n\npts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\n\npt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,104,106,110))\n\nprojstr <- \"+init=epsg:3071\"         # make everything in meters\n\nL <- SpatialLines(list(Lines(list(Line(pts),Line(pt2)),\"X\")),proj4string =\nCRS(projstr)) \n\nplot(L)\n\n# indicate where QGIS is installed on your computer\n\nqgis_env <- set_env(\"C:/Program Files/QGIS 2.14\")\n\n# get args for GRASS function (generates runtime error when first called)\n\nargs <- get_args_man(\"grass7:v.clean\", qgis_env = qgis_env, options = TRUE)\n\n# have a look at the GRASS online help\n\nopen_help(\"grass7:v.clean\", qgis_env = qgis_env)\n\n \n\n# specify the necessary arguments\n\nargs$input <- L\n\nargs$tool <- \"break\"\n\nargs$output <- file.path(tempdir(), \"out.shp\")\n\n# load the output directly into R again\n\nout <- run_qgis(alg = \"grass7:v.clean\", params = args,\n\n                load_output = TRUE,\n\n                qgis_env = qgis_env)\n\n \n\n \n\n \n\n \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I still don't know why I get the Runtime Error the first time I call the\nfunction get_args_man(). \n\n \n\nBut, more importantly, it looks my issue with the second problem was as\nsimple as the fact that I",
+      "thread_id": "thread-97073c1d1068",
+      "thread_depth": 1,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-f8d3ff0f837f",
+      "message_id": "<00a901d396f1$adbdd3e0$09397ba0$@gmail.com>",
+      "from_name": "Glenn Stauffer",
+      "from_email_hash": "d6b71de33a59a82424aed4dd9d5eb5a1f2b5da4323eba8888da5c0f43cddc89a",
+      "date": "2018-01-26T16:04:45-06:00",
+      "subject": "[R-sig-Geo] Splitting spatial lines at self intersections (line crossings)",
+      "subject_clean": "Splitting spatial lines at self intersections (line crossings)",
+      "in_reply_to": "<004d01d396d3$80511660$80f34320$@gmail.com>",
+      "references": [
+        "<006801d3962b$9059f110$b10dd330$@gmail.com>",
+        "<2a963040-f346-22c3-f373-8e90f84e823d@math.aau.dk>",
+        "<004d01d396d3$80511660$80f34320$@gmail.com>"
+      ],
+      "body_plain": "I think I have a solution now. \nTo recap, I wanted to planarize a line feature (split every line at every\nline crossing), and I wanted an R solution so I could iterate over many\nfeature objects. My solution obviously does not strictly use R, but it is\ncarried out completely from within R. I used the v.clean algorithm from\nGRASS, passed as an argument to the run_qgis function from the RQGIS\npackage. Seems to do exactly what I want. \nMy initial problem with v.clean was that I was passing a SpatialLines\nfeature instead of a SpatialLinesDataFrame feature to the algorithm.\n\nGlenn\n\n-----Original Message-----\nFrom: Glenn Stauffer [mailto:gestauffer at gmail.com] \nSent: Friday, January 26, 2018 12:29 PM\nTo: 'Ege Rubak' <rubak at math.aau.dk>\nSubject: RE: [R-sig-Geo] Splitting spatial lines at self intersections (line\ncrossings)\n\nI think I am really close to a solution using the RQGIS package and the\nGRASS function v.clean. The v.clean function should do exactly what I want,\nbut I have not been able to get it to work yet from R, although I could get\nanother GRASS functions to work (see example from Jannes Muenchow at\nhttp://r-sig-geo.2731867.n2.nabble.com/v-split-length-GRASS-in-R-td7590611.h\ntml ). When I try v.clean, I keep getting an error \" Error in\nfile.exists(params[[i]]) : invalid 'file' argument\", and have not been able\nto ferret out the cause. I am going to start a new thread about this, and\nreport back here if I can get resolution.\n\nGlenn\n\n-----Original Message-----\nFrom: R-sig-Geo [mailto:r-sig-geo-bounces at r-project.org] On Behalf Of Ege\nRubak\nSent: Friday, January 26, 2018 12:49 AM\nTo: r-sig-geo at r-project.org\nSubject: Re: [R-sig-Geo] Splitting spatial lines at self intersections (line\ncrossings)\n\nThe `psp` class in spatstat consists of individual line segments and\n`selfcrossing.psp` checks whether each individual line intersects one of the\nother lines, which happens at all the points in your plot.\n\nIf instead you treat each of the two line sequences as a `psp` you can check\nfind the crossings of the two `psp` objects. I.e., continuing your code\n(with `spatstat` and `maptools` loaded):\n\nL1 <- SpatialLines(list(Lines(list(Line(pts)), \"X\")))\nL2 <- SpatialLines(list(Lines(list(Line(pt2)), \"X\")))\nl1 <- as.psp(L1)\nl2 <- as.psp(L2)\nint <- crossing.psp(l1, l2)\n\nThis gives you the four intersections between the lines. I don't know of a\nsimple way to do the next task in `spatstat`. A useful function if you are\ngoing to try to write some code is `test.crossing.psp` which gives you a\nlogical matrix indicating which segments cross.\n\nCheers,\nEge\n\nOn 01/25/2018 11:26 PM, Glenn Stauffer wrote:\n> I have a Spatial Lines object I would like to split at every point \n> where the line self-intersects (crosses or touches itself), or \n> anywhere lines touch each other, if there are multiple lines.\n> \n> I've tried using spatstat to convert the SpatialLines to a psp object \n> and then use the selfcrossing.psp function to find the intersection \n> points (see example below). But that seems to identify all the nodes, \n> not just the points where the line crosses. Also, even if it \n> identified only the crossings (which is what I want), I am not sure \n> how to perform the next step and split the lines at those points.\n> \n> So, 1) I need to identify the crossings/touches, and 2) split the \n> lines at those points.\n> \n>   \n> \n> Essentially, what I am looking for is an R equivalent to the planarize \n> function in ArgGIS. Is there a relatively easy way to do this in R?\n> \n>   \n> \n> Thanks,\n> \n> Glenn\n> \n>   \n> \n> Here is an example of what I have tried.\n> \n>   \n> \n>   \n> \n> pts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\n> \n> pt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,104,106,110))\n> \n> projstr <- \"+init=epsg:3071\"         # make everything in meters\n> \n> L <-\n> SpatialLines(list(Lines(list(Line(pts),Line(pt2)),\"X\")),proj4string =\n> CRS(projstr))\n> \n> plot(L)\n> \n> PSP <- as.psp.SpatialLines(L)\n> \n> int <- selfcrossing.psp(PSP)\n> \n> plot(int,add=TRUE,col=\"red\") # identifies more than just the crossings\n> \n>                                  \n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "I think I have a solution now. \nTo recap, I wanted to planarize a line feature (split every line at every\nline crossing), and I wanted an R solution so I could iterate over many\nfeature objects. My so",
+      "thread_id": "thread-f8d3ff0f837f",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-45651bce82e4",
+      "message_id": "<CAAcGz98Q5KVPTdHGkmNu06_3Sfebe4Rov2NjPOGL5KxRe-Fsng@mail.gmail.com>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "acd579fb79d1a9375bc76a80cfcc85617e73f5138102204ab0c04aca43dd7766",
+      "date": "2018-01-26T22:24:31Z",
+      "subject": "[R-sig-Geo] Splitting spatial lines at self intersections (line crossings)",
+      "subject_clean": "Splitting spatial lines at self intersections (line crossings)",
+      "in_reply_to": "<00a901d396f1$adbdd3e0$09397ba0$@gmail.com>",
+      "references": [
+        "<006801d3962b$9059f110$b10dd330$@gmail.com>",
+        "<2a963040-f346-22c3-f373-8e90f84e823d@math.aau.dk>",
+        "<004d01d396d3$80511660$80f34320$@gmail.com>",
+        "<00a901d396f1$adbdd3e0$09397ba0$@gmail.com>"
+      ],
+      "body_plain": "I think rgeos::gNode will do it,  prior to decomposition, and perhaps\nrequiring a union beforehand -  there are other options, but I got side\ntracked exploring them :)\n\nOn Sat, 27 Jan 2018, 09:05 Glenn Stauffer, <gestauffer at gmail.com> wrote:\n\n> I think I have a solution now.\n> To recap, I wanted to planarize a line feature (split every line at every\n> line crossing), and I wanted an R solution so I could iterate over many\n> feature objects. My solution obviously does not strictly use R, but it is\n> carried out completely from within R. I used the v.clean algorithm from\n> GRASS, passed as an argument to the run_qgis function from the RQGIS\n> package. Seems to do exactly what I want.\n> My initial problem with v.clean was that I was passing a SpatialLines\n> feature instead of a SpatialLinesDataFrame feature to the algorithm.\n>\n> Glenn\n>\n> -----Original Message-----\n> From: Glenn Stauffer [mailto:gestauffer at gmail.com]\n> Sent: Friday, January 26, 2018 12:29 PM\n> To: 'Ege Rubak' <rubak at math.aau.dk>\n> Subject: RE: [R-sig-Geo] Splitting spatial lines at self intersections\n> (line\n> crossings)\n>\n> I think I am really close to a solution using the RQGIS package and the\n> GRASS function v.clean. The v.clean function should do exactly what I want,\n> but I have not been able to get it to work yet from R, although I could get\n> another GRASS functions to work (see example from Jannes Muenchow at\n>\n> http://r-sig-geo.2731867.n2.nabble.com/v-split-length-GRASS-in-R-td7590611.h\n> tml\n> <http://r-sig-geo.2731867.n2.nabble.com/v-split-length-GRASS-in-R-td7590611.html>\n> ). When I try v.clean, I keep getting an error \" Error in\n> file.exists(params[[i]]) : invalid 'file' argument\", and have not been able\n> to ferret out the cause. I am going to start a new thread about this, and\n> report back here if I can get resolution.\n>\n> Glenn\n>\n> -----Original Message-----\n> From: R-sig-Geo [mailto:r-sig-geo-bounces at r-project.org] On Behalf Of Ege\n> Rubak\n> Sent: Friday, January 26, 2018 12:49 AM\n> To: r-sig-geo at r-project.org\n> Subject: Re: [R-sig-Geo] Splitting spatial lines at self intersections\n> (line\n> crossings)\n>\n> The `psp` class in spatstat consists of individual line segments and\n> `selfcrossing.psp` checks whether each individual line intersects one of\n> the\n> other lines, which happens at all the points in your plot.\n>\n> If instead you treat each of the two line sequences as a `psp` you can\n> check\n> find the crossings of the two `psp` objects. I.e., continuing your code\n> (with `spatstat` and `maptools` loaded):\n>\n> L1 <- SpatialLines(list(Lines(list(Line(pts)), \"X\")))\n> L2 <- SpatialLines(list(Lines(list(Line(pt2)), \"X\")))\n> l1 <- as.psp(L1)\n> l2 <- as.psp(L2)\n> int <- crossing.psp(l1, l2)\n>\n> This gives you the four intersections between the lines. I don't know of a\n> simple way to do the next task in `spatstat`. A useful function if you are\n> going to try to write some code is `test.crossing.psp` which gives you a\n> logical matrix indicating which segments cross.\n>\n> Cheers,\n> Ege\n>\n> On 01/25/2018 11:26 PM, Glenn Stauffer wrote:\n> > I have a Spatial Lines object I would like to split at every point\n> > where the line self-intersects (crosses or touches itself), or\n> > anywhere lines touch each other, if there are multiple lines.\n> >\n> > I've tried using spatstat to convert the SpatialLines to a psp object\n> > and then use the selfcrossing.psp function to find the intersection\n> > points (see example below). But that seems to identify all the nodes,\n> > not just the points where the line crosses. Also, even if it\n> > identified only the crossings (which is what I want), I am not sure\n> > how to perform the next step and split the lines at those points.\n> >\n> > So, 1) I need to identify the crossings/touches, and 2) split the\n> > lines at those points.\n> >\n> >\n> >\n> > Essentially, what I am looking for is an R equivalent to the planarize\n> > function in ArgGIS. Is there a relatively easy way to do this in R?\n> >\n> >\n> >\n> > Thanks,\n> >\n> > Glenn\n> >\n> >\n> >\n> > Here is an example of what I have tried.\n> >\n> >\n> >\n> >\n> >\n> > pts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\n> >\n> > pt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,104,106,110))\n> >\n> > projstr <- \"+init=epsg:3071\"         # make everything in meters\n> >\n> > L <-\n> > SpatialLines(list(Lines(list(Line(pts),Line(pt2)),\"X\")),proj4string =\n> > CRS(projstr))\n> >\n> > plot(L)\n> >\n> > PSP <- as.psp.SpatialLines(L)\n> >\n> > int <- selfcrossing.psp(PSP)\n> >\n> > plot(int,add=TRUE,col=\"red\") # identifies more than just the crossings\n> >\n> >\n> >\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \nDr. Michael Sumner\nSoftware and Database Engineer\nAustralian Antarctic Division\n203 Channel Highway\nKingston Tasmania 7050 Australia\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I think rgeos::gNode will do it,  prior to decomposition, and perhaps\nrequiring a union beforehand -  there are other options, but I got side\ntracked exploring them :)\n\nOn Sat, 27 Jan 2018, 09:05 Glen",
+      "thread_id": "thread-f8d3ff0f837f",
+      "thread_depth": 1,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-398772a2dc27",
+      "message_id": "<E22C3CE5-0893-4CFC-A86C-C17EFB453E9C@imperial.ac.uk>",
+      "from_name": "Orme, David",
+      "from_email_hash": "7b0e8611a8cb12a19c0e508a0bf83cdaddee49b6eca3c39f04ea117000dffdd3",
+      "date": "2018-01-27T13:47:12Z",
+      "subject": "[R-sig-Geo] Breaking a polygon at a line",
+      "subject_clean": "Breaking a polygon at a line",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n\nI?m trying to cut a polygon open into a linestring using a line string as a blade (for want of a better description). The specific use case is that I want to convert a polygon boundary into a GPX route and want to control the starting point.\n\nUsing ?sf?, an simple example of the inputs and target is:\n\npoly <- st_sfc(st_polygon(list(matrix(c(0,2,2,0,0,0,0,2,2,0), ncol=2))))\nline <- st_sfc(st_linestring(matrix(c(1,3,1,1), ncol=2)))\n\nplot(poly, xlim=c(-1,4), ylim=c(-1,3), lwd=3, border='grey70')\nplot(line, add=TRUE, col='red')\n\ntarget <- st_sfc(st_linestring(matrix(c(2,2,0,0,2,2,1,0,0,2,2,1), ncol=2)))\ntext(st_coordinates(target))\n\nOptions:\n- st_split() always returns the same feature type so it only splits if the line crosses the polygon boundary at least twice.\n- st_cast() is converts the polygon to a linestring, but uses the first coordinate in the polygon as the starting point of the line string.\n\nSo, the clunky solution I can see is to use st_intersection to find a point on both the line and polygon, find distances from all points on the polygon boundary to that and then juggle some blocks of coordinates to get the order right.\n\nAm I missing something? Bit of a fringe use-case, I suspect but I was curious if there is an existing solution.\n\nThanks,\nDavid\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nI?m trying to cut a polygon open into a linestring using a line string as a blade (for want of a better description). The specific use case is that I want to convert a polygon boundary into a GPX",
+      "thread_id": "thread-398772a2dc27",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-eddab1aef1c8",
+      "message_id": "<alpine.LFD.2.21.1801271558260.498@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2018-01-27T16:01:28+01:00",
+      "subject": "[R-sig-Geo] accessing spatial imagery via rgdal's web map tile service driver",
+      "subject_clean": "accessing spatial imagery via rgdal's web map tile service driver",
+      "in_reply_to": "<CA+ZRYj_c_LT8WYU+UEgmg-OZrNsXhTVT1jjZT0LXcDNf-R=HHg@mail.gmail.com>",
+      "references": [
+        "<CA+ZRYj_c_LT8WYU+UEgmg-OZrNsXhTVT1jjZT0LXcDNf-R=HHg@mail.gmail.com>"
+      ],
+      "body_plain": "On Fri, 26 Jan 2018, Fischbach, Anthony wrote:\n\n> I see that WMS (\"OGC Web Map Service\") and WMTS (\"OGC Web Mab Tile\n> Service\") are supported within my rgdal installation , however, it is\n> unclear how to call for WMTS imagery.\n> Please advise on how to access geo-referenced imagery through a web map\n> tile service, such as described here\n> (\n> https://wiki.earthdata.nasa.gov/display/GIBS/Map+Library+Usage#expand-GDALBasics\n> )\n> for gdal using the current rgdal version (under R version 3.4.3 rgdal\n> version 1.2-16)\n\nDo what anyone using GDAL drivers would do, refer to the documentation, in \nthis case on http://www.gdal.org/frmt_wms.html.\n\nRoger\n\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Fri, 26 Jan 2018, Fischbach, Anthony wrote:\n\n> I see that WMS (\"OGC Web Map Service\") and WMTS (\"OGC Web Mab Tile\n> Service\") are supported within my rgdal installation , however, it is\n> unclear h",
+      "thread_id": "thread-b46a6f33ee92",
+      "thread_depth": 1,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-ca59ffcf3ca6",
+      "message_id": "<001e01d399e6$aebb88d0$0c329a70$@esenvironmental.com>",
+      "from_name": "Todd McDonnell",
+      "from_email_hash": "f0364185b723f9c06c67e93fb9dd9de27c525cff7fe3a4449d37d453865cc62e",
+      "date": "2018-01-30T08:23:34-08:00",
+      "subject": "[R-sig-Geo] Monte Carlo with mc2d",
+      "subject_clean": "Monte Carlo with mc2d",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi all,\n\n \n\nI posted a question to Stack Overflow a couple weeks ago regarding Monte\nCarlo simulation with mc2d with no replies:\n\nhttps://stackoverflow.com/questions/48306933/grid-based-monte-carlo-simulati\non-using-mc2d\n\n \n\nMight anyone here have a suggestion for how to address the error?\n\n \n\nMy approach is largely based on this advice:\n\nhttp://r-sig-geo.2731867.n2.nabble.com/apply-monte-carlo-simulation-for-each\n-cell-in-a-matrix-originally-raster-td7367094.html#a7367555\n\n \n\nThanks in advance for any suggestions,\n\nTodd\n\n \n\n--\n\nTodd McDonnell\n\nResearch Scientist, Ph.D.\n\nE&S Environmental Chemistry\n\n2161 NW Fillmore Ave., Corvallis, OR\n\n \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all,\n\n \n\nI posted a question to Stack Overflow a couple weeks ago regarding Monte\nCarlo simulation with mc2d with no replies:\n\nhttps://stackoverflow.com/questions/48306933/grid-based-monte-carlo-si",
+      "thread_id": "thread-ca59ffcf3ca6",
+      "thread_depth": 0,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-cad52c953828",
+      "message_id": "<CAKkiGbvt5TkDhCXGMsR8Ks=Q8_csNG_h-7VC6w5ys-3MwO-atw@mail.gmail.com>",
+      "from_name": "Vijay Lulla",
+      "from_email_hash": "f30009fbf2f07578599e5257a29c88082f57149b90b796b4f3423ea74e8eb1a3",
+      "date": "2018-01-30T14:36:16-05:00",
+      "subject": "[R-sig-Geo] Monte Carlo with mc2d",
+      "subject_clean": "Monte Carlo with mc2d",
+      "in_reply_to": "<001e01d399e6$aebb88d0$0c329a70$@esenvironmental.com>",
+      "references": [
+        "<001e01d399e6$aebb88d0$0c329a70$@esenvironmental.com>"
+      ],
+      "body_plain": "Return the min,mean,max values as a list of numbers and calc will create a\nRasterStack.  ?`calc` states that 'calc' returns a RasterBrick if 'fun'\nreturns more than one number.  Below are a few minor changes I had to make\nto your function.\n\nfun <- function(x) {\n  # Convert each raster to mcnode object\n  dA <- mcdata(x[1], type=\"0\")\n  dB <- mcdata(x[2], type=\"0\")\n  dC <- mcdata(x[3], type=\"0\")\n  dD <- mcdata(x[4], type=\"0\")\n\n  # Define uniform distirbutions for each raster\n  stA <- mcstoc(runif, type=\"U\", min=dA-uA, max=dA+uA, rtrunc=TRUE, linf=0)\n# modified: fixed typo!\n  stB <- mcstoc(runif, type=\"U\", min=dA-uB, max=dA+uB, rtrunc=TRUE, linf=0)\n  stC <- mcstoc(runif, type=\"U\", min=dA-uC, max=dA+uC, rtrunc=TRUE, linf=0)\n  stD <- mcstoc(runif, type=\"U\", min=dA-uD, max=dA+uD, rtrunc=TRUE, linf=0)\n\n  # Apply Monte Carlo to this equation\n  CL <- stA + stB + stC + stD\n  # Extract the min, mean, and max CL from the 1000 iterations\n  c(min(CL), mean(CL), max(CL))  # modified: return vector of numbers\n}\n\nHTH,\nVijay.\n\n\nOn Tue, Jan 30, 2018 at 11:23 AM, Todd McDonnell <\ntodd.mcdonnell at esenvironmental.com> wrote:\n\n> Hi all,\n>\n>\n>\n> I posted a question to Stack Overflow a couple weeks ago regarding Monte\n> Carlo simulation with mc2d with no replies:\n>\n> https://stackoverflow.com/questions/48306933/grid-based-\n> monte-carlo-simulati\n> on-using-mc2d\n>\n>\n>\n> Might anyone here have a suggestion for how to address the error?\n>\n>\n>\n> My approach is largely based on this advice:\n>\n> http://r-sig-geo.2731867.n2.nabble.com/apply-monte-carlo-\n> simulation-for-each\n> -cell-in-a-matrix-originally-raster-td7367094.html#a7367555\n>\n>\n>\n> Thanks in advance for any suggestions,\n>\n> Todd\n>\n>\n>\n> --\n>\n> Todd McDonnell\n>\n> Research Scientist, Ph.D.\n>\n> E&S Environmental Chemistry\n>\n> 2161 NW Fillmore Ave., Corvallis, OR\n>\n>\n>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n\n-- \nVijay Lulla, Ph.D.\n\nAssistant Professor,\nDept. of Geography, IUPUI\n425 University Blvd, CA-207C.\nIndianapolis, IN-46202\nvlulla at iupui.edu\n\n<http://vijaylulla.com>\nhttp://vijaylulla.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Return the min,mean,max values as a list of numbers and calc will create a\nRasterStack.  ?`calc` states that 'calc' returns a RasterBrick if 'fun'\nreturns more than one number.  Below are a few minor ",
+      "thread_id": "thread-ca59ffcf3ca6",
+      "thread_depth": 1,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-12bc324952fb",
+      "message_id": "<007801d39a0a$ba396370$2eac2a50$@esenvironmental.com>",
+      "from_name": "Todd McDonnell",
+      "from_email_hash": "f0364185b723f9c06c67e93fb9dd9de27c525cff7fe3a4449d37d453865cc62e",
+      "date": "2018-01-30T12:41:38-08:00",
+      "subject": "[R-sig-Geo] Monte Carlo with mc2d",
+      "subject_clean": "Monte Carlo with mc2d",
+      "in_reply_to": "<CAKkiGbvt5TkDhCXGMsR8Ks=Q8_csNG_h-7VC6w5ys-3MwO-atw@mail.gmail.com>",
+      "references": [
+        "<001e01d399e6$aebb88d0$0c329a70$@esenvironmental.com>",
+        "<CAKkiGbvt5TkDhCXGMsR8Ks=Q8_csNG_h-7VC6w5ys-3MwO-atw@mail.gmail.com>"
+      ],
+      "body_plain": "This works great, many thanks Vijay. I have updated the code on Stack Overflow as well.\n\n \n\nTodd\n\n \n\nFrom: Vijay Lulla [mailto:vijaylulla at gmail.com] \nSent: Tuesday, January 30, 2018 11:36 AM\nTo: Todd McDonnell\nCc: R-sig-geo Mailing List\nSubject: Re: [R-sig-Geo] Monte Carlo with mc2d\n\n \n\nReturn the min,mean,max values as a list of numbers and calc will create a RasterStack.  ?`calc` states that 'calc' returns a RasterBrick if 'fun' returns more than one number.  Below are a few minor changes I had to make to your function.\n\nfun <- function(x) {\n  # Convert each raster to mcnode object\n  dA <- mcdata(x[1], type=\"0\")\n  dB <- mcdata(x[2], type=\"0\")\n  dC <- mcdata(x[3], type=\"0\")\n  dD <- mcdata(x[4], type=\"0\")\n\n  # Define uniform distirbutions for each raster\n  stA <- mcstoc(runif, type=\"U\", min=dA-uA, max=dA+uA, rtrunc=TRUE, linf=0) # modified: fixed typo!\n  stB <- mcstoc(runif, type=\"U\", min=dA-uB, max=dA+uB, rtrunc=TRUE, linf=0)\n  stC <- mcstoc(runif, type=\"U\", min=dA-uC, max=dA+uC, rtrunc=TRUE, linf=0)\n  stD <- mcstoc(runif, type=\"U\", min=dA-uD, max=dA+uD, rtrunc=TRUE, linf=0)\n\n  # Apply Monte Carlo to this equation\n  CL <- stA + stB + stC + stD\n  # Extract the min, mean, and max CL from the 1000 iterations\n  c(min(CL), mean(CL), max(CL))  # modified: return vector of numbers\n}\n\nHTH,\n\nVijay.\n\n \n\n \n\nOn Tue, Jan 30, 2018 at 11:23 AM, Todd McDonnell <todd.mcdonnell at esenvironmental.com> wrote:\n\nHi all,\n\n\n\nI posted a question to Stack Overflow a couple weeks ago regarding Monte\nCarlo simulation with mc2d with no replies:\n\nhttps://stackoverflow.com/questions/48306933/grid-based-monte-carlo-simulati <https://stackoverflow.com/questions/48306933/grid-based-monte-carlo-simulation-using-mc2d> \non-using-mc2d\n\n\n\nMight anyone here have a suggestion for how to address the error?\n\n\n\nMy approach is largely based on this advice:\n\nhttp://r-sig-geo.2731867.n2.nabble.com/apply-monte-carlo-simulation-for-each <http://r-sig-geo.2731867.n2.nabble.com/apply-monte-carlo-simulation-for-each-cell-in-a-matrix-originally-raster-td7367094.html#a7367555> \n-cell-in-a-matrix-originally-raster-td7367094.html#a7367555\n\n\n\nThanks in advance for any suggestions,\n\nTodd\n\n\n\n--\n\nTodd McDonnell\n\nResearch Scientist, Ph.D.\n\nE&S Environmental Chemistry\n\n2161 NW Fillmore Ave., Corvallis, OR\n\n\n\n\n        [[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n\n-- \n\nVijay Lulla, Ph.D.\n\n\n\nAssistant Professor,\n\nDept. of Geography, IUPUI\n\n425 University Blvd, CA-207C.\n\nIndianapolis, IN-46202\n\nvlulla at iupui.edu\n\n <http://vijaylulla.com> \n\n\nhttp://vijaylulla.com\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "This works great, many thanks Vijay. I have updated the code on Stack Overflow as well.\n\n \n\nTodd\n\n \n\nFrom: Vijay Lulla [mailto:vijaylulla at gmail.com] \nSent: Tuesday, January 30, 2018 11:36 AM\nTo: To",
+      "thread_id": "thread-ca59ffcf3ca6",
+      "thread_depth": 2,
+      "month": "2018-01"
+    },
+    {
+      "id": "msg-c2dbc021a9e0",
+      "message_id": "<CAJHv-Snh1qfj6+Lj-_OTHqbqVYQ1L6CPjufPiRqz8un9CfdAsw@mail.gmail.com>",
+      "from_name": "Sojin Lee",
+      "from_email_hash": "b52f80b65a81b78d4edba83ac6278040c759169a469563957cec339974fd640e",
+      "date": "2018-01-31T12:08:03-07:00",
+      "subject": "[R-sig-Geo] Correcting negative kriging weight in krigeST",
+      "subject_clean": "Correcting negative kriging weight in krigeST",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear R-sig-Geo users,\n\nI'm currently using krigeST for 3-d geostationaly sattlite data\ninterpolation, and I'm trying to estimate \"Interpolation variance\" in\nYamamoto et al, 2000.\n(https://link.springer.com/article/10.1023/A:1007577916868)\n\nMy problem is that the variance is somtimes negative. I'm thinking\nthat it is due to the negative kriging weights. I found that there is\na solution in Deutsch (1995)\n(https://www.sciencedirect.com/science/article/pii/0098300496000052#).\n\nBut I'm not sure there is already a option in krigeST fuction. Could\nyou let me know about the solution?\n\nThank you for your consideration.\n\n\nBest regards,\n\nSojin\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear R-sig-Geo users,\n\nI'm currently using krigeST for 3-d geostationaly sattlite data\ninterpolation, and I'm trying to estimate \"Interpolation variance\" in\nYamamoto et al, 2000.\n(https://link.springe",
+      "thread_id": "thread-c2dbc021a9e0",
+      "thread_depth": 0,
+      "month": "2018-01"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-d371a12f526e",
+      "subject": "how to access source code to the 'variogramLine' function in Gstat ?",
+      "message_count": 3,
+      "participants": [
+        "Edzer Pebesma",
+        "bernard julien"
+      ],
+      "started": "2018-01-02T17:08:35+00:00",
+      "last_reply": "2018-01-02T18:12:54+00:00",
+      "root_message_id": "msg-d371a12f526e"
+    },
+    {
+      "id": "thread-8a2880a8287a",
+      "subject": "standard errors of total impacts in a spatial lag regression model lagsarlm",
+      "message_count": 3,
+      "participants": [
+        "Rafael Pereira",
+        "Roger Bivand"
+      ],
+      "started": "2018-01-03T09:37:04-02:00",
+      "last_reply": "2018-01-04T10:17:50-02:00",
+      "root_message_id": "msg-8a2880a8287a"
+    },
+    {
+      "id": "thread-f90df754e064",
+      "subject": "error when using fit.variogram.gls",
+      "message_count": 1,
+      "participants": [
+        "Laura Poggio"
+      ],
+      "started": "2018-01-04T14:08:03+00:00",
+      "last_reply": "2018-01-04T14:08:03+00:00",
+      "root_message_id": "msg-f90df754e064"
+    },
+    {
+      "id": "thread-c65448c5815e",
+      "subject": "STKriging export",
+      "message_count": 1,
+      "participants": [
+        "Rodrigo Lilla Manzione"
+      ],
+      "started": "2018-01-05T16:15:03-02:00",
+      "last_reply": "2018-01-05T16:15:03-02:00",
+      "root_message_id": "msg-c65448c5815e"
+    },
+    {
+      "id": "thread-8cc0ce9ef532",
+      "subject": "EGU session: R’s deliberate role in Earth sciences; abstract deadline Jan 10",
+      "message_count": 1,
+      "participants": [
+        "Edzer Pebesma"
+      ],
+      "started": "2018-01-06T20:11:24+01:00",
+      "last_reply": "2018-01-06T20:11:24+01:00",
+      "root_message_id": "msg-8cc0ce9ef532"
+    },
+    {
+      "id": "thread-6938eb81b388",
+      "subject": "Spatial filtering with glm with grid sampling",
+      "message_count": 8,
+      "participants": [
+        "Roger Bivand",
+        "Sima Usvyatsov"
+      ],
+      "started": "2018-01-10T12:32:36-04:00",
+      "last_reply": "2018-01-12T13:45:53+01:00",
+      "root_message_id": "msg-6938eb81b388"
+    },
+    {
+      "id": "thread-8ed7b2fae565",
+      "subject": "R code for rainfall isohyet map",
+      "message_count": 1,
+      "participants": [
+        "Stefano Sofia"
+      ],
+      "started": "2018-01-18T08:11:44+00:00",
+      "last_reply": "2018-01-18T08:11:44+00:00",
+      "root_message_id": "msg-8ed7b2fae565"
+    },
+    {
+      "id": "thread-ad880e15247f",
+      "subject": "Updated Text of Applied Spatial Data Analysis with R?",
+      "message_count": 2,
+      "participants": [
+        "Patrick Schratz",
+        "Peterson, Steven K."
+      ],
+      "started": "2018-01-22T20:22:01+00:00",
+      "last_reply": "2018-01-22T23:14:13+01:00",
+      "root_message_id": "msg-ad880e15247f"
+    },
+    {
+      "id": "thread-02f4db44c68f",
+      "subject": "Issue with st_read sf with Encoding for MapInfo file (Frisian municipality name)",
+      "message_count": 3,
+      "participants": [
+        "Egge-Jan Pollé",
+        "Peter van Horssen"
+      ],
+      "started": "2018-01-23T20:49:03+00:00",
+      "last_reply": "2018-01-24T22:09:05+01:00",
+      "root_message_id": "msg-02f4db44c68f"
+    },
+    {
+      "id": "thread-1b9e64d030a7",
+      "subject": "Plot a raster behind a shapefile",
+      "message_count": 3,
+      "participants": [
+        "A. Marcia BARBOSA",
+        "Florian Betz",
+        "Stefano Sofia"
+      ],
+      "started": "2018-01-25T08:55:40+00:00",
+      "last_reply": "2018-01-25T10:07:00+01:00",
+      "root_message_id": "msg-1b9e64d030a7"
+    },
+    {
+      "id": "thread-d5acf4d5c4ae",
+      "subject": "Splitting spatial lines at self intersections (line crossings)",
+      "message_count": 4,
+      "participants": [
+        "Ege Rubak",
+        "Glenn Stauffer",
+        "Marcelino de la Cruz Rot",
+        "Michael Sumner"
+      ],
+      "started": "2018-01-25T16:26:35-06:00",
+      "last_reply": "2018-01-26T18:04:01+01:00",
+      "root_message_id": "msg-d5acf4d5c4ae"
+    },
+    {
+      "id": "thread-b46a6f33ee92",
+      "subject": "accessing spatial imagery via rgdal's web map tile service driver",
+      "message_count": 2,
+      "participants": [
+        "Fischbach, Anthony",
+        "Roger Bivand"
+      ],
+      "started": "2018-01-26T11:23:04-09:00",
+      "last_reply": "2018-01-27T16:01:28+01:00",
+      "root_message_id": "msg-b46a6f33ee92"
+    },
+    {
+      "id": "thread-97073c1d1068",
+      "subject": "Error in file.exists(params[[i]]) : invalid 'file' argument when using v.clean function in RQGIS",
+      "message_count": 2,
+      "participants": [
+        "Glenn Stauffer"
+      ],
+      "started": "2018-01-26T13:22:30-06:00",
+      "last_reply": "2018-01-26T15:51:18-06:00",
+      "root_message_id": "msg-97073c1d1068"
+    },
+    {
+      "id": "thread-f8d3ff0f837f",
+      "subject": "Splitting spatial lines at self intersections (line crossings)",
+      "message_count": 2,
+      "participants": [
+        "Glenn Stauffer",
+        "Michael Sumner"
+      ],
+      "started": "2018-01-26T16:04:45-06:00",
+      "last_reply": "2018-01-26T22:24:31+00:00",
+      "root_message_id": "msg-f8d3ff0f837f"
+    },
+    {
+      "id": "thread-840845961aaf",
+      "subject": "R version 3.3.2, Windows 10: gstat package: Defining new correlation model in gstat package?",
+      "message_count": 1,
+      "participants": [
+        "Rathore, Saubhagya Singh"
+      ],
+      "started": "2018-01-26T16:42:35+00:00",
+      "last_reply": "2018-01-26T16:42:35+00:00",
+      "root_message_id": "msg-840845961aaf"
+    },
+    {
+      "id": "thread-398772a2dc27",
+      "subject": "Breaking a polygon at a line",
+      "message_count": 1,
+      "participants": [
+        "Orme, David"
+      ],
+      "started": "2018-01-27T13:47:12+00:00",
+      "last_reply": "2018-01-27T13:47:12+00:00",
+      "root_message_id": "msg-398772a2dc27"
+    },
+    {
+      "id": "thread-ca59ffcf3ca6",
+      "subject": "Monte Carlo with mc2d",
+      "message_count": 3,
+      "participants": [
+        "Todd McDonnell",
+        "Vijay Lulla"
+      ],
+      "started": "2018-01-30T08:23:34-08:00",
+      "last_reply": "2018-01-30T12:41:38-08:00",
+      "root_message_id": "msg-ca59ffcf3ca6"
+    },
+    {
+      "id": "thread-c2dbc021a9e0",
+      "subject": "Correcting negative kriging weight in krigeST",
+      "message_count": 1,
+      "participants": [
+        "Sojin Lee"
+      ],
+      "started": "2018-01-31T12:08:03-07:00",
+      "last_reply": "2018-01-31T12:08:03-07:00",
+      "root_message_id": "msg-c2dbc021a9e0"
+    }
+  ]
+}

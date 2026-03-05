@@ -1,0 +1,161 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2025-07",
+  "messages": [
+    {
+      "id": "msg-ff2fe0f256c1",
+      "message_id": "<CAAKwTDGbBXjUi4x593uRp2F4ftGrvpO6+EvsAWE9gfb21Q2PtA@mail.gmail.com>",
+      "from_name": "Gabriel Cotlier",
+      "from_email_hash": "fe6b7ece94315f2ba414b8c7053cca118260d4229688ad762179e180bbdf3aaf",
+      "date": "2025-07-12T10:46:36-03:00",
+      "subject": "[R-sig-Geo] Question on Scale bar",
+      "subject_clean": "Question on Scale bar",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\nI would like to ask for help to add a scale bar to the following map below.\nThanks a lot in advance.\nKind regards,\nGabriel\n\nlibrary(ggplot2)\nlibrary(sf)\nlibrary(rnaturalearth)\nlibrary(rnaturalearthdata)\n\n# Get world map data\nworld <- ne_countries(scale = \"medium\", returnclass = \"sf\")\n\n# Define the bounding box for Europe\neurope_extent <- st_bbox(c(xmin = -12, xmax = 35, ymin = 30, ymax = 72),\ncrs = st_crs(4326))\n\n# Filter for Europe, then for Italy and Iberian Peninsula\neurope <- st_crop(world, europe_extent)\nitaly_and_iberian <- europe[europe$name %in% c(\"Spain\", \"Portugal\",\n\"Italy\"),]\n\n# Load another shapefile\n# Replace \"path/to/your/shapefile.shp\"\nA <- st_read(\"path/to/your/shapefile1.shp\" )\nB <- st_read(\"path/to/your/shapefile2.shp\" )\nsq1 <- st_read(\"path/to/your/shapefile3.shp\" )\nsq2 <- st_read(\"path/to/your/shapefile4.shp\" )\n\n# Plot the map with the added shapefile\nggplot(data = europe) +\n  geom_sf(fill = \"lightgray\") + # Background map\n  geom_sf(data = italy_and_iberian, fill = \"skyblue\") + # Highlighted areas\n  geom_sf(data = A, fill = \"lightgreen\") + # Added shapefile\n geom_sf(data = B, fill = \"lightblue\") + # Added shapefile\n  geom_sf(data = sq1, fill =NA,  color=\"red\", lwd=0.5) + # Added shapefile\n  geom_sf(data = sq2, fill=NA, color =\"red\", lwd=0.5) + # Added shapefile\n  coord_sf(xlim = c(-12, 35), ylim = c(30, 72), expand = FALSE) + # Set map\nboundaries.\n  theme_bw() +\n  labs(title = \"Italian, Iberian in Europe\")\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\nI would like to ask for help to add a scale bar to the following map below.\nThanks a lot in advance.\nKind regards,\nGabriel\n\nlibrary(ggplot2)\nlibrary(sf)\nlibrary(rnaturalearth)\nlibrary(rnaturale",
+      "thread_id": "thread-ff2fe0f256c1",
+      "thread_depth": 0,
+      "month": "2025-07"
+    },
+    {
+      "id": "msg-c122f727aa53",
+      "message_id": "<dToPcrlu8bdCVS9xVtduMn38wfWw7fZ6vScumW-YHAfxNCJuQgCqDs0uslBFodFZ89las-Sct3Jt5Tv6_FmL1G2C95qNV7o1knll3o0gUE8=@proton.me>",
+      "from_name": "Micha Silver",
+      "from_email_hash": "43738d187ce0c68d47d7fb47a375bec91da1b9210fa9d9fc6ae1044a6bce710b",
+      "date": "2025-07-12T20:01:22Z",
+      "subject": "[R-sig-Geo] Question on Scale bar",
+      "subject_clean": "Question on Scale bar",
+      "in_reply_to": "<CAAKwTDGbBXjUi4x593uRp2F4ftGrvpO6+EvsAWE9gfb21Q2PtA@mail.gmail.com>",
+      "references": [
+        "<CAAKwTDGbBXjUi4x593uRp2F4ftGrvpO6+EvsAWE9gfb21Q2PtA@mail.gmail.com>"
+      ],
+      "body_plain": "--\nMicha Silver\ncell: +972-523-665918\n\n\nOn Saturday, 12 July 2025 at 16:47, Gabriel Cotlier <gabiklm01 at gmail.com> wrote:\n\n> Hello,\n> I would like to ask for help to add a scale bar to the following map below.\n> Thanks a lot in advance.\n> Kind regards,\n> Gabriel\n\nYou might consider the `ggspatial` package that has a function: `annotation_scale()`\n\nhttps://paleolimbot.github.io/ggspatial/reference/annotation_scale.html\n\n\n> \n> library(ggplot2)\n> library(sf)\n> library(rnaturalearth)\n> library(rnaturalearthdata)\n> \n> # Get world map data\n> world <- ne_countries(scale = \"medium\", returnclass = \"sf\")\n> \n> # Define the bounding box for Europe\n> europe_extent <- st_bbox(c(xmin = -12, xmax = 35, ymin = 30, ymax = 72),\n> crs = st_crs(4326))\n> \n> # Filter for Europe, then for Italy and Iberian Peninsula\n> europe <- st_crop(world, europe_extent)\n> italy_and_iberian <- europe[europe$name %in% c(\"Spain\", \"Portugal\",\n> \"Italy\"),]\n> \n> # Load another shapefile\n> # Replace \"path/to/your/shapefile.shp\"\n> A <- st_read(\"path/to/your/shapefile1.shp\" )\n> B <- st_read(\"path/to/your/shapefile2.shp\" )\n> sq1 <- st_read(\"path/to/your/shapefile3.shp\" )\n> sq2 <- st_read(\"path/to/your/shapefile4.shp\" )\n> \n> # Plot the map with the added shapefile\n> ggplot(data = europe) +\n> geom_sf(fill = \"lightgray\") + # Background map\n> geom_sf(data = italy_and_iberian, fill = \"skyblue\") + # Highlighted areas\n> geom_sf(data = A, fill = \"lightgreen\") + # Added shapefile\n> geom_sf(data = B, fill = \"lightblue\") + # Added shapefile\n> geom_sf(data = sq1, fill =NA, color=\"red\", lwd=0.5) + # Added shapefile\n> geom_sf(data = sq2, fill=NA, color =\"red\", lwd=0.5) + # Added shapefile\n> coord_sf(xlim = c(-12, 35), ylim = c(30, 72), expand = FALSE) + # Set map\n> boundaries.\n> theme_bw() +\n> labs(title = \"Italian, Iberian in Europe\")\n> \n> [[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "--\nMicha Silver\ncell: +972-523-665918\n\n\nOn Saturday, 12 July 2025 at 16:47, Gabriel Cotlier <gabiklm01 at gmail.com> wrote:\n\n> Hello,\n> I would like to ask for help to add a scale bar to the following",
+      "thread_id": "thread-ff2fe0f256c1",
+      "thread_depth": 1,
+      "month": "2025-07"
+    },
+    {
+      "id": "msg-3ab75af04231",
+      "message_id": "<CAAKwTDGNhMvypk21T5cQKXxmMkwKccXYogyOJSarD9zUASmhSQ@mail.gmail.com>",
+      "from_name": "Gabriel Cotlier",
+      "from_email_hash": "fe6b7ece94315f2ba414b8c7053cca118260d4229688ad762179e180bbdf3aaf",
+      "date": "2025-07-12T17:34:37-03:00",
+      "subject": "[R-sig-Geo] Question on Scale bar",
+      "subject_clean": "Question on Scale bar",
+      "in_reply_to": "<dToPcrlu8bdCVS9xVtduMn38wfWw7fZ6vScumW-YHAfxNCJuQgCqDs0uslBFodFZ89las-Sct3Jt5Tv6_FmL1G2C95qNV7o1knll3o0gUE8=@proton.me>",
+      "references": [
+        "<CAAKwTDGbBXjUi4x593uRp2F4ftGrvpO6+EvsAWE9gfb21Q2PtA@mail.gmail.com>",
+        "<dToPcrlu8bdCVS9xVtduMn38wfWw7fZ6vScumW-YHAfxNCJuQgCqDs0uslBFodFZ89las-Sct3Jt5Tv6_FmL1G2C95qNV7o1knll3o0gUE8=@proton.me>"
+      ],
+      "body_plain": "Dear Micha,\nThank you very much for the tip. I worked out, but I am concerned about the\nwarning that appears:\n\n*Scale on map varies by more than 10%, scale bar may be inaccurate*\n\nOn Sat, Jul 12, 2025 at 5:01?PM Micha Silver <micha_silver+DEV at proton.me>\nwrote:\n\n>\n>\n>\n>\n> --\n> Micha Silver\n> cell: +972-523-665918\n>\n>\n> On Saturday, 12 July 2025 at 16:47, Gabriel Cotlier <gabiklm01 at gmail.com>\n> wrote:\n>\n> > Hello,\n> > I would like to ask for help to add a scale bar to the following map\n> below.\n> > Thanks a lot in advance.\n> > Kind regards,\n> > Gabriel\n>\n> You might consider the `ggspatial` package that has a function:\n> `annotation_scale()`\n>\n> https://paleolimbot.github.io/ggspatial/reference/annotation_scale.html\n>\n>\n> >\n> > library(ggplot2)\n> > library(sf)\n> > library(rnaturalearth)\n> > library(rnaturalearthdata)\n> >\n> > # Get world map data\n> > world <- ne_countries(scale = \"medium\", returnclass = \"sf\")\n> >\n> > # Define the bounding box for Europe\n> > europe_extent <- st_bbox(c(xmin = -12, xmax = 35, ymin = 30, ymax = 72),\n> > crs = st_crs(4326))\n> >\n> > # Filter for Europe, then for Italy and Iberian Peninsula\n> > europe <- st_crop(world, europe_extent)\n> > italy_and_iberian <- europe[europe$name %in% c(\"Spain\", \"Portugal\",\n> > \"Italy\"),]\n> >\n> > # Load another shapefile\n> > # Replace \"path/to/your/shapefile.shp\"\n> > A <- st_read(\"path/to/your/shapefile1.shp\" )\n> > B <- st_read(\"path/to/your/shapefile2.shp\" )\n> > sq1 <- st_read(\"path/to/your/shapefile3.shp\" )\n> > sq2 <- st_read(\"path/to/your/shapefile4.shp\" )\n> >\n> > # Plot the map with the added shapefile\n> > ggplot(data = europe) +\n> > geom_sf(fill = \"lightgray\") + # Background map\n> > geom_sf(data = italy_and_iberian, fill = \"skyblue\") + # Highlighted areas\n> > geom_sf(data = A, fill = \"lightgreen\") + # Added shapefile\n> > geom_sf(data = B, fill = \"lightblue\") + # Added shapefile\n> > geom_sf(data = sq1, fill =NA, color=\"red\", lwd=0.5) + # Added shapefile\n> > geom_sf(data = sq2, fill=NA, color =\"red\", lwd=0.5) + # Added shapefile\n> > coord_sf(xlim = c(-12, 35), ylim = c(30, 72), expand = FALSE) + # Set map\n> > boundaries.\n> > theme_bw() +\n> > labs(title = \"Italian, Iberian in Europe\")\n> >\n> > [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Micha,\nThank you very much for the tip. I worked out, but I am concerned about the\nwarning that appears:\n\n*Scale on map varies by more than 10%, scale bar may be inaccurate*\n\nOn Sat, Jul 12, 2025",
+      "thread_id": "thread-ff2fe0f256c1",
+      "thread_depth": 2,
+      "month": "2025-07"
+    },
+    {
+      "id": "msg-bc21c97b9ddc",
+      "message_id": "<TQKsAc81QsoytguW5-idjPO3a4W7TzUXsOfCsbL5mlZ4CPMqZyXhE4ImVm5SdkUFBZ9G98DhypDummQnCoOcYt9QvtmqgqDrul91fhpyPUA=@proton.me>",
+      "from_name": "Micha Silver",
+      "from_email_hash": "43738d187ce0c68d47d7fb47a375bec91da1b9210fa9d9fc6ae1044a6bce710b",
+      "date": "2025-07-13T08:48:20Z",
+      "subject": "[R-sig-Geo] Question on Scale bar",
+      "subject_clean": "Question on Scale bar",
+      "in_reply_to": "<CAAKwTDGNhMvypk21T5cQKXxmMkwKccXYogyOJSarD9zUASmhSQ@mail.gmail.com>",
+      "references": [
+        "<CAAKwTDGbBXjUi4x593uRp2F4ftGrvpO6+EvsAWE9gfb21Q2PtA@mail.gmail.com>",
+        "<dToPcrlu8bdCVS9xVtduMn38wfWw7fZ6vScumW-YHAfxNCJuQgCqDs0uslBFodFZ89las-Sct3Jt5Tv6_FmL1G2C95qNV7o1knll3o0gUE8=@proton.me>",
+        "<CAAKwTDGNhMvypk21T5cQKXxmMkwKccXYogyOJSarD9zUASmhSQ@mail.gmail.com>"
+      ],
+      "body_plain": "--\nMicha Silvercell: +972-523-665918\n\n> On Saturday, 12 July 2025 at 23:35, Gabriel Cotlier <gabiklm01 at gmail.com> wrote:\n>\n> Dear Micha,\n> Thank you very much for the tip. I worked out, but I am concerned about the warning that appears:\n\nI assume that is because you are using WGS84 long/lat. So there is a difference in distances E-W vs N-S. For example, in S. Spain 1 degree N-S is about 110 km while 1 degree E-W is about 90 km.\n\n> Scale on map varies by more than 10%, scale bar may be inaccurate\n\nOn Sat, Jul 12, 2025 at 5:01?PM Micha Silver <[micha_silver+DEV at proton.me](mailto:micha_silver%2BDEV at proton.me)> wrote:\n\n> --\n> Micha Silver\n> cell: +972-523-665918\n>\n> On Saturday, 12 July 2025 at 16:47, Gabriel Cotlier <gabiklm01 at gmail.com> wrote:\n>\n>> Hello,\n>> I would like to ask for help to add a scale bar to the following map below.\n>> Thanks a lot in advance.\n>> Kind regards,\n>> Gabriel\n>\n> You might consider the `ggspatial` package that has a function: `annotation_scale()`\n>\n> https://paleolimbot.github.io/ggspatial/reference/annotation_scale.html\n>\n>>\n>> library(ggplot2)\n>> library(sf)\n>> library(rnaturalearth)\n>> library(rnaturalearthdata)\n>>\n>> # Get world map data\n>> world <- ne_countries(scale = \"medium\", returnclass = \"sf\")\n>>\n>> # Define the bounding box for Europe\n>> europe_extent <- st_bbox(c(xmin = -12, xmax = 35, ymin = 30, ymax = 72),\n>> crs = st_crs(4326))\n>>\n>> # Filter for Europe, then for Italy and Iberian Peninsula\n>> europe <- st_crop(world, europe_extent)\n>> italy_and_iberian <- europe[europe$name %in% c(\"Spain\", \"Portugal\",\n>> \"Italy\"),]\n>>\n>> # Load another shapefile\n>> # Replace \"path/to/your/shapefile.shp\"\n>> A <- st_read(\"path/to/your/shapefile1.shp\" )\n>> B <- st_read(\"path/to/your/shapefile2.shp\" )\n>> sq1 <- st_read(\"path/to/your/shapefile3.shp\" )\n>> sq2 <- st_read(\"path/to/your/shapefile4.shp\" )\n>>\n>> # Plot the map with the added shapefile\n>> ggplot(data = europe) +\n>> geom_sf(fill = \"lightgray\") + # Background map\n>> geom_sf(data = italy_and_iberian, fill = \"skyblue\") + # Highlighted areas\n>> geom_sf(data = A, fill = \"lightgreen\") + # Added shapefile\n>> geom_sf(data = B, fill = \"lightblue\") + # Added shapefile\n>> geom_sf(data = sq1, fill =NA, color=\"red\", lwd=0.5) + # Added shapefile\n>> geom_sf(data = sq2, fill=NA, color =\"red\", lwd=0.5) + # Added shapefile\n>> coord_sf(xlim = c(-12, 35), ylim = c(30, 72), expand = FALSE) + # Set map\n>> boundaries.\n>> theme_bw() +\n>> labs(title = \"Italian, Iberian in Europe\")\n>>\n>> [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "--\nMicha Silvercell: +972-523-665918\n\n> On Saturday, 12 July 2025 at 23:35, Gabriel Cotlier <gabiklm01 at gmail.com> wrote:\n>\n> Dear Micha,\n> Thank you very much for the tip. I worked out, but I am co",
+      "thread_id": "thread-ff2fe0f256c1",
+      "thread_depth": 3,
+      "month": "2025-07"
+    },
+    {
+      "id": "msg-0813739eae3a",
+      "message_id": "<CAAKwTDEsGANSDg0Fs_47V-daBA+h370LUM83336tL=TZnNGWbQ@mail.gmail.com>",
+      "from_name": "Gabriel Cotlier",
+      "from_email_hash": "fe6b7ece94315f2ba414b8c7053cca118260d4229688ad762179e180bbdf3aaf",
+      "date": "2025-07-13T09:41:12-03:00",
+      "subject": "[R-sig-Geo] Question on Scale bar",
+      "subject_clean": "Question on Scale bar",
+      "in_reply_to": "<TQKsAc81QsoytguW5-idjPO3a4W7TzUXsOfCsbL5mlZ4CPMqZyXhE4ImVm5SdkUFBZ9G98DhypDummQnCoOcYt9QvtmqgqDrul91fhpyPUA=@proton.me>",
+      "references": [
+        "<CAAKwTDGbBXjUi4x593uRp2F4ftGrvpO6+EvsAWE9gfb21Q2PtA@mail.gmail.com>",
+        "<dToPcrlu8bdCVS9xVtduMn38wfWw7fZ6vScumW-YHAfxNCJuQgCqDs0uslBFodFZ89las-Sct3Jt5Tv6_FmL1G2C95qNV7o1knll3o0gUE8=@proton.me>",
+        "<CAAKwTDGNhMvypk21T5cQKXxmMkwKccXYogyOJSarD9zUASmhSQ@mail.gmail.com>",
+        "<TQKsAc81QsoytguW5-idjPO3a4W7TzUXsOfCsbL5mlZ4CPMqZyXhE4ImVm5SdkUFBZ9G98DhypDummQnCoOcYt9QvtmqgqDrul91fhpyPUA=@proton.me>"
+      ],
+      "body_plain": "Yes is correct. Using CRS 3587 would correct this distortion?\nThanks a lot.\n\nOn Sun, Jul 13, 2025 at 5:48?AM Micha Silver <micha_silver+DEV at proton.me>\nwrote:\n\n>\n> --\n> Micha Silver\n> cell: +972-523-665918\n>\n> On Saturday, 12 July 2025 at 23:35, Gabriel Cotlier <gabiklm01 at gmail.com>\n> wrote:\n> Dear Micha,\n> Thank you very much for the tip. I worked out, but I am concerned about\n> the warning that appears:\n>\n>\n> I assume that is because you are using WGS84 long/lat. So there is a\n> difference in distances E-W vs N-S. For example, in S. Spain 1 degree  N-S\n> is about 110 km while 1 degree E-W is about 90 km.\n>\n>\n> *Scale on map varies by more than 10%, scale bar may be inaccurate*\n>\n>\n> On Sat, Jul 12, 2025 at 5:01?PM Micha Silver <micha_silver+DEV at proton.me>\n> wrote:\n>\n>>\n>>\n>>\n>>\n>> --\n>> Micha Silver\n>> cell: +972-523-665918\n>>\n>>\n>> On Saturday, 12 July 2025 at 16:47, Gabriel Cotlier <gabiklm01 at gmail.com>\n>> wrote:\n>>\n>> > Hello,\n>> > I would like to ask for help to add a scale bar to the following map\n>> below.\n>> > Thanks a lot in advance.\n>> > Kind regards,\n>> > Gabriel\n>>\n>> You might consider the `ggspatial` package that has a function:\n>> `annotation_scale()`\n>>\n>> https://paleolimbot.github.io/ggspatial/reference/annotation_scale.html\n>>\n>>\n>> >\n>> > library(ggplot2)\n>> > library(sf)\n>> > library(rnaturalearth)\n>> > library(rnaturalearthdata)\n>> >\n>> > # Get world map data\n>> > world <- ne_countries(scale = \"medium\", returnclass = \"sf\")\n>> >\n>> > # Define the bounding box for Europe\n>> > europe_extent <- st_bbox(c(xmin = -12, xmax = 35, ymin = 30, ymax = 72),\n>> > crs = st_crs(4326))\n>> >\n>> > # Filter for Europe, then for Italy and Iberian Peninsula\n>> > europe <- st_crop(world, europe_extent)\n>> > italy_and_iberian <- europe[europe$name %in% c(\"Spain\", \"Portugal\",\n>> > \"Italy\"),]\n>> >\n>> > # Load another shapefile\n>> > # Replace \"path/to/your/shapefile.shp\"\n>> > A <- st_read(\"path/to/your/shapefile1.shp\" )\n>> > B <- st_read(\"path/to/your/shapefile2.shp\" )\n>> > sq1 <- st_read(\"path/to/your/shapefile3.shp\" )\n>> > sq2 <- st_read(\"path/to/your/shapefile4.shp\" )\n>> >\n>> > # Plot the map with the added shapefile\n>> > ggplot(data = europe) +\n>> > geom_sf(fill = \"lightgray\") + # Background map\n>> > geom_sf(data = italy_and_iberian, fill = \"skyblue\") + # Highlighted\n>> areas\n>> > geom_sf(data = A, fill = \"lightgreen\") + # Added shapefile\n>> > geom_sf(data = B, fill = \"lightblue\") + # Added shapefile\n>> > geom_sf(data = sq1, fill =NA, color=\"red\", lwd=0.5) + # Added shapefile\n>> > geom_sf(data = sq2, fill=NA, color =\"red\", lwd=0.5) + # Added shapefile\n>> > coord_sf(xlim = c(-12, 35), ylim = c(30, 72), expand = FALSE) + # Set\n>> map\n>> > boundaries.\n>> > theme_bw() +\n>> > labs(title = \"Italian, Iberian in Europe\")\n>> >\n>> > [[alternative HTML version deleted]]\n>> >\n>> > _______________________________________________\n>> > R-sig-Geo mailing list\n>> > R-sig-Geo at r-project.org\n>> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Yes is correct. Using CRS 3587 would correct this distortion?\nThanks a lot.\n\nOn Sun, Jul 13, 2025 at 5:48?AM Micha Silver <micha_silver+DEV at proton.me>\nwrote:\n\n>\n> --\n> Micha Silver\n> cell: +972-523",
+      "thread_id": "thread-ff2fe0f256c1",
+      "thread_depth": 4,
+      "month": "2025-07"
+    },
+    {
+      "id": "msg-50ffe0e60c29",
+      "message_id": "<tgwLx6tWFfeOYhgJaEhYfUjiNxhzLMpn_hRu3XzHDhfkiEJdpuP7c6V0K20ZpzPaMof85TFbmTZOR-b5bybLVoMfXfHIvHR0IsBfpHVbKQA=@proton.me>",
+      "from_name": "Micha Silver",
+      "from_email_hash": "43738d187ce0c68d47d7fb47a375bec91da1b9210fa9d9fc6ae1044a6bce710b",
+      "date": "2025-07-13T13:22:13Z",
+      "subject": "[R-sig-Geo] Question on Scale bar",
+      "subject_clean": "Question on Scale bar",
+      "in_reply_to": "<CAAKwTDEsGANSDg0Fs_47V-daBA+h370LUM83336tL=TZnNGWbQ@mail.gmail.com>",
+      "references": [
+        "<CAAKwTDGbBXjUi4x593uRp2F4ftGrvpO6+EvsAWE9gfb21Q2PtA@mail.gmail.com>",
+        "<dToPcrlu8bdCVS9xVtduMn38wfWw7fZ6vScumW-YHAfxNCJuQgCqDs0uslBFodFZ89las-Sct3Jt5Tv6_FmL1G2C95qNV7o1knll3o0gUE8=@proton.me>",
+        "<CAAKwTDGNhMvypk21T5cQKXxmMkwKccXYogyOJSarD9zUASmhSQ@mail.gmail.com>",
+        "<TQKsAc81QsoytguW5-idjPO3a4W7TzUXsOfCsbL5mlZ4CPMqZyXhE4ImVm5SdkUFBZ9G98DhypDummQnCoOcYt9QvtmqgqDrul91fhpyPUA=@proton.me>",
+        "<CAAKwTDEsGANSDg0Fs_47V-daBA+h370LUM83336tL=TZnNGWbQ@mail.gmail.com>"
+      ],
+      "body_plain": "--\nMicha Silvercell: +972-523-665918\n\nOn Sunday, 13 July 2025 at 15:41, Gabriel Cotlier <gabiklm01 at gmail.com> wrote:\n\n> Yes is correct. Using CRS 3587 would correct this distortion?\n> Thanks a lot.\n\nI don't think so\nCheck here:\nhttps://epsg.io/3857\n\nIf it's important to keep distances accurate, you should look for an equidistant projection for your area. Maps of Europe are typically projected to EPSG:3035 which is equal area, not equidistant, but it's pretty close, and widely accepted.\n\n> On Sun, Jul 13, 2025 at 5:48?AM Micha Silver <[micha_silver+DEV at proton.me](mailto:micha_silver%2BDEV at proton.me)> wrote:\n>\n>> --\n>> Micha Silvercell: +972-523-665918\n>>\n>>> On Saturday, 12 July 2025 at 23:35, Gabriel Cotlier <gabiklm01 at gmail.com> wrote:\n>>>\n>>> Dear Micha,\n>>> Thank you very much for the tip. I worked out, but I am concerned about the warning that appears:\n>>\n>> I assume that is because you are using WGS84 long/lat. So there is a difference in distances E-W vs N-S. For example, in S. Spain 1 degree N-S is about 110 km while 1 degree E-W is about 90 km.\n>>\n>>> Scale on map varies by more than 10%, scale bar may be inaccurate\n>>\n>> On Sat, Jul 12, 2025 at 5:01?PM Micha Silver <[micha_silver+DEV at proton.me](mailto:micha_silver%2BDEV at proton.me)> wrote:\n>>\n>>> --\n>>> Micha Silver\n>>> cell: +972-523-665918\n>>>\n>>> On Saturday, 12 July 2025 at 16:47, Gabriel Cotlier <gabiklm01 at gmail.com> wrote:\n>>>\n>>>> Hello,\n>>>> I would like to ask for help to add a scale bar to the following map below.\n>>>> Thanks a lot in advance.\n>>>> Kind regards,\n>>>> Gabriel\n>>>\n>>> You might consider the `ggspatial` package that has a function: `annotation_scale()`\n>>>\n>>> https://paleolimbot.github.io/ggspatial/reference/annotation_scale.html\n>>>\n>>>>\n>>>> library(ggplot2)\n>>>> library(sf)\n>>>> library(rnaturalearth)\n>>>> library(rnaturalearthdata)\n>>>>\n>>>> # Get world map data\n>>>> world <- ne_countries(scale = \"medium\", returnclass = \"sf\")\n>>>>\n>>>> # Define the bounding box for Europe\n>>>> europe_extent <- st_bbox(c(xmin = -12, xmax = 35, ymin = 30, ymax = 72),\n>>>> crs = st_crs(4326))\n>>>>\n>>>> # Filter for Europe, then for Italy and Iberian Peninsula\n>>>> europe <- st_crop(world, europe_extent)\n>>>> italy_and_iberian <- europe[europe$name %in% c(\"Spain\", \"Portugal\",\n>>>> \"Italy\"),]\n>>>>\n>>>> # Load another shapefile\n>>>> # Replace \"path/to/your/shapefile.shp\"\n>>>> A <- st_read(\"path/to/your/shapefile1.shp\" )\n>>>> B <- st_read(\"path/to/your/shapefile2.shp\" )\n>>>> sq1 <- st_read(\"path/to/your/shapefile3.shp\" )\n>>>> sq2 <- st_read(\"path/to/your/shapefile4.shp\" )\n>>>>\n>>>> # Plot the map with the added shapefile\n>>>> ggplot(data = europe) +\n>>>> geom_sf(fill = \"lightgray\") + # Background map\n>>>> geom_sf(data = italy_and_iberian, fill = \"skyblue\") + # Highlighted areas\n>>>> geom_sf(data = A, fill = \"lightgreen\") + # Added shapefile\n>>>> geom_sf(data = B, fill = \"lightblue\") + # Added shapefile\n>>>> geom_sf(data = sq1, fill =NA, color=\"red\", lwd=0.5) + # Added shapefile\n>>>> geom_sf(data = sq2, fill=NA, color =\"red\", lwd=0.5) + # Added shapefile\n>>>> coord_sf(xlim = c(-12, 35), ylim = c(30, 72), expand = FALSE) + # Set map\n>>>> boundaries.\n>>>> theme_bw() +\n>>>> labs(title = \"Italian, Iberian in Europe\")\n>>>>\n>>>> [[alternative HTML version deleted]]\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "--\nMicha Silvercell: +972-523-665918\n\nOn Sunday, 13 July 2025 at 15:41, Gabriel Cotlier <gabiklm01 at gmail.com> wrote:\n\n> Yes is correct. Using CRS 3587 would correct this distortion?\n> Thanks a lot.",
+      "thread_id": "thread-ff2fe0f256c1",
+      "thread_depth": 5,
+      "month": "2025-07"
+    },
+    {
+      "id": "msg-533bb220babe",
+      "message_id": "<b43542c4b3986fe610ce31c4bb79244d@dunnington.ca>",
+      "from_name": "Dewey Dunnington",
+      "from_email_hash": "b116acc603e3adafad5b9f0d9329462a8d68f850ebadc42d6f34106d41ad9433",
+      "date": "2025-07-13T16:44:35-03:00",
+      "subject": "[R-sig-Geo] Question on Scale bar",
+      "subject_clean": "Question on Scale bar",
+      "in_reply_to": "<tgwLx6tWFfeOYhgJaEhYfUjiNxhzLMpn_hRu3XzHDhfkiEJdpuP7c6V0K20ZpzPaMof85TFbmTZOR-b5bybLVoMfXfHIvHR0IsBfpHVbKQA=@proton.me>",
+      "references": [
+        "<CAAKwTDGbBXjUi4x593uRp2F4ftGrvpO6+EvsAWE9gfb21Q2PtA@mail.gmail.com>",
+        "<dToPcrlu8bdCVS9xVtduMn38wfWw7fZ6vScumW-YHAfxNCJuQgCqDs0uslBFodFZ89las-Sct3Jt5Tv6_FmL1G2C95qNV7o1knll3o0gUE8=@proton.me>",
+        "<CAAKwTDGNhMvypk21T5cQKXxmMkwKccXYogyOJSarD9zUASmhSQ@mail.gmail.com>",
+        "<TQKsAc81QsoytguW5-idjPO3a4W7TzUXsOfCsbL5mlZ4CPMqZyXhE4ImVm5SdkUFBZ9G98DhypDummQnCoOcYt9QvtmqgqDrul91fhpyPUA=@proton.me>",
+        "<CAAKwTDEsGANSDg0Fs_47V-daBA+h370LUM83336tL=TZnNGWbQ@mail.gmail.com>",
+        "<tgwLx6tWFfeOYhgJaEhYfUjiNxhzLMpn_hRu3XzHDhfkiEJdpuP7c6V0K20ZpzPaMof85TFbmTZOR-b5bybLVoMfXfHIvHR0IsBfpHVbKQA=@proton.me>"
+      ],
+      "body_plain": "Glad the scale bar function from ggspatial is still useful!\n\nI'm not sure that when I put that warning in that I anticipated the \nnumber of use-cases where this warning would be emitted. On most maps of \nlarge-scale areas you see in the wild, the scale bar will be wildly \ninaccurate for some places on the map and for most maps this is OK \n(unless your map is quite literally claiming to be a map of the distance \nbetween x and x, for example). The function of the scale bar is often to \ncommunicate order of magnitude, or often just has to exist as a \nrequirement for a publication style guide.\n\nWhat I'm getting at is that...I wrote that warning and I ignore it all \nthe time :)\n\nAll the best,\n\n-dewey\n\nOn 2025-07-13 10:22, Micha Silver via R-sig-Geo wrote:\n> --\n> Micha Silvercell: +972-523-665918\n> \n> On Sunday, 13 July 2025 at 15:41, Gabriel Cotlier <gabiklm01 at gmail.com> \n> wrote:\n> \n>> Yes is correct. Using CRS 3587 would correct this distortion?\n>> Thanks a lot.\n> \n> I don't think so\n> Check here:\n> https://epsg.io/3857\n> \n> If it's important to keep distances accurate, you should look for an \n> equidistant projection for your area. Maps of Europe are typically \n> projected to EPSG:3035 which is equal area, not equidistant, but it's \n> pretty close, and widely accepted.\n> \n>> On Sun, Jul 13, 2025 at 5:48?AM Micha Silver \n>> <[micha_silver+DEV at proton.me](mailto:micha_silver%2BDEV at proton.me)> \n>> wrote:\n>> \n>>> --\n>>> Micha Silvercell: +972-523-665918\n>>> \n>>>> On Saturday, 12 July 2025 at 23:35, Gabriel Cotlier \n>>>> <gabiklm01 at gmail.com> wrote:\n>>>> \n>>>> Dear Micha,\n>>>> Thank you very much for the tip. I worked out, but I am concerned \n>>>> about the warning that appears:\n>>> \n>>> I assume that is because you are using WGS84 long/lat. So there is a \n>>> difference in distances E-W vs N-S. For example, in S. Spain 1 degree \n>>> N-S is about 110 km while 1 degree E-W is about 90 km.\n>>> \n>>>> Scale on map varies by more than 10%, scale bar may be inaccurate\n>>> \n>>> On Sat, Jul 12, 2025 at 5:01?PM Micha Silver \n>>> <[micha_silver+DEV at proton.me](mailto:micha_silver%2BDEV at proton.me)> \n>>> wrote:\n>>> \n>>>> --\n>>>> Micha Silver\n>>>> cell: +972-523-665918\n>>>> \n>>>> On Saturday, 12 July 2025 at 16:47, Gabriel Cotlier \n>>>> <gabiklm01 at gmail.com> wrote:\n>>>> \n>>>>> Hello,\n>>>>> I would like to ask for help to add a scale bar to the following \n>>>>> map below.\n>>>>> Thanks a lot in advance.\n>>>>> Kind regards,\n>>>>> Gabriel\n>>>> \n>>>> You might consider the `ggspatial` package that has a function: \n>>>> `annotation_scale()`\n>>>> \n>>>> https://paleolimbot.github.io/ggspatial/reference/annotation_scale.html\n>>>> \n>>>>> \n>>>>> library(ggplot2)\n>>>>> library(sf)\n>>>>> library(rnaturalearth)\n>>>>> library(rnaturalearthdata)\n>>>>> \n>>>>> # Get world map data\n>>>>> world <- ne_countries(scale = \"medium\", returnclass = \"sf\")\n>>>>> \n>>>>> # Define the bounding box for Europe\n>>>>> europe_extent <- st_bbox(c(xmin = -12, xmax = 35, ymin = 30, ymax = \n>>>>> 72),\n>>>>> crs = st_crs(4326))\n>>>>> \n>>>>> # Filter for Europe, then for Italy and Iberian Peninsula\n>>>>> europe <- st_crop(world, europe_extent)\n>>>>> italy_and_iberian <- europe[europe$name %in% c(\"Spain\", \"Portugal\",\n>>>>> \"Italy\"),]\n>>>>> \n>>>>> # Load another shapefile\n>>>>> # Replace \"path/to/your/shapefile.shp\"\n>>>>> A <- st_read(\"path/to/your/shapefile1.shp\" )\n>>>>> B <- st_read(\"path/to/your/shapefile2.shp\" )\n>>>>> sq1 <- st_read(\"path/to/your/shapefile3.shp\" )\n>>>>> sq2 <- st_read(\"path/to/your/shapefile4.shp\" )\n>>>>> \n>>>>> # Plot the map with the added shapefile\n>>>>> ggplot(data = europe) +\n>>>>> geom_sf(fill = \"lightgray\") + # Background map\n>>>>> geom_sf(data = italy_and_iberian, fill = \"skyblue\") + # Highlighted \n>>>>> areas\n>>>>> geom_sf(data = A, fill = \"lightgreen\") + # Added shapefile\n>>>>> geom_sf(data = B, fill = \"lightblue\") + # Added shapefile\n>>>>> geom_sf(data = sq1, fill =NA, color=\"red\", lwd=0.5) + # Added \n>>>>> shapefile\n>>>>> geom_sf(data = sq2, fill=NA, color =\"red\", lwd=0.5) + # Added \n>>>>> shapefile\n>>>>> coord_sf(xlim = c(-12, 35), ylim = c(30, 72), expand = FALSE) + # \n>>>>> Set map\n>>>>> boundaries.\n>>>>> theme_bw() +\n>>>>> labs(title = \"Italian, Iberian in Europe\")\n>>>>> \n>>>>> [[alternative HTML version deleted]]\n>>>>> \n>>>>> _______________________________________________\n>>>>> R-sig-Geo mailing list\n>>>>> R-sig-Geo at r-project.org\n>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Glad the scale bar function from ggspatial is still useful!\n\nI'm not sure that when I put that warning in that I anticipated the \nnumber of use-cases where this warning would be emitted. On most maps ",
+      "thread_id": "thread-ff2fe0f256c1",
+      "thread_depth": 6,
+      "month": "2025-07"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-ff2fe0f256c1",
+      "subject": "Question on Scale bar",
+      "message_count": 7,
+      "participants": [
+        "Dewey Dunnington",
+        "Gabriel Cotlier",
+        "Micha Silver"
+      ],
+      "started": "2025-07-12T10:46:36-03:00",
+      "last_reply": "2025-07-13T16:44:35-03:00",
+      "root_message_id": "msg-ff2fe0f256c1"
+    }
+  ]
+}

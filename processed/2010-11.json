@@ -1,0 +1,67 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2010-11",
+  "messages": [
+    {
+      "id": "msg-e6156186c2ea",
+      "message_id": "<89A84F9C-9390-451C-A252-EA80C3216E2A@auckland.ac.nz>",
+      "from_name": "Rolf Turner",
+      "from_email_hash": "904c134d5ad39093183253270ee481b35c208cc4297e137e579e32e8115e7dff",
+      "date": "2010-11-01T09:29:41+13:00",
+      "subject": "[R-sig-Geo] distance to polygon (and line_",
+      "subject_clean": "distance to polygon (and line_",
+      "in_reply_to": "<4CCDB7A6.8080708@gmail.com>",
+      "references": [
+        "<AANLkTinU3joDPuVHinB+tfvbTvuBLDX1EgJ03HPT_HD+@mail.gmail.com>",
+        "<4CCD71BA.1040609@uni-muenster.de>",
+        "<4CCDB7A6.8080708@gmail.com>"
+      ],
+      "body_plain": "On 1/11/2010, at 7:38 AM, Peter Larson wrote:\n\n> Hello all,\n> \n> I have a database of point (lat long) data.\n> I also have shapefiles of polygon and line data.\n> \n> I need to find the distances from each of the points to 1) the nearest \n> polygon and 2) the nearest line.\n> \n> Is this possible?\n\n\nIn R all things are possible.\n\nYou may have problems with units; the units in which your points are expressed\nmust be the same as those in which the lines and polygons are expressed.\n\nIf you can express everything in terms of two dimensional Euclidean units,\nthen the facilities of spatstat will allow you to do what you want.  Currently\nspatstat does not handle great circle distances.\n\nIf you express your collection of polygons as a single owin object, say \"xxx\", then\ndistfun(xxx)(x,y) will give the distances from to xxx.  These will be the\nminima of the distances from the points to the individual polygons.\n\nLikewise if you express your collection of lines as a psp object, say \"lll\",\nthen distfun(lll)(x,y) will the distance from each point to the nearest line.\n\nIn the foregoing \"x\" represents the vector of x-coordinates of your points,\nand y the vector of y-coordinates.\n\nSee\n\n\tvignette(\"shapefiles\")\n\nfor instructions on how to turn shapefile data into spatstat style objects.\n\n\tcheers,\n\n\t\tRolf",
+      "body_snippet": "On 1/11/2010, at 7:38 AM, Peter Larson wrote:\n\n> Hello all,\n> \n> I have a database of point (lat long) data.\n> I also have shapefiles of polygon and line data.\n> \n> I need to find the distances from e",
+      "thread_id": "thread-e6156186c2ea",
+      "thread_depth": 0,
+      "month": "2010-11"
+    },
+    {
+      "id": "msg-002d9a6b30d4",
+      "message_id": "<27CDE7124B2936429F279F96320D71735EEF0707FC@EXNSW-MBX02.nexus.csiro.au>",
+      "from_name": "David.Clifford at csiro.au",
+      "from_email_hash": "f86652cb1508726b2c0ee1bda45d54d5279fb69e5f1b5e15994a7dc2c4409c7d",
+      "date": "2010-11-01T09:41:29+11:00",
+      "subject": "[R-sig-Geo] Changing the coordinates of a SpatialGridDataFrame",
+      "subject_clean": "Changing the coordinates of a SpatialGridDataFrame",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Big thanks to all the respondents for their help with my problem last week. Based on their suggestions it seems that the way to solve my problem is to use the following commands:\n\ngp <- gridparameters(obj)\ngp <- round(gp,3)\nGT <- with(gp, GridTopolopy(cellcentre.offset, cellsize, cells.dim))\nobj <- SpatialGridDataFrame(GT, slot(obj,\"data\"))\n\nkind regards,\n\nDavid\n\nDr David Clifford\nResearch Scientist\nCSIRO Division of Mathematics, Informatics and Statistics\nPhone: +61 7 3214 2816 |?Fax: +61 7 3214 2855 \nDavid.Clifford at csiro.au?|?www.csiro.au?|?www.csiro.au/people/David.Clifford.html?\nAddress:?CSIRO Long Pocket Laboratories, 120 Meiers Road, INDOOROOPILLY QLD 4068 \nNew Postal Address from Nov 2010:?CSIRO, EcoSciences Precinct, PO Box 2583, Brisbane, QLD 4001\nNew Street Address from Nov 2010:?CSIRO, EcoSciences Precinct, 41 Boggo Road, Annerley, QLD 4103\nNew Phone from Nov 2010: +61 7 3833 5532\nPLEASE NOTE\nThe information contained in this email may be confidential or privileged. Any unauthorised use or disclosure is prohibited. If you have received this email in error, please delete it immediately and notify?the sender by return email. Thank you. To the extent permitted by law, CSIRO does not represent, warrant and/or guarantee that the integrity of this communication has been maintained or that the communication is free of errors, virus, interception or interference.\nPlease consider the environment before printing this email.",
+      "body_snippet": "Big thanks to all the respondents for their help with my problem last week. Based on their suggestions it seems that the way to solve my problem is to use the following commands:\n\ngp <- gridparameters",
+      "thread_id": "thread-002d9a6b30d4",
+      "thread_depth": 0,
+      "month": "2010-11"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-e6156186c2ea",
+      "subject": "distance to polygon (and line_",
+      "message_count": 1,
+      "participants": [
+        "Rolf Turner"
+      ],
+      "started": "2010-11-01T09:29:41+13:00",
+      "last_reply": "2010-11-01T09:29:41+13:00",
+      "root_message_id": "msg-e6156186c2ea"
+    },
+    {
+      "id": "thread-002d9a6b30d4",
+      "subject": "Changing the coordinates of a SpatialGridDataFrame",
+      "message_count": 1,
+      "participants": [
+        "David.Clifford at csiro.au"
+      ],
+      "started": "2010-11-01T09:41:29+11:00",
+      "last_reply": "2010-11-01T09:41:29+11:00",
+      "root_message_id": "msg-002d9a6b30d4"
+    }
+  ]
+}

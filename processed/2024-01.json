@@ -1,0 +1,187 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2024-01",
+  "messages": [
+    {
+      "id": "msg-1b384c1c8c73",
+      "message_id": "<CAGg5H0bpUrHwZiKQv7r2B=o3bdL9B+sfH==dwR-1_HyvkEP2WA@mail.gmail.com>",
+      "from_name": "Nikolaos Tziokas",
+      "from_email_hash": "8312105e7618a0b91bd7038dde37c1862aea2c44337b9a99a2f8e8cdbaab259c",
+      "date": "2024-01-16T08:21:58Z",
+      "subject": "[R-sig-Geo] Plot the location of a break point identified by the bfastlite function",
+      "subject_clean": "Plot the location of a break point identified by the bfastlite function",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I am using the bfastlite funtion from the bfast package for time-series\nanalysis of nighttime light (NTL) imagery. I have monthly data from April\n2013 to December 2022 (129 monthly images). Using the code below, the\nbfastlite found 2 breaks in the time-series data:\n\nlibrary(bfast)\nlibrary(terra)\n\nwd <- \"path/\"\n\nl <- list.files(paste0(wd), pattern = '.tif$',\n                all.files = TRUE, full.names = FALSE)\n\n\nrr <- lapply(paste0(wd, l), rast)\nstandard <- rr[[1]]\n\nrs <- list(standard)\nfor (i in 2:length(rr)) {\n  rr[[i]] <- terra::crop(rr[[i]], standard, extend = TRUE)\n}\n\ns <- rast(rr)\n\nm <- terra::as.matrix(s)\nm <- m[!rowSums(is.na(m)), ]\n\n# convert the matrix to timeseries matrix\ntm <- ts(data = m, start = c(2013, 4), end = c(2022, 12), frequency = 12,\nclass = \"ts\")\n\nbf <- bfastlite(\n  tm,\n  formula = response ~ harmon,\n  order = 3,\n  breaks = \"all\",\n  lag = 17,\n  slag = 7,\n  na.action = na.omit,\n  stl = \"none\",\n  decomp = c(\"stl\", \"stlplus\"),\n  sbins = 1,\n  h = .25,\n  level = 0.5,\n  type = c(\"OLS-MOSUM\", \"RE\"),\n  plot = TRUE,\n  hpc = \"foreach\"\n)\n\nbf\nplot(bf)\n\n\nHow can I plot the location (i.e., pixels) of the breakpoints? You can\ndownload the dataset from my GoogleDrive\n<https://drive.google.com/drive/folders/1UloTKYHa7I3Wi_2pt3n3xbZ6vFvVz3_Y?usp=sharing>.\nThe entire code runs in less than 10 seconds.\n\n-- \nTziokas Nikolaos\nCartographer\n\nTel:(+44)07561120302\nLinkedIn <http://linkedin.com/in/nikolaos-tziokas-896081130>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am using the bfastlite funtion from the bfast package for time-series\nanalysis of nighttime light (NTL) imagery. I have monthly data from April\n2013 to December 2022 (129 monthly images). Using the ",
+      "thread_id": "thread-1b384c1c8c73",
+      "thread_depth": 0,
+      "month": "2024-01"
+    },
+    {
+      "id": "msg-04b80151ef69",
+      "message_id": "<SA1PR15MB63974D3217B0206F1F79FBA0B0712@SA1PR15MB6397.namprd15.prod.outlook.com>",
+      "from_name": "Xiang Ye",
+      "from_email_hash": "0e81ff3ad9bdcb6c73b8285dd18c316c310cdb4d01350cb5ac1c7b9774fd356b",
+      "date": "2024-01-18T12:30:36Z",
+      "subject": "[R-sig-Geo] How to attach customized row.names to poly2nb()",
+      "subject_clean": "How to attach customized row.names to poly2nb()",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear community,\n\nIt should be a very simple question with a straightforward answer - so please forgive my foolishness.\n\nBy default, poly2nb() provides the neighbor list of a region in terms of numbers, for example:\n\nlibrary(spdep)\nlibrary(spDataLarge)\n\npoly2nb(bristol_zones) -> bqueen\nbqueen[1]\n\nThe output is\n[cid:157ba602-300e-4f6b-8875-ea050def287c]\nwhich is expected.\n\nBut often the case this is not convenient. So I want to provide a vector of names to label each region, and expect when I type bqueen[1], it can return something like a list of place names.\n\nAccording to the help of poly2nb(), this is implemented by row.names(). However, it does not work:\n[cid:be6a526c-5629-4c17-af44-972fb84f4a04]\nIt looks like the output neglects the argument of row.names.\nHow should I solve this issue?\n\nThanks in advance!\n\n\n?? YE, Xiang\nTHINKING SPATIALLY<http://www.linkedin.com/in/spatialyexiang>.\nPh.D. in Spatial Statistics\n\n-------------- next part --------------\nAn HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20240118/b9f37558/attachment.html>\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 15103 bytes\nDesc: image.png\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20240118/b9f37558/attachment.png>\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 19502 bytes\nDesc: image.png\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20240118/b9f37558/attachment-0001.png>",
+      "body_snippet": "Dear community,\n\nIt should be a very simple question with a straightforward answer - so please forgive my foolishness.\n\nBy default, poly2nb() provides the neighbor list of a region in terms of numbers",
+      "thread_id": "thread-04b80151ef69",
+      "thread_depth": 0,
+      "month": "2024-01"
+    },
+    {
+      "id": "msg-95f5888b396c",
+      "message_id": "<SV0P279MB0475D300F82158D574E9B576EE712@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2024-01-18T12:52:37Z",
+      "subject": "[R-sig-Geo] How to attach customized row.names to poly2nb()",
+      "subject_clean": "How to attach customized row.names to poly2nb()",
+      "in_reply_to": "<SA1PR15MB63974D3217B0206F1F79FBA0B0712@SA1PR15MB6397.namprd15.prod.outlook.com>",
+      "references": [
+        "<SA1PR15MB63974D3217B0206F1F79FBA0B0712@SA1PR15MB6397.namprd15.prod.outlook.com>"
+      ],
+      "body_plain": "Please never attach screenshots, nobody can copy/paste the code shown in them. Thus:\n\nlibrary(spdep)\nlibrary(spDataLarge)\ndata(bristol_zones)\nbqueen <- poly2nb(bristol_zones, row.names=bristol_zones$name)\n\nHowever, updating to also suppport sf removed the facility of setting through the row.names= argument:\n\nattr(bqueen, \"region.id\")[bqueen[[1]]]\n# [1] \"2\"  \"39\" \"44\" \"50\" \"86\" \"94\"\n\nhttps://github.com/r-spatial/spdep/blob/b815397c2ce0d58b3b4ca0c36bba7b5c3abbbcc2/R/poly2nb.R#L16-L20\n\npoly2nb(as(bristol_zones, \"Spatial\"), row.names = bristol_zones$name)\nattr(bqueen, \"region.id\")[bqueen[[1]]]\n# [1] \"Bath and North East Somerset 003\" \"Bristol 038\"\n# [3] \"Bristol 043\"                      \"Bristol 049\"\n# [5] \"South Gloucestershire 024\"        \"South Gloucestershire 032\"\n\nI've raised this issue https://github.com/r-spatial/spdep/issues/143 so this should work again at the next release.\n\nRoger\n--\nRoger Bivand\nEmeritus Professor\nNorwegian School of Economics\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway\nRoger.Bivand at nhh.no\n\n________________________________________\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Xiang Ye via R-sig-Geo <r-sig-geo at r-project.org>\nSent: 18 January 2024 13:30\nTo: R Special Interest Group on using Geographical data and Mapping\nSubject: [R-sig-Geo] How to attach customized row.names to poly2nb()\n\nDear community,\n\nIt should be a very simple question with a straightforward answer - so please forgive my foolishness.\n\nBy default, poly2nb() provides the neighbor list of a region in terms of numbers, for example:\n\nlibrary(spdep)\nlibrary(spDataLarge)\n\npoly2nb(bristol_zones) -> bqueen\nbqueen[1]\n\nThe output is\n[cid:157ba602-300e-4f6b-8875-ea050def287c]\nwhich is expected.\n\nBut often the case this is not convenient. So I want to provide a vector of names to label each region, and expect when I type bqueen[1], it can return something like a list of place names.\n\nAccording to the help of poly2nb(), this is implemented by row.names(). However, it does not work:\n[cid:be6a526c-5629-4c17-af44-972fb84f4a04]\nIt looks like the output neglects the argument of row.names.\nHow should I solve this issue?\n\nThanks in advance!\n\n\n?? YE, Xiang\nTHINKING SPATIALLY<http://www.linkedin.com/in/spatialyexiang>.\nPh.D. in Spatial Statistics",
+      "body_snippet": "Please never attach screenshots, nobody can copy/paste the code shown in them. Thus:\n\nlibrary(spdep)\nlibrary(spDataLarge)\ndata(bristol_zones)\nbqueen <- poly2nb(bristol_zones, row.names=bristol_zones$n",
+      "thread_id": "thread-04b80151ef69",
+      "thread_depth": 1,
+      "month": "2024-01"
+    },
+    {
+      "id": "msg-de1ddd73c4f9",
+      "message_id": "<SA1PR15MB6397F812EE9B5625B688B894B0702@SA1PR15MB6397.namprd15.prod.outlook.com>",
+      "from_name": "Xiang Ye",
+      "from_email_hash": "0e81ff3ad9bdcb6c73b8285dd18c316c310cdb4d01350cb5ac1c7b9774fd356b",
+      "date": "2024-01-19T07:48:16Z",
+      "subject": "[R-sig-Geo] 回复: How to attach customized row.names to poly2nb()",
+      "subject_clean": "回复: How to attach customized row.names to poly2nb()",
+      "in_reply_to": "<SV0P279MB0475D300F82158D574E9B576EE712@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>",
+      "references": [
+        "<SA1PR15MB63974D3217B0206F1F79FBA0B0712@SA1PR15MB6397.namprd15.prod.outlook.com>",
+        "<SV0P279MB0475D300F82158D574E9B576EE712@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>"
+      ],
+      "body_plain": "Dear Prof. Bivand,\n\nThank you for replying to my email so quickly! And I am looking for the next release of the package.\n\nAlso thank you for telling me the proper way of communication in the email list. I appreciate it and will follow it.\n\nHave a warm nice weekend!\n\n??? YE, Xiang\nTHINKING SPATIALLY<http://www.linkedin.com/in/spatialyexiang>.\nPh.D. in Spatial Statistics\n________________________________\n??????: Roger Bivand <Roger.Bivand at nhh.no>\n???????: 2024??1??18?? 20:52\n?????: R Special Interest Group on using Geographical data and Mapping <r-sig-geo at r-project.org>; Xiang Ye <xiangye at buffalo.edu>\n????: Re: How to attach customized row.names to poly2nb()\n\n[??????????????? roger.bivand at nhh.no ????????????? https://aka.ms/LearnAboutSenderIdentification???????????????????]<https://aka.ms/LearnAboutSenderIdentification%EF%BC%8C%E4%BB%A5%E4%BA%86%E8%A7%A3?%E4%B8%80%E7%82%B9?%E4%BB%80?%E5%BE%88%E9%87%8D%E8%A6%81]>\n\nPlease never attach screenshots, nobody can copy/paste the code shown in them. Thus:\n\nlibrary(spdep)\nlibrary(spDataLarge)\ndata(bristol_zones)\nbqueen <- poly2nb(bristol_zones, row.names=bristol_zones$name)\n\nHowever, updating to also suppport sf removed the facility of setting through the row.names= argument:\n\nattr(bqueen, \"region.id\")[bqueen[[1]]]\n# [1] \"2\"  \"39\" \"44\" \"50\" \"86\" \"94\"\n\nhttps://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2Fr-spatial%2Fspdep%2Fblob%2Fb815397c2ce0d58b3b4ca0c36bba7b5c3abbbcc2%2FR%2Fpoly2nb.R%23L16-L20&data=05%7C02%7Cxiangye%40buffalo.edu%7Cba13b377482e474835fa08dc18245b32%7C96464a8af8ed40b199e25f6b50a20250%7C0%7C0%7C638411791628580321%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=FJyVOpUcPHsy0jEtiXNIh4clAk6XZgeU5lFwlcXwBj4%3D&reserved=0<https://github.com/r-spatial/spdep/blob/b815397c2ce0d58b3b4ca0c36bba7b5c3abbbcc2/R/poly2nb.R#L16-L20>\n\npoly2nb(as(bristol_zones, \"Spatial\"), row.names = bristol_zones$name)\nattr(bqueen, \"region.id\")[bqueen[[1]]]\n# [1] \"Bath and North East Somerset 003\" \"Bristol 038\"\n# [3] \"Bristol 043\"                      \"Bristol 049\"\n# [5] \"South Gloucestershire 024\"        \"South Gloucestershire 032\"\n\nI've raised this issue https://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2Fr-spatial%2Fspdep%2Fissues%2F143&data=05%7C02%7Cxiangye%40buffalo.edu%7Cba13b377482e474835fa08dc18245b32%7C96464a8af8ed40b199e25f6b50a20250%7C0%7C0%7C638411791628589305%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=N4KsmyMx4YbonTJxI1ygLNETbxj%2BFO4g%2BLhdbwOWB%2FU%3D&reserved=0<https://github.com/r-spatial/spdep/issues/143> so this should work again at the next release.\n\nRoger\n--\nRoger Bivand\nEmeritus Professor\nNorwegian School of Economics\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway\nRoger.Bivand at nhh.no\n\n________________________________________\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Xiang Ye via R-sig-Geo <r-sig-geo at r-project.org>\nSent: 18 January 2024 13:30\nTo: R Special Interest Group on using Geographical data and Mapping\nSubject: [R-sig-Geo] How to attach customized row.names to poly2nb()\n\nDear community,\n\nIt should be a very simple question with a straightforward answer - so please forgive my foolishness.\n\nBy default, poly2nb() provides the neighbor list of a region in terms of numbers, for example:\n\nlibrary(spdep)\nlibrary(spDataLarge)\n\npoly2nb(bristol_zones) -> bqueen\nbqueen[1]\n\nThe output is\n[cid:157ba602-300e-4f6b-8875-ea050def287c]\nwhich is expected.\n\nBut often the case this is not convenient. So I want to provide a vector of names to label each region, and expect when I type bqueen[1], it can return something like a list of place names.\n\nAccording to the help of poly2nb(), this is implemented by row.names(). However, it does not work:\n[cid:be6a526c-5629-4c17-af44-972fb84f4a04]\nIt looks like the output neglects the argument of row.names.\nHow should I solve this issue?\n\nThanks in advance!\n\n\n??? YE, Xiang\nTHINKING SPATIALLY<https://nam12.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.linkedin.com%2Fin%2Fspatialyexiang&data=05%7C02%7Cxiangye%40buffalo.edu%7Cba13b377482e474835fa08dc18245b32%7C96464a8af8ed40b199e25f6b50a20250%7C0%7C0%7C638411791628593387%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=WS4Fa7MZqC4jJKgIXA1rNEbef7vREC4I6DJQHoSZTG0%3D&reserved=0<http://www.linkedin.com/in/spatialyexiang>>.\nPh.D. in Spatial Statistics\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Prof. Bivand,\n\nThank you for replying to my email so quickly! And I am looking for the next release of the package.\n\nAlso thank you for telling me the proper way of communication in the email lis",
+      "thread_id": "thread-04b80151ef69",
+      "thread_depth": 2,
+      "month": "2024-01"
+    },
+    {
+      "id": "msg-19e84a7698fa",
+      "message_id": "<CABkCotTh1JptD76M_FfmATchHMiuAksRfdLQU5kpa-v-r1kZCA@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2024-01-20T08:42:39-06:00",
+      "subject": "[R-sig-Geo] Recommendations for wildfire risk analysis (spatially explicit)",
+      "subject_clean": "Recommendations for wildfire risk analysis (spatially explicit)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list members,\n\nI am looking for suggestions for R packages or an approach using R for\nwildfire risk analysis.\n\nManuel\n\n-- \n*Manuel Sp?nola, Ph.D.*\nInstituto Internacional en Conservaci?n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.cr <mspinola at una.ac.cr>\nmspinola10 at gmail.com\nTel?fono: (506) 8706 - 4662\nSitio web institucional: ICOMVIS\n<http://www.icomvis.una.ac.cr/index.php/manuel>\nSitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>\nBlog sobre Ciencia de Datos: Blog de Ciencia de Datos\n<https://mspinola-ciencia-de-datos.netlify.app>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list members,\n\nI am looking for suggestions for R packages or an approach using R for\nwildfire risk analysis.\n\nManuel\n\n-- \n*Manuel Sp?nola, Ph.D.*\nInstituto Internacional en Conservaci?n y Manejo",
+      "thread_id": "thread-19e84a7698fa",
+      "thread_depth": 0,
+      "month": "2024-01"
+    },
+    {
+      "id": "msg-f33f3ed42bdf",
+      "message_id": "<CALrbzg0jn4KixZBB+NXoxm0SX2CmPpqBYjL7555kgGv7Uk5O8A@mail.gmail.com>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "715c796f300568f44190a795995f5d8c66b19c1f8bc2156d2221fcda4991bb5a",
+      "date": "2024-01-21T21:35:43-05:00",
+      "subject": "[R-sig-Geo]  Recommendations for wildfire risk analysis (spatially explicit)",
+      "subject_clean": "Recommendations for wildfire risk analysis (spatially explicit)",
+      "in_reply_to": "<CABkCotTh1JptD76M_FfmATchHMiuAksRfdLQU5kpa-v-r1kZCA@mail.gmail.com>",
+      "references": [
+        "<CABkCotTh1JptD76M_FfmATchHMiuAksRfdLQU5kpa-v-r1kZCA@mail.gmail.com>"
+      ],
+      "body_plain": "Hi,\n\nPerhaps this might be a good place to start?\n\nhttps://esajournals.onlinelibrary.wiley.com/doi/10.1002/eap.1898  The\nauthors state that the work was done primarily in R.\n\nCheers,\nBen\n\n\nOn Sat, Jan 20, 2024 at 9:43?AM Manuel Sp?nola <mspinola10 at gmail.com> wrote:\n>\n> Dear list members,\n>\n> I am looking for suggestions for R packages or an approach using R for\n> wildfire risk analysis.\n>\n> Manuel\n>\n> --\n> *Manuel Sp?nola, Ph.D.*\n> Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre\n> Universidad Nacional\n> Apartado 1350-3000\n> Heredia\n> COSTA RICA\n> mspinola at una.cr <mspinola at una.ac.cr>\n> mspinola10 at gmail.com\n> Tel?fono: (506) 8706 - 4662\n> Sitio web institucional: ICOMVIS\n> <http://www.icomvis.una.ac.cr/index.php/manuel>\n> Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>\n> Blog sobre Ciencia de Datos: Blog de Ciencia de Datos\n> <https://mspinola-ciencia-de-datos.netlify.app>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hi,\n\nPerhaps this might be a good place to start?\n\nhttps://esajournals.onlinelibrary.wiley.com/doi/10.1002/eap.1898  The\nauthors state that the work was done primarily in R.\n\nCheers,\nBen\n\n\nOn Sat, Jan",
+      "thread_id": "thread-19e84a7698fa",
+      "thread_depth": 1,
+      "month": "2024-01"
+    },
+    {
+      "id": "msg-6b8f8e162b9c",
+      "message_id": "<CAA=SVwGwLKd=EPZC_tbrZc7i4kujnKeb-NdV4==+PLcuG3uuXQ@mail.gmail.com>",
+      "from_name": "Dexter Locke",
+      "from_email_hash": "bd7a2d02f59c983f231bcadf493b0cecbc13ac7e57af2d79c63d7d70f7ec8c97",
+      "date": "2024-01-22T20:13:06-05:00",
+      "subject": "[R-sig-Geo]  Recommendations for wildfire risk analysis (spatially explicit)",
+      "subject_clean": "Recommendations for wildfire risk analysis (spatially explicit)",
+      "in_reply_to": "<CALrbzg0jn4KixZBB+NXoxm0SX2CmPpqBYjL7555kgGv7Uk5O8A@mail.gmail.com>",
+      "references": [
+        "<CABkCotTh1JptD76M_FfmATchHMiuAksRfdLQU5kpa-v-r1kZCA@mail.gmail.com>",
+        "<CALrbzg0jn4KixZBB+NXoxm0SX2CmPpqBYjL7555kgGv7Uk5O8A@mail.gmail.com>"
+      ],
+      "body_plain": "Possibly helpful:\nhttps://www.publish.csiro.au/WF/WF21176\nhttps://www.fs.usda.gov/research/treesearch/67085\n\n-Dexter\n\n\n\n\n\nOn Sun, Jan 21, 2024 at 9:36?PM Ben Tupper <btupper at bigelow.org> wrote:\n\n> Hi,\n>\n> Perhaps this might be a good place to start?\n>\n> https://esajournals.onlinelibrary.wiley.com/doi/10.1002/eap.1898  The\n> authors state that the work was done primarily in R.\n>\n> Cheers,\n> Ben\n>\n>\n> On Sat, Jan 20, 2024 at 9:43?AM Manuel Sp?nola <mspinola10 at gmail.com>\n> wrote:\n> >\n> > Dear list members,\n> >\n> > I am looking for suggestions for R packages or an approach using R for\n> > wildfire risk analysis.\n> >\n> > Manuel\n> >\n> > --\n> > *Manuel Sp?nola, Ph.D.*\n> > Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre\n> > Universidad Nacional\n> > Apartado 1350-3000\n> > Heredia\n> > COSTA RICA\n> > mspinola at una.cr <mspinola at una.ac.cr>\n> > mspinola10 at gmail.com\n> > Tel?fono: (506) 8706 - 4662\n> > Sitio web institucional: ICOMVIS\n> > <http://www.icomvis.una.ac.cr/index.php/manuel>\n> > Sitio web personal: Sitio personal <\n> https://mspinola-sitioweb.netlify.app>\n> > Blog sobre Ciencia de Datos: Blog de Ciencia de Datos\n> > <https://mspinola-ciencia-de-datos.netlify.app>\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Possibly helpful:\nhttps://www.publish.csiro.au/WF/WF21176\nhttps://www.fs.usda.gov/research/treesearch/67085\n\n-Dexter\n\n\n\n\n\nOn Sun, Jan 21, 2024 at 9:36?PM Ben Tupper <btupper at bigelow.org> wrote:\n\n> ",
+      "thread_id": "thread-19e84a7698fa",
+      "thread_depth": 2,
+      "month": "2024-01"
+    },
+    {
+      "id": "msg-5a1bea10aa79",
+      "message_id": "<CABkCotSdiGH0zWzxCTgbT=wP83QP=YaAY9Nh3UqMVs5fxoJLQg@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2024-01-30T10:45:59-06:00",
+      "subject": "[R-sig-Geo]  Recommendations for wildfire risk analysis (spatially explicit)",
+      "subject_clean": "Recommendations for wildfire risk analysis (spatially explicit)",
+      "in_reply_to": "<CAA=SVwGwLKd=EPZC_tbrZc7i4kujnKeb-NdV4==+PLcuG3uuXQ@mail.gmail.com>",
+      "references": [
+        "<CABkCotTh1JptD76M_FfmATchHMiuAksRfdLQU5kpa-v-r1kZCA@mail.gmail.com>",
+        "<CALrbzg0jn4KixZBB+NXoxm0SX2CmPpqBYjL7555kgGv7Uk5O8A@mail.gmail.com>",
+        "<CAA=SVwGwLKd=EPZC_tbrZc7i4kujnKeb-NdV4==+PLcuG3uuXQ@mail.gmail.com>"
+      ],
+      "body_plain": "Thank you very much.\n\nManuel\n\nEl lun, 22 ene 2024 a las 19:13, Dexter Locke (<dexter.locke at gmail.com>)\nescribi?:\n\n>\n> Possibly helpful:\n> https://www.publish.csiro.au/WF/WF21176\n> https://www.fs.usda.gov/research/treesearch/67085\n>\n> -Dexter\n>\n>\n>\n>\n>\n> On Sun, Jan 21, 2024 at 9:36?PM Ben Tupper <btupper at bigelow.org> wrote:\n>\n>> Hi,\n>>\n>> Perhaps this might be a good place to start?\n>>\n>> https://esajournals.onlinelibrary.wiley.com/doi/10.1002/eap.1898  The\n>> authors state that the work was done primarily in R.\n>>\n>> Cheers,\n>> Ben\n>>\n>>\n>> On Sat, Jan 20, 2024 at 9:43?AM Manuel Sp?nola <mspinola10 at gmail.com>\n>> wrote:\n>> >\n>> > Dear list members,\n>> >\n>> > I am looking for suggestions for R packages or an approach using R for\n>> > wildfire risk analysis.\n>> >\n>> > Manuel\n>> >\n>> > --\n>> > *Manuel Sp?nola, Ph.D.*\n>> > Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre\n>> > Universidad Nacional\n>> > Apartado 1350-3000\n>> > Heredia\n>> > COSTA RICA\n>> > mspinola at una.cr <mspinola at una.ac.cr>\n>> > mspinola10 at gmail.com\n>> > Tel?fono: (506) 8706 - 4662\n>> > Sitio web institucional: ICOMVIS\n>> > <http://www.icomvis.una.ac.cr/index.php/manuel>\n>> > Sitio web personal: Sitio personal <\n>> https://mspinola-sitioweb.netlify.app>\n>> > Blog sobre Ciencia de Datos: Blog de Ciencia de Datos\n>> > <https://mspinola-ciencia-de-datos.netlify.app>\n>> >\n>> >         [[alternative HTML version deleted]]\n>> >\n>> > _______________________________________________\n>> > R-sig-Geo mailing list\n>> > R-sig-Geo at r-project.org\n>> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n-- \n*Manuel Sp?nola, Ph.D.*\nInstituto Internacional en Conservaci?n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.cr <mspinola at una.ac.cr>\nmspinola10 at gmail.com\nTel?fono: (506) 8706 - 4662\nSitio web institucional: ICOMVIS\n<http://www.icomvis.una.ac.cr/index.php/manuel>\nSitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>\nBlog sobre Ciencia de Datos: Blog de Ciencia de Datos\n<https://mspinola-ciencia-de-datos.netlify.app>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you very much.\n\nManuel\n\nEl lun, 22 ene 2024 a las 19:13, Dexter Locke (<dexter.locke at gmail.com>)\nescribi?:\n\n>\n> Possibly helpful:\n> https://www.publish.csiro.au/WF/WF21176\n> https://www.fs.us",
+      "thread_id": "thread-19e84a7698fa",
+      "thread_depth": 3,
+      "month": "2024-01"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-1b384c1c8c73",
+      "subject": "Plot the location of a break point identified by the bfastlite function",
+      "message_count": 1,
+      "participants": [
+        "Nikolaos Tziokas"
+      ],
+      "started": "2024-01-16T08:21:58+00:00",
+      "last_reply": "2024-01-16T08:21:58+00:00",
+      "root_message_id": "msg-1b384c1c8c73"
+    },
+    {
+      "id": "thread-04b80151ef69",
+      "subject": "How to attach customized row.names to poly2nb()",
+      "message_count": 3,
+      "participants": [
+        "Roger Bivand",
+        "Xiang Ye"
+      ],
+      "started": "2024-01-18T12:30:36+00:00",
+      "last_reply": "2024-01-19T07:48:16+00:00",
+      "root_message_id": "msg-04b80151ef69"
+    },
+    {
+      "id": "thread-19e84a7698fa",
+      "subject": "Recommendations for wildfire risk analysis (spatially explicit)",
+      "message_count": 4,
+      "participants": [
+        "Ben Tupper",
+        "Dexter Locke",
+        "Manuel Spínola"
+      ],
+      "started": "2024-01-20T08:42:39-06:00",
+      "last_reply": "2024-01-30T10:45:59-06:00",
+      "root_message_id": "msg-19e84a7698fa"
+    }
+  ]
+}

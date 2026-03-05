@@ -1,0 +1,97 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2013-02",
+  "messages": [
+    {
+      "id": "msg-da2024d4d226",
+      "message_id": "<CALjAYt7jHSTxkNaDv10=A-cXWAzHos=nc9cY+Gpe4_LnUSV_pg@mail.gmail.com>",
+      "from_name": "Etienne B. Racine",
+      "from_email_hash": "43b2a5b474c9e620c2a0ea1a2ccc70c29d0c1c5133fe827016988c6bbef8a35d",
+      "date": "2013-02-28T18:13:36-05:00",
+      "subject": "[R-sig-Geo] Antw: arithmetic with layers from a raster stack/brick",
+      "subject_clean": "Antw: arithmetic with layers from a raster stack/brick",
+      "in_reply_to": "<512FCF700200002700018AA9@gwia2.boku.ac.at>",
+      "references": [
+        "<512FCF700200002700018AA9@gwia2.boku.ac.at>"
+      ],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20130228/6c8e9d3a/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20130228/6c8e9d3a/attachment.pl>",
+      "thread_id": "thread-da2024d4d226",
+      "thread_depth": 0,
+      "month": "2013-02"
+    },
+    {
+      "id": "msg-acf0637eb3e9",
+      "message_id": "<1362113042981-7582896.post@n2.nabble.com>",
+      "from_name": "Jesse Berman",
+      "from_email_hash": "ea674515b5f0cec9a9eb3758a8ac57d48c6addf304b9f057581b68308c977166",
+      "date": "2013-02-28T20:44:02-08:00",
+      "subject": "[R-sig-Geo] crop and overlay question",
+      "subject_clean": "crop and overlay question",
+      "in_reply_to": "<FF9DB805FC41CC4E95825A50F68063021292D7CC@challenger.uhd.campus>",
+      "references": [
+        "<FF9DB805FC41CC4E95825A50F68063021292D7CC@challenger.uhd.campus>"
+      ],
+      "body_plain": "Hi Erin,\n\nI'm sure someone else will have a more elegant solution, but if you need a\nquick fix try this (adapted from your posted code)\n\nJesse\n\ntmp <- map(\"state\",\"Texas\",fill=TRUE,plot=FALSE) \ntexas.boundary <- map2SpatialPolygons(tmp, IDs=tmp$names,\nproj4string=CRS(\"+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0\")) \ntexas1.boundary <- spTransform(texas.boundary,CRS(\"+proj=aea +lat_1=27.5\n+lat_2=35 +lat_0=18 +lon_0=-100 +x_0=1500000 +y_0=6000000 +ellps=GRS80\n+datum=NAD83 +units=m +no_defs\") ) \ngrd <- SpatialPoints(makegrid(texas1.boundary, n=300))\n\n# New steps \nOverlay<-overlay(grd, texas1.boundary) #To find out which points fall within\nthe TX boundary\ngrd at coords<-cbind(grd at coords,Overlay) #To mark those points outside TX with\nan NA\ntex.grid<-na.exclude(as.data.frame(grd)) # Transfers to non-spatial\ndataframe to remove NA points\ncoordinates(tex.grid)=~x1+x2 # Now turn back into spatial points dataframe\nproj4string(tex.grid)=(\"+proj=aea +lat_1=27.5 +lat_2=35 +lat_0=18\n+lon_0=-100 +x_0=1500000 +y_0=6000000 +ellps=GRS80 +datum=NAD83 +units=m\n+no_defs\")\nplot(tex.grid)\n\n\n\n--\nView this message in context: http://r-sig-geo.2731867.n2.nabble.com/crop-and-overlay-question-tp7582894p7582896.html\nSent from the R-sig-geo mailing list archive at Nabble.com.",
+      "body_snippet": "Hi Erin,\n\nI'm sure someone else will have a more elegant solution, but if you need a\nquick fix try this (adapted from your posted code)\n\nJesse\n\ntmp <- map(\"state\",\"Texas\",fill=TRUE,plot=FALSE) \ntexas.",
+      "thread_id": "thread-acf0637eb3e9",
+      "thread_depth": 0,
+      "month": "2013-02"
+    },
+    {
+      "id": "msg-5d3e483e5775",
+      "message_id": "<CANtt_hzCAj4+hP4uS_LjMuaGsG+hPbOWw0QgMO3JBYspnpofyg@mail.gmail.com>",
+      "from_name": "Robert J. Hijmans",
+      "from_email_hash": "70faee4a4bb00a9a42b7eb40463e8688ad54c69883a6137dae52bd7d9c748ee2",
+      "date": "2013-02-28T21:02:55-08:00",
+      "subject": "[R-sig-Geo] plot raster over google map",
+      "subject_clean": "plot raster over google map",
+      "in_reply_to": "<CD556DCD.3F09%rossahmed@gmail.com>",
+      "references": [
+        "<CANtt_hze6TwfMnfE3bzncC2d2bNwKhFMLb6U+=Va2kFrRgq5sg@mail.gmail.com>",
+        "<CD556DCD.3F09%rossahmed@gmail.com>"
+      ],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20130228/0c412f29/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20130228/0c412f29/attachment.pl>",
+      "thread_id": "thread-5d3e483e5775",
+      "thread_depth": 0,
+      "month": "2013-02"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-da2024d4d226",
+      "subject": "Antw: arithmetic with layers from a raster stack/brick",
+      "message_count": 1,
+      "participants": [
+        "Etienne B. Racine"
+      ],
+      "started": "2013-02-28T18:13:36-05:00",
+      "last_reply": "2013-02-28T18:13:36-05:00",
+      "root_message_id": "msg-da2024d4d226"
+    },
+    {
+      "id": "thread-acf0637eb3e9",
+      "subject": "crop and overlay question",
+      "message_count": 1,
+      "participants": [
+        "Jesse Berman"
+      ],
+      "started": "2013-02-28T20:44:02-08:00",
+      "last_reply": "2013-02-28T20:44:02-08:00",
+      "root_message_id": "msg-acf0637eb3e9"
+    },
+    {
+      "id": "thread-5d3e483e5775",
+      "subject": "plot raster over google map",
+      "message_count": 1,
+      "participants": [
+        "Robert J. Hijmans"
+      ],
+      "started": "2013-02-28T21:02:55-08:00",
+      "last_reply": "2013-02-28T21:02:55-08:00",
+      "root_message_id": "msg-5d3e483e5775"
+    }
+  ]
+}

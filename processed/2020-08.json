@@ -1,0 +1,877 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2020-08",
+  "messages": [
+    {
+      "id": "msg-8ff28f5b6e40",
+      "message_id": "<3aa6b621-380b-52bf-193e-da58c5f4c006@uni-muenster.de>",
+      "from_name": "Markus Konkol",
+      "from_email_hash": "e97b78439991845a06727cd8ba167d5b8b37d03dc88da9b74039a2f958988037",
+      "date": "2020-08-03T09:51:40+02:00",
+      "subject": "[R-sig-Geo] Online study in the context of open reproducible research",
+      "subject_clean": "Online study in the context of open reproducible research",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear R-geo community,\n\nI am Markus and a member of the project Opening Reproducible Research \n(https://o2r.info/) at the Institute for Geoinformatics under the \nsupervision of Prof. Dr. Christian Kray and Prof. Dr. Edzer Pebesma. I \nam currently running an online study to investigate the understanding of \nopen reproducible research. For this reason, I am looking for \nresearchers from the geo-domain who have some familiarity with R and are \ninterested in participating in my study. Substantial R expertise is not \nrequired. Being able to open, run, read, and write a bit of R code is \nalready enough. The study will take no longer than one hour. With the \nhelp of a system we developed, the participants will solve some tasks \n(we do not test the participants, so they cannot do anything wrong!) and \nthen we will have a little interview to talk a bit about their opinions \nand experiences while using the system. The exact dates will be arranged \nindividually. You can contact me via mail: m.konkol at uni-muenster.de \n<mailto:m.konkol at uni-muenster.de>. Don?t hesitate to forward this mail \nto anyone who might be interested.\n\nThanks in advance and kind regards,\n\nMarkus Konkol\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear R-geo community,\n\nI am Markus and a member of the project Opening Reproducible Research \n(https://o2r.info/) at the Institute for Geoinformatics under the \nsupervision of Prof. Dr. Christian Kray",
+      "thread_id": "thread-8ff28f5b6e40",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-13aee2755194",
+      "message_id": "<BN8PR17MB2980A9900EBB6DFAFAF367A5824D0@BN8PR17MB2980.namprd17.prod.outlook.com>",
+      "from_name": "Pietro Andre Telatin Paschoalino",
+      "from_email_hash": "f843c821f566026f28ea9c2ba3fe4f79d8803e90f6069a2e18305879d8fda13d",
+      "date": "2020-08-03T16:28:24Z",
+      "subject": "[R-sig-Geo] Doubt",
+      "subject_clean": "Doubt",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello everyone, follow my doubts about the sphet package, related to direct and indirect impacts, and simulation of standard errors.\n\nI will be very grateful if anyone can help me.\n\nfollow my code using built-in columbus data.\n\nlibrary(rgdal)\nlibrary(sp)\nlibrary(raster)\nlibrary(rgeos)\nlibrary(maptools)\nlibrary(spdep)\nlibrary (splm)\nlibrary(sphet)\n\ndata(columbus, package=\"spdep\")\nlistw <- spdep::nb2listw(col.gal.nb)\n\nattach(columbus)\n\n#i'm going direct to regression by sphet\n\n#SAC (SARAR MODEL)\n\nSAC.robust <- spreg(INC ~ HOVAL+DISCBD+CP, data=columbus, listw, model=\"sarar\", het=TRUE)\n\n#LAG MODEL\n\nSARrobust <- spreg(INC ~ HOVAL+DISCBD+CP, data=columbus, listw, model=\"lag\", het=TRUE)\n\n#going to my questions about the impacts function\n\n#FOR SAC MODEL\n\n> W <- as(as_dgRMatrix_listw(listw), \"CsparseMatrix\")\nWarning message:\n\nFunction as_dgRMatrix_listw moved to the spatialreg package\n\n> trMatc <- trW(W, type=\"mult\")\n\nWarning message:\nFunction trW moved to the spatialreg package\n\n> effects<- summary(impacts(SAC.robust, tr=trMatc, R=10000), zstats=TRUE, short=TRUE)\n> effects\n\n========================================================\nSimulation results (GSTSLS variance matrix):\n========================================================\n\n #FOR SAR MODEL\n>\n> effects<- summary(impacts(SARrobust, tr=trMatc, R=10000), zstats=TRUE, short=TRUE)\n\nthat gives me:\n\nError in UseMethod(\"impacts\", obj) :\n  no applicable method for 'impacts' applied to an object of class \"c('sphet', 'stsls_sphet')\"\n\n#how i said the impacts is not computable.\n\n#One way to compute the impacts is by:\n\neffects<- summary(spatialreg::impacts(SARrobust, tr=trMatc, R=10000), zstats=TRUE, short=TRUE)\neffects\n\nImpact measures (lag, trace):\n========================================================\nSimulation results (IV HAC variance matrix):\n========================================================\n\n the simulation of standard errors and p-values is done by IV HAC. (which left me confused because I did not specify such an\n#attribute in my regression, leaving me in doubt if the standard errors of the regression had also been corrected with HAC.)\n\n#another option is:\n\neffects<- summary(spatialreg::impacts.stsls(SARrobust, tr=trMatc, R=10000), zstats=TRUE, short=TRUE)\neffects\n\n#again simulated through the HAC variance matrix.\n#Note: In this case, generally, all p-values were not significant, but using my database, by spatialreg :: impacts, the impacts are\n#statistically significant and using spatialreg :: impacts. stsls, they become insignificant.\n\n#follow my sessionInfo (), how i Said, i'm using the version of sphet by R-forge.\n>\n> sessionInfo ()\n\nR version 3.6.2 (2019-12-12)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 10 x64 (build 18363)\n\nMatrix products: default\n\nlocale:\n[1] LC_COLLATE=English_United States.1252  LC_CTYPE=English_United States.1252    LC_MONETARY=English_United States.1252\n[4] LC_NUMERIC=C                           LC_TIME=English_United States.1252\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base\n\nother attached packages:\n [1] sphet_1.7-6    splm_1.4-11    spdep_1.1-5    sf_0.9-5       spData_0.3.8   maptools_1.0-1 rgeos_0.5-3    raster_3.3-7   rgdal_1.5-10\n[10] sp_1.4-2\n\nloaded via a namespace (and not attached):\n [1] Rcpp_1.0.5         bdsmatrix_1.3-4    lattice_0.20-41    deldir_0.1-25      class_7.3-15       zoo_1.8-8          gtools_3.8.2\n [8] digest_0.6.25      lmtest_0.9-37      spDataLarge_0.4.1  R6_2.4.1           coda_0.19-3        e1071_1.7-3        spam_2.5-1\n[15] pillar_1.4.4       Rdpack_0.11-1      miscTools_0.6-26   rlang_0.4.7        rstudioapi_0.11    gdata_2.18.0       gmodels_2.18.1\n[22] Matrix_1.2-18      splines_3.6.2      stringr_1.4.0      foreign_0.8-72     compiler_3.6.2     pkgconfig_2.0.3    maxLik_1.3-8\n[29] tidyselect_1.1.0   tibble_3.0.1       expm_0.999-4       codetools_0.2-16   crayon_1.3.4       dplyr_1.0.0        MASS_7.3-51.4\n[36] spatialreg_1.1-5   grid_3.6.2         nlme_3.1-142       lifecycle_0.2.0    DBI_1.1.0          magrittr_1.5       units_0.6-7\n[43] ibdreg_0.2.5       bibtex_0.4.2.2     KernSmooth_2.23-16 stringi_1.4.6      plm_2.2-3          LearnBayes_2.15.1  ellipsis_0.3.1\n[50] generics_0.0.2     vctrs_0.3.1        boot_1.3-23        sandwich_2.5-1     Formula_1.2-3      tools_3.6.2        glue_1.4.1\n[57] purrr_0.3.4        parallel_3.6.2     classInt_0.4-3     gbRd_0.4-11        dotCall64_1.0-0\n\nThank you.\n\nPietro Andre Telatin Paschoalino\nDoutorando em Ci?ncias Econ?micas da Universidade Estadual de Maring? - PCE.\n\n[https://ipmcdn.avast.com/images/icons/icon-envelope-tick-round-orange-animated-no-repeat-v1.gif]<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail&utm_term=icon>    Virus-free. www.avast.com<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail&utm_term=link>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello everyone, follow my doubts about the sphet package, related to direct and indirect impacts, and simulation of standard errors.\n\nI will be very grateful if anyone can help me.\n\nfollow my code usi",
+      "thread_id": "thread-13aee2755194",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-b32da0a84ed1",
+      "message_id": "<alpine.LFD.2.23.451.2008032145010.963098@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2020-08-03T21:56:38+02:00",
+      "subject": "[R-sig-Geo] Doubt",
+      "subject_clean": "Doubt",
+      "in_reply_to": "<BN8PR17MB2980A9900EBB6DFAFAF367A5824D0@BN8PR17MB2980.namprd17.prod.outlook.com>",
+      "references": [
+        "<BN8PR17MB2980A9900EBB6DFAFAF367A5824D0@BN8PR17MB2980.namprd17.prod.outlook.com>"
+      ],
+      "body_plain": "On Mon, 3 Aug 2020, Pietro Andre Telatin Paschoalino wrote:\n\n> Hello everyone, follow my doubts about the sphet package, related to direct and indirect impacts, and simulation of standard errors.\n>\n> I will be very grateful if anyone can help me.\n>\n> follow my code using built-in columbus data.\n>\n> library(rgdal)\n> library(sp)\n> library(raster)\n> library(rgeos)\n> library(maptools)\n> library(spdep)\n> library (splm)\n> library(sphet)\n>\n> data(columbus, package=\"spdep\")\n> listw <- spdep::nb2listw(col.gal.nb)\n>\n> attach(columbus)\n>\n> #i'm going direct to regression by sphet\n>\n> #SAC (SARAR MODEL)\n>\n> SAC.robust <- spreg(INC ~ HOVAL+DISCBD+CP, data=columbus, listw, model=\"sarar\", het=TRUE)\n>\n> #LAG MODEL\n>\n> SARrobust <- spreg(INC ~ HOVAL+DISCBD+CP, data=columbus, listw, model=\"lag\", het=TRUE)\n>\n> #going to my questions about the impacts function\n>\n> #FOR SAC MODEL\n>\n>> W <- as(as_dgRMatrix_listw(listw), \"CsparseMatrix\")\n> Warning message:\n>\n> Function as_dgRMatrix_listw moved to the spatialreg package\n>\n>> trMatc <- trW(W, type=\"mult\")\n>\n> Warning message:\n> Function trW moved to the spatialreg package\n>\n>> effects<- summary(impacts(SAC.robust, tr=trMatc, R=10000), zstats=TRUE, short=TRUE)\n>> effects\n>\n\nWith remotes::install_github(\"gpiras/sphet\"), you need rather:\n\neffects<- impacts(SAC.robust, tr=trMatc, n_mvn=10000, inference=TRUE)\nsummary(effects)\neffects <- impacts(SARrobust, tr=trMatc, n_mvn=10000, inference=TRUE)\nsummary(effects)\n\nHowever, these are work-in-progress, and would benefit from raising an \nissue on https://github.com/gpiras/sphet/issues. The values are similar \nto:\n\nlibrary(spatialreg)\nSARrobust1 <- stsls(INC ~ HOVAL+DISCBD+CP, data=columbus, listw,\n   robust=TRUE)\nii <- impacts(SARrobust1, tr=trMatc, R=10000)\nsummary(ii, zstats=TRUE, short=TRUE)\n\nRaising an issue would help, and this example should be included there.\n\nRoger\n\n> ========================================================\n> Simulation results (GSTSLS variance matrix):\n> ========================================================\n>\n> #FOR SAR MODEL\n>>\n>> effects<- summary(impacts(SARrobust, tr=trMatc, R=10000), zstats=TRUE, short=TRUE)\n>\n> that gives me:\n>\n> Error in UseMethod(\"impacts\", obj) :\n>  no applicable method for 'impacts' applied to an object of class \"c('sphet', 'stsls_sphet')\"\n>\n> #how i said the impacts is not computable.\n>\n> #One way to compute the impacts is by:\n>\n> effects<- summary(spatialreg::impacts(SARrobust, tr=trMatc, R=10000), zstats=TRUE, short=TRUE)\n> effects\n>\n> Impact measures (lag, trace):\n> ========================================================\n> Simulation results (IV HAC variance matrix):\n> ========================================================\n>\n> the simulation of standard errors and p-values is done by IV HAC. (which left me confused because I did not specify such an\n> #attribute in my regression, leaving me in doubt if the standard errors of the regression had also been corrected with HAC.)\n>\n> #another option is:\n>\n> effects<- summary(spatialreg::impacts.stsls(SARrobust, tr=trMatc, R=10000), zstats=TRUE, short=TRUE)\n> effects\n>\n> #again simulated through the HAC variance matrix.\n> #Note: In this case, generally, all p-values were not significant, but using my database, by spatialreg :: impacts, the impacts are\n> #statistically significant and using spatialreg :: impacts. stsls, they become insignificant.\n>\n> #follow my sessionInfo (), how i Said, i'm using the version of sphet by R-forge.\n>>\n>> sessionInfo ()\n>\n> R version 3.6.2 (2019-12-12)\n> Platform: x86_64-w64-mingw32/x64 (64-bit)\n> Running under: Windows 10 x64 (build 18363)\n>\n> Matrix products: default\n>\n> locale:\n> [1] LC_COLLATE=English_United States.1252  LC_CTYPE=English_United States.1252    LC_MONETARY=English_United States.1252\n> [4] LC_NUMERIC=C                           LC_TIME=English_United States.1252\n>\n> attached base packages:\n> [1] stats     graphics  grDevices utils     datasets  methods   base\n>\n> other attached packages:\n> [1] sphet_1.7-6    splm_1.4-11    spdep_1.1-5    sf_0.9-5       spData_0.3.8   maptools_1.0-1 rgeos_0.5-3    raster_3.3-7   rgdal_1.5-10\n> [10] sp_1.4-2\n>\n> loaded via a namespace (and not attached):\n> [1] Rcpp_1.0.5         bdsmatrix_1.3-4    lattice_0.20-41    deldir_0.1-25      class_7.3-15       zoo_1.8-8          gtools_3.8.2\n> [8] digest_0.6.25      lmtest_0.9-37      spDataLarge_0.4.1  R6_2.4.1           coda_0.19-3        e1071_1.7-3        spam_2.5-1\n> [15] pillar_1.4.4       Rdpack_0.11-1      miscTools_0.6-26   rlang_0.4.7        rstudioapi_0.11    gdata_2.18.0       gmodels_2.18.1\n> [22] Matrix_1.2-18      splines_3.6.2      stringr_1.4.0      foreign_0.8-72     compiler_3.6.2     pkgconfig_2.0.3    maxLik_1.3-8\n> [29] tidyselect_1.1.0   tibble_3.0.1       expm_0.999-4       codetools_0.2-16   crayon_1.3.4       dplyr_1.0.0        MASS_7.3-51.4\n> [36] spatialreg_1.1-5   grid_3.6.2         nlme_3.1-142       lifecycle_0.2.0    DBI_1.1.0          magrittr_1.5       units_0.6-7\n> [43] ibdreg_0.2.5       bibtex_0.4.2.2     KernSmooth_2.23-16 stringi_1.4.6      plm_2.2-3          LearnBayes_2.15.1  ellipsis_0.3.1\n> [50] generics_0.0.2     vctrs_0.3.1        boot_1.3-23        sandwich_2.5-1     Formula_1.2-3      tools_3.6.2        glue_1.4.1\n> [57] purrr_0.3.4        parallel_3.6.2     classInt_0.4-3     gbRd_0.4-11        dotCall64_1.0-0\n>\n> Thank you.\n>\n> Pietro Andre Telatin Paschoalino\n> Doutorando em Ci?ncias Econ?micas da Universidade Estadual de Maring? - PCE.\n>\n> [https://ipmcdn.avast.com/images/icons/icon-envelope-tick-round-orange-animated-no-repeat-v1.gif]<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail&utm_term=icon>    Virus-free. www.avast.com<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail&utm_term=link>\n>\n> \t[[alternative HTML version deleted]]\n>\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Mon, 3 Aug 2020, Pietro Andre Telatin Paschoalino wrote:\n\n> Hello everyone, follow my doubts about the sphet package, related to direct and indirect impacts, and simulation of standard errors.\n>\n> ",
+      "thread_id": "thread-13aee2755194",
+      "thread_depth": 1,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-8d70158c9b5d",
+      "message_id": "<BN8PR17MB298021D7A0D1FE27671B4F35824D0@BN8PR17MB2980.namprd17.prod.outlook.com>",
+      "from_name": "pietro_tei@to m@iii@g oii hotm@ii@com",
+      "from_email_hash": "124ec76c2f4b44c70e0ea88e71f4281894da7ac6ac712ca7e9e830ece27292f9",
+      "date": "2020-08-03T18:56:59-03:00",
+      "subject": "[R-sig-Geo] Doubt",
+      "subject_clean": "Doubt",
+      "in_reply_to": "<alpine.LFD.2.23.451.2008032145010.963098@reclus.nhh.no>",
+      "references": [],
+      "body_plain": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20200803/7c1a5ec3/attachment.html>",
+      "body_snippet": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20200803/7c1a5ec3/attachment.html>",
+      "thread_id": "thread-13aee2755194",
+      "thread_depth": 2,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-2a72f42c9bfd",
+      "message_id": "<CAFZj849HNad8WWg8ihWQYpDH1f5Ks9UzJC3u6-TtikHDd5achw@mail.gmail.com>",
+      "from_name": "massimo bressan",
+      "from_email_hash": "f8f5dbcbdc5c1dae1eaee19d85cc1e3d4addc2bec2d10168439ae6f29208a452",
+      "date": "2020-08-06T11:19:29+02:00",
+      "subject": "[R-sig-Geo] library rgdal 1.5-15 installation failed",
+      "subject_clean": "library rgdal 1.5-15 installation failed",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I've got this error by updating rgdal packages from 1.5-12 to 1.5-15\n\n###################################\n\nprojectit.cpp:159:95: error: expected ?,? or ?...? before ?SEXP?\n SEXP transform_ng(SEXP fromargs, SEXP toargs, SEXP coordOp, SEXP npts,\nSEXP x, SEXP y, SEXP z SEXP aoi) {\n\n                   ^~~~\nprojectit.cpp: In function ?SEXPREC* transform_ng(SEXP, SEXP, SEXP, SEXP,\nSEXP, SEXP, SEXP)?:\nprojectit.cpp:159:6: error: conflicting declaration of C function ?SEXPREC*\ntransform_ng(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)?\n SEXP transform_ng(SEXP fromargs, SEXP toargs, SEXP coordOp, SEXP npts,\nSEXP x, SEXP y, SEXP z SEXP aoi) {\n      ^~~~~~~~~~~~\nIn file included from projectit.cpp:11:0:\nrgdal.h:132:6: note: previous declaration ?SEXPREC* transform_ng(SEXP,\nSEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)?\n SEXP transform_ng(SEXP fromargs, SEXP toargs, SEXP coordOp, SEXP npts,\nSEXP x, SEXP y, SEXP z, SEXP aoi); // both\n      ^~~~~~~~~~~~\n/usr/lib/R/etc/Makeconf:177: recipe for target 'projectit.o' failed\nmake: *** [projectit.o] Error 1\nERROR: compilation failed for package ?rgdal?\n* removing ?/home/max/R/x86_64-pc-linux-gnu-library/3.5/rgdal?\n* restoring previous ?/home/max/R/x86_64-pc-linux-gnu-library/3.5/rgdal?\n####################################\nmy system is:\n\nDebian 9 stretch, Debian 4.9.228-1 (2020-07-05)\n\nR version 3.6.3 (2020-02-29) -- \"Holding the Windsock\"\nCopyright (C) 2020 The R Foundation for Statistical Computing\nPlatform: x86_64-pc-linux-gnu (64-bit)\n\nany help for that?\nthanks\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I've got this error by updating rgdal packages from 1.5-12 to 1.5-15\n\n###################################\n\nprojectit.cpp:159:95: error: expected ?,? or ?...? before ?SEXP?\n SEXP transform_ng(SEXP from",
+      "thread_id": "thread-2a72f42c9bfd",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-2ae04841e429",
+      "message_id": "<40456100-ebba-c7ce-9caa-5f5d206d3335@gmail.com>",
+      "from_name": "Tomislav Hengl",
+      "from_email_hash": "1c592038322bbeaa3bb702d8d64ab9c83a31b70d7020477c6836f5af383d3072",
+      "date": "2020-08-06T12:11:30+02:00",
+      "subject": "[R-sig-Geo] Postdoctoral position (OpenGeoHub): integrated proximal and remote sensing of soil",
+      "subject_clean": "Postdoctoral position (OpenGeoHub): integrated proximal and remote sensing of soil",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Application Deadline: 20th of September 2020\nPossible start date: 15th of November 2020\nDuration: 2+ years,\nJob location: Agro Business Park 10, Wageningen, the Netherlands\nBruto monthly salary: The gross monthly salary starts at ? 2.720,- (with \npossible bonuses)\nJob type: Post-doctoral researcher\nFields: pedometrics, soil spectroscopy, remote sensing, predictive \nmodeling, soil organic carbon, data science\nEmployer: OpenGeoHub foundation\n\nOpenGeoHub foundation is looking for a Post-doctoral researcher in the \nfield of proximal and remote soil sensing, with a proven experience of \nfitting soil-spectroscopy calibration models, harmonizing and managing \nlaboratory soil measurements, estimating soil organic carbon stocks \nusing combination of remote sensing and soil spectroscopy, and has \nexperience in programming in R and/or Python. We especially welcome \ncandidates with interest in developing and implementing novel modeling \ntechniques that help bridge the gaps between field-based proximal \nsensing, and satellite-based remote sensing of soil. The candidate would \nwork for OpenGeoHub on current and future international projects \nincluding the ?Soil Spectroscopy for global good? (global data sets; \nproject lead by WHRC) and the H2020 project ?AgriCapture ? Developing \nEO-powered services to promote soil carbon sequestration through \nregenerative agriculture? (EU-wide data sets). The candidate would also \nactively contribute to the www.OpenLandMap.org data portal and similar \nglobal datasets produced and maintained by OpenGeoHub.\n\n\"Help us make better data and better software for a better world!\"\n\nTo apply for this position visit: \nhttps://opengeohub.org/jobs/2020/postdoctoral-position-integrated-proximal-and-remote-sensing-soil\n\n\n-- \nT. (Tom) Hengl\nTechnical support / Vice Chair\nThe OpenGeoHub Foundation\nVisiting address: Agro Business Park 10, 6708PW Wageningen, NL\nTel: +31 (0)317 427537\nUrl: https://opengeohub.org/about\nTwitter: https://twitter.com/tom_hengl\nhttps://www.youtube.com/c/OpenGeoHubFoundation\nskype:tom.hengl?chat\nPublications: http://scholar.google.com/citations?user=2oYU7S8AAAAJ",
+      "body_snippet": "Application Deadline: 20th of September 2020\nPossible start date: 15th of November 2020\nDuration: 2+ years,\nJob location: Agro Business Park 10, Wageningen, the Netherlands\nBruto monthly salary: The g",
+      "thread_id": "thread-2ae04841e429",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-713de0044921",
+      "message_id": "<alpine.LFD.2.23.451.2008061206220.1945157@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2020-08-06T12:17:58+02:00",
+      "subject": "[R-sig-Geo] library rgdal 1.5-15 installation failed",
+      "subject_clean": "library rgdal 1.5-15 installation failed",
+      "in_reply_to": "<CAFZj849HNad8WWg8ihWQYpDH1f5Ks9UzJC3u6-TtikHDd5achw@mail.gmail.com>",
+      "references": [
+        "<CAFZj849HNad8WWg8ihWQYpDH1f5Ks9UzJC3u6-TtikHDd5achw@mail.gmail.com>"
+      ],
+      "body_plain": "A known problem for users of outdated PROJ and GDAL; work-around\n\ninstall.packages(\"rgdal\", repos=\"http://R-Forge.R-project.org\")\n\nuntil next release (submission when \nhttps://cran.r-project.org/web/checks/check_results_rgdal.html updates to \n1.5-15 for all platforms).\n\nError initially trapped by the Solaris platform in CRAN package checks, \nthanks to Brian Ripley for alerting me that I had omitted to check the \npackage with outdated PROJ/GDAL before submission; error not trapped by \nthe CRAN submission system because those platforms use recent PROJ/GDAL.\n\nAs package maintainer, I recommend (strongly) staying as close to current \nsystem requirements as possible, because those version fix often serious \nbugs and offer much enhanced processing. In the case of PROJ/GDAL, from \nPROJ >= 6 and GDAL >= 3, the data models and APIs change radically, and we \ncannot be sure that we can test for outdated versions (this happened in \nthis case because of a rushed release to fix a different problem).\n\nI believe that things should still avoid failing, but will be more and \nmore outdated. The gate for outdated PROJ/GDAL has to be kept open for \nreally bad choices (legacy OS versions without available builds of more \nrecent versions of GDAL and PROJ). However, as in this case, it may not be \npossible to test for dozens of external system requirements combinations, \nincluding reverse dependency checks for almost 900 packages using rgdal \nand rgdal through raster. Revdeps run yesterday with the development \nversion of rgdal and PROJ 5.2.0 / GDAL 2.2.4 show no remaining problems \ncaused by rgdal.\n\nUsers are strongly encouraged to move to as recent PROJ and GDAL releases \nas possible; CRAN Windows binaries (and shortly OSX binaries) are fairly \nrecent. A maintainer's life is rarely a happy one ...\n\nRoger\n\n\nOn Thu, 6 Aug 2020, massimo bressan wrote:\n\n> I've got this error by updating rgdal packages from 1.5-12 to 1.5-15\n>\n> ###################################\n>\n> projectit.cpp:159:95: error: expected ?,? or ?...? before ?SEXP?\n> SEXP transform_ng(SEXP fromargs, SEXP toargs, SEXP coordOp, SEXP npts,\n> SEXP x, SEXP y, SEXP z SEXP aoi) {\n>\n>                   ^~~~\n> projectit.cpp: In function ?SEXPREC* transform_ng(SEXP, SEXP, SEXP, SEXP,\n> SEXP, SEXP, SEXP)?:\n> projectit.cpp:159:6: error: conflicting declaration of C function ?SEXPREC*\n> transform_ng(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)?\n> SEXP transform_ng(SEXP fromargs, SEXP toargs, SEXP coordOp, SEXP npts,\n> SEXP x, SEXP y, SEXP z SEXP aoi) {\n>      ^~~~~~~~~~~~\n> In file included from projectit.cpp:11:0:\n> rgdal.h:132:6: note: previous declaration ?SEXPREC* transform_ng(SEXP,\n> SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)?\n> SEXP transform_ng(SEXP fromargs, SEXP toargs, SEXP coordOp, SEXP npts,\n> SEXP x, SEXP y, SEXP z, SEXP aoi); // both\n>      ^~~~~~~~~~~~\n> /usr/lib/R/etc/Makeconf:177: recipe for target 'projectit.o' failed\n> make: *** [projectit.o] Error 1\n> ERROR: compilation failed for package ?rgdal?\n> * removing ?/home/max/R/x86_64-pc-linux-gnu-library/3.5/rgdal?\n> * restoring previous ?/home/max/R/x86_64-pc-linux-gnu-library/3.5/rgdal?\n> ####################################\n> my system is:\n>\n> Debian 9 stretch, Debian 4.9.228-1 (2020-07-05)\n>\n> R version 3.6.3 (2020-02-29) -- \"Holding the Windsock\"\n> Copyright (C) 2020 The R Foundation for Statistical Computing\n> Platform: x86_64-pc-linux-gnu (64-bit)\n>\n> any help for that?\n> thanks\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "A known problem for users of outdated PROJ and GDAL; work-around\n\ninstall.packages(\"rgdal\", repos=\"http://R-Forge.R-project.org\")\n\nuntil next release (submission when \nhttps://cran.r-project.org/web/c",
+      "thread_id": "thread-2a72f42c9bfd",
+      "thread_depth": 1,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-351aa287cd7b",
+      "message_id": "<CAGxgkWifnuNxsW+gJPQ4efEb6eWwwOFwfu5g15nUM0JQzk9jNw@mail.gmail.com>",
+      "from_name": "Thomas Adams",
+      "from_email_hash": "07e8d239a6e603bbb3eba454c2268ef85db25ff8c598ad5e18e017bc15014605",
+      "date": "2020-08-10T16:01:33-04:00",
+      "subject": "[R-sig-Geo] How to change scale labeling in spplot",
+      "subject_clean": "How to change scale labeling in spplot",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi all,\n\nI have searched for examples to change the labeling for raster data (two\npanels) consisting of integer values (1, 2, and 3). In the scale I want to\nlabel these as \"Af\", \"Am\", Aw\".\n\nMy code looks like:\n\ncolp <- colorRampPalette(c(\"#960000\", \"#FF0000\", \"#FFCCCC\"))\nbrks<-seq(0,3,1)\nspplot(KG_haiti,xlim=c(-8313027,-7959668),ylim=c(2017552,2297053),at=brks,col.regions=colp(length(brks)-1),ylab=\"Climate\nClass\",main=\"Koppen-Geiger Climate Classification for\\nClimate Years\n1981-2010 and El Nino Years\",names.attr=c(\"Climate Normal\",\"El\nNino\"),colorkey=list(labels = list(labels = c(\"Af\",\"Am\",\"Aw\"))))\n\nI'm getting just the 3 colors, but the labels \"Af\", \"Am\", Aw\" are repeated\nacross each color; I need to have each color associated with just one of\nthe labels. Obviously, I'm doing something wrong...\n\nI just cannot figure out how to do this.\n\nRegards,\nTom\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all,\n\nI have searched for examples to change the labeling for raster data (two\npanels) consisting of integer values (1, 2, and 3). In the scale I want to\nlabel these as \"Af\", \"Am\", Aw\".\n\nMy code lo",
+      "thread_id": "thread-351aa287cd7b",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-5b9abfc02b45",
+      "message_id": "<CAMbH+HjGGaHArdm5jvmM0YNhEYctsvDTrPNV=23mmvyAYY0GxQ@mail.gmail.com>",
+      "from_name": "Tim Salabim",
+      "from_email_hash": "8d14b80be9ac25ff7cb227ebd876d608f97ddfde762920c16666793f1b9e4e45",
+      "date": "2020-08-10T22:34:36+02:00",
+      "subject": "[R-sig-Geo] How to change scale labeling in spplot",
+      "subject_clean": "How to change scale labeling in spplot",
+      "in_reply_to": "<CAGxgkWifnuNxsW+gJPQ4efEb6eWwwOFwfu5g15nUM0JQzk9jNw@mail.gmail.com>",
+      "references": [
+        "<CAGxgkWifnuNxsW+gJPQ4efEb6eWwwOFwfu5g15nUM0JQzk9jNw@mail.gmail.com>"
+      ],
+      "body_plain": "Have you tried\ncolorkey=list(labels = list(labels = list(\"Af\",\"Am\",\"Aw\")))\n?\n\n\n\nOn Mon, Aug 10, 2020, 22:01 Thomas Adams <tea3rd at gmail.com> wrote:\n\n> Hi all,\n>\n> I have searched for examples to change the labeling for raster data (two\n> panels) consisting of integer values (1, 2, and 3). In the scale I want to\n> label these as \"Af\", \"Am\", Aw\".\n>\n> My code looks like:\n>\n> colp <- colorRampPalette(c(\"#960000\", \"#FF0000\", \"#FFCCCC\"))\n> brks<-seq(0,3,1)\n>\n> spplot(KG_haiti,xlim=c(-8313027,-7959668),ylim=c(2017552,2297053),at=brks,col.regions=colp(length(brks)-1),ylab=\"Climate\n> Class\",main=\"Koppen-Geiger Climate Classification for\\nClimate Years\n> 1981-2010 and El Nino Years\",names.attr=c(\"Climate Normal\",\"El\n> Nino\"),colorkey=list(labels = list(labels = c(\"Af\",\"Am\",\"Aw\"))))\n>\n> I'm getting just the 3 colors, but the labels \"Af\", \"Am\", Aw\" are repeated\n> across each color; I need to have each color associated with just one of\n> the labels. Obviously, I'm doing something wrong...\n>\n> I just cannot figure out how to do this.\n>\n> Regards,\n> Tom\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Have you tried\ncolorkey=list(labels = list(labels = list(\"Af\",\"Am\",\"Aw\")))\n?\n\n\n\nOn Mon, Aug 10, 2020, 22:01 Thomas Adams <tea3rd at gmail.com> wrote:\n\n> Hi all,\n>\n> I have searched for examples to cha",
+      "thread_id": "thread-351aa287cd7b",
+      "thread_depth": 1,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-4b0b9c70ffb4",
+      "message_id": "<CAGxgkWjPvLh2ZznxbYs916P7iY364KeNBQPo7v99BZz=JGTZkg@mail.gmail.com>",
+      "from_name": "Thomas Adams",
+      "from_email_hash": "07e8d239a6e603bbb3eba454c2268ef85db25ff8c598ad5e18e017bc15014605",
+      "date": "2020-08-10T17:05:35-04:00",
+      "subject": "[R-sig-Geo] How to change scale labeling in spplot",
+      "subject_clean": "How to change scale labeling in spplot",
+      "in_reply_to": "<CAMbH+HjGGaHArdm5jvmM0YNhEYctsvDTrPNV=23mmvyAYY0GxQ@mail.gmail.com>",
+      "references": [
+        "<CAGxgkWifnuNxsW+gJPQ4efEb6eWwwOFwfu5g15nUM0JQzk9jNw@mail.gmail.com>",
+        "<CAMbH+HjGGaHArdm5jvmM0YNhEYctsvDTrPNV=23mmvyAYY0GxQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hi Tim,\n\nYes, basically, I have and just did again, try this -- same result...\n\nTom\n\nOn Mon, Aug 10, 2020 at 4:34 PM Tim Salabim <tim.appelhans at gmail.com> wrote:\n\n> Have you tried\n> colorkey=list(labels = list(labels = list(\"Af\",\"Am\",\"Aw\")))\n> ?\n>\n>\n>\n> On Mon, Aug 10, 2020, 22:01 Thomas Adams <tea3rd at gmail.com> wrote:\n>\n>> Hi all,\n>>\n>> I have searched for examples to change the labeling for raster data (two\n>> panels) consisting of integer values (1, 2, and 3). In the scale I want to\n>> label these as \"Af\", \"Am\", Aw\".\n>>\n>> My code looks like:\n>>\n>> colp <- colorRampPalette(c(\"#960000\", \"#FF0000\", \"#FFCCCC\"))\n>> brks<-seq(0,3,1)\n>>\n>> spplot(KG_haiti,xlim=c(-8313027,-7959668),ylim=c(2017552,2297053),at=brks,col.regions=colp(length(brks)-1),ylab=\"Climate\n>> Class\",main=\"Koppen-Geiger Climate Classification for\\nClimate Years\n>> 1981-2010 and El Nino Years\",names.attr=c(\"Climate Normal\",\"El\n>> Nino\"),colorkey=list(labels = list(labels = c(\"Af\",\"Am\",\"Aw\"))))\n>>\n>> I'm getting just the 3 colors, but the labels \"Af\", \"Am\", Aw\" are repeated\n>> across each color; I need to have each color associated with just one of\n>> the labels. Obviously, I'm doing something wrong...\n>>\n>> I just cannot figure out how to do this.\n>>\n>> Regards,\n>> Tom\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n-- \nThomas E Adams, III\n1724 Sage Lane\nBlacksburg, VA 24060\ntea3rd at gmail.com (personal)\ntea at terrapredictions.org (work)\n\n1 (513) 739-9512 (cell)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Tim,\n\nYes, basically, I have and just did again, try this -- same result...\n\nTom\n\nOn Mon, Aug 10, 2020 at 4:34 PM Tim Salabim <tim.appelhans at gmail.com> wrote:\n\n> Have you tried\n> colorkey=list(l",
+      "thread_id": "thread-351aa287cd7b",
+      "thread_depth": 2,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-e6d874a2766b",
+      "message_id": "<d9570088-fc2b-2781-e6ce-880ad7d2e12c@mbacou.com>",
+      "from_name": "Bacou, Melanie",
+      "from_email_hash": "5c81096d55abd34e703ffa1377a7ff0fd373feb65a5df014e46c31d2da952066",
+      "date": "2020-08-10T23:14:36+01:00",
+      "subject": "[R-sig-Geo] How to change scale labeling in spplot",
+      "subject_clean": "How to change scale labeling in spplot",
+      "in_reply_to": "<CAGxgkWjPvLh2ZznxbYs916P7iY364KeNBQPo7v99BZz=JGTZkg@mail.gmail.com>",
+      "references": [
+        "<CAGxgkWifnuNxsW+gJPQ4efEb6eWwwOFwfu5g15nUM0JQzk9jNw@mail.gmail.com>",
+        "<CAMbH+HjGGaHArdm5jvmM0YNhEYctsvDTrPNV=23mmvyAYY0GxQ@mail.gmail.com>",
+        "<CAGxgkWjPvLh2ZznxbYs916P7iY364KeNBQPo7v99BZz=JGTZkg@mail.gmail.com>"
+      ],
+      "body_plain": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20200810/60068873/attachment.html>",
+      "body_snippet": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20200810/60068873/attachment.html>",
+      "thread_id": "thread-351aa287cd7b",
+      "thread_depth": 3,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-6d786ae77a18",
+      "message_id": "<CAA5N_eai9wEB-Lf0ik4xfsHbwq6kZKU4tUCBy8mENC5iS3fqwg@mail.gmail.com>",
+      "from_name": "Chanda Chiseni",
+      "from_email_hash": "e0d1d023d5bab0de5dc659745d49de72de518e66c3133dd9b82a6aba271a44da",
+      "date": "2020-08-11T19:20:23+02:00",
+      "subject": "[R-sig-Geo] Moran's I with Objects of Different Length",
+      "subject_clean": "Moran's I with Objects of Different Length",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I am trying to perform moran's I test on residuals from by probit model\nusing k-nearest neighbour weights, however i run into an error which i\ncant seem to find the solution anywhere online the error is\n\n> moran.test(residuals.glm(svyprobitest),knear2weight)\nError in moran.test(residuals.glm(svyprobitest), knear2weight) :\n  objects of different length\n\n\nThe codes I use to come up to this are below\n\n> library(foreign)\n> dhsanalysis2= read.dta(\"DHSSpatialreg11.dta\")\n##removing NAs in PSU\n> dhsanalysis3=subset(dhsanalysis2, !is.na(psu))\n##generating a survey design\n> mydesighdhs= svydesign(ids =~psu, data =dhsanalysis3, weight = ~wgt,\nstrata = ~v023,nest=TRUE)\n##Defining coordinate colums\n> coordinates(dhsanalysis3)= c(\"longnum\",\"latnum\")\n#Defining Projection\n> proj4string(dhsanalysis3) <- CRS(\"+init=epsg:4326\")\n##binding longiude and latitude\n> lon2<- dhsanalysis3$longnum\n> lat2<- dhsanalysis3$latnum\n> coords<- cbind(lon2,lat2)\n##Creating spatial weights based on the nearest neighbour\n> knear2= knearneigh(coords,k=2,longlat=T)\nWarning message:\nIn knearneigh(coords, k = 2, longlat = T) :\n  knearneigh: identical points found ### I get a warning message on\nidentical points found, is this a problem and how would i deal with this\n> knear2.nb= knn2nb(knear2)\n> knear2weight= nb2listw(knear2.nb, style=\"W\",zero.policy=T)\n\n##declaring categorical variables as factor variables\n> dhsanalysis3$hivpositive.f <- factor(dhsanalysis3$hivpositive)\n> dhsanalysis3$protestant.f <- factor(dhsanalysis3$protestant2)\n> dhsanalysis3$Married.f <- factor(dhsanalysis3$Married)\n> dhsanalysis3$female.f <- factor(dhsanalysis3$female)\n> dhsanalysis3$urban1.f <- factor(dhsanalysis3$urban1)\n> dhsanalysis3$river10kmdum.f <- factor(dhsanalysis3$river10kmdum)\n> dhsanalysis3$Explorer50kmdum.f <- factor(dhsanalysis3$Explorer50kmdum)\n> dhsanalysis3$Rail50kmdum.f <- factor(dhsanalysis3$Rail50kmdum)\n> dhsanalysis3$Province1.f <- factor(dhsanalysis3$Province1)\n> dhsanalysis3$WealthIndex.f <- factor(dhsanalysis3$WealthIndex)\n> dhsanalysis3$occupation2.f <- factor(dhsanalysis3$occupation2)\n> dhsanalysis3$highested.f <- factor(dhsanalysis3$highested)\n> protestant.f= dhsanalysis3$protestant.f\n> hivpositive.f=dhsanalysi3$hivpositive.f\n> Married.f=dhsanalysis3$Married.f\n> female.f=dhsanalysis3$female.f\n> urban1.f=dhsanalysis3$urban1.f\n> river10kmdum.f=dhsanalysis3$river10kmdum.f\n> Explorer50kmdum.f=dhsanalysis2$Explorer50kmdum.f\n> Province1.f=dhsanalysis3$Province1.f\n> WealthIndex.f=dhsanalysis3$WealthIndex.f\n> occupation2.f=dhsanalysis3$occupation2.f\n> highested.f=dhsanalysis3$highested.f\n> Age=dhsanalysis3$Age\n> Age2=dhsanalysis3$Age2\n> HIVKnowledge=dhsanalysis3$HIVKnowledge\n> churchkm=dhsanalysis3$churchkm\n> lnhospitalkm=dhsanalysis3$lnhospitalkm\n> lnElevationMean=dhsanalysis3$lnElevationMean\n\n> ###VARIABLES IN SURVEY DESIGN\n> mydesighdhs$hivpositive.f <- factor(dhsanalysis3$hivpositive)\n> mydesighdhs$protestant.f <- factor(dhsanalysis3$protestant2)\n> mydesighdhs$Married.f <- factor(dhsanalysis3$Married)\n> mydesighdhs$female.f <- factor(dhsanalysis3$female)\n> mydesighdhs$urban1.f <- factor(dhsanalysis3$urban1)\n> mydesighdhs$river10kmdum.f <- factor(dhsanalysis3$river10kmdum)\n> mydesighdhs$Explorer50kmdum.f <- factor(dhsanalysis3$Explorer50kmdum)\n> mydesighdhs$Rail50kmdum.f <- factor(dhsanalysis3$Rail50kmdum)\n> mydesighdhs$Province1.f <- factor(dhsanalysis3$Province1)\n> mydesighdhs$WealthIndex.f <- factor(dhsanalysis3$WealthIndex)\n> mydesighdhs$occupation2.f <- factor(dhsanalysis3$occupation2)\n> mydesighdhs$highested.f <- factor(dhsanalysis3$highested)\n> mydesighdhs$Age=Age\n> mydesighdhs$Age2=Age2\n> mydesighdhs$HIVKnowledge=HIVKnowledge\n> mydesighdhs$churchkm=churchkm\n> mydesighdhs$lnhospitalkm=lnhospitalkm\n> mydesighdhs$lnElevationMean=lnElevationMean\n\n> svyprobitest= svyglm(hivpositive.f~ churchkm +lnhospitalkm +protestant.f+\nAge+\nAge2+Married.f+female.f+urban1.f+river10kmdum.f+Explorer50kmdum.f+Rail50kmdum.f+lnElevationMean+Province1.f\n+ WealthIndex.f + HIVKnowledge+ occupation2.f+\nhighested.f,design=mydesighdhs,family = quasibinomial(link =\n\"probit\"),data=dhsanalysis3)\nError in .subset2(x, i, exact = exact) : subscript out of bounds\n\n## Iran my probit model without implementing the survey design in the model\njust to see whether Moran test is working\n> svyprobitest2= glm(hivpositive.f~ churchkm +lnhospitalkm +protestant.f+\nAge+\nAge2+Married.f+female.f+urban1.f+river10kmdum.f+Explorer50kmdum.f+Rail50kmdum.f+lnElevationMean+Province1.f\n+ WealthIndex.f + HIVKnowledge+ occupation2.f+ highested.f,family =\nquasibinomial(link = \"probit\"),data=dhsanalysis3)\n#Moran test\n> moran.test(residuals.glm(svyprobitest),knear2weight)\nError in moran.test(residuals.glm(svyprobitest), knear2weight) :\n  objects of different length\n\n\nKind Regards,\n\nMichael Chanda Chiseni\n\nPhd Candidate\n\nDepartment of Economic History\n\nLund University\n\nVisiting address: Alfa 1, Scheelev?gen 15 B, 22363 Lund\n\n\n\n*Africa is not poor, it is poorly managed (Ellen Johnson-Sirleaf ). *\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am trying to perform moran's I test on residuals from by probit model\nusing k-nearest neighbour weights, however i run into an error which i\ncant seem to find the solution anywhere online the error ",
+      "thread_id": "thread-6d786ae77a18",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-fb1f03030e4c",
+      "message_id": "<CAL+ycW=O2Mpw2Y+HJWczvreVjSSTvd5MuxvODhW9UPCf2XAFJA@mail.gmail.com>",
+      "from_name": "Frederico Faleiro",
+      "from_email_hash": "e24283d1d155c66ec3e60c6c4a91e9ab996ba668a32aaa0f42602b8b29f472c2",
+      "date": "2020-08-11T17:43:13-03:00",
+      "subject": "[R-sig-Geo] Mask from raster with less RAM",
+      "subject_clean": "Mask from raster with less RAM",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\nI would like to generate a mask from a raster, but my workflow needs a lot\nof RAM to process big rasters. I need this polygon mask to use in another's\nrasters.\nDo you know another approach that needs less RAM?\n\n# reproducible example\nlibrary(raster)\n# read data to create mask\nr <- raster(system.file(\"external/test.grd\", package=\"raster\"))\nr[!is.na(r)] <- 1\npol <- rasterToPolygons(r, dissolve = T) #  a lot of RAM to process the data\n# apply the mask in another raster\n r2 <- raster(extent(r), res(r))\nr2[ ] <- 1\nr2.mask <- mask(r2, pol)\n\nCheers!\n\n-- \nFrederico Faleiro\nPostdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\nDepartment of Ecology | Institute of Biological Science | Federal\nUniversity of Goi?s | Brazil\nRG: https://www.researchgate.net/profile/Frederico_Faleiro\nCV: http://lattes.cnpq.br/4926404840659003\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nI would like to generate a mask from a raster, but my workflow needs a lot\nof RAM to process big rasters. I need this polygon mask to use in another's\nrasters.\nDo you know another approach ",
+      "thread_id": "thread-fb1f03030e4c",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-27ef8b926c9e",
+      "message_id": "<CAJefdj6YEOJQfpx28U_wKVXx7hVsm7CbyREXGVUqsuYpjUNKAw@mail.gmail.com>",
+      "from_name": "Stephen Stewart",
+      "from_email_hash": "d88a549db59fa26add0a86d371cdbef4cdfe2d51db1f91bef1ca0b6fe9019a7b",
+      "date": "2020-08-12T08:25:46+10:00",
+      "subject": "[R-sig-Geo] Mask from raster with less RAM",
+      "subject_clean": "Mask from raster with less RAM",
+      "in_reply_to": "<CAL+ycW=O2Mpw2Y+HJWczvreVjSSTvd5MuxvODhW9UPCf2XAFJA@mail.gmail.com>",
+      "references": [
+        "<CAL+ycW=O2Mpw2Y+HJWczvreVjSSTvd5MuxvODhW9UPCf2XAFJA@mail.gmail.com>"
+      ],
+      "body_plain": "Hi Frederico,\n\nIt may not solve all of your RAM issues, but in this situation I would skip\nthe rasterToPolygons (which is also usually very slow) and use raster math\nto propagate NAs.\n\nr <- raster(system.file(\"external/test.grd\", package=\"raster\"))\nr[!is.na(r)] <- 1\n# Can also be faster to do r = r / r, but add an offset (that cannot result\nin 0) if you have valid 0s.\n r2 <- raster(extent(r), res(r))\nr2[ ] <- 1\nr2.mask <- r * r2\n\nIf you have a polygon to use as a mask, burn it in using the fasterize\npackage and then apply the above.\n\nHope that helps.\n\nCheers,\n\nSteve\n\nOn Wed., 12 Aug. 2020, 6:43 am Frederico Faleiro, <fvfaleiro at gmail.com>\nwrote:\n\n> Dear all,\n>\n> I would like to generate a mask from a raster, but my workflow needs a lot\n> of RAM to process big rasters. I need this polygon mask to use in another's\n> rasters.\n> Do you know another approach that needs less RAM?\n>\n> # reproducible example\n> library(raster)\n> # read data to create mask\n> r <- raster(system.file(\"external/test.grd\", package=\"raster\"))\n> r[!is.na(r)] <- 1\n> pol <- rasterToPolygons(r, dissolve = T) #  a lot of RAM to process the\n> data\n> # apply the mask in another raster\n>  r2 <- raster(extent(r), res(r))\n> r2[ ] <- 1\n> r2.mask <- mask(r2, pol)\n>\n> Cheers!\n>\n> --\n> Frederico Faleiro\n> Postdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\n> Department of Ecology | Institute of Biological Science | Federal\n> University of Goi?s | Brazil\n> RG: https://www.researchgate.net/profile/Frederico_Faleiro\n> CV: http://lattes.cnpq.br/4926404840659003\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Frederico,\n\nIt may not solve all of your RAM issues, but in this situation I would skip\nthe rasterToPolygons (which is also usually very slow) and use raster math\nto propagate NAs.\n\nr <- raster(sys",
+      "thread_id": "thread-fb1f03030e4c",
+      "thread_depth": 1,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-1b7a1251f0c5",
+      "message_id": "<alpine.LFD.2.23.451.2008121244250.2887369@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2020-08-12T12:55:21+02:00",
+      "subject": "[R-sig-Geo] Moran's I with Objects of Different Length",
+      "subject_clean": "Moran's I with Objects of Different Length",
+      "in_reply_to": "<CAA5N_eai9wEB-Lf0ik4xfsHbwq6kZKU4tUCBy8mENC5iS3fqwg@mail.gmail.com>",
+      "references": [
+        "<CAA5N_eai9wEB-Lf0ik4xfsHbwq6kZKU4tUCBy8mENC5iS3fqwg@mail.gmail.com>"
+      ],
+      "body_plain": "On Tue, 11 Aug 2020, Chanda Chiseni wrote:\n\n> I am trying to perform moran's I test on residuals from by probit model\n> using k-nearest neighbour weights, however i run into an error which i\n> cant seem to find the solution anywhere online the error is\n>\n>> moran.test(residuals.glm(svyprobitest),knear2weight)\n> Error in moran.test(residuals.glm(svyprobitest), knear2weight) :\n>  objects of different length\n>\n>\n> The codes I use to come up to this are below\n>\n>> library(foreign)\n>> dhsanalysis2= read.dta(\"DHSSpatialreg11.dta\")\n> ##removing NAs in PSU\n>> dhsanalysis3=subset(dhsanalysis2, !is.na(psu))\n> ##generating a survey design\n>> mydesighdhs= svydesign(ids =~psu, data =dhsanalysis3, weight = ~wgt,\n> strata = ~v023,nest=TRUE)\n> ##Defining coordinate colums\n>> coordinates(dhsanalysis3)= c(\"longnum\",\"latnum\")\n> #Defining Projection\n>> proj4string(dhsanalysis3) <- CRS(\"+init=epsg:4326\")\n> ##binding longiude and latitude\n>> lon2<- dhsanalysis3$longnum\n>> lat2<- dhsanalysis3$latnum\n>> coords<- cbind(lon2,lat2)\n> ##Creating spatial weights based on the nearest neighbour\n>> knear2= knearneigh(coords,k=2,longlat=T)\n> Warning message:\n> In knearneigh(coords, k = 2, longlat = T) :\n>  knearneigh: identical points found ### I get a warning message on\n> identical points found, is this a problem and how would i deal with this\n\nIt usually indicates muddled thinking. You have more than?one observation \nat the same point, which could be an unintended duplicate (copy of the \nsame observation), or it could indicate that any spatial process has \nmultiple values at that point. In geostatistics, one would jitter the \npoints to introduce distance. In your case, this probably isn't households \nliving at one address point. All the observations at the same point will \nget the same sets of neighbours. If there are many co-located \nobservations, k in k-nearest may be too small to include them all.\n\n>> knear2.nb= knn2nb(knear2)\n>> knear2weight= nb2listw(knear2.nb, style=\"W\",zero.policy=T)\n>\n> ##declaring categorical variables as factor variables\n>> dhsanalysis3$hivpositive.f <- factor(dhsanalysis3$hivpositive)\n>> dhsanalysis3$protestant.f <- factor(dhsanalysis3$protestant2)\n>> dhsanalysis3$Married.f <- factor(dhsanalysis3$Married)\n>> dhsanalysis3$female.f <- factor(dhsanalysis3$female)\n>> dhsanalysis3$urban1.f <- factor(dhsanalysis3$urban1)\n>> dhsanalysis3$river10kmdum.f <- factor(dhsanalysis3$river10kmdum)\n>> dhsanalysis3$Explorer50kmdum.f <- factor(dhsanalysis3$Explorer50kmdum)\n>> dhsanalysis3$Rail50kmdum.f <- factor(dhsanalysis3$Rail50kmdum)\n>> dhsanalysis3$Province1.f <- factor(dhsanalysis3$Province1)\n>> dhsanalysis3$WealthIndex.f <- factor(dhsanalysis3$WealthIndex)\n>> dhsanalysis3$occupation2.f <- factor(dhsanalysis3$occupation2)\n>> dhsanalysis3$highested.f <- factor(dhsanalysis3$highested)\n>> protestant.f= dhsanalysis3$protestant.f\n>> hivpositive.f=dhsanalysi3$hivpositive.f\n>> Married.f=dhsanalysis3$Married.f\n>> female.f=dhsanalysis3$female.f\n>> urban1.f=dhsanalysis3$urban1.f\n>> river10kmdum.f=dhsanalysis3$river10kmdum.f\n>> Explorer50kmdum.f=dhsanalysis2$Explorer50kmdum.f\n>> Province1.f=dhsanalysis3$Province1.f\n>> WealthIndex.f=dhsanalysis3$WealthIndex.f\n>> occupation2.f=dhsanalysis3$occupation2.f\n>> highested.f=dhsanalysis3$highested.f\n>> Age=dhsanalysis3$Age\n>> Age2=dhsanalysis3$Age2\n>> HIVKnowledge=dhsanalysis3$HIVKnowledge\n>> churchkm=dhsanalysis3$churchkm\n>> lnhospitalkm=dhsanalysis3$lnhospitalkm\n>> lnElevationMean=dhsanalysis3$lnElevationMean\n>\n>> ###VARIABLES IN SURVEY DESIGN\n>> mydesighdhs$hivpositive.f <- factor(dhsanalysis3$hivpositive)\n>> mydesighdhs$protestant.f <- factor(dhsanalysis3$protestant2)\n>> mydesighdhs$Married.f <- factor(dhsanalysis3$Married)\n>> mydesighdhs$female.f <- factor(dhsanalysis3$female)\n>> mydesighdhs$urban1.f <- factor(dhsanalysis3$urban1)\n>> mydesighdhs$river10kmdum.f <- factor(dhsanalysis3$river10kmdum)\n>> mydesighdhs$Explorer50kmdum.f <- factor(dhsanalysis3$Explorer50kmdum)\n>> mydesighdhs$Rail50kmdum.f <- factor(dhsanalysis3$Rail50kmdum)\n>> mydesighdhs$Province1.f <- factor(dhsanalysis3$Province1)\n>> mydesighdhs$WealthIndex.f <- factor(dhsanalysis3$WealthIndex)\n>> mydesighdhs$occupation2.f <- factor(dhsanalysis3$occupation2)\n>> mydesighdhs$highested.f <- factor(dhsanalysis3$highested)\n>> mydesighdhs$Age=Age\n>> mydesighdhs$Age2=Age2\n>> mydesighdhs$HIVKnowledge=HIVKnowledge\n>> mydesighdhs$churchkm=churchkm\n>> mydesighdhs$lnhospitalkm=lnhospitalkm\n>> mydesighdhs$lnElevationMean=lnElevationMean\n>\n>> svyprobitest= svyglm(hivpositive.f~ churchkm +lnhospitalkm +protestant.f+\n> Age+\n> Age2+Married.f+female.f+urban1.f+river10kmdum.f+Explorer50kmdum.f+Rail50kmdum.f+lnElevationMean+Province1.f\n> + WealthIndex.f + HIVKnowledge+ occupation2.f+\n> highested.f,design=mydesighdhs,family = quasibinomial(link =\n> \"probit\"),data=dhsanalysis3)\n> Error in .subset2(x, i, exact = exact) : subscript out of bounds\n\nSo you've an error anyway.\n\n>\n> ## Iran my probit model without implementing the survey design in the model\n> just to see whether Moran test is working\n>> svyprobitest2= glm(hivpositive.f~ churchkm +lnhospitalkm +protestant.f+\n> Age+\n> Age2+Married.f+female.f+urban1.f+river10kmdum.f+Explorer50kmdum.f+Rail50kmdum.f+lnElevationMean+Province1.f\n> + WealthIndex.f + HIVKnowledge+ occupation2.f+ highested.f,family =\n> quasibinomial(link = \"probit\"),data=dhsanalysis3)\n> #Moran test\n>> moran.test(residuals.glm(svyprobitest),knear2weight)\n> Error in moran.test(residuals.glm(svyprobitest), knear2weight) :\n>  objects of different length\n>\n\nTesting residuals using moran.test() is usually wrong, as the expectation \nand variance of the statistic are based on a null model (intercept only), \nnot a model with covariates.\n\nWhat are length(residuals.glm(svyprobitest)) and length(knear2.nb)? Did \nglm drop observations with missing values? If so, you should subset both \nthe data submitted to glm() and the neighbour object so that they match.\n\nHope this helps,\n\nRoger\n\n>\n> Kind Regards,\n>\n> Michael Chanda Chiseni\n>\n> Phd Candidate\n>\n> Department of Economic History\n>\n> Lund University\n>\n> Visiting address: Alfa 1, Scheelev?gen 15 B, 22363 Lund\n>\n>\n>\n> *Africa is not poor, it is poorly managed (Ellen Johnson-Sirleaf ). *\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Tue, 11 Aug 2020, Chanda Chiseni wrote:\n\n> I am trying to perform moran's I test on residuals from by probit model\n> using k-nearest neighbour weights, however i run into an error which i\n> cant se",
+      "thread_id": "thread-6d786ae77a18",
+      "thread_depth": 1,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-91acee88493c",
+      "message_id": "<CAA5N_eZm9+JRFw2gtHE=kyAEhLND6EH4SJHe_0ALLNdXTqsFoQ@mail.gmail.com>",
+      "from_name": "Chanda Chiseni",
+      "from_email_hash": "e0d1d023d5bab0de5dc659745d49de72de518e66c3133dd9b82a6aba271a44da",
+      "date": "2020-08-12T14:30:46+02:00",
+      "subject": "[R-sig-Geo] Moran's I with Objects of Different Length",
+      "subject_clean": "Moran's I with Objects of Different Length",
+      "in_reply_to": "<alpine.LFD.2.23.451.2008121244250.2887369@reclus.nhh.no>",
+      "references": [
+        "<CAA5N_eai9wEB-Lf0ik4xfsHbwq6kZKU4tUCBy8mENC5iS3fqwg@mail.gmail.com>",
+        "<alpine.LFD.2.23.451.2008121244250.2887369@reclus.nhh.no>"
+      ],
+      "body_plain": "Hi Roger\n\nThank you for your response.\n\nI am using DHS individual level data , they cluster individuals into about\n25-30 people and assign them coordinates depending on where they were\nsurveyed. So about 30 individuals have similar coordinates. Yes I do have\nmore than one observation at one point as you have stated, this could be\nthe source of my problem indeed, My question is how could i go about\ncreating nearest neighbors and weights by clustering individuals that share\nthe same point? I sought for a solution online but could not find any.\nSorry I am a novice at spatial econometrics, this may be obvious to some ,\nso instead of testing for spatial correlation in my residuals, I should in\nessence test for spatial autocorrelation in my outcome variable, for\ninstance in my analysis I am using a dummy variable of whether an\nindividual is hiv positive or negative. And is there a specific way of\nusing a moran.test() on a dummy variable?\n\n\nKind Regards,\n\nMichael Chanda Chiseni\n\nPhd Candidate\n\nDepartment of Economic History\n\nLund University\n\nVisiting address: Alfa 1, Scheelev?gen 15 B, 22363 Lund\n\n\n\n*Africa is not poor, it is poorly managed (Ellen Johnson-Sirleaf ). *\n\n\n\n\n\n\nOn Wed, Aug 12, 2020 at 12:55 PM Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Tue, 11 Aug 2020, Chanda Chiseni wrote:\n>\n> > I am trying to perform moran's I test on residuals from by probit model\n> > using k-nearest neighbour weights, however i run into an error which i\n> > cant seem to find the solution anywhere online the error is\n> >\n> >> moran.test(residuals.glm(svyprobitest),knear2weight)\n> > Error in moran.test(residuals.glm(svyprobitest), knear2weight) :\n> >  objects of different length\n> >\n> >\n> > The codes I use to come up to this are below\n> >\n> >> library(foreign)\n> >> dhsanalysis2= read.dta(\"DHSSpatialreg11.dta\")\n> > ##removing NAs in PSU\n> >> dhsanalysis3=subset(dhsanalysis2, !is.na(psu))\n> > ##generating a survey design\n> >> mydesighdhs= svydesign(ids =~psu, data =dhsanalysis3, weight = ~wgt,\n> > strata = ~v023,nest=TRUE)\n> > ##Defining coordinate colums\n> >> coordinates(dhsanalysis3)= c(\"longnum\",\"latnum\")\n> > #Defining Projection\n> >> proj4string(dhsanalysis3) <- CRS(\"+init=epsg:4326\")\n> > ##binding longiude and latitude\n> >> lon2<- dhsanalysis3$longnum\n> >> lat2<- dhsanalysis3$latnum\n> >> coords<- cbind(lon2,lat2)\n> > ##Creating spatial weights based on the nearest neighbour\n> >> knear2= knearneigh(coords,k=2,longlat=T)\n> > Warning message:\n> > In knearneigh(coords, k = 2, longlat = T) :\n> >  knearneigh: identical points found ### I get a warning message on\n> > identical points found, is this a problem and how would i deal with this\n>\n> It usually indicates muddled thinking. You have more than one observation\n> at the same point, which could be an unintended duplicate (copy of the\n> same observation), or it could indicate that any spatial process has\n> multiple values at that point. In geostatistics, one would jitter the\n> points to introduce distance. In your case, this probably isn't households\n> living at one address point. All the observations at the same point will\n> get the same sets of neighbours. If there are many co-located\n> observations, k in k-nearest may be too small to include them all.\n>\n> >> knear2.nb= knn2nb(knear2)\n> >> knear2weight= nb2listw(knear2.nb, style=\"W\",zero.policy=T)\n> >\n> > ##declaring categorical variables as factor variables\n> >> dhsanalysis3$hivpositive.f <- factor(dhsanalysis3$hivpositive)\n> >> dhsanalysis3$protestant.f <- factor(dhsanalysis3$protestant2)\n> >> dhsanalysis3$Married.f <- factor(dhsanalysis3$Married)\n> >> dhsanalysis3$female.f <- factor(dhsanalysis3$female)\n> >> dhsanalysis3$urban1.f <- factor(dhsanalysis3$urban1)\n> >> dhsanalysis3$river10kmdum.f <- factor(dhsanalysis3$river10kmdum)\n> >> dhsanalysis3$Explorer50kmdum.f <- factor(dhsanalysis3$Explorer50kmdum)\n> >> dhsanalysis3$Rail50kmdum.f <- factor(dhsanalysis3$Rail50kmdum)\n> >> dhsanalysis3$Province1.f <- factor(dhsanalysis3$Province1)\n> >> dhsanalysis3$WealthIndex.f <- factor(dhsanalysis3$WealthIndex)\n> >> dhsanalysis3$occupation2.f <- factor(dhsanalysis3$occupation2)\n> >> dhsanalysis3$highested.f <- factor(dhsanalysis3$highested)\n> >> protestant.f= dhsanalysis3$protestant.f\n> >> hivpositive.f=dhsanalysi3$hivpositive.f\n> >> Married.f=dhsanalysis3$Married.f\n> >> female.f=dhsanalysis3$female.f\n> >> urban1.f=dhsanalysis3$urban1.f\n> >> river10kmdum.f=dhsanalysis3$river10kmdum.f\n> >> Explorer50kmdum.f=dhsanalysis2$Explorer50kmdum.f\n> >> Province1.f=dhsanalysis3$Province1.f\n> >> WealthIndex.f=dhsanalysis3$WealthIndex.f\n> >> occupation2.f=dhsanalysis3$occupation2.f\n> >> highested.f=dhsanalysis3$highested.f\n> >> Age=dhsanalysis3$Age\n> >> Age2=dhsanalysis3$Age2\n> >> HIVKnowledge=dhsanalysis3$HIVKnowledge\n> >> churchkm=dhsanalysis3$churchkm\n> >> lnhospitalkm=dhsanalysis3$lnhospitalkm\n> >> lnElevationMean=dhsanalysis3$lnElevationMean\n> >\n> >> ###VARIABLES IN SURVEY DESIGN\n> >> mydesighdhs$hivpositive.f <- factor(dhsanalysis3$hivpositive)\n> >> mydesighdhs$protestant.f <- factor(dhsanalysis3$protestant2)\n> >> mydesighdhs$Married.f <- factor(dhsanalysis3$Married)\n> >> mydesighdhs$female.f <- factor(dhsanalysis3$female)\n> >> mydesighdhs$urban1.f <- factor(dhsanalysis3$urban1)\n> >> mydesighdhs$river10kmdum.f <- factor(dhsanalysis3$river10kmdum)\n> >> mydesighdhs$Explorer50kmdum.f <- factor(dhsanalysis3$Explorer50kmdum)\n> >> mydesighdhs$Rail50kmdum.f <- factor(dhsanalysis3$Rail50kmdum)\n> >> mydesighdhs$Province1.f <- factor(dhsanalysis3$Province1)\n> >> mydesighdhs$WealthIndex.f <- factor(dhsanalysis3$WealthIndex)\n> >> mydesighdhs$occupation2.f <- factor(dhsanalysis3$occupation2)\n> >> mydesighdhs$highested.f <- factor(dhsanalysis3$highested)\n> >> mydesighdhs$Age=Age\n> >> mydesighdhs$Age2=Age2\n> >> mydesighdhs$HIVKnowledge=HIVKnowledge\n> >> mydesighdhs$churchkm=churchkm\n> >> mydesighdhs$lnhospitalkm=lnhospitalkm\n> >> mydesighdhs$lnElevationMean=lnElevationMean\n> >\n> >> svyprobitest= svyglm(hivpositive.f~ churchkm +lnhospitalkm\n> +protestant.f+\n> > Age+\n> >\n> Age2+Married.f+female.f+urban1.f+river10kmdum.f+Explorer50kmdum.f+Rail50kmdum.f+lnElevationMean+Province1.f\n> > + WealthIndex.f + HIVKnowledge+ occupation2.f+\n> > highested.f,design=mydesighdhs,family = quasibinomial(link =\n> > \"probit\"),data=dhsanalysis3)\n> > Error in .subset2(x, i, exact = exact) : subscript out of bounds\n>\n> So you've an error anyway.\n>\n> >\n> > ## Iran my probit model without implementing the survey design in the\n> model\n> > just to see whether Moran test is working\n> >> svyprobitest2= glm(hivpositive.f~ churchkm +lnhospitalkm +protestant.f+\n> > Age+\n> >\n> Age2+Married.f+female.f+urban1.f+river10kmdum.f+Explorer50kmdum.f+Rail50kmdum.f+lnElevationMean+Province1.f\n> > + WealthIndex.f + HIVKnowledge+ occupation2.f+ highested.f,family =\n> > quasibinomial(link = \"probit\"),data=dhsanalysis3)\n> > #Moran test\n> >> moran.test(residuals.glm(svyprobitest),knear2weight)\n> > Error in moran.test(residuals.glm(svyprobitest), knear2weight) :\n> >  objects of different length\n> >\n>\n> Testing residuals using moran.test() is usually wrong, as the expectation\n> and variance of the statistic are based on a null model (intercept only),\n> not a model with covariates.\n>\n> What are length(residuals.glm(svyprobitest)) and length(knear2.nb)? Did\n> glm drop observations with missing values? If so, you should subset both\n> the data submitted to glm() and the neighbour object so that they match.\n>\n> Hope this helps,\n>\n> Roger\n>\n> >\n> > Kind Regards,\n> >\n> > Michael Chanda Chiseni\n> >\n> > Phd Candidate\n> >\n> > Department of Economic History\n> >\n> > Lund University\n> >\n> > Visiting address: Alfa 1, Scheelev?gen 15 B, 22363 Lund\n> >\n> >\n> >\n> > *Africa is not poor, it is poorly managed (Ellen Johnson-Sirleaf ). *\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics,\n> Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> https://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Roger\n\nThank you for your response.\n\nI am using DHS individual level data , they cluster individuals into about\n25-30 people and assign them coordinates depending on where they were\nsurveyed. So ab",
+      "thread_id": "thread-6d786ae77a18",
+      "thread_depth": 2,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-221059ad7469",
+      "message_id": "<CAL+ycWmwbpGiUNnBa6Kx7V1tTgF9DWwqa6wq0DTrvFqQ-N649Q@mail.gmail.com>",
+      "from_name": "Frederico Faleiro",
+      "from_email_hash": "e24283d1d155c66ec3e60c6c4a91e9ab996ba668a32aaa0f42602b8b29f472c2",
+      "date": "2020-08-12T10:55:21-03:00",
+      "subject": "[R-sig-Geo] Mask from raster with less RAM",
+      "subject_clean": "Mask from raster with less RAM",
+      "in_reply_to": "<CAJefdj6YEOJQfpx28U_wKVXx7hVsm7CbyREXGVUqsuYpjUNKAw@mail.gmail.com>",
+      "references": [
+        "<CAL+ycW=O2Mpw2Y+HJWczvreVjSSTvd5MuxvODhW9UPCf2XAFJA@mail.gmail.com>",
+        "<CAJefdj6YEOJQfpx28U_wKVXx7hVsm7CbyREXGVUqsuYpjUNKAw@mail.gmail.com>"
+      ],
+      "body_plain": "Hi guys, thank you for your reply.\n\nJaime, I have tried, but I can't install rgdal needed to use raster and\napparently other people too (\nhttps://stackoverflow.com/questions/57617895/how-to-install-rgdal-and-or-upload-raster-on-google-collaboration).\nDo you have a solution?\nHugo, I need the mask in vector format because the rasters have different\nresolutions, so I can't use raster as a mask. I have modified the reprex to\nbe more precise about it (see below).\nSteve, I think this approach has the same issue of Hugo Costa. I don't have\nthe polygon of the mask, so I am trying to create one to apply in the other\nrasters of different resolutions.\n\n# reproducible example\nlibrary(raster)\n# read data to create mask\nr <- raster(system.file(\"external/test.grd\", package=\"raster\"))\nr[!is.na(r)] <- 1\npol <- rasterToPolygons(r, dissolve = T) #  a lot of RAM to process the data\n# raster of different resolution\nres2 <- res(r) + 10\nr2 <- raster(extent(r), resolution = res2)\nr2[ ] <- 1\n# apply the mask\nr2.mask <- mask(r2, pol)\n# plot\npar(mfrow = c(1, 3))\nplot(r)\nplot(r2)\nplot(r2.mask)\n\nCheers!\n\nEm ter., 11 de ago. de 2020 ?s 19:26, Stephen Stewart <\nstephen.stewart85 at gmail.com> escreveu:\n\n> Hi Frederico,\n>\n> It may not solve all of your RAM issues, but in this situation I would\n> skip the rasterToPolygons (which is also usually very slow) and use raster\n> math to propagate NAs.\n>\n> r <- raster(system.file(\"external/test.grd\", package=\"raster\"))\n> r[!is.na(r)] <- 1\n> # Can also be faster to do r = r / r, but add an offset (that cannot\n> result in 0) if you have valid 0s.\n>  r2 <- raster(extent(r), res(r))\n> r2[ ] <- 1\n> r2.mask <- r * r2\n>\n> If you have a polygon to use as a mask, burn it in using the fasterize\n> package and then apply the above.\n>\n> Hope that helps.\n>\n> Cheers,\n>\n> Steve\n>\n> On Wed., 12 Aug. 2020, 6:43 am Frederico Faleiro, <fvfaleiro at gmail.com>\n> wrote:\n>\n>> Dear all,\n>>\n>> I would like to generate a mask from a raster, but my workflow needs a lot\n>> of RAM to process big rasters. I need this polygon mask to use in\n>> another's\n>> rasters.\n>> Do you know another approach that needs less RAM?\n>>\n>> # reproducible example\n>> library(raster)\n>> # read data to create mask\n>> r <- raster(system.file(\"external/test.grd\", package=\"raster\"))\n>> r[!is.na(r)] <- 1\n>> pol <- rasterToPolygons(r, dissolve = T) #  a lot of RAM to process the\n>> data\n>> # apply the mask in another raster\n>>  r2 <- raster(extent(r), res(r))\n>> r2[ ] <- 1\n>> r2.mask <- mask(r2, pol)\n>>\n>> Cheers!\n>>\n>> --\n>> Frederico Faleiro\n>> Postdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\n>> Department of Ecology | Institute of Biological Science | Federal\n>> University of Goi?s | Brazil\n>> RG: https://www.researchgate.net/profile/Frederico_Faleiro\n>> CV: http://lattes.cnpq.br/4926404840659003\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi guys, thank you for your reply.\n\nJaime, I have tried, but I can't install rgdal needed to use raster and\napparently other people too (\nhttps://stackoverflow.com/questions/57617895/how-to-install-rg",
+      "thread_id": "thread-fb1f03030e4c",
+      "thread_depth": 2,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-6cb4b5e9b8a7",
+      "message_id": "<CADvFi5pSYY7nB12dB__J_ALHLRJkK2NO9GFRpMrszP9rHkDkCQ@mail.gmail.com>",
+      "from_name": "Hugo Costa",
+      "from_email_hash": "6d23f65c6e5ad8d13e9e98421a5a330e794eafa5988ace7833ff56d3acb1c4ee",
+      "date": "2020-08-12T16:09:10+01:00",
+      "subject": "[R-sig-Geo] Mask from raster with less RAM",
+      "subject_clean": "Mask from raster with less RAM",
+      "in_reply_to": "<CAL+ycWmwbpGiUNnBa6Kx7V1tTgF9DWwqa6wq0DTrvFqQ-N649Q@mail.gmail.com>",
+      "references": [
+        "<CAL+ycW=O2Mpw2Y+HJWczvreVjSSTvd5MuxvODhW9UPCf2XAFJA@mail.gmail.com>",
+        "<CAJefdj6YEOJQfpx28U_wKVXx7hVsm7CbyREXGVUqsuYpjUNKAw@mail.gmail.com>",
+        "<CAL+ycWmwbpGiUNnBa6Kx7V1tTgF9DWwqa6wq0DTrvFqQ-N649Q@mail.gmail.com>"
+      ],
+      "body_plain": "Hi Frederico,\nmy first reaction is to project the raster object to be used as a mask to\nthe same resolution of the raster to be masked. Certainly it's faster then\nand converting raster to vector. If the raster is big, gdalUtils::gdalwarp\ncan help in projecting your raster data.\nHope this helps\nHugo\n\nFrederico Faleiro <fvfaleiro at gmail.com> escreveu no dia quarta, 12/08/2020\n?(s) 14:55:\n\n> Hi guys, thank you for your reply.\n>\n> Jaime, I have tried, but I can't install rgdal needed to use raster and\n> apparently other people too (\n>\n> https://stackoverflow.com/questions/57617895/how-to-install-rgdal-and-or-upload-raster-on-google-collaboration\n> ).\n> Do you have a solution?\n> Hugo, I need the mask in vector format because the rasters have different\n> resolutions, so I can't use raster as a mask. I have modified the reprex to\n> be more precise about it (see below).\n> Steve, I think this approach has the same issue of Hugo Costa. I don't have\n> the polygon of the mask, so I am trying to create one to apply in the other\n> rasters of different resolutions.\n>\n> # reproducible example\n> library(raster)\n> # read data to create mask\n> r <- raster(system.file(\"external/test.grd\", package=\"raster\"))\n> r[!is.na(r)] <- 1\n> pol <- rasterToPolygons(r, dissolve = T) #  a lot of RAM to process the\n> data\n> # raster of different resolution\n> res2 <- res(r) + 10\n> r2 <- raster(extent(r), resolution = res2)\n> r2[ ] <- 1\n> # apply the mask\n> r2.mask <- mask(r2, pol)\n> # plot\n> par(mfrow = c(1, 3))\n> plot(r)\n> plot(r2)\n> plot(r2.mask)\n>\n> Cheers!\n>\n> Em ter., 11 de ago. de 2020 ?s 19:26, Stephen Stewart <\n> stephen.stewart85 at gmail.com> escreveu:\n>\n> > Hi Frederico,\n> >\n> > It may not solve all of your RAM issues, but in this situation I would\n> > skip the rasterToPolygons (which is also usually very slow) and use\n> raster\n> > math to propagate NAs.\n> >\n> > r <- raster(system.file(\"external/test.grd\", package=\"raster\"))\n> > r[!is.na(r)] <- 1\n> > # Can also be faster to do r = r / r, but add an offset (that cannot\n> > result in 0) if you have valid 0s.\n> >  r2 <- raster(extent(r), res(r))\n> > r2[ ] <- 1\n> > r2.mask <- r * r2\n> >\n> > If you have a polygon to use as a mask, burn it in using the fasterize\n> > package and then apply the above.\n> >\n> > Hope that helps.\n> >\n> > Cheers,\n> >\n> > Steve\n> >\n> > On Wed., 12 Aug. 2020, 6:43 am Frederico Faleiro, <fvfaleiro at gmail.com>\n> > wrote:\n> >\n> >> Dear all,\n> >>\n> >> I would like to generate a mask from a raster, but my workflow needs a\n> lot\n> >> of RAM to process big rasters. I need this polygon mask to use in\n> >> another's\n> >> rasters.\n> >> Do you know another approach that needs less RAM?\n> >>\n> >> # reproducible example\n> >> library(raster)\n> >> # read data to create mask\n> >> r <- raster(system.file(\"external/test.grd\", package=\"raster\"))\n> >> r[!is.na(r)] <- 1\n> >> pol <- rasterToPolygons(r, dissolve = T) #  a lot of RAM to process the\n> >> data\n> >> # apply the mask in another raster\n> >>  r2 <- raster(extent(r), res(r))\n> >> r2[ ] <- 1\n> >> r2.mask <- mask(r2, pol)\n> >>\n> >> Cheers!\n> >>\n> >> --\n> >> Frederico Faleiro\n> >> Postdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\n> >> Department of Ecology | Institute of Biological Science | Federal\n> >> University of Goi?s | Brazil\n> >> RG: https://www.researchgate.net/profile/Frederico_Faleiro\n> >> CV: http://lattes.cnpq.br/4926404840659003\n> >>\n> >>         [[alternative HTML version deleted]]\n> >>\n> >> _______________________________________________\n> >> R-sig-Geo mailing list\n> >> R-sig-Geo at r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>\n> >\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Frederico,\nmy first reaction is to project the raster object to be used as a mask to\nthe same resolution of the raster to be masked. Certainly it's faster then\nand converting raster to vector. If t",
+      "thread_id": "thread-fb1f03030e4c",
+      "thread_depth": 3,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-3f43228c1104",
+      "message_id": "<alpine.LFD.2.23.451.2008121824590.2892079@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2020-08-12T18:34:32+02:00",
+      "subject": "[R-sig-Geo] Moran's I with Objects of Different Length",
+      "subject_clean": "Moran's I with Objects of Different Length",
+      "in_reply_to": "<CAA5N_eZm9+JRFw2gtHE=kyAEhLND6EH4SJHe_0ALLNdXTqsFoQ@mail.gmail.com>",
+      "references": [
+        "<CAA5N_eai9wEB-Lf0ik4xfsHbwq6kZKU4tUCBy8mENC5iS3fqwg@mail.gmail.com>",
+        "<alpine.LFD.2.23.451.2008121244250.2887369@reclus.nhh.no>",
+        "<CAA5N_eZm9+JRFw2gtHE=kyAEhLND6EH4SJHe_0ALLNdXTqsFoQ@mail.gmail.com>"
+      ],
+      "body_plain": "On Wed, 12 Aug 2020, Chanda Chiseni wrote:\n\n> Hi Roger\n>\n> Thank you for your response.\n>\n> I am using DHS individual level data , they cluster individuals into about\n> 25-30 people and assign them coordinates depending on where they were\n> surveyed. So about 30 individuals have similar coordinates. Yes I do have\n> more than one observation at one point as you have stated, this could be\n> the source of my problem indeed, My question is how could i go about\n> creating nearest neighbors and weights by clustering individuals that share\n> the same point? I sought for a solution online but could not find any.\n\nSearching online is seldom informative, there is a poor signal-to-noise \nratio.\n\nSee for example the HSAR package or other multi-level approaches, review \nin https://doi.org/10.1016/j.spasta.2017.01.002 and in references in HSAR. \nYou have a lower layer of observations in an upper layer of known survey \nlocations, so a multi-level approach respects that structure, I think. \nProbably an upper level MRF in mgcv::gam() or try the hgml package, or \nINLA/BayesX for Bayesian approaches.\n\nIn these you fit a model with spatially structured random effects at the \nupper level (the weights probably need to be symmetric), which then show \nwhether including this term improves the fit.\n\nHope this helps,\n\nRoger\n\n> Sorry I am a novice at spatial econometrics, this may be obvious to some ,\n> so instead of testing for spatial correlation in my residuals, I should in\n> essence test for spatial autocorrelation in my outcome variable, for\n> instance in my analysis I am using a dummy variable of whether an\n> individual is hiv positive or negative. And is there a specific way of\n> using a moran.test() on a dummy variable?\n>\n>\n> Kind Regards,\n>\n> Michael Chanda Chiseni\n>\n> Phd Candidate\n>\n> Department of Economic History\n>\n> Lund University\n>\n> Visiting address: Alfa 1, Scheelev?gen 15 B, 22363 Lund\n>\n>\n>\n> *Africa is not poor, it is poorly managed (Ellen Johnson-Sirleaf ). *\n>\n>\n>\n>\n>\n>\n> On Wed, Aug 12, 2020 at 12:55 PM Roger Bivand <Roger.Bivand at nhh.no> wrote:\n>\n>> On Tue, 11 Aug 2020, Chanda Chiseni wrote:\n>>\n>>> I am trying to perform moran's I test on residuals from by probit model\n>>> using k-nearest neighbour weights, however i run into an error which i\n>>> cant seem to find the solution anywhere online the error is\n>>>\n>>>> moran.test(residuals.glm(svyprobitest),knear2weight)\n>>> Error in moran.test(residuals.glm(svyprobitest), knear2weight) :\n>>>  objects of different length\n>>>\n>>>\n>>> The codes I use to come up to this are below\n>>>\n>>>> library(foreign)\n>>>> dhsanalysis2= read.dta(\"DHSSpatialreg11.dta\")\n>>> ##removing NAs in PSU\n>>>> dhsanalysis3=subset(dhsanalysis2, !is.na(psu))\n>>> ##generating a survey design\n>>>> mydesighdhs= svydesign(ids =~psu, data =dhsanalysis3, weight = ~wgt,\n>>> strata = ~v023,nest=TRUE)\n>>> ##Defining coordinate colums\n>>>> coordinates(dhsanalysis3)= c(\"longnum\",\"latnum\")\n>>> #Defining Projection\n>>>> proj4string(dhsanalysis3) <- CRS(\"+init=epsg:4326\")\n>>> ##binding longiude and latitude\n>>>> lon2<- dhsanalysis3$longnum\n>>>> lat2<- dhsanalysis3$latnum\n>>>> coords<- cbind(lon2,lat2)\n>>> ##Creating spatial weights based on the nearest neighbour\n>>>> knear2= knearneigh(coords,k=2,longlat=T)\n>>> Warning message:\n>>> In knearneigh(coords, k = 2, longlat = T) :\n>>>  knearneigh: identical points found ### I get a warning message on\n>>> identical points found, is this a problem and how would i deal with this\n>>\n>> It usually indicates muddled thinking. You have more than one observation\n>> at the same point, which could be an unintended duplicate (copy of the\n>> same observation), or it could indicate that any spatial process has\n>> multiple values at that point. In geostatistics, one would jitter the\n>> points to introduce distance. In your case, this probably isn't households\n>> living at one address point. All the observations at the same point will\n>> get the same sets of neighbours. If there are many co-located\n>> observations, k in k-nearest may be too small to include them all.\n>>\n>>>> knear2.nb= knn2nb(knear2)\n>>>> knear2weight= nb2listw(knear2.nb, style=\"W\",zero.policy=T)\n>>>\n>>> ##declaring categorical variables as factor variables\n>>>> dhsanalysis3$hivpositive.f <- factor(dhsanalysis3$hivpositive)\n>>>> dhsanalysis3$protestant.f <- factor(dhsanalysis3$protestant2)\n>>>> dhsanalysis3$Married.f <- factor(dhsanalysis3$Married)\n>>>> dhsanalysis3$female.f <- factor(dhsanalysis3$female)\n>>>> dhsanalysis3$urban1.f <- factor(dhsanalysis3$urban1)\n>>>> dhsanalysis3$river10kmdum.f <- factor(dhsanalysis3$river10kmdum)\n>>>> dhsanalysis3$Explorer50kmdum.f <- factor(dhsanalysis3$Explorer50kmdum)\n>>>> dhsanalysis3$Rail50kmdum.f <- factor(dhsanalysis3$Rail50kmdum)\n>>>> dhsanalysis3$Province1.f <- factor(dhsanalysis3$Province1)\n>>>> dhsanalysis3$WealthIndex.f <- factor(dhsanalysis3$WealthIndex)\n>>>> dhsanalysis3$occupation2.f <- factor(dhsanalysis3$occupation2)\n>>>> dhsanalysis3$highested.f <- factor(dhsanalysis3$highested)\n>>>> protestant.f= dhsanalysis3$protestant.f\n>>>> hivpositive.f=dhsanalysi3$hivpositive.f\n>>>> Married.f=dhsanalysis3$Married.f\n>>>> female.f=dhsanalysis3$female.f\n>>>> urban1.f=dhsanalysis3$urban1.f\n>>>> river10kmdum.f=dhsanalysis3$river10kmdum.f\n>>>> Explorer50kmdum.f=dhsanalysis2$Explorer50kmdum.f\n>>>> Province1.f=dhsanalysis3$Province1.f\n>>>> WealthIndex.f=dhsanalysis3$WealthIndex.f\n>>>> occupation2.f=dhsanalysis3$occupation2.f\n>>>> highested.f=dhsanalysis3$highested.f\n>>>> Age=dhsanalysis3$Age\n>>>> Age2=dhsanalysis3$Age2\n>>>> HIVKnowledge=dhsanalysis3$HIVKnowledge\n>>>> churchkm=dhsanalysis3$churchkm\n>>>> lnhospitalkm=dhsanalysis3$lnhospitalkm\n>>>> lnElevationMean=dhsanalysis3$lnElevationMean\n>>>\n>>>> ###VARIABLES IN SURVEY DESIGN\n>>>> mydesighdhs$hivpositive.f <- factor(dhsanalysis3$hivpositive)\n>>>> mydesighdhs$protestant.f <- factor(dhsanalysis3$protestant2)\n>>>> mydesighdhs$Married.f <- factor(dhsanalysis3$Married)\n>>>> mydesighdhs$female.f <- factor(dhsanalysis3$female)\n>>>> mydesighdhs$urban1.f <- factor(dhsanalysis3$urban1)\n>>>> mydesighdhs$river10kmdum.f <- factor(dhsanalysis3$river10kmdum)\n>>>> mydesighdhs$Explorer50kmdum.f <- factor(dhsanalysis3$Explorer50kmdum)\n>>>> mydesighdhs$Rail50kmdum.f <- factor(dhsanalysis3$Rail50kmdum)\n>>>> mydesighdhs$Province1.f <- factor(dhsanalysis3$Province1)\n>>>> mydesighdhs$WealthIndex.f <- factor(dhsanalysis3$WealthIndex)\n>>>> mydesighdhs$occupation2.f <- factor(dhsanalysis3$occupation2)\n>>>> mydesighdhs$highested.f <- factor(dhsanalysis3$highested)\n>>>> mydesighdhs$Age=Age\n>>>> mydesighdhs$Age2=Age2\n>>>> mydesighdhs$HIVKnowledge=HIVKnowledge\n>>>> mydesighdhs$churchkm=churchkm\n>>>> mydesighdhs$lnhospitalkm=lnhospitalkm\n>>>> mydesighdhs$lnElevationMean=lnElevationMean\n>>>\n>>>> svyprobitest= svyglm(hivpositive.f~ churchkm +lnhospitalkm\n>> +protestant.f+\n>>> Age+\n>>>\n>> Age2+Married.f+female.f+urban1.f+river10kmdum.f+Explorer50kmdum.f+Rail50kmdum.f+lnElevationMean+Province1.f\n>>> + WealthIndex.f + HIVKnowledge+ occupation2.f+\n>>> highested.f,design=mydesighdhs,family = quasibinomial(link =\n>>> \"probit\"),data=dhsanalysis3)\n>>> Error in .subset2(x, i, exact = exact) : subscript out of bounds\n>>\n>> So you've an error anyway.\n>>\n>>>\n>>> ## Iran my probit model without implementing the survey design in the\n>> model\n>>> just to see whether Moran test is working\n>>>> svyprobitest2= glm(hivpositive.f~ churchkm +lnhospitalkm +protestant.f+\n>>> Age+\n>>>\n>> Age2+Married.f+female.f+urban1.f+river10kmdum.f+Explorer50kmdum.f+Rail50kmdum.f+lnElevationMean+Province1.f\n>>> + WealthIndex.f + HIVKnowledge+ occupation2.f+ highested.f,family =\n>>> quasibinomial(link = \"probit\"),data=dhsanalysis3)\n>>> #Moran test\n>>>> moran.test(residuals.glm(svyprobitest),knear2weight)\n>>> Error in moran.test(residuals.glm(svyprobitest), knear2weight) :\n>>>  objects of different length\n>>>\n>>\n>> Testing residuals using moran.test() is usually wrong, as the expectation\n>> and variance of the statistic are based on a null model (intercept only),\n>> not a model with covariates.\n>>\n>> What are length(residuals.glm(svyprobitest)) and length(knear2.nb)? Did\n>> glm drop observations with missing values? If so, you should subset both\n>> the data submitted to glm() and the neighbour object so that they match.\n>>\n>> Hope this helps,\n>>\n>> Roger\n>>\n>>>\n>>> Kind Regards,\n>>>\n>>> Michael Chanda Chiseni\n>>>\n>>> Phd Candidate\n>>>\n>>> Department of Economic History\n>>>\n>>> Lund University\n>>>\n>>> Visiting address: Alfa 1, Scheelev?gen 15 B, 22363 Lund\n>>>\n>>>\n>>>\n>>> *Africa is not poor, it is poorly managed (Ellen Johnson-Sirleaf ). *\n>>>\n>>>       [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>\n>> --\n>> Roger Bivand\n>> Department of Economics, Norwegian School of Economics,\n>> Helleveien 30, N-5045 Bergen, Norway.\n>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n>> https://orcid.org/0000-0003-2392-6140\n>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 12 Aug 2020, Chanda Chiseni wrote:\n\n> Hi Roger\n>\n> Thank you for your response.\n>\n> I am using DHS individual level data , they cluster individuals into about\n> 25-30 people and assign them co",
+      "thread_id": "thread-6d786ae77a18",
+      "thread_depth": 3,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-08366fdbf76e",
+      "message_id": "<alpine.LFD.2.23.451.2008121836110.2892079@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2020-08-12T18:45:29+02:00",
+      "subject": "[R-sig-Geo] Mask from raster with less RAM",
+      "subject_clean": "Mask from raster with less RAM",
+      "in_reply_to": "<CAL+ycWmwbpGiUNnBa6Kx7V1tTgF9DWwqa6wq0DTrvFqQ-N649Q@mail.gmail.com>",
+      "references": [
+        "<CAL+ycW=O2Mpw2Y+HJWczvreVjSSTvd5MuxvODhW9UPCf2XAFJA@mail.gmail.com>",
+        "<CAJefdj6YEOJQfpx28U_wKVXx7hVsm7CbyREXGVUqsuYpjUNKAw@mail.gmail.com>",
+        "<CAL+ycWmwbpGiUNnBa6Kx7V1tTgF9DWwqa6wq0DTrvFqQ-N649Q@mail.gmail.com>"
+      ],
+      "body_plain": "On Wed, 12 Aug 2020, Frederico Faleiro wrote:\n\n> Hi guys, thank you for your reply.\n>\n> Jaime, I have tried, but I can't install rgdal needed to use raster and\n> apparently other people too (\n> https://stackoverflow.com/questions/57617895/how-to-install-rgdal-and-or-upload-raster-on-google-collaboration).\n> Do you have a solution?\n\nUse CRAN Windows or MacOS binaries, or install the system requirements. \nUnless you can do that, for example because you do not control the \nplatform you are using (are you working on a cloud instance?), do not \ninstall packages needing external software \nfrom source.\n\n> Hugo, I need the mask in vector format because the rasters have different\n> resolutions, so I can't use raster as a mask. I have modified the reprex to\n> be more precise about it (see below).\n\nPlease use GRASS. What you are trying to do is something that has \"just \nworked\" in GRASS since it was first created. GRASS can be run from the \nshell, from Python and from R (rgrass7). Or use SAGA, another fast raster \nprocessor. Both mask from raster directly. Write a shell script for GRASS \nto resample your rasters, mask them, and complete. You can also use GRASS \nand SAGA from QGIS. You might use Python or R to make file name handling \n\"easier\" than in a script. Neither GRASS nor SAGA use much memory unless \nrasters are huge, and then they are lean.\n\nRoger\n\n> Steve, I think this approach has the same issue of Hugo Costa. I don't have\n> the polygon of the mask, so I am trying to create one to apply in the other\n> rasters of different resolutions.\n>\n> # reproducible example\n> library(raster)\n> # read data to create mask\n> r <- raster(system.file(\"external/test.grd\", package=\"raster\"))\n> r[!is.na(r)] <- 1\n> pol <- rasterToPolygons(r, dissolve = T) #  a lot of RAM to process the data\n> # raster of different resolution\n> res2 <- res(r) + 10\n> r2 <- raster(extent(r), resolution = res2)\n> r2[ ] <- 1\n> # apply the mask\n> r2.mask <- mask(r2, pol)\n> # plot\n> par(mfrow = c(1, 3))\n> plot(r)\n> plot(r2)\n> plot(r2.mask)\n>\n> Cheers!\n>\n> Em ter., 11 de ago. de 2020 ?s 19:26, Stephen Stewart <\n> stephen.stewart85 at gmail.com> escreveu:\n>\n>> Hi Frederico,\n>>\n>> It may not solve all of your RAM issues, but in this situation I would\n>> skip the rasterToPolygons (which is also usually very slow) and use raster\n>> math to propagate NAs.\n>>\n>> r <- raster(system.file(\"external/test.grd\", package=\"raster\"))\n>> r[!is.na(r)] <- 1\n>> # Can also be faster to do r = r / r, but add an offset (that cannot\n>> result in 0) if you have valid 0s.\n>>  r2 <- raster(extent(r), res(r))\n>> r2[ ] <- 1\n>> r2.mask <- r * r2\n>>\n>> If you have a polygon to use as a mask, burn it in using the fasterize\n>> package and then apply the above.\n>>\n>> Hope that helps.\n>>\n>> Cheers,\n>>\n>> Steve\n>>\n>> On Wed., 12 Aug. 2020, 6:43 am Frederico Faleiro, <fvfaleiro at gmail.com>\n>> wrote:\n>>\n>>> Dear all,\n>>>\n>>> I would like to generate a mask from a raster, but my workflow needs a lot\n>>> of RAM to process big rasters. I need this polygon mask to use in\n>>> another's\n>>> rasters.\n>>> Do you know another approach that needs less RAM?\n>>>\n>>> # reproducible example\n>>> library(raster)\n>>> # read data to create mask\n>>> r <- raster(system.file(\"external/test.grd\", package=\"raster\"))\n>>> r[!is.na(r)] <- 1\n>>> pol <- rasterToPolygons(r, dissolve = T) #  a lot of RAM to process the\n>>> data\n>>> # apply the mask in another raster\n>>>  r2 <- raster(extent(r), res(r))\n>>> r2[ ] <- 1\n>>> r2.mask <- mask(r2, pol)\n>>>\n>>> Cheers!\n>>>\n>>> --\n>>> Frederico Faleiro\n>>> Postdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\n>>> Department of Ecology | Institute of Biological Science | Federal\n>>> University of Goi?s | Brazil\n>>> RG: https://www.researchgate.net/profile/Frederico_Faleiro\n>>> CV: http://lattes.cnpq.br/4926404840659003\n>>>\n>>>         [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 12 Aug 2020, Frederico Faleiro wrote:\n\n> Hi guys, thank you for your reply.\n>\n> Jaime, I have tried, but I can't install rgdal needed to use raster and\n> apparently other people too (\n> https:",
+      "thread_id": "thread-fb1f03030e4c",
+      "thread_depth": 3,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-f2a03a0653a1",
+      "message_id": "<CAL+ycWmdRJM=nG1kkSvDy0VORUWV4q395z86uUX4OmA3kmdghg@mail.gmail.com>",
+      "from_name": "Frederico Faleiro",
+      "from_email_hash": "e24283d1d155c66ec3e60c6c4a91e9ab996ba668a32aaa0f42602b8b29f472c2",
+      "date": "2020-08-12T14:58:30-03:00",
+      "subject": "[R-sig-Geo] Mask from raster with less RAM",
+      "subject_clean": "Mask from raster with less RAM",
+      "in_reply_to": "<alpine.LFD.2.23.451.2008121836110.2892079@reclus.nhh.no>",
+      "references": [
+        "<CAL+ycW=O2Mpw2Y+HJWczvreVjSSTvd5MuxvODhW9UPCf2XAFJA@mail.gmail.com>",
+        "<CAJefdj6YEOJQfpx28U_wKVXx7hVsm7CbyREXGVUqsuYpjUNKAw@mail.gmail.com>",
+        "<CAL+ycWmwbpGiUNnBa6Kx7V1tTgF9DWwqa6wq0DTrvFqQ-N649Q@mail.gmail.com>",
+        "<alpine.LFD.2.23.451.2008121836110.2892079@reclus.nhh.no>"
+      ],
+      "body_plain": "Hi guys,\n\nI really need to use the mask without modifying the original resolution of\nthe rasters, so vectorizing was my first try. I know I can resample first\nbefore applying a raster mask, but this will not work for my objectives\nthat involve creating some visualisations to the same area with the\noriginal resolution.\nRoger, I have tried use the google colab in the cloud (e.g.\nhttps://colab.research.google.com/drive/1BYnnbqeyZAlYnxR9IHC8tpW07EpDeyKR#scrollTo=uaE0kZ0vkqms)\nand I think you are right about the restriction about the use of external\nsoftwares like GDAL in this specific case.\nDo you know if is it possible to do it in GRASS or QGIS? I only find the\nfunction polygonize (as in raster::rasterToContour) that generates contours\naround equal values from the raster.\n\nCheers,\n\n\nEm qua., 12 de ago. de 2020 ?s 13:45, Roger Bivand <Roger.Bivand at nhh.no>\nescreveu:\n\n> On Wed, 12 Aug 2020, Frederico Faleiro wrote:\n>\n> > Hi guys, thank you for your reply.\n> >\n> > Jaime, I have tried, but I can't install rgdal needed to use raster and\n> > apparently other people too (\n> >\n> https://stackoverflow.com/questions/57617895/how-to-install-rgdal-and-or-upload-raster-on-google-collaboration\n> ).\n> > Do you have a solution?\n>\n> Use CRAN Windows or MacOS binaries, or install the system requirements.\n> Unless you can do that, for example because you do not control the\n> platform you are using (are you working on a cloud instance?), do not\n> install packages needing external software\n> from source.\n>\n> > Hugo, I need the mask in vector format because the rasters have different\n> > resolutions, so I can't use raster as a mask. I have modified the reprex\n> to\n> > be more precise about it (see below).\n>\n> Please use GRASS. What you are trying to do is something that has \"just\n> worked\" in GRASS since it was first created. GRASS can be run from the\n> shell, from Python and from R (rgrass7). Or use SAGA, another fast raster\n> processor. Both mask from raster directly. Write a shell script for GRASS\n> to resample your rasters, mask them, and complete. You can also use GRASS\n> and SAGA from QGIS. You might use Python or R to make file name handling\n> \"easier\" than in a script. Neither GRASS nor SAGA use much memory unless\n> rasters are huge, and then they are lean.\n>\n> Roger\n>\n> > Steve, I think this approach has the same issue of Hugo Costa. I don't\n> have\n> > the polygon of the mask, so I am trying to create one to apply in the\n> other\n> > rasters of different resolutions.\n> >\n> > # reproducible example\n> > library(raster)\n> > # read data to create mask\n> > r <- raster(system.file(\"external/test.grd\", package=\"raster\"))\n> > r[!is.na(r)] <- 1\n> > pol <- rasterToPolygons(r, dissolve = T) #  a lot of RAM to process the\n> data\n> > # raster of different resolution\n> > res2 <- res(r) + 10\n> > r2 <- raster(extent(r), resolution = res2)\n> > r2[ ] <- 1\n> > # apply the mask\n> > r2.mask <- mask(r2, pol)\n> > # plot\n> > par(mfrow = c(1, 3))\n> > plot(r)\n> > plot(r2)\n> > plot(r2.mask)\n> >\n> > Cheers!\n> >\n> > Em ter., 11 de ago. de 2020 ?s 19:26, Stephen Stewart <\n> > stephen.stewart85 at gmail.com> escreveu:\n> >\n> >> Hi Frederico,\n> >>\n> >> It may not solve all of your RAM issues, but in this situation I would\n> >> skip the rasterToPolygons (which is also usually very slow) and use\n> raster\n> >> math to propagate NAs.\n> >>\n> >> r <- raster(system.file(\"external/test.grd\", package=\"raster\"))\n> >> r[!is.na(r)] <- 1\n> >> # Can also be faster to do r = r / r, but add an offset (that cannot\n> >> result in 0) if you have valid 0s.\n> >>  r2 <- raster(extent(r), res(r))\n> >> r2[ ] <- 1\n> >> r2.mask <- r * r2\n> >>\n> >> If you have a polygon to use as a mask, burn it in using the fasterize\n> >> package and then apply the above.\n> >>\n> >> Hope that helps.\n> >>\n> >> Cheers,\n> >>\n> >> Steve\n> >>\n> >> On Wed., 12 Aug. 2020, 6:43 am Frederico Faleiro, <fvfaleiro at gmail.com>\n> >> wrote:\n> >>\n> >>> Dear all,\n> >>>\n> >>> I would like to generate a mask from a raster, but my workflow needs a\n> lot\n> >>> of RAM to process big rasters. I need this polygon mask to use in\n> >>> another's\n> >>> rasters.\n> >>> Do you know another approach that needs less RAM?\n> >>>\n> >>> # reproducible example\n> >>> library(raster)\n> >>> # read data to create mask\n> >>> r <- raster(system.file(\"external/test.grd\", package=\"raster\"))\n> >>> r[!is.na(r)] <- 1\n> >>> pol <- rasterToPolygons(r, dissolve = T) #  a lot of RAM to process the\n> >>> data\n> >>> # apply the mask in another raster\n> >>>  r2 <- raster(extent(r), res(r))\n> >>> r2[ ] <- 1\n> >>> r2.mask <- mask(r2, pol)\n> >>>\n> >>> Cheers!\n> >>>\n> >>> --\n> >>> Frederico Faleiro\n> >>> Postdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/\n> )\n> >>> Department of Ecology | Institute of Biological Science | Federal\n> >>> University of Goi?s | Brazil\n> >>> RG: https://www.researchgate.net/profile/Frederico_Faleiro\n> >>> CV: http://lattes.cnpq.br/4926404840659003\n> >>>\n> >>>         [[alternative HTML version deleted]]\n> >>>\n> >>> _______________________________________________\n> >>> R-sig-Geo mailing list\n> >>> R-sig-Geo at r-project.org\n> >>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>>\n> >>\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics,\n> Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> https://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi guys,\n\nI really need to use the mask without modifying the original resolution of\nthe rasters, so vectorizing was my first try. I know I can resample first\nbefore applying a raster mask, but this w",
+      "thread_id": "thread-fb1f03030e4c",
+      "thread_depth": 4,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-103da44ddd05",
+      "message_id": "<CAFBgidpWpCaZV7COwh6HMcRQ9mhXnJ_UajO8SfSJGjYaD3G7ag@mail.gmail.com>",
+      "from_name": "Sourav Sarkar",
+      "from_email_hash": "d226acb6f1188ec2b0fd592e044294430377ed8814a811b6a87d109aba96613a",
+      "date": "2020-08-12T23:50:37+05:30",
+      "subject": "[R-sig-Geo] Mask from raster with less RAM",
+      "subject_clean": "Mask from raster with less RAM",
+      "in_reply_to": "<CAL+ycW=O2Mpw2Y+HJWczvreVjSSTvd5MuxvODhW9UPCf2XAFJA@mail.gmail.com>",
+      "references": [
+        "<CAL+ycW=O2Mpw2Y+HJWczvreVjSSTvd5MuxvODhW9UPCf2XAFJA@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Frederico,\nWith the very little experience that I have with raster data, it seems to\nme (maybe I am wrong) that `crop' is computationally easier than `mask'. If\nthe crop command serves your purpose, maybe you can try:\nr2.mask <- crop(r2, pol)\n\nKind regards,\n\n???, ?? ?????, ???? ?????? ?:?? AM ??? ? Frederico Faleiro <\nfvfaleiro at gmail.com> ???????:\n\n> Dear all,\n>\n> I would like to generate a mask from a raster, but my workflow needs a lot\n> of RAM to process big rasters. I need this polygon mask to use in another's\n> rasters.\n> Do you know another approach that needs less RAM?\n>\n> # reproducible example\n> library(raster)\n> # read data to create mask\n> r <- raster(system.file(\"external/test.grd\", package=\"raster\"))\n> r[!is.na(r)] <- 1\n> pol <- rasterToPolygons(r, dissolve = T) #  a lot of RAM to process the\n> data\n> # apply the mask in another raster\n>  r2 <- raster(extent(r), res(r))\n> r2[ ] <- 1\n> r2.mask <- mask(r2, pol)\n>\n> Cheers!\n>\n> --\n> Frederico Faleiro\n> Postdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\n> Department of Ecology | Institute of Biological Science | Federal\n> University of Goi?s | Brazil\n> RG: https://www.researchgate.net/profile/Frederico_Faleiro\n> CV: http://lattes.cnpq.br/4926404840659003\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \nSourav Sarkar,\nAssistant Professor,\nSchool of Arts and Sciences,\nAhmedabad University\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Frederico,\nWith the very little experience that I have with raster data, it seems to\nme (maybe I am wrong) that `crop' is computationally easier than `mask'. If\nthe crop command serves your purpo",
+      "thread_id": "thread-fb1f03030e4c",
+      "thread_depth": 1,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-d293dda4f357",
+      "message_id": "<E1C26BA8-67CE-4FB4-BD57-A649D7FDCA21@gambaro.co.uk>",
+      "from_name": "Nicola Gambaro",
+      "from_email_hash": "be74d828159669733433bc9982f94c53aebed679c788b8ba5f7ff28414824bfb",
+      "date": "2020-08-13T20:11:38+02:00",
+      "subject": "[R-sig-Geo] Spatial correlation between two 'sf' kriging objects",
+      "subject_clean": "Spatial correlation between two 'sf' kriging objects",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I have created two ?sf? kriging objects (point vectors), one for temperature and another for agricultural yields. To make the grid and carry out the point interpolation, I have remained within the ?sf? package.\n\nI would now like to create a spatial local correlation ?raster? between these two variables, as shown on this webpage https://statnmap.com/2018-01-27-spatial-correlation-between-rasters/ <https://statnmap.com/2018-01-27-spatial-correlation-between-rasters/>. However, in that example, they use the ?raster? package and the ?focal? function. I was wondering if there was a way of doing this within ?sf?, i.e. without having to change classes? If not, what is the best way to convert those objects into raster classes?\n\nHere is an excerpt of my kriging code for reference:\nlibrary(sf)\nsf_data <- st_as_sf(x = data, coords = c(\"longitude\", \"latitude\"), crs = 4326)\nlibrary(gstat)\nvgm_utci <- variogram(UTCI~1, sf_data)\nutci_fit <- fit.variogram(vgm_utci, vgm(\"Gau\"), fit.kappa = TRUE)\nplot(vgm_utci, utci_fit)\nistria <- read_sf(?./Istria_Boundary.shp\")\nistria <- istria$geometry\nistria.grid <- istria %>% \n  st_make_grid(cellsize = 0.05, what = \"centers\") %>% \n  st_intersection(istria) \nlibrary(ggplot2)\nggplot() + geom_sf(data = istria) + geom_sf(data = istria.grid)\nlibrary(stars)\nutci_krig <- krige(formula = sf_data$UTCI ~ 1, locations = sf_data, \n                   newdata = istria.grid, model = utci_fit)\n\n\nThank you very much in advance,\n\nNicola\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I have created two ?sf? kriging objects (point vectors), one for temperature and another for agricultural yields. To make the grid and carry out the point interpolation, I have remained within the ?sf",
+      "thread_id": "thread-d293dda4f357",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-a05262b0060a",
+      "message_id": "<043f13cc-20e1-a768-3419-03301f8d8f7b@gmail.com>",
+      "from_name": "Bede-Fazekas Ákos",
+      "from_email_hash": "f2e2e122dfd4dbb8b8973b23d149555486ccb4290cb5f11779739fdbbcf5b93d",
+      "date": "2020-08-14T14:01:43+02:00",
+      "subject": "[R-sig-Geo]  Spatial correlation between two 'sf' kriging objects",
+      "subject_clean": "Spatial correlation between two 'sf' kriging objects",
+      "in_reply_to": "<E1C26BA8-67CE-4FB4-BD57-A649D7FDCA21@gambaro.co.uk>",
+      "references": [
+        "<E1C26BA8-67CE-4FB4-BD57-A649D7FDCA21@gambaro.co.uk>"
+      ],
+      "body_plain": "Dear Nicola,\n\nInstead of raster::focal(), you can apply the cor() function in \ncombination with st_distance() (or st_buffer() and st_within()). E.g. \nlet's say that 'grid' is a POINT type sf object containing columns \n'temperature' and 'yield':\ndistance_threshold <- 40\ndistance_matrix <- st_distance(grid)\ngrid$correlation <- vapply(X = 1:nrow(grid), FUN.VALUE = numeric(1), FUN \n= function (point_number) {cor(x = st_set_geometry(grid, \nNULL)[distance_matrix[point_number, distance_matrix[point_number, , drop \n= TRUE] < distance_threshold , drop = TRUE], \"temperature\"], y = \nst_set_geometry(grid, NULL)[distance_matrix[point_number, \ndistance_matrix[point_number, , drop = TRUE] < distance_threshold , drop \n= TRUE], \"yield\"])})\n\nOr something like this... I have not tested this code, and am sure that \nit is not the most efficient solution.\n\nFor large, square grids, raster might be faster than sf. You can convert \nyour grid to RasterLayer with function rasterFromXYZ() combined with \nst_coordinates(), st_set_geometry(, NULL) and cbind.data.frame(). There \nmight be more straightforward solutions for the conversion...\n\nHTH,\n?kos Bede-Fazekas\nHungarian Academy of Sciences\n\n\n2020.08.13. 20:11 keltez?ssel, Nicola Gambaro ?rta:\n> I have created two ?sf? kriging objects (point vectors), one for temperature and another for agricultural yields. To make the grid and carry out the point interpolation, I have remained within the ?sf? package.\n>\n> I would now like to create a spatial local correlation ?raster? between these two variables, as shown on this webpage https://statnmap.com/2018-01-27-spatial-correlation-between-rasters/ <https://statnmap.com/2018-01-27-spatial-correlation-between-rasters/>. However, in that example, they use the ?raster? package and the ?focal? function. I was wondering if there was a way of doing this within ?sf?, i.e. without having to change classes? If not, what is the best way to convert those objects into raster classes?\n>\n> Here is an excerpt of my kriging code for reference:\n> library(sf)\n> sf_data <- st_as_sf(x = data, coords = c(\"longitude\", \"latitude\"), crs = 4326)\n> library(gstat)\n> vgm_utci <- variogram(UTCI~1, sf_data)\n> utci_fit <- fit.variogram(vgm_utci, vgm(\"Gau\"), fit.kappa = TRUE)\n> plot(vgm_utci, utci_fit)\n> istria <- read_sf(?./Istria_Boundary.shp\")\n> istria <- istria$geometry\n> istria.grid <- istria %>%\n>    st_make_grid(cellsize = 0.05, what = \"centers\") %>%\n>    st_intersection(istria)\n> library(ggplot2)\n> ggplot() + geom_sf(data = istria) + geom_sf(data = istria.grid)\n> library(stars)\n> utci_krig <- krige(formula = sf_data$UTCI ~ 1, locations = sf_data,\n>                     newdata = istria.grid, model = utci_fit)\n>\n>\n> Thank you very much in advance,\n>\n> Nicola\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Dear Nicola,\n\nInstead of raster::focal(), you can apply the cor() function in \ncombination with st_distance() (or st_buffer() and st_within()). E.g. \nlet's say that 'grid' is a POINT type sf object co",
+      "thread_id": "thread-d293dda4f357",
+      "thread_depth": 1,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-1154c55ee206",
+      "message_id": "<CAL+ycWnx0QdYV0pCuAxgcr9jEawBAAo3qyFXkJfeaUNbbvd02w@mail.gmail.com>",
+      "from_name": "Frederico Faleiro",
+      "from_email_hash": "e24283d1d155c66ec3e60c6c4a91e9ab996ba668a32aaa0f42602b8b29f472c2",
+      "date": "2020-08-14T19:08:43-03:00",
+      "subject": "[R-sig-Geo] Mask from raster with less RAM",
+      "subject_clean": "Mask from raster with less RAM",
+      "in_reply_to": "<CAFBgidpWpCaZV7COwh6HMcRQ9mhXnJ_UajO8SfSJGjYaD3G7ag@mail.gmail.com>",
+      "references": [
+        "<CAL+ycW=O2Mpw2Y+HJWczvreVjSSTvd5MuxvODhW9UPCf2XAFJA@mail.gmail.com>",
+        "<CAFBgidpWpCaZV7COwh6HMcRQ9mhXnJ_UajO8SfSJGjYaD3G7ag@mail.gmail.com>"
+      ],
+      "body_plain": "Hi guys,\n\nthank you for your help. Sometimes we really need more RAM. I got access to\na cluster with more RAM and solved the problem.\nDear Sourav, you are right, but the crop only cuts the extent of the\nrasters, so I really need to use mask. In addition, my main limitation was\nin generating the polygon from raster (i.e. rasterToPolygons).\n\nCheers!\n\nEm qua., 12 de ago. de 2020 ?s 15:20, Sourav Sarkar <\nsourav.sarkar at ahduni.edu.in> escreveu:\n\n> Dear Frederico,\n> With the very little experience that I have with raster data, it seems to\n> me (maybe I am wrong) that `crop' is computationally easier than `mask'. If\n> the crop command serves your purpose, maybe you can try:\n> r2.mask <- crop(r2, pol)\n>\n> Kind regards,\n>\n> ???, ?? ?????, ???? ?????? ?:?? AM ??? ? Frederico Faleiro <\n> fvfaleiro at gmail.com> ???????:\n>\n>> Dear all,\n>>\n>> I would like to generate a mask from a raster, but my workflow needs a lot\n>> of RAM to process big rasters. I need this polygon mask to use in\n>> another's\n>> rasters.\n>> Do you know another approach that needs less RAM?\n>>\n>> # reproducible example\n>> library(raster)\n>> # read data to create mask\n>> r <- raster(system.file(\"external/test.grd\", package=\"raster\"))\n>> r[!is.na(r)] <- 1\n>> pol <- rasterToPolygons(r, dissolve = T) #  a lot of RAM to process the\n>> data\n>> # apply the mask in another raster\n>>  r2 <- raster(extent(r), res(r))\n>> r2[ ] <- 1\n>> r2.mask <- mask(r2, pol)\n>>\n>> Cheers!\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>\n> --\n> Sourav Sarkar,\n> Assistant Professor,\n> School of Arts and Sciences,\n> Ahmedabad University\n>\n\n\n-- \nFrederico Faleiro\nPostdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\nDepartment of Ecology | Institute of Biological Science | Federal\nUniversity of Goi?s | Brazil\nRG: https://www.researchgate.net/profile/Frederico_Faleiro\nCV: http://lattes.cnpq.br/4926404840659003\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi guys,\n\nthank you for your help. Sometimes we really need more RAM. I got access to\na cluster with more RAM and solved the problem.\nDear Sourav, you are right, but the crop only cuts the extent of t",
+      "thread_id": "thread-fb1f03030e4c",
+      "thread_depth": 2,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-65aca84f9d12",
+      "message_id": "<20200815162920.12d78260@rolf-Latitude-E7470>",
+      "from_name": "Rolf Turner",
+      "from_email_hash": "85365426fbf4496cfac2415de7f8b411ee0133e9a8b2316f8939adcd30c2a157",
+      "date": "2020-08-15T16:29:20+12:00",
+      "subject": "[R-sig-Geo] Testing.",
+      "subject_clean": "Testing.",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "My apologies for the noise.  Please ignore this message.\nI am just trying to test out message filters in a new mail client that\nI am learning to use.\n\nAgain, sorry for the noise.\n\ncheers,\n\nRolf Turner\n\n-- \nHonorary Research Fellow\nDepartment of Statistics\nUniversity of Auckland\nPhone: +64-9-373-7599 ext. 88276",
+      "body_snippet": "My apologies for the noise.  Please ignore this message.\nI am just trying to test out message filters in a new mail client that\nI am learning to use.\n\nAgain, sorry for the noise.\n\ncheers,\n\nRolf Turner",
+      "thread_id": "thread-65aca84f9d12",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-19868a153c73",
+      "message_id": "<BC3DF338-570E-4CBD-B713-6EB511B704D4@gambaro.co.uk>",
+      "from_name": "Nicola Gambaro",
+      "from_email_hash": "be74d828159669733433bc9982f94c53aebed679c788b8ba5f7ff28414824bfb",
+      "date": "2020-08-15T23:15:52+02:00",
+      "subject": "[R-sig-Geo]  Spatial correlation between two 'sf' kriging objects",
+      "subject_clean": "Spatial correlation between two 'sf' kriging objects",
+      "in_reply_to": "<mailman.28368.3.1597485601.62583.r-sig-geo@r-project.org>",
+      "references": [
+        "<mailman.28368.3.1597485601.62583.r-sig-geo@r-project.org>"
+      ],
+      "body_plain": "Dear ?kos,\n\nThank you very much for your help. \n\nI ran your code but unfortunately it returns the error:\n\nError in Ops.units(distance_matrix[as_units(point_number), , drop = TRUE],  : \n  \t\tboth operands of the expression should be \"units\" objects \n\nAny ideas how to fix this?\n\nCheers!\n\nNicola Gambaro\nBSc Environmental Geoscience, First Class\nDurham University \n\n> Message: 1\n> Date: Fri, 14 Aug 2020 14:01:43 +0200\n> From: =?UTF-8?Q?Bede-Fazekas_=c3=81kos?= <bfalevlist at gmail.com>\n> To: r-sig-geo at r-project.org\n> Subject: Re: [R-sig-Geo]  Spatial correlation between two 'sf' kriging\n> \tobjects\n> Message-ID: <043f13cc-20e1-a768-3419-03301f8d8f7b at gmail.com>\n> Content-Type: text/plain; charset=\"utf-8\"; Format=\"flowed\"\n> \n> Dear Nicola,\n> \n> Instead of raster::focal(), you can apply the cor() function in \n> combination with st_distance() (or st_buffer() and st_within()). E.g. \n> let's say that 'grid' is a POINT type sf object containing columns \n> 'temperature' and 'yield':\n> distance_threshold <- 40\n> distance_matrix <- st_distance(grid)\n> grid$correlation <- vapply(X = 1:nrow(grid), FUN.VALUE = numeric(1), FUN \n> = function (point_number) {cor(x = st_set_geometry(grid, \n> NULL)[distance_matrix[point_number, distance_matrix[point_number, , drop \n> = TRUE] < distance_threshold , drop = TRUE], \"temperature\"], y = \n> st_set_geometry(grid, NULL)[distance_matrix[point_number, \n> distance_matrix[point_number, , drop = TRUE] < distance_threshold , drop \n> = TRUE], \"yield\"])})\n> \n> Or something like this... I have not tested this code, and am sure that \n> it is not the most efficient solution.\n> \n> For large, square grids, raster might be faster than sf. You can convert \n> your grid to RasterLayer with function rasterFromXYZ() combined with \n> st_coordinates(), st_set_geometry(, NULL) and cbind.data.frame(). There \n> might be more straightforward solutions for the conversion...\n> \n> HTH,\n> ?kos Bede-Fazekas\n> Hungarian Academy of Sciences\n> \n> \n> 2020.08.13. 20:11 keltez?ssel, Nicola Gambaro ?rta:\n>> I have created two ?sf? kriging objects (point vectors), one for temperature and another for agricultural yields. To make the grid and carry out the point interpolation, I have remained within the ?sf? package.\n>> \n>> I would now like to create a spatial local correlation ?raster? between these two variables, as shown on this webpage https://statnmap.com/2018-01-27-spatial-correlation-between-rasters/ <https://statnmap.com/2018-01-27-spatial-correlation-between-rasters/>. However, in that example, they use the ?raster? package and the ?focal? function. I was wondering if there was a way of doing this within ?sf?, i.e. without having to change classes? If not, what is the best way to convert those objects into raster classes?\n>> \n>> Here is an excerpt of my kriging code for reference:\n>> library(sf)\n>> sf_data <- st_as_sf(x = data, coords = c(\"longitude\", \"latitude\"), crs = 4326)\n>> library(gstat)\n>> vgm_utci <- variogram(UTCI~1, sf_data)\n>> utci_fit <- fit.variogram(vgm_utci, vgm(\"Gau\"), fit.kappa = TRUE)\n>> plot(vgm_utci, utci_fit)\n>> istria <- read_sf(?./Istria_Boundary.shp\")\n>> istria <- istria$geometry\n>> istria.grid <- istria %>%\n>>   st_make_grid(cellsize = 0.05, what = \"centers\") %>%\n>>   st_intersection(istria)\n>> library(ggplot2)\n>> ggplot() + geom_sf(data = istria) + geom_sf(data = istria.grid)\n>> library(stars)\n>> utci_krig <- krige(formula = sf_data$UTCI ~ 1, locations = sf_data,\n>>                    newdata = istria.grid, model = utci_fit)\n>> \n>> \n>> Thank you very much in advance,\n>> \n>> Nicola\n>> \t[[alternative HTML version deleted]]\n>> \n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear ?kos,\n\nThank you very much for your help. \n\nI ran your code but unfortunately it returns the error:\n\nError in Ops.units(distance_matrix[as_units(point_number), , drop = TRUE],  : \n  \t\tboth operan",
+      "thread_id": "thread-19868a153c73",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-2c48ae5b44fc",
+      "message_id": "<43b238f9-6ddd-2e01-6eef-113d74156ae1@gmail.com>",
+      "from_name": "Bede-Fazekas Ákos",
+      "from_email_hash": "f2e2e122dfd4dbb8b8973b23d149555486ccb4290cb5f11779739fdbbcf5b93d",
+      "date": "2020-08-17T09:00:44+02:00",
+      "subject": "[R-sig-Geo]  Spatial correlation between two 'sf' kriging objects",
+      "subject_clean": "Spatial correlation between two 'sf' kriging objects",
+      "in_reply_to": "<BC3DF338-570E-4CBD-B713-6EB511B704D4@gambaro.co.uk>",
+      "references": [
+        "<mailman.28368.3.1597485601.62583.r-sig-geo@r-project.org>",
+        "<BC3DF338-570E-4CBD-B713-6EB511B704D4@gambaro.co.uk>"
+      ],
+      "body_plain": "Dear Nicola,\nyou are right, the class of the result of st_distance is not numeric but \nunits (if CRS != NA). You may convert it to numeric with as.numeric().\nHTH,\n?kos\n\n2020.08.15. 23:15 keltez?ssel, Nicola Gambaro ?rta:\n> Dear ?kos,\n>\n> Thank you very much for your help.\n>\n> I ran your code but unfortunately it returns the error:\n>\n> Error in Ops.units(distance_matrix[as_units(point_number), , drop = TRUE],  :\n>    \t\tboth operands of the expression should be \"units\" objects\n>\n> Any ideas how to fix this?\n>\n> Cheers!\n>\n> Nicola Gambaro\n> BSc Environmental Geoscience, First Class\n> Durham University\n>\n>> Message: 1\n>> Date: Fri, 14 Aug 2020 14:01:43 +0200\n>> From: =?UTF-8?Q?Bede-Fazekas_=c3=81kos?= <bfalevlist at gmail.com>\n>> To: r-sig-geo at r-project.org\n>> Subject: Re: [R-sig-Geo]  Spatial correlation between two 'sf' kriging\n>> \tobjects\n>> Message-ID: <043f13cc-20e1-a768-3419-03301f8d8f7b at gmail.com>\n>> Content-Type: text/plain; charset=\"utf-8\"; Format=\"flowed\"\n>>\n>> Dear Nicola,\n>>\n>> Instead of raster::focal(), you can apply the cor() function in\n>> combination with st_distance() (or st_buffer() and st_within()). E.g.\n>> let's say that 'grid' is a POINT type sf object containing columns\n>> 'temperature' and 'yield':\n>> distance_threshold <- 40\n>> distance_matrix <- st_distance(grid)\n>> grid$correlation <- vapply(X = 1:nrow(grid), FUN.VALUE = numeric(1), FUN\n>> = function (point_number) {cor(x = st_set_geometry(grid,\n>> NULL)[distance_matrix[point_number, distance_matrix[point_number, , drop\n>> = TRUE] < distance_threshold , drop = TRUE], \"temperature\"], y =\n>> st_set_geometry(grid, NULL)[distance_matrix[point_number,\n>> distance_matrix[point_number, , drop = TRUE] < distance_threshold , drop\n>> = TRUE], \"yield\"])})\n>>\n>> Or something like this... I have not tested this code, and am sure that\n>> it is not the most efficient solution.\n>>\n>> For large, square grids, raster might be faster than sf. You can convert\n>> your grid to RasterLayer with function rasterFromXYZ() combined with\n>> st_coordinates(), st_set_geometry(, NULL) and cbind.data.frame(). There\n>> might be more straightforward solutions for the conversion...\n>>\n>> HTH,\n>> ?kos Bede-Fazekas\n>> Hungarian Academy of Sciences\n>>\n>>\n>> 2020.08.13. 20:11 keltez?ssel, Nicola Gambaro ?rta:\n>>> I have created two ?sf? kriging objects (point vectors), one for temperature and another for agricultural yields. To make the grid and carry out the point interpolation, I have remained within the ?sf? package.\n>>>\n>>> I would now like to create a spatial local correlation ?raster? between these two variables, as shown on this webpage https://statnmap.com/2018-01-27-spatial-correlation-between-rasters/ <https://statnmap.com/2018-01-27-spatial-correlation-between-rasters/>. However, in that example, they use the ?raster? package and the ?focal? function. I was wondering if there was a way of doing this within ?sf?, i.e. without having to change classes? If not, what is the best way to convert those objects into raster classes?\n>>>\n>>> Here is an excerpt of my kriging code for reference:\n>>> library(sf)\n>>> sf_data <- st_as_sf(x = data, coords = c(\"longitude\", \"latitude\"), crs = 4326)\n>>> library(gstat)\n>>> vgm_utci <- variogram(UTCI~1, sf_data)\n>>> utci_fit <- fit.variogram(vgm_utci, vgm(\"Gau\"), fit.kappa = TRUE)\n>>> plot(vgm_utci, utci_fit)\n>>> istria <- read_sf(?./Istria_Boundary.shp\")\n>>> istria <- istria$geometry\n>>> istria.grid <- istria %>%\n>>>    st_make_grid(cellsize = 0.05, what = \"centers\") %>%\n>>>    st_intersection(istria)\n>>> library(ggplot2)\n>>> ggplot() + geom_sf(data = istria) + geom_sf(data = istria.grid)\n>>> library(stars)\n>>> utci_krig <- krige(formula = sf_data$UTCI ~ 1, locations = sf_data,\n>>>                     newdata = istria.grid, model = utci_fit)\n>>>\n>>>\n>>> Thank you very much in advance,\n>>>\n>>> Nicola\n>>> \t[[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Dear Nicola,\nyou are right, the class of the result of st_distance is not numeric but \nunits (if CRS != NA). You may convert it to numeric with as.numeric().\nHTH,\n?kos\n\n2020.08.15. 23:15 keltez?ssel, ",
+      "thread_id": "thread-19868a153c73",
+      "thread_depth": 1,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-b4f7e74c8cbd",
+      "message_id": "<e814793f-2d3c-5bd5-1a40-43c8093f2081@yahoo.com.br>",
+      "from_name": "ASANTOS",
+      "from_email_hash": "9c328798782fdba9a5eb7253ec556480706d126689efca25bdfbcd5bdfb8dc96",
+      "date": "2020-08-19T16:21:31-04:00",
+      "subject": "[R-sig-Geo] Count occurrences less memory expensive than superimpose function in several spatial objects",
+      "subject_clean": "Count occurrences less memory expensive than superimpose function in several spatial objects",
+      "in_reply_to": null,
+      "references": [
+        "<e814793f-2d3c-5bd5-1a40-43c8093f2081.ref@yahoo.com.br>"
+      ],
+      "body_plain": "Dear r-sig-geo Members,\n\n ??? I'll like to read several shapefiles, count occurrences in the same \ncoordinate and create a final shapefile with a threshold number of \noccurrences. I try to convert the shapefiles in ppp object (because I \nhave some part of my data set in shapefile and another in ppp objects) \nand applied superimpose function without success. In my synthetic example :\n\n#Packages\nlibrary(spatstat)\nlibrary(dplyr)\nlibrary(sp)\nlibrary(rgdal)\nlibrary(raster)\n\n\n#Point process example\ndata(ants)\nants.df<-as.data.frame(ants) #Convert to data frame\n\n# Sample 75% in original dataset, repeat this 9 times and create a \nshapefile in each loop\n\nfor(i in 1:9){\ns.ants.df<-sample_frac(ants.df, 0.75)\ns.ants<-ppp(x=s.ants.df[,1],y=s.ants.df[,2],window=ants$window)#Create \nnew ppp object\nsample.pts<-cbind(s.ants$x,s.ants$y)\npts.sampling = SpatialPoints(sample.pts)\nUTMcoor.df <- SpatialPointsDataFrame(pts.sampling, \ndata.frame(id=1:length(pts.sampling)))\nwriteOGR(UTMcoor.df, \".\",paste0('sample.shape',i), driver=\"ESRI \nShapefile\",overwrite=TRUE)\n}\n\n#Read all the 9 shapefiles created\nall_shape <- list.files(pattern=\"\\\\.shp$\", full.names=TRUE)\nall_shape_list <- lapply(all_shape, shapefile)\n\n#Convert shapefile to ppp statstat\ntarget <- vector(\"list\", length(all_shape_list))\nfor(i in 1:length(all_shape_list)){\ntarget[[i]] <- ppp(x=all_shape_list[[i]]@coords[,1],\ny=all_shape_list[[i]]@coords[,2],window=ants$window)}\n\n#Join all ppp objects using multiplicity\ntarget_sub<-do.call(superimpose,target)\nres<-multiplicity(target_sub)\n\n#Occurrences in the same coordinate > 5\nres.xy<-as.data.frame(target_sub$x,target_sub$y,res)\nres_F<-res.xy[res.xy$res>5,]\n\n#Final shapefile\nfinal.pts<-cbind(res_F[,1],res_F[,2])\npts.final = SpatialPoints(final.pts)\nUTMcoor.df <- SpatialPointsDataFrame(pts.final, \ndata.frame(id=1:length(pts.final)))\nUTMcoor.df2 <-remove.duplicates(UTMcoor.df)\nwriteOGR(UTMcoor.df2, \".\", paste0('final.ants'), driver=\"ESRI \nShapefile\",overwrite=TRUE)\n\n\nThis approach works very well in this synthetic example!!! But in my \nreal data set a have the 99 shapefiles with 10^7 coordinates and when I \ntry to use the do.call(superimpose,target) function my 32GB RAM memory \ncrashed.\n\nPlease any ideas for how I can create a new shapefile with a criteria \noccurrences exposed but less memory expensive than superimpose all the \nobjects created?\n\nThanks in advanced,\nAlexandre\n\n-- \nAlexandre dos Santos\nGeotechnologies and Spatial Statistics applied to Forest Entomology\nInstituto Federal de Mato Grosso (IFMT) - Campus Caceres\nCaixa Postal 244 (PO Box)\nAvenida dos Ramires, s/n - Vila Real\nCaceres - MT - CEP 78201-380 (ZIP code)\nPhone: (+55) 65 99686-6970 / (+55) 65 3221-2674\nLattes CV: http://lattes.cnpq.br/1360403201088680\nOrcID: orcid.org/0000-0001-8232-6722\nResearchGate: www.researchgate.net/profile/Alexandre_Santos10\nPublons: https://publons.com/researcher/3085587/alexandre-dos-santos/\n--\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear r-sig-geo Members,\n\n ??? I'll like to read several shapefiles, count occurrences in the same \ncoordinate and create a final shapefile with a threshold number of \noccurrences. I try to convert the",
+      "thread_id": "thread-b4f7e74c8cbd",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-dd9e597ab8d5",
+      "message_id": "<CAKkiGbvfcw9HVPDGUnCy6+mNmtPbyZDfE3XEDDzLbkam81P=qg@mail.gmail.com>",
+      "from_name": "Vijay Lulla",
+      "from_email_hash": "d004d26e190221188366bf072a760b5263377ef285b3f6047b606b92bd2cd196",
+      "date": "2020-08-19T20:49:52-04:00",
+      "subject": "[R-sig-Geo] Count occurrences less memory expensive than superimpose function in several spatial objects",
+      "subject_clean": "Count occurrences less memory expensive than superimpose function in several spatial objects",
+      "in_reply_to": "<e814793f-2d3c-5bd5-1a40-43c8093f2081@yahoo.com.br>",
+      "references": [
+        "<e814793f-2d3c-5bd5-1a40-43c8093f2081.ref@yahoo.com.br>",
+        "<e814793f-2d3c-5bd5-1a40-43c8093f2081@yahoo.com.br>"
+      ],
+      "body_plain": "Hi Alexandre,\nAs far as I can tell (mostly from reading the docs...no prior experience of\nusing multiplicity or superimpose myself) it appears that they are just\ncalculating the number of unique values for a combination of x,y coordinate\npairs. So, you can do this by using the group by semantics of either\ntidyverse or SQL to generate the res.xy data.frame. Below is an example of\ngenerating res.xy alternatively using data.table (I'm not as familiar with\ntidyverse):\n\ntarget_sub1 <- rbindlist(lapply(target, as.data.table))\nres1 <- target_sub1[, .(res=.N), by=.(x,y)]\nres.xy1 = res1[target_sub1, on=c(\"x\",\"y\")]\n\nall.equal(res.xy, res.xy1, check.attributes=FALSE) # should return TRUE\n\nIf you're using SQL then you just join the raw table with the grouped table\nand you should get the table coordinates and occurrences. And, considering\nthe number of coordinates you have I recommend either data.table or SQL to\ngenerate the final output.\nHTH,\nVijay.\n\n\nOn Wed, Aug 19, 2020 at 4:22 PM ASANTOS via R-sig-Geo <\nr-sig-geo at r-project.org> wrote:\n\n> Dear r-sig-geo Members,\n>\n>  ??? I'll like to read several shapefiles, count occurrences in the same\n> coordinate and create a final shapefile with a threshold number of\n> occurrences. I try to convert the shapefiles in ppp object (because I\n> have some part of my data set in shapefile and another in ppp objects)\n> and applied superimpose function without success. In my synthetic example :\n>\n> #Packages\n> library(spatstat)\n> library(dplyr)\n> library(sp)\n> library(rgdal)\n> library(raster)\n>\n>\n> #Point process example\n> data(ants)\n> ants.df<-as.data.frame(ants) #Convert to data frame\n>\n> # Sample 75% in original dataset, repeat this 9 times and create a\n> shapefile in each loop\n>\n> for(i in 1:9){\n> s.ants.df<-sample_frac(ants.df, 0.75)\n> s.ants<-ppp(x=s.ants.df[,1],y=s.ants.df[,2],window=ants$window)#Create\n> new ppp object\n> sample.pts<-cbind(s.ants$x,s.ants$y)\n> pts.sampling = SpatialPoints(sample.pts)\n> UTMcoor.df <- SpatialPointsDataFrame(pts.sampling,\n> data.frame(id=1:length(pts.sampling)))\n> writeOGR(UTMcoor.df, \".\",paste0('sample.shape',i), driver=\"ESRI\n> Shapefile\",overwrite=TRUE)\n> }\n>\n> #Read all the 9 shapefiles created\n> all_shape <- list.files(pattern=\"\\\\.shp$\", full.names=TRUE)\n> all_shape_list <- lapply(all_shape, shapefile)\n>\n> #Convert shapefile to ppp statstat\n> target <- vector(\"list\", length(all_shape_list))\n> for(i in 1:length(all_shape_list)){\n> target[[i]] <- ppp(x=all_shape_list[[i]]@coords[,1],\n> y=all_shape_list[[i]]@coords[,2],window=ants$window)}\n>\n> #Join all ppp objects using multiplicity\n> target_sub<-do.call(superimpose,target)\n> res<-multiplicity(target_sub)\n>\n> #Occurrences in the same coordinate > 5\n> res.xy<-as.data.frame(target_sub$x,target_sub$y,res)\n> res_F<-res.xy[res.xy$res>5,]\n>\n> #Final shapefile\n> final.pts<-cbind(res_F[,1],res_F[,2])\n> pts.final = SpatialPoints(final.pts)\n> UTMcoor.df <- SpatialPointsDataFrame(pts.final,\n> data.frame(id=1:length(pts.final)))\n> UTMcoor.df2 <-remove.duplicates(UTMcoor.df)\n> writeOGR(UTMcoor.df2, \".\", paste0('final.ants'), driver=\"ESRI\n> Shapefile\",overwrite=TRUE)\n>\n>\n> This approach works very well in this synthetic example!!! But in my\n> real data set a have the 99 shapefiles with 10^7 coordinates and when I\n> try to use the do.call(superimpose,target) function my 32GB RAM memory\n> crashed.\n>\n> Please any ideas for how I can create a new shapefile with a criteria\n> occurrences exposed but less memory expensive than superimpose all the\n> objects created?\n>\n> Thanks in advanced,\n> Alexandre\n>\n> --\n> Alexandre dos Santos\n> Geotechnologies and Spatial Statistics applied to Forest Entomology\n> Instituto Federal de Mato Grosso (IFMT) - Campus Caceres\n> Caixa Postal 244 (PO Box)\n> Avenida dos Ramires, s/n - Vila Real\n> Caceres - MT - CEP 78201-380 (ZIP code)\n> Phone: (+55) 65 99686-6970 / (+55) 65 3221-2674\n> Lattes CV: http://lattes.cnpq.br/1360403201088680\n> OrcID: orcid.org/0000-0001-8232-6722\n> ResearchGate: www.researchgate.net/profile/Alexandre_Santos10\n> Publons: https://publons.com/researcher/3085587/alexandre-dos-santos/\n> --\n>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \nVijay Lulla, PhD\nORCID | <https://orcid.org/0000-0002-0823-2522> Homepage\n<http://vlulla.github.io> | Google Scholar\n<https://scholar.google.com/citations?user=VjhJWOgAAAAJ&hl=en> | Github\n<https://github.com/vlulla>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Alexandre,\nAs far as I can tell (mostly from reading the docs...no prior experience of\nusing multiplicity or superimpose myself) it appears that they are just\ncalculating the number of unique value",
+      "thread_id": "thread-b4f7e74c8cbd",
+      "thread_depth": 1,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-31f27a1742ee",
+      "message_id": "<36f98583-ad35-3aa9-af8b-684a4a2d80b7@yahoo.com.br>",
+      "from_name": "ASANTOS",
+      "from_email_hash": "9c328798782fdba9a5eb7253ec556480706d126689efca25bdfbcd5bdfb8dc96",
+      "date": "2020-08-20T11:18:19-04:00",
+      "subject": "[R-sig-Geo] Count occurrences less memory expensive than superimpose function in several spatial objects [SOLVED]",
+      "subject_clean": "Count occurrences less memory expensive than superimpose function in several spatial objects [SOLVED]",
+      "in_reply_to": "<CAKkiGbvfcw9HVPDGUnCy6+mNmtPbyZDfE3XEDDzLbkam81P=qg@mail.gmail.com>",
+      "references": [
+        "<e814793f-2d3c-5bd5-1a40-43c8093f2081.ref@yahoo.com.br>",
+        "<e814793f-2d3c-5bd5-1a40-43c8093f2081@yahoo.com.br>",
+        "<CAKkiGbvfcw9HVPDGUnCy6+mNmtPbyZDfE3XEDDzLbkam81P=qg@mail.gmail.com>"
+      ],
+      "body_plain": "Thanks Vijay,\n\nNow works and I don't to need pass my shapefiles objects to ppp for \nusing the superimpose function. The solution now is:\n\n#Packages library(spatstat) library(dplyr) library(sp) library(rgdal) \nlibrary(raster) library(data.table) #Point process example data(ants) \nants.df<-as.data.frame(ants) #Convert to data frame # Sample 75% in \noriginal dataset, repeat this 9 times and create a shapefile in each \nloop for(i in 1:9){ s.ants.df<-sample_frac(ants.df, 0.75) \ns.ants<-ppp(x=s.ants.df[,1],y=s.ants.df[,2],window=ants$window)#Create \nnew ppp object sample.pts<-cbind(s.ants$x,s.ants$y) pts.sampling = \nSpatialPoints(sample.pts) UTMcoor.df <- \nSpatialPointsDataFrame(pts.sampling, \ndata.frame(id=1:length(pts.sampling))) writeOGR(UTMcoor.df, \n\".\",paste0('sample.shape',i), driver=\"ESRI Shapefile\",overwrite=TRUE) } \n#Read all the 9 shapefiles created all_shape <- \nlist.files(pattern=\"\\\\.shp$\", full.names=TRUE) all_shape_list <- \nlapply(all_shape, shapefile) # target_sub1 <- \nrbindlist(lapply(all_shape_list, as.data.table)) res1 <- target_sub1[, \n.(res=.N), by=.(coords.x1,coords.x2)] res.xy1 = res1[target_sub1, \non=c(\"coords.x1\",\"coords.x2\")] all.equal(res.xy1, res.xy1, \ncheck.attributes=FALSE) # should return TRUE #Occurrences in the same \ncoordinate > 5 res_F<-res.xy1[res.xy1$res>5,] \nres_F<-as.data.frame(res_F) #Final shapefile \nfinal.pts<-cbind(res_F[,1],res_F[,2]) pts.final = \nSpatialPoints(final.pts) UTMcoor.df <- SpatialPointsDataFrame(pts.final, \ndata.frame(id=1:length(pts.final))) UTMcoor.df2 \n<-remove.duplicates(UTMcoor.df) writeOGR(UTMcoor.df2, \".\", \npaste0('final.ants'), driver=\"ESRI Shapefile\", overwrite=TRUE) #<END>\n\nAlexandre\n\n-- \nAlexandre dos Santos\nGeotechnologies and Spatial Statistics applied to Forest Entomology\nInstituto Federal de Mato Grosso (IFMT) - Campus Caceres\nCaixa Postal 244 (PO Box)\nAvenida dos Ramires, s/n - Vila Real\nCaceres - MT - CEP 78201-380 (ZIP code)\nPhone: (+55) 65 99686-6970 / (+55) 65 3221-2674\nLattes CV: http://lattes.cnpq.br/1360403201088680\nOrcID: orcid.org/0000-0001-8232-6722\nResearchGate: www.researchgate.net/profile/Alexandre_Santos10\nPublons: https://publons.com/researcher/3085587/alexandre-dos-santos/\n--\n\nEm 19/08/2020 20:49, Vijay Lulla escreveu:\n> Hi Alexandre,\n> As far as I can tell (mostly from reading the docs...no prior experience of\n> using multiplicity or superimpose myself) it appears that they are just\n> calculating the number of unique values for a combination of x,y coordinate\n> pairs. So, you can do this by using the group by semantics of either\n> tidyverse or SQL to generate the res.xy data.frame. Below is an example of\n> generating res.xy alternatively using data.table (I'm not as familiar with\n> tidyverse):\n>\n> target_sub1 <- rbindlist(lapply(target, as.data.table))\n> res1 <- target_sub1[, .(res=.N), by=.(x,y)]\n> res.xy1 = res1[target_sub1, on=c(\"x\",\"y\")]\n>\n> all.equal(res.xy, res.xy1, check.attributes=FALSE) # should return TRUE\n>\n> If you're using SQL then you just join the raw table with the grouped table\n> and you should get the table coordinates and occurrences. And, considering\n> the number of coordinates you have I recommend either data.table or SQL to\n> generate the final output.\n> HTH,\n> Vijay.\n>\n>\n> On Wed, Aug 19, 2020 at 4:22 PM ASANTOS via R-sig-Geo <\n> r-sig-geo at r-project.org> wrote:\n>\n>> Dear r-sig-geo Members,\n>>\n>>   ??? I'll like to read several shapefiles, count occurrences in the same\n>> coordinate and create a final shapefile with a threshold number of\n>> occurrences. I try to convert the shapefiles in ppp object (because I\n>> have some part of my data set in shapefile and another in ppp objects)\n>> and applied superimpose function without success. In my synthetic example :\n>>\n>> #Packages\n>> library(spatstat)\n>> library(dplyr)\n>> library(sp)\n>> library(rgdal)\n>> library(raster)\n>>\n>>\n>> #Point process example\n>> data(ants)\n>> ants.df<-as.data.frame(ants) #Convert to data frame\n>>\n>> # Sample 75% in original dataset, repeat this 9 times and create a\n>> shapefile in each loop\n>>\n>> for(i in 1:9){\n>> s.ants.df<-sample_frac(ants.df, 0.75)\n>> s.ants<-ppp(x=s.ants.df[,1],y=s.ants.df[,2],window=ants$window)#Create\n>> new ppp object\n>> sample.pts<-cbind(s.ants$x,s.ants$y)\n>> pts.sampling = SpatialPoints(sample.pts)\n>> UTMcoor.df <- SpatialPointsDataFrame(pts.sampling,\n>> data.frame(id=1:length(pts.sampling)))\n>> writeOGR(UTMcoor.df, \".\",paste0('sample.shape',i), driver=\"ESRI\n>> Shapefile\",overwrite=TRUE)\n>> }\n>>\n>> #Read all the 9 shapefiles created\n>> all_shape <- list.files(pattern=\"\\\\.shp$\", full.names=TRUE)\n>> all_shape_list <- lapply(all_shape, shapefile)\n>>\n>> #Convert shapefile to ppp statstat\n>> target <- vector(\"list\", length(all_shape_list))\n>> for(i in 1:length(all_shape_list)){\n>> target[[i]] <- ppp(x=all_shape_list[[i]]@coords[,1],\n>> y=all_shape_list[[i]]@coords[,2],window=ants$window)}\n>>\n>> #Join all ppp objects using multiplicity\n>> target_sub<-do.call(superimpose,target)\n>> res<-multiplicity(target_sub)\n>>\n>> #Occurrences in the same coordinate > 5\n>> res.xy<-as.data.frame(target_sub$x,target_sub$y,res)\n>> res_F<-res.xy[res.xy$res>5,]\n>>\n>> #Final shapefile\n>> final.pts<-cbind(res_F[,1],res_F[,2])\n>> pts.final = SpatialPoints(final.pts)\n>> UTMcoor.df <- SpatialPointsDataFrame(pts.final,\n>> data.frame(id=1:length(pts.final)))\n>> UTMcoor.df2 <-remove.duplicates(UTMcoor.df)\n>> writeOGR(UTMcoor.df2, \".\", paste0('final.ants'), driver=\"ESRI\n>> Shapefile\",overwrite=TRUE)\n>>\n>>\n>> This approach works very well in this synthetic example!!! But in my\n>> real data set a have the 99 shapefiles with 10^7 coordinates and when I\n>> try to use the do.call(superimpose,target) function my 32GB RAM memory\n>> crashed.\n>>\n>> Please any ideas for how I can create a new shapefile with a criteria\n>> occurrences exposed but less memory expensive than superimpose all the\n>> objects created?\n>>\n>> Thanks in advanced,\n>> Alexandre\n>>\n>> --\n>> Alexandre dos Santos\n>> Geotechnologies and Spatial Statistics applied to Forest Entomology\n>> Instituto Federal de Mato Grosso (IFMT) - Campus Caceres\n>> Caixa Postal 244 (PO Box)\n>> Avenida dos Ramires, s/n - Vila Real\n>> Caceres - MT - CEP 78201-380 (ZIP code)\n>> Phone: (+55) 65 99686-6970 / (+55) 65 3221-2674\n>> Lattes CV: http://lattes.cnpq.br/1360403201088680\n>> OrcID: orcid.org/0000-0001-8232-6722\n>> ResearchGate: www.researchgate.net/profile/Alexandre_Santos10\n>> Publons: https://publons.com/researcher/3085587/alexandre-dos-santos/\n>> --\n>>\n>>\n>>          [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks Vijay,\n\nNow works and I don't to need pass my shapefiles objects to ppp for \nusing the superimpose function. The solution now is:\n\n#Packages library(spatstat) library(dplyr) library(sp) library",
+      "thread_id": "thread-b4f7e74c8cbd",
+      "thread_depth": 2,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-e2b5e3a7005f",
+      "message_id": "<MEAPR01MB2232C1EADCBFB9236DBF7816A4580@MEAPR01MB2232.ausprd01.prod.outlook.com>",
+      "from_name": "Adrian Baddeley",
+      "from_email_hash": "85ec357ba14897ea1485b76adc52e1779ed73429f6a60f2f83ae052c1affd266",
+      "date": "2020-08-22T11:04:13Z",
+      "subject": "[R-sig-Geo] Count occurrences less memory expensive than superimpose function in several spatial objects",
+      "subject_clean": "Count occurrences less memory expensive than superimpose function in several spatial objects",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Alexandre Santos writes:\n\n > I'll like to read several shapefiles, count occurrences in the same\n > coordinate and create a final shapefile with a threshold number of\n > occurrences. I try to convert the shapefiles in ppp object (because I\n > have some part of my data set in shapefile and another in ppp objects)\n > and applied superimpose function [.... ]\n\nThe function 'superimpose' in the spatstat package is generic, with methods for 'ppp' and 'default'.\n\nYour example code applies 'superimpose' to a list of objects of class 'ppp'.\nThis uses the method 'superimpose.ppp' which applies to objects of class 'ppp'\nand constructs a new object of class 'ppp'. This task includes computing the appropriate \"observation window\"\n(a component of the 'ppp' structure) from the observation windows of the input patterns.\nThere is an option in 'superimpose.ppp' to specify the observation window of the result.\nYou didn't use this option, so you're expecting the function 'superimpose.ppp' to calculate the\nappropriate window. When you have many objects with complicated windows, this will take a lot of time.\n\nTo make this go faster you could simply extract the (x,y) coordinates of the objects using coords() or as.data.frame().\nThen call 'superimpose' on these data frames which will invoke superimpose.default which will concatenate the\n(x,y) coordinate lists very quickly.\n\nIf I understand correctly, your ultimate goal is to have a list of the unique (x,y) points and their multiplicities.\n\nIf you have already superimposed (concatenated) the x, y coordinate lists, then you can calculate the multiplicities\nwith 'table' , or the spatstat function 'uniquemap' (the latter function is extremely fast)\n\nHowever, you don't need to concatenate all the coordinates of all the point patterns before calculating multiplicities.\nIn big data applications it would be more efficient to process each point pattern dataset first,\ndetermining the unique (x,y) points and their multiplicities within each point pattern,\nand then to merge the results from the different point patterns. Something like this,\nif 'Plist' is your list of point patterns:\n\n       # process each point pattern\n        Vlist <- lapply(unname(Plist),\n        function(P) {\n               xy <- as.data.frame(P)[,c(\"x\",\"y\")]\n               um <- uniquemap(xy)\n               isun <- (um == seq_along(um))\n               mul <- table(um)\n               return(cbind(xy[isun, , drop=FALSE], m=mul))\n       })\n       # concatenate results from all patterns\n       V <- do.call(rbind, Vlist)\n       # find unique points\n       um <- uniquemap(V[,c(\"x\",\"y\")])\n       isun <- (um == seq_along(um))\n       U <- V[isun, c(\"x\", \"y\")]\n       m <- tapply(V$m, factor(um), sum)\n\nThen U contains the unique locations and m is the multiplicities.\n\n\n\n\nProf Adrian Baddeley HonDSc FAA\n\nJohn Curtin Distinguished Professor\n\nSchool of Electrical Engineering, Computing and Mathematical Sciences\n\nCurtin University, Perth, Western Australia\n\n\nI work Wednesdays and Thursdays only\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Alexandre Santos writes:\n\n > I'll like to read several shapefiles, count occurrences in the same\n > coordinate and create a final shapefile with a threshold number of\n > occurrences. I try to convert ",
+      "thread_id": "thread-e2b5e3a7005f",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-56b5fc087770",
+      "message_id": "<a3951256-697a-bb29-41f6-bf6b434dea51@yahoo.com.br>",
+      "from_name": "ASANTOS",
+      "from_email_hash": "9c328798782fdba9a5eb7253ec556480706d126689efca25bdfbcd5bdfb8dc96",
+      "date": "2020-08-27T21:17:58-04:00",
+      "subject": "[R-sig-Geo] Distance rule that filtering a set of points in \"ppp\" class by minimum or maximum distance",
+      "subject_clean": "Distance rule that filtering a set of points in \"ppp\" class by minimum or maximum distance",
+      "in_reply_to": null,
+      "references": [
+        "<a3951256-697a-bb29-41f6-bf6b434dea51.ref@yahoo.com.br>"
+      ],
+      "body_plain": "Dear R-Sig_Geo Members,\n\nI'd like to find a more simple way to filtering a set of points in a \n\"ppp\" object by minimum or maximum distance.\n\nIn my example using a ants (\"ppp\" object) in spatstat package:\n\n#Packages\nlibrary(spatstat)\nlibrary(sp)\n\n#Point process example\ndata(ants)\nstr(ants)\n#- attr(*, \"class\")= chr \"ppp\"\n\n#Computes the matrix of distances between all pairs of ants nests and \nselection of more than 20 m distance neighborhood\nants.df<-as.data.frame(ants)\ncoordinates(ants.df) <- ~x+y\nants.dmat <- spDists(ants.df) #Calculate a distance matrix using spDists\nmin.dist <- 20 #distance range\nants.dmat[ants.dmat <= min.dist] <- NA # Na for less than 20 meters\n\nHere yet I need to start a relative long code for identified columns \nwith NA in ants.dmat object, create a new data frame and than create a \nnew ppp object based in the coordinates and marks etc...\n\nIs there any more easy way for create a new \"ppp\" object just only \nspecified a distance rule that filtering a set of points in a original \n\"ppp\" object by minimum or maximum distance?\n\nThanks in advanced,\n\nAlexandre\n\n-- \nAlexandre dos Santos\nGeotechnologies and Spatial Statistics applied to Forest Entomology\nInstituto Federal de Mato Grosso (IFMT) - Campus Caceres\nCaixa Postal 244 (PO Box)\nAvenida dos Ramires, s/n - Vila Real\nCaceres - MT - CEP 78201-380 (ZIP code)\nPhone: (+55) 65 99686-6970 / (+55) 65 3221-2674\nLattes CV: http://lattes.cnpq.br/1360403201088680\nOrcID: orcid.org/0000-0001-8232-6722\nResearchGate: www.researchgate.net/profile/Alexandre_Santos10\nPublons: https://publons.com/researcher/3085587/alexandre-dos-santos/\n--\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear R-Sig_Geo Members,\n\nI'd like to find a more simple way to filtering a set of points in a \n\"ppp\" object by minimum or maximum distance.\n\nIn my example using a ants (\"ppp\" object) in spatstat packa",
+      "thread_id": "thread-56b5fc087770",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-d83c13d29fbd",
+      "message_id": "<F3950BB9-66DF-40A2-895A-37D17D40A11B@ucl.ac.uk>",
+      "from_name": "Bevan, Andrew",
+      "from_email_hash": "9651bb8ea28a96fde46c76a6c0920904c30bb801dfe495d7456eb91689503c24",
+      "date": "2020-08-28T01:18:59Z",
+      "subject": "[R-sig-Geo] c884",
+      "subject_clean": "c884",
+      "in_reply_to": "<a3951256-697a-bb29-41f6-bf6b434dea51@yahoo.com.br>",
+      "references": [
+        "<a3951256-697a-bb29-41f6-bf6b434dea51.ref@yahoo.com.br>",
+        "<a3951256-697a-bb29-41f6-bf6b434dea51@yahoo.com.br>"
+      ],
+      "body_plain": "I am on leave until mid-December 2020 and will only be checking emails very intermittently.\n\nIf you are a prospective student and have queries about the MSc in Computational Archaeology, please email Mark Lake (mark.lake at ucl.ac.uk).\n\nOn 28 Aug 2020, at 02:17, ASANTOS via R-sig-Geo <r-sig-geo at r-project.org> wrote:\n\nDear R-Sig_Geo Members,\n\nI'd like to find a more simple way to filtering a set of points in a\n\"ppp\" object by minimum or maximum distance.\n\nIn my example using a ants (\"ppp\" object) in spatstat package:\n\n#Packages\nlibrary(spatstat)\nlibrary(sp)\n\n#Point process example\ndata(ants)\nstr(ants)\n#- attr(*, \"class\")= chr \"ppp\"\n\n#Computes the matrix of distances between all pairs of ants nests and\nselection of more than 20 m distance neighborhood\nants.df<-as.data.frame(ants)\ncoordinates(ants.df) <- ~x+y\nants.dmat <- spDists(ants.df) #Calculate a distance matrix using spDists\nmin.dist <- 20 #distance range\nants.dmat[ants.dmat <= min.dist] <- NA # Na for less than 20 meters\n\nHere yet I need to start a relative long code for identified columns\nwith NA in ants.dmat object, create a new data frame and than create a\nnew ppp object based in the coordinates and marks etc...\n\nIs there any more easy way for create a new \"ppp\" object just only\nspecified a distance rule that filtering a set of points in a original\n\"ppp\" object by minimum or maximum distance?\n\nThanks in advanced,\n\nAlexandre\n\n--\nAlexandre dos Santos\nGeotechnologies and Spatial Statistics applied to Forest Entomology\nInstituto Federal de Mato Grosso (IFMT) - Campus Caceres\nCaixa Postal 244 (PO Box)\nAvenida dos Ramires, s/n - Vila Real\nCaceres - MT - CEP 78201-380 (ZIP code)\nPhone: (+55) 65 99686-6970 / (+55) 65 3221-2674\nLattes CV: https://eur01.safelinks.protection.outlook.com/?url=http%3A%2F%2Flattes.cnpq.br%2F1360403201088680&amp;data=02%7C01%7C%7Ca70f07e55bbb49d60ec008d84af0479d%7C1faf88fea9984c5b93c9210a11d9a5c2%7C0%7C0%7C637341743158107956&amp;sdata=yE4%2Fk76Ya9lntZoXFJsAUHg55rl%2BBVLBHuFk95Q4uc8%3D&amp;reserved=0\nOrcID: orcid.org/0000-0001-8232-6722\nResearchGate: https://eur01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.researchgate.net%2Fprofile%2FAlexandre_Santos10&amp;data=02%7C01%7C%7Ca70f07e55bbb49d60ec008d84af0479d%7C1faf88fea9984c5b93c9210a11d9a5c2%7C0%7C0%7C637341743158107956&amp;sdata=hLw2XYvqjhMn%2FuJOXmYu%2BHUKrLFgrZaxoSj6%2Bl%2BIm6Q%3D&amp;reserved=0\nPublons: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fpublons.com%2Fresearcher%2F3085587%2Falexandre-dos-santos%2F&amp;data=02%7C01%7C%7Ca70f07e55bbb49d60ec008d84af0479d%7C1faf88fea9984c5b93c9210a11d9a5c2%7C0%7C0%7C637341743158107956&amp;sdata=o%2FR75Akr9VE%2BF6GLEWHcEsbRtoRkLCkjsBk%2BXH%2F5yLc%3D&amp;reserved=0\n--\n\n\n        [[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=02%7C01%7C%7Ca70f07e55bbb49d60ec008d84af0479d%7C1faf88fea9984c5b93c9210a11d9a5c2%7C0%7C0%7C637341743158107956&amp;sdata=%2Fhi%2Fkda%2FniyJ0GuRmnZvoBPl92%2BwmORhGcZFNShiNRc%3D&amp;reserved=0\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am on leave until mid-December 2020 and will only be checking emails very intermittently.\n\nIf you are a prospective student and have queries about the MSc in Computational Archaeology, please email ",
+      "thread_id": "thread-56b5fc087770",
+      "thread_depth": 1,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-d91ea2fda482",
+      "message_id": "<20200828233741.7946b1a4@rolf-Latitude-E7470>",
+      "from_name": "Rolf Turner",
+      "from_email_hash": "85365426fbf4496cfac2415de7f8b411ee0133e9a8b2316f8939adcd30c2a157",
+      "date": "2020-08-28T23:37:41+12:00",
+      "subject": "[R-sig-Geo]  Distance rule that filtering a set of points in \"ppp\" class by minimum or maximum distance",
+      "subject_clean": "Distance rule that filtering a set of points in \"ppp\" class by minimum or maximum distance",
+      "in_reply_to": "<a3951256-697a-bb29-41f6-bf6b434dea51@yahoo.com.br>",
+      "references": [
+        "<a3951256-697a-bb29-41f6-bf6b434dea51.ref@yahoo.com.br>",
+        "<a3951256-697a-bb29-41f6-bf6b434dea51@yahoo.com.br>"
+      ],
+      "body_plain": "On Thu, 27 Aug 2020 21:17:58 -0400\nASANTOS via R-sig-Geo <r-sig-geo at r-project.org> wrote:\n\n> Dear R-Sig_Geo Members,\n> \n> I'd like to find a more simple way to filtering a set of points in a \n> \"ppp\" object by minimum or maximum distance.\n> \n> In my example using a ants (\"ppp\" object) in spatstat package:\n> \n> #Packages\n> library(spatstat)\n> library(sp)\n> \n> #Point process example\n> data(ants)\n> str(ants)\n> #- attr(*, \"class\")= chr \"ppp\"\n> \n> #Computes the matrix of distances between all pairs of ants nests and \n> selection of more than 20 m distance neighborhood\n> ants.df<-as.data.frame(ants)\n> coordinates(ants.df) <- ~x+y\n> ants.dmat <- spDists(ants.df) #Calculate a distance matrix using\n> spDists min.dist <- 20 #distance range\n> ants.dmat[ants.dmat <= min.dist] <- NA # Na for less than 20 meters\n> \n> Here yet I need to start a relative long code for identified columns \n> with NA in ants.dmat object, create a new data frame and than create\n> a new ppp object based in the coordinates and marks etc...\n> \n> Is there any more easy way for create a new \"ppp\" object just only \n> specified a distance rule that filtering a set of points in a\n> original \"ppp\" object by minimum or maximum distance?\n> \n> Thanks in advanced,\n> \n> Alexandre\n> \n\nIt's very easy! :-)\n\nddd <- nndist(ants)\nfarAnts <- ants[ddd >= 20]\n\ncheers,\n\nRolf\n\n-- \nHonorary Research Fellow\nDepartment of Statistics\nUniversity of Auckland\nPhone: +64-9-373-7599 ext. 88276",
+      "body_snippet": "On Thu, 27 Aug 2020 21:17:58 -0400\nASANTOS via R-sig-Geo <r-sig-geo at r-project.org> wrote:\n\n> Dear R-Sig_Geo Members,\n> \n> I'd like to find a more simple way to filtering a set of points in a \n> \"pp",
+      "thread_id": "thread-56b5fc087770",
+      "thread_depth": 1,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-3a529a982d7f",
+      "message_id": "<BN8PR17MB298010203675B068ED2902BF82520@BN8PR17MB2980.namprd17.prod.outlook.com>",
+      "from_name": "Pietro Andre Telatin Paschoalino",
+      "from_email_hash": "f843c821f566026f28ea9c2ba3fe4f79d8803e90f6069a2e18305879d8fda13d",
+      "date": "2020-08-28T18:09:55Z",
+      "subject": "[R-sig-Geo] Doubt in Extract function (raster)",
+      "subject_clean": "Doubt in Extract function (raster)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello everyone,\n\nI have a simple question regarding extracting climatic data from raster to shape (polygons).\n\nI am extracting climatic data, for example precipitation, from a raster (nc file) following the  structure:\n\nfn <-file.path (\"mypath\")\n\nncfile <- nc_open (fn)\nrasbrick <- stack (fn)\n\nhow it is a multiband and I want just a few of them:\n\nrasbrick <- rasbrick [[70:71]]\n\nfinally, I extract to the columns that I want:\n\nfor (i in 1: length (rasbrick @ layers)) {\n  weath_dt [, 4 + i] = raster :: extract (rasbrick [[i]], shape2, mean)\n}\n\nCould you confirm what I understand in the R documentation?\n\n  *   In this case, I am extracting only the simple average of the values ??of the cells that have centroid inside the polygon, correct?\n\n\n  *   Would you know to inform me why, when I ask for it to be weighted by the area of ??the cell within the polygon (weights = TRUE) I receive more missing values ??than asking just the average? Shouldn't it be the other way around?\n\nSorry if the question is too basic. If necessary I can try to do some example, but I believe it must be a \"general\" question, not depending much on my data, but maybe I'm wrong.\n\nThank you very much.\n\nPietro Andre Telatin Paschoalino\nDoutorando em Ci?ncias Econ?micas da Universidade Estadual de Maring? - PCE.\n\n[https://ipmcdn.avast.com/images/icons/icon-envelope-tick-round-orange-animated-no-repeat-v1.gif]<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail&utm_term=icon>    Virus-free. www.avast.com<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail&utm_term=link>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello everyone,\n\nI have a simple question regarding extracting climatic data from raster to shape (polygons).\n\nI am extracting climatic data, for example precipitation, from a raster (nc file) followi",
+      "thread_id": "thread-3a529a982d7f",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-f9305187a1f0",
+      "message_id": "<CALR7N39bhxyzMtHdOsB77Uao4nc79wNdm_TE1NPJ+70QfJkxBQ@mail.gmail.com>",
+      "from_name": "Sophie Bouchet",
+      "from_email_hash": "76ffed4b05a3a4b033e06a9decc80270e39134aee8fec9a2ccbddd9984fac80d",
+      "date": "2020-08-31T14:26:07+02:00",
+      "subject": "[R-sig-Geo] unsuscribe",
+      "subject_clean": "unsuscribe",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\n\nCan you unsubscribe me?\n\nThanks\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nCan you unsubscribe me?\n\nThanks\n\n\t[[alternative HTML version deleted]]",
+      "thread_id": "thread-f9305187a1f0",
+      "thread_depth": 0,
+      "month": "2020-08"
+    },
+    {
+      "id": "msg-baec0827de57",
+      "message_id": "<CAEMP_RurMvt1TyMk8rZQBkTSTG0kaoneiBXJVx6Qz1Zkk+rLrw@mail.gmail.com>",
+      "from_name": "Scott Haag",
+      "from_email_hash": "c2212559820613fd2ea6c9022ab58eb246d15e6cda7676a992537e2c8cdbb391",
+      "date": "2020-08-31T10:07:15-04:00",
+      "subject": "[R-sig-Geo] Could you please unsubscribe me?",
+      "subject_clean": "Could you please unsubscribe me?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "[[alternative HTML version deleted]]",
+      "body_snippet": "[[alternative HTML version deleted]]",
+      "thread_id": "thread-baec0827de57",
+      "thread_depth": 0,
+      "month": "2020-08"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-8ff28f5b6e40",
+      "subject": "Online study in the context of open reproducible research",
+      "message_count": 1,
+      "participants": [
+        "Markus Konkol"
+      ],
+      "started": "2020-08-03T09:51:40+02:00",
+      "last_reply": "2020-08-03T09:51:40+02:00",
+      "root_message_id": "msg-8ff28f5b6e40"
+    },
+    {
+      "id": "thread-13aee2755194",
+      "subject": "Doubt",
+      "message_count": 3,
+      "participants": [
+        "Pietro Andre Telatin Paschoalino",
+        "Roger Bivand",
+        "pietro_tei@to m@iii@g oii hotm@ii@com"
+      ],
+      "started": "2020-08-03T16:28:24+00:00",
+      "last_reply": "2020-08-03T18:56:59-03:00",
+      "root_message_id": "msg-13aee2755194"
+    },
+    {
+      "id": "thread-2a72f42c9bfd",
+      "subject": "library rgdal 1.5-15 installation failed",
+      "message_count": 2,
+      "participants": [
+        "Roger Bivand",
+        "massimo bressan"
+      ],
+      "started": "2020-08-06T11:19:29+02:00",
+      "last_reply": "2020-08-06T12:17:58+02:00",
+      "root_message_id": "msg-2a72f42c9bfd"
+    },
+    {
+      "id": "thread-2ae04841e429",
+      "subject": "Postdoctoral position (OpenGeoHub): integrated proximal and remote sensing of soil",
+      "message_count": 1,
+      "participants": [
+        "Tomislav Hengl"
+      ],
+      "started": "2020-08-06T12:11:30+02:00",
+      "last_reply": "2020-08-06T12:11:30+02:00",
+      "root_message_id": "msg-2ae04841e429"
+    },
+    {
+      "id": "thread-351aa287cd7b",
+      "subject": "How to change scale labeling in spplot",
+      "message_count": 4,
+      "participants": [
+        "Bacou, Melanie",
+        "Thomas Adams",
+        "Tim Salabim"
+      ],
+      "started": "2020-08-10T16:01:33-04:00",
+      "last_reply": "2020-08-10T23:14:36+01:00",
+      "root_message_id": "msg-351aa287cd7b"
+    },
+    {
+      "id": "thread-fb1f03030e4c",
+      "subject": "Mask from raster with less RAM",
+      "message_count": 8,
+      "participants": [
+        "Frederico Faleiro",
+        "Hugo Costa",
+        "Roger Bivand",
+        "Sourav Sarkar",
+        "Stephen Stewart"
+      ],
+      "started": "2020-08-11T17:43:13-03:00",
+      "last_reply": "2020-08-14T19:08:43-03:00",
+      "root_message_id": "msg-fb1f03030e4c"
+    },
+    {
+      "id": "thread-6d786ae77a18",
+      "subject": "Moran's I with Objects of Different Length",
+      "message_count": 4,
+      "participants": [
+        "Chanda Chiseni",
+        "Roger Bivand"
+      ],
+      "started": "2020-08-11T19:20:23+02:00",
+      "last_reply": "2020-08-12T18:34:32+02:00",
+      "root_message_id": "msg-6d786ae77a18"
+    },
+    {
+      "id": "thread-d293dda4f357",
+      "subject": "Spatial correlation between two 'sf' kriging objects",
+      "message_count": 2,
+      "participants": [
+        "Bede-Fazekas Ákos",
+        "Nicola Gambaro"
+      ],
+      "started": "2020-08-13T20:11:38+02:00",
+      "last_reply": "2020-08-14T14:01:43+02:00",
+      "root_message_id": "msg-d293dda4f357"
+    },
+    {
+      "id": "thread-65aca84f9d12",
+      "subject": "Testing.",
+      "message_count": 1,
+      "participants": [
+        "Rolf Turner"
+      ],
+      "started": "2020-08-15T16:29:20+12:00",
+      "last_reply": "2020-08-15T16:29:20+12:00",
+      "root_message_id": "msg-65aca84f9d12"
+    },
+    {
+      "id": "thread-19868a153c73",
+      "subject": "Spatial correlation between two 'sf' kriging objects",
+      "message_count": 2,
+      "participants": [
+        "Bede-Fazekas Ákos",
+        "Nicola Gambaro"
+      ],
+      "started": "2020-08-15T23:15:52+02:00",
+      "last_reply": "2020-08-17T09:00:44+02:00",
+      "root_message_id": "msg-19868a153c73"
+    },
+    {
+      "id": "thread-b4f7e74c8cbd",
+      "subject": "Count occurrences less memory expensive than superimpose function in several spatial objects",
+      "message_count": 3,
+      "participants": [
+        "ASANTOS",
+        "Vijay Lulla"
+      ],
+      "started": "2020-08-19T16:21:31-04:00",
+      "last_reply": "2020-08-20T11:18:19-04:00",
+      "root_message_id": "msg-b4f7e74c8cbd"
+    },
+    {
+      "id": "thread-e2b5e3a7005f",
+      "subject": "Count occurrences less memory expensive than superimpose function in several spatial objects",
+      "message_count": 1,
+      "participants": [
+        "Adrian Baddeley"
+      ],
+      "started": "2020-08-22T11:04:13+00:00",
+      "last_reply": "2020-08-22T11:04:13+00:00",
+      "root_message_id": "msg-e2b5e3a7005f"
+    },
+    {
+      "id": "thread-56b5fc087770",
+      "subject": "Distance rule that filtering a set of points in \"ppp\" class by minimum or maximum distance",
+      "message_count": 3,
+      "participants": [
+        "ASANTOS",
+        "Bevan, Andrew",
+        "Rolf Turner"
+      ],
+      "started": "2020-08-27T21:17:58-04:00",
+      "last_reply": "2020-08-28T23:37:41+12:00",
+      "root_message_id": "msg-56b5fc087770"
+    },
+    {
+      "id": "thread-3a529a982d7f",
+      "subject": "Doubt in Extract function (raster)",
+      "message_count": 1,
+      "participants": [
+        "Pietro Andre Telatin Paschoalino"
+      ],
+      "started": "2020-08-28T18:09:55+00:00",
+      "last_reply": "2020-08-28T18:09:55+00:00",
+      "root_message_id": "msg-3a529a982d7f"
+    },
+    {
+      "id": "thread-baec0827de57",
+      "subject": "Could you please unsubscribe me?",
+      "message_count": 1,
+      "participants": [
+        "Scott Haag"
+      ],
+      "started": "2020-08-31T10:07:15-04:00",
+      "last_reply": "2020-08-31T10:07:15-04:00",
+      "root_message_id": "msg-baec0827de57"
+    },
+    {
+      "id": "thread-f9305187a1f0",
+      "subject": "unsuscribe",
+      "message_count": 1,
+      "participants": [
+        "Sophie Bouchet"
+      ],
+      "started": "2020-08-31T14:26:07+02:00",
+      "last_reply": "2020-08-31T14:26:07+02:00",
+      "root_message_id": "msg-f9305187a1f0"
+    }
+  ]
+}

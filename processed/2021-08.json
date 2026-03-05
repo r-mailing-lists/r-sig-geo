@@ -1,0 +1,240 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2021-08",
+  "messages": [
+    {
+      "id": "msg-5152684d72c1",
+      "message_id": "<3233316e-8d-7add-454a-dd11da85658@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2021-08-01T16:20:07+02:00",
+      "subject": "[R-sig-Geo] question about accessing geometry from an sf object",
+      "subject_clean": "question about accessing geometry from an sf object",
+      "in_reply_to": "<CACxE24nntrgVeND4Xy2GEdAUt0Efx=deuUt+N6At1RAh_E_7kw@mail.gmail.com>",
+      "references": [
+        "<CACxE24nntrgVeND4Xy2GEdAUt0Efx=deuUt+N6At1RAh_E_7kw@mail.gmail.com>"
+      ],
+      "body_plain": "Hi Erin,\n\nMaybe consider st_coordinates() to get a matrix of coordinates, \npreferably from st_geometry() of the \"sf\" object, as hard-coding the name \nof the column containing the \"sfc\" object might be affected in some cases \nby a different name. Then subset the matrix as you wish.\n\nHope this helps,\n\nRoger\n\nOn Sun, 1 Aug 2021, Erin Hodgess wrote:\n\n> Hello!\n>\n> I have the following sf object:\n>\n>> bt.cent\n> Simple feature collection with 8 features and 1 field\n> Geometry type: POINT\n> Dimension:     XY\n> Bounding box:  xmin: -105.0746 ymin: 38.97641 xmax: -104.7917 ymax: 39.82494\n> CRS:           +proj=longlat +datum=WGS84 +no_defs\n>   rnorm.10.                   geometry\n> 1  0.3297790 POINT (-105.0746 38.97641)\n> 2         NA POINT (-104.7917 38.97641)\n> 3 -1.0734667 POINT (-105.0746 39.25925)\n> 4         NA POINT (-104.7917 39.25925)\n> 5 -0.1284898  POINT (-105.0746 39.5421)\n> 6 -0.4071287  POINT (-104.7917 39.5421)\n> 7         NA POINT (-105.0746 39.82494)\n> 8  1.4171128 POINT (-104.7917 39.82494)\n>\n> And I am accessing the geometry (to build covariances) as:\n>> bt.cent$geometry[[1]][1]\n> [1] -105.0746\n>> bt.cent$geometry[[1]][2]\n> [1] 38.97641\n>>\n>\n> Is that the best way to handle the geometry items, please?\n>\n> Thanks in advance,\n> Sincerely,\n> Erin\n>\n>\n> Erin Hodgess, PhD\n> mailto: erinm.hodgess at gmail.com\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "Hi Erin,\n\nMaybe consider st_coordinates() to get a matrix of coordinates, \npreferably from st_geometry() of the \"sf\" object, as hard-coding the name \nof the column containing the \"sfc\" object might be",
+      "thread_id": "thread-5152684d72c1",
+      "thread_depth": 0,
+      "month": "2021-08"
+    },
+    {
+      "id": "msg-a0065b5fbef3",
+      "message_id": "<CACxE24mE-dodBXc4k5GR1rUjSRwNHaib4pe69ZU2j=fYUW2nTw@mail.gmail.com>",
+      "from_name": "Erin Hodgess",
+      "from_email_hash": "ac639128bb874866c754d5dc13bfc895ac4076b6eeee1c741127f9a3c34dd723",
+      "date": "2021-08-01T09:38:05-06:00",
+      "subject": "[R-sig-Geo] question about accessing geometry from an sf object",
+      "subject_clean": "question about accessing geometry from an sf object",
+      "in_reply_to": "<3233316e-8d-7add-454a-dd11da85658@reclus2.nhh.no>",
+      "references": [
+        "<CACxE24nntrgVeND4Xy2GEdAUt0Efx=deuUt+N6At1RAh_E_7kw@mail.gmail.com>",
+        "<3233316e-8d-7add-454a-dd11da85658@reclus2.nhh.no>"
+      ],
+      "body_plain": "Thanks so much!\n\nThat?s perfect.\n\nSincerely,\nErin\n\nOn Sun, Aug 1, 2021 at 8:20 AM Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> Hi Erin,\n>\n> Maybe consider st_coordinates() to get a matrix of coordinates,\n> preferably from st_geometry() of the \"sf\" object, as hard-coding the name\n> of the column containing the \"sfc\" object might be affected in some cases\n> by a different name. Then subset the matrix as you wish.\n>\n> Hope this helps,\n>\n> Roger\n>\n> On Sun, 1 Aug 2021, Erin Hodgess wrote:\n>\n> > Hello!\n> >\n> > I have the following sf object:\n> >\n> >> bt.cent\n> > Simple feature collection with 8 features and 1 field\n> > Geometry type: POINT\n> > Dimension:     XY\n> > Bounding box:  xmin: -105.0746 ymin: 38.97641 xmax: -104.7917 ymax:\n> 39.82494\n> > CRS:           +proj=longlat +datum=WGS84 +no_defs\n> >   rnorm.10.                   geometry\n> > 1  0.3297790 POINT (-105.0746 38.97641)\n> > 2         NA POINT (-104.7917 38.97641)\n> > 3 -1.0734667 POINT (-105.0746 39.25925)\n> > 4         NA POINT (-104.7917 39.25925)\n> > 5 -0.1284898  POINT (-105.0746 39.5421)\n> > 6 -0.4071287  POINT (-104.7917 39.5421)\n> > 7         NA POINT (-105.0746 39.82494)\n> > 8  1.4171128 POINT (-104.7917 39.82494)\n> >\n> > And I am accessing the geometry (to build covariances) as:\n> >> bt.cent$geometry[[1]][1]\n> > [1] -105.0746\n> >> bt.cent$geometry[[1]][2]\n> > [1] 38.97641\n> >>\n> >\n> > Is that the best way to handle the geometry items, please?\n> >\n> > Thanks in advance,\n> > Sincerely,\n> > Erin\n> >\n> >\n> > Erin Hodgess, PhD\n> > mailto: erinm.hodgess at gmail.com\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n> --\n> Roger Bivand\n> Emeritus Professor\n> Department of Economics, Norwegian School of Economics,\n> Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\n> e-mail: Roger.Bivand at nhh.no\n> https://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n-- \nErin Hodgess, PhD\nmailto: erinm.hodgess at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks so much!\n\nThat?s perfect.\n\nSincerely,\nErin\n\nOn Sun, Aug 1, 2021 at 8:20 AM Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> Hi Erin,\n>\n> Maybe consider st_coordinates() to get a matrix of coordi",
+      "thread_id": "thread-5152684d72c1",
+      "thread_depth": 1,
+      "month": "2021-08"
+    },
+    {
+      "id": "msg-3e9e5a8c6723",
+      "message_id": "<1905185310.2804806.1628119244464@mail.yahoo.com>",
+      "from_name": "Germán Gallego",
+      "from_email_hash": "32a65870012e2a91fea7fccc89741c3ed1ebb4b940c7abccbc088139bc50bfd6",
+      "date": "2021-08-04T23:20:44Z",
+      "subject": "[R-sig-Geo] use nbcosts() with geographic openstreetmap distance as weights",
+      "subject_clean": "use nbcosts() with geographic openstreetmap distance as weights",
+      "in_reply_to": null,
+      "references": [
+        "<1905185310.2804806.1628119244464.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "I am conducting a study of Regionalization for the Ministry of Health of Colombia, using a MST and SKATER algorithm proposed by Assauncao. I have included 121 social and health covariates sumarized on a SImilarity matrix (After Explratory Factor analysis dimensiionality treatment).? that will be used into skater function.\nI am using a spatialpolygons dataframe with the 1081 municipalities? that I've proccesed with nb2list() function. Also I have the geographic distance? (extracted from openstreetmaps) from each capital city to anotherone, and I want to use it in nbcosts() function.? When? I read the nbcosts documentation I read that the data must be in dataframe class object but what i have is a dist object. The code does not show any error but im not sure how the dist object is computing it.\n> ady <- poly2nb(colpeso.utmsub)\n\n> adycostsdist <- nbcosts(ady,distkmat1)\n\n> class(distkmat1)\n[1] \"dist\"\nI suppose that I have to covert a dist object into a nbdist object? or find the way to use it properly into nbcost function,?\nI'll apreciate your opinion on this.?\nThank you in advance\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am conducting a study of Regionalization for the Ministry of Health of Colombia, using a MST and SKATER algorithm proposed by Assauncao. I have included 121 social and health covariates sumarized on",
+      "thread_id": "thread-3e9e5a8c6723",
+      "thread_depth": 0,
+      "month": "2021-08"
+    },
+    {
+      "id": "msg-7c6c41f588f5",
+      "message_id": "<dd669c96-b8fd-98fd-2171-ae10cff575ac@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2021-08-05T10:17:04+02:00",
+      "subject": "[R-sig-Geo]  use nbcosts() with geographic openstreetmap distance as weights",
+      "subject_clean": "use nbcosts() with geographic openstreetmap distance as weights",
+      "in_reply_to": "<1905185310.2804806.1628119244464@mail.yahoo.com>",
+      "references": [
+        "<1905185310.2804806.1628119244464.ref@mail.yahoo.com>",
+        "<1905185310.2804806.1628119244464@mail.yahoo.com>"
+      ],
+      "body_plain": "On Wed, 4 Aug 2021, Germ?n Gallego via R-sig-Geo wrote:\n\n> I am conducting a study of Regionalization for the Ministry of Health of \n> Colombia, using a MST and SKATER algorithm proposed by Assauncao. I have \n> included 121 social and health covariates sumarized on a SImilarity \n> matrix (After Explratory Factor analysis dimensiionality treatment). \n> that will be used into skater function.\n> I am using a spatialpolygons dataframe with the 1081 municipalities that \n> I've proccesed with nb2list() function. Also I have the geographic \n> distance (extracted from openstreetmaps) from each capital city to \n> anotherone, and I want to use it in nbcosts() function.  When I read the \n> nbcosts documentation I read that the data must be in dataframe class \n> object but what i have is a dist object. The code does not show any \n> error but im not sure how the dist object is computing it.\n>> ady <- poly2nb(colpeso.utmsub)\n>\n>> adycostsdist <- nbcosts(ady,distkmat1)\n>\n>> class(distkmat1)\n> [1] \"dist\"\n\n> I suppose that I have to covert a dist object into a nbdist object? or \n> find the way to use it properly into nbcost function,\n\nNo, this is not a sensible way of using this approach. The data.frame \nshould contain observations for the spatial objects on variables relevant \nfor the regionalization being undertaken, not a distance matrix. These \nvariables might be demographic, socio-economic, or others relevant to the \nregionalization. It is the \"distance\" in variable, not geographic, space \nthat is used to weight the edges of the graph, so that less similar edges \nare dropped and more similar edges retained. The geographical distances \nbetween observations are implicit in the neighbour graph - see \nhttps://keen-swartz-3146c4.netlify.app/area.html#higher-order-neighbours \nfor a discussion. Run example(skater) to see that four variables are used \nin the dpad data.frame.\n\nHope this clarifies,\n\nRoger\n\n> I'll apreciate your opinion on this.?\n> Thank you in advance\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 4 Aug 2021, Germ?n Gallego via R-sig-Geo wrote:\n\n> I am conducting a study of Regionalization for the Ministry of Health of \n> Colombia, using a MST and SKATER algorithm proposed by Assauncao.",
+      "thread_id": "thread-3e9e5a8c6723",
+      "thread_depth": 1,
+      "month": "2021-08"
+    },
+    {
+      "id": "msg-986b395fe003",
+      "message_id": "<CAAKwTDEeiNdDLs8FnqLMraDvS1kvbio_fV8e-sjcGJTVfOtjTA@mail.gmail.com>",
+      "from_name": "Gabriel Cotlier",
+      "from_email_hash": "fe6b7ece94315f2ba414b8c7053cca118260d4229688ad762179e180bbdf3aaf",
+      "date": "2021-08-12T12:02:03+03:00",
+      "subject": "[R-sig-Geo] question on the use of Leaflet for plotting points and rater GeoTIFF",
+      "subject_clean": "question on the use of Leaflet for plotting points and rater GeoTIFF",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello.\n\nI would like to use Leaflet package to plot over a Google Satellite base\nmap :\n\n1.  a shapefile of polygon\n2.  a shapefile of points\n3,  a GeoTIFF image\n\nI could use the Leaflet package to get plotted successfully only the first\nItem of the list above with the following code :\n\nrequire(rgdal)\nlibrary(rgeos)\nlibrary(raster)\n\nshapeData <- raster::shapefile('Seattle_boundries.shp')\nshapeData <- spTransform(shapeData, CRS(\"+proj=longlat +ellps=GRS80\"))\n\nleaflet() %>%\n  addTiles(urlTemplate = \"\nhttps://mts1.google.com/vt/lyrs=s&hl=en&src=app&x={x}&y={y}&z={z}&s=G\",\nattribution = 'Google')  %>%\n  addPolygons(data=shapeData,weight=5,col = 'red')\n\nHow is it possible to find a way to complete the code above for plotting\nthe item 2 and 3 as well in the same Leaflet figure.\n\nIs there any possible solution that can enable this task?\n\nThanks for your help.\n\nKind regards\nGabriel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello.\n\nI would like to use Leaflet package to plot over a Google Satellite base\nmap :\n\n1.  a shapefile of polygon\n2.  a shapefile of points\n3,  a GeoTIFF image\n\nI could use the Leaflet package to get",
+      "thread_id": "thread-986b395fe003",
+      "thread_depth": 0,
+      "month": "2021-08"
+    },
+    {
+      "id": "msg-12448fce15ef",
+      "message_id": "<CALrbzg3JKsLH3_pAN72WjPWQcyVNM5Grfs9mz_Hwo+mnhVsGyw@mail.gmail.com>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "715c796f300568f44190a795995f5d8c66b19c1f8bc2156d2221fcda4991bb5a",
+      "date": "2021-08-12T10:07:31-04:00",
+      "subject": "[R-sig-Geo]  question on the use of Leaflet for plotting points and rater GeoTIFF",
+      "subject_clean": "question on the use of Leaflet for plotting points and rater GeoTIFF",
+      "in_reply_to": "<CAAKwTDEeiNdDLs8FnqLMraDvS1kvbio_fV8e-sjcGJTVfOtjTA@mail.gmail.com>",
+      "references": [
+        "<CAAKwTDEeiNdDLs8FnqLMraDvS1kvbio_fV8e-sjcGJTVfOtjTA@mail.gmail.com>"
+      ],
+      "body_plain": "Hi,\n\nSee the \"markers\" and \"raster images\" sections here\nhttp://rstudio.github.io/leaflet/markers.html\n\nCheers,\nBen\n\nOn Thu, Aug 12, 2021 at 5:02 AM Gabriel Cotlier <gabiklm01 at gmail.com> wrote:\n\n> Hello.\n>\n> I would like to use Leaflet package to plot over a Google Satellite base\n> map :\n>\n> 1.  a shapefile of polygon\n> 2.  a shapefile of points\n> 3,  a GeoTIFF image\n>\n> I could use the Leaflet package to get plotted successfully only the first\n> Item of the list above with the following code :\n>\n> require(rgdal)\n> library(rgeos)\n> library(raster)\n>\n> shapeData <- raster::shapefile('Seattle_boundries.shp')\n> shapeData <- spTransform(shapeData, CRS(\"+proj=longlat +ellps=GRS80\"))\n>\n> leaflet() %>%\n>   addTiles(urlTemplate = \"\n> https://mts1.google.com/vt/lyrs=s&hl=en&src=app&x={x}&y={y}&z={z}&s=G\",\n> attribution = 'Google')  %>%\n>   addPolygons(data=shapeData,weight=5,col = 'red')\n>\n> How is it possible to find a way to complete the code above for plotting\n> the item 2 and 3 as well in the same Leaflet figure.\n>\n> Is there any possible solution that can enable this task?\n>\n> Thanks for your help.\n>\n> Kind regards\n> Gabriel\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \nBen Tupper (he/him)\nBigelow Laboratory for Ocean Science\nEast Boothbay, Maine\nhttp://www.bigelow.org/\nhttps://eco.bigelow.org\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nSee the \"markers\" and \"raster images\" sections here\nhttp://rstudio.github.io/leaflet/markers.html\n\nCheers,\nBen\n\nOn Thu, Aug 12, 2021 at 5:02 AM Gabriel Cotlier <gabiklm01 at gmail.com> wrote:\n\n> ",
+      "thread_id": "thread-986b395fe003",
+      "thread_depth": 1,
+      "month": "2021-08"
+    },
+    {
+      "id": "msg-9c916aaf2537",
+      "message_id": "<CAAKwTDF4gtoc53x3zyKZAcDWWgx70WsaPVpQGi1q_on3T+a+aQ@mail.gmail.com>",
+      "from_name": "Gabriel Cotlier",
+      "from_email_hash": "fe6b7ece94315f2ba414b8c7053cca118260d4229688ad762179e180bbdf3aaf",
+      "date": "2021-08-12T21:24:21+03:00",
+      "subject": "[R-sig-Geo]  question on the use of Leaflet for plotting points and rater GeoTIFF",
+      "subject_clean": "question on the use of Leaflet for plotting points and rater GeoTIFF",
+      "in_reply_to": "<CALrbzg3JKsLH3_pAN72WjPWQcyVNM5Grfs9mz_Hwo+mnhVsGyw@mail.gmail.com>",
+      "references": [
+        "<CAAKwTDEeiNdDLs8FnqLMraDvS1kvbio_fV8e-sjcGJTVfOtjTA@mail.gmail.com>",
+        "<CALrbzg3JKsLH3_pAN72WjPWQcyVNM5Grfs9mz_Hwo+mnhVsGyw@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Ben,\n\nThanks a lot for your help!\nActually it worked very well for me with the link you gave me.\nHowever, for some reason the numbers of the values in color scale goes from\nthe lower values set at the top  (blue) of the sacale to the higher values\nset at the bottom (red ) and it would be better for me if it goes from from\nthe lower values in the bottom (blue) to higher value in the top (red),\nsince is temperature going from the lower to the higher.\n Another issue I found a bit problematic for me to modify is that the color\npalette is too \"light\", for instance not like the color palette \"Jet\" in\nMatlab or Python, it seems as if the intensity of the colors of the\ntemperature colors is low or light maybe is a transparency and should\nchange opacity ....?\n\nMaybe you or somebody knows a possible way to improve these two issues a\nbit ?\n\nHere is the code :\n\n# color palettes\n# pal <- colorNumeric(palette = \"Spectral\", values(raster), na.color =\n\"transparent\" , reverse = TRUE)\npal <- colorNumeric(palette = \"RdYlBu\", values(raster), na.color =\n\"transparent\" , reverse = TRUE)\n\n# plot map\nleaflet() %>%\n  addTiles(urlTemplate = \"\nhttps://mts1.google.com/vt/lyrs=s&hl=en&src=app&x={x}&y={y}&z={z}&s=G\",\nattribution = 'Google')  %>%\n  addPolygons(data = polygon,weight=5,col = 'black')  %>%\n  addCircles(data = points, color = \"White\", radius = 500, fillOpacity =\n1,opacity = 9)%>%\n  addRasterImage(raster, project = FALSE, colors = pal) %>%\n  addLegend(pal = pal, values = values(raster), title = \"Temperature\",\nopacity = 9)  # ,labFormat = labelFormat(transform = function(x) sort(x,\ndecreasing = TRUE)))\n\nThanks a lot again for your help.\nKind regards,\nGabriel\n\n\nOn Thu, Aug 12, 2021 at 5:07 PM Ben Tupper <btupper at bigelow.org> wrote:\n\n> Hi,\n>\n> See the \"markers\" and \"raster images\" sections here\n> http://rstudio.github.io/leaflet/markers.html\n>\n> Cheers,\n> Ben\n>\n> On Thu, Aug 12, 2021 at 5:02 AM Gabriel Cotlier <gabiklm01 at gmail.com>\n> wrote:\n>\n>> Hello.\n>>\n>> I would like to use Leaflet package to plot over a Google Satellite base\n>> map :\n>>\n>> 1.  a shapefile of polygon\n>> 2.  a shapefile of points\n>> 3,  a GeoTIFF image\n>>\n>> I could use the Leaflet package to get plotted successfully only the first\n>> Item of the list above with the following code :\n>>\n>> require(rgdal)\n>> library(rgeos)\n>> library(raster)\n>>\n>> shapeData <- raster::shapefile('Seattle_boundries.shp')\n>> shapeData <- spTransform(shapeData, CRS(\"+proj=longlat +ellps=GRS80\"))\n>>\n>> leaflet() %>%\n>>   addTiles(urlTemplate = \"\n>> https://mts1.google.com/vt/lyrs=s&hl=en&src=app&x={x}&y={y}&z={z}&s=G\",\n>> attribution = 'Google')  %>%\n>>   addPolygons(data=shapeData,weight=5,col = 'red')\n>>\n>> How is it possible to find a way to complete the code above for plotting\n>> the item 2 and 3 as well in the same Leaflet figure.\n>>\n>> Is there any possible solution that can enable this task?\n>>\n>> Thanks for your help.\n>>\n>> Kind regards\n>> Gabriel\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>\n> --\n> Ben Tupper (he/him)\n> Bigelow Laboratory for Ocean Science\n> East Boothbay, Maine\n> http://www.bigelow.org/\n> https://eco.bigelow.org\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Ben,\n\nThanks a lot for your help!\nActually it worked very well for me with the link you gave me.\nHowever, for some reason the numbers of the values in color scale goes from\nthe lower values set a",
+      "thread_id": "thread-986b395fe003",
+      "thread_depth": 2,
+      "month": "2021-08"
+    },
+    {
+      "id": "msg-0d5d38fcaa8b",
+      "message_id": "<CALrbzg2ChpLDrzD0wCkn5xH6z5=ktS4oWrS7g74xq9ginPvurQ@mail.gmail.com>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "715c796f300568f44190a795995f5d8c66b19c1f8bc2156d2221fcda4991bb5a",
+      "date": "2021-08-13T08:00:27-04:00",
+      "subject": "[R-sig-Geo]  question on the use of Leaflet for plotting points and rater GeoTIFF",
+      "subject_clean": "question on the use of Leaflet for plotting points and rater GeoTIFF",
+      "in_reply_to": "<CAAKwTDF4gtoc53x3zyKZAcDWWgx70WsaPVpQGi1q_on3T+a+aQ@mail.gmail.com>",
+      "references": [
+        "<CAAKwTDEeiNdDLs8FnqLMraDvS1kvbio_fV8e-sjcGJTVfOtjTA@mail.gmail.com>",
+        "<CALrbzg3JKsLH3_pAN72WjPWQcyVNM5Grfs9mz_Hwo+mnhVsGyw@mail.gmail.com>",
+        "<CAAKwTDF4gtoc53x3zyKZAcDWWgx70WsaPVpQGi1q_on3T+a+aQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hi,\n\nI don't think we can run the code since it isn't reproducible (see\nhttps://CRAN.R-project.org/package=reprex\n<https://cran.r-project.org/package=reprex> for help with that.)  But here\nare some hints:\n\nflipped color bar - I love to use RSeek.org which is an R-centric search\nengine -  you may want to bookmark it or add it to your search engine list\nif your browser supports that. https://rseek.org/?q=leaflet+flip+color+bar\nThis search hits a number of discussions on flipping the color bar.\n\ncolor intensity - oooooh, there is so much discussion in the world about\ncolors.  By default raster images have opacity of 1 (fully opaque) when\nrendered in leaflet, so really it is a matter of finding the color table\nyou want and then applying colorNumeric judiciously.  For me it comes down\nto trial and error.  If you are looking for eye pop! then perhaps check out\nthe viridis options.  See ?colorNumeric\n\nCheers,\nBen\n\nOn Thu, Aug 12, 2021 at 2:24 PM Gabriel Cotlier <gabiklm01 at gmail.com> wrote:\n\n> Dear Ben,\n>\n> Thanks a lot for your help!\n> Actually it worked very well for me with the link you gave me.\n> However, for some reason the numbers of the values in color scale goes\n> from the lower values set at the top  (blue) of the sacale to the\n> higher values set at the bottom (red ) and it would be better for me if it\n> goes from from the lower values in the bottom (blue) to higher value in the\n> top (red), since is temperature going from the lower to the higher.\n>  Another issue I found a bit problematic for me to modify is that the\n> color palette is too \"light\", for instance not like the color palette \"Jet\"\n> in Matlab or Python, it seems as if the intensity of the colors of the\n> temperature colors is low or light maybe is a transparency and should\n> change opacity ....?\n>\n> Maybe you or somebody knows a possible way to improve these two issues a\n> bit ?\n>\n> Here is the code :\n>\n> # color palettes\n> # pal <- colorNumeric(palette = \"Spectral\", values(raster), na.color =\n> \"transparent\" , reverse = TRUE)\n> pal <- colorNumeric(palette = \"RdYlBu\", values(raster), na.color =\n> \"transparent\" , reverse = TRUE)\n>\n> # plot map\n> leaflet() %>%\n>   addTiles(urlTemplate = \"\n> https://mts1.google.com/vt/lyrs=s&hl=en&src=app&x={x}&y={y}&z={z}&s=G\",\n> attribution = 'Google')  %>%\n>   addPolygons(data = polygon,weight=5,col = 'black')  %>%\n>   addCircles(data = points, color = \"White\", radius = 500, fillOpacity =\n> 1,opacity = 9)%>%\n>   addRasterImage(raster, project = FALSE, colors = pal) %>%\n>   addLegend(pal = pal, values = values(raster), title = \"Temperature\",\n> opacity = 9)  # ,labFormat = labelFormat(transform = function(x) sort(x,\n> decreasing = TRUE)))\n>\n> Thanks a lot again for your help.\n> Kind regards,\n> Gabriel\n>\n>\n> On Thu, Aug 12, 2021 at 5:07 PM Ben Tupper <btupper at bigelow.org> wrote:\n>\n>> Hi,\n>>\n>> See the \"markers\" and \"raster images\" sections here\n>> http://rstudio.github.io/leaflet/markers.html\n>>\n>> Cheers,\n>> Ben\n>>\n>> On Thu, Aug 12, 2021 at 5:02 AM Gabriel Cotlier <gabiklm01 at gmail.com>\n>> wrote:\n>>\n>>> Hello.\n>>>\n>>> I would like to use Leaflet package to plot over a Google Satellite base\n>>> map :\n>>>\n>>> 1.  a shapefile of polygon\n>>> 2.  a shapefile of points\n>>> 3,  a GeoTIFF image\n>>>\n>>> I could use the Leaflet package to get plotted successfully only the\n>>> first\n>>> Item of the list above with the following code :\n>>>\n>>> require(rgdal)\n>>> library(rgeos)\n>>> library(raster)\n>>>\n>>> shapeData <- raster::shapefile('Seattle_boundries.shp')\n>>> shapeData <- spTransform(shapeData, CRS(\"+proj=longlat +ellps=GRS80\"))\n>>>\n>>> leaflet() %>%\n>>>   addTiles(urlTemplate = \"\n>>> https://mts1.google.com/vt/lyrs=s&hl=en&src=app&x={x}&y={y}&z={z}&s=G\",\n>>> attribution = 'Google')  %>%\n>>>   addPolygons(data=shapeData,weight=5,col = 'red')\n>>>\n>>> How is it possible to find a way to complete the code above for plotting\n>>> the item 2 and 3 as well in the same Leaflet figure.\n>>>\n>>> Is there any possible solution that can enable this task?\n>>>\n>>> Thanks for your help.\n>>>\n>>> Kind regards\n>>> Gabriel\n>>>\n>>>         [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>\n>>\n>> --\n>> Ben Tupper (he/him)\n>> Bigelow Laboratory for Ocean Science\n>> East Boothbay, Maine\n>> http://www.bigelow.org/\n>> https://eco.bigelow.org\n>>\n>>\n\n-- \nBen Tupper (he/him)\nBigelow Laboratory for Ocean Science\nEast Boothbay, Maine\nhttp://www.bigelow.org/\nhttps://eco.bigelow.org\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nI don't think we can run the code since it isn't reproducible (see\nhttps://CRAN.R-project.org/package=reprex\n<https://cran.r-project.org/package=reprex> for help with that.)  But here\nare some hi",
+      "thread_id": "thread-986b395fe003",
+      "thread_depth": 3,
+      "month": "2021-08"
+    },
+    {
+      "id": "msg-2cd85b4012da",
+      "message_id": "<CAAKwTDEde4qZokwrHf_76M2VR9Vw2Qj_4CA0CYGDmfrrdY8CXQ@mail.gmail.com>",
+      "from_name": "Gabriel Cotlier",
+      "from_email_hash": "fe6b7ece94315f2ba414b8c7053cca118260d4229688ad762179e180bbdf3aaf",
+      "date": "2021-08-13T18:47:46+03:00",
+      "subject": "[R-sig-Geo]  question on the use of Leaflet for plotting points and rater GeoTIFF",
+      "subject_clean": "question on the use of Leaflet for plotting points and rater GeoTIFF",
+      "in_reply_to": "<CALrbzg2ChpLDrzD0wCkn5xH6z5=ktS4oWrS7g74xq9ginPvurQ@mail.gmail.com>",
+      "references": [
+        "<CAAKwTDEeiNdDLs8FnqLMraDvS1kvbio_fV8e-sjcGJTVfOtjTA@mail.gmail.com>",
+        "<CALrbzg3JKsLH3_pAN72WjPWQcyVNM5Grfs9mz_Hwo+mnhVsGyw@mail.gmail.com>",
+        "<CAAKwTDF4gtoc53x3zyKZAcDWWgx70WsaPVpQGi1q_on3T+a+aQ@mail.gmail.com>",
+        "<CALrbzg2ChpLDrzD0wCkn5xH6z5=ktS4oWrS7g74xq9ginPvurQ@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Ben,\n\nThanks a lot for your help with the useful and appropriate link you sent\nme. There was the solution for the flipping of the colorbar.\nI could finally flip the color bar and it worked out correctly. I also\nfound a little bit less opaque color palette, that is the matlab \"jet\"\ncolor in the R \"matlab\" package, but it is still a bit opaque for\nmy personal taste. I will give it some trials and errors with many\ndifferent opacities to see what happened.\n\nThanks a lot again for your helpful advice and guidance,\n\nKind regards,\nGabriel\n\n\n\n\nOn Fri, Aug 13, 2021 at 3:00 PM Ben Tupper <btupper at bigelow.org> wrote:\n\n> Hi,\n>\n> I don't think we can run the code since it isn't reproducible (see\n> https://CRAN.R-project.org/package=reprex\n> <https://cran.r-project.org/package=reprex> for help with that.)  But\n> here are some hints:\n>\n> flipped color bar - I love to use RSeek.org which is an R-centric search\n> engine -  you may want to bookmark it or add it to your search engine list\n> if your browser supports that. https://rseek.org/?q=leaflet+flip+color+bar\n> This search hits a number of discussions on flipping the color bar.\n>\n> color intensity - oooooh, there is so much discussion in the world about\n> colors.  By default raster images have opacity of 1 (fully opaque) when\n> rendered in leaflet, so really it is a matter of finding the color table\n> you want and then applying colorNumeric judiciously.  For me it comes down\n> to trial and error.  If you are looking for eye pop! then perhaps check out\n> the viridis options.  See ?colorNumeric\n>\n> Cheers,\n> Ben\n>\n> On Thu, Aug 12, 2021 at 2:24 PM Gabriel Cotlier <gabiklm01 at gmail.com>\n> wrote:\n>\n>> Dear Ben,\n>>\n>> Thanks a lot for your help!\n>> Actually it worked very well for me with the link you gave me.\n>> However, for some reason the numbers of the values in color scale goes\n>> from the lower values set at the top  (blue) of the sacale to the\n>> higher values set at the bottom (red ) and it would be better for me if it\n>> goes from from the lower values in the bottom (blue) to higher value in the\n>> top (red), since is temperature going from the lower to the higher.\n>>  Another issue I found a bit problematic for me to modify is that the\n>> color palette is too \"light\", for instance not like the color palette \"Jet\"\n>> in Matlab or Python, it seems as if the intensity of the colors of the\n>> temperature colors is low or light maybe is a transparency and should\n>> change opacity ....?\n>>\n>> Maybe you or somebody knows a possible way to improve these two issues a\n>> bit ?\n>>\n>> Here is the code :\n>>\n>> # color palettes\n>> # pal <- colorNumeric(palette = \"Spectral\", values(raster), na.color =\n>> \"transparent\" , reverse = TRUE)\n>> pal <- colorNumeric(palette = \"RdYlBu\", values(raster), na.color =\n>> \"transparent\" , reverse = TRUE)\n>>\n>> # plot map\n>> leaflet() %>%\n>>   addTiles(urlTemplate = \"\n>> https://mts1.google.com/vt/lyrs=s&hl=en&src=app&x={x}&y={y}&z={z}&s=G\",\n>> attribution = 'Google')  %>%\n>>   addPolygons(data = polygon,weight=5,col = 'black')  %>%\n>>   addCircles(data = points, color = \"White\", radius = 500, fillOpacity =\n>> 1,opacity = 9)%>%\n>>   addRasterImage(raster, project = FALSE, colors = pal) %>%\n>>   addLegend(pal = pal, values = values(raster), title = \"Temperature\",\n>> opacity = 9)  # ,labFormat = labelFormat(transform = function(x) sort(x,\n>> decreasing = TRUE)))\n>>\n>> Thanks a lot again for your help.\n>> Kind regards,\n>> Gabriel\n>>\n>>\n>> On Thu, Aug 12, 2021 at 5:07 PM Ben Tupper <btupper at bigelow.org> wrote:\n>>\n>>> Hi,\n>>>\n>>> See the \"markers\" and \"raster images\" sections here\n>>> http://rstudio.github.io/leaflet/markers.html\n>>>\n>>> Cheers,\n>>> Ben\n>>>\n>>> On Thu, Aug 12, 2021 at 5:02 AM Gabriel Cotlier <gabiklm01 at gmail.com>\n>>> wrote:\n>>>\n>>>> Hello.\n>>>>\n>>>> I would like to use Leaflet package to plot over a Google Satellite base\n>>>> map :\n>>>>\n>>>> 1.  a shapefile of polygon\n>>>> 2.  a shapefile of points\n>>>> 3,  a GeoTIFF image\n>>>>\n>>>> I could use the Leaflet package to get plotted successfully only the\n>>>> first\n>>>> Item of the list above with the following code :\n>>>>\n>>>> require(rgdal)\n>>>> library(rgeos)\n>>>> library(raster)\n>>>>\n>>>> shapeData <- raster::shapefile('Seattle_boundries.shp')\n>>>> shapeData <- spTransform(shapeData, CRS(\"+proj=longlat +ellps=GRS80\"))\n>>>>\n>>>> leaflet() %>%\n>>>>   addTiles(urlTemplate = \"\n>>>> https://mts1.google.com/vt/lyrs=s&hl=en&src=app&x={x}&y={y}&z={z}&s=G\",\n>>>> attribution = 'Google')  %>%\n>>>>   addPolygons(data=shapeData,weight=5,col = 'red')\n>>>>\n>>>> How is it possible to find a way to complete the code above for plotting\n>>>> the item 2 and 3 as well in the same Leaflet figure.\n>>>>\n>>>> Is there any possible solution that can enable this task?\n>>>>\n>>>> Thanks for your help.\n>>>>\n>>>> Kind regards\n>>>> Gabriel\n>>>>\n>>>>         [[alternative HTML version deleted]]\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>\n>>>\n>>>\n>>> --\n>>> Ben Tupper (he/him)\n>>> Bigelow Laboratory for Ocean Science\n>>> East Boothbay, Maine\n>>> http://www.bigelow.org/\n>>> https://eco.bigelow.org\n>>>\n>>>\n>\n> --\n> Ben Tupper (he/him)\n> Bigelow Laboratory for Ocean Science\n> East Boothbay, Maine\n> http://www.bigelow.org/\n> https://eco.bigelow.org\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Ben,\n\nThanks a lot for your help with the useful and appropriate link you sent\nme. There was the solution for the flipping of the colorbar.\nI could finally flip the color bar and it worked out co",
+      "thread_id": "thread-986b395fe003",
+      "thread_depth": 4,
+      "month": "2021-08"
+    },
+    {
+      "id": "msg-8fe307f555fe",
+      "message_id": "<9815e283-3eb8-a778-5f21-2ccb21bfc288@yeah.net>",
+      "from_name": "Jinsong Zhao",
+      "from_email_hash": "fa59c780d79254f01106f40cecbad06a9c9689427386ee75ee32092605de77ba",
+      "date": "2021-08-19T22:22:01+08:00",
+      "subject": "[R-sig-Geo] Uncertainty of a spatial model",
+      "subject_clean": "Uncertainty of a spatial model",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi there,\n\nI have encountered difficulties in determining the uncertainty of a \nspatial model. I hope you would like to share your knowledge and help \nme. Thanks in advance!\n\nHere we assume that we have three input layers, A, B, and C, and one \noutput layer R with R = A + B + C. I hope to estimate how the \nuncertainty of input layers propagates to the model output.\n\nI learned that the input layer could be treated as a spatial random \nfield, and the uncertainty could be estimated with MCMC algorithm[1]. \nHowever, I don't know how to include the spatial component of the model \ninto the MCMC.\n\nAny hint will be really appreciated.\n\nBest wishes,\nJinsong\n\n[1] Supplementary Note 4 (page 8 and 9) in \nhttps://static-content.springer.com/esm/art%3A10.1038%2Fs41467-017-02142-7/MediaObjects/41467_2017_2142_MOESM1_ESM.pdf",
+      "body_snippet": "Hi there,\n\nI have encountered difficulties in determining the uncertainty of a \nspatial model. I hope you would like to share your knowledge and help \nme. Thanks in advance!\n\nHere we assume that we ha",
+      "thread_id": "thread-8fe307f555fe",
+      "thread_depth": 0,
+      "month": "2021-08"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-5152684d72c1",
+      "subject": "question about accessing geometry from an sf object",
+      "message_count": 2,
+      "participants": [
+        "Erin Hodgess",
+        "Roger Bivand"
+      ],
+      "started": "2021-08-01T16:20:07+02:00",
+      "last_reply": "2021-08-01T09:38:05-06:00",
+      "root_message_id": "msg-5152684d72c1"
+    },
+    {
+      "id": "thread-3e9e5a8c6723",
+      "subject": "use nbcosts() with geographic openstreetmap distance as weights",
+      "message_count": 2,
+      "participants": [
+        "Germán Gallego",
+        "Roger Bivand"
+      ],
+      "started": "2021-08-04T23:20:44+00:00",
+      "last_reply": "2021-08-05T10:17:04+02:00",
+      "root_message_id": "msg-3e9e5a8c6723"
+    },
+    {
+      "id": "thread-986b395fe003",
+      "subject": "question on the use of Leaflet for plotting points and rater GeoTIFF",
+      "message_count": 5,
+      "participants": [
+        "Ben Tupper",
+        "Gabriel Cotlier"
+      ],
+      "started": "2021-08-12T12:02:03+03:00",
+      "last_reply": "2021-08-13T18:47:46+03:00",
+      "root_message_id": "msg-986b395fe003"
+    },
+    {
+      "id": "thread-8fe307f555fe",
+      "subject": "Uncertainty of a spatial model",
+      "message_count": 1,
+      "participants": [
+        "Jinsong Zhao"
+      ],
+      "started": "2021-08-19T22:22:01+08:00",
+      "last_reply": "2021-08-19T22:22:01+08:00",
+      "root_message_id": "msg-8fe307f555fe"
+    }
+  ]
+}

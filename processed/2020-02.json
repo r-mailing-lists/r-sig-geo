@@ -1,0 +1,623 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2020-02",
+  "messages": [
+    {
+      "id": "msg-3764a46bfa32",
+      "message_id": "<CAAKwTDH1FzG7ayCZyiZFDdpgoQWr3EQa8ghf51UXtbaouSOsGw@mail.gmail.com>",
+      "from_name": "Gabriel Cotlier",
+      "from_email_hash": "fe6b7ece94315f2ba414b8c7053cca118260d4229688ad762179e180bbdf3aaf",
+      "date": "2020-02-01T20:25:24+02:00",
+      "subject": "[R-sig-Geo] question on writing shapefiles from OSM data",
+      "subject_clean": "question on writing shapefiles from OSM data",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear users,\nI would like to download OSM data and convert it to shapefile and change\ncoordinates to same as Landsat data.\nI'm following the code bellow.\nIs this the correct way for saving/writing to swapfile the OSM data?\nThanks a lot for your response.\nBest,\n\nlibrary(osmar)\nlibrary(osmdata)\nlibrary(OpenStreetMap)\nlibrary(tmap)\n\n# Paris administrative borders ID\nid<-c(7444)\ndat2 <- opq_osm_id (type = \"relation\", id = id) %>%\n  opq_string () %>%\n  osmdata_sf ()\nqtm(dat2$osm_multipolygons)\n\nlibrary(sf)\nst_write(dat2$osm_multipolygons, \"s.shp\")\n# change coordinate system to Landsat data\nlandst_crs= \"+proj=utm +zone=36 +datum=WGS84 +units=m +no_defs +ellps=WGS84\n+towgs84=0,0,0\"\ns=readOGR('/Users/gcotlier/Desktop/s.shp')\nS <- spTransform(s, CRS(landst_crs))\nwriteOGR( obj = S, dsn = '/Users/gcotlier/Desktop',layer = \"S1\", driver =\n\"ESRI Shapefile\")\nS1=readOGR('/Users/gcotlier/Desktop/S1.shp')\nplot(S1)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear users,\nI would like to download OSM data and convert it to shapefile and change\ncoordinates to same as Landsat data.\nI'm following the code bellow.\nIs this the correct way for saving/writing to s",
+      "thread_id": "thread-3764a46bfa32",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-e17e423cee40",
+      "message_id": "<alpine.LFD.2.21.2002021511210.1749822@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2020-02-02T15:21:08+01:00",
+      "subject": "[R-sig-Geo] question on writing shapefiles from OSM data",
+      "subject_clean": "question on writing shapefiles from OSM data",
+      "in_reply_to": "<CAAKwTDH1FzG7ayCZyiZFDdpgoQWr3EQa8ghf51UXtbaouSOsGw@mail.gmail.com>",
+      "references": [
+        "<CAAKwTDH1FzG7ayCZyiZFDdpgoQWr3EQa8ghf51UXtbaouSOsGw@mail.gmail.com>"
+      ],
+      "body_plain": "On Sat, 1 Feb 2020, Gabriel Cotlier wrote:\n\n> Dear users,\n> I would like to download OSM data and convert it to shapefile and change\n> coordinates to same as Landsat data.\n> I'm following the code bellow.\n> Is this the correct way for saving/writing to swapfile the OSM data?\n\nSince you are using the sf package, why not use it for the other \noperations? There is no need to involve sp or rgdal unless you want to for \nsome other reason. Maybe you are copying from an old blog or SO source? \nHave you visited: https://www.r-spatial.org/ with plenty of posts on \nmigrating to sf?\n\nWith regard to coordinate operations, you (and everybody else) will need \nto find out how to define CRS without using Proj.4 strings; this change is \ncoming soon! Yours looks like EPSG:32636. Both sf and sp will be moving \nvery soon to WKT2-2019 from Proj.4 strings (Proj.4 strings will still be \navailable, but datums and other specification components may simply drop \nout without warning because of changes in PROJ and GDAL).\n\nFinally, stop using shapefiles and change to GeoPackage straight away, \nthere is no reason to continue to use a format past its end-of-life.\n\nRoger\n\n> Thanks a lot for your response.\n> Best,\n>\n> library(osmar)\n> library(osmdata)\n> library(OpenStreetMap)\n> library(tmap)\n>\n> # Paris administrative borders ID\n> id<-c(7444)\n> dat2 <- opq_osm_id (type = \"relation\", id = id) %>%\n>  opq_string () %>%\n>  osmdata_sf ()\n> qtm(dat2$osm_multipolygons)\n>\n> library(sf)\n> st_write(dat2$osm_multipolygons, \"s.shp\")\n> # change coordinate system to Landsat data\n> landst_crs= \"+proj=utm +zone=36 +datum=WGS84 +units=m +no_defs +ellps=WGS84\n> +towgs84=0,0,0\"\n> s=readOGR('/Users/gcotlier/Desktop/s.shp')\n> S <- spTransform(s, CRS(landst_crs))\n> writeOGR( obj = S, dsn = '/Users/gcotlier/Desktop',layer = \"S1\", driver =\n> \"ESRI Shapefile\")\n> S1=readOGR('/Users/gcotlier/Desktop/S1.shp')\n> plot(S1)\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Sat, 1 Feb 2020, Gabriel Cotlier wrote:\n\n> Dear users,\n> I would like to download OSM data and convert it to shapefile and change\n> coordinates to same as Landsat data.\n> I'm following the code bel",
+      "thread_id": "thread-3764a46bfa32",
+      "thread_depth": 1,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-18701d754888",
+      "message_id": "<1337581491.1501353.1580734626762@mail.yahoo.com>",
+      "from_name": "Mirela Beloiu",
+      "from_email_hash": "ebfd43e44814035a0fb1ca7f859a6418ae3200575041234f23e20446ee6fe7f0",
+      "date": "2020-02-03T12:57:06Z",
+      "subject": "[R-sig-Geo] How to check & interpret an MCMCglmm ordinal model in R?",
+      "subject_clean": "How to check & interpret an MCMCglmm ordinal model in R?",
+      "in_reply_to": null,
+      "references": [
+        "<1337581491.1501353.1580734626762.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "Dear users,\nI'm trying to explain changes in tree vitality from 1 to 3 (1=green, 2=damage, 3=dry) using precipitation, diameter and tree species in an MCMCglmm model. I am struggling with two questions:1. How do I check if the model is correct??2. How do I interpret the summary of the MCMCglmm model in relation to my response variable (the three groups 1,2 and 3)?\nData and R script can be found here?https://drive.google.com/drive/folders/1LmgEAssR5FfFw1CkYjygsaawg84dDAwk?usp=sharing?.?Details are posted here.\n###MCMCglmm model, family= ordinal\n\n    prior1<-list(R=list(V=diag(1),nu=0.002))\n    m1 <-MCMCglmm(VIT_2018~ pp18 +DBH+Species, \n                                 family = \"ordinal\", data = comsp,prior=prior1,pr = TRUE, \n                                 nitt = 60000, burnin =30000, thin = 50)\n    summary(m1)\n    Iterations = 30001:59951\n     Thinning interval  = 50\n     Sample size  = 600 \n     DIC: -146008.7 \n     R-structure:  ~units\n          post.mean l-95% CI u-95% CI eff.samp\n    units      2697     1016     5304    6.075\n     Location effects: VIT_2018 ~ pp18 + DBH + Species \n                            post.mean  l-95% CI  u-95% CI eff.samp   pMCMC   \n    (Intercept)              60.64229  31.71644  92.78733    11.49 < 0.002 **\n    pp18                     -0.07020  -0.11518  -0.03556    15.47 < 0.002 **\n    DBH                       0.17357  -0.01797   0.37281    58.26 0.06000 . \n    SpeciesBetula pendula   -12.88510 -29.42191   1.87807    58.40 0.08667 . \n    SpeciesCarpinus betulus  15.57570   0.96439  30.89528    45.04 0.02000 * \n    SpeciesCorylus avellana  -3.81337 -18.31965  13.12771   600.00 0.59000   \n    SpeciesCrataegus spec.  -14.90077 -36.86880   4.24729   286.00 0.10333   \n    SpeciesFagus sylvatica  -15.03559 -29.04547  -2.07809    60.56 0.00667 **\n    SpeciesFrangula alnus    20.10817  -0.10598  38.66354    73.88 0.01333 * \n    SpeciesQuercus spec.     -9.09458 -24.52595   6.42502   293.33 0.26000   \n    SpeciesSambucus nigra    24.29894   2.58339  46.29901    49.66 0.02333 * \n    SpeciesSorbus aucuparia  39.56930  22.97282  63.15175    10.13 < 0.002 **\n    ---\n    Signif. codes:  0 ?***? 0.001 ?**? 0.01 ?*? 0.05 ?.? 0.1 ? ? 1\n     Cutpoints: \n                             post.mean l-95% CI u-95% CI eff.samp\n    cutpoint.traitVIT_2018.1     80.46    55.38    117.9    4.204\n#### Estimating Credible Intervals\n    HPDinterval(mcmc(randomprior1$Sol[,\"(Intercept)\"]))\n    #        lower    upper\n    #var1 31.71644 92.78733\n    #attr(,\"Probability\")\n    #[1] 0.95\nAny suggestions/ideas would be really helpful. Thank you for your time and help!\n\nMirela\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear users,\nI'm trying to explain changes in tree vitality from 1 to 3 (1=green, 2=damage, 3=dry) using precipitation, diameter and tree species in an MCMCglmm model. I am struggling with two question",
+      "thread_id": "thread-18701d754888",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-b79c65ee2f0c",
+      "message_id": "<CAOav87UcUi1mOBt9N7Pw4ctN7Xu1eFh7VbeMcgwJ9ab_FoDSuQ@mail.gmail.com>",
+      "from_name": "Melanie Graeser",
+      "from_email_hash": "170cda31883fa381d01c34a0d9f907bec810ae4e785b3be4a5c0d49cc7627cb9",
+      "date": "2020-02-05T16:06:08+01:00",
+      "subject": "[R-sig-Geo] Geocoding addresses restricted to one country",
+      "subject_clean": "Geocoding addresses restricted to one country",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear users,\n\nI am trying to geocode locations of firms in Liberia from a vector of\naddresses. My problem is that many addresses are not geocoded in\nLiberia, but instead all over the world. I would like to restrict the\nAPI geocoding response to only show results that are in Liberia. I am\nusing the Google API and library(ggmap). My code is the following:\n\nregister_google(key = \"myAPIkey\")\n\ntest <- mutate_geocode(nec07, Address) # nec07 is my df of firms,\nAddress is a vector of firm addresses\n\ntest1<-test %>% drop_na(lon) # dropping all NAs where geocoding\nreturned no result to be able to create sf object to see if locations\nare correctly geocoded\n\ntest1_sf <- st_as_sf(test1, coords = c(\"lon\", \"lat\"), crs = 4326)\n\nmapview(test1_sf) # Only 2000 out of 5000 firms are geocoded in\nLiberia, the rest in other countries\n\nI would be very grateful if you know of any options to restrict\ngeocoding to return locations only in Liberia.\n\nMany thanks in advance!\n\nMelanie\n\n-- \nMelanie Gr?ser\n*Research Associate*\n*Vienna University of Economics and Business*",
+      "body_snippet": "Dear users,\n\nI am trying to geocode locations of firms in Liberia from a vector of\naddresses. My problem is that many addresses are not geocoded in\nLiberia, but instead all over the world. I would lik",
+      "thread_id": "thread-b79c65ee2f0c",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-ecbc212e9092",
+      "message_id": "<CABPHv2N-0UDtVq0jer2r4ThaqgLYsawGS7s6ScXRjjyuqtJCvQ@mail.gmail.com>",
+      "from_name": "Brad Nissen",
+      "from_email_hash": "b401a2c05c91bade4087b362c0a52fb868f07d915ea6ab2b8885a3ea3862ba2f",
+      "date": "2020-02-05T09:40:36-06:00",
+      "subject": "[R-sig-Geo] Why do kde estimates from ks and adehabitatHR packages in R produce different results? (with same bandwidth and grid)",
+      "subject_clean": "Why do kde estimates from ks and adehabitatHR packages in R produce different results? (with same bandwidth and grid)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi All,\n\nI have a series of VHF radio-telemetry data from animals that I am hoping\nto be able analyze in R. I have done my research on the different packages\navailable for this, and I believe that utilizing the package ks to select a\nplug-in bandwidth method for all individuals will be most appropriate,\nbased on previous research with my study species. This is reinforced in\nsection 4.3 of this spatial ecology book\n<https://ecosystems.psu.edu/research/labs/walter-lab/manual/home-range-estimation/link-to-pdf>\nand\nin this paper by Millspaugh et al (2006)\n<https://wildlife.onlinelibrary.wiley.com/doi/pdf/10.2193/0022-541X%282006%2970%5B384%3AAORSUU%5D2.0.CO%3B2>\n.\n\nI have written two R functions, initially to check that I got similar\nresults, and then hopefully select one to analyze the home ranges of my\nstudy animals. My results from the two functions were not as similar as I\nhoped, and that is what brings me to this forum - to figure out why. The\nfirst function relies entirely on the ks package, by using the kde()\nfunction and a pre-defined grid expanded by a factor of the bandwidth to\nget the volume of the Utilization distribution (UD). The UD was then sorted\nby high to low density. I calculated the size of a grid cell, then\ncalculated the cumulative sum of the grid cell volumes. I then took the\nnumber of cells in this list needed to give a cumulative volume of 0.95 or\n0.50 (depending on if I am interested in the 95% or 50% kde area) and then\nmultiplied that number of cells by the cell size to get the area. Perhaps\nthere is a flaw in my logic here that I am not seeing, if so please alert\nme.\n\nThe annotated R code for that function is here:\n\nkde_ks.hpi <- function(filename, percentage, gridsize, multiplier){\n    data <- read.csv(file = filename)\n    x <- as.data.frame(data$X)\n    y <- as.data.frame(data$Y)\n    loc <- cbind(x,y)\n    data.h <-Hpi(loc)\n    x.grid.size<- (gridsize) #Set grid size as no. of nodes in the x\ndirection\n    band.mult<- (multiplier)\n    x=seq(min(loc[,1])-band.mult*sqrt(data.h[1,1]), max(loc[,1]) +\nband.mult *sqrt(data.h[1,1]), length.out=x.grid.size)\n    y=seq(min(loc[,2])-band.mult*sqrt(data.h[2,2]), max(loc[,2])+\nband.mult*sqrt(data.h[2,2]), by=(x[2]-x[1])) #sets out nodes in y axis,\nspaced the same as x axis\n    eval.pts <-expand.grid(x,y)\n    UD <-kde(loc,H=data.h,eval.points=eval.pts)\n    output<-\ndata.frame(cbind(UD$eval.points[,1],UD$eval.points[,2],UD$estimate))\n    colnames(output)<- c(\"xcoord\",\"ycoord\",\"UD_ht\")\n    cell.area <- (x[2]-x[1])*(y[2]-y[1])\n    grid.vol <- sum(cell.area*output[,3]) #check that grid UD vol is >=0.99\n    vol<-output[,3]/sum(output[,3]) #standardize volume to add to 1\n    output<-data.frame(cbind(output,vol))\n    output<-output[order(-output$vol),] #sort by descending volume\n    cumV<-cumsum(output$vol) #calculate cumulative UD volume\n    output<-data.frame(cbind(output,cumV)) #add cumulative vol to output\n    sub.UD<-subset(output,output$cumV<=(percentage/100)) #subset output by\npercent vol\n    cellcount <- nrow(sub.UD)\n    area <- cellcount*cell.area\n    KDE <- data.frame(c(area,grid.vol))\n    KDE\n    }\n\nSo as an example -\nkde_ks.hpi(\"C01 .csv\", percentage=50,gridsize =150,multiplier =3) #I will\nattach a stripped down version of this data file if anyone is interested in\nreproducing my results.\n\nIn this case - I found a 99% home range area of 3958 meter^2 for this\nindividual.\n\nMy second function is largely based on code that I found from the Spatial\nEcology textbook that I referenced above. This code transforms the\nbandwidth and kde from the ks package with rasters to utilize functions in\nthe adehabitatHR function to easily get UD volumes and areas. The\ndifference between my code and the one in the book is that I define the\ngrid using the same methods as the first function. Yet, I don't get the\nsame results, despite using the same grid and bandwidth as I did in the\nprevious function. Below is the annotated code for that function:\n\nCRS.SC <http://crs.sc/> <- CRS(\"+init=epsg:32616\") #define study area\nprojection first\n\nkde_ade.ks.hpi <- function(filename, percentage, gridsize, multiplier){\n  data <- read.csv(file = filename) #read in data\n  x <- as.data.frame(data$X)\n  y <- as.data.frame(data$Y)\n  xy <- c(x,y)\n  loc <- cbind(x,y)\n  data.h <-Hpi(loc) #define bandwidth using plug-in method\n  data.proj <- SpatialPointsDataFrame(xy,data, proj4string = CRS.SC\n<http://crs.sc/>)\n  boundingVals <- data.proj at bbox #get the bounding values of the animal\nlocations\n  band.mult <- (multiplier) #define the value used to expand the evaluation\ngrid\n  y.expand <- band.mult*sqrt(data.h[2,2]) #set the value used to expand the\ngrid by a function of the multiplier and the bandwidth\n  x.expand <- band.mult*sqrt(data.h[1,1]) #note that this expansion is\ndifferent in the x and y direction\n  deltaX <- as.integer(((boundingVals[1,2]) - (boundingVals[1,1])) +\n(2*x.expand)) #get the total length of the grid axis\n  deltaY <- as.integer(((boundingVals[2,2]) - (boundingVals[2,1])) +\n(2*y.expand))\n  x.grid.size <- (gridsize) #set the number of grid nodes in the X direction\n  gridRes <- deltaX/x.grid.size #determine the grid resolution, (i.e the\nsize of one side of a cell)\n  y.grid.size <- deltaY/gridRes #determine the number of nodes in the Y\ndirection using the same cell size as the x axis\n  boundingVals[2,1] <- boundingVals[2,1] - y.expand #min Y - expand the in\neach direction grid by the previously determined value\n  boundingVals[2,2] <- boundingVals[2,2] + y.expand #max Y\n  boundingVals[1,1] <- boundingVals[1,1] - x.expand #min X\n  boundingVals[1,2] <- boundingVals[1,2] + x.expand #max X\n  gridTopo <- GridTopology((boundingVals[,1]),\nc(gridRes,gridRes),c(x.grid.size,y.grid.size)) #Grid Topology object is\nbasis for sampling grid (offset, cellsize, dim)\n  sampGrid <- SpatialGrid(gridTopo, proj4string = CRS.SC\n<http://crs.sc/>) #Using\nthe Grid Topology and projection create a SpatialGrid class\n  sampSP <- as(sampGrid, \"SpatialPixels\") #Cast over to Spatial Pixels\n  sampRaster <- raster(sampGrid) #convert the SpatialGrid class to a raster\n  sampRaster[] <- 1 #set all the raster values to 1 such as to make a data\nmask\n  evalPoints <- xyFromCell(sampRaster, 1:ncell(sampRaster)) #Get the center\npoints of the mask raster with values set to 1\n  hpikde <- kde(x=loc, H=data.h, eval.points=evalPoints) #Create the KDE\nusing the evaluation points\n  hpikde.raster <- raster(sampRaster) #Create a template raster based upon\nthe mask and then assign the values from the kde to the template\n  hpikde.raster <- setValues(hpikde.raster,hpikde$estimate)\n  hpikde.px <- as(hpikde.raster,\"SpatialPixelsDataFrame\") #Cast over to\nSPxDF\n  hpikde.ud <- new(\"estUD\", hpikde.px) #create new estUD using the SPxDF\n  hpikde.ud at vol = FALSE #Assign values to a couple slots of the estUD\n  hpikde.ud at h$meth = \"Plug-in Bandwidth\"\n  hpikde.ud.vol <- getvolumeUD(hpikde.ud, standardize=TRUE) #Convert the UD\nvalues to volume using getvolumeUD from adehabitatHR and cast over to a\nraster\n  hpikde.ud.vol.raster <- raster(hpikde.ud.vol)\n  hpikde.vol <- getverticeshr(hpikde.ud, percent = percentage,ida = NULL,\nunin = \"m\", unout = \"m2\", standardize=TRUE) #Here we generate volume\ncontours using the UD\n  hpikde.vol$area #Determine UD area at that contour\n}\n\nSo for example:\n> kde_ade.ks.hpi(filename = \"C01 .csv\",\npercentage=50,gridsize=150,multiplier=3)\n[1] 3965.43\n\nSo in this case - I found a 50% kde home range area of 3965 meter^2 for\nthis individual. Not really that big a difference from the other value of\n3958 m^2- but I would love to know where it comes from, as it the\ndifference between the two functions can vary based on how I define the\ngrid, multiplier, or percentage. At 99% the same data set produces a value\nof 67182 m^2 and 67453 m^2 for the first and second methods, respectively.\nIn this case the second method produces a larger value both times, but when\nI try this with a different animal, the first method gives me larger areas.\nWhat is going on here, why is there a difference? Is one method better than\nanother? What do you all recommend for moving forward?\n\nI am hoping to use these functions and alter them to produce shapefiles\nthat I can then map in GIS, once my methodology is settled.\n\nThank you very much for your time,\n\nBrad Nissen\n\n*--May the forest be with you! *\n\n-------------- next part --------------\nAn HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20200205/3e26c5a6/attachment.html>\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: C01 .csv\nType: application/vnd.ms-excel\nSize: 2081 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20200205/3e26c5a6/attachment.xlb>",
+      "body_snippet": "Hi All,\n\nI have a series of VHF radio-telemetry data from animals that I am hoping\nto be able analyze in R. I have done my research on the different packages\navailable for this, and I believe that uti",
+      "thread_id": "thread-ecbc212e9092",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-80a67a48aff9",
+      "message_id": "<345f6acda84ac6411449ac7e11e58d05b9450c7b.camel@wu.ac.at>",
+      "from_name": "Mathias Moser",
+      "from_email_hash": "5a542cfb8e722718fba6f8fefe67e7e2790b4e3c898b5f8d901d618d7609c2dd",
+      "date": "2020-02-05T17:02:19+01:00",
+      "subject": "[R-sig-Geo] Geocoding addresses restricted to one country",
+      "subject_clean": "Geocoding addresses restricted to one country",
+      "in_reply_to": "<CAOav87UcUi1mOBt9N7Pw4ctN7Xu1eFh7VbeMcgwJ9ab_FoDSuQ@mail.gmail.com>",
+      "references": [
+        "<CAOav87UcUi1mOBt9N7Pw4ctN7Xu1eFh7VbeMcgwJ9ab_FoDSuQ@mail.gmail.com>"
+      ],
+      "body_plain": "The Google API accepts two parameters which influence the selection of\nmatches [1]: \"region\" uses domains (.lr in case of Liberia) and\n\"bounds\" uses a bounding box (long/lat coords) to prioritize certain\nresults. \n\nWhile geocode()/mutate_geocode() do not expose these explicitly they\ncan probably be added using the \"inject\" parameter as key-value pairs\n(see help(geocode)).\n\nHth, Mathias\n\n-- \nMathias Moser\n\nInstitute for Economic Geography & GIScience\nWU Vienna\n\n[1] \nhttps://developers.google.com/maps/documentation/geocoding/intro#geocoding\n\nOn Wed, 2020-02-05 at 16:06 +0100, Melanie Graeser wrote:\n> Dear users,\n> \n> I am trying to geocode locations of firms in Liberia from a vector of\n> addresses. My problem is that many addresses are not geocoded in\n> Liberia, but instead all over the world. I would like to restrict the\n> API geocoding response to only show results that are in Liberia. I am\n> using the Google API and library(ggmap). My code is the following:\n> \n> register_google(key = \"myAPIkey\")\n> \n> test <- mutate_geocode(nec07, Address) # nec07 is my df of firms,\n> Address is a vector of firm addresses\n> \n> test1<-test %>% drop_na(lon) # dropping all NAs where geocoding\n> returned no result to be able to create sf object to see if locations\n> are correctly geocoded\n> \n> test1_sf <- st_as_sf(test1, coords = c(\"lon\", \"lat\"), crs = 4326)\n> \n> mapview(test1_sf) # Only 2000 out of 5000 firms are geocoded in\n> Liberia, the rest in other countries\n> \n> I would be very grateful if you know of any options to restrict\n> geocoding to return locations only in Liberia.\n> \n> Many thanks in advance!\n> \n> Melanie\n> \n>",
+      "body_snippet": "The Google API accepts two parameters which influence the selection of\nmatches [1]: \"region\" uses domains (.lr in case of Liberia) and\n\"bounds\" uses a bounding box (long/lat coords) to prioritize cert",
+      "thread_id": "thread-b79c65ee2f0c",
+      "thread_depth": 1,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-f3a503b8450a",
+      "message_id": "<870824852.137048.1580955097570@mail.yahoo.com>",
+      "from_name": "Thiago V. dos Santos",
+      "from_email_hash": "c421c5179ec3e9a145f62b1464c57f802503f6ccf3d351dffbbdacd0360491a2",
+      "date": "2020-02-06T02:11:37Z",
+      "subject": "[R-sig-Geo] How to find distance between grid cell and point that lies in specified radius?",
+      "subject_clean": "How to find distance between grid cell and point that lies in specified radius?",
+      "in_reply_to": null,
+      "references": [
+        "<870824852.137048.1580955097570.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "Hello all,\n\nI am trying to implement a function in R to perform the Cressman scheme (which corrects the values of a gridded field, say precipitation, based on the closest observations available).\n\nIt looks like it hasn't been done yet, but please let me know if you are aware of any R package that implements the Cressman scheme.\n\nI have a raster and a spatial points layer (which I will call \"stations\"). A toy example is provided below:\n\n```\nlibrary(raster)\n\n\n# create random raster\nr <- raster(nrows=9, ncols=18, xmn=5153337, xmx=6570069, ymn=7462732,?\n? ? ? ? ? ? ymx=8060416, crs = CRS(\"+proj=poly +lat_0=0 +lon_0=-54 +x_0=5000000 +y_0=10000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs\"))\nr[] <- runif(ncell(r))\n\n\n# create spatial points\npts <- sampleRandom(r, 10, na.rm = TRUE, sp = TRUE)\n\n\n# display everything\nplot(r)\nplot(pts, add=T, col=\"red\", pch=16)\n```\n\nThe starting point of my analysis would be:\n\n1) for each grid cell in the raster, identify the station(s) that lie *within a radius of influence* (say 30 km);\n\n2) for each station lying under the radius of influence, calculate a distance-weighted expression that will be used later to correct the raster values. Its formula is:\n\nW = (R2 - r2)/(R2 + r2)?\n\nwhere R = influence radius and r = distance between the station and the grid cell.\n\n3) Based on the weighted correction factor W calculated above, update the value of the grid cell using the expression W * (gridpoint - station). The actual expression is a bit more sophisticated, but I want to get the general method here.\n\nBased on some research, it looks like this could be done with sf. But since I don't have any experience with that package, would someone more familiar please point out some functions in sf or even other packages that could be helpful to solve my problem?\n\nThanks in advance,\n?-- Thiago V. dos Santos\n\nPostdoctoral Research Fellow\nDepartment of Climate and Space Science and Engineering\nUniversity of Michigan",
+      "body_snippet": "Hello all,\n\nI am trying to implement a function in R to perform the Cressman scheme (which corrects the values of a gridded field, say precipitation, based on the closest observations available).\n\nIt ",
+      "thread_id": "thread-f3a503b8450a",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-805c4da46ebd",
+      "message_id": "<CALrbzg1keupL240U8mZdPzvXR_aEONjvdKw1pJSYKnBE0FOdig@mail.gmail.com>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "715c796f300568f44190a795995f5d8c66b19c1f8bc2156d2221fcda4991bb5a",
+      "date": "2020-02-06T13:36:40-05:00",
+      "subject": "[R-sig-Geo]  How to find distance between grid cell and point that lies in specified radius?",
+      "subject_clean": "How to find distance between grid cell and point that lies in specified radius?",
+      "in_reply_to": "<870824852.137048.1580955097570@mail.yahoo.com>",
+      "references": [
+        "<870824852.137048.1580955097570.ref@mail.yahoo.com>",
+        "<870824852.137048.1580955097570@mail.yahoo.com>"
+      ],
+      "body_plain": "Hi,\n\nI think you'll enjoy sf once you get going with it.\n\nI am not familiar with the Cressman scheme, but you maybe able to do\nstep 1 with raster (either pointDistance() or distanceFromPoints() - I\ncan't quite recall).  In sf you could something like this..\n\nlibrary(raster)\nlibrary(sf)\nlibrary(units)\nlibrary(dplyr)\n\ncrs <- \"+proj=poly +lat_0=0 +lon_0=-54 +x_0=5000000 +y_0=10000000\n+ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs\"\nr <- raster(nrows=9, ncols=18,\n            xmn=5153337, xmx=6570069,\n            ymn=7462732,ymx=8060416,\n            crs = crs)\nr[] <- runif(ncell(r))\n\nxy <- raster::xyFromCell(r, seq_len(ncell(r)))\nxy <- lapply(seq_len(nrow(xy)), function(i) sf::st_point(xy[i,]))\nxy <- sf::st_sfc(xy, crs = crs)\n\npts <- sampleRandom(r, 10, na.rm = TRUE, sp = TRUE) %>%\n  sf::st_as_sfc()\n\nd <- sf::st_distance(xy, pts)\nthreshold <- units::set_units(100000, m)\nd_within <- d <= threshold\n\n\nd will be a [ncell x npoints] numeric matrix of distance from cell\nlocations to points\nd_within will be a matrix [ncell x npoints] of logicals flagging which\nare within your threshold (I used 100km)\n\nHope that helps start you off.\n\nCheers,\nBen\n\n\n\nOn Wed, Feb 5, 2020 at 9:12 PM Thiago V. dos Santos via R-sig-Geo\n<r-sig-geo at r-project.org> wrote:\n>\n> Hello all,\n>\n> I am trying to implement a function in R to perform the Cressman scheme (which corrects the values of a gridded field, say precipitation, based on the closest observations available).\n>\n> It looks like it hasn't been done yet, but please let me know if you are aware of any R package that implements the Cressman scheme.\n>\n> I have a raster and a spatial points layer (which I will call \"stations\"). A toy example is provided below:\n>\n> ```\n> library(raster)\n>\n>\n> # create random raster\n> r <- raster(nrows=9, ncols=18, xmn=5153337, xmx=6570069, ymn=7462732,\n>             ymx=8060416, crs = CRS(\"+proj=poly +lat_0=0 +lon_0=-54 +x_0=5000000 +y_0=10000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs\"))\n> r[] <- runif(ncell(r))\n>\n>\n> # create spatial points\n> pts <- sampleRandom(r, 10, na.rm = TRUE, sp = TRUE)\n>\n>\n> # display everything\n> plot(r)\n> plot(pts, add=T, col=\"red\", pch=16)\n> ```\n>\n> The starting point of my analysis would be:\n>\n> 1) for each grid cell in the raster, identify the station(s) that lie *within a radius of influence* (say 30 km);\n>\n> 2) for each station lying under the radius of influence, calculate a distance-weighted expression that will be used later to correct the raster values. Its formula is:\n>\n> W = (R2 - r2)/(R2 + r2)\n>\n> where R = influence radius and r = distance between the station and the grid cell.\n>\n> 3) Based on the weighted correction factor W calculated above, update the value of the grid cell using the expression W * (gridpoint - station). The actual expression is a bit more sophisticated, but I want to get the general method here.\n>\n> Based on some research, it looks like this could be done with sf. But since I don't have any experience with that package, would someone more familiar please point out some functions in sf or even other packages that could be helpful to solve my problem?\n>\n> Thanks in advance,\n>  -- Thiago V. dos Santos\n>\n> Postdoctoral Research Fellow\n> Department of Climate and Space Science and Engineering\n> University of Michigan\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n-- \nBen Tupper\nBigelow Laboratory for Ocean Science\nWest Boothbay Harbor, Maine\nhttp://www.bigelow.org/\nhttps://eco.bigelow.org",
+      "body_snippet": "Hi,\n\nI think you'll enjoy sf once you get going with it.\n\nI am not familiar with the Cressman scheme, but you maybe able to do\nstep 1 with raster (either pointDistance() or distanceFromPoints() - I\nca",
+      "thread_id": "thread-f3a503b8450a",
+      "thread_depth": 1,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-b3d639d81899",
+      "message_id": "<CAN9eD7nVw9eir_3E4LePSVYAq9NaMtr+FFj=mHV3Etdk=UKM2w@mail.gmail.com>",
+      "from_name": "nevil amos",
+      "from_email_hash": "9f695963951885b36d44769d7dec9de712960aec929f4015316e69ecc7d26c5a",
+      "date": "2020-02-07T15:34:05+11:00",
+      "subject": "[R-sig-Geo] Cannot view custom tiles made in package tiler in r leaflet - either locally or from github pages server.",
+      "subject_clean": "Cannot view custom tiles made in package tiler in r leaflet - either locally or from github pages server.",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I wish to create tiled version of a large number of custom rasters for\nviewing in shiny/leaflet apps ( to speed viewing of rasters)\n\nI have produced tiles using  package tiler, these can be viewed in the\npreview.html, but when uploaded to github pages  as described in the\nintroduction to tiler they do not show up when added as tiles in leaflet.\n\nIt is difficult to make a reproducible code here - since the tiles have to\nbe loaded to be served from the web.\n\nHowever below I include the code used 1. to produce the tiles and 2, to\nview the tiles in my github pages.\n\nI have tried the suggestion of using {-y} in the sever path for TMS, this\nmakes no difference the background map is displayed but the custom tiles\nare not.\n\nRaster used from the package as an example in reality I need to serve many\n10000x6000 cell geotiffs.\n\nExample code:\n\nlibrary(tiler)\nlibary(leaflet)\n# make tiles in zoom levels 1:6 these tiles have then been uploaded to\ngithub to serve from repository:\n#\n\ntile_dir<-\"us48lr\"\nmap <- system.file(\"maps/map_wgs84.tif\", package = \"tiler\")\ntile(map,tile_dir , \"0-6\")\nview_tiles(tile_dir)\n\n\n#no TMS related modifications\ntiles <- \"https://nevilamos.github.io/TileTest/us48lr/{z}/{x}/{y}.png\"\nleaflet(\n  options = leafletOptions(minZoom = 0, maxZoom = 7), width = \"100%\") %>%\n  addProviderTiles(\"Stamen.Toner\") %>%\n  addTiles(urlTemplate=tiles, options = tileOptions(opacity = 0.8)) %>%\nsetView(-100, 40, 3)\n\n#No tiles displayed\n\n\n# {-y} and tileOptions(tms=T)\ntiles <- \"https://nevilamos.github.io/TileTest/us48lr/{z}/{x}/{-y}.png\"\nleaflet(\n  options = leafletOptions(minZoom = 0, maxZoom = 7), width = \"100%\") %>%\n  addProviderTiles(\"Stamen.Toner\") %>%\n  addTiles(urlTemplate=tiles, options = tileOptions(opacity = 0.8,tms=T))\n%>% setView(-100, 40, 3)\n\n#No tiles displayed\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I wish to create tiled version of a large number of custom rasters for\nviewing in shiny/leaflet apps ( to speed viewing of rasters)\n\nI have produced tiles using  package tiler, these can be viewed in ",
+      "thread_id": "thread-b3d639d81899",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-fd5f439d8ca5",
+      "message_id": "<1251214852.879896.1581360271306@mail.yahoo.com>",
+      "from_name": "Julie Lee-Yaw",
+      "from_email_hash": "a867c3a07d569465561bc7f977c5efe6e39e21ab12f43201cc8b847abf60aafa",
+      "date": "2020-02-10T18:44:31Z",
+      "subject": "[R-sig-Geo] reading an ESRI grid into R",
+      "subject_clean": "reading an ESRI grid into R",
+      "in_reply_to": null,
+      "references": [
+        "<1251214852.879896.1581360271306.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "Hi I'm using the raster package to load a DEM from here:\nhttp://www.cec.org/tools-and-resources/map-files/elevation-2007\n\nThe data appear to be stored as an ESRI grid (adf) and I have no experience with this format.\n>From what I can tell this format is similar to a shp file with different files storing different things pertaining to the grid.\nI'm using the raster command (raster package) to read the w001001.adf file:\n\ndem<-raster(\"./Elevation_GRID/NA_Elevation/data/NA_Elevation/na_elevation/w001001.adf\")\n\nThe produces what looks like a raster with values. Is that all I need to do or should I be reading these data another way?\nThanks\nJulie\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi I'm using the raster package to load a DEM from here:\nhttp://www.cec.org/tools-and-resources/map-files/elevation-2007\n\nThe data appear to be stored as an ESRI grid (adf) and I have no experience wi",
+      "thread_id": "thread-fd5f439d8ca5",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-73c720a68479",
+      "message_id": "<CAAcGz9_c0zMApdaB5-WRu6sBX5Ly-Qz-N1MkMMycaOSw8kGAqg@mail.gmail.com>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "ec02820eba6228afb61925d60b233042e6d048081cc8b7f7e46a034ba5ad3d90",
+      "date": "2020-02-11T06:48:01+11:00",
+      "subject": "[R-sig-Geo] reading an ESRI grid into R",
+      "subject_clean": "reading an ESRI grid into R",
+      "in_reply_to": "<1251214852.879896.1581360271306@mail.yahoo.com>",
+      "references": [
+        "<1251214852.879896.1581360271306.ref@mail.yahoo.com>",
+        "<1251214852.879896.1581360271306@mail.yahoo.com>"
+      ],
+      "body_plain": "What you've done is perfectly fine. The raster() function invokes the GDAL\nlibrary to do the read, via the rgdal package. It doesn't read any data at\nfirst, so dem is just a metadata shell that raster works with - if you plot\nor crop or extract that triggers the actual data read as needed.\n\nYou might also try the stars package, to keep it lazy and not read all the\ndata at first start with the proxy argument:\n\ndem_stars <-\nstars::read_stars(\"./Elevation_GRID/NA_Elevation/data/NA_Elevation/na_elevation/w001001.adf\",\nproxy = TRUE)\n\nThis also uses GDAL but does it with code internal to the sf package. These\nare pretty much analogous, but stars can do more when grids are more\ngeneral.\n\nThe GDAL details for this format are here\nhttps://gdal.org/drivers/raster/arcinfo_grid_format.html\n\nCheers, Mike\n\nOn Tue, Feb 11, 2020 at 5:44 AM Julie Lee-Yaw via R-sig-Geo <\nr-sig-geo at r-project.org> wrote:\n\n> Hi I'm using the raster package to load a DEM from here:\n> http://www.cec.org/tools-and-resources/map-files/elevation-2007\n>\n> The data appear to be stored as an ESRI grid (adf) and I have no\n> experience with this format.\n> From what I can tell this format is similar to a shp file with different\n> files storing different things pertaining to the grid.\n> I'm using the raster command (raster package) to read the w001001.adf file:\n>\n>\n> dem<-raster(\"./Elevation_GRID/NA_Elevation/data/NA_Elevation/na_elevation/w001001.adf\")\n>\n> The produces what looks like a raster with values. Is that all I need to\n> do or should I be reading these data another way?\n> Thanks\n> Julie\n>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \nMichael Sumner\nSoftware and Database Engineer\nAustralian Antarctic Division\nHobart, Australia\ne-mail: mdsumner at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "What you've done is perfectly fine. The raster() function invokes the GDAL\nlibrary to do the read, via the rgdal package. It doesn't read any data at\nfirst, so dem is just a metadata shell that raster",
+      "thread_id": "thread-fd5f439d8ca5",
+      "thread_depth": 1,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-e43ceef45245",
+      "message_id": "<CAAJgi5wpEKe94756LFYNqh=VZCqcya3HZDCssLT4niEKmdqVQA@mail.gmail.com>",
+      "from_name": "Jonathan Rosenblatt",
+      "from_email_hash": "6497336464cc11ebf5eb48ff92599ce966efd21b00b375e54c75bdaa946ff634",
+      "date": "2020-02-13T15:42:04+02:00",
+      "subject": "[R-sig-Geo] Fwd: Copernicus DIAS",
+      "subject_clean": "Copernicus DIAS",
+      "in_reply_to": "<CAAJgi5wAfRd9rM5d9KiTYfB54w17+ZSQk16KF0B3=xWnzJ=vBA@mail.gmail.com>",
+      "references": [
+        "<CAAJgi5wAfRd9rM5d9KiTYfB54w17+ZSQk16KF0B3=xWnzJ=vBA@mail.gmail.com>"
+      ],
+      "body_plain": "Dear all\n\nI wonder: I encountered only 1 package that imports data from the MASSIVE\nCopernicus database (https://github.com/antoinestevens/copernicus).\nIs there any particular reason there are no \"canonical\" packages to import\nfrom Copernicus? Is it because DIAS services like Wekeo and Sobloo make any\nsuch package unnecessary? Is it because the data is too large for R to\nhandle without a propose server?\n\nThank you in advance\n\n\n\n-- \n--\nJonathan Rosenblatt\nDept. of Industrial Engineering and Management\nBen Gurion University of the Negev\nwww.john-ros.com\n\n\n\n-- \nJonathan Rosenblatt\nwww.john-ros.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all\n\nI wonder: I encountered only 1 package that imports data from the MASSIVE\nCopernicus database (https://github.com/antoinestevens/copernicus).\nIs there any particular reason there are no \"can",
+      "thread_id": "thread-e43ceef45245",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-6934c2fff413",
+      "message_id": "<5f8c38b6-d94b-de01-8672-3cd4d9afcfe6@ibbr.cnr.it>",
+      "from_name": "maurizio marchi",
+      "from_email_hash": "b7b073bc0283afea98f3c4ddf95dd49cd28a1ca46520b55860a11459d6e35e29",
+      "date": "2020-02-18T15:08:05+01:00",
+      "subject": "[R-sig-Geo] Strange spatial reference system netCDF [stars and sf functions not working now]",
+      "subject_clean": "Strange spatial reference system netCDF [stars and sf functions not working now]",
+      "in_reply_to": "<mailman.27870.3.1577876402.59805.r-sig-geo@r-project.org>",
+      "references": [
+        "<mailman.27870.3.1577876402.59805.r-sig-geo@r-project.org>"
+      ],
+      "body_plain": "Dear all,\nThanks for your time. Unfortunately the solution the community (i.e. \nEdzer Pebesma, https://github.com/r-spatial/stars/issues/175) is not \nworking anymore. Does anyone knows why the code is now broken? Here the \noutput of the old R code...\n\n/f<-\"tasmax_rcp85_land-rcm_eur_12km_01_mon_198012-208011.nc\"//\n//library(stars)//\n//? Loading required package: abind//\n//? Loading required package: sf//\n//? Linking to GEOS 3.8.0, GDAL 3.0.2, PROJ 6.2.1//\n//r<-read_ncdf(f, ncsub = cbind(start = c(1, 1, 1, 1), count = c(418, \n406, 3, 1)), eps=1e-3)//\n//? no 'var' specified, using tasmax//\n//? other available variables://\n//? rotated_latitude_longitude, ensemble_member, time, time_bnds, \ngrid_latitude, grid_latitude_bnds, grid_longitude, grid_longitude_bnds, \nensemble_member_id, month_number, year, yyyymm//\n//? Error in UseMethod(\"GPFN\") : //\n//? no applicable method for 'GPFN' applied to an object of class \n\"rotated_latitude_longitude\"//\n//rx<-read_stars(f, proxy = TRUE) # only for the crs!//\n//? Warning messages://\n//? 1: In CPL_read_gdal(as.character(x), as.character(options), \nas.character(driver),? ://\n//??? GDAL Message 1: The dataset has several variables that could be \nidentified as vector fields, but not all share the same primary \ndimension. Consequently they will be ignored.//\n//? 2: In CPL_read_gdal(as.character(x), as.character(options), \nas.character(driver),? ://\n//??? GDAL Message 1: dimension #1 (time) is not a Time dimension.//\n//? 3: In CPL_read_gdal(as.character(x), as.character(options), \nas.character(driver),? ://\n//??? GDAL Message 1: dimension #0 (ensemble_member) is not a Time \ndimension.//\n//st_crs(r)<-st_crs(rx)//\n//? Warning messages://\n//? 1: In CPL_crs_from_proj4string(x) ://\n//??? GDAL Error 1: PROJ: proj_as_wkt: DerivedGeographicCRS can only be \nexported to WKT2//\n//? 2: In CPL_crs_from_proj4string(x) ://\n//??? GDAL Error 1: PROJ: proj_as_wkt: DerivedGeographicCRS can only be \nexported to WKT2//\n//r0 = stars:::st_transform_proj.stars(r, 4326)//\n//? Error: invalid crs: , reason: generic error of unknown origin//\n//? proj_create: unrecognized format / unknown name//\n//r0//\n//Error: object 'r0' not found//\n/\nAll my bests\n-- \n*Maurizio Marchi,\nPhD Forest Science - Ecological Mathematics*\nResearcher\nCNR - Institute of Biosciences and BioResources (IBBR), Florence \ndivision (Italy)\nSkypeID: maurizioxyz\nhttp://ibbr.cnr.it/ibbr/info/people/maurizio-marchi\n#####------#####\nEUFGIS National Focal Point for Italy (www.eufgis.org)\nScopus Author ID: 57188626512\nResearcherID: T-3813-2019\nhttp://b4est.eu/ project\n/...CPUs don't need to sleep.../\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\nThanks for your time. Unfortunately the solution the community (i.e. \nEdzer Pebesma, https://github.com/r-spatial/stars/issues/175) is not \nworking anymore. Does anyone knows why the code is",
+      "thread_id": "thread-6934c2fff413",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-e6d9cf838106",
+      "message_id": "<alpine.LFD.2.21.2002182255170.476782@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2020-02-18T22:58:08+01:00",
+      "subject": "[R-sig-Geo]  Strange spatial reference system netCDF [stars and sf functions not working now]",
+      "subject_clean": "Strange spatial reference system netCDF [stars and sf functions not working now]",
+      "in_reply_to": "<5f8c38b6-d94b-de01-8672-3cd4d9afcfe6@ibbr.cnr.it>",
+      "references": [
+        "<mailman.27870.3.1577876402.59805.r-sig-geo@r-project.org>",
+        "<5f8c38b6-d94b-de01-8672-3cd4d9afcfe6@ibbr.cnr.it>"
+      ],
+      "body_plain": "On Tue, 18 Feb 2020, maurizio marchi wrote:\n\n> Dear all,\n> Thanks for your time. Unfortunately the solution the community (i.e.\n> Edzer Pebesma, https://github.com/r-spatial/stars/issues/175) is not\n> working anymore. Does anyone knows why the code is now broken? Here the\n> output of the old R code...\n>\n> /f<-\"tasmax_rcp85_land-rcm_eur_12km_01_mon_198012-208011.nc\"//\n> //library(stars)//\n> //? Loading required package: abind//\n> //? Loading required package: sf//\n> //? Linking to GEOS 3.8.0, GDAL 3.0.2, PROJ 6.2.1//\n\nThis seems to be the \"smoking gun\" - when the code last ran without error, \nwhich versions of GDAL and PROJ were you using? See below for the \nPROJ-related error message.\n\n> //r<-read_ncdf(f, ncsub = cbind(start = c(1, 1, 1, 1), count = c(418,\n> 406, 3, 1)), eps=1e-3)//\n> //? no 'var' specified, using tasmax//\n> //? other available variables://\n> //? rotated_latitude_longitude, ensemble_member, time, time_bnds,\n> grid_latitude, grid_latitude_bnds, grid_longitude, grid_longitude_bnds,\n> ensemble_member_id, month_number, year, yyyymm//\n> //? Error in UseMethod(\"GPFN\") : //\n> //? no applicable method for 'GPFN' applied to an object of class\n> \"rotated_latitude_longitude\"//\n> //rx<-read_stars(f, proxy = TRUE) # only for the crs!//\n> //? Warning messages://\n> //? 1: In CPL_read_gdal(as.character(x), as.character(options),\n> as.character(driver),? ://\n> //??? GDAL Message 1: The dataset has several variables that could be\n> identified as vector fields, but not all share the same primary\n> dimension. Consequently they will be ignored.//\n> //? 2: In CPL_read_gdal(as.character(x), as.character(options),\n> as.character(driver),? ://\n> //??? GDAL Message 1: dimension #1 (time) is not a Time dimension.//\n> //? 3: In CPL_read_gdal(as.character(x), as.character(options),\n> as.character(driver),? ://\n> //??? GDAL Message 1: dimension #0 (ensemble_member) is not a Time\n> dimension.//\n> //st_crs(r)<-st_crs(rx)//\n> //? Warning messages://\n> //? 1: In CPL_crs_from_proj4string(x) ://\n> //??? GDAL Error 1: PROJ: proj_as_wkt: DerivedGeographicCRS can only be\n> exported to WKT2//\n> //? 2: In CPL_crs_from_proj4string(x) ://\n> //??? GDAL Error 1: PROJ: proj_as_wkt: DerivedGeographicCRS can only be\n> exported to WKT2//\n\n... here ... is the use of code that will vary by GDAL and PROJ versions.\n\nRoger\n\n\n> //r0 = stars:::st_transform_proj.stars(r, 4326)//\n> //? Error: invalid crs: , reason: generic error of unknown origin//\n> //? proj_create: unrecognized format / unknown name//\n> //r0//\n> //Error: object 'r0' not found//\n> /\n> All my bests\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Tue, 18 Feb 2020, maurizio marchi wrote:\n\n> Dear all,\n> Thanks for your time. Unfortunately the solution the community (i.e.\n> Edzer Pebesma, https://github.com/r-spatial/stars/issues/175) is not\n>",
+      "thread_id": "thread-6934c2fff413",
+      "thread_depth": 1,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-d59f2fd22f58",
+      "message_id": "<CAF16KkW+uSjHx0t61heJLJFdR7kGa8Pzuw4v2Tn2_75gSx+c3g@mail.gmail.com>",
+      "from_name": "Robin Lovelace",
+      "from_email_hash": "8a416e214939387f4004ff832ebd5ee55f5c034dabd456e828a1db125a87ef53",
+      "date": "2020-02-19T11:25:03Z",
+      "subject": "[R-sig-Geo] Spatilal Network Hackathon",
+      "subject_clean": "Spatilal Network Hackathon",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\nWe are happy to invite you to join a hackathon on spatial networks on the*\n27th of May at the University of Milan - Bicocca from 9AM to 5PM. *The\nhackathon is an official satellite event of the European R Users Meeting\n(ERUM) <https://2020.erum.io/> conference, that will be organized in Milan\nfrom 27th to 30th of May. The hackathon will be focussed on developing and\ntesting of the new R package for spatial networks: sfnetworks.\n\nAnyone with an interest in spatial networks and open source software is\ninvited, especially if you have experience with real world spatial network\ndata that could be used in documentation or experience developing software\nfor working with spatial or graph datasets (particularly R packages).\n\nThe event is free and you can get a ticket at the following link:\nhttps://www.eventbrite.co.uk/e/erum2020-satellite-event-hackathon-on-spatial-networks-tickets-90976873277\nYou can read a more detailed description of the event at the following\nlink: https://2020.erum.io/program/hackathon/\n\n*Summary*:\n\n   - *What*: A hackathon on spatial networks where we will present our new\n   R package and discuss with the participants the problems they face working\n   with spatial networks.\n   - *Who*: Everyone working on or interested in spatial networks can join\n   the hackathon. The only minimal requirement is a basic knowledge of sf\n   and igraph packages. We will provide a few vignettes explaining how our\n   package works, so you don't need to be an expert in the field.\n   - *When*: 27th of May, from 9AM to 5PM\n   - *Where*: University of Milan - Bicocca, the same building of the\n   ERUM2020 conference. We will specify the venue of the event as soon as\n   possible. You can also find more information on how to reach the venue\n   here <https://2020.erum.io/venue/>.\n\nBest wishes, Lorena Abad, Andrea Gilardi, Robin Lovelace, Lucan van der\nMeer.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nWe are happy to invite you to join a hackathon on spatial networks on the*\n27th of May at the University of Milan - Bicocca from 9AM to 5PM. *The\nhackathon is an official satellite event of",
+      "thread_id": "thread-d59f2fd22f58",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-9dab3e99dc22",
+      "message_id": "<07fc4c88-1d88-3d8f-fef7-335f2ab5bbf5@gmail.com>",
+      "from_name": "Paulo Flores Ribeiro",
+      "from_email_hash": "742fe164c2e649c10dc7071d3703d891da5084b7e771d67af616c314288ba5f3",
+      "date": "2020-02-19T14:05:42Z",
+      "subject": "[R-sig-Geo] using the same legend for different scenarios in sf plots",
+      "subject_clean": "using the same legend for different scenarios in sf plots",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\nI want to compare the spatial distribution of a variable in 7 different \nscenarios by running the same plot code successively 7 times (within sf \npackage), each time changing the values of the variable for each \nscenario. In each run, I copy-paste the map into a word document. In the \nend, I want to visually compare the 7 maps, but for that I need the \nscale range of the legend values to be the same on the seven maps \n(including the colour ramp).\nHow to force the scale interval (and the corresponding colour ramp) to \nbe the same on the seven maps, within the sf package?\nThanks,\nPauloFR\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\nI want to compare the spatial distribution of a variable in 7 different \nscenarios by running the same plot code successively 7 times (within sf \npackage), each time changing the values of the ",
+      "thread_id": "thread-9dab3e99dc22",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-7d2e43632743",
+      "message_id": "<8e284d83-90a0-cf4e-7af9-c9cd7396be17@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2020-02-19T15:10:12+01:00",
+      "subject": "[R-sig-Geo] using the same legend for different scenarios in sf plots",
+      "subject_clean": "using the same legend for different scenarios in sf plots",
+      "in_reply_to": "<07fc4c88-1d88-3d8f-fef7-335f2ab5bbf5@gmail.com>",
+      "references": [
+        "<07fc4c88-1d88-3d8f-fef7-335f2ab5bbf5@gmail.com>"
+      ],
+      "body_plain": "With the breaks argument you can specify the numbers at which colors break.\n\nOn 2/19/20 3:05 PM, Paulo Flores Ribeiro wrote:\n> Hello,\n> I want to compare the spatial distribution of a variable in 7 different \n> scenarios by running the same plot code successively 7 times (within sf \n> package), each time changing the values of the variable for each \n> scenario. In each run, I copy-paste the map into a word document. In the \n> end, I want to visually compare the 7 maps, but for that I need the \n> scale range of the legend values to be the same on the seven maps \n> (including the colour ramp).\n> How to force the scale interval (and the corresponding colour ramp) to \n> be the same on the seven maps, within the sf package?\n> Thanks,\n> PauloFR\n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48149 Muenster, Germany\nPhone: +49 251 8333081\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: pEpkey.asc\nType: application/pgp-keys\nSize: 3110 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20200219/7b2afe2a/attachment.bin>",
+      "body_snippet": "With the breaks argument you can specify the numbers at which colors break.\n\nOn 2/19/20 3:05 PM, Paulo Flores Ribeiro wrote:\n> Hello,\n> I want to compare the spatial distribution of a variable in 7 di",
+      "thread_id": "thread-9dab3e99dc22",
+      "thread_depth": 1,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-9f27aae7c869",
+      "message_id": "<12126b46-58f5-0c3b-1038-da7a508f972b@gmail.com>",
+      "from_name": "Paulo Flores Ribeiro",
+      "from_email_hash": "742fe164c2e649c10dc7071d3703d891da5084b7e771d67af616c314288ba5f3",
+      "date": "2020-02-19T15:05:16Z",
+      "subject": "[R-sig-Geo] using the same legend for different scenarios in sf plots",
+      "subject_clean": "using the same legend for different scenarios in sf plots",
+      "in_reply_to": "<8e284d83-90a0-cf4e-7af9-c9cd7396be17@uni-muenster.de>",
+      "references": [
+        "<07fc4c88-1d88-3d8f-fef7-335f2ab5bbf5@gmail.com>",
+        "<8e284d83-90a0-cf4e-7af9-c9cd7396be17@uni-muenster.de>"
+      ],
+      "body_plain": "Thanks, Edzer. I used ?breaks = seq (from = 0, to = 0.4, by = 0.01)? and \nit works beautifully!\nBest regards,\nPauloFR\n\n?s 14:10 de 19-02-2020, Edzer Pebesma escreveu:\n> With the breaks argument you can specify the numbers at which colors break.\n>\n> On 2/19/20 3:05 PM, Paulo Flores Ribeiro wrote:\n>> Hello,\n>> I want to compare the spatial distribution of a variable in 7 different\n>> scenarios by running the same plot code successively 7 times (within sf\n>> package), each time changing the values of the variable for each\n>> scenario. In each run, I copy-paste the map into a word document. In the\n>> end, I want to visually compare the 7 maps, but for that I need the\n>> scale range of the legend values to be the same on the seven maps\n>> (including the colour ramp).\n>> How to force the scale interval (and the corresponding colour ramp) to\n>> be the same on the seven maps, within the sf package?\n>> Thanks,\n>> PauloFR\n>>\n>>\n>> \t[[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks, Edzer. I used ?breaks = seq (from = 0, to = 0.4, by = 0.01)? and \nit works beautifully!\nBest regards,\nPauloFR\n\n?s 14:10 de 19-02-2020, Edzer Pebesma escreveu:\n> With the breaks argument you ca",
+      "thread_id": "thread-9dab3e99dc22",
+      "thread_depth": 2,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-1aa76a634379",
+      "message_id": "<F7F6CB2B-4CB7-424B-974D-149A944451A8@ibbr.cnr.it>",
+      "from_name": "Maurizio Marchi",
+      "from_email_hash": "b7b073bc0283afea98f3c4ddf95dd49cd28a1ca46520b55860a11459d6e35e29",
+      "date": "2020-02-19T18:02:58+01:00",
+      "subject": "[R-sig-Geo]  Strange spatial reference system netCDF [stars and sf functions not working now]",
+      "subject_clean": "Strange spatial reference system netCDF [stars and sf functions not working now]",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I?m sorry for being the smoking gun but looking at the issue climatological data seems to be difficult to be handled in R...\nYes the issue is connected to the GDAL version. I can?t remember exactly but I?m sure it wasn?t the versions I have now and posted before...\nI did a trick using proj4 package and some handmade stuff but not really GIS ;) However my code was not working on other systems so I?m far away from a real solution...\nBut the main question is Why RCM are delivered in this awful CRS!? \nAll my bests \n\n-- \nMaurizio Marchi,\nPhD Forest Science - Ecological Mathematics \nResearcher\nCNR - Institute of Biosciences and BioResources (IBBR), Florence division (Italy)\nSkypeID: maurizioxyz\nhttp://www.ibbr.cnr.it/ibbr/info/people/maurizio-marchi\n#####------#####\nAnnals of Silvicultural Research Associated Editor\nEUFGIS National Focal Point for Italy (www.eufgis.org)\nScopus Author ID: 57188626512\nResearcherID: T-3813-2019\nhttp://b4est.eu/ project\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I?m sorry for being the smoking gun but looking at the issue climatological data seems to be difficult to be handled in R...\nYes the issue is connected to the GDAL version. I can?t remember exactly bu",
+      "thread_id": "thread-1aa76a634379",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-f30ad099aff2",
+      "message_id": "<87471e47-39ed-a3f3-d472-24201997532d@cirad.fr>",
+      "from_name": "Facundo Muñoz",
+      "from_email_hash": "099efb3fe6e595fc38f0f752ebd24f58ee2b478820b4b84569c0e32291cbf740",
+      "date": "2020-02-20T14:27:28+01:00",
+      "subject": "[R-sig-Geo] using the same legend for different scenarios in sf plots",
+      "subject_clean": "using the same legend for different scenarios in sf plots",
+      "in_reply_to": "<12126b46-58f5-0c3b-1038-da7a508f972b@gmail.com>",
+      "references": [
+        "<07fc4c88-1d88-3d8f-fef7-335f2ab5bbf5@gmail.com>",
+        "<8e284d83-90a0-cf4e-7af9-c9cd7396be17@uni-muenster.de>",
+        "<12126b46-58f5-0c3b-1038-da7a508f972b@gmail.com>"
+      ],
+      "body_plain": "In addition to Edzer's answer, I'd suggest considering producing a\nsingle faceted plot with the 7 maps with a common legend, which might be\na more straightforward way to present a comparison of scenarios.\n\nSee, for instance, an example at\nhttps://umr-astre.pages.mia.inra.fr/presentations/2019_rfsa_lsd/#21\n\n?acu.-\n\n\nOn 19/02/2020 16:05, Paulo Flores Ribeiro wrote:\n> Thanks, Edzer. I used ?breaks = seq (from = 0, to = 0.4, by = 0.01)? and \n> it works beautifully!\n> Best regards,\n> PauloFR\n>\n> ?s 14:10 de 19-02-2020, Edzer Pebesma escreveu:\n>> With the breaks argument you can specify the numbers at which colors break.\n>>\n>> On 2/19/20 3:05 PM, Paulo Flores Ribeiro wrote:\n>>> Hello,\n>>> I want to compare the spatial distribution of a variable in 7 different\n>>> scenarios by running the same plot code successively 7 times (within sf\n>>> package), each time changing the values of the variable for each\n>>> scenario. In each run, I copy-paste the map into a word document. In the\n>>> end, I want to visually compare the 7 maps, but for that I need the\n>>> scale range of the legend values to be the same on the seven maps\n>>> (including the colour ramp).\n>>> How to force the scale interval (and the corresponding colour ramp) to\n>>> be the same on the seven maps, within the sf package?\n>>> Thanks,\n>>> PauloFR\n>>>\n>>>\n>>> \t[[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "In addition to Edzer's answer, I'd suggest considering producing a\nsingle faceted plot with the 7 maps with a common legend, which might be\na more straightforward way to present a comparison of scenar",
+      "thread_id": "thread-9dab3e99dc22",
+      "thread_depth": 3,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-595b0e79caa7",
+      "message_id": "<84fd73f4-ad31-37af-55b9-768847171509@gmail.com>",
+      "from_name": "Paulo Flores Ribeiro",
+      "from_email_hash": "742fe164c2e649c10dc7071d3703d891da5084b7e771d67af616c314288ba5f3",
+      "date": "2020-02-20T16:10:14Z",
+      "subject": "[R-sig-Geo] using the same legend for different scenarios in sf plots",
+      "subject_clean": "using the same legend for different scenarios in sf plots",
+      "in_reply_to": "<87471e47-39ed-a3f3-d472-24201997532d@cirad.fr>",
+      "references": [
+        "<07fc4c88-1d88-3d8f-fef7-335f2ab5bbf5@gmail.com>",
+        "<8e284d83-90a0-cf4e-7af9-c9cd7396be17@uni-muenster.de>",
+        "<12126b46-58f5-0c3b-1038-da7a508f972b@gmail.com>",
+        "<87471e47-39ed-a3f3-d472-24201997532d@cirad.fr>"
+      ],
+      "body_plain": "Thank you, Facundo. Nice graphs, by the way.\nCheers,\nPauloFR\n\n?s 13:27 de 20-02-2020, Facundo Mu?oz escreveu:\n> In addition to Edzer's answer, I'd suggest considering producing a\n> single faceted plot with the 7 maps with a common legend, which might be\n> a more straightforward way to present a comparison of scenarios.\n>\n> See, for instance, an example at\n> https://umr-astre.pages.mia.inra.fr/presentations/2019_rfsa_lsd/#21\n>\n> ?acu.-\n>\n>\n> On 19/02/2020 16:05, Paulo Flores Ribeiro wrote:\n>> Thanks, Edzer. I used ?breaks = seq (from = 0, to = 0.4, by = 0.01)? and\n>> it works beautifully!\n>> Best regards,\n>> PauloFR\n>>\n>> ?s 14:10 de 19-02-2020, Edzer Pebesma escreveu:\n>>> With the breaks argument you can specify the numbers at which colors break.\n>>>\n>>> On 2/19/20 3:05 PM, Paulo Flores Ribeiro wrote:\n>>>> Hello,\n>>>> I want to compare the spatial distribution of a variable in 7 different\n>>>> scenarios by running the same plot code successively 7 times (within sf\n>>>> package), each time changing the values of the variable for each\n>>>> scenario. In each run, I copy-paste the map into a word document. In the\n>>>> end, I want to visually compare the 7 maps, but for that I need the\n>>>> scale range of the legend values to be the same on the seven maps\n>>>> (including the colour ramp).\n>>>> How to force the scale interval (and the corresponding colour ramp) to\n>>>> be the same on the seven maps, within the sf package?\n>>>> Thanks,\n>>>> PauloFR\n>>>>\n>>>>\n>>>> \t[[alternative HTML version deleted]]\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> \t[[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_snippet": "Thank you, Facundo. Nice graphs, by the way.\nCheers,\nPauloFR\n\n?s 13:27 de 20-02-2020, Facundo Mu?oz escreveu:\n> In addition to Edzer's answer, I'd suggest considering producing a\n> single faceted plot",
+      "thread_id": "thread-9dab3e99dc22",
+      "thread_depth": 4,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-2d23289f6b70",
+      "message_id": "<fe5dc077-9884-93ba-c1b2-bc37f175b296@yahoo.com.br>",
+      "from_name": "ASANTOS",
+      "from_email_hash": "9c328798782fdba9a5eb7253ec556480706d126689efca25bdfbcd5bdfb8dc96",
+      "date": "2020-02-20T19:20:21-04:00",
+      "subject": "[R-sig-Geo] Circular/square sample function for extract coordinates and marks in *ppp object",
+      "subject_clean": "Circular/square sample function for extract coordinates and marks in *ppp object",
+      "in_reply_to": null,
+      "references": [
+        "<fe5dc077-9884-93ba-c1b2-bc37f175b296.ref@yahoo.com.br>"
+      ],
+      "body_plain": "Dear r-sig-geo members,\n\nI've to know if there is a function for sample for extract coordinates \nand marks of a marked planar point pattern object? In my example:\n\nlibrary(spatstat)\n\n## Using a longleaf data set\nlongleaf\n#Marked planar point pattern: 584 points\n#marks are numeric, of storage type??? ???double???\n#window: rectangle = [0, 200] x [0, 200] metres\n\nThere is the spsample(x, n, \"random\") for example, but this function \nsample random points inside longleaf$window area and doesn't work for marks.\n\nI've like a function that extract longleaf points coordinates and marks \ninside a circular area (eg. 1 metres) or square area (eg. 1 metes h x w) \naround n random sample points and a data frame or better a new marked \nplanar point patter object as output.\n\nIs there this type of function implemented in R?\n\nThanks in advanced,\n\nAlexandre\n\n-- \nAlexandre dos Santos\nGeotechnologies and Spatial Statistics applied to Forest Entomology\nInstituto Federal de Mato Grosso (IFMT) - Campus Caceres\nCaixa Postal 244 (PO Box)\nAvenida dos Ramires, s/n - Distrito Industrial\nCaceres - MT - CEP 78.200-000 (ZIP code)\nPhone: (+55) 65 99686-6970 / (+55) 65 3221-2674\nLattes CV: http://lattes.cnpq.br/1360403201088680\nOrcID: orcid.org/0000-0001-8232-6722\nResearchGate: www.researchgate.net/profile/Alexandre_Santos10\nPublons: https://publons.com/researcher/3085587/alexandre-dos-santos/\n--",
+      "body_snippet": "Dear r-sig-geo members,\n\nI've to know if there is a function for sample for extract coordinates \nand marks of a marked planar point pattern object? In my example:\n\nlibrary(spatstat)\n\n## Using a longle",
+      "thread_id": "thread-2d23289f6b70",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-e8e821def718",
+      "message_id": "<CABgUnxBHqbqbuKW35P_M=OKrQGNFFmE8Gn-Vt5RS+PYNF4akBg@mail.gmail.com>",
+      "from_name": "Chiedza Machingaidze",
+      "from_email_hash": "e01452f34dd3a1fddae001e218c3b716832f4704388c511818463fd4c5feb4b2",
+      "date": "2020-02-26T01:34:03+11:00",
+      "subject": "[R-sig-Geo] Error using predict.sarlm",
+      "subject_clean": "Error using predict.sarlm",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I am running the following code:\nError in predict.sarlm(m1s, newdata = \" geodata \", listw = shpw )\n\nand getting the following error:\nError in predict.sarlm(m1s, newdata = \"geodata\", listw = shpw,  :\n  newdata should have region.id as row.names\n\nI did a search and found a post about the same problem:\nhttp://r-sig-geo.2731867.n2.nabble.com/Error-while-using-predict-sarlm-td7592817.html\n\n\nSo, per the post, I have ensured that region.id matches row names:\n> str(attr( geodatanb , \"region.id\"))\n chr [1:74] \"1\" \"2\" \"3\" \"4\" \"5\" \"6\" \"7\" \"8\" \"9\" \"10\" \"11\" \"12\" \"13\" \"14\"\n\"15\" \"16\" \"17\" \"18\" \"19\" \"20\" \"21\" \"22\" \"23\" \"24\" \"25\" \"26\" \"27\" \"28\" \"29\"\n\"30\" \"31\" \"32\" \"33\" ...\n> str(row.names(generalrateforpred))\n chr [1:74] \"1\" \"2\" \"3\" \"4\" \"5\" \"6\" \"7\" \"8\" \"9\" \"10\" \"11\" \"12\" \"13\" \"14\"\n\"15\" \"16\" \"17\" \"18\" \"19\" \"20\" \"21\" \"22\" \"23\" \"24\" \"25\" \"26\" \"27\" \"28\" \"29\"\n\"30\" \"31\" \"32\" \"33\" ...\nall(row.names(geodata at data) %in% attr( geodatanb, \"region.id\"))\n[1] TRUE\n\nUnfortunately, I'm still getting the error.\n\nCould anyone offer any further assistance?\n\nThank you,\nChi\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am running the following code:\nError in predict.sarlm(m1s, newdata = \" geodata \", listw = shpw )\n\nand getting the following error:\nError in predict.sarlm(m1s, newdata = \"geodata\", listw = shpw,  :\n ",
+      "thread_id": "thread-e8e821def718",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-8d6a2389cc96",
+      "message_id": "<CANVKczO8OMg0XQFjHZYsykzrRcnZXaTpF6OHDAsCmZt0ZMft+Q@mail.gmail.com>",
+      "from_name": "Barry Rowlingson",
+      "from_email_hash": "978d93eeccd73f54cd1080f2010d589bc57743b6aeffbe86b0c01e659efa8282",
+      "date": "2020-02-25T15:39:08Z",
+      "subject": "[R-sig-Geo] Peter Diggle Birthday Conference",
+      "subject_clean": "Peter Diggle Birthday Conference",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hope nobody thinks I'm spamming the list but I'd like to promote the\nconference that we are holding in April in honour of Prof Diggle's 70th\nbirthday (actually yesterday).\n\nI've worked with him for nearly 30 years, and I wrote the first version of\n`splancs` for `S` by interfacing to his Fortran code. Some of this code is\nstill in the R version of splancs today.\n\nWe've got a lot of spatial statistics talks, a smattering of longitudinal\ndata, and a couple of parties scheduled. Our invited speakers include the\ncurrent president of the Royal Statistical Society.\n\nTalk titles (click for full abstracts) are here:\n  http://www.developingstatistics.org/programme/talks/\n\nRegistration details are here:\n http://www.developingstatistics.org/registration/\n\nHope to see some of you there in April!\n\nBarry\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hope nobody thinks I'm spamming the list but I'd like to promote the\nconference that we are holding in April in honour of Prof Diggle's 70th\nbirthday (actually yesterday).\n\nI've worked with him for ne",
+      "thread_id": "thread-8d6a2389cc96",
+      "thread_depth": 0,
+      "month": "2020-02"
+    },
+    {
+      "id": "msg-35c1b4dfdc14",
+      "message_id": "<alpine.LFD.2.21.2002251914050.2005451@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2020-02-25T19:18:35+01:00",
+      "subject": "[R-sig-Geo] Error using predict.sarlm",
+      "subject_clean": "Error using predict.sarlm",
+      "in_reply_to": "<CABgUnxBHqbqbuKW35P_M=OKrQGNFFmE8Gn-Vt5RS+PYNF4akBg@mail.gmail.com>",
+      "references": [
+        "<CABgUnxBHqbqbuKW35P_M=OKrQGNFFmE8Gn-Vt5RS+PYNF4akBg@mail.gmail.com>"
+      ],
+      "body_plain": "On Tue, 25 Feb 2020, Chiedza Machingaidze wrote:\n\n> I am running the following code:\n> Error in predict.sarlm(m1s, newdata = \" geodata \", listw = shpw )\n>\n> and getting the following error:\n> Error in predict.sarlm(m1s, newdata = \"geodata\", listw = shpw,  :\n>  newdata should have region.id as row.names\n\nPlease try to provide a reproducible example, such as:\n\ndata(oldcol, package=\"spdep\")\nlw <- spdep::nb2listw(COL.nb)\nCOL.mix.eig <- lagsarlm(CRIME ~ INC + HOVAL, data=COL.OLD, lw, Dubin=TRUE)\npredict(COL.mix.eig, newdata=\"COL.OLD\", listw=lw)\n#Error in predict.sarlm(COL.mix.eig, newdata = \"COL.OLD\", listw = lw) :\n#  newdata should have region.id as row.names\n\nIf this corresponds to your case, why is the newdata= object in quotation \nmarks?\n\nPlease try to post plain text only, HTML makes it harder to read code.\n\nHope this clarifies,\n\nRoger\n\n>\n> I did a search and found a post about the same problem:\n> http://r-sig-geo.2731867.n2.nabble.com/Error-while-using-predict-sarlm-td7592817.html\n>\n>\n> So, per the post, I have ensured that region.id matches row names:\n>> str(attr( geodatanb , \"region.id\"))\n> chr [1:74] \"1\" \"2\" \"3\" \"4\" \"5\" \"6\" \"7\" \"8\" \"9\" \"10\" \"11\" \"12\" \"13\" \"14\"\n> \"15\" \"16\" \"17\" \"18\" \"19\" \"20\" \"21\" \"22\" \"23\" \"24\" \"25\" \"26\" \"27\" \"28\" \"29\"\n> \"30\" \"31\" \"32\" \"33\" ...\n>> str(row.names(generalrateforpred))\n> chr [1:74] \"1\" \"2\" \"3\" \"4\" \"5\" \"6\" \"7\" \"8\" \"9\" \"10\" \"11\" \"12\" \"13\" \"14\"\n> \"15\" \"16\" \"17\" \"18\" \"19\" \"20\" \"21\" \"22\" \"23\" \"24\" \"25\" \"26\" \"27\" \"28\" \"29\"\n> \"30\" \"31\" \"32\" \"33\" ...\n> all(row.names(geodata at data) %in% attr( geodatanb, \"region.id\"))\n> [1] TRUE\n>\n> Unfortunately, I'm still getting the error.\n>\n> Could anyone offer any further assistance?\n>\n> Thank you,\n> Chi\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Tue, 25 Feb 2020, Chiedza Machingaidze wrote:\n\n> I am running the following code:\n> Error in predict.sarlm(m1s, newdata = \" geodata \", listw = shpw )\n>\n> and getting the following error:\n> Error in",
+      "thread_id": "thread-e8e821def718",
+      "thread_depth": 1,
+      "month": "2020-02"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-3764a46bfa32",
+      "subject": "question on writing shapefiles from OSM data",
+      "message_count": 2,
+      "participants": [
+        "Gabriel Cotlier",
+        "Roger Bivand"
+      ],
+      "started": "2020-02-01T20:25:24+02:00",
+      "last_reply": "2020-02-02T15:21:08+01:00",
+      "root_message_id": "msg-3764a46bfa32"
+    },
+    {
+      "id": "thread-18701d754888",
+      "subject": "How to check & interpret an MCMCglmm ordinal model in R?",
+      "message_count": 1,
+      "participants": [
+        "Mirela Beloiu"
+      ],
+      "started": "2020-02-03T12:57:06+00:00",
+      "last_reply": "2020-02-03T12:57:06+00:00",
+      "root_message_id": "msg-18701d754888"
+    },
+    {
+      "id": "thread-ecbc212e9092",
+      "subject": "Why do kde estimates from ks and adehabitatHR packages in R produce different results? (with same bandwidth and grid)",
+      "message_count": 1,
+      "participants": [
+        "Brad Nissen"
+      ],
+      "started": "2020-02-05T09:40:36-06:00",
+      "last_reply": "2020-02-05T09:40:36-06:00",
+      "root_message_id": "msg-ecbc212e9092"
+    },
+    {
+      "id": "thread-b79c65ee2f0c",
+      "subject": "Geocoding addresses restricted to one country",
+      "message_count": 2,
+      "participants": [
+        "Mathias Moser",
+        "Melanie Graeser"
+      ],
+      "started": "2020-02-05T16:06:08+01:00",
+      "last_reply": "2020-02-05T17:02:19+01:00",
+      "root_message_id": "msg-b79c65ee2f0c"
+    },
+    {
+      "id": "thread-f3a503b8450a",
+      "subject": "How to find distance between grid cell and point that lies in specified radius?",
+      "message_count": 2,
+      "participants": [
+        "Ben Tupper",
+        "Thiago V. dos Santos"
+      ],
+      "started": "2020-02-06T02:11:37+00:00",
+      "last_reply": "2020-02-06T13:36:40-05:00",
+      "root_message_id": "msg-f3a503b8450a"
+    },
+    {
+      "id": "thread-b3d639d81899",
+      "subject": "Cannot view custom tiles made in package tiler in r leaflet - either locally or from github pages server.",
+      "message_count": 1,
+      "participants": [
+        "nevil amos"
+      ],
+      "started": "2020-02-07T15:34:05+11:00",
+      "last_reply": "2020-02-07T15:34:05+11:00",
+      "root_message_id": "msg-b3d639d81899"
+    },
+    {
+      "id": "thread-fd5f439d8ca5",
+      "subject": "reading an ESRI grid into R",
+      "message_count": 2,
+      "participants": [
+        "Julie Lee-Yaw",
+        "Michael Sumner"
+      ],
+      "started": "2020-02-10T18:44:31+00:00",
+      "last_reply": "2020-02-11T06:48:01+11:00",
+      "root_message_id": "msg-fd5f439d8ca5"
+    },
+    {
+      "id": "thread-e43ceef45245",
+      "subject": "Copernicus DIAS",
+      "message_count": 1,
+      "participants": [
+        "Jonathan Rosenblatt"
+      ],
+      "started": "2020-02-13T15:42:04+02:00",
+      "last_reply": "2020-02-13T15:42:04+02:00",
+      "root_message_id": "msg-e43ceef45245"
+    },
+    {
+      "id": "thread-6934c2fff413",
+      "subject": "Strange spatial reference system netCDF [stars and sf functions not working now]",
+      "message_count": 2,
+      "participants": [
+        "Roger Bivand",
+        "maurizio marchi"
+      ],
+      "started": "2020-02-18T15:08:05+01:00",
+      "last_reply": "2020-02-18T22:58:08+01:00",
+      "root_message_id": "msg-6934c2fff413"
+    },
+    {
+      "id": "thread-d59f2fd22f58",
+      "subject": "Spatilal Network Hackathon",
+      "message_count": 1,
+      "participants": [
+        "Robin Lovelace"
+      ],
+      "started": "2020-02-19T11:25:03+00:00",
+      "last_reply": "2020-02-19T11:25:03+00:00",
+      "root_message_id": "msg-d59f2fd22f58"
+    },
+    {
+      "id": "thread-9dab3e99dc22",
+      "subject": "using the same legend for different scenarios in sf plots",
+      "message_count": 5,
+      "participants": [
+        "Edzer Pebesma",
+        "Facundo Muñoz",
+        "Paulo Flores Ribeiro"
+      ],
+      "started": "2020-02-19T14:05:42+00:00",
+      "last_reply": "2020-02-20T16:10:14+00:00",
+      "root_message_id": "msg-9dab3e99dc22"
+    },
+    {
+      "id": "thread-1aa76a634379",
+      "subject": "Strange spatial reference system netCDF [stars and sf functions not working now]",
+      "message_count": 1,
+      "participants": [
+        "Maurizio Marchi"
+      ],
+      "started": "2020-02-19T18:02:58+01:00",
+      "last_reply": "2020-02-19T18:02:58+01:00",
+      "root_message_id": "msg-1aa76a634379"
+    },
+    {
+      "id": "thread-2d23289f6b70",
+      "subject": "Circular/square sample function for extract coordinates and marks in *ppp object",
+      "message_count": 1,
+      "participants": [
+        "ASANTOS"
+      ],
+      "started": "2020-02-20T19:20:21-04:00",
+      "last_reply": "2020-02-20T19:20:21-04:00",
+      "root_message_id": "msg-2d23289f6b70"
+    },
+    {
+      "id": "thread-8d6a2389cc96",
+      "subject": "Peter Diggle Birthday Conference",
+      "message_count": 1,
+      "participants": [
+        "Barry Rowlingson"
+      ],
+      "started": "2020-02-25T15:39:08+00:00",
+      "last_reply": "2020-02-25T15:39:08+00:00",
+      "root_message_id": "msg-8d6a2389cc96"
+    },
+    {
+      "id": "thread-e8e821def718",
+      "subject": "Error using predict.sarlm",
+      "message_count": 2,
+      "participants": [
+        "Chiedza Machingaidze",
+        "Roger Bivand"
+      ],
+      "started": "2020-02-26T01:34:03+11:00",
+      "last_reply": "2020-02-25T19:18:35+01:00",
+      "root_message_id": "msg-e8e821def718"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2011-02",
+  "messages": [
+    {
+      "id": "msg-744dc640a622",
+      "message_id": "<C99179E2.668C%macqueen1@llnl.gov>",
+      "from_name": "MacQueen, Don",
+      "from_email_hash": "a355feda42ba291cca3ded2b4bd0f5892237f43a1a49bebc63799ce72f20c62e",
+      "date": "2011-02-28T16:12:18-08:00",
+      "subject": "[R-sig-Geo] cropping in raster package loses color table?",
+      "subject_clean": "cropping in raster package loses color table?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "The colortable is apparently not preserved when using crop() from the\nraster package. This is something I would find useful.\n\nI'm only just beginning to learn how to use the raster package, so perhaps\nthere's another way to subset a raster image that preserves the\ncolortable? Or I'm making some mistake?\n\n(also, is there a better way to set the colortable?)\n\nThere is a reproducible example below.\n\nThanks\n-Don\n\n\n## based on the example in ?crop\nr <- raster(nrow=45, ncol=90)\nr[] <- sample(1:10,ncell(r),replace=TRUE)\nr at legend@colortable <-c(\"#476BA1\",\"#D1DEFA\",\"#DECACA\",\"#D99482\",\"#EE0000\",\n      \"#AB0000\",\"#B3AEA3\",\"#68AB63\",\"#1C6330\",\"#B5CA8F\")\n\ne <- extent(-160, 10, 30, 60)\nrc <- crop(r, e)\n\ncat('original colortable\\n')\nstr(r at legend)\ncat('\\ncropped colortable\\n')\nstr(rc at legend)\n\nWith output:\n\noriginal colortable\nFormal class 'RasterLegend' [package \"raster\"] with 4 slots\n  ..@ type      : chr(0)\n  ..@ values    : NULL\n  ..@ color     : NULL\n  ..@ colortable: chr [1:10] \"#476BA1\" \"#D1DEFA\" \"#DECACA\" \"#D99482\" ...\n\ncropped colortable\nFormal class 'RasterLegend' [package \"raster\"] with 4 slots\n  ..@ type      : chr(0)\n  ..@ values    : NULL\n  ..@ color     : NULL\n  ..@ colortable: NULL\n\n\n\n\n> sessionInfo()\nR version 2.12.2 (2011-02-25)\nPlatform: i386-apple-darwin9.8.0/i386 (32-bit)\n\nlocale:\n[1] C\n\nattached base packages:\n[1] graphics  grDevices utils     datasets  stats     methods   base\n\nother attached packages:\n[1] raster_1.7-46   rgdal_0.6-33    maptools_0.7-38 lattice_0.19-17\nsp_0.9-77       foreign_0.8-42\n\nloaded via a namespace (and not attached):\n[1] grid_2.12.2\n\n\n-- \nDon MacQueen\n\nLawrence Livermore National Laboratory\n7000 East Ave., L-627\nLivermore, CA 94550\n925-423-1062",
+      "body_snippet": "The colortable is apparently not preserved when using crop() from the\nraster package. This is something I would find useful.\n\nI'm only just beginning to learn how to use the raster package, so perhaps",
+      "thread_id": "thread-744dc640a622",
+      "thread_depth": 0,
+      "month": "2011-02"
+    },
+    {
+      "id": "msg-0cada9f0577e",
+      "message_id": "<1298938622296-6075542.post@n2.nabble.com>",
+      "from_name": "Robert Hijmans",
+      "from_email_hash": "70faee4a4bb00a9a42b7eb40463e8688ad54c69883a6137dae52bd7d9c748ee2",
+      "date": "2011-02-28T16:17:02-08:00",
+      "subject": "[R-sig-Geo] cropping in raster package loses color table?",
+      "subject_clean": "cropping in raster package loses color table?",
+      "in_reply_to": "<C99179E2.668C%macqueen1@llnl.gov>",
+      "references": [
+        "<C99179E2.668C%macqueen1@llnl.gov>"
+      ],
+      "body_plain": "Don,\n\n> The colortable is apparently not preserved when using crop() from the \n> raster package. This is something I would find useful. \n\nI agree. Color table support is relatively recent and it is ignored by most\nfunctions (and hence lost when using crop). That needs improvement.\n\n> (also, is there a better way to set the colortable?) \n\nNo, there are no functions for that yet. So you'll have to do that by hand.\n\nThanks for pointing this out.\n\nRobert\n\n-- \nView this message in context: http://r-sig-geo.2731867.n2.nabble.com/cropping-in-raster-package-loses-color-table-tp6075534p6075542.html\nSent from the R-sig-geo mailing list archive at Nabble.com.",
+      "body_snippet": "Don,\n\n> The colortable is apparently not preserved when using crop() from the \n> raster package. This is something I would find useful. \n\nI agree. Color table support is relatively recent and it is ig",
+      "thread_id": "thread-744dc640a622",
+      "thread_depth": 1,
+      "month": "2011-02"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-744dc640a622",
+      "subject": "cropping in raster package loses color table?",
+      "message_count": 2,
+      "participants": [
+        "MacQueen, Don",
+        "Robert Hijmans"
+      ],
+      "started": "2011-02-28T16:12:18-08:00",
+      "last_reply": "2011-02-28T16:17:02-08:00",
+      "root_message_id": "msg-744dc640a622"
+    }
+  ]
+}

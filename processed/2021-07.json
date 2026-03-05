@@ -1,0 +1,773 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2021-07",
+  "messages": [
+    {
+      "id": "msg-a33ce1018ae3",
+      "message_id": "<CAGmiv2+T5ACXQ0=CJNYvRAU9BsQe6xWxv=4k8RJ==07tQuKvGQ@mail.gmail.com>",
+      "from_name": "Raman Mishra",
+      "from_email_hash": "f40e2ac410c609bcb633ecb918bb3993bbcfce4719bc710aec8b070d5b7c277c",
+      "date": "2021-07-03T17:57:24+05:30",
+      "subject": "[R-sig-Geo] Reverse the legend",
+      "subject_clean": "Reverse the legend",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear All,\nI am using tmap package to create maps. I want to reverse the order of\nlegend in my polygon map. I tried tm_fill(legend.reverse=T) but it is\nnot working.\nPlease provide a solution for this.\nThanks,\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear All,\nI am using tmap package to create maps. I want to reverse the order of\nlegend in my polygon map. I tried tm_fill(legend.reverse=T) but it is\nnot working.\nPlease provide a solution for this.\n",
+      "thread_id": "thread-a33ce1018ae3",
+      "thread_depth": 0,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-e87b2359b036",
+      "message_id": "<mailman.28699.2.1625332935.1337.r-sig-geo@r-project.org>",
+      "from_name": "mr",
+      "from_email_hash": "b078e684bb3134b1b8829d6473e12c92e993d81b9510412c2668029094491b43",
+      "date": "2021-07-03T18:11:54+01:00",
+      "subject": "[R-sig-Geo] Gwmodel an spgwr return too different local coefficients?",
+      "subject_clean": "Gwmodel an spgwr return too different local coefficients?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all, \nI am using spgwr::ggwr() and GWmodel::ggwr.basic to fit a generalized geographically weighted regression with Poisson model and log-link function.\nLocal coefficients between packages are very different, but i couldn't find out why. If any body can point me what am i missing, i apreciate a lot.\n\nBelow is an example using spData::nc.sids.  I would expect local coefficents will be around the observed mean, but this doesnt occur using the GWmodel::ggwr.basic function:\n\nlibrary (spData)\nlibrary(GWmodel)\nlibrary(spgwr)\nlibrary(sp)\n\ndata(nc.sids)\nnc.sids$SID79 <- nc.sids$SID79 + 1 \n# formula of glm poisson model\nf1 <- SID79 ~ offset(log(BIR79))\n\n# GWmodel\nsp::coordinates(nc.sids) <- ~ x + y\ndM <- gw.dist(dp.locat = coordinates(nc.sids))\nbw_gw <- bw.ggwr(formula(f1), nc.sids, family =\"poisson\", approach=\"AIC\",\n                  kernel=\"gaussian\", adaptive = T, p = 2, theta = 0, longlat=F, dMat = dM)\nm_gw <- ggwr.basic(formula(f1), data = nc.sids, \n                    regression.points = nc.sids, bw = bw_gw, \n                    family = \"poisson\", kernel = \"gaussian\", \n                    adaptive = T, cv = F, tol = 1e-5, \n                    maxiter = 1000, dMat = dM)\n\n# spgwr\ndfsids <- as.data.frame(nc.sids)\nxycoord <- cbind(dfsids$x,dfsids$y)\nbw_sp <- ggwr.sel(formula(f1), data = dfsids , family = poisson(link = \"log\"), \n                   gweight = gwr.Gauss, adapt = T, coords = xycoord, \n                   tol = 1e-5 , verbose = T) \nm_sp <- ggwr(formula(f1), data = dfsids, gweight = gwr.Gauss,\n             adapt = bw_sp, family = poisson(link=\"log\"),  \n             type=\"working\", coords = xycoord) \n\n# compare results\nobs <- mean(log(nc.sids$SID79 / nc.sids$BIR79))\ngw <- mean(m_gw$SDF$Intercept)\nsp <- mean(m_sp$SDF$X.Intercept.)\n\ncbind(obs, sp, gw)\n\nSent from Mail for Windows 10\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all, \nI am using spgwr::ggwr() and GWmodel::ggwr.basic to fit a generalized geographically weighted regression with Poisson model and log-link function.\nLocal coefficients between packages are ve",
+      "thread_id": "thread-e87b2359b036",
+      "thread_depth": 0,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-151fd1e29f55",
+      "message_id": "<055b1d12-a21f-6793-cc21-c142b3bb43b4@mail.montclair.edu>",
+      "from_name": "Danlin Yu",
+      "from_email_hash": "3f79bd4ee58ef2352bf1e9e9596c82efcd8671f9e7bf8fcc4b1721922da6fde4",
+      "date": "2021-07-04T01:35:16-04:00",
+      "subject": "[R-sig-Geo] Gwmodel an spgwr return too different local coefficients?",
+      "subject_clean": "Gwmodel an spgwr return too different local coefficients?",
+      "in_reply_to": "<20210703171215.D9EB62E5@hypatia.math.ethz.ch>",
+      "references": [
+        "<20210703171215.D9EB62E5@hypatia.math.ethz.ch>"
+      ],
+      "body_plain": "Hi,\n\nHave you checked the bandwidth vector between the two packages (bw_gw \nand bw_sp)? If these two are different then the estimated coefficients \nwill be different, too.\n\nHope this helps.\n\nDanlin\n\nOn 2021/7/3 13:11, mr via R-sig-Geo wrote:\n> Dear all,\n> I am using spgwr::ggwr() and GWmodel::ggwr.basic to fit a generalized geographically weighted regression with Poisson model and log-link function.\n> Local coefficients between packages are very different, but i couldn't find out why. If any body can point me what am i missing, i apreciate a lot.\n>\n> Below is an example using spData::nc.sids.  I would expect local coefficents will be around the observed mean, but this doesnt occur using the GWmodel::ggwr.basic function:\n>\n> library (spData)\n> library(GWmodel)\n> library(spgwr)\n> library(sp)\n>\n> data(nc.sids)\n> nc.sids$SID79 <- nc.sids$SID79 + 1\n> # formula of glm poisson model\n> f1 <- SID79 ~ offset(log(BIR79))\n>\n> # GWmodel\n> sp::coordinates(nc.sids) <- ~ x + y\n> dM <- gw.dist(dp.locat = coordinates(nc.sids))\n> bw_gw <- bw.ggwr(formula(f1), nc.sids, family =\"poisson\", approach=\"AIC\",\n>                    kernel=\"gaussian\", adaptive = T, p = 2, theta = 0, longlat=F, dMat = dM)\n> m_gw <- ggwr.basic(formula(f1), data = nc.sids,\n>                      regression.points = nc.sids, bw = bw_gw,\n>                      family = \"poisson\", kernel = \"gaussian\",\n>                      adaptive = T, cv = F, tol = 1e-5,\n>                      maxiter = 1000, dMat = dM)\n>\n> # spgwr\n> dfsids <- as.data.frame(nc.sids)\n> xycoord <- cbind(dfsids$x,dfsids$y)\n> bw_sp <- ggwr.sel(formula(f1), data = dfsids , family = poisson(link = \"log\"),\n>                     gweight = gwr.Gauss, adapt = T, coords = xycoord,\n>                     tol = 1e-5 , verbose = T)\n> m_sp <- ggwr(formula(f1), data = dfsids, gweight = gwr.Gauss,\n>               adapt = bw_sp, family = poisson(link=\"log\"),\n>               type=\"working\", coords = xycoord)\n>\n> # compare results\n> obs <- mean(log(nc.sids$SID79 / nc.sids$BIR79))\n> gw <- mean(m_gw$SDF$Intercept)\n> sp <- mean(m_sp$SDF$X.Intercept.)\n>\n> cbind(obs, sp, gw)\n>\n> Sent from Mail for Windows 10\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \n___________________________________________\nDanlin Yu, Ph.D.\nProfessor of GIS and Urban Geography\nDepartment of Earth & Environmental Studies\nMontclair State University\nMontclair, NJ, 07043\nTel: 973-655-4313\nFax: 973-655-4072\nOffice: CELS 314\nEmail: yud at mail.montclair.edu\nwebpage: csam.montclair.edu/~yu",
+      "body_snippet": "Hi,\n\nHave you checked the bandwidth vector between the two packages (bw_gw \nand bw_sp)? If these two are different then the estimated coefficients \nwill be different, too.\n\nHope this helps.\n\nDanlin\n\nO",
+      "thread_id": "thread-151fd1e29f55",
+      "thread_depth": 0,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-f179c6da89b1",
+      "message_id": "<202107041623476292723@whu.edu.cn>",
+      "from_name": "bi@bi@iu m@iii@g oii whu@edu@c@",
+      "from_email_hash": "5f7bda28a6d1ef3f806500a4a6758ef688f2210c8b06431305d94e737d2c4cdb",
+      "date": "2021-07-04T16:23:49+08:00",
+      "subject": "[R-sig-Geo] Gwmodel an spgwr return too different local coefficients?",
+      "subject_clean": "Gwmodel an spgwr return too different local coefficients?",
+      "in_reply_to": null,
+      "references": [
+        "<20210703171216.559801298@hypatia.math.ethz.ch>"
+      ],
+      "body_plain": "Hi,\n\nIn GWmodel, we didn't process the offset term, and that's why the results are very different from each other.\n\nMoreover, the bandwidths for them are also different, but this won't cause a big difference.\n\nCheers,\nBinbin\n\n\n\nbinbinlu at whu.edu.cn\n \nFrom: mr via R-sig-Geo\nDate: 2021-07-04 01:11\nTo: r-sig-geo at r-project.org\nSubject: [R-sig-Geo] Gwmodel an spgwr return too different local coefficients?\nDear all, \nI am using spgwr::ggwr() and GWmodel::ggwr.basic to fit a generalized geographically weighted regression with Poisson model and log-link function.\nLocal coefficients between packages are very different, but i couldn't find out why. If any body can point me what am i missing, i apreciate a lot.\n \nBelow is an example using spData::nc.sids.  I would expect local coefficents will be around the observed mean, but this doesnt occur using the GWmodel::ggwr.basic function:\n \nlibrary (spData)\nlibrary(GWmodel)\nlibrary(spgwr)\nlibrary(sp)\n \ndata(nc.sids)\nnc.sids$SID79 <- nc.sids$SID79 + 1 \n# formula of glm poisson model\nf1 <- SID79 ~ offset(log(BIR79))\n \n# GWmodel\nsp::coordinates(nc.sids) <- ~ x + y\ndM <- gw.dist(dp.locat = coordinates(nc.sids))\nbw_gw <- bw.ggwr(formula(f1), nc.sids, family =\"poisson\", approach=\"AIC\",\n                  kernel=\"gaussian\", adaptive = T, p = 2, theta = 0, longlat=F, dMat = dM)\nm_gw <- ggwr.basic(formula(f1), data = nc.sids, \n                    regression.points = nc.sids, bw = bw_gw, \n                    family = \"poisson\", kernel = \"gaussian\", \n                    adaptive = T, cv = F, tol = 1e-5, \n                    maxiter = 1000, dMat = dM)\n \n# spgwr\ndfsids <- as.data.frame(nc.sids)\nxycoord <- cbind(dfsids$x,dfsids$y)\nbw_sp <- ggwr.sel(formula(f1), data = dfsids , family = poisson(link = \"log\"), \n                   gweight = gwr.Gauss, adapt = T, coords = xycoord, \n                   tol = 1e-5 , verbose = T) \nm_sp <- ggwr(formula(f1), data = dfsids, gweight = gwr.Gauss,\n             adapt = bw_sp, family = poisson(link=\"log\"),  \n             type=\"working\", coords = xycoord) \n \n# compare results\nobs <- mean(log(nc.sids$SID79 / nc.sids$BIR79))\ngw <- mean(m_gw$SDF$Intercept)\nsp <- mean(m_sp$SDF$X.Intercept.)\n \ncbind(obs, sp, gw)\n \nSent from Mail for Windows 10\n \n \n[[alternative HTML version deleted]]\n \n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nIn GWmodel, we didn't process the offset term, and that's why the results are very different from each other.\n\nMoreover, the bandwidths for them are also different, but this won't cause a big dif",
+      "thread_id": "thread-f179c6da89b1",
+      "thread_depth": 0,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-6596c21a8597",
+      "message_id": "<mailman.28702.3.1625494714.1337.r-sig-geo@r-project.org>",
+      "from_name": "mr",
+      "from_email_hash": "b078e684bb3134b1b8829d6473e12c92e993d81b9510412c2668029094491b43",
+      "date": "2021-07-05T14:58:10+01:00",
+      "subject": "[R-sig-Geo] Gwmodel an spgwr return too different local coefficients?",
+      "subject_clean": "Gwmodel an spgwr return too different local coefficients?",
+      "in_reply_to": "<202107041623476292723@whu.edu.cn>",
+      "references": [
+        "<20210703171216.559801298@hypatia.math.ethz.ch>",
+        "<202107041623476292723@whu.edu.cn>"
+      ],
+      "body_plain": "Ok, thank you for your comments.\nRegards, Manuel\n\nSent from Mail for Windows 10\n\nFrom: binbinlu at whu.edu.cn\nSent: 4 de julho de 2021 09:24\nTo: mr; r-sig-geo\nSubject: Re: [R-sig-Geo] Gwmodel an spgwr return too different local coefficients?\n\nHi,\n\nIn GWmodel, we didn't process the offset term, and that's why the results are very different from each other.\n\nMoreover, the bandwidths for them are also different, but this won't cause a big difference.\n\nCheers,\nBinbin\n\n\nbinbinlu at whu.edu.cn\n?\nFrom:?mr via R-sig-Geo\nDate:?2021-07-04?01:11\nTo:?r-sig-geo at r-project.org\nSubject:?[R-sig-Geo] Gwmodel an spgwr return too different local coefficients?\nDear all, \nI am using spgwr::ggwr() and GWmodel::ggwr.basic to fit a generalized geographically weighted regression with Poisson model and log-link function.\nLocal coefficients between packages are very different, but i couldn't find out why. If any body can point me what am i missing, i apreciate a lot.\n?\nBelow is an example using spData::nc.sids.? I would expect local coefficents will be around the observed mean, but this doesnt occur using the GWmodel::ggwr.basic function:\n?\nlibrary (spData)\nlibrary(GWmodel)\nlibrary(spgwr)\nlibrary(sp)\n?\ndata(nc.sids)\nnc.sids$SID79 <- nc.sids$SID79 + 1 \n# formula of glm poisson model\nf1 <- SID79 ~ offset(log(BIR79))\n?\n# GWmodel\nsp::coordinates(nc.sids) <- ~ x + y\ndM <- gw.dist(dp.locat = coordinates(nc.sids))\nbw_gw <- bw.ggwr(formula(f1), nc.sids, family =\"poisson\", approach=\"AIC\",\n????????????????? kernel=\"gaussian\", adaptive = T, p = 2, theta = 0, longlat=F, dMat = dM)\nm_gw <- ggwr.basic(formula(f1), data = nc.sids, \n??????????????????? regression.points = nc.sids, bw = bw_gw, \n??????????????????? family = \"poisson\", kernel = \"gaussian\", \n??????????????????? adaptive = T, cv = F, tol = 1e-5, \n??????????????????? maxiter = 1000, dMat = dM)\n?\n# spgwr\ndfsids <- as.data.frame(nc.sids)\nxycoord <- cbind(dfsids$x,dfsids$y)\nbw_sp <- ggwr.sel(formula(f1), data = dfsids , family = poisson(link = \"log\"), \n?????????????????? gweight = gwr.Gauss, adapt = T, coords = xycoord, \n?????????????????? tol = 1e-5 , verbose = T) \nm_sp <- ggwr(formula(f1), data = dfsids, gweight = gwr.Gauss,\n???????????? adapt = bw_sp, family = poisson(link=\"log\"),? \n???????????? type=\"working\", coords = xycoord) \n?\n# compare results\nobs <- mean(log(nc.sids$SID79 / nc.sids$BIR79))\ngw <- mean(m_gw$SDF$Intercept)\nsp <- mean(m_sp$SDF$X.Intercept.)\n?\ncbind(obs, sp, gw)\n?\nSent from Mail for Windows 10\n?\n?\n[[alternative HTML version deleted]]\n?\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n-------------- next part --------------\nAn HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20210705/52b24ead/attachment.html>\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: 44B618F6EBBA4A9787CC8D4514D9167B.png\nType: image/png\nSize: 129 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20210705/52b24ead/attachment.png>",
+      "body_snippet": "Ok, thank you for your comments.\nRegards, Manuel\n\nSent from Mail for Windows 10\n\nFrom: binbinlu at whu.edu.cn\nSent: 4 de julho de 2021 09:24\nTo: mr; r-sig-geo\nSubject: Re: [R-sig-Geo] Gwmodel an spgwr",
+      "thread_id": "thread-f179c6da89b1",
+      "thread_depth": 1,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-c71095f60416",
+      "message_id": "<e219561e-d0b3-04e2-4d22-fa348394fe1c@elrick.de>",
+      "from_name": "Tim Elrick",
+      "from_email_hash": "77c6b62c54eb7f2a9b812532863775b4660de8cd8f8b1c608d2ba8a2ceda067d",
+      "date": "2021-07-05T22:14:01+02:00",
+      "subject": "[R-sig-Geo] How to project a SpatExtent object?",
+      "subject_clean": "How to project a SpatExtent object?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi all,\n\nDoes anyone know how to (re-)project a SpatExtent object from the terra \npackage?\n\nproject() only works on SpatVector or SpatRaster, but vect() doesn't \nwork on a SpatExtent either to convert a SpatExtent to a SpatVector.\n\nThanks,\n\nTim",
+      "body_snippet": "Hi all,\n\nDoes anyone know how to (re-)project a SpatExtent object from the terra \npackage?\n\nproject() only works on SpatVector or SpatRaster, but vect() doesn't \nwork on a SpatExtent either to convert",
+      "thread_id": "thread-c71095f60416",
+      "thread_depth": 0,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-a2762e8e1d08",
+      "message_id": "<CAAcGz98VZ3F=WEyJLufmAMunatitx4u+EMz7REPMFz=2bTD3jw@mail.gmail.com>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "ec02820eba6228afb61925d60b233042e6d048081cc8b7f7e46a034ba5ad3d90",
+      "date": "2021-07-06T10:00:18+10:00",
+      "subject": "[R-sig-Geo] How to project a SpatExtent object?",
+      "subject_clean": "How to project a SpatExtent object?",
+      "in_reply_to": "<e219561e-d0b3-04e2-4d22-fa348394fe1c@elrick.de>",
+      "references": [
+        "<e219561e-d0b3-04e2-4d22-fa348394fe1c@elrick.de>"
+      ],
+      "body_plain": "I think you can project the empty rast() object, using the same idiom as\n{raster} to create an empty version:\n\n f <- system.file(\"ex/elev.tif\", package=\"terra\", mustWork = TRUE)\n r <- rast(f)\nterra::project(terra::rast(r), \"+proj=laea\")\n\nthat seems analogous to what raster::projectExtent does.\n\nHTH, Mike\n\n\n\nOn Tue, Jul 6, 2021 at 6:14 AM Tim Elrick <abo at elrick.de> wrote:\n\n> Hi all,\n>\n> Does anyone know how to (re-)project a SpatExtent object from the terra\n> package?\n>\n> project() only works on SpatVector or SpatRaster, but vect() doesn't\n> work on a SpatExtent either to convert a SpatExtent to a SpatVector.\n>\n> Thanks,\n>\n> Tim\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \nMichael Sumner\nSoftware and Database Engineer\nAustralian Antarctic Division\nHobart, Australia\ne-mail: mdsumner at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I think you can project the empty rast() object, using the same idiom as\n{raster} to create an empty version:\n\n f <- system.file(\"ex/elev.tif\", package=\"terra\", mustWork = TRUE)\n r <- rast(f)\nterra::p",
+      "thread_id": "thread-c71095f60416",
+      "thread_depth": 1,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-c8745caac262",
+      "message_id": "<xgz1r8ba7u8.fsf@hafogvatn.is>",
+      "from_name": "Julian M. Burgos",
+      "from_email_hash": "950ea9cca6e3b3adb7ff6eeb7af8648e91468eccbd26cb5e549d117d523ea9e5",
+      "date": "2021-07-06T13:29:51Z",
+      "subject": "[R-sig-Geo] Issue with st_warp, gdal and NAs",
+      "subject_clean": "Issue with st_warp, gdal and NAs",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list,\n\nI am having a bit of trouble using st_warp() to aggregate star objects with the option \"use_gdal = TRUE\".  I am using the \"average\" method, and I want cells with NA values to be ignored.  To demonstrate, I will make a small raster for testing, and will include cells with NA values:\n\n#-------------------------------------------------\n  \nlibrary(raster)\n\n# Create raster for testing\nmyfile <- \"~/myraster.tif\"\nmyraster <- raster(xmn = 0, ymn = 0, xmx = 10, ymx = 10, resolution = 0.1,\n                   crs = 4326, vals = sample(1:20, size = 10000, replace = TRUE))\nmyraster[sample(1:10000, 200)] <- NA\nwriteRaster(myraster, filename = myfile, overwrite = TRUE)\n\n#-------------------------------------------------\n\nWith the raster package, I can aggergate the cells ignoring the NA values like this:\n\n\nr1 <- raster(myfile)\nag1 <- raster::aggregate(x = raster(myfile), fact = 10,\n                         fun = mean, na.rm = TRUE)\n\n...which is what I want.  I can also aggregate the cells including the NAs, like this:\n                                                                                   \nag2 <- raster::aggregate(x = raster(myfile), fact = 10,\n                         fun = mean, na.rm = FALSE)\n\n.... which produces a raster with a lots of gaps.  Now, to do a similar aggregation with the stars package I can do this:\n\ns1 <-  read_stars(myfile)\n\nag3 <- st_warp(src = s1,\n              dest = st_as_stars(st_bbox(s1), dx = 1, dy = 1),\n              use_gdal = TRUE,\n              method = \"average\")\n\nThe resulting raster (ag3) has gaps like ag2, which means that the NAs are not being ignored when computing the averages.  With use_gdal_TRUE and method=\"average\" we are using gdalwarp with the average resampling method, which according to the documentation \"computes the weighted average of all non-NODATA contributing pixels.\".  So I guess the problem is that the NAs are not being recognized as NODATA pixels.\n\nDoes anybody know how to solve this?\n\nMany thanks,\n\nJulian\n \n\n\n-- \nJulian Mariano Burgos, PhD\nHafranns?knastofnun, ranns?kna- og r??gjafarstofnun hafs og vatna/\nMarine and Freshwater Research Institute\nBotnsj?varsvi?s / Demersal Division\n  Fornub??ir 5, IS-220 Hafnarfj?r?ur, Iceland\nwww.hafogvatn.is\nS?mi/Telephone : +354-5752037\nNetfang/Email: julian.burgos at hafogvatn.is",
+      "body_snippet": "Dear list,\n\nI am having a bit of trouble using st_warp() to aggregate star objects with the option \"use_gdal = TRUE\".  I am using the \"average\" method, and I want cells with NA values to be ignored.  ",
+      "thread_id": "thread-c8745caac262",
+      "thread_depth": 0,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-2bb5e3018458",
+      "message_id": "<ff05ccab-e119-7faa-7d63-00dab34ae081@elrick.de>",
+      "from_name": "Tim Elrick",
+      "from_email_hash": "77c6b62c54eb7f2a9b812532863775b4660de8cd8f8b1c608d2ba8a2ceda067d",
+      "date": "2021-07-06T17:47:10+02:00",
+      "subject": "[R-sig-Geo] How to project a SpatExtent object?",
+      "subject_clean": "How to project a SpatExtent object?",
+      "in_reply_to": "<CAAcGz98VZ3F=WEyJLufmAMunatitx4u+EMz7REPMFz=2bTD3jw@mail.gmail.com>",
+      "references": [
+        "<e219561e-d0b3-04e2-4d22-fa348394fe1c@elrick.de>",
+        "<CAAcGz98VZ3F=WEyJLufmAMunatitx4u+EMz7REPMFz=2bTD3jw@mail.gmail.com>"
+      ],
+      "body_plain": "Hi Mike,\n\nThanks. Your code didn't take into account that I was interested in \nSpatExtent instead of SpatRaster. So, I modified the code:\n\nlibrary(terra)\nf <- system.file(\"ex/elev.tif\", package=\"terra\", mustWork = TRUE)\nf\nr <- rast(f)\n\ne <- ext(c(6.0, 6.2, 49.7, 49.8))\nplot(r, ext = e)\n\nr2 <- project(r, \"+proj=utm +zone=31\")\nr2\n# the following is the line that re-projects the SpatExtent\ne2 <- ext(project(rast(e, crs = crs(r)), \"+proj=utm +zone=31\"))\nplot(r2, ext = e2)\n\n From the example it is difficult to judge if it worked out (as I am not \ntoo familiar with the DEM of the example). When I try to apply it my \ncase (reprojecting a SpatExtent from UTM zone 18N to WGS84), this code \ndoesn't work. The resulting extent will select the whole raster image \ninstead of the previously defined extent. Due to the large file sizes, I \ncannot offer a reproducible example based on my data unfortunately. I \nwill look into it further and try to understand, why it doesn't work.\n\nThanks anyway,\nTim\n\nOn 2021-07-06 02:00, Michael Sumner wrote:\nI think you can project the empty rast() object, using the same idiom as\n\n{raster} to create an empty version:\n\n   f <- system.file(\"ex/elev.tif\", package=\"terra\", mustWork = TRUE)\n   r <- rast(f)\nterra::project(terra::rast(r), \"+proj=laea\")\n\nthat seems analogous to what raster::projectExtent does.\n\nHTH, Mike\n\n\n\nOn Tue, Jul 6, 2021 at 6:14 AM Tim Elrick <abo at elrick.de\n<mailto:abo at elrick.de>> wrote:\n\n     Hi all,\n\n     Does anyone know how to (re-)project a SpatExtent object from the terra\n     package?\n\n     project() only works on SpatVector or SpatRaster, but vect() doesn't\n     work on a SpatExtent either to convert a SpatExtent to a SpatVector.\n\n     Thanks,\n\n     Tim\n\n     _______________________________________________\n     R-sig-Geo mailing list\n     R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n     https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n     <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n\n\n\n-- \nMichael Sumner\nSoftware and Database Engineer\nAustralian Antarctic Division\nHobart, Australia\ne-mail: mdsumner at gmail.com <mailto:mdsumner at gmail.com>",
+      "body_snippet": "Hi Mike,\n\nThanks. Your code didn't take into account that I was interested in \nSpatExtent instead of SpatRaster. So, I modified the code:\n\nlibrary(terra)\nf <- system.file(\"ex/elev.tif\", package=\"terra",
+      "thread_id": "thread-c71095f60416",
+      "thread_depth": 2,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-9363f7d39756",
+      "message_id": "<6D5B8D0A-9997-4306-BAE2-F632C4CE3009@gmail.com>",
+      "from_name": "Raphael Saldanha",
+      "from_email_hash": "ad0fe40b794f3673e41325d126245f290467b9a30245276a26357fe3a1efe247",
+      "date": "2021-07-07T18:09:50-03:00",
+      "subject": "[R-sig-Geo] Shiny app for Spatial Econometric classes",
+      "subject_clean": "Shiny app for Spatial Econometric classes",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello all!\n\nMe and Professor Eduardo Almeida (UFJF, Brazil) are creating an R Shiny app for Spatial Econometric classes. The app is called Tobler and currently offers some tests and estimation of cross-section and panel models.\n\nThe app is hosted at shinyapps: https://rfsaldanha.shinyapps.io/tobler/ \n\nThe code is open at GitHub: https://github.com/rfsaldanha/tobler \n\nAll suggestions are welcome!\n\n\nBest regards,\n\nRaphael Saldanha\nFunda??o Oswaldo Cruz - Brazil\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: smime.p7s\nType: application/pkcs7-signature\nSize: 4908 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20210707/2d413a11/attachment.p7s>",
+      "body_snippet": "Hello all!\n\nMe and Professor Eduardo Almeida (UFJF, Brazil) are creating an R Shiny app for Spatial Econometric classes. The app is called Tobler and currently offers some tests and estimation of cros",
+      "thread_id": "thread-9363f7d39756",
+      "thread_depth": 0,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-bb0edc1ee867",
+      "message_id": "<20210708142008.5738ef1a@rolf-Latitude-E7470>",
+      "from_name": "Rolf Turner",
+      "from_email_hash": "85365426fbf4496cfac2415de7f8b411ee0133e9a8b2316f8939adcd30c2a157",
+      "date": "2021-07-08T14:20:08+12:00",
+      "subject": "[R-sig-Geo] Shiny app for Spatial Econometric classes",
+      "subject_clean": "Shiny app for Spatial Econometric classes",
+      "in_reply_to": "<6D5B8D0A-9997-4306-BAE2-F632C4CE3009@gmail.com>",
+      "references": [
+        "<6D5B8D0A-9997-4306-BAE2-F632C4CE3009@gmail.com>"
+      ],
+      "body_plain": "On Wed, 7 Jul 2021 18:09:50 -0300\nRaphael Saldanha <rfsaldanha at gmail.com> wrote:\n\n> Hello all!\n> \n> Me and Professor Eduardo Almeida (UFJF, Brazil) are creating an R\n> Shiny app for Spatial Econometric classes. \n\n<SNIP>\n\nI hope that you won't find this comment offensive, but I could not\nresist sending it to you, since I am rather fanatical (pedantic?) about\ncorrect English usage.\n\nThe expression \"Me and Professor Eduardo Almeida\" is both (a) bad\ngrammar and (b) bad form.  (a) Instead of the pronoun \"Me\" (accusative or\nobjective case) you should use \"I\" (nominative or subjective case), since\nthis expression is the subject of the sentence.  (b) It is \"bad form\"\n(it sounds vaguely self-promoting)  to put a first person pronoun before the\nnames of others to which it is linked.  You should say \"Professor\nEduardo Almeida and I are creating ....\".\n\nI realise that English is surely a second language for you, and your\nEnglish is infinitely better than my non-existent Portuguese.  Your\nEnglish is actually quite good, probably better than that of many\nnative English speakers.  Nevertheless the expression that you use is\nnot correct and you should strive to avoid such usage.\n\nAgain let me express the hope that you won't take offence at this\ncomment.\n\ncheers,\n\nRolf Turner\n\n-- \nHonorary Research Fellow\nDepartment of Statistics\nUniversity of Auckland\nPhone: +64-9-373-7599 ext. 88276",
+      "body_snippet": "On Wed, 7 Jul 2021 18:09:50 -0300\nRaphael Saldanha <rfsaldanha at gmail.com> wrote:\n\n> Hello all!\n> \n> Me and Professor Eduardo Almeida (UFJF, Brazil) are creating an R\n> Shiny app for Spatial Econome",
+      "thread_id": "thread-9363f7d39756",
+      "thread_depth": 1,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-edc622a49309",
+      "message_id": "<C7F33BC4-4107-4DAE-B3AA-BBB68EF049D9@gmail.com>",
+      "from_name": "Raphael Saldanha",
+      "from_email_hash": "ad0fe40b794f3673e41325d126245f290467b9a30245276a26357fe3a1efe247",
+      "date": "2021-07-08T07:32:35-03:00",
+      "subject": "[R-sig-Geo] Shiny app for Spatial Econometric classes",
+      "subject_clean": "Shiny app for Spatial Econometric classes",
+      "in_reply_to": "<20210708142008.5738ef1a@rolf-Latitude-E7470>",
+      "references": [
+        "<20210708142008.5738ef1a@rolf-Latitude-E7470>"
+      ],
+      "body_plain": "No offense taken. Thanks for the remark and opportunity to learn.\n\n\nCheers,\n\nRaphael \n\n> Em 7 de jul. de 2021, ?(s) 23:20, Rolf Turner <r.turner at auckland.ac.nz> escreveu:\n> \n> ?\n>> On Wed, 7 Jul 2021 18:09:50 -0300\n>> Raphael Saldanha <rfsaldanha at gmail.com> wrote:\n>> \n>> Hello all!\n>> \n>> Me and Professor Eduardo Almeida (UFJF, Brazil) are creating an R\n>> Shiny app for Spatial Econometric classes. \n> \n> <SNIP>\n> \n> I hope that you won't find this comment offensive, but I could not\n> resist sending it to you, since I am rather fanatical (pedantic?) about\n> correct English usage.\n> \n> The expression \"Me and Professor Eduardo Almeida\" is both (a) bad\n> grammar and (b) bad form.  (a) Instead of the pronoun \"Me\" (accusative or\n> objective case) you should use \"I\" (nominative or subjective case), since\n> this expression is the subject of the sentence.  (b) It is \"bad form\"\n> (it sounds vaguely self-promoting)  to put a first person pronoun before the\n> names of others to which it is linked.  You should say \"Professor\n> Eduardo Almeida and I are creating ....\".\n> \n> I realise that English is surely a second language for you, and your\n> English is infinitely better than my non-existent Portuguese.  Your\n> English is actually quite good, probably better than that of many\n> native English speakers.  Nevertheless the expression that you use is\n> not correct and you should strive to avoid such usage.\n> \n> Again let me express the hope that you won't take offence at this\n> comment.\n> \n> cheers,\n> \n> Rolf Turner\n> \n> -- \n> Honorary Research Fellow\n> Department of Statistics\n> University of Auckland\n> Phone: +64-9-373-7599 ext. 88276\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "No offense taken. Thanks for the remark and opportunity to learn.\n\n\nCheers,\n\nRaphael \n\n> Em 7 de jul. de 2021, ?(s) 23:20, Rolf Turner <r.turner at auckland.ac.nz> escreveu:\n> \n> ?\n>> On Wed, 7 Jul 20",
+      "thread_id": "thread-9363f7d39756",
+      "thread_depth": 2,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-8f47d51a93b2",
+      "message_id": "<853e3554-5071-1704-e174-1f5ab1f45c3b@prodsyse.com>",
+      "from_name": "Spencer Graves",
+      "from_email_hash": "5203a00a66485f2d34e41482790931c4036fce81c75dfe4b9dc5c72db48bef06",
+      "date": "2021-07-08T06:45:42-05:00",
+      "subject": "[R-sig-Geo] Shiny app for Spatial Econometric classes",
+      "subject_clean": "Shiny app for Spatial Econometric classes",
+      "in_reply_to": "<C7F33BC4-4107-4DAE-B3AA-BBB68EF049D9@gmail.com>",
+      "references": [
+        "<20210708142008.5738ef1a@rolf-Latitude-E7470>",
+        "<C7F33BC4-4107-4DAE-B3AA-BBB68EF049D9@gmail.com>"
+      ],
+      "body_plain": "Estimado Raphael:\n\n\n\t  I don't know any Portuguese either, and I'm very grateful that you've \nmade the effort to ask this group in a language not your own.\n\n\n\t  In primary school, I learned that constructions like, \"Me and \nProfessor ...\" too often sounded like, \"Mean Professor ...\".\n\n\n\t  Un fuerte abrazo (\"A big hug\", as a Uruguayan man whom I had not \npreviously met ended a letter inviting me to talk at a conference).\n\n\n\t  Spencer Graves\n\n\nOn 7/8/21 5:32 AM, Raphael Saldanha wrote:\n> No offense taken. Thanks for the remark and opportunity to learn.\n> \n> \n> Cheers,\n> \n> Raphael\n> \n>> Em 7 de jul. de 2021, ?(s) 23:20, Rolf Turner <r.turner at auckland.ac.nz> escreveu:\n>>\n>> ?\n>>> On Wed, 7 Jul 2021 18:09:50 -0300\n>>> Raphael Saldanha <rfsaldanha at gmail.com> wrote:\n>>>\n>>> Hello all!\n>>>\n>>> Me and Professor Eduardo Almeida (UFJF, Brazil) are creating an R\n>>> Shiny app for Spatial Econometric classes.\n>>\n>> <SNIP>\n>>\n>> I hope that you won't find this comment offensive, but I could not\n>> resist sending it to you, since I am rather fanatical (pedantic?) about\n>> correct English usage.\n>>\n>> The expression \"Me and Professor Eduardo Almeida\" is both (a) bad\n>> grammar and (b) bad form.  (a) Instead of the pronoun \"Me\" (accusative or\n>> objective case) you should use \"I\" (nominative or subjective case), since\n>> this expression is the subject of the sentence.  (b) It is \"bad form\"\n>> (it sounds vaguely self-promoting)  to put a first person pronoun before the\n>> names of others to which it is linked.  You should say \"Professor\n>> Eduardo Almeida and I are creating ....\".\n>>\n>> I realise that English is surely a second language for you, and your\n>> English is infinitely better than my non-existent Portuguese.  Your\n>> English is actually quite good, probably better than that of many\n>> native English speakers.  Nevertheless the expression that you use is\n>> not correct and you should strive to avoid such usage.\n>>\n>> Again let me express the hope that you won't take offence at this\n>> comment.\n>>\n>> cheers,\n>>\n>> Rolf Turner\n>>\n>> -- \n>> Honorary Research Fellow\n>> Department of Statistics\n>> University of Auckland\n>> Phone: +64-9-373-7599 ext. 88276\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_snippet": "Estimado Raphael:\n\n\n\t  I don't know any Portuguese either, and I'm very grateful that you've \nmade the effort to ask this group in a language not your own.\n\n\n\t  In primary school, I learned that const",
+      "thread_id": "thread-9363f7d39756",
+      "thread_depth": 3,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-2ead0cbced83",
+      "message_id": "<0A32F3A1-0B40-4C41-A9F9-3CE1BE73CF7F@gmail.com>",
+      "from_name": "Raphael Saldanha",
+      "from_email_hash": "ad0fe40b794f3673e41325d126245f290467b9a30245276a26357fe3a1efe247",
+      "date": "2021-07-08T10:00:48-03:00",
+      "subject": "[R-sig-Geo] Shiny app for Spatial Econometric classes",
+      "subject_clean": "Shiny app for Spatial Econometric classes",
+      "in_reply_to": "<853e3554-5071-1704-e174-1f5ab1f45c3b@prodsyse.com>",
+      "references": [
+        "<20210708142008.5738ef1a@rolf-Latitude-E7470>",
+        "<C7F33BC4-4107-4DAE-B3AA-BBB68EF049D9@gmail.com>",
+        "<853e3554-5071-1704-e174-1f5ab1f45c3b@prodsyse.com>"
+      ],
+      "body_plain": "Estimado Spencer,\n\nThanks for your kind words. Actually, that construction is not standard in Portuguese also (although that does not sound pedant or with some bad intention for our ears). I revised the text three times and used an app for grammar correction before sending. Anyway, it was a mistake by all means. \n\nTo learn Spatial Econometrics and other fields require from us additional efforts. There is just a few books or materials in Portuguese. But I try to approach this difficult as an opportunity to learn.\n\nIndeed, one of the reasons for building the app was to facilitate the use of the methods for people that are learning R. *Professor Eduardo and I* teach annually a course on that field and we face this challenge. With the pandemics and Zoom classes, we hope that the app and our scripts will help the students to learn R.\n\n\nUm forte abra?o,\n\nRaphael Saldanha\n\n> Em 8 de jul. de 2021, ?(s) 08:45, Spencer Graves <spencer.graves at prodsyse.com> escreveu:\n> \n> Estimado Raphael:\n> \n> \n> \t  I don't know any Portuguese either, and I'm very grateful that you've made the effort to ask this group in a language not your own.\n> \n> \n> \t  In primary school, I learned that constructions like, \"Me and Professor ...\" too often sounded like, \"Mean Professor ...\".\n> \n> \n> \t  Un fuerte abrazo (\"A big hug\", as a Uruguayan man whom I had not previously met ended a letter inviting me to talk at a conference).\n> \n> \n> \t  Spencer Graves\n> \n> \n> On 7/8/21 5:32 AM, Raphael Saldanha wrote:\n>> No offense taken. Thanks for the remark and opportunity to learn.\n>> Cheers,\n>> Raphael\n>>> Em 7 de jul. de 2021, ?(s) 23:20, Rolf Turner <r.turner at auckland.ac.nz> escreveu:\n>>> \n>>> ?\n>>>> On Wed, 7 Jul 2021 18:09:50 -0300\n>>>> Raphael Saldanha <rfsaldanha at gmail.com> wrote:\n>>>> \n>>>> Hello all!\n>>>> \n>>>> Me and Professor Eduardo Almeida (UFJF, Brazil) are creating an R\n>>>> Shiny app for Spatial Econometric classes.\n>>> \n>>> <SNIP>\n>>> \n>>> I hope that you won't find this comment offensive, but I could not\n>>> resist sending it to you, since I am rather fanatical (pedantic?) about\n>>> correct English usage.\n>>> \n>>> The expression \"Me and Professor Eduardo Almeida\" is both (a) bad\n>>> grammar and (b) bad form.  (a) Instead of the pronoun \"Me\" (accusative or\n>>> objective case) you should use \"I\" (nominative or subjective case), since\n>>> this expression is the subject of the sentence.  (b) It is \"bad form\"\n>>> (it sounds vaguely self-promoting)  to put a first person pronoun before the\n>>> names of others to which it is linked.  You should say \"Professor\n>>> Eduardo Almeida and I are creating ....\".\n>>> \n>>> I realise that English is surely a second language for you, and your\n>>> English is infinitely better than my non-existent Portuguese.  Your\n>>> English is actually quite good, probably better than that of many\n>>> native English speakers.  Nevertheless the expression that you use is\n>>> not correct and you should strive to avoid such usage.\n>>> \n>>> Again let me express the hope that you won't take offence at this\n>>> comment.\n>>> \n>>> cheers,\n>>> \n>>> Rolf Turner\n>>> \n>>> -- \n>>> Honorary Research Fellow\n>>> Department of Statistics\n>>> University of Auckland\n>>> Phone: +64-9-373-7599 ext. 88276\n>>> \n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: smime.p7s\nType: application/pkcs7-signature\nSize: 4908 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20210708/e8a99ebb/attachment.p7s>",
+      "body_snippet": "Estimado Spencer,\n\nThanks for your kind words. Actually, that construction is not standard in Portuguese also (although that does not sound pedant or with some bad intention for our ears). I revised t",
+      "thread_id": "thread-9363f7d39756",
+      "thread_depth": 4,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-1e6ec9bc6962",
+      "message_id": "<878971ed-bceb-8a77-fef-8956e2313853@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2021-07-09T16:30:14+02:00",
+      "subject": "[R-sig-Geo] Shiny app for Spatial Econometric classes",
+      "subject_clean": "Shiny app for Spatial Econometric classes",
+      "in_reply_to": "<0A32F3A1-0B40-4C41-A9F9-3CE1BE73CF7F@gmail.com>",
+      "references": [
+        "<20210708142008.5738ef1a@rolf-Latitude-E7470>",
+        "<C7F33BC4-4107-4DAE-B3AA-BBB68EF049D9@gmail.com>",
+        "<853e3554-5071-1704-e174-1f5ab1f45c3b@prodsyse.com>",
+        "<0A32F3A1-0B40-4C41-A9F9-3CE1BE73CF7F@gmail.com>"
+      ],
+      "body_plain": "Returning to the \"Tobler\" shiny app:\n\nThe main serious weakness is the name and the approach. It is not and has \nnever been the case that \"Everything is related to everything else, but \nnear things are more related than distant things.\" This is and has always \nbeen an oversimplification, disguising the underlying entitation/support \nproblem. Are the units of observation appropriate for the scale of the \nunobserved spatial process?\n\nTobler (1970) https://doi.org/10.2307/143141 was published in the same SI \nas Olsson (1970) https://doi.org/10.2307/143140 (Olsson precedes Tobler), \nbut Olsson does grasp the important point that spatial autocorrelation is \nnot immanent in spatial phenomena, but often is engendered by \ninappropriate entitation, by omitted variables and/or inappropriate \nfunctional form. The key quote from Olsson is on p. 228:\n\n\"The existence of such autocorrelations makes it tempting to agree with \nTobler (1970, 236 [my interpolation, the original refers to a conference \npaper]) that 'everything is related to everything else, but near things \nare more related than distant things.' On the other hand, the fact that \nthe autocorrelations seem to hide systematic specification errors suggests \nthat the elevation of this statement to the status of 'the first law of \ngeography' is at best premature. At worst, the statement may represent the \nspatial variant of the post hoc fallacy, which would mean  that \ncoinincidence has been mistaken for a causal relation.\"\n\nThe status of the \"first law\" is very similar to the belief that John Snow \ninduced the cause of cholera as water-borne from a map. It may be a good \nway of selling GIS, but it isn't accurate; Snow had a strong working \nmicrobiological hypothesis prior to visiting Soho, and the map was \nprepared after the Broad street pump was disabled as documentation that \nthe hypothesis held (see https://doi.org/10.1016/s0140-6736(00)02442-9 \nBrody et al. 2000).\n\nSo the framing of the shiny app is unfortunate, and spatial econometrics \nis not a toolbox, rather a way of loooking at mis-specification when space \nis involved, I think.\n\nHope this isn't too critical,\n\nRoger\n\nOn Thu, 8 Jul 2021, Raphael Saldanha wrote:\n\n> Estimado Spencer,\n>\n> Thanks for your kind words. Actually, that construction is not standard \n> in Portuguese also (although that does not sound pedant or with some bad \n> intention for our ears). I revised the text three times and used an app \n> for grammar correction before sending. Anyway, it was a mistake by all \n> means.\n>\n> To learn Spatial Econometrics and other fields require from us \n> additional efforts. There is just a few books or materials in \n> Portuguese. But I try to approach this difficult as an opportunity to \n> learn.\n>\n> Indeed, one of the reasons for building the app was to facilitate the \n> use of the methods for people that are learning R. *Professor Eduardo \n> and I* teach annually a course on that field and we face this challenge. \n> With the pandemics and Zoom classes, we hope that the app and our \n> scripts will help the students to learn R.\n>\n>\n> Um forte abra?o,\n>\n> Raphael Saldanha\n>\n>> Em 8 de jul. de 2021, ?(s) 08:45, Spencer Graves <spencer.graves at prodsyse.com> escreveu:\n>>\n>> Estimado Raphael:\n>>\n>>\n>> \t  I don't know any Portuguese either, and I'm very grateful that you've made the effort to ask this group in a language not your own.\n>>\n>>\n>> \t  In primary school, I learned that constructions like, \"Me and Professor ...\" too often sounded like, \"Mean Professor ...\".\n>>\n>>\n>> \t  Un fuerte abrazo (\"A big hug\", as a Uruguayan man whom I had not previously met ended a letter inviting me to talk at a conference).\n>>\n>>\n>> \t  Spencer Graves\n>>\n>>\n>> On 7/8/21 5:32 AM, Raphael Saldanha wrote:\n>>> No offense taken. Thanks for the remark and opportunity to learn.\n>>> Cheers,\n>>> Raphael\n>>>> Em 7 de jul. de 2021, ?(s) 23:20, Rolf Turner <r.turner at auckland.ac.nz> escreveu:\n>>>>\n>>>> ?\n>>>>> On Wed, 7 Jul 2021 18:09:50 -0300\n>>>>> Raphael Saldanha <rfsaldanha at gmail.com> wrote:\n>>>>>\n>>>>> Hello all!\n>>>>>\n>>>>> Me and Professor Eduardo Almeida (UFJF, Brazil) are creating an R\n>>>>> Shiny app for Spatial Econometric classes.\n>>>>\n>>>> <SNIP>\n>>>>\n>>>> I hope that you won't find this comment offensive, but I could not\n>>>> resist sending it to you, since I am rather fanatical (pedantic?) about\n>>>> correct English usage.\n>>>>\n>>>> The expression \"Me and Professor Eduardo Almeida\" is both (a) bad\n>>>> grammar and (b) bad form.  (a) Instead of the pronoun \"Me\" (accusative or\n>>>> objective case) you should use \"I\" (nominative or subjective case), since\n>>>> this expression is the subject of the sentence.  (b) It is \"bad form\"\n>>>> (it sounds vaguely self-promoting)  to put a first person pronoun before the\n>>>> names of others to which it is linked.  You should say \"Professor\n>>>> Eduardo Almeida and I are creating ....\".\n>>>>\n>>>> I realise that English is surely a second language for you, and your\n>>>> English is infinitely better than my non-existent Portuguese.  Your\n>>>> English is actually quite good, probably better than that of many\n>>>> native English speakers.  Nevertheless the expression that you use is\n>>>> not correct and you should strive to avoid such usage.\n>>>>\n>>>> Again let me express the hope that you won't take offence at this\n>>>> comment.\n>>>>\n>>>> cheers,\n>>>>\n>>>> Rolf Turner\n>>>>\n>>>> --\n>>>> Honorary Research Fellow\n>>>> Department of Statistics\n>>>> University of Auckland\n>>>> Phone: +64-9-373-7599 ext. 88276\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "Returning to the \"Tobler\" shiny app:\n\nThe main serious weakness is the name and the approach. It is not and has \nnever been the case that \"Everything is related to everything else, but \nnear things ar",
+      "thread_id": "thread-9363f7d39756",
+      "thread_depth": 5,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-2fa18df2a2ff",
+      "message_id": "<5478436-d93a-89c0-827e-b63d925369e@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2021-07-12T11:16:16+02:00",
+      "subject": "[R-sig-Geo] Shiny app for Spatial Econometric classes",
+      "subject_clean": "Shiny app for Spatial Econometric classes",
+      "in_reply_to": "<878971ed-bceb-8a77-fef-8956e2313853@reclus2.nhh.no>",
+      "references": [
+        "<20210708142008.5738ef1a@rolf-Latitude-E7470>",
+        "<C7F33BC4-4107-4DAE-B3AA-BBB68EF049D9@gmail.com>",
+        "<853e3554-5071-1704-e174-1f5ab1f45c3b@prodsyse.com>",
+        "<0A32F3A1-0B40-4C41-A9F9-3CE1BE73CF7F@gmail.com>",
+        "<878971ed-bceb-8a77-fef-8956e2313853@reclus2.nhh.no>"
+      ],
+      "body_plain": "Perhaps it is just my connection, but it is not possible to load any data, \nso I cannot evaluate the other components in practice.\n\nI do however think that you need to acknowledge the results of Piras and \nPrucha, https://doi.org/10.1016/j.regsciurbeco.2014.03.002, and try to \npoint out the dangers of pre-testing, rather than estimating the most \ninclusive model first, and simplifying from there.\n\nRoger\n\nOn Fri, 9 Jul 2021, Roger Bivand wrote:\n\n> Returning to the \"Tobler\" shiny app:\n>\n> The main serious weakness is the name and the approach. It is not and has \n> never been the case that \"Everything is related to everything else, but near \n> things are more related than distant things.\" This is and has always been an \n> oversimplification, disguising the underlying entitation/support problem. Are \n> the units of observation appropriate for the scale of the unobserved spatial \n> process?\n>\n> Tobler (1970) https://doi.org/10.2307/143141 was published in the same SI as \n> Olsson (1970) https://doi.org/10.2307/143140 (Olsson precedes Tobler), but \n> Olsson does grasp the important point that spatial autocorrelation is not \n> immanent in spatial phenomena, but often is engendered by inappropriate \n> entitation, by omitted variables and/or inappropriate functional form. The \n> key quote from Olsson is on p. 228:\n>\n> \"The existence of such autocorrelations makes it tempting to agree with \n> Tobler (1970, 236 [my interpolation, the original refers to a conference \n> paper]) that 'everything is related to everything else, but near things are \n> more related than distant things.' On the other hand, the fact that the \n> autocorrelations seem to hide systematic specification errors suggests that \n> the elevation of this statement to the status of 'the first law of geography' \n> is at best premature. At worst, the statement may represent the spatial \n> variant of the post hoc fallacy, which would mean  that coinincidence has \n> been mistaken for a causal relation.\"\n>\n> The status of the \"first law\" is very similar to the belief that John Snow \n> induced the cause of cholera as water-borne from a map. It may be a good way \n> of selling GIS, but it isn't accurate; Snow had a strong working \n> microbiological hypothesis prior to visiting Soho, and the map was prepared \n> after the Broad street pump was disabled as documentation that the hypothesis \n> held (see https://doi.org/10.1016/s0140-6736(00)02442-9 Brody et al. 2000).\n>\n> So the framing of the shiny app is unfortunate, and spatial econometrics is \n> not a toolbox, rather a way of loooking at mis-specification when space is \n> involved, I think.\n>\n> Hope this isn't too critical,\n>\n> Roger\n>\n> On Thu, 8 Jul 2021, Raphael Saldanha wrote:\n>\n>>  Estimado Spencer,\n>>\n>>  Thanks for your kind words. Actually, that construction is not standard in\n>>  Portuguese also (although that does not sound pedant or with some bad\n>>  intention for our ears). I revised the text three times and used an app\n>>  for grammar correction before sending. Anyway, it was a mistake by all\n>>  means.\n>>\n>>  To learn Spatial Econometrics and other fields require from us additional\n>>  efforts. There is just a few books or materials in Portuguese. But I try\n>>  to approach this difficult as an opportunity to learn.\n>>\n>>  Indeed, one of the reasons for building the app was to facilitate the use\n>>  of the methods for people that are learning R. *Professor Eduardo and I*\n>>  teach annually a course on that field and we face this challenge. With the\n>>  pandemics and Zoom classes, we hope that the app and our scripts will help\n>>  the students to learn R.\n>> \n>>\n>>  Um forte abra?o,\n>>\n>>  Raphael Saldanha\n>>\n>>>  Em 8 de jul. de 2021, ?(s) 08:45, Spencer Graves\n>>>  <spencer.graves at prodsyse.com> escreveu:\n>>>\n>>>  Estimado Raphael:\n>>> \n>>>\n>>>     I don't know any Portuguese either, and I'm very grateful that you've\n>>>     made the effort to ask this group in a language not your own.\n>>> \n>>>\n>>>     In primary school, I learned that constructions like, \"Me and\n>>>     Professor ...\" too often sounded like, \"Mean Professor ...\".\n>>> \n>>>\n>>>     Un fuerte abrazo (\"A big hug\", as a Uruguayan man whom I had not\n>>>     previously met ended a letter inviting me to talk at a conference).\n>>> \n>>>\n>>>     Spencer Graves\n>>> \n>>>\n>>>  On 7/8/21 5:32 AM, Raphael Saldanha wrote:\n>>>>  No offense taken. Thanks for the remark and opportunity to learn.\n>>>>  Cheers,\n>>>>  Raphael\n>>>>>  Em 7 de jul. de 2021, ?(s) 23:20, Rolf Turner <r.turner at auckland.ac.nz>\n>>>>>  escreveu:\n>>>>>\n>>>>>\n>>>>>>  On Wed, 7 Jul 2021 18:09:50 -0300\n>>>>>>  Raphael Saldanha <rfsaldanha at gmail.com> wrote:\n>>>>>>\n>>>>>>  Hello all!\n>>>>>>\n>>>>>>  Me and Professor Eduardo Almeida (UFJF, Brazil) are creating an R\n>>>>>>  Shiny app for Spatial Econometric classes.\n>>>>>\n>>>>>  <SNIP>\n>>>>>\n>>>>>  I hope that you won't find this comment offensive, but I could not\n>>>>>  resist sending it to you, since I am rather fanatical (pedantic?) about\n>>>>>  correct English usage.\n>>>>>\n>>>>>  The expression \"Me and Professor Eduardo Almeida\" is both (a) bad\n>>>>>  grammar and (b) bad form.  (a) Instead of the pronoun \"Me\" (accusative\n>>>>>  or\n>>>>>  objective case) you should use \"I\" (nominative or subjective case),\n>>>>>  since\n>>>>>  this expression is the subject of the sentence.  (b) It is \"bad form\"\n>>>>>  (it sounds vaguely self-promoting)  to put a first person pronoun\n>>>>>  before the\n>>>>>  names of others to which it is linked.  You should say \"Professor\n>>>>>  Eduardo Almeida and I are creating ....\".\n>>>>>\n>>>>>  I realise that English is surely a second language for you, and your\n>>>>>  English is infinitely better than my non-existent Portuguese.  Your\n>>>>>  English is actually quite good, probably better than that of many\n>>>>>  native English speakers.  Nevertheless the expression that you use is\n>>>>>  not correct and you should strive to avoid such usage.\n>>>>>\n>>>>>  Again let me express the hope that you won't take offence at this\n>>>>>  comment.\n>>>>>\n>>>>>  cheers,\n>>>>>\n>>>>>  Rolf Turner\n>>>>>\n>>>>>  --\n>>>>>  Honorary Research Fellow\n>>>>>  Department of Statistics\n>>>>>  University of Auckland\n>>>>>  Phone: +64-9-373-7599 ext. 88276\n>>>>>\n>>>>>  _______________________________________________\n>>>>>  R-sig-Geo mailing list\n>>>>>  R-sig-Geo at r-project.org\n>>>>>  https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>  _______________________________________________\n>>>>  R-sig-Geo mailing list\n>>>>  R-sig-Geo at r-project.org\n>>>>  https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> \n>> \n>\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "Perhaps it is just my connection, but it is not possible to load any data, \nso I cannot evaluate the other components in practice.\n\nI do however think that you need to acknowledge the results of Piras",
+      "thread_id": "thread-9363f7d39756",
+      "thread_depth": 6,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-6862a222b3b7",
+      "message_id": "<CAK6w6NNy8-FfMKhBUyrzF68BmMxuAjO6f_dLoP817Pi+3HdUoQ@mail.gmail.com>",
+      "from_name": "wycliff mwania",
+      "from_email_hash": "44b581ce5dbe7184e0ebe15e21698927c674e0a39a4d0362f0f787bda3f3faa6",
+      "date": "2021-07-12T16:25:50+03:00",
+      "subject": "[R-sig-Geo] Spatio Temporal Kriging",
+      "subject_clean": "Spatio Temporal Kriging",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hey there,\nI am doing kriging in R language and am facing some problems when I reach\nthe for using the grid.\nWhen I run this code:\n```{r}\ncoordinates(grid.ST) <- c(\"Long\", \"Lat\")\njuly.kriged <- krige(log(WaterLevel) ~ 1, July, grid.ST, model=july.fit)\n```\nI get this error:\nError in (function (classes, fdef, mtable) : unable to find an inherited\nmethod for function ?coordinates<-? for signature ?\"STF\"?\nI really do not understand what is happening.\nAlso, when I plot my interpolation results, I get blank plot but the scale\nis shown.\nKindly help.\nThank you in advance.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hey there,\nI am doing kriging in R language and am facing some problems when I reach\nthe for using the grid.\nWhen I run this code:\n```{r}\ncoordinates(grid.ST) <- c(\"Long\", \"Lat\")\njuly.kriged <- krige(",
+      "thread_id": "thread-6862a222b3b7",
+      "thread_depth": 0,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-e70f845f0568",
+      "message_id": "<C5B0FD81-8139-4B22-BBF5-B6021B46AD08@gmail.com>",
+      "from_name": "Raphael Saldanha",
+      "from_email_hash": "ad0fe40b794f3673e41325d126245f290467b9a30245276a26357fe3a1efe247",
+      "date": "2021-07-12T10:35:19-03:00",
+      "subject": "[R-sig-Geo] Spatio Temporal Kriging",
+      "subject_clean": "Spatio Temporal Kriging",
+      "in_reply_to": "<CAK6w6NNy8-FfMKhBUyrzF68BmMxuAjO6f_dLoP817Pi+3HdUoQ@mail.gmail.com>",
+      "references": [
+        "<CAK6w6NNy8-FfMKhBUyrzF68BmMxuAjO6f_dLoP817Pi+3HdUoQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hi!\n\nAssuming that you are using the gstat package, looks like that the error occurs when you try to attribute c(\"Long\", \"Lat?) to coordinates function.\n\nTry to follow the example from the ?krige function (bellow) with your data:\n\nlibrary(gstat)\nlibrary(sp)\n\ndata(meuse)\ncoordinates(meuse) = ~x+y\ndata(meuse.grid)\ngridded(meuse.grid) = ~x+y\nm <- vgm(.59, \"Sph\", 874, .04)\n\n# ordinary kriging:\nx <- krige(log(zinc)~1, meuse, meuse.grid, model = m)\n\n\n\nBest,\n\nRaphael Saldanha\n\n> Em 12 de jul. de 2021, ?(s) 10:25, wycliff mwania <mwaniahwycliff at gmail.com> escreveu:\n> \n> Hey there,\n> I am doing kriging in R language and am facing some problems when I reach\n> the for using the grid.\n> When I run this code:\n> ```{r}\n> coordinates(grid.ST) <- c(\"Long\", \"Lat\")\n> july.kriged <- krige(log(WaterLevel) ~ 1, July, grid.ST, model=july.fit)\n> ```\n> I get this error:\n> Error in (function (classes, fdef, mtable) : unable to find an inherited\n> method for function ?coordinates<-? for signature ?\"STF\"?\n> I really do not understand what is happening.\n> Also, when I plot my interpolation results, I get blank plot but the scale\n> is shown.\n> Kindly help.\n> Thank you in advance.\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: smime.p7s\nType: application/pkcs7-signature\nSize: 4908 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20210712/24ed5ea3/attachment.p7s>",
+      "body_snippet": "Hi!\n\nAssuming that you are using the gstat package, looks like that the error occurs when you try to attribute c(\"Long\", \"Lat?) to coordinates function.\n\nTry to follow the example from the ?krige func",
+      "thread_id": "thread-6862a222b3b7",
+      "thread_depth": 1,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-885a3ce6f6bd",
+      "message_id": "<CAKqeJZAJbH9kCyVDgbAsG3Lt34Za+=ayi_qNd=xVkjd=0iztTw@mail.gmail.com>",
+      "from_name": "Iraida Redondo",
+      "from_email_hash": "dc156ae4fd4981d1da7afa4177f5200756eb40c8d52f2636f3e16fe36a4f4068",
+      "date": "2021-07-12T17:48:28+02:00",
+      "subject": "[R-sig-Geo] Trying to compute Moran's I for the first time.",
+      "subject_clean": "Trying to compute Moran's I for the first time.",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi everyone.\n\nMy name is Iraida. It's my first time joining a mail list and also doing\nspatial analysis, so sorry if any of my issues are basic. I've spent a lot\nof time searching the internet and contacting researchers that made\nanalyses on spatial autocorrelation but any of my attempts seems to work.\n\nJust for a little background, I work with a wild population of birds that\nprospect a lot into their conspecific nest boxes. We want to know if this\nprospecting behaviour has to do with breeding habitat selection. After\nreading the literature, I see that is mandatory and very recurrent to check\nfor spatial and temporal autocorrelation of reproductive success in wild\npopulations. This reproductive success is thought to integrate\nenvironmental factors. So, patchiness and predictability of reproductive\nsuccess would act as a proxy of habitat heterogeneity and information\nreliability, thus both are needed for individuals to be able to make a\nhabitat choice and use information. I would like to compute a Moran's Index\nto check for spatial autocorrelation, however I can't find the solution!\n\nWe have a nest box (N= ~250) population in a colony and I have collected\nthe reproductive success of the last 7 years for each of the nest boxes.\n\nI have used this code for calculating Moran's I for a single year and\nmaking a correlogram, by advice of a researcher who I asked for help. In\nthis script, the spantree function is a procedure to find the smallest\ndistance keeping all unit sampling linked. And I used it because it's being\ndifficult to decide the lag distance.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n*starling <- read.csv(\"starling.csv\", header = TRUE, sep =\n\";\")str(starling)geo=starlingcoordinates(geo) <-\n~longitude+latitudeXYstarling=coordinates(geo)xy.dl=rdist.earth(XYstarling,\nmiles = FALSE)diag(xy.dl) <- 0\nspanning=spantree(xy.dl)dmin=max(spanning$dist)dmax=max(xy.dl)plot(coordinates(geo))nb1\n=dnearneigh(as.matrix(XYstarling), 0, dmin, longlat = TRUE)correloresm1 =\nsp.correlogram(nb1, starling$rs, order = (dmax/dmin), method = \"I\",\nzero.policy = TRUE)plot(correloresm1)*\n\nHowever, the sp.correlogram function tells me the following: \"too few\nincluded observations in higher lags: reduce order'. But I can't make it\nwork. I think that the distribution of my nest boxes has to do with this\nerror, as a great number of them are distributed in trios and at low\ndensities, while the rest are uniformly distributed and closer to each\nother.\n\nI am new at spatial analysis and my advisor can't help me on this and this\nis just an assumption check that I have to do to continue with my research.\nI would like to know if there is any way to keep it as simple as possible\nto keep moving forward.\n\n\nThank you so much in advance.\n\nKind regards.\n\n\n\nIraida\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi everyone.\n\nMy name is Iraida. It's my first time joining a mail list and also doing\nspatial analysis, so sorry if any of my issues are basic. I've spent a lot\nof time searching the internet and con",
+      "thread_id": "thread-885a3ce6f6bd",
+      "thread_depth": 0,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-faa630593a46",
+      "message_id": "<330F78AA-BB73-4F2D-8CAA-03483AE3E568@gmail.com>",
+      "from_name": "Raphael Saldanha",
+      "from_email_hash": "ad0fe40b794f3673e41325d126245f290467b9a30245276a26357fe3a1efe247",
+      "date": "2021-07-14T20:21:48-03:00",
+      "subject": "[R-sig-Geo] Shiny app for Spatial Econometric classes",
+      "subject_clean": "Shiny app for Spatial Econometric classes",
+      "in_reply_to": "<5478436-d93a-89c0-827e-b63d925369e@reclus2.nhh.no>",
+      "references": [
+        "<20210708142008.5738ef1a@rolf-Latitude-E7470>",
+        "<C7F33BC4-4107-4DAE-B3AA-BBB68EF049D9@gmail.com>",
+        "<853e3554-5071-1704-e174-1f5ab1f45c3b@prodsyse.com>",
+        "<0A32F3A1-0B40-4C41-A9F9-3CE1BE73CF7F@gmail.com>",
+        "<878971ed-bceb-8a77-fef-8956e2313853@reclus2.nhh.no>",
+        "<5478436-d93a-89c0-827e-b63d925369e@reclus2.nhh.no>"
+      ],
+      "body_plain": "Thanks Prof. Bivand for your considerations about name and approach. We will debate your points on our next meeting about the project. \n\nAdditionally, I want to thank you for your extensive contribution to the field. Without your packages and publications (and from others), this project would be unthinkable. \n\n\nBest regards,\n\nRaphael Saldanha\n\n> Em 12 de jul. de 2021, ?(s) 06:16, Roger Bivand <Roger.Bivand at nhh.no> escreveu:\n> \n> Perhaps it is just my connection, but it is not possible to load any data, so I cannot evaluate the other components in practice.\n> \n> I do however think that you need to acknowledge the results of Piras and Prucha, https://doi.org/10.1016/j.regsciurbeco.2014.03.002, and try to point out the dangers of pre-testing, rather than estimating the most inclusive model first, and simplifying from there.\n> \n> Roger\n> \n> On Fri, 9 Jul 2021, Roger Bivand wrote:\n> \n>> Returning to the \"Tobler\" shiny app:\n>> \n>> The main serious weakness is the name and the approach. It is not and has never been the case that \"Everything is related to everything else, but near things are more related than distant things.\" This is and has always been an oversimplification, disguising the underlying entitation/support problem. Are the units of observation appropriate for the scale of the unobserved spatial process?\n>> \n>> Tobler (1970) https://doi.org/10.2307/143141 was published in the same SI as Olsson (1970) https://doi.org/10.2307/143140 (Olsson precedes Tobler), but Olsson does grasp the important point that spatial autocorrelation is not immanent in spatial phenomena, but often is engendered by inappropriate entitation, by omitted variables and/or inappropriate functional form. The key quote from Olsson is on p. 228:\n>> \n>> \"The existence of such autocorrelations makes it tempting to agree with Tobler (1970, 236 [my interpolation, the original refers to a conference paper]) that 'everything is related to everything else, but near things are more related than distant things.' On the other hand, the fact that the autocorrelations seem to hide systematic specification errors suggests that the elevation of this statement to the status of 'the first law of geography' is at best premature. At worst, the statement may represent the spatial variant of the post hoc fallacy, which would mean  that coinincidence has been mistaken for a causal relation.\"\n>> \n>> The status of the \"first law\" is very similar to the belief that John Snow induced the cause of cholera as water-borne from a map. It may be a good way of selling GIS, but it isn't accurate; Snow had a strong working microbiological hypothesis prior to visiting Soho, and the map was prepared after the Broad street pump was disabled as documentation that the hypothesis held (see https://doi.org/10.1016/s0140-6736(00)02442-9 Brody et al. 2000).\n>> \n>> So the framing of the shiny app is unfortunate, and spatial econometrics is not a toolbox, rather a way of loooking at mis-specification when space is involved, I think.\n>> \n>> Hope this isn't too critical,\n>> \n>> Roger\n>> \n>> On Thu, 8 Jul 2021, Raphael Saldanha wrote:\n>> \n>>> Estimado Spencer,\n>>> \n>>> Thanks for your kind words. Actually, that construction is not standard in\n>>> Portuguese also (although that does not sound pedant or with some bad\n>>> intention for our ears). I revised the text three times and used an app\n>>> for grammar correction before sending. Anyway, it was a mistake by all\n>>> means.\n>>> \n>>> To learn Spatial Econometrics and other fields require from us additional\n>>> efforts. There is just a few books or materials in Portuguese. But I try\n>>> to approach this difficult as an opportunity to learn.\n>>> \n>>> Indeed, one of the reasons for building the app was to facilitate the use\n>>> of the methods for people that are learning R. *Professor Eduardo and I*\n>>> teach annually a course on that field and we face this challenge. With the\n>>> pandemics and Zoom classes, we hope that the app and our scripts will help\n>>> the students to learn R.\n>>> \n>>> Um forte abra?o,\n>>> \n>>> Raphael Saldanha\n>>> \n>>>> Em 8 de jul. de 2021, ?(s) 08:45, Spencer Graves\n>>>> <spencer.graves at prodsyse.com> escreveu:\n>>>> \n>>>> Estimado Raphael:\n>>>> \n>>>>    I don't know any Portuguese either, and I'm very grateful that you've\n>>>>    made the effort to ask this group in a language not your own.\n>>>> \n>>>>    In primary school, I learned that constructions like, \"Me and\n>>>>    Professor ...\" too often sounded like, \"Mean Professor ...\".\n>>>> \n>>>>    Un fuerte abrazo (\"A big hug\", as a Uruguayan man whom I had not\n>>>>    previously met ended a letter inviting me to talk at a conference).\n>>>> \n>>>>    Spencer Graves\n>>>> \n>>>> On 7/8/21 5:32 AM, Raphael Saldanha wrote:\n>>>>> No offense taken. Thanks for the remark and opportunity to learn.\n>>>>> Cheers,\n>>>>> Raphael\n>>>>>> Em 7 de jul. de 2021, ?(s) 23:20, Rolf Turner <r.turner at auckland.ac.nz>\n>>>>>> escreveu:\n>>>>>> \n>>>>>> \n>>>>>>> On Wed, 7 Jul 2021 18:09:50 -0300\n>>>>>>> Raphael Saldanha <rfsaldanha at gmail.com> wrote:\n>>>>>>> \n>>>>>>> Hello all!\n>>>>>>> \n>>>>>>> Me and Professor Eduardo Almeida (UFJF, Brazil) are creating an R\n>>>>>>> Shiny app for Spatial Econometric classes.\n>>>>>> \n>>>>>> <SNIP>\n>>>>>> \n>>>>>> I hope that you won't find this comment offensive, but I could not\n>>>>>> resist sending it to you, since I am rather fanatical (pedantic?) about\n>>>>>> correct English usage.\n>>>>>> \n>>>>>> The expression \"Me and Professor Eduardo Almeida\" is both (a) bad\n>>>>>> grammar and (b) bad form.  (a) Instead of the pronoun \"Me\" (accusative\n>>>>>> or\n>>>>>> objective case) you should use \"I\" (nominative or subjective case),\n>>>>>> since\n>>>>>> this expression is the subject of the sentence.  (b) It is \"bad form\"\n>>>>>> (it sounds vaguely self-promoting)  to put a first person pronoun\n>>>>>> before the\n>>>>>> names of others to which it is linked.  You should say \"Professor\n>>>>>> Eduardo Almeida and I are creating ....\".\n>>>>>> \n>>>>>> I realise that English is surely a second language for you, and your\n>>>>>> English is infinitely better than my non-existent Portuguese.  Your\n>>>>>> English is actually quite good, probably better than that of many\n>>>>>> native English speakers.  Nevertheless the expression that you use is\n>>>>>> not correct and you should strive to avoid such usage.\n>>>>>> \n>>>>>> Again let me express the hope that you won't take offence at this\n>>>>>> comment.\n>>>>>> \n>>>>>> cheers,\n>>>>>> \n>>>>>> Rolf Turner\n>>>>>> \n>>>>>> --\n>>>>>> Honorary Research Fellow\n>>>>>> Department of Statistics\n>>>>>> University of Auckland\n>>>>>> Phone: +64-9-373-7599 ext. 88276\n>>>>>> \n>>>>>> _______________________________________________\n>>>>>> R-sig-Geo mailing list\n>>>>>> R-sig-Geo at r-project.org\n>>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>> _______________________________________________\n>>>>> R-sig-Geo mailing list\n>>>>> R-sig-Geo at r-project.org\n>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> \n>> \n> \n> -- \n> Roger Bivand\n> Emeritus Professor\n> Department of Economics, Norwegian School of Economics,\n> Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\n> e-mail: Roger.Bivand at nhh.no\n> https://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: smime.p7s\nType: application/pkcs7-signature\nSize: 4908 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20210714/cfe29104/attachment.p7s>",
+      "body_snippet": "Thanks Prof. Bivand for your considerations about name and approach. We will debate your points on our next meeting about the project. \n\nAdditionally, I want to thank you for your extensive contributi",
+      "thread_id": "thread-9363f7d39756",
+      "thread_depth": 7,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-22e4280f88eb",
+      "message_id": "<VI1PR08MB3392508920C8EA9EBAA6F1F6B4129@VI1PR08MB3392.eurprd08.prod.outlook.com>",
+      "from_name": "Jesús Rojo",
+      "from_email_hash": "038f4742f2639e0aa88ce63ac6ecd7ba49d05a241487195646e77ada205fc465",
+      "date": "2021-07-15T09:55:22+02:00",
+      "subject": "[R-sig-Geo] Cropping Large RasterStack",
+      "subject_clean": "Cropping Large RasterStack",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello everyone\nI have a Large RasterStack (8501485725 elements, 336.8 Mb) compounded by 23750 raster layers (0.1 degree of resolution)\nI would like to do a crop based on an extent\n\n'tmax <- crop(tmax, extent(0, 20, 40, 55))?\n\nIt seems to be very time-consuming, and even it seems that my pc is not able to crop after a long time\nDo you know another efficient way to do this task without parallelizing?\nI think that I did this task with large stacks in the past with ?crop? and it run well, but now I do not know if it is possible\nThanks for your help\nKind regards\n\nJes?s Rojo",
+      "body_snippet": "Hello everyone\nI have a Large RasterStack (8501485725 elements, 336.8 Mb) compounded by 23750 raster layers (0.1 degree of resolution)\nI would like to do a crop based on an extent\n\n'tmax <- crop(tmax,",
+      "thread_id": "thread-22e4280f88eb",
+      "thread_depth": 0,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-242a102866cb",
+      "message_id": "<671a3a4282e748e8a07f319fa4185db4@uni-bayreuth.de>",
+      "from_name": "Khan, Saeed Akhtar",
+      "from_email_hash": "ae998ce8b17ce26931b25cda147c45a114fa75ff4cba0be357c4e241570162fc",
+      "date": "2021-07-15T08:04:05Z",
+      "subject": "[R-sig-Geo] Cropping Large RasterStack",
+      "subject_clean": "Cropping Large RasterStack",
+      "in_reply_to": "<VI1PR08MB3392508920C8EA9EBAA6F1F6B4129@VI1PR08MB3392.eurprd08.prod.outlook.com>",
+      "references": [
+        "<VI1PR08MB3392508920C8EA9EBAA6F1F6B4129@VI1PR08MB3392.eurprd08.prod.outlook.com>"
+      ],
+      "body_plain": "Hi Rojo, \n\nI think you should crop individual rasters through a loop and stack the results at the end. \n\nBest, \nSaeed\n\n-----Original Message-----\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.org> On Behalf Of Jes?s Rojo\nSent: Thursday, July 15, 2021 9:55 AM\nTo: r-sig-geo at r-project.org\nSubject: [R-sig-Geo] Cropping Large RasterStack\n\nHello everyone\nI have a Large RasterStack (8501485725 elements, 336.8 Mb) compounded by 23750 raster layers (0.1 degree of resolution) I would like to do a crop based on an extent\n\n'tmax <- crop(tmax, extent(0, 20, 40, 55))?\n\nIt seems to be very time-consuming, and even it seems that my pc is not able to crop after a long time Do you know another efficient way to do this task without parallelizing?\nI think that I did this task with large stacks in the past with ?crop? and it run well, but now I do not know if it is possible Thanks for your help Kind regards\n\nJes?s Rojo\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hi Rojo, \n\nI think you should crop individual rasters through a loop and stack the results at the end. \n\nBest, \nSaeed\n\n-----Original Message-----\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.org> O",
+      "thread_id": "thread-22e4280f88eb",
+      "thread_depth": 1,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-1ce7f67ed978",
+      "message_id": "<CAH8k9Q=NhPAFsSU10MxKRdWU6thu3NNyhVK8gA_pQNBrDy0vvw@mail.gmail.com>",
+      "from_name": "Łukasz Pawlik",
+      "from_email_hash": "0b1c76b0512785aac01edec111f43583c1048d9509de9148babcbf13bb0003e0",
+      "date": "2021-07-15T10:08:59+02:00",
+      "subject": "[R-sig-Geo] Cropping Large RasterStack",
+      "subject_clean": "Cropping Large RasterStack",
+      "in_reply_to": "<VI1PR08MB3392508920C8EA9EBAA6F1F6B4129@VI1PR08MB3392.eurprd08.prod.outlook.com>",
+      "references": [
+        "<VI1PR08MB3392508920C8EA9EBAA6F1F6B4129@VI1PR08MB3392.eurprd08.prod.outlook.com>"
+      ],
+      "body_plain": "Hi,\nI normally use this simple function and for loop to automate the process.\n\nget_file <- function(x){\n  mask1 <- st_read('XXXXXXXXXXXXXXXXX.shp')\n  raster1 <- terra::rast(paste0('file_path',\n                                list_of_files[x],'.tif'))\n  terra::crop(raster1, mask1,\n              filename=paste0('file_path',\n                                        list_of_files_new[x],'.tif'))\n  unlink(paste0('file_path',\n                list_of_files_new[x],'.tif'))\n}\n\nget_chelsa(x)\n\nnumbers <- 1:420\n\nfor(i in numbers){\n  get_chelsa(i)\n}\n\nIf files are large, I use a computer cluster, for instance,\nhttp://www.plgrid.pl/en.\n\nHope this helps.\n\nBest,\nLukasz\n\nczw., 15 lip 2021 o 09:56 Jes?s Rojo <jru85yebe at hotmail.com> napisa?(a):\n\n> Hello everyone\n> I have a Large RasterStack (8501485725 elements, 336.8 Mb) compounded by\n> 23750 raster layers (0.1 degree of resolution)\n> I would like to do a crop based on an extent\n>\n> 'tmax <- crop(tmax, extent(0, 20, 40, 55))?\n>\n> It seems to be very time-consuming, and even it seems that my pc is not\n> able to crop after a long time\n> Do you know another efficient way to do this task without parallelizing?\n> I think that I did this task with large stacks in the past with ?crop? and\n> it run well, but now I do not know if it is possible\n> Thanks for your help\n> Kind regards\n>\n> Jes?s Rojo\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \nWWW: https://www.biomorpho.us.edu.pl/\nResearchGate: https://www.researchgate.net/profile/ukasz_Pawlik\nTwitter: @BMGResearchTea1\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\nI normally use this simple function and for loop to automate the process.\n\nget_file <- function(x){\n  mask1 <- st_read('XXXXXXXXXXXXXXXXX.shp')\n  raster1 <- terra::rast(paste0('file_path',\n       ",
+      "thread_id": "thread-22e4280f88eb",
+      "thread_depth": 1,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-2249f7945cdc",
+      "message_id": "<b32777de-2d6d-a397-d18f-213c28fdb213@gmail.com>",
+      "from_name": "Bede-Fazekas Ákos",
+      "from_email_hash": "f2e2e122dfd4dbb8b8973b23d149555486ccb4290cb5f11779739fdbbcf5b93d",
+      "date": "2021-07-15T10:14:45+02:00",
+      "subject": "[R-sig-Geo] Cropping Large RasterStack",
+      "subject_clean": "Cropping Large RasterStack",
+      "in_reply_to": "<671a3a4282e748e8a07f319fa4185db4@uni-bayreuth.de>",
+      "references": [
+        "<VI1PR08MB3392508920C8EA9EBAA6F1F6B4129@VI1PR08MB3392.eurprd08.prod.outlook.com>",
+        "<671a3a4282e748e8a07f319fa4185db4@uni-bayreuth.de>"
+      ],
+      "body_plain": "Hello Jes?s,\nalso you can try terra::crop(), it might be faster and/or more \nmemory-efficient.\nHave a nice week,\n?kos\n---\n?kos Bede-Fazekas\nCentre for Ecological Research, Hungary\n\n2021.07.15. 10:04 keltez?ssel, Khan, Saeed Akhtar ?rta:\n> Hi Rojo,\n>\n> I think you should crop individual rasters through a loop and stack the results at the end.\n>\n> Best,\n> Saeed\n>\n> -----Original Message-----\n> From: R-sig-Geo <r-sig-geo-bounces at r-project.org> On Behalf Of Jes?s Rojo\n> Sent: Thursday, July 15, 2021 9:55 AM\n> To: r-sig-geo at r-project.org\n> Subject: [R-sig-Geo] Cropping Large RasterStack\n>\n> Hello everyone\n> I have a Large RasterStack (8501485725 elements, 336.8 Mb) compounded by 23750 raster layers (0.1 degree of resolution) I would like to do a crop based on an extent\n>\n> 'tmax <- crop(tmax, extent(0, 20, 40, 55))?\n>\n> It seems to be very time-consuming, and even it seems that my pc is not able to crop after a long time Do you know another efficient way to do this task without parallelizing?\n> I think that I did this task with large stacks in the past with ?crop? and it run well, but now I do not know if it is possible Thanks for your help Kind regards\n>\n> Jes?s Rojo\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hello Jes?s,\nalso you can try terra::crop(), it might be faster and/or more \nmemory-efficient.\nHave a nice week,\n?kos\n---\n?kos Bede-Fazekas\nCentre for Ecological Research, Hungary\n\n2021.07.15. 10:04 k",
+      "thread_id": "thread-22e4280f88eb",
+      "thread_depth": 2,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-99663e4282ff",
+      "message_id": "<xgzh7gumuk1.fsf@hafogvatn.is>",
+      "from_name": "Julian M. Burgos",
+      "from_email_hash": "950ea9cca6e3b3adb7ff6eeb7af8648e91468eccbd26cb5e549d117d523ea9e5",
+      "date": "2021-07-16T10:17:50Z",
+      "subject": "[R-sig-Geo] Issue with st_warp, gdal and NAs",
+      "subject_clean": "Issue with st_warp, gdal and NAs",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list,\n\nMy apologies for posting this again.  I am not sure if it went through the first time.\n\nI am having a bit of trouble using st_warp() to aggregate star objects with the option \"use_gdal = TRUE\".  I am using the \"average\" method, and I want cells with NA values to be ignored when computing the averages.  To demonstrate, I will make a small raster for testing, and will include cells with NA values:\n\n#-------------------------------------------------\n  \nlibrary(raster)\n\n# Create raster for testing\nmyfile <- \"~/myraster.tif\"\nmyraster <- raster(xmn = 0, ymn = 0, xmx = 10, ymx = 10, resolution = 0.1,\n                   crs = 4326, vals = sample(1:20, size = 10000, replace = TRUE))\nmyraster[sample(1:10000, 200)] <- NA\nwriteRaster(myraster, filename = myfile, overwrite = TRUE)\n\n#-------------------------------------------------\n\nWith the raster package, I can aggregate the cells ignoring the NA values like this:\n\n\nr1 <- raster(myfile)\nag1 <- raster::aggregate(x = raster(myfile), fact = 10,\n                         fun = mean, na.rm = TRUE)\n\n...which is what I want.  I can also aggregate the cells including the NAs, like this:\n                                                                                   \nag2 <- raster::aggregate(x = raster(myfile), fact = 10,\n                         fun = mean, na.rm = FALSE)\n\n.... which produces a raster with a lots of gaps.  Now, to do a similar aggregation with the stars package I can do this:\n\ns1 <-  read_stars(myfile)\n\nag3 <- st_warp(src = s1,\n              dest = st_as_stars(st_bbox(s1), dx = 1, dy = 1),\n              use_gdal = TRUE,\n              method = \"average\")\n\nThe resulting raster (ag3) has gaps like ag2, which means that the NAs are not being ignored when computing the averages.  With use_gdal_TRUE and method=\"average\" we are using gdalwarp with the average resampling method, which according to the documentation \"computes the weighted average of all non-NODATA contributing pixels.\".  So I guess the problem is that the NAs are not being recognized as NODATA pixels.\n\nDoes anybody know how to solve this?\n\nMany thanks,\n\nJulian\n\n-- \nJulian Mariano Burgos, PhD\nHafranns?knastofnun, ranns?kna- og r??gjafarstofnun hafs og vatna/\nMarine and Freshwater Research Institute\nBotnsj?varsvi?s / Demersal Division\n  Fornub??ir 5, IS-220 Hafnarfj?r?ur, Iceland\nwww.hafogvatn.is\nS?mi/Telephone : +354-5752037\nNetfang/Email: julian.burgos at hafogvatn.is",
+      "body_snippet": "Dear list,\n\nMy apologies for posting this again.  I am not sure if it went through the first time.\n\nI am having a bit of trouble using st_warp() to aggregate star objects with the option \"use_gdal = T",
+      "thread_id": "thread-99663e4282ff",
+      "thread_depth": 0,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-cda518d9fd7d",
+      "message_id": "<d8fe3342-1f4a-d03c-4187-25db395372fd@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2021-07-22T15:20:01+02:00",
+      "subject": "[R-sig-Geo] Issue with st_warp, gdal and NAs",
+      "subject_clean": "Issue with st_warp, gdal and NAs",
+      "in_reply_to": "<xgzh7gumuk1.fsf@hafogvatn.is>",
+      "references": [
+        "<xgzh7gumuk1.fsf@hafogvatn.is>"
+      ],
+      "body_plain": "Dear Julian, you can do that by passing a non-NA value as no_data_value, \ne.g. by\n\nag3 <- st_warp(src = s1,\n               dest = st_as_stars(st_bbox(s1), dx = 1, dy = 1),\n               use_gdal = TRUE,\n               method = \"average\",\n               no_data_value = -9999)\n\n\nOn 16/07/2021 12:17, Julian M. Burgos wrote:\n> Dear list,\n> \n> My apologies for posting this again.  I am not sure if it went through the first time.\n> \n> I am having a bit of trouble using st_warp() to aggregate star objects with the option \"use_gdal = TRUE\".  I am using the \"average\" method, and I want cells with NA values to be ignored when computing the averages.  To demonstrate, I will make a small raster for testing, and will include cells with NA values:\n> \n> #-------------------------------------------------\n>    \n> library(raster)\n> \n> # Create raster for testing\n> myfile <- \"~/myraster.tif\"\n> myraster <- raster(xmn = 0, ymn = 0, xmx = 10, ymx = 10, resolution = 0.1,\n>                     crs = 4326, vals = sample(1:20, size = 10000, replace = TRUE))\n> myraster[sample(1:10000, 200)] <- NA\n> writeRaster(myraster, filename = myfile, overwrite = TRUE)\n> \n> #-------------------------------------------------\n> \n> With the raster package, I can aggregate the cells ignoring the NA values like this:\n> \n> \n> r1 <- raster(myfile)\n> ag1 <- raster::aggregate(x = raster(myfile), fact = 10,\n>                           fun = mean, na.rm = TRUE)\n> \n> ...which is what I want.  I can also aggregate the cells including the NAs, like this:\n>                                                                                     \n> ag2 <- raster::aggregate(x = raster(myfile), fact = 10,\n>                           fun = mean, na.rm = FALSE)\n> \n> .... which produces a raster with a lots of gaps.  Now, to do a similar aggregation with the stars package I can do this:\n> \n> s1 <-  read_stars(myfile)\n> \n> ag3 <- st_warp(src = s1,\n>                dest = st_as_stars(st_bbox(s1), dx = 1, dy = 1),\n>                use_gdal = TRUE,\n>                method = \"average\")\n> \n> The resulting raster (ag3) has gaps like ag2, which means that the NAs are not being ignored when computing the averages.  With use_gdal_TRUE and method=\"average\" we are using gdalwarp with the average resampling method, which according to the documentation \"computes the weighted average of all non-NODATA contributing pixels.\".  So I guess the problem is that the NAs are not being recognized as NODATA pixels.\n> \n> Does anybody know how to solve this?\n> \n> Many thanks,\n> \n> Julian\n> \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48151 Muenster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "Dear Julian, you can do that by passing a non-NA value as no_data_value, \ne.g. by\n\nag3 <- st_warp(src = s1,\n               dest = st_as_stars(st_bbox(s1), dx = 1, dy = 1),\n               use_gdal = TR",
+      "thread_id": "thread-99663e4282ff",
+      "thread_depth": 1,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-1e6bdd7d6c16",
+      "message_id": "<908483446.33504.1627356514767@mail.yahoo.com>",
+      "from_name": "Javad Bayat",
+      "from_email_hash": "449ad12d020730ee956cd8f2f73e29ad59b76bfe291142178a062e7f9da31f43",
+      "date": "2021-07-27T03:28:34Z",
+      "subject": "[R-sig-Geo] Satellite Image",
+      "subject_clean": "Satellite Image",
+      "in_reply_to": null,
+      "references": [
+        "<908483446.33504.1627356514767.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "Dear all; \nI want to extract special wavelength of landsat8 image, 470nm, and 570nm. \nIs there any way to do this?Sincerely\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all; \nI want to extract special wavelength of landsat8 image, 470nm, and 570nm. \nIs there any way to do this?Sincerely\n\n\t[[alternative HTML version deleted]]",
+      "thread_id": "thread-1e6bdd7d6c16",
+      "thread_depth": 0,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-aa9055cca7c7",
+      "message_id": "<CAJgdCD7rOiQWwOF62FVByrrd+xKCKDr96hQ0EWJ-xuaKAKuaug@mail.gmail.com>",
+      "from_name": "John Wasige",
+      "from_email_hash": "6b355049a295651f56f7c88a546e074bcf992467f5c3654f919ca64965060b3d",
+      "date": "2021-07-28T22:36:13+03:00",
+      "subject": "[R-sig-Geo] Adding a regression line on time series plot",
+      "subject_clean": "Adding a regression line on time series plot",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\nGreetings!\n\nI need help. How can I add a regression line on this plot:\n\nMODIS.filt.ts = ts(l, start=c(2001,1), end=c(2020,23), frequency=23)\nplot(MODIS.filt.ts)\n\nThanks for your help\n\nJohn\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\nGreetings!\n\nI need help. How can I add a regression line on this plot:\n\nMODIS.filt.ts = ts(l, start=c(2001,1), end=c(2020,23), frequency=23)\nplot(MODIS.filt.ts)\n\nThanks for your help\n\nJohn\n\n",
+      "thread_id": "thread-aa9055cca7c7",
+      "thread_depth": 0,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-8b303a3649a8",
+      "message_id": "<CACxE24mv+V=Y0Ch_ufMvryWy27YjFOMYDPB6AsPBktmju-Y5Pw@mail.gmail.com>",
+      "from_name": "Erin Hodgess",
+      "from_email_hash": "ac639128bb874866c754d5dc13bfc895ac4076b6eeee1c741127f9a3c34dd723",
+      "date": "2021-07-28T15:31:05-06:00",
+      "subject": "[R-sig-Geo] Adding a regression line on time series plot",
+      "subject_clean": "Adding a regression line on time series plot",
+      "in_reply_to": "<CAJgdCD7rOiQWwOF62FVByrrd+xKCKDr96hQ0EWJ-xuaKAKuaug@mail.gmail.com>",
+      "references": [
+        "<CAJgdCD7rOiQWwOF62FVByrrd+xKCKDr96hQ0EWJ-xuaKAKuaug@mail.gmail.com>"
+      ],
+      "body_plain": "How about something like this:\n\nMODIS.filt.ts <- ts(rnorm(460),start=c(2001,1),end=c(2020,23),freq=23)\nabline(lm(MODIS.filt.ts~c(1:460)))\n\n\nErin Hodgess, PhD\nmailto: erinm.hodgess at gmail.com\n\n\nOn Wed, Jul 28, 2021 at 1:37 PM John Wasige <johnwasige at gmail.com> wrote:\n\n> Dear all,\n> Greetings!\n>\n> I need help. How can I add a regression line on this plot:\n>\n> MODIS.filt.ts = ts(l, start=c(2001,1), end=c(2020,23), frequency=23)\n> plot(MODIS.filt.ts)\n>\n> Thanks for your help\n>\n> John\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "How about something like this:\n\nMODIS.filt.ts <- ts(rnorm(460),start=c(2001,1),end=c(2020,23),freq=23)\nabline(lm(MODIS.filt.ts~c(1:460)))\n\n\nErin Hodgess, PhD\nmailto: erinm.hodgess at gmail.com\n\n\nOn We",
+      "thread_id": "thread-aa9055cca7c7",
+      "thread_depth": 1,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-4efa28b989d8",
+      "message_id": "<395417256.470075.1627597227265@mail.yahoo.com>",
+      "from_name": "Alexandre Santos",
+      "from_email_hash": "9c328798782fdba9a5eb7253ec556480706d126689efca25bdfbcd5bdfb8dc96",
+      "date": "2021-07-29T22:20:27Z",
+      "subject": "[R-sig-Geo] Create a ppp object in UTM with mixture of zones",
+      "subject_clean": "Create a ppp object in UTM with mixture of zones",
+      "in_reply_to": null,
+      "references": [
+        "<395417256.470075.1627597227265.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "Dear?Members,\n\n\nI'd?like?to?use?my?spatial?data?set?(\"sp_ds\")?as?ppp?(spatstat?Point?Pattern?object),?an?I?try?to?do:\n\n\n\n#?Open?spatial?data?set?in?GitHub\nlibrary(spatstat)\nlibrary(sf)\nlibrary(sp)\n\n\nsp_ds<-read.csv(\"https://raw.githubusercontent.com/Leprechault/trash/master/myspds.csv\")\nstr(sp_ds)\n#'data.frame':??4458?obs.?of??2?variables:\n#?$?Lat?:?num??9.17?9.71?9.12?9.12?9.71?...\n#?$?Long:?num??35.8?35.5?35.8?35.8?35.5?...\n\n\n#?Create?boudaries?using?sf\nsfds?=?st_as_sf(sp_ds,?coords=c(\"Long\",\"Lat\"),?crs=4326)\ntraps<-sp_ds\nch?<-?chull(traps[,c(2,1)])\ncoords?<-?traps[c(ch,?ch[1]),?]?\ncoordinates(coords)?<-?c(\"Long\",\"Lat\")\nproj4string(coords)?<-?CRS(\"+init=epsg:4326\")\nW?<-?owin(poly=cbind(coordinates(coords)[,2],coordinates(coords)[,1]))?\n\n\n\n#?Create?a?ppp?Point?Pattern?object\nout.ppp<-ppp(x=sp_ds$Lat,y=sp_ds$Long,window=W)\nplot(out.ppp)\n\n\nf1?<-?ppm(out.ppp~1)?\nE?<-envelope(f1,?Kinhom,?nsim?=?19,?global?=?TRUE,?correction?=?\"border\")\nplot(E)\n\n\n#But?I'd?like?to?r?distance (x axis) in?kilometers?and?for?this?I?need?to?convert?the?coordinate?reference?system?of?4326?to\nUTM,?a?have?3?UTM?zones:\n#34N?bounds:?(18.0,?0.0,?24.0,?84.0)\n#35N?bounds:?(24.0,?0.0,?30.0,?84.0)\n#36N?bounds:?(30.0,?0.0,?36.0,?84.0)\n\n\nPlease?the?area?a?simple?way?to?create?a?ppp?object?in?UTM?with a mixture?of?zones?\n\n\nThanks?in?advance,\n\n\nAlexandre",
+      "body_snippet": "Dear?Members,\n\n\nI'd?like?to?use?my?spatial?data?set?(\"sp_ds\")?as?ppp?(spatstat?Point?Pattern?object),?an?I?try?to?do:\n\n\n\n#?Open?spatial?data?set?in?GitHub\nlibrary(spatstat)\nlibrary(sf)\nlibrary(sp)\n\n\ns",
+      "thread_id": "thread-4efa28b989d8",
+      "thread_depth": 0,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-eab95dd897e7",
+      "message_id": "<CAAcGz9_u8PMOpM-UCekzu9EXzhEqr1FT9pSY0ovgKT77nNx=Og@mail.gmail.com>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "ec02820eba6228afb61925d60b233042e6d048081cc8b7f7e46a034ba5ad3d90",
+      "date": "2021-07-31T04:40:53+10:00",
+      "subject": "[R-sig-Geo] Create a ppp object in UTM with mixture of zones",
+      "subject_clean": "Create a ppp object in UTM with mixture of zones",
+      "in_reply_to": "<395417256.470075.1627597227265@mail.yahoo.com>",
+      "references": [
+        "<395417256.470075.1627597227265.ref@mail.yahoo.com>",
+        "<395417256.470075.1627597227265@mail.yahoo.com>"
+      ],
+      "body_plain": "Don't use UTM, it's a legacy of a bygone era. Use a local custom projection\nsuch as laea:\n\nhttps://twitter.com/mdsumner/status/1136794870113218561?s=19\n\nI know it's common advice, utm for projection choice but it's trash\npropagated by folks who should know better. Traversing zones for projection\nchoice for basic distance properties is unnecessary.\n\nBest, Mike\n\nOn Fri, 30 Jul 2021, 08:21 Alexandre Santos via R-sig-Geo, <\nr-sig-geo at r-project.org> wrote:\n\n> Dear Members,\n>\n>\n>\n> I'd like to use my spatial data set (\"sp_ds\") as ppp (spatstat Point Pattern object), an I try to do:\n>\n>\n>\n> # Open spatial data set in GitHub\n> library(spatstat)\n> library(sf)\n> library(sp)\n>\n>\n> sp_ds<-read.csv(\"\n> https://raw.githubusercontent.com/Leprechault/trash/master/myspds.csv\")\n> str(sp_ds)\n> #'data.frame':  4458 obs. of  2 variables:\n> # $ Lat : num  9.17 9.71 9.12 9.12 9.71 ...\n> # $ Long: num  35.8 35.5 35.8 35.8 35.5 ...\n>\n>\n> # Create boudaries using sf\n> sfds = st_as_sf(sp_ds, coords=c(\"Long\",\"Lat\"), crs=4326)\n> traps<-sp_ds\n> ch <- chull(traps[,c(2,1)])\n> coords <- traps[c(ch, ch[1]), ]\n> coordinates(coords) <- c(\"Long\",\"Lat\")\n> proj4string(coords) <- CRS(\"+init=epsg:4326\")\n> W <- owin(poly=cbind(coordinates(coords)[,2],coordinates(coords)[,1]))\n>\n>\n>\n> # Create a ppp Point Pattern object\n> out.ppp<-ppp(x=sp_ds$Lat,y=sp_ds$Long,window=W)\n> plot(out.ppp)\n>\n>\n> f1 <- ppm(out.ppp~1)\n> E <-envelope(f1, Kinhom, nsim = 19, global = TRUE, correction = \"border\")\n> plot(E)\n>\n>\n> #But I'd like to r distance (x axis)\n> in kilometers and for this I need to convert the coordinate reference system of 4326 to\n> UTM, a have 3 UTM zones:\n> #34N bounds: (18.0, 0.0, 24.0, 84.0)\n> #35N bounds: (24.0, 0.0, 30.0, 84.0)\n> #36N bounds: (30.0, 0.0, 36.0, 84.0)\n>\n>\n> Please the area a simple way to create a ppp object in UTM with a\n> mixture of zones?\n>\n>\n> Thanks in advance,\n>\n>\n> Alexandre\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Don't use UTM, it's a legacy of a bygone era. Use a local custom projection\nsuch as laea:\n\nhttps://twitter.com/mdsumner/status/1136794870113218561?s=19\n\nI know it's common advice, utm for projection c",
+      "thread_id": "thread-4efa28b989d8",
+      "thread_depth": 1,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-d7a711b42a03",
+      "message_id": "<2025620979.1667490.1627675784053@mail.yahoo.com>",
+      "from_name": "Alexandre Santos",
+      "from_email_hash": "9c328798782fdba9a5eb7253ec556480706d126689efca25bdfbcd5bdfb8dc96",
+      "date": "2021-07-30T20:09:44Z",
+      "subject": "[R-sig-Geo] Create a ppp object in UTM with mixture of zones",
+      "subject_clean": "Create a ppp object in UTM with mixture of zones",
+      "in_reply_to": "<CAAcGz9_u8PMOpM-UCekzu9EXzhEqr1FT9pSY0ovgKT77nNx=Og@mail.gmail.com>",
+      "references": [
+        "<395417256.470075.1627597227265.ref@mail.yahoo.com>",
+        "<395417256.470075.1627597227265@mail.yahoo.com>",
+        "<CAAcGz9_u8PMOpM-UCekzu9EXzhEqr1FT9pSY0ovgKT77nNx=Og@mail.gmail.com>"
+      ],
+      "body_plain": "Thanks, Mike\n\nProblem solved with a transformation of to Lambert azimuthal equal-area projection centred on longitude and latitude of?0:\n\n# Packages\nlibrary(spatstat)\nlibrary(sf)\nlibrary(sp)\nlibrary(raster)\n\n\n# Open spatial data set in GitHub\nsp_ds<-read.csv(\"https://raw.githubusercontent.com/Leprechault/trash/master/myspds.csv\")\nstr(sp_ds)\n#'data.frame':? 4458 obs. of? 2 variables:\n# $ Lat : num? 9.17 9.71 9.12 9.12 9.71 ...\n# $ Long: num? 35.8 35.5 35.8 35.8 35.5 ...\n\n\nsp_ds <- st_read(\"https://raw.githubusercontent.com/Leprechault/trash/master/myspds.csv\")\nsp_ds_sf <- st_as_sf(sp_ds, coords = c(\"Lat\", \"Long\"), crs = 4326)\n\n\n# Here the Mike tip!!\nsp_ds_laea = st_transform(sp_ds_sf,?\n? ? ? ? ? ? ? ? ? ? ? ? ? ?crs = \"+proj=laea +x_0=0 +y_0=0 +lon_0=0 +lat_0=0\")\n# Create boudaries using sf\nch_ds <- st_convex_hull(st_union(sp_ds_laea))\nW<- as.owin(ch_ds)?\n\n\n# Create a ppp Point Pattern with sf object\nout.ppp <- as.ppp(X=st_coordinates(sp_ds_laea),W=W)\nplot(out.ppp)\n\n\n\n\n# Make a CRS test\nf1 <- ppm(out.ppp~1)?\nE <-envelope(f1, Kinhom, nsim = 19, global = TRUE, correction = \"border\")\nplot(E)\n\nBest wishes,\n\nAlexandre\n\n\n\n\n\n\n\n\nEm sexta-feira, 30 de julho de 2021 15:41:08 BRT, Michael Sumner <mdsumner at gmail.com> escreveu: \n\n\n\n\n\nDon't use UTM, it's a legacy of a bygone era. Use a local custom projection such as laea:\n\nhttps://twitter.com/mdsumner/status/1136794870113218561?s=19\n\nI know it's common advice, utm for projection choice but it's trash propagated by folks who should know better. Traversing zones for projection choice for basic distance properties is unnecessary.\n\nBest, Mike\n\nOn Fri, 30 Jul 2021, 08:21 Alexandre Santos via R-sig-Geo, <r-sig-geo at r-project.org> wrote:\n> Dear?Members,\n> \n> \n> I'd?like?to?use?my?spatial?data?set?(\"sp_ds\")?as?ppp?(spatstat?Point?Pattern?object),?an?I?try?to?do:\n> \n> \n> \n> #?Open?spatial?data?set?in?GitHub\n> library(spatstat)\n> library(sf)\n> library(sp)\n> \n> \n> sp_ds<-read.csv(\"https://raw.githubusercontent.com/Leprechault/trash/master/myspds.csv\")\n> str(sp_ds)\n> #'data.frame':??4458?obs.?of??2?variables:\n> #?$?Lat?:?num??9.17?9.71?9.12?9.12?9.71?...\n> #?$?Long:?num??35.8?35.5?35.8?35.8?35.5?...\n> \n> \n> #?Create?boudaries?using?sf\n> sfds?=?st_as_sf(sp_ds,?coords=c(\"Long\",\"Lat\"),?crs=4326)\n> traps<-sp_ds\n> ch?<-?chull(traps[,c(2,1)])\n> coords?<-?traps[c(ch,?ch[1]),?]?\n> coordinates(coords)?<-?c(\"Long\",\"Lat\")\n> proj4string(coords)?<-?CRS(\"+init=epsg:4326\")\n> W?<-?owin(poly=cbind(coordinates(coords)[,2],coordinates(coords)[,1]))?\n> \n> \n> \n> #?Create?a?ppp?Point?Pattern?object\n> out.ppp<-ppp(x=sp_ds$Lat,y=sp_ds$Long,window=W)\n> plot(out.ppp)\n> \n> \n> f1?<-?ppm(out.ppp~1)?\n> E?<-envelope(f1,?Kinhom,?nsim?=?19,?global?=?TRUE,?correction?=?\"border\")\n> plot(E)\n> \n> \n> #But?I'd?like?to?r?distance (x axis) in?kilometers?and?for?this?I?need?to?convert?the?coordinate?reference?system?of?4326?to\n> UTM,?a?have?3?UTM?zones:\n> #34N?bounds:?(18.0,?0.0,?24.0,?84.0)\n> #35N?bounds:?(24.0,?0.0,?30.0,?84.0)\n> #36N?bounds:?(30.0,?0.0,?36.0,?84.0)\n> \n> \n> Please?the?area?a?simple?way?to?create?a?ppp?object?in?UTM?with a mixture?of?zones?\n> \n> \n> Thanks?in?advance,\n> \n> \n> Alexandre\n> \n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n>",
+      "body_snippet": "Thanks, Mike\n\nProblem solved with a transformation of to Lambert azimuthal equal-area projection centred on longitude and latitude of?0:\n\n# Packages\nlibrary(spatstat)\nlibrary(sf)\nlibrary(sp)\nlibrary(r",
+      "thread_id": "thread-4efa28b989d8",
+      "thread_depth": 2,
+      "month": "2021-07"
+    },
+    {
+      "id": "msg-f9fb346df8f0",
+      "message_id": "<CAAcGz9_BVPuiBHYTpD2zMsXVQfPyzdo1GnJ7M1+iDQD9RPrKkg@mail.gmail.com>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "ec02820eba6228afb61925d60b233042e6d048081cc8b7f7e46a034ba5ad3d90",
+      "date": "2021-07-31T10:13:37+10:00",
+      "subject": "[R-sig-Geo] Create a ppp object in UTM with mixture of zones",
+      "subject_clean": "Create a ppp object in UTM with mixture of zones",
+      "in_reply_to": "<2025620979.1667490.1627675784053@mail.yahoo.com>",
+      "references": [
+        "<395417256.470075.1627597227265.ref@mail.yahoo.com>",
+        "<395417256.470075.1627597227265@mail.yahoo.com>",
+        "<CAAcGz9_u8PMOpM-UCekzu9EXzhEqr1FT9pSY0ovgKT77nNx=Og@mail.gmail.com>",
+        "<2025620979.1667490.1627675784053@mail.yahoo.com>"
+      ],
+      "body_plain": "On Sat, Jul 31, 2021 at 6:09 AM Alexandre Santos <\nalexandresantosbr at yahoo.com.br> wrote:\n>\n> Thanks, Mike\n>\n> Problem solved with a transformation of to Lambert azimuthal equal-area\nprojection centred on longitude and latitude of 0:\n>\n> # Packages\n> library(spatstat)\n> library(sf)\n> library(sp)\n> library(raster)\n>\n>\n> # Open spatial data set in GitHub\n> sp_ds<-read.csv(\"\nhttps://raw.githubusercontent.com/Leprechault/trash/master/myspds.csv\")\n> str(sp_ds)\n> #'data.frame':  4458 obs. of  2 variables:\n> # $ Lat : num  9.17 9.71 9.12 9.12 9.71 ...\n> # $ Long: num  35.8 35.5 35.8 35.8 35.5 ...\n>\n>\n> sp_ds <- st_read(\"\nhttps://raw.githubusercontent.com/Leprechault/trash/master/myspds.csv\")\n> sp_ds_sf <- st_as_sf(sp_ds, coords = c(\"Lat\", \"Long\"), crs = 4326)\n>\n>\n> # Here the Mike tip!!\n> sp_ds_laea = st_transform(sp_ds_sf,\n>                            crs = \"+proj=laea +x_0=0 +y_0=0 +lon_0=0\n+lat_0=0\")\n\n\n  great, but you should centre the projection for your data - +lon_0 and\n+lat_0 specify a central-ish point for your longitude,latitude values. Plot\nthe data on a map in long lat, and then plot them once projected - it looks\npretty weird with centre lon,lat at 0,0 . - you want more like \"+proj=laea\n+lon_0=29.9 +lat_0=13.4 +datum=WGS84\" - the x_0 and y_0 may be specified,\nthey just move the 0,0 of the projection away from the centre of your map\n(nice to not have negative values). It's likely you could find a local\nauthority projection that is defined for general use (laea, lcc, aeqd are\ncommon).\n\nAlso, you are using Lat,Long order which is technically correct for\nEPSG:4326, other variants of longitude,latitude specifications use the more\nstraightforward coordinate order, it's configurable and sf handles it etc.\nbut you should definitely check :)\n\nFinally, it's probably worth saying in this case for these data you could\nprobably choose the central (of the 3) UTM zones involved and get just as\ngood properties ( I never see that said in the wild). But, it's not really\npossible to have overarching advice here because your data and your context\nand your distances can be a very broad set of cases, that's why different\nfamilies of projections exist, for options. You can calculate distance and\narea in long,lat with geodist, geosphere, sf and many other packages - and\nsf is incorporating s2 to enable that always for data in long,lat - but I\nassume you need an actual coordinate system for spatstat to operate in its\nown context (so your approach is exactly right). The choice of projection\ncan be subtle and require expertise, but a local central laea for smallish\nregions is pretty fail safe.  Over a small area like this, most projections\nwill be exactly the same in terms of distance, area, shape  - but not\nknowing the broader case of data you might want to deal with means such\nadvice needs to be issued with care. :)\n\nHTH\n\n\n\n> # Create boudaries using sf\n> ch_ds <- st_convex_hull(st_union(sp_ds_laea))\n> W<- as.owin(ch_ds)\n>\n>\n> # Create a ppp Point Pattern with sf object\n> out.ppp <- as.ppp(X=st_coordinates(sp_ds_laea),W=W)\n> plot(out.ppp)\n>\n>\n>\n>\n> # Make a CRS test\n> f1 <- ppm(out.ppp~1)\n> E <-envelope(f1, Kinhom, nsim = 19, global = TRUE, correction = \"border\")\n> plot(E)\n>\n> Best wishes,\n>\n> Alexandre\n>\n>\n>\n>\n>\n>\n>\n>\n> Em sexta-feira, 30 de julho de 2021 15:41:08 BRT, Michael Sumner <\nmdsumner at gmail.com> escreveu:\n>\n>\n>\n>\n>\n> Don't use UTM, it's a legacy of a bygone era. Use a local custom\nprojection such as laea:\n>\n> https://twitter.com/mdsumner/status/1136794870113218561?s=19\n>\n> I know it's common advice, utm for projection choice but it's trash\npropagated by folks who should know better. Traversing zones for projection\nchoice for basic distance properties is unnecessary.\n>\n> Best, Mike\n>\n> On Fri, 30 Jul 2021, 08:21 Alexandre Santos via R-sig-Geo, <\nr-sig-geo at r-project.org> wrote:\n> > Dear Members,\n> >\n> >\n> > I'd like to use my spatial data set (\"sp_ds\") as ppp (spatstat Point\nPattern object), an I try to do:\n> >\n> >\n> >\n> > # Open spatial data set in GitHub\n> > library(spatstat)\n> > library(sf)\n> > library(sp)\n> >\n> >\n> > sp_ds<-read.csv(\"\nhttps://raw.githubusercontent.com/Leprechault/trash/master/myspds.csv\")\n> > str(sp_ds)\n> > #'data.frame':  4458 obs. of  2 variables:\n> > # $ Lat : num  9.17 9.71 9.12 9.12 9.71 ...\n> > # $ Long: num  35.8 35.5 35.8 35.8 35.5 ...\n> >\n> >\n> > # Create boudaries using sf\n> > sfds = st_as_sf(sp_ds, coords=c(\"Long\",\"Lat\"), crs=4326)\n> > traps<-sp_ds\n> > ch <- chull(traps[,c(2,1)])\n> > coords <- traps[c(ch, ch[1]), ]\n> > coordinates(coords) <- c(\"Long\",\"Lat\")\n> > proj4string(coords) <- CRS(\"+init=epsg:4326\")\n> > W <- owin(poly=cbind(coordinates(coords)[,2],coordinates(coords)[,1]))\n> >\n> >\n> >\n> > # Create a ppp Point Pattern object\n> > out.ppp<-ppp(x=sp_ds$Lat,y=sp_ds$Long,window=W)\n> > plot(out.ppp)\n> >\n> >\n> > f1 <- ppm(out.ppp~1)\n> > E <-envelope(f1, Kinhom, nsim = 19, global = TRUE, correction =\n\"border\")\n> > plot(E)\n> >\n> >\n> > #But I'd like to r distance (x axis) in kilometers and for this I need\nto convert the coordinate reference system of 4326 to\n> > UTM, a have 3 UTM zones:\n> > #34N bounds: (18.0, 0.0, 24.0, 84.0)\n> > #35N bounds: (24.0, 0.0, 30.0, 84.0)\n> > #36N bounds: (30.0, 0.0, 36.0, 84.0)\n> >\n> >\n> > Please the area a simple way to create a ppp object in UTM with a\nmixture of zones?\n> >\n> >\n> > Thanks in advance,\n> >\n> >\n> > Alexandre\n> >\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> >\n>\n\n\n--\nMichael Sumner\nSoftware and Database Engineer\nAustralian Antarctic Division\nHobart, Australia\ne-mail: mdsumner at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "On Sat, Jul 31, 2021 at 6:09 AM Alexandre Santos <\nalexandresantosbr at yahoo.com.br> wrote:\n>\n> Thanks, Mike\n>\n> Problem solved with a transformation of to Lambert azimuthal equal-area\nprojection cen",
+      "thread_id": "thread-4efa28b989d8",
+      "thread_depth": 3,
+      "month": "2021-07"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-a33ce1018ae3",
+      "subject": "Reverse the legend",
+      "message_count": 1,
+      "participants": [
+        "Raman Mishra"
+      ],
+      "started": "2021-07-03T17:57:24+05:30",
+      "last_reply": "2021-07-03T17:57:24+05:30",
+      "root_message_id": "msg-a33ce1018ae3"
+    },
+    {
+      "id": "thread-e87b2359b036",
+      "subject": "Gwmodel an spgwr return too different local coefficients?",
+      "message_count": 1,
+      "participants": [
+        "mr"
+      ],
+      "started": "2021-07-03T18:11:54+01:00",
+      "last_reply": "2021-07-03T18:11:54+01:00",
+      "root_message_id": "msg-e87b2359b036"
+    },
+    {
+      "id": "thread-151fd1e29f55",
+      "subject": "Gwmodel an spgwr return too different local coefficients?",
+      "message_count": 1,
+      "participants": [
+        "Danlin Yu"
+      ],
+      "started": "2021-07-04T01:35:16-04:00",
+      "last_reply": "2021-07-04T01:35:16-04:00",
+      "root_message_id": "msg-151fd1e29f55"
+    },
+    {
+      "id": "thread-f179c6da89b1",
+      "subject": "Gwmodel an spgwr return too different local coefficients?",
+      "message_count": 2,
+      "participants": [
+        "bi@bi@iu m@iii@g oii whu@edu@c@",
+        "mr"
+      ],
+      "started": "2021-07-04T16:23:49+08:00",
+      "last_reply": "2021-07-05T14:58:10+01:00",
+      "root_message_id": "msg-f179c6da89b1"
+    },
+    {
+      "id": "thread-c71095f60416",
+      "subject": "How to project a SpatExtent object?",
+      "message_count": 3,
+      "participants": [
+        "Michael Sumner",
+        "Tim Elrick"
+      ],
+      "started": "2021-07-05T22:14:01+02:00",
+      "last_reply": "2021-07-06T17:47:10+02:00",
+      "root_message_id": "msg-c71095f60416"
+    },
+    {
+      "id": "thread-c8745caac262",
+      "subject": "Issue with st_warp, gdal and NAs",
+      "message_count": 1,
+      "participants": [
+        "Julian M. Burgos"
+      ],
+      "started": "2021-07-06T13:29:51+00:00",
+      "last_reply": "2021-07-06T13:29:51+00:00",
+      "root_message_id": "msg-c8745caac262"
+    },
+    {
+      "id": "thread-9363f7d39756",
+      "subject": "Shiny app for Spatial Econometric classes",
+      "message_count": 8,
+      "participants": [
+        "Raphael Saldanha",
+        "Roger Bivand",
+        "Rolf Turner",
+        "Spencer Graves"
+      ],
+      "started": "2021-07-07T18:09:50-03:00",
+      "last_reply": "2021-07-14T20:21:48-03:00",
+      "root_message_id": "msg-9363f7d39756"
+    },
+    {
+      "id": "thread-6862a222b3b7",
+      "subject": "Spatio Temporal Kriging",
+      "message_count": 2,
+      "participants": [
+        "Raphael Saldanha",
+        "wycliff mwania"
+      ],
+      "started": "2021-07-12T16:25:50+03:00",
+      "last_reply": "2021-07-12T10:35:19-03:00",
+      "root_message_id": "msg-6862a222b3b7"
+    },
+    {
+      "id": "thread-885a3ce6f6bd",
+      "subject": "Trying to compute Moran's I for the first time.",
+      "message_count": 1,
+      "participants": [
+        "Iraida Redondo"
+      ],
+      "started": "2021-07-12T17:48:28+02:00",
+      "last_reply": "2021-07-12T17:48:28+02:00",
+      "root_message_id": "msg-885a3ce6f6bd"
+    },
+    {
+      "id": "thread-22e4280f88eb",
+      "subject": "Cropping Large RasterStack",
+      "message_count": 4,
+      "participants": [
+        "Bede-Fazekas Ákos",
+        "Jesús Rojo",
+        "Khan, Saeed Akhtar",
+        "Łukasz Pawlik"
+      ],
+      "started": "2021-07-15T09:55:22+02:00",
+      "last_reply": "2021-07-15T10:14:45+02:00",
+      "root_message_id": "msg-22e4280f88eb"
+    },
+    {
+      "id": "thread-99663e4282ff",
+      "subject": "Issue with st_warp, gdal and NAs",
+      "message_count": 2,
+      "participants": [
+        "Edzer Pebesma",
+        "Julian M. Burgos"
+      ],
+      "started": "2021-07-16T10:17:50+00:00",
+      "last_reply": "2021-07-22T15:20:01+02:00",
+      "root_message_id": "msg-99663e4282ff"
+    },
+    {
+      "id": "thread-1e6bdd7d6c16",
+      "subject": "Satellite Image",
+      "message_count": 1,
+      "participants": [
+        "Javad Bayat"
+      ],
+      "started": "2021-07-27T03:28:34+00:00",
+      "last_reply": "2021-07-27T03:28:34+00:00",
+      "root_message_id": "msg-1e6bdd7d6c16"
+    },
+    {
+      "id": "thread-aa9055cca7c7",
+      "subject": "Adding a regression line on time series plot",
+      "message_count": 2,
+      "participants": [
+        "Erin Hodgess",
+        "John Wasige"
+      ],
+      "started": "2021-07-28T22:36:13+03:00",
+      "last_reply": "2021-07-28T15:31:05-06:00",
+      "root_message_id": "msg-aa9055cca7c7"
+    },
+    {
+      "id": "thread-4efa28b989d8",
+      "subject": "Create a ppp object in UTM with mixture of zones",
+      "message_count": 4,
+      "participants": [
+        "Alexandre Santos",
+        "Michael Sumner"
+      ],
+      "started": "2021-07-29T22:20:27+00:00",
+      "last_reply": "2021-07-31T10:13:37+10:00",
+      "root_message_id": "msg-4efa28b989d8"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2023-07",
+  "messages": [
+    {
+      "id": "msg-82bcea5f3573",
+      "message_id": "<af1bcc5b-57b2-d815-da55-f2d959dfc89a@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2023-07-13T17:00:21+02:00",
+      "subject": "[R-sig-Geo] Spatial Data Science across Languages, Muenster Sept 18+19",
+      "subject_clean": "Spatial Data Science across Languages, Muenster Sept 18+19",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\nWe are organising a small workshop on ?Spatial Data Science across \nLanguages? on Sept 18+19 in Muenster, Germany. The goal is to bring \ndevelopers and users from R-Spatial, GeoPython and GeoJulia together to \ndiscuss shared challenges and interests. The website is \nhttps://r-spatial.org/sdsl/ . If you are interested in participating \nplease register through the form found on the website before Aug 7 UTC.\n-- \nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48151 Muenster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "Dear all,\n\nWe are organising a small workshop on ?Spatial Data Science across \nLanguages? on Sept 18+19 in Muenster, Germany. The goal is to bring \ndevelopers and users from R-Spatial, GeoPython and G",
+      "thread_id": "thread-82bcea5f3573",
+      "thread_depth": 0,
+      "month": "2023-07"
+    },
+    {
+      "id": "msg-7486f2e3a5fc",
+      "message_id": "<b2adaeb088e6bd4e76ce8f25d6f3ed5f@ba.irsa.cnr.it>",
+      "from_name": "Emanuele Barca",
+      "from_email_hash": "55e549f5e25cd9157c03a6b9fb7457184457ce36891d3491f89d53a25cae3e60",
+      "date": "2023-07-23T12:33:48+02:00",
+      "subject": "[R-sig-Geo] help using SVC_mle of library varycoef",
+      "subject_clean": "help using SVC_mle of library varycoef",
+      "in_reply_to": "<mailman.29293.3.1689328801.13179.r-sig-geo@r-project.org>",
+      "references": [
+        "<mailman.29293.3.1689328801.13179.r-sig-geo@r-project.org>"
+      ],
+      "body_plain": "Hi, this is emanuele barca and I would like to learn the library \nvarycoef.\nI created a simulation of an ideal spatial dataset (gaussian) and \napplied SVC_mle function:\n\nset.seed(1234)\n\nlibrary(gstat)\n\n# create structure\nnx <- 100\nny <- 100\nxy <- expand.grid(1:nx, 1:ny)\nnames(xy) <- c(\"x\",\"y\")\n\ng.dummy <- gstat(formula = z ~ 1 + x + I(y^0.5), locations = ~ x + y, \ndummy = T, beta = c(1, 0.01, 0.005),\n                  model = vgm(psill = 0.025, range = 20, model = 'Ste', \nkappa = 10), nmax = 20)\n\nyy <- predict(g.dummy, newdata = xy, nsim = 1)\n\n\nxy.reduced <- as.data.frame(matrix(ncol = 3, nrow = 0))\nfor (i in 1:5000){\n   xy.reduced[i, ] <- yy[i*2, 1:3]\n}\n\nFact<- 20/100 #% of reduction about 80%\ntraining <- sample(nrow(xy.reduced), trunc(Fact*nrow(xy.reduced)))\nXtraining <- xy.reduced[training, ]\nXtest <- xy.reduced[-training, ]\ndf_train <- Xtraining\ncolnames(df_train) <- c(\"X\", \"Y\", \"sim\")\n\nfit_svc <- SVC_mle(sim ~ X + Y, data = df_train, locs = df_train[, \n1:2])#\ncoef(fit_svc)\nsummary(fit_svc)\n\nbut it returns an error of the covariance matrix.\n  Could someone help me to overcome the error?\n\nthanks in advance\n\nemanuele",
+      "body_snippet": "Hi, this is emanuele barca and I would like to learn the library \nvarycoef.\nI created a simulation of an ideal spatial dataset (gaussian) and \napplied SVC_mle function:\n\nset.seed(1234)\n\nlibrary(gstat)",
+      "thread_id": "thread-7486f2e3a5fc",
+      "thread_depth": 0,
+      "month": "2023-07"
+    },
+    {
+      "id": "msg-653f20dd0d10",
+      "message_id": "<62242069.5004805.1690300237358@mail.yahoo.com>",
+      "from_name": "r@i@1290 m@iii@g oii @im@com",
+      "from_email_hash": "519a848d8d29aa1a190bbf6906b356cb4af62d7dda3eec7f65a989098e205d1c",
+      "date": "2023-07-25T15:50:37Z",
+      "subject": "[R-sig-Geo] Changing the line type of probability density curve in R",
+      "subject_clean": "Changing the line type of probability density curve in R",
+      "in_reply_to": null,
+      "references": [
+        "<62242069.5004805.1690300237358.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "I am trying to change the line type of a density curve, just so that it stands out relative to the rest of the density curves that I have on the same plot. However, the issue is that when I use the \"linetype\" function to make a dashed curve (i.e. linetype=2), there is no error, but the actual line type remains only solid in the generated plot. This is what I tried:\n? ? Globalpdf <- ggplot() + geom_density(data=GEV[1:5,], mapping = aes(x=GLocation45),?? ? color=\"black\", size=3) + geom_density(data=GEV[16:20,], mapping = aes(x=GLocation45),?? ? color=\"black\", size=3, linetype=2) + geom_density(data=GEV[29:33,], mapping =?? ? aes(x=GLocation45), color=\"blue\",size=3) + geom_density(data=GEV[1:5,], mapping =?? ? aes(x=GLocation85), color=\"black\", size=3) + geom_density(data=GEV[16:20,], mapping =?? ? aes(x=GLocation85), color=\"black\", size=3) + geom_density(data=GEV[29:33,], mapping =?? ? aes(x=GLocation85), color=\"red\", size=3) + geom_density(data=GEV[1:5,], mapping =?? ? aes(x=GLocationco), color=\"green\", size=3) + geom_density(data=GEV[16:20,], mapping =?? ? aes(x=GLocationco), color=\"green\", size=3) + geom_density(data=GEV[29:33,], mapping =?? ? aes(x=GLocationco), color=\"green\", size=3) + xlab(\"One-day max (mm/day)\") + ggtitle(\"Global\")?? ? + xlim(150, 300)+theme(plot.title = element_text(size=54))+?? ? theme(axis.title=element_text(size=54)) + theme(axis.text=element_text(size=54)) +?? ? theme(panel.background = element_blank())\n\nDoing this correctly produces the series of pdf curves on the plot, as shown below, but the second black curve that I specified to appear as \"dashed\" remains as a solid black curve, rather than the desired dashed black curve. It is only that one that I require to appear as dashed. Is there a reason for this happening?\nAny help with this would be greatly appreciated!?\nThanks,\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am trying to change the line type of a density curve, just so that it stands out relative to the rest of the density curves that I have on the same plot. However, the issue is that when I use the \"l",
+      "thread_id": "thread-653f20dd0d10",
+      "thread_depth": 0,
+      "month": "2023-07"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-82bcea5f3573",
+      "subject": "Spatial Data Science across Languages, Muenster Sept 18+19",
+      "message_count": 1,
+      "participants": [
+        "Edzer Pebesma"
+      ],
+      "started": "2023-07-13T17:00:21+02:00",
+      "last_reply": "2023-07-13T17:00:21+02:00",
+      "root_message_id": "msg-82bcea5f3573"
+    },
+    {
+      "id": "thread-7486f2e3a5fc",
+      "subject": "help using SVC_mle of library varycoef",
+      "message_count": 1,
+      "participants": [
+        "Emanuele Barca"
+      ],
+      "started": "2023-07-23T12:33:48+02:00",
+      "last_reply": "2023-07-23T12:33:48+02:00",
+      "root_message_id": "msg-7486f2e3a5fc"
+    },
+    {
+      "id": "thread-653f20dd0d10",
+      "subject": "Changing the line type of probability density curve in R",
+      "message_count": 1,
+      "participants": [
+        "r@i@1290 m@iii@g oii @im@com"
+      ],
+      "started": "2023-07-25T15:50:37+00:00",
+      "last_reply": "2023-07-25T15:50:37+00:00",
+      "root_message_id": "msg-653f20dd0d10"
+    }
+  ]
+}

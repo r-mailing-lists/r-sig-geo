@@ -1,0 +1,523 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2019-01",
+  "messages": [
+    {
+      "id": "msg-94f22c56879f",
+      "message_id": "<50FC5A75-21D5-41F1-AC65-CE38C381A564@yahoo.com>",
+      "from_name": "Veron M. Izon",
+      "from_email_hash": "1b2339ed361cf1cabb324e67824979a83422d38b03f664a1f69637dd5b7eb197",
+      "date": "2019-01-04T14:10:00-08:00",
+      "subject": "[R-sig-Geo] Impacts code after gstslshet",
+      "subject_clean": "Impacts code after gstslshet",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n \nMy name is Germ?n Iz?n. I am currently working on a project in which I am estimating a SARAR specification using the gstslshet function. After estimating this model I tried estimating the marginal effects using the impacts function but I get the following error: ?Error in spdep::intImpacts(rho = rho, beta = beta, P = P, n = n, mu = mu,  : argument \"evalues\" is missing, with no default?. I get the same message using the columbus data. I do not get this error after estimating a spatial lag model (e.g., lagsarlm). I would truly appreciate any help with this. Thank you!\n \nGerm?n",
+      "body_snippet": "Hi,\n \nMy name is Germ?n Iz?n. I am currently working on a project in which I am estimating a SARAR specification using the gstslshet function. After estimating this model I tried estimating the margin",
+      "thread_id": "thread-94f22c56879f",
+      "thread_depth": 0,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-3ab7fa82b419",
+      "message_id": "<alpine.LFD.2.21.1901051612160.24559@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2019-01-05T16:19:49+01:00",
+      "subject": "[R-sig-Geo] Impacts code after gstslshet",
+      "subject_clean": "Impacts code after gstslshet",
+      "in_reply_to": "<50FC5A75-21D5-41F1-AC65-CE38C381A564@yahoo.com>",
+      "references": [
+        "<50FC5A75-21D5-41F1-AC65-CE38C381A564@yahoo.com>"
+      ],
+      "body_plain": "On Fri, 4 Jan 2019, Veron M. Izon via R-sig-Geo wrote:\n\n> Hi,\n>\n> My name is Germ?n Iz?n. I am currently working on a project in which I \n> am estimating a SARAR specification using the gstslshet function. After \n> estimating this model I tried estimating the marginal effects using the \n> impacts function but I get the following error: ?Error in \n> spdep::intImpacts(rho = rho, beta = beta, P = P, n = n, mu = mu, : \n> argument \"evalues\" is missing, with no default?. I get the same message \n> using the columbus data. I do not get this error after estimating a \n> spatial lag model (e.g., lagsarlm). I would truly appreciate any help \n> with this. Thank you!\n\nHad you provided the output of sessionInfo(), it would be easier to say. \nMy guess is that you are using sphet 1.7, and spdep 0.8-1. The use of \neigenvalues in impacts measures was presented by Gianfranco Piras at the \nSpatial Econometrics meeting in June 2018, and implemented in spdep and \nsphet, but sphet has not been released since then. I just bumped the \nversion number of sphet on R-Forge to 1.7-2, and hope that it will let you \nrun install.packages(\"sphet\", repos=\"http://R-Forge.R-project.org\"), which \nis not possible at the moment (see \nhttps://r-forge.r-project.org/R/?group_id=477). If you can install the \ndevelopment version of sphet from source, check it out by:\n\nsvn checkout svn://svn.r-forge.r-project.org/svnroot/sphet/\n\nand run R CMD build sphet, then R CMD INSTALL that .tar.gz file.\n\nRoger\n\n>\n> Germ?n\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Fri, 4 Jan 2019, Veron M. Izon via R-sig-Geo wrote:\n\n> Hi,\n>\n> My name is Germ?n Iz?n. I am currently working on a project in which I \n> am estimating a SARAR specification using the gstslshet func",
+      "thread_id": "thread-94f22c56879f",
+      "thread_depth": 1,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-fd1ad56566f7",
+      "message_id": "<alpine.LFD.2.21.1901051646320.24559@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2019-01-05T16:48:02+01:00",
+      "subject": "[R-sig-Geo] Impacts code after gstslshet",
+      "subject_clean": "Impacts code after gstslshet",
+      "in_reply_to": "<alpine.LFD.2.21.1901051612160.24559@reclus.nhh.no>",
+      "references": [
+        "<50FC5A75-21D5-41F1-AC65-CE38C381A564@yahoo.com>",
+        "<alpine.LFD.2.21.1901051612160.24559@reclus.nhh.no>"
+      ],
+      "body_plain": "Run install.packages(\"sphet\", repos=\"http://R-Forge.R-project.org\") for \nLinux/OSX source install or Windows binary install of the development \nversion of sphet, and please report back if this resolves the problem.\n\nRoger\n\nOn Sat, 5 Jan 2019, Roger Bivand wrote:\n\n> On Fri, 4 Jan 2019, Veron M. Izon via R-sig-Geo wrote:\n>\n>>  Hi,\n>>\n>>  My name is Germ?n Iz?n. I am currently working on a project in which I am\n>>  estimating a SARAR specification using the gstslshet function. After\n>>  estimating this model I tried estimating the marginal effects using the\n>>  impacts function but I get the following error: ?Error in\n>>  spdep::intImpacts(rho = rho, beta = beta, P = P, n = n, mu = mu, :\n>>  argument \"evalues\" is missing, with no default?. I get the same message\n>>  using the columbus data. I do not get this error after estimating a\n>>  spatial lag model (e.g., lagsarlm). I would truly appreciate any help with\n>>  this. Thank you!\n>\n> Had you provided the output of sessionInfo(), it would be easier to say. My \n> guess is that you are using sphet 1.7, and spdep 0.8-1. The use of \n> eigenvalues in impacts measures was presented by Gianfranco Piras at the \n> Spatial Econometrics meeting in June 2018, and implemented in spdep and \n> sphet, but sphet has not been released since then. I just bumped the version \n> number of sphet on R-Forge to 1.7-2, and hope that it will let you run \n> install.packages(\"sphet\", repos=\"http://R-Forge.R-project.org\"), which is not \n> possible at the moment (see https://r-forge.r-project.org/R/?group_id=477). \n> If you can install the development version of sphet from source, check it out \n> by:\n>\n> svn checkout svn://svn.r-forge.r-project.org/svnroot/sphet/\n>\n> and run R CMD build sphet, then R CMD INSTALL that .tar.gz file.\n>\n> Roger\n>\n>>\n>>  Germ?n\n>>\n>>  _______________________________________________\n>>  R-sig-Geo mailing list\n>>  R-sig-Geo at r-project.org\n>>  https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> \n>\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "Run install.packages(\"sphet\", repos=\"http://R-Forge.R-project.org\") for \nLinux/OSX source install or Windows binary install of the development \nversion of sphet, and please report back if this resolve",
+      "thread_id": "thread-94f22c56879f",
+      "thread_depth": 2,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-a77fc9c3c21a",
+      "message_id": "<B831FA71-0AF4-443B-BC72-CF9AC5022D1E@yahoo.com>",
+      "from_name": "Izon, German",
+      "from_email_hash": "1b2339ed361cf1cabb324e67824979a83422d38b03f664a1f69637dd5b7eb197",
+      "date": "2019-01-05T13:06:43-08:00",
+      "subject": "[R-sig-Geo] Impacts code after gstslshet",
+      "subject_clean": "Impacts code after gstslshet",
+      "in_reply_to": "<alpine.LFD.2.21.1901051646320.24559@reclus.nhh.no>",
+      "references": [
+        "<50FC5A75-21D5-41F1-AC65-CE38C381A564@yahoo.com>",
+        "<alpine.LFD.2.21.1901051612160.24559@reclus.nhh.no>",
+        "<alpine.LFD.2.21.1901051646320.24559@reclus.nhh.no>"
+      ],
+      "body_plain": "Hi Roger,\n\nThank you very much for your quick response and help. It did work.\n\nBest,\nGerm?n\n\n?On 1/5/19, 7:48 AM, \"Roger Bivand\" <Roger.Bivand at nhh.no> wrote:\n\n    Run install.packages(\"sphet\", repos=\"http://R-Forge.R-project.org\") for \n    Linux/OSX source install or Windows binary install of the development \n    version of sphet, and please report back if this resolves the problem.\n    \n    Roger\n    \n    On Sat, 5 Jan 2019, Roger Bivand wrote:\n    \n    > On Fri, 4 Jan 2019, Veron M. Izon via R-sig-Geo wrote:\n    >\n    >>  Hi,\n    >>\n    >>  My name is Germ?n Iz?n. I am currently working on a project in which I am\n    >>  estimating a SARAR specification using the gstslshet function. After\n    >>  estimating this model I tried estimating the marginal effects using the\n    >>  impacts function but I get the following error: ?Error in\n    >>  spdep::intImpacts(rho = rho, beta = beta, P = P, n = n, mu = mu, :\n    >>  argument \"evalues\" is missing, with no default?. I get the same message\n    >>  using the columbus data. I do not get this error after estimating a\n    >>  spatial lag model (e.g., lagsarlm). I would truly appreciate any help with\n    >>  this. Thank you!\n    >\n    > Had you provided the output of sessionInfo(), it would be easier to say. My \n    > guess is that you are using sphet 1.7, and spdep 0.8-1. The use of \n    > eigenvalues in impacts measures was presented by Gianfranco Piras at the \n    > Spatial Econometrics meeting in June 2018, and implemented in spdep and \n    > sphet, but sphet has not been released since then. I just bumped the version \n    > number of sphet on R-Forge to 1.7-2, and hope that it will let you run \n    > install.packages(\"sphet\", repos=\"http://R-Forge.R-project.org\"), which is not \n    > possible at the moment (see https://r-forge.r-project.org/R/?group_id=477). \n    > If you can install the development version of sphet from source, check it out \n    > by:\n    >\n    > svn checkout svn://svn.r-forge.r-project.org/svnroot/sphet/\n    >\n    > and run R CMD build sphet, then R CMD INSTALL that .tar.gz file.\n    >\n    > Roger\n    >\n    >>\n    >>  Germ?n\n    >>\n    >>  _______________________________________________\n    >>  R-sig-Geo mailing list\n    >>  R-sig-Geo at r-project.org\n    >>  https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n    >> \n    >\n    >\n    \n    -- \n    Roger Bivand\n    Department of Economics, Norwegian School of Economics,\n    Helleveien 30, N-5045 Bergen, Norway.\n    voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n    https://orcid.org/0000-0003-2392-6140\n    https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "Hi Roger,\n\nThank you very much for your quick response and help. It did work.\n\nBest,\nGerm?n\n\n?On 1/5/19, 7:48 AM, \"Roger Bivand\" <Roger.Bivand at nhh.no> wrote:\n\n    Run install.packages(\"sphet\", repo",
+      "thread_id": "thread-94f22c56879f",
+      "thread_depth": 3,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-0b09f012710c",
+      "message_id": "<CAHoVOwpoA4hbTfTYMhVYw=oYrpOT9nSKRAz9mL-xT-RuOgHnkQ@mail.gmail.com>",
+      "from_name": "Diana Gutiérrez",
+      "from_email_hash": "c6c30bab35890dd39634f7177c13543f5c33ae0f9477b599a5af4ebcb73a83a3",
+      "date": "2019-01-10T14:10:31Z",
+      "subject": "[R-sig-Geo] Parallelization of LMZ.F3GWR.test in spgwr package",
+      "subject_clean": "Parallelization of LMZ.F3GWR.test in spgwr package",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\nI was wondering if it would be possible to run the F3 variability test by\nLeung et al. (2000) (as included in the spgwr package) using parallel, so\nprocessing times could be reduced when you have a large number of\nobservations and parameters. I would appreciate any insights and/or code\nexamples if you happen to know of any that can be shared.\n\nThanks in advance,\n\nDiana.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nI was wondering if it would be possible to run the F3 variability test by\nLeung et al. (2000) (as included in the spgwr package) using parallel, so\nprocessing times could be reduced when yo",
+      "thread_id": "thread-0b09f012710c",
+      "thread_depth": 0,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-11ab66956760",
+      "message_id": "<CAAfFO-=DS=hvKKzKHSPskC8p8TsjaV4+L59z=K-EhbJ6LbU-_w@mail.gmail.com>",
+      "from_name": "Salvatore Falanga Bolognesi",
+      "from_email_hash": "cdb37ab5c92ae79cafe1bd324e89554dcafcfdee9bf65f8406cff337e4a13033",
+      "date": "2019-01-10T16:10:27+01:00",
+      "subject": "[R-sig-Geo] Harmonized Surface Reflectance Product",
+      "subject_clean": "Harmonized Surface Reflectance Product",
+      "in_reply_to": "<CAAfFO-mqxm=t1GjZ0=G4Y4FUNXEt+EEgkodptJH3ChhEoRxLPQ@mail.gmail.com>",
+      "references": [
+        "<CAAfFO-mqxm=t1GjZ0=G4Y4FUNXEt+EEgkodptJH3ChhEoRxLPQ@mail.gmail.com>"
+      ],
+      "body_plain": "Resolved!\n\nIl giorno mar 14 nov 2017 alle ore 15:34 Salvatore Falanga Bolognesi <\ns.falangabolognesi at gmail.com> ha scritto:\n\n> I Have HLS products (for example go to see\n> https://hls.gsfc.nasa.gov/data/v1.3/sites/BE/S30/2017/31UDS/\n>\n> HLS data are stored in Hierarchical Data Format (HDF)-4 compressed format.\n> Each HDF data file is\n> associated with an ENVI header file containing georeference information.\n> (\n> https://hls.gsfc.nasa.gov/wp-content/uploads/2017/08/HLS.v1.3.UserGuide_v2.pdf\n> )\n> I want to convert this data in to GeoTiff format.\n> Is it possible to do that in R?\n> Sincerely.\n> Salvatore\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Resolved!\n\nIl giorno mar 14 nov 2017 alle ore 15:34 Salvatore Falanga Bolognesi <\ns.falangabolognesi at gmail.com> ha scritto:\n\n> I Have HLS products (for example go to see\n> https://hls.gsfc.nasa.gov",
+      "thread_id": "thread-11ab66956760",
+      "thread_depth": 0,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-17fc4fba4329",
+      "message_id": "<alpine.LFD.2.21.1901121304100.13609@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2019-01-12T13:06:44+01:00",
+      "subject": "[R-sig-Geo] Parallelization of LMZ.F3GWR.test in spgwr package",
+      "subject_clean": "Parallelization of LMZ.F3GWR.test in spgwr package",
+      "in_reply_to": "<CAHoVOwpoA4hbTfTYMhVYw=oYrpOT9nSKRAz9mL-xT-RuOgHnkQ@mail.gmail.com>",
+      "references": [
+        "<CAHoVOwpoA4hbTfTYMhVYw=oYrpOT9nSKRAz9mL-xT-RuOgHnkQ@mail.gmail.com>"
+      ],
+      "body_plain": "On Thu, 10 Jan 2019, Diana Guti?rrez wrote:\n\n> Dear all,\n>\n> I was wondering if it would be possible to run the F3 variability test by\n> Leung et al. (2000) (as included in the spgwr package) using parallel, so\n> processing times could be reduced when you have a large number of\n> observations and parameters. I would appreciate any insights and/or code\n> examples if you happen to know of any that can be shared.\n\nYes, GWR is very demanding for computation. It should only ever be used \nfor exploring model mis-specification, never for inference or prediction. \nSo making a bad test on a bad method run faster should not be a priority.\n\nRoger\n\n>\n> Thanks in advance,\n>\n> Diana.\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Thu, 10 Jan 2019, Diana Guti?rrez wrote:\n\n> Dear all,\n>\n> I was wondering if it would be possible to run the F3 variability test by\n> Leung et al. (2000) (as included in the spgwr package) using pa",
+      "thread_id": "thread-0b09f012710c",
+      "thread_depth": 1,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-8a7e34d4f2e7",
+      "message_id": "<4cc09fa6-568c-dea6-755b-1f94bd2eb46b@auckland.ac.nz>",
+      "from_name": "Rolf Turner",
+      "from_email_hash": "00507e33f1824331f51be8709ec5385bd35aff4ae21168f5c861d517ac3f52bc",
+      "date": "2019-01-13T09:55:38+13:00",
+      "subject": "[R-sig-Geo] Parallelization of LMZ.F3GWR.test in spgwr package",
+      "subject_clean": "Parallelization of LMZ.F3GWR.test in spgwr package",
+      "in_reply_to": "<alpine.LFD.2.21.1901121304100.13609@reclus.nhh.no>",
+      "references": [
+        "<CAHoVOwpoA4hbTfTYMhVYw=oYrpOT9nSKRAz9mL-xT-RuOgHnkQ@mail.gmail.com>",
+        "<alpine.LFD.2.21.1901121304100.13609@reclus.nhh.no>"
+      ],
+      "body_plain": "On 1/13/19 1:06 AM, Roger Bivand wrote:\n\n> ... GWR is very demanding for computation. It should only ever be used\n> for exploring model mis-specification, never for inference or prediction.\n> So making a bad test on a bad method run faster should not be a priority.\n\nFortune nomination!\n\ncheers,\n\nRolf\n\n-- \nHonorary Research Fellow\nDepartment of Statistics\nUniversity of Auckland\nPhone: +64-9-373-7599 ext. 88276",
+      "body_snippet": "On 1/13/19 1:06 AM, Roger Bivand wrote:\n\n> ... GWR is very demanding for computation. It should only ever be used\n> for exploring model mis-specification, never for inference or prediction.\n> So makin",
+      "thread_id": "thread-0b09f012710c",
+      "thread_depth": 2,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-6f12a95ae9f9",
+      "message_id": "<CAJ07u9pL3-2RwpuKqORukCh2kjZByEXS-FtL_2PP_a1ug1N=aQ@mail.gmail.com>",
+      "from_name": "Salami Suleiman",
+      "from_email_hash": "44d040300cf29632504c43ce245f60766cfee278a50335ef9b72463c2e8333e3",
+      "date": "2019-01-13T09:46:41Z",
+      "subject": "[R-sig-Geo] Comparing spatio-temporal variations across multiple years",
+      "subject_clean": "Comparing spatio-temporal variations across multiple years",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\nI am new to spatial statistics. I am working on a project analyzing the\nspatio-temporal neonatal mortality.\n\nI have data for six year from 2012 to 2017 specified at district level in a\nshape file. The shape file consist the number of neonatal deaths and number\nof live births per year for the 6 year period together with the district\nnames and unique district codes.\n\nHow can I compare the spatial variation of neonatal mortality rate across\nthe 6 years.\n\nI have computed the neonatal mortality rate for the period and a Global\nMoran's for each year.\n\nI would want to be able to compare the spatial structure over the period to\nidentify any statistically significant changes in the neonatal mortality\nrate.\n\nAny assistance would be greatly appreciated. Thanks!\n\nSincerely,\nSalami\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\nI am new to spatial statistics. I am working on a project analyzing the\nspatio-temporal neonatal mortality.\n\nI have data for six year from 2012 to 2017 specified at district level in a\nshape fi",
+      "thread_id": "thread-6f12a95ae9f9",
+      "thread_depth": 0,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-ac8d2ceeccc3",
+      "message_id": "<CACxE24mXUOZqq9D=ELxY5F2oHGuJTv0w97AuGrch2qtv0JLa1w@mail.gmail.com>",
+      "from_name": "Erin Hodgess",
+      "from_email_hash": "ad4c381adc5ad6689032279129953a26e044141934d2229b2012ea3b8195c122",
+      "date": "2019-01-14T12:05:34-07:00",
+      "subject": "[R-sig-Geo] Parallelization of LMZ.F3GWR.test in spgwr package",
+      "subject_clean": "Parallelization of LMZ.F3GWR.test in spgwr package",
+      "in_reply_to": "<4cc09fa6-568c-dea6-755b-1f94bd2eb46b@auckland.ac.nz>",
+      "references": [
+        "<CAHoVOwpoA4hbTfTYMhVYw=oYrpOT9nSKRAz9mL-xT-RuOgHnkQ@mail.gmail.com>",
+        "<alpine.LFD.2.21.1901121304100.13609@reclus.nhh.no>",
+        "<4cc09fa6-568c-dea6-755b-1f94bd2eb46b@auckland.ac.nz>"
+      ],
+      "body_plain": "Would there actually be any interest in making GWR parallel, please?  I\nenjoy messing with parallel stuff, but don?t want to spend time if it is\nnot productive.\n\nThanks for listening!\nSincerely,\nErin\n\nOn Sat, Jan 12, 2019 at 1:56 PM Rolf Turner <r.turner at auckland.ac.nz> wrote:\n\n>\n>\n> On 1/13/19 1:06 AM, Roger Bivand wrote:\n>\n> > ... GWR is very demanding for computation. It should only ever be used\n> > for exploring model mis-specification, never for inference or prediction.\n> > So making a bad test on a bad method run faster should not be a priority.\n>\n> Fortune nomination!\n>\n> cheers,\n>\n> Rolf\n>\n> --\n> Honorary Research Fellow\n> Department of Statistics\n> University of Auckland\n> Phone: +64-9-373-7599 ext. 88276\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n-- \nErin Hodgess, PhD\nmailto: erinm.hodgess at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Would there actually be any interest in making GWR parallel, please?  I\nenjoy messing with parallel stuff, but don?t want to spend time if it is\nnot productive.\n\nThanks for listening!\nSincerely,\nErin\n",
+      "thread_id": "thread-0b09f012710c",
+      "thread_depth": 3,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-f9022a3edc54",
+      "message_id": "<alpine.LFD.2.21.1901142006190.8850@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2019-01-14T20:21:19+01:00",
+      "subject": "[R-sig-Geo] Parallelization of LMZ.F3GWR.test in spgwr package",
+      "subject_clean": "Parallelization of LMZ.F3GWR.test in spgwr package",
+      "in_reply_to": "<CACxE24mXUOZqq9D=ELxY5F2oHGuJTv0w97AuGrch2qtv0JLa1w@mail.gmail.com>",
+      "references": [
+        "<CAHoVOwpoA4hbTfTYMhVYw=oYrpOT9nSKRAz9mL-xT-RuOgHnkQ@mail.gmail.com>",
+        "<alpine.LFD.2.21.1901121304100.13609@reclus.nhh.no>",
+        "<4cc09fa6-568c-dea6-755b-1f94bd2eb46b@auckland.ac.nz>",
+        "<CACxE24mXUOZqq9D=ELxY5F2oHGuJTv0w97AuGrch2qtv0JLa1w@mail.gmail.com>"
+      ],
+      "body_plain": "On Mon, 14 Jan 2019, Erin Hodgess wrote:\n\n> Would there actually be any interest in making GWR parallel, please?  I\n> enjoy messing with parallel stuff, but don?t want to spend time if it is\n> not productive.\n\nspgwr::gwr() takes a cl= argument to pass a parallel object into the \nfunction, but this only saves time if the fit.points are given as an \nargument, and where # fit points is >> # data points.\n\nNot checked for many years, used in: http://hdl.handle.net/11250/163254 \nwith no obvious easy advantage. Maybe worth revisiting?\n\nRoger\n\n\n>\n> Thanks for listening!\n> Sincerely,\n> Erin\n>\n> On Sat, Jan 12, 2019 at 1:56 PM Rolf Turner <r.turner at auckland.ac.nz> wrote:\n>\n>>\n>>\n>> On 1/13/19 1:06 AM, Roger Bivand wrote:\n>>\n>>> ... GWR is very demanding for computation. It should only ever be used\n>>> for exploring model mis-specification, never for inference or prediction.\n>>> So making a bad test on a bad method run faster should not be a priority.\n>>\n>> Fortune nomination!\n>>\n>> cheers,\n>>\n>> Rolf\n>>\n>> --\n>> Honorary Research Fellow\n>> Department of Statistics\n>> University of Auckland\n>> Phone: +64-9-373-7599 ext. 88276\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Mon, 14 Jan 2019, Erin Hodgess wrote:\n\n> Would there actually be any interest in making GWR parallel, please?  I\n> enjoy messing with parallel stuff, but don?t want to spend time if it is\n> not pro",
+      "thread_id": "thread-0b09f012710c",
+      "thread_depth": 4,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-236af1221f06",
+      "message_id": "<CACxE24n3sgj+jH4c_hJJk6+nsT8uR4pSeDuSKQMPyOfNty4eAg@mail.gmail.com>",
+      "from_name": "Erin Hodgess",
+      "from_email_hash": "ad4c381adc5ad6689032279129953a26e044141934d2229b2012ea3b8195c122",
+      "date": "2019-01-14T12:22:14-07:00",
+      "subject": "[R-sig-Geo] Parallelization of LMZ.F3GWR.test in spgwr package",
+      "subject_clean": "Parallelization of LMZ.F3GWR.test in spgwr package",
+      "in_reply_to": "<alpine.LFD.2.21.1901142006190.8850@reclus.nhh.no>",
+      "references": [
+        "<CAHoVOwpoA4hbTfTYMhVYw=oYrpOT9nSKRAz9mL-xT-RuOgHnkQ@mail.gmail.com>",
+        "<alpine.LFD.2.21.1901121304100.13609@reclus.nhh.no>",
+        "<4cc09fa6-568c-dea6-755b-1f94bd2eb46b@auckland.ac.nz>",
+        "<CACxE24mXUOZqq9D=ELxY5F2oHGuJTv0w97AuGrch2qtv0JLa1w@mail.gmail.com>",
+        "<alpine.LFD.2.21.1901142006190.8850@reclus.nhh.no>"
+      ],
+      "body_plain": "Thanks, I'll check it out.  Awesome!\n\nSincerely,\nErin\n\n\nOn Mon, Jan 14, 2019 at 12:21 PM Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Mon, 14 Jan 2019, Erin Hodgess wrote:\n>\n> > Would there actually be any interest in making GWR parallel, please?  I\n> > enjoy messing with parallel stuff, but don?t want to spend time if it is\n> > not productive.\n>\n> spgwr::gwr() takes a cl= argument to pass a parallel object into the\n> function, but this only saves time if the fit.points are given as an\n> argument, and where # fit points is >> # data points.\n>\n> Not checked for many years, used in: http://hdl.handle.net/11250/163254\n> with no obvious easy advantage. Maybe worth revisiting?\n>\n> Roger\n>\n>\n> >\n> > Thanks for listening!\n> > Sincerely,\n> > Erin\n> >\n> > On Sat, Jan 12, 2019 at 1:56 PM Rolf Turner <r.turner at auckland.ac.nz>\n> wrote:\n> >\n> >>\n> >>\n> >> On 1/13/19 1:06 AM, Roger Bivand wrote:\n> >>\n> >>> ... GWR is very demanding for computation. It should only ever be used\n> >>> for exploring model mis-specification, never for inference or\n> prediction.\n> >>> So making a bad test on a bad method run faster should not be a\n> priority.\n> >>\n> >> Fortune nomination!\n> >>\n> >> cheers,\n> >>\n> >> Rolf\n> >>\n> >> --\n> >> Honorary Research Fellow\n> >> Department of Statistics\n> >> University of Auckland\n> >> Phone: +64-9-373-7599 ext. 88276\n> >>\n> >> _______________________________________________\n> >> R-sig-Geo mailing list\n> >> R-sig-Geo at r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>\n> >\n>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics,\n> Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> https://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n\n-- \nErin Hodgess, PhD\nmailto: erinm.hodgess at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks, I'll check it out.  Awesome!\n\nSincerely,\nErin\n\n\nOn Mon, Jan 14, 2019 at 12:21 PM Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Mon, 14 Jan 2019, Erin Hodgess wrote:\n>\n> > Would there actu",
+      "thread_id": "thread-0b09f012710c",
+      "thread_depth": 5,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-ff290ec4a238",
+      "message_id": "<05f10721-ec47-e482-d7db-a575f62ed0fa@gmail.com>",
+      "from_name": "Tomislav Hengl",
+      "from_email_hash": "1c592038322bbeaa3bb702d8d64ab9c83a31b70d7020477c6836f5af383d3072",
+      "date": "2019-01-15T22:55:27+01:00",
+      "subject": "[R-sig-Geo] LandGIS Open Land data service - global stack of environmental layers",
+      "subject_clean": "LandGIS Open Land data service - global stack of environmental layers",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "We have recently released a webmapping system to serve global consistent \nenvironmental and Earth science layers at spatial resolutions from 10 km \nto 250 m (hopefully also soon at 100 m). This is an Open Data system as \nmajority of layers are distributed under the Open Data Commons Open \nDatabase License (ODbL) and/or Creative Commons Attribution-ShareAlike \n4.0 International license (CC BY-SA). Read more about LandGIS in: \nhttp://opengeohub.org/about-landgis.\n\nYou can access the web app at:\n\nhttps://landgis.opengeohub.org\n\nThe system currently (Jan 2019) serves about 300+ layers from relief and \ngeology, to vegetation indices, climatic images, soil properties and \nclasses and potential and actual vegetation. Complete overview of \navailable layers is available at:\n\nhttps://github.com/Envirometrix/LandGISmaps\n\nIn addition to the web-mapping app, data can be accessed using the:\n\n- Geonode installation at https://maps.opengeohub.org,\n- LandGIS REST API services at https://landgisapi.opengeohub.org,\n- LandGIS WCS at https://geoserver.opengeohub.org/landgisgeoserver/web/,\n\nA copy of all layers is also available via Zenodo.org i.e. via an unique \nURL.\n\nTo access data at point locations best use the REST API. For example, to \naccess monthly precipitations at a location X, Y you can use:\n\nhttps://landgisapi.opengeohub.org/query/point?lat=7.58033&lon=35.6561&coll=layers1km&regex=clm_precipitation_imerge.(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)_m_1km_s0..0cm_.*_v0.1.tif\n\nwhich returns a GeoJSON (table) with precipitation values in mm.\n\nTo access values of LandGIS layers at multiple points you can use:\n\ncurl -X POST --form \"points=@test_points.geojson\" --form \n\"layer=pnv_fapar_proba.v.jul_d_1km_s0..0cm_2014..2017_v0.1.tif\" \nhttps://landgisapi.opengeohub.org/query/points -o results.json\n\nwhere test_points.geojson is the input GeoJSON file containing \ncoordinates of points. The multi-point access is currently limited to \nmax 20 points, but we hope to increase this number gradually. More \nexamples of how to construct spatial queries are available at: \nhttps://landgisapi.opengeohub.org\n\nIn addition to the REST access, you can also access the LandGIS data \nusing the Web Coverage Service (WCS) functionality of the Geoserver e.g. \nto subset layers using a bounding box. For example, to download surface \ntemperature for July for an area of about 300 by 300 km you can use:\n\nhttps://geoserver.opengeohub.org/landgisgeoserver/ows?service=WCS&version=2.0.1&\nrequest=GetCoverage&\ncoverageId=layers1km:clm_lst_mod11a2.jul.day_m_1km_s0..0cm_2000..2017_v1.0&\nsubset=Lat(41,45)&subset=Long(32,35)\n\nThe read limit for WCS is 4GB and response size limit is 200MB. This \nmeans that WCS might fail if you try to fetch too large bounding boxes. \nIf this happens we recommend instead downloading whole GeoTIFFs from Zenodo.\n\nWe are currently preparing R functionality to allow users fetching data \nfrom LandGIS in a more systematic way (import, overlay, subset, \nplot...). If you would like to contribute to this initiative, especially \nto testing the R functions, please send me an email. Also we would \nappreciate if you would report any bug or inconsistency you discover \nvia: https://github.com/Envirometrix/LandGISmaps/issues\n\nIf you are currently producing any similar types of data (e.g. \nenvironmental layers at resolutions from 100 m to 1 km for a global land \nmask) and if you would like to publish this data on LandGIS, please \nforward a proposal for publishing your global layers: \nhttps://opengeohub.org/submitting-global-layers-inclusion-landgis and we \nwill get on it asap.\n\nthank you,\n\nTom Hengl\nhttps://opengeohub.org/people/tom-hengl",
+      "body_snippet": "We have recently released a webmapping system to serve global consistent \nenvironmental and Earth science layers at spatial resolutions from 10 km \nto 250 m (hopefully also soon at 100 m). This is an ",
+      "thread_id": "thread-ff290ec4a238",
+      "thread_depth": 0,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-1a5c5a2390d3",
+      "message_id": "<5D1706E1-D552-4AC7-87E4-A894D181287A@gmail.com>",
+      "from_name": "Richard Sherman",
+      "from_email_hash": "274ed521db1b5fb1d5654e1db7b632662d2f41488dcca104e21ace1d34f90c1c",
+      "date": "2019-01-16T18:19:04-08:00",
+      "subject": "[R-sig-Geo] Simple choropleth using ggplot2",
+      "subject_clean": "Simple choropleth using ggplot2",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello all,\n\nI am trying to plot a simple choropleth, something I?ve done a while ago using rworldmap and also (if I recall correctly) ggplot2, but I am failing to draw the map at all and failing (I think) to merge my data properly with the shapefile. Thank you for help with a basic question. I?d like to know what is wrong with what I?m doing here.\n\nMy R script is \n\nlibrary(ggplot2)\nlibrary(rgdal)\nlibrary(plyr)\n\n# get shapefile for world map\ndownload.file(\"https://opendata.arcgis.com/datasets/252471276c9941729543be8789e06e12_0.zip\", destfile = \"countries.zip?)\n\n# get world bank maternal mortality data\ndownload.file(\"http://api.worldbank.org/v2/en/indicator/SH.STA.MMRT?downloadformat=csv\", destfile = \"mmr.zip?)\n\n# get csv file with concordance between ISO-2-alpha and ISO-3-alpha country codes\ndownload.file(\"https://raw.githubusercontent.com/rsspdx/mmr/master/iso_2_iso_3.csv\", destfile = \"iso_2_iso_3.csv?)\n\n# unzip the zipped files\nmmr.files <- unzip(\"mmr.zip\")\nunzip(\"countries.zip?)\n\n# read in maternal mortality data and fix it up\nmmr.data <- read.csv(mmr.files[2], skip = 3, stringsAsFactors = FALSE)\nmmr.data.name <- mmr.data$Country.Name\nmmr.data.code <- mmr.data$Country.Code\nmmr.data.mmr <- mmr.data$X2015\nmmr.data.df <- as.data.frame(cbind(mmr.data.name, mmr.data.code, mmr.data.mmr))\nnames(mmr.data.df) <- c(\"Country.Name\", \"Country.Code\", \"mmr?)\n\n# read in the shapefile\nworld.map <- readOGR(dsn=\".\", layer = \"UIA_World_Countries_Boundaries\")\n\n# --------- possibly I should be doing this ------------\n#\n# world.map at data$id <- rownames(world.map at data)\n# world.map.df <- fortify(world.map)\n#\n# -------------------------------------------------------\n\n#------or perhaps I need to merge the data into a data slot of the shapefile\n#------but I can?t recall (or never knew?) how to do that\n\n# get ISO2 country codes\niso_2_iso_3 <- read.csv(\"iso_2_iso_3.csv?)\n\n# ISO2 in this file is called ISO in the shapefile, create ISO variable\n# then merge into mmr.data\niso_2_iso_3$ISO <- iso_2_iso_3$ISO2\nmmr.data.df <- merge(iso_2_iso_3, mmr.data.df, by.x=\"ISO3\", by.y=\"Country.Code?)\n\n# merge maternal mortality data into shapefile\nmmr <- merge(world.map, mmr.data.df, by = \"ISO\")\nmmr <- fortify(mmr)\nstr(mmr)\n\n# ---------create a map, not working\nmap <- ggplot(data = mmr, aes(x = long, y = lat, group = group))\n\n# ---------look at the map, obviously not working\nmap + geom_polygon(fill = mmr$mmr)\n\n\n---\nRichard Sherman\nrss.pdx at gmail.com",
+      "body_snippet": "Hello all,\n\nI am trying to plot a simple choropleth, something I?ve done a while ago using rworldmap and also (if I recall correctly) ggplot2, but I am failing to draw the map at all and failing (I th",
+      "thread_id": "thread-1a5c5a2390d3",
+      "thread_depth": 0,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-99ce23a543d5",
+      "message_id": "<9d4b0d44-4f90-3db8-363e-152f9574eb31@gmail.com>",
+      "from_name": "Bede-Fazekas Ákos",
+      "from_email_hash": "f2e2e122dfd4dbb8b8973b23d149555486ccb4290cb5f11779739fdbbcf5b93d",
+      "date": "2019-01-17T09:23:16+01:00",
+      "subject": "[R-sig-Geo] Simple choropleth using ggplot2",
+      "subject_clean": "Simple choropleth using ggplot2",
+      "in_reply_to": "<5D1706E1-D552-4AC7-87E4-A894D181287A@gmail.com>",
+      "references": [
+        "<5D1706E1-D552-4AC7-87E4-A894D181287A@gmail.com>"
+      ],
+      "body_plain": "Dear Richard,\nalthough I have problem with your mmr.zip (R cannott unzip it), and \ncould not try your code, I? suggest to migrate from sp to sf. ggplot can \neasily use Simple Features data.\nUse function sf::st_as_sf() to convert your Spatial* data to Simple \nFeatures.\nHTH,\n?kos Bede-Fazekas\nHungarian Academy of Sciences\n\n2019.01.17. 3:19 keltez?ssel, Richard Sherman ?rta:\n> Hello all,\n>\n> I am trying to plot a simple choropleth, something I?ve done a while ago using rworldmap and also (if I recall correctly) ggplot2, but I am failing to draw the map at all and failing (I think) to merge my data properly with the shapefile. Thank you for help with a basic question. I?d like to know what is wrong with what I?m doing here.\n>\n> My R script is\n>\n> library(ggplot2)\n> library(rgdal)\n> library(plyr)\n>\n> # get shapefile for world map\n> download.file(\"https://opendata.arcgis.com/datasets/252471276c9941729543be8789e06e12_0.zip\", destfile = \"countries.zip?)\n>\n> # get world bank maternal mortality data\n> download.file(\"http://api.worldbank.org/v2/en/indicator/SH.STA.MMRT?downloadformat=csv\", destfile = \"mmr.zip?)\n>\n> # get csv file with concordance between ISO-2-alpha and ISO-3-alpha country codes\n> download.file(\"https://raw.githubusercontent.com/rsspdx/mmr/master/iso_2_iso_3.csv\", destfile = \"iso_2_iso_3.csv?)\n>\n> # unzip the zipped files\n> mmr.files <- unzip(\"mmr.zip\")\n> unzip(\"countries.zip?)\n>\n> # read in maternal mortality data and fix it up\n> mmr.data <- read.csv(mmr.files[2], skip = 3, stringsAsFactors = FALSE)\n> mmr.data.name <- mmr.data$Country.Name\n> mmr.data.code <- mmr.data$Country.Code\n> mmr.data.mmr <- mmr.data$X2015\n> mmr.data.df <- as.data.frame(cbind(mmr.data.name, mmr.data.code, mmr.data.mmr))\n> names(mmr.data.df) <- c(\"Country.Name\", \"Country.Code\", \"mmr?)\n>\n> # read in the shapefile\n> world.map <- readOGR(dsn=\".\", layer = \"UIA_World_Countries_Boundaries\")\n>\n> # --------- possibly I should be doing this ------------\n> #\n> # world.map at data$id <- rownames(world.map at data)\n> # world.map.df <- fortify(world.map)\n> #\n> # -------------------------------------------------------\n>\n> #------or perhaps I need to merge the data into a data slot of the shapefile\n> #------but I can?t recall (or never knew?) how to do that\n>\n> # get ISO2 country codes\n> iso_2_iso_3 <- read.csv(\"iso_2_iso_3.csv?)\n>\n> # ISO2 in this file is called ISO in the shapefile, create ISO variable\n> # then merge into mmr.data\n> iso_2_iso_3$ISO <- iso_2_iso_3$ISO2\n> mmr.data.df <- merge(iso_2_iso_3, mmr.data.df, by.x=\"ISO3\", by.y=\"Country.Code?)\n>\n> # merge maternal mortality data into shapefile\n> mmr <- merge(world.map, mmr.data.df, by = \"ISO\")\n> mmr <- fortify(mmr)\n> str(mmr)\n>\n> # ---------create a map, not working\n> map <- ggplot(data = mmr, aes(x = long, y = lat, group = group))\n>\n> # ---------look at the map, obviously not working\n> map + geom_polygon(fill = mmr$mmr)\n>\n>\n> ---\n> Richard Sherman\n> rss.pdx at gmail.com\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_snippet": "Dear Richard,\nalthough I have problem with your mmr.zip (R cannott unzip it), and \ncould not try your code, I? suggest to migrate from sp to sf. ggplot can \neasily use Simple Features data.\nUse functi",
+      "thread_id": "thread-1a5c5a2390d3",
+      "thread_depth": 1,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-8b6a69707977",
+      "message_id": "<19d25965-0b9a-81ab-0e52-ba926d7cd9c6@gmail.com>",
+      "from_name": "Tomislav Hengl",
+      "from_email_hash": "1c592038322bbeaa3bb702d8d64ab9c83a31b70d7020477c6836f5af383d3072",
+      "date": "2019-01-18T10:40:57+01:00",
+      "subject": "[R-sig-Geo] LandGIS Open Land data service - global stack of environmental layers",
+      "subject_clean": "LandGIS Open Land data service - global stack of environmental layers",
+      "in_reply_to": "<05f10721-ec47-e482-d7db-a575f62ed0fa@gmail.com>",
+      "references": [
+        "<05f10721-ec47-e482-d7db-a575f62ed0fa@gmail.com>"
+      ],
+      "body_plain": "Just added an example with multipoint query to the LandGISmaps rep:\n\nhttps://github.com/Envirometrix/LandGISmaps/tree/master/tutorial\n\nREST now works for up to 50 points. The impressive speed is mainly \nthanks to using SSD and cloud GeoTIFF settings \n(https://github.com/Envirometrix/LandGISmaps#cloud-optimized-geotiff).\n\nlibrary(rjson)\nlibrary(rgdal)\nlibrary(fossil)\nlibrary(plotKML)\n\n## REST multipoint query ----\npath <- geopath(lon1=4.9, lon2=4.9, lat1=52.3, lat2=35.1)\nwriteOGR(as(path, \"SpatialPointsDataFrame\"), \"test_points.geojson\", \nlayer=\"test_points\", driver=\"GeoJSON\")\n## overlay points and grids:\nbrowseURL('https://landgis.opengeohub.org/#/?base=Stamen%20(OpenStreetMap)&center=49.6466,9.1126&zoom=7&opacity=80&layer=veg_fapar_proba.v.*_d&time=July')\nsystem('curl -X POST --form \"points=@test_points.geojson\" --form \n\"layer=pnv_fapar_proba.v.jul_d_1km_s0..0cm_2014..2017_v0.1.tif\" \nhttps://landgisapi.opengeohub.org/query/points -o results.json')\ndf <- data.frame(matrix(unlist(rjson::fromJSON(file=\"results.json\")), \nncol = 3, byrow = TRUE))\nstr(df)\nplot(df[,2], df[,3], type=\"l\")\n## 255 is the missing value\n\nLet me know if you experience any problems.\n\nTom Hengl\nhttps://opengeohub.org/people/tom-hengl\n\nOn 1/15/19 10:55 PM, Tomislav Hengl wrote:\n> \n> We have recently released a webmapping system to serve global consistent \n> environmental and Earth science layers at spatial resolutions from 10 km \n> to 250 m (hopefully also soon at 100 m). This is an Open Data system as \n> majority of layers are distributed under the Open Data Commons Open \n> Database License (ODbL) and/or Creative Commons Attribution-ShareAlike \n> 4.0 International license (CC BY-SA). Read more about LandGIS in: \n> http://opengeohub.org/about-landgis.\n> \n> You can access the web app at:\n> \n> https://landgis.opengeohub.org\n> \n> The system currently (Jan 2019) serves about 300+ layers from relief and \n> geology, to vegetation indices, climatic images, soil properties and \n> classes and potential and actual vegetation. Complete overview of \n> available layers is available at:\n> \n> https://github.com/Envirometrix/LandGISmaps\n> \n> In addition to the web-mapping app, data can be accessed using the:\n> \n> - Geonode installation at https://maps.opengeohub.org,\n> - LandGIS REST API services at https://landgisapi.opengeohub.org,\n> - LandGIS WCS at https://geoserver.opengeohub.org/landgisgeoserver/web/,\n> \n> A copy of all layers is also available via Zenodo.org i.e. via an unique \n> URL.\n> \n> To access data at point locations best use the REST API. For example, to \n> access monthly precipitations at a location X, Y you can use:\n> \n> https://landgisapi.opengeohub.org/query/point?lat=7.58033&lon=35.6561&coll=layers1km&regex=clm_precipitation_imerge.(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)_m_1km_s0..0cm_.*_v0.1.tif \n> \n> \n> which returns a GeoJSON (table) with precipitation values in mm.\n> \n> To access values of LandGIS layers at multiple points you can use:\n> \n> curl -X POST --form \"points=@test_points.geojson\" --form \n> \"layer=pnv_fapar_proba.v.jul_d_1km_s0..0cm_2014..2017_v0.1.tif\" \n> https://landgisapi.opengeohub.org/query/points -o results.json\n> \n> where test_points.geojson is the input GeoJSON file containing \n> coordinates of points. The multi-point access is currently limited to \n> max 20 points, but we hope to increase this number gradually. More \n> examples of how to construct spatial queries are available at: \n> https://landgisapi.opengeohub.org\n> \n> In addition to the REST access, you can also access the LandGIS data \n> using the Web Coverage Service (WCS) functionality of the Geoserver e.g. \n> to subset layers using a bounding box. For example, to download surface \n> temperature for July for an area of about 300 by 300 km you can use:\n> \n> https://geoserver.opengeohub.org/landgisgeoserver/ows?service=WCS&version=2.0.1& \n> \n> request=GetCoverage&\n> coverageId=layers1km:clm_lst_mod11a2.jul.day_m_1km_s0..0cm_2000..2017_v1.0&\n> subset=Lat(41,45)&subset=Long(32,35)\n> \n> The read limit for WCS is 4GB and response size limit is 200MB. This \n> means that WCS might fail if you try to fetch too large bounding boxes. \n> If this happens we recommend instead downloading whole GeoTIFFs from \n> Zenodo.\n> \n> We are currently preparing R functionality to allow users fetching data \n> from LandGIS in a more systematic way (import, overlay, subset, \n> plot...). If you would like to contribute to this initiative, especially \n> to testing the R functions, please send me an email. Also we would \n> appreciate if you would report any bug or inconsistency you discover \n> via: https://github.com/Envirometrix/LandGISmaps/issues\n> \n> If you are currently producing any similar types of data (e.g. \n> environmental layers at resolutions from 100 m to 1 km for a global land \n> mask) and if you would like to publish this data on LandGIS, please \n> forward a proposal for publishing your global layers: \n> https://opengeohub.org/submitting-global-layers-inclusion-landgis and we \n> will get on it asap.\n> \n> thank you,\n> \n> Tom Hengl\n> https://opengeohub.org/people/tom-hengl",
+      "body_snippet": "Just added an example with multipoint query to the LandGISmaps rep:\n\nhttps://github.com/Envirometrix/LandGISmaps/tree/master/tutorial\n\nREST now works for up to 50 points. The impressive speed is mainl",
+      "thread_id": "thread-ff290ec4a238",
+      "thread_depth": 1,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-79a63bc99b7a",
+      "message_id": "<CAOm+BKdbknRBFuwpmNQEDCZmSKtpCKwnd0MLkynoNmUqMLV43Q@mail.gmail.com>",
+      "from_name": "Bedilu Ejigu",
+      "from_email_hash": "ecb81c8b01829c656265f7c52cda048b7ac0b07926965660cc1cdebb44128aef",
+      "date": "2019-01-21T14:49:49+03:00",
+      "subject": "[R-sig-Geo] Can we fit SAR/CAR model for geostatistical data",
+      "subject_clean": "Can we fit SAR/CAR model for geostatistical data",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Could it be reasonable to analyze a geostatistical data  using spatial\nautoregreesive models (i.e. SAR and CAR) by treating the geostatistical\ndata as it was observed on a discrete indexing set instead of continuous\nindexing set?\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Could it be reasonable to analyze a geostatistical data  using spatial\nautoregreesive models (i.e. SAR and CAR) by treating the geostatistical\ndata as it was observed on a discrete indexing set instea",
+      "thread_id": "thread-79a63bc99b7a",
+      "thread_depth": 0,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-96621ee06fe6",
+      "message_id": "<alpine.LFD.2.21.1901221044460.26520@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2019-01-22T10:49:28+01:00",
+      "subject": "[R-sig-Geo] Can we fit SAR/CAR model for geostatistical data",
+      "subject_clean": "Can we fit SAR/CAR model for geostatistical data",
+      "in_reply_to": "<CAOm+BKdbknRBFuwpmNQEDCZmSKtpCKwnd0MLkynoNmUqMLV43Q@mail.gmail.com>",
+      "references": [
+        "<CAOm+BKdbknRBFuwpmNQEDCZmSKtpCKwnd0MLkynoNmUqMLV43Q@mail.gmail.com>"
+      ],
+      "body_plain": "I don't think this is a productive avenue, as geostatistics is mostly \nabout prediction, but SAR/CAR are mostly about mitigating \nmis-specification problems in inference from covariates. This means that \nprediction say from SAR/CAR fitted models is less well understood, for SAR \nsee for example Michel Goulard, Thibault Laurent & Christine Thomas-Agnan, \n2017 \\emph{About predictions in spatial autoregressive models: optimal and \nalmost optimal strategies},  Spatial Economic Analysis Volume 12, Issue \n2--3, 304--325 https://doi.org/10.1080/17421772.2017.1300679.\n\nHowever, INLA (and others) use GMRF in building prediction models, so the \nlattice (mesh) may play a role. See for example:\n\nhttps://becarioprecario.bitbucket.io/spde-gitbook/\nhttp://www.r-inla.org/spde-book\n\nHope this helps,\n\nRoger\n\nOn Mon, 21 Jan 2019, Bedilu Ejigu wrote:\n\n> Could it be reasonable to analyze a geostatistical data  using spatial\n> autoregreesive models (i.e. SAR and CAR) by treating the geostatistical\n> data as it was observed on a discrete indexing set instead of continuous\n> indexing set?\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "I don't think this is a productive avenue, as geostatistics is mostly \nabout prediction, but SAR/CAR are mostly about mitigating \nmis-specification problems in inference from covariates. This means th",
+      "thread_id": "thread-79a63bc99b7a",
+      "thread_depth": 1,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-9ed690d12b75",
+      "message_id": "<1902525475.1534331.1548415716849@mail.yahoo.com>",
+      "from_name": "Mirela Beloiu",
+      "from_email_hash": "ebfd43e44814035a0fb1ca7f859a6418ae3200575041234f23e20446ee6fe7f0",
+      "date": "2019-01-25T11:28:36Z",
+      "subject": "[R-sig-Geo] pcfinhom and Kcross.inhom unexpected behavior, heterogeneity or not?",
+      "subject_clean": "pcfinhom and Kcross.inhom unexpected behavior, heterogeneity or not?",
+      "in_reply_to": null,
+      "references": [
+        "<1902525475.1534331.1548415716849.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "Dear members,\n\nI am currently analyzing the spatial patterns of a tree species using the \"spatstat\" package.\nI struggle with some concepts and function output (strange graphs).I posted the data and the questions here:https://stackoverflow.com/questions/54364272/pcfinhom-and-kcross-inhom-unexpected-behavior-heterogeneity-or-not?\n\nI would be very grateful to receive some advice.\nThank you in advance!Best regards,Mirela\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear members,\n\nI am currently analyzing the spatial patterns of a tree species using the \"spatstat\" package.\nI struggle with some concepts and function output (strange graphs).I posted the data and th",
+      "thread_id": "thread-9ed690d12b75",
+      "thread_depth": 0,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-5f7152a864ee",
+      "message_id": "<264a50c8-6c29-c2fb-5552-5570bdf1b667@gmail.com>",
+      "from_name": "Micha Silver",
+      "from_email_hash": "86a446f0e02a9a64c82549e8099ffb13525e0c2e5405536a3c4150e1bbd36549",
+      "date": "2019-01-29T00:19:47+02:00",
+      "subject": "[R-sig-Geo] Problem with Sequential Gaussian Simulation",
+      "subject_clean": "Problem with Sequential Gaussian Simulation",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I've run into a problem trying to produce a number of SGS realizations \nusing gstat::krige. (this was definitely working two weeks ago, and now \nI'm getting a seg fault, and I can't figure out why. Any help would be \nappreciated.\n\n\nHere are the details:\n\n\nMy input \"locations\":\n\n-------------------------\n\n > str(gauges_spdf)\n\nFormal class 'SpatialPointsDataFrame' [package \"sp\"] with 5 slots\n ? ..@ data?????? :'data.frame':??? 24 obs. of? 1 variable:\n ? .. ..$ precip: num [1:24] 13.21 2.66 12.67 8.97 18.69 ...\n ? ..@ coords.nrs : num(0)\n ? ..@ coords???? : num [1:24, 1:2] -37.5 11.5 -9.5 20.5 -27.5 -3.5 \n-12.5 33.5 -4.5 34.5 ...\n ? .. ..- attr(*, \"dimnames\")=List of 2\n ? .. .. ..$ : NULL\n ? .. .. ..$ : chr [1:2] \"x\" \"y\"\n ? ..@ bbox?????? : num [1:2, 1:2] -45.5 -49.5 46.5 49.5\n ? .. ..- attr(*, \"dimnames\")=List of 2\n ? .. .. ..$ : chr [1:2] \"x\" \"y\"\n ? .. .. ..$ : chr [1:2] \"min\" \"max\"\n ? ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slot\n ? .. .. ..@ projargs: chr NA\n\n\nMy target \"newdata\" grid\n\n-------------------------\n\n > str(grd)\nFormal class 'SpatialPixels' [package \"sp\"] with 5 slots\n ? ..@ grid?????? :Formal class 'GridTopology' [package \"sp\"] with 3 slots\n ? .. .. ..@ cellcentre.offset: Named num [1:2] -49.5 -49.5\n ? .. .. .. ..- attr(*, \"names\")= chr [1:2] \"x\" \"y\"\n ? .. .. ..@ cellsize???????? : Named num [1:2] 1 1\n ? .. .. .. ..- attr(*, \"names\")= chr [1:2] \"x\" \"y\"\n ? .. .. ..@ cells.dim??????? : Named int [1:2] 100 100\n ? .. .. .. ..- attr(*, \"names\")= chr [1:2] \"x\" \"y\"\n ? ..@ grid.index : int [1:10000] 1 2 3 4 5 6 7 8 9 10 ...\n ? ..@ coords???? : num [1:10000, 1:2] -49.5 -48.5 -47.5 -46.5 -45.5 \n-44.5 -43.5 -42.5 -41.5 -40.5 ...\n ? .. ..- attr(*, \"dimnames\")=List of 2\n ? .. .. ..$ : chr [1:10000] \"1\" \"2\" \"3\" \"4\" ...\n ? .. .. ..$ : chr [1:2] \"x\" \"y\"\n ? ..@ bbox?????? : num [1:2, 1:2] -50 -50 50 50\n ? .. ..- attr(*, \"dimnames\")=List of 2\n ? .. .. ..$ : chr [1:2] \"x\" \"y\"\n ? .. .. ..$ : chr [1:2] \"min\" \"max\"\n ? ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slot\n ? .. .. ..@ projargs: chr NA\n\n\nMy variogram\n\n-------------------------\n\n > precip_fit\n ? model????? psill??? range\n1?? Nug? 0.6391787? 0.00000\n2?? Exp 12.0158808 17.39194\n\n\n\nThe command that I am running\n\n(any value of nsim causes the crash below. But oridinary kriging \n*without* the nsim param works fine)\n\n-------------------------\n\nprecip_SGS = krige(formula = precip~1,\n\n ???????????????????? locations = gauges_spdf,\n ???????????????????? newdata = grd,\n ???????????????????? model = precip_fit,\n ???????????????????? nsim = num_sims,\n ???????????????????? nmax = 4)\n\n\n\nThe error output:\n-------------------------\n\ndrawing 10 GLS realisations of beta...\n\n[using conditional Gaussian simulation]\n\n ?*** caught segfault ***\naddress (nil), cause 'memory not mapped'\n\nTraceback:\n ?1: predict.gstat(g, newdata = newdata, block = block, nsim = nsim,???? \nindicators = indicators, na.action = na.action, debug.level = debug.level)\n ?2: predict(g, newdata = newdata, block = block, nsim = nsim, \nindicators = indicators,???? na.action = na.action, debug.level = \ndebug.level)\n ?3: .local(formula, locations, ...)\n ?4: krige(formula = precip ~ 1, locations = gauges_spdf, newdata = \ngrd,???? model = precip_fit, nsim = num_sims, nmax = 4)\n ?5: krige(formula = precip ~ 1, locations = gauges_spdf, newdata = \ngrd,???? model = precip_fit, nsim = num_sims, nmax = 4)\n ?6: CreateRainRealizations(gauges_spdf, num_sims)\n ?7: eval(ei, envir)\n ?8: eval(ei, envir)\n ?9: withVisible(eval(ei, envir))\n10: source(\"~/Studies/Research/synthetic/code/run_synthetic.R\")\n\n\nMy seesion Info:\n-------------------------\n\n > sessionInfo()\n\nR version 3.5.2 (2018-12-20)\nPlatform: x86_64-pc-linux-gnu (64-bit)\nRunning under: Debian GNU/Linux buster/sid\n\nMatrix products: default\nBLAS: /usr/lib/x86_64-linux-gnu/atlas/libblas.so.3.10.3\nLAPACK: /usr/lib/x86_64-linux-gnu/atlas/liblapack.so.3.10.3\n\nlocale:\n ?[1] LC_CTYPE=en_US.UTF-8?????? LC_NUMERIC=C\n ?[3] LC_TIME=en_US.UTF-8??????? LC_COLLATE=en_US.UTF-8\n ?[5] LC_MONETARY=en_US.UTF-8??? LC_MESSAGES=en_US.UTF-8\n ?[7] LC_PAPER=en_US.UTF-8?????? LC_NAME=C\n ?[9] LC_ADDRESS=C?????????????? LC_TELEPHONE=C\n[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C\n\nattached base packages:\n[1] stats???? graphics? grDevices utils???? datasets methods?? base\n\nloaded via a namespace (and not attached):\n[1] compiler_3.5.2\n\n\nMany thanks,\n\nMicha",
+      "body_snippet": "I've run into a problem trying to produce a number of SGS realizations \nusing gstat::krige. (this was definitely working two weeks ago, and now \nI'm getting a seg fault, and I can't figure out why. An",
+      "thread_id": "thread-5f7152a864ee",
+      "thread_depth": 0,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-e2f0f30fca5e",
+      "message_id": "<1207360211.839103.1548948909450@mail.yahoo.com>",
+      "from_name": "Sohrab Abbasnejad",
+      "from_email_hash": "3d24d35a8a362f96732ec8b8b6da4c4e8c6af31d42273ab95125dcf27a9d95b3",
+      "date": "2019-01-31T15:35:09Z",
+      "subject": "[R-sig-Geo] How to mask the area around a raster map with a buffer?",
+      "subject_clean": "How to mask the area around a raster map with a buffer?",
+      "in_reply_to": null,
+      "references": [
+        "<1207360211.839103.1548948909450.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "Dear all,\n\nI have a dataframe with around 90k observations over an area including a continent (a raster object), and a variable of interest whose values I want to visualize on a map. I have used levelplot function from lattice package to visualize the data, and added a map of the continent to the plot as a layer (using a shapefile). So far, so good.\n\nMy area of interest is the continent itself, but my data covers a larger area (including the oceans around the continent). I would like to keep the whole map but mask the ocean around the continent (with a buffer of 100km) and keep the values only for the continent.\n\nI would appreciate it if someone could help me achieve this.\n\nThank you in advance,\nSohrab\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nI have a dataframe with around 90k observations over an area including a continent (a raster object), and a variable of interest whose values I want to visualize on a map. I have used level",
+      "thread_id": "thread-e2f0f30fca5e",
+      "thread_depth": 0,
+      "month": "2019-01"
+    },
+    {
+      "id": "msg-ff7c9f15de0e",
+      "message_id": "<CADvFi5qZvr2yXhhL+GgZYVjjg=2GOtxAk-MekV6yDJTAHgT1nw@mail.gmail.com>",
+      "from_name": "Hugo Costa",
+      "from_email_hash": "6d23f65c6e5ad8d13e9e98421a5a330e794eafa5988ace7833ff56d3acb1c4ee",
+      "date": "2019-01-31T22:25:28Z",
+      "subject": "[R-sig-Geo]  How to mask the area around a raster map with a buffer?",
+      "subject_clean": "How to mask the area around a raster map with a buffer?",
+      "in_reply_to": "<1207360211.839103.1548948909450@mail.yahoo.com>",
+      "references": [
+        "<1207360211.839103.1548948909450.ref@mail.yahoo.com>",
+        "<1207360211.839103.1548948909450@mail.yahoo.com>"
+      ],
+      "body_plain": "Hi Sohrab,\nwithout data it's difficult to give a definitive answer. However, a bit of\nGIS and/or spatial analysis with raster package (e.g. mask function) may\nwork for you.\nCheers\nHugo\n\nSohrab Abbasnejad via R-sig-Geo <r-sig-geo at r-project.org> escreveu no dia\nquinta, 31/01/2019 ?(s) 15:35:\n\n> Dear all,\n>\n> I have a dataframe with around 90k observations over an area including a\n> continent (a raster object), and a variable of interest whose values I want\n> to visualize on a map. I have used levelplot function from lattice package\n> to visualize the data, and added a map of the continent to the plot as a\n> layer (using a shapefile). So far, so good.\n>\n> My area of interest is the continent itself, but my data covers a larger\n> area (including the oceans around the continent). I would like to keep the\n> whole map but mask the ocean around the continent (with a buffer of 100km)\n> and keep the values only for the continent.\n>\n> I would appreciate it if someone could help me achieve this.\n>\n> Thank you in advance,\n> Sohrab\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Sohrab,\nwithout data it's difficult to give a definitive answer. However, a bit of\nGIS and/or spatial analysis with raster package (e.g. mask function) may\nwork for you.\nCheers\nHugo\n\nSohrab Abbasne",
+      "thread_id": "thread-e2f0f30fca5e",
+      "thread_depth": 1,
+      "month": "2019-01"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-94f22c56879f",
+      "subject": "Impacts code after gstslshet",
+      "message_count": 4,
+      "participants": [
+        "Izon, German",
+        "Roger Bivand",
+        "Veron M. Izon"
+      ],
+      "started": "2019-01-04T14:10:00-08:00",
+      "last_reply": "2019-01-05T13:06:43-08:00",
+      "root_message_id": "msg-94f22c56879f"
+    },
+    {
+      "id": "thread-0b09f012710c",
+      "subject": "Parallelization of LMZ.F3GWR.test in spgwr package",
+      "message_count": 6,
+      "participants": [
+        "Diana Gutiérrez",
+        "Erin Hodgess",
+        "Roger Bivand",
+        "Rolf Turner"
+      ],
+      "started": "2019-01-10T14:10:31+00:00",
+      "last_reply": "2019-01-14T12:22:14-07:00",
+      "root_message_id": "msg-0b09f012710c"
+    },
+    {
+      "id": "thread-11ab66956760",
+      "subject": "Harmonized Surface Reflectance Product",
+      "message_count": 1,
+      "participants": [
+        "Salvatore Falanga Bolognesi"
+      ],
+      "started": "2019-01-10T16:10:27+01:00",
+      "last_reply": "2019-01-10T16:10:27+01:00",
+      "root_message_id": "msg-11ab66956760"
+    },
+    {
+      "id": "thread-6f12a95ae9f9",
+      "subject": "Comparing spatio-temporal variations across multiple years",
+      "message_count": 1,
+      "participants": [
+        "Salami Suleiman"
+      ],
+      "started": "2019-01-13T09:46:41+00:00",
+      "last_reply": "2019-01-13T09:46:41+00:00",
+      "root_message_id": "msg-6f12a95ae9f9"
+    },
+    {
+      "id": "thread-ff290ec4a238",
+      "subject": "LandGIS Open Land data service - global stack of environmental layers",
+      "message_count": 2,
+      "participants": [
+        "Tomislav Hengl"
+      ],
+      "started": "2019-01-15T22:55:27+01:00",
+      "last_reply": "2019-01-18T10:40:57+01:00",
+      "root_message_id": "msg-ff290ec4a238"
+    },
+    {
+      "id": "thread-1a5c5a2390d3",
+      "subject": "Simple choropleth using ggplot2",
+      "message_count": 2,
+      "participants": [
+        "Bede-Fazekas Ákos",
+        "Richard Sherman"
+      ],
+      "started": "2019-01-16T18:19:04-08:00",
+      "last_reply": "2019-01-17T09:23:16+01:00",
+      "root_message_id": "msg-1a5c5a2390d3"
+    },
+    {
+      "id": "thread-79a63bc99b7a",
+      "subject": "Can we fit SAR/CAR model for geostatistical data",
+      "message_count": 2,
+      "participants": [
+        "Bedilu Ejigu",
+        "Roger Bivand"
+      ],
+      "started": "2019-01-21T14:49:49+03:00",
+      "last_reply": "2019-01-22T10:49:28+01:00",
+      "root_message_id": "msg-79a63bc99b7a"
+    },
+    {
+      "id": "thread-9ed690d12b75",
+      "subject": "pcfinhom and Kcross.inhom unexpected behavior, heterogeneity or not?",
+      "message_count": 1,
+      "participants": [
+        "Mirela Beloiu"
+      ],
+      "started": "2019-01-25T11:28:36+00:00",
+      "last_reply": "2019-01-25T11:28:36+00:00",
+      "root_message_id": "msg-9ed690d12b75"
+    },
+    {
+      "id": "thread-5f7152a864ee",
+      "subject": "Problem with Sequential Gaussian Simulation",
+      "message_count": 1,
+      "participants": [
+        "Micha Silver"
+      ],
+      "started": "2019-01-29T00:19:47+02:00",
+      "last_reply": "2019-01-29T00:19:47+02:00",
+      "root_message_id": "msg-5f7152a864ee"
+    },
+    {
+      "id": "thread-e2f0f30fca5e",
+      "subject": "How to mask the area around a raster map with a buffer?",
+      "message_count": 2,
+      "participants": [
+        "Hugo Costa",
+        "Sohrab Abbasnejad"
+      ],
+      "started": "2019-01-31T15:35:09+00:00",
+      "last_reply": "2019-01-31T22:25:28+00:00",
+      "root_message_id": "msg-e2f0f30fca5e"
+    }
+  ]
+}

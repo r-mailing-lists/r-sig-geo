@@ -1,0 +1,38 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2011-04",
+  "messages": [
+    {
+      "id": "msg-077bdee238cd",
+      "message_id": "<201104301631.11115.dylan.beaudette@gmail.com>",
+      "from_name": "Dylan Beaudette",
+      "from_email_hash": "c8db3086db71c5566870602fe31cc591fd90ebe11a5037d2f9b7996369565292",
+      "date": "2011-04-30T16:31:11-07:00",
+      "subject": "[R-sig-Geo] spsample taking excessive memory",
+      "subject_clean": "spsample taking excessive memory",
+      "in_reply_to": "<4DBB5CD1.4040609@amnh.org>",
+      "references": [
+        "<4DBB5CD1.4040609@amnh.org>"
+      ],
+      "body_plain": "On Friday, April 29, 2011, Ned Horning wrote:\n> Hi -\n> \n> I am trying to select 1000 random samples from each set of ESRI \n> Shapefile polygons with the same attribute value (attName). This has \n> worked well in the past with other shapefiles. The file I'm using now \n> has 69 relatively simple polygons with 9 unique values for the attribute \n> I'm using to group the polygons. When I run spsample it takes several \n> minutes to collect the samples for some of the unique attribute values \n> and it is using well over 12GB of memory. By the time it start \n> collecting samples from the last set of polygons my swap space is nearly \n> exhausted and the spsample process goes on for hours until I kill it. Do \n> these symptoms sound familiar to anyone? Any ideas about what the \n> problem might be? I pasted my code below.\n> \n> Thanks in advance for any help.\n> \n> Ned\n\nHi,\n\nNot sure if this is the problem, but it could be that dynamically appending to \nthe object 'xy' is causing some of the memory consumption / slowness.\n\nI would suggest iterating over collections of polygons, and saving the results \nto a pre-allocated list object. Then, rbind the elements of the list back \ntogether at the end.\n\nCheers,\nDylan\n\n\n> --\n> shapefile <- '/home/nedhorning/AMNH/Galapagos/quickbird_train_4.shp'\n> numsamps <- 1000\n> attName <- 'type_id'\n> \n> vec <- readShapePoly(shapefile)\n> #\n> # Create vector of unique land cover attribute values\n> allAtt <- slot(vec, \"data\")\n> tabAtt <-table(allAtt[[attName]])\n> uniqueAtt <-as.numeric(names(tabAtt))\n> # Create input data from a Shapefile with training data and the image\n> for (x in 1:length(uniqueAtt)) {\n>    # Create a vector of all date for attName=x\n>    class_data <- vec[vec[[attName]]==uniqueAtt[x],]\n>    # Get random points for the class\n>    classpts <- spsample(class_data, type=\"random\", n=numsamps)\n>    #Append data for all but the first run\n>    if (x == 1) {\n>      xy <- classpts\n>    } else {\n>      xy <- rbind(xy, classpts)\n>    }\n> }\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n\n-- \nDylan E. Beaudette\nUSDA-NRCS Soil Scientist\nCalifornia Soil Resource Lab\nhttp://casoilresource.lawr.ucdavis.edu/",
+      "body_snippet": "On Friday, April 29, 2011, Ned Horning wrote:\n> Hi -\n> \n> I am trying to select 1000 random samples from each set of ESRI \n> Shapefile polygons with the same attribute value (attName). This has \n> wor",
+      "thread_id": "thread-077bdee238cd",
+      "thread_depth": 0,
+      "month": "2011-04"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-077bdee238cd",
+      "subject": "spsample taking excessive memory",
+      "message_count": 1,
+      "participants": [
+        "Dylan Beaudette"
+      ],
+      "started": "2011-04-30T16:31:11-07:00",
+      "last_reply": "2011-04-30T16:31:11-07:00",
+      "root_message_id": "msg-077bdee238cd"
+    }
+  ]
+}

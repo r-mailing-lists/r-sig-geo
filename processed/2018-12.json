@@ -1,0 +1,698 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2018-12",
+  "messages": [
+    {
+      "id": "msg-104bf76450f9",
+      "message_id": "<80913593-5451-109d-4549-b11ea4e1cd52@uni-koeln.de>",
+      "from_name": "Christian Willmes",
+      "from_email_hash": "707eb811b69fdf1e0e08ee713f463d6338ef813f1489bf9174390948dad5e34c",
+      "date": "2018-12-04T16:42:33+01:00",
+      "subject": "[R-sig-Geo] How to test for a layer in GRASS GIS mapset using rgrass7",
+      "subject_clean": "How to test for a layer in GRASS GIS mapset using rgrass7",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\n\nI am not sure if this is the correct list to ask this specific question \nabout executing GRASS GIS from R Scripts.\n\nMy problem is how to determine if a layer exists in the current GRASS \nGIS mapset or not.\n\nDuring my script I use r.mapcalc from GRASS GIS to do some expensive \ncomputation. So I want to store and reuse the resulting layer, wich is \nproduced according to a variable value, in case I need this layer for \nthe specific variable value again.\n\nIf I just omit the overwrite tag it does not work, becasue GRASS GIS \nstops the execution on this event.\n\nError in execGRASS(\"r.mapcalc\", expression = expr) : The command:\nr.mapcalc expression=\"rsl40 = GEBCO_2014_2D_4326 >= -40\"\nproduced an error (1) during execution:\nFEHLER: output map <rsl40> exists. To overwrite, use the --overwrite flag\nError in execGRASS(\"r.mapcalc\", expression = expr) : The command:\nr.mapcalc expression=\"land_NA_1_rsl40? =? if( rsl40 , 1 ,null())\"\nproduced an error (1) during execution:\nFEHLER: output map <land_NA_1_rsl40> exists. To overwrite, use the\n ??????? --overwrite flag\n\nSo, I tryed to check if a certain layer already exists in the mapset to \ntest if the computation needs/can be executed or not.\n\nUsing the following:\n\nif(execGRASS(\"g.findfile\", element=\"cell\", file=lyrname, mapset='\".\"')){\n ??? return(FALSE)\n ? }else{\n ??? return(TRUE)\n ? }\n\nHere it stops, if the layer does not exist:\n\nFehler in execGRASS(\"g.findfile\", element = \"cell\", file = lyrname, \nmapset = \"\\\".\\\"\") :\n ? The command:\ng.findfile element=cell file=rsl40 mapset=\".\"\nproduced an error (1) during execution:\n\n\nDoes anyone know a solution to this?\n\nThank you very much!\n\nBest,\nChristian\n\n\n-- \nDr. Christian Willmes\t\nAG GIS & Fernerkundung      | GIS & RS Group\nGeographisches Institut     | Institute of Geography\nUniversit?t zu K?ln         | University of Cologne\nTel.: +49 (0)221 470 6234\nhttp://www.geographie.uni-koeln.de/14126.html\nhttp://www.sfb806.de\nhttp://crc806db.uni-koeln.de\nhttp://publons.com/a/1316706/\nhttp://orcid.org/0000-0002-5566-6542",
+      "body_snippet": "Hello,\n\nI am not sure if this is the correct list to ask this specific question \nabout executing GRASS GIS from R Scripts.\n\nMy problem is how to determine if a layer exists in the current GRASS \nGIS m",
+      "thread_id": "thread-104bf76450f9",
+      "thread_depth": 0,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-ed247574c66a",
+      "message_id": "<9b100def-346a-0562-d67c-ae70e99ba151@gmail.com>",
+      "from_name": "Bede-Fazekas Ákos",
+      "from_email_hash": "0b574eae59a15ec7af272051636497c3f860e4aaceda823e197420edf3f16009",
+      "date": "2018-12-04T16:50:29+01:00",
+      "subject": "[R-sig-Geo] [R-sig-eco] raster::predict example doesn't work?",
+      "subject_clean": "raster::predict example doesn't work?",
+      "in_reply_to": "<b0da65baed4a49eba15be8ad15b8a53d@hi.no>",
+      "references": [
+        "<b0da65baed4a49eba15be8ad15b8a53d@hi.no>"
+      ],
+      "body_plain": "Dear Genoveva,\n\nAll the examples in the help file of package 'party' \n(https://cran.r-project.org/web/packages/party/party.pdf) use the \nfunction predict() from package 'stats' instead of package 'raster'.\nBut converting the RasterStack to data.frame, changing the column 'red' \nfrom numeric to factor, using stats::predict(..., newdata), and create a \nnew layer of the RasterStack can solve the problem.\nlogo_df <- as.data.frame(logo)\nlogo_df$red <- factor(logo_df$red, levels = levels(v$red))\npc <- stats::predict(m, OOB = TRUE, newdata = logo_df)\nlogo$pc <- pc\n\nHTH,\n?kos Bede-Fazekas\nHungarian Academy of Sciences\n\n\n2018.12.04. 15:52 keltez?ssel, Gonzalez-Mirelis, Genoveva ?rta:\n> Dear list,\n>\n> I posted this question recently on another list so I apologize for any cross-posting. Still no solution.\n>\n>\n> I would like to use the 'predict' function in the 'raster' package in an implementation of species distribution modelling with a couple of factor variables. Furthermore, I would like to set this up exactly as the cforest example listed in the help file. Unfortunately, I cannot get the example to work!\n>\n>\n>\n> # create a RasterStack or RasterBrick with with a set of predictor layers\n>\n>\n>\n> logo <- brick(system.file(\"external/rlogo.grd\", package=\"raster\"))\n>\n> names(logo)\n>\n>\n>\n> # known presence and absence points\n>\n> p <- matrix(c(48, 48, 48, 53, 50, 46, 54, 70, 84, 85, 74, 84, 95, 85,\n>\n>                66, 42, 26, 4, 19, 17, 7, 14, 26, 29, 39, 45, 51, 56, 46, 38, 31,\n>\n>                22, 34, 60, 70, 73, 63, 46, 43, 28), ncol=2)\n>\n>\n>\n> a <- matrix(c(22, 33, 64, 85, 92, 94, 59, 27, 30, 64, 60, 33, 31, 9,\n>\n>                99, 67, 15, 5, 4, 30, 8, 37, 42, 27, 19, 69, 60, 73, 3, 5, 21,\n>\n>                37, 52, 70, 74, 9, 13, 4, 17, 47), ncol=2)\n>\n>\n>\n> # extract values for points\n>\n> xy <- rbind(cbind(1, p), cbind(0, a))\n>\n> v <- data.frame(cbind(pa=xy[,1], extract(logo, xy[,2:3])))\n>\n>\n>\n> # cforest (other Random Forest implementation) example with factors argument\n>\n>\n>\n> v$red <- as.factor(round(v$red/100))\n>\n> logo$red <- round(logo[[1]]/100)\n>\n>\n>\n> library(party)\n>\n> m <- cforest(pa~., control=cforest_unbiased(mtry=3), data=v) f <- list(levels(v$red))\n>\n> names(f) <- 'red'\n>\n> pc <- predict(logo, m, OOB=TRUE, factors=f)\n>\n>\n>\n> # Error in v[cells, ] <- predv :\n>\n> # number of items to replace is not a multiple of replacement length\n>\n>\n>\n> # If you change the order of the first two arguments (I read this somewhere) then the error changes, like this:\n>\n>\n>\n> pc <- predict(m, logo, OOB=TRUE, factors=f)\n>\n>\n>\n> # Error in RET at prediction_weights(newdata = newdata, mincriterion = mincriterion,  :\n>\n> # unused argument (factors = f)\n>\n>\n>\n> # Lastly, if I run the line without the 'factors' argument\n>\n> pc <- predict(m, logo, OOB=TRUE)\n>\n>\n>\n> # Then I get no errors, but I don't understand the result. It's a vector of 40 values (predictions?)\n>\n>\n>\n> I am using Package 'raster' version 2.6-7 in RStudio 1.1.453, running off a server. I have tried the on several other computers, though, and the error persisted.\n>\n>\n>\n> Many thanks for any help,\n>\n>\n>\n> Genoveva\n>\n> Genoveva Gonzalez Mirelis, Scientist\n> Institute of Marine Research\n> Nordnesgaten 50\n> 5005 Bergen, Norway\n> Phone number +47 55238510\n>\n>\n> Genoveva Gonzalez Mirelis, Scientist\n> Institute of Marine Research\n> Nordnesgaten 50\n> 5005 Bergen, Norway\n> Phone number +47 55238510\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-ecology mailing list\n> R-sig-ecology at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-ecology\n>",
+      "body_snippet": "Dear Genoveva,\n\nAll the examples in the help file of package 'party' \n(https://cran.r-project.org/web/packages/party/party.pdf) use the \nfunction predict() from package 'stats' instead of package 'ras",
+      "thread_id": "thread-ed247574c66a",
+      "thread_depth": 0,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-9d4c2884da7b",
+      "message_id": "<alpine.LNX.2.20.1812041023060.32236@salmo.appl-ecosys.com>",
+      "from_name": "Rich Shepard",
+      "from_email_hash": "cdd04ae48e52434265f6225a63834dc2bb5ec9524def50473e8d67344874db70",
+      "date": "2018-12-04T10:25:34-08:00",
+      "subject": "[R-sig-Geo] How to test for a layer in GRASS GIS mapset using rgrass7",
+      "subject_clean": "How to test for a layer in GRASS GIS mapset using rgrass7",
+      "in_reply_to": "<80913593-5451-109d-4549-b11ea4e1cd52@uni-koeln.de>",
+      "references": [
+        "<80913593-5451-109d-4549-b11ea4e1cd52@uni-koeln.de>"
+      ],
+      "body_plain": "On Tue, 4 Dec 2018, Christian Willmes wrote:\n\n> During my script I use r.mapcalc from GRASS GIS to do some expensive\n> computation. So I want to store and reuse the resulting layer, wich is\n> produced according to a variable value, in case I need this layer for the\n> specific variable value again.\n>\n> If I just omit the overwrite tag it does not work, becasue GRASS GIS stops \n> the execution on this event.\n\nChristian,\n\n   Yes, grass wants the --o flag to overwrite an existing file. You can learn\nwhat raster maps exist using 'g.list type=rast | grep <mapname>'.\n\nHTH,\n\nRich",
+      "body_snippet": "On Tue, 4 Dec 2018, Christian Willmes wrote:\n\n> During my script I use r.mapcalc from GRASS GIS to do some expensive\n> computation. So I want to store and reuse the resulting layer, wich is\n> produced",
+      "thread_id": "thread-104bf76450f9",
+      "thread_depth": 1,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-0f51401ba1ac",
+      "message_id": "<alpine.LFD.2.21.1812042048020.5400@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-12-04T20:55:08+01:00",
+      "subject": "[R-sig-Geo] How to test for a layer in GRASS GIS mapset using rgrass7",
+      "subject_clean": "How to test for a layer in GRASS GIS mapset using rgrass7",
+      "in_reply_to": "<80913593-5451-109d-4549-b11ea4e1cd52@uni-koeln.de>",
+      "references": [
+        "<80913593-5451-109d-4549-b11ea4e1cd52@uni-koeln.de>"
+      ],
+      "body_plain": "On Tue, 4 Dec 2018, Christian Willmes wrote:\n\n> Hello,\n>\n> I am not sure if this is the correct list to ask this specific question about \n> executing GRASS GIS from R Scripts.\n>\n> My problem is how to determine if a layer exists in the current GRASS GIS \n> mapset or not.\n>\n> During my script I use r.mapcalc from GRASS GIS to do some expensive \n> computation. So I want to store and reuse the resulting layer, wich is \n> produced according to a variable value, in case I need this layer for the \n> specific variable value again.\n>\n> If I just omit the overwrite tag it does not work, becasue GRASS GIS stops \n> the execution on this event.\n>\n> Error in execGRASS(\"r.mapcalc\", expression = expr) : The command:\n> r.mapcalc expression=\"rsl40 = GEBCO_2014_2D_4326 >= -40\"\n> produced an error (1) during execution:\n> FEHLER: output map <rsl40> exists. To overwrite, use the --overwrite flag\n> Error in execGRASS(\"r.mapcalc\", expression = expr) : The command:\n> r.mapcalc expression=\"land_NA_1_rsl40? =? if( rsl40 , 1 ,null())\"\n> produced an error (1) during execution:\n> FEHLER: output map <land_NA_1_rsl40> exists. To overwrite, use the\n> ??????? --overwrite flag\n>\n> So, I tryed to check if a certain layer already exists in the mapset to test \n> if the computation needs/can be executed or not.\n>\n> Using the following:\n>\n> if(execGRASS(\"g.findfile\", element=\"cell\", file=lyrname, mapset='\".\"')){\n> ??? return(FALSE)\n> ? }else{\n> ??? return(TRUE)\n> ? }\n\nYou need to wrap the test in try() if it may not succeed (in nc):\n\noo <- try(execGRASS(\"g.findfile\", element=\"cell\", file=\"slope\",\n       mapset=\"'.'\", intern=TRUE), silent=TRUE)\nifelse(class(oo) == \"try-error\", FALSE, TRUE)\n\nand use intern to capture the output if the file exists. However, you can, \nas Rich says, simply overwrite existing files if you wish.\n\n>\n> Here it stops, if the layer does not exist:\n>\n\nNote that your R script does not stop, simply g.findfile has returned 1 \nrather than 0 on exit.\n\nHope this clarifies,\n\nRoger\n\n\n> Fehler in execGRASS(\"g.findfile\", element = \"cell\", file = lyrname, mapset = \n> \"\\\".\\\"\") :\n> ? The command:\n> g.findfile element=cell file=rsl40 mapset=\".\"\n> produced an error (1) during execution:\n>\n>\n> Does anyone know a solution to this?\n>\n> Thank you very much!\n>\n> Best,\n> Christian\n>\n>\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Tue, 4 Dec 2018, Christian Willmes wrote:\n\n> Hello,\n>\n> I am not sure if this is the correct list to ask this specific question about \n> executing GRASS GIS from R Scripts.\n>\n> My problem is how to",
+      "thread_id": "thread-104bf76450f9",
+      "thread_depth": 1,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-176e71354d0b",
+      "message_id": "<adaaab4e-ba11-37b9-94a8-d9b7c7f85c32@gmail.com>",
+      "from_name": "Micha Silver",
+      "from_email_hash": "5fe6809de20af22e45085c2ed0fc0934cb538e511b87fc831cf3d95d12a5e50e",
+      "date": "2018-12-04T23:42:50+02:00",
+      "subject": "[R-sig-Geo] How to test for a layer in GRASS GIS mapset using rgrass7",
+      "subject_clean": "How to test for a layer in GRASS GIS mapset using rgrass7",
+      "in_reply_to": "<80913593-5451-109d-4549-b11ea4e1cd52@uni-koeln.de>",
+      "references": [
+        "<80913593-5451-109d-4549-b11ea4e1cd52@uni-koeln.de>"
+      ],
+      "body_plain": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20181204/06b39917/attachment.html>",
+      "body_snippet": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20181204/06b39917/attachment.html>",
+      "thread_id": "thread-104bf76450f9",
+      "thread_depth": 1,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-5e214b9bb453",
+      "message_id": "<05a80563-7a1c-2965-950c-afb363ce1f68@uni-koeln.de>",
+      "from_name": "Christian Willmes",
+      "from_email_hash": "707eb811b69fdf1e0e08ee713f463d6338ef813f1489bf9174390948dad5e34c",
+      "date": "2018-12-05T09:24:20+01:00",
+      "subject": "[R-sig-Geo] How to test for a layer in GRASS GIS mapset using rgrass7",
+      "subject_clean": "How to test for a layer in GRASS GIS mapset using rgrass7",
+      "in_reply_to": "<alpine.LFD.2.21.1812042048020.5400@reclus.nhh.no>",
+      "references": [
+        "<80913593-5451-109d-4549-b11ea4e1cd52@uni-koeln.de>",
+        "<alpine.LFD.2.21.1812042048020.5400@reclus.nhh.no>"
+      ],
+      "body_plain": "Am 04.12.18 um 20:55 schrieb Roger Bivand:\n> You need to wrap the test in try() if it may not succeed (in nc):\n>\n> oo <- try(execGRASS(\"g.findfile\", element=\"cell\", file=\"slope\",\n> ????? mapset=\"'.'\", intern=TRUE), silent=TRUE)\n> ifelse(class(oo) == \"try-error\", FALSE, TRUE)\n>\n> and use intern to capture the output if the file exists.\n\nThank you very much, this was exactly what solved the issue.\n\nBest regards,\nChristian\n\n\n\n-- \nDr. Christian Willmes\t\nAG GIS & Fernerkundung      | GIS & RS Group\nGeographisches Institut     | Institute of Geography\nUniversit?t zu K?ln         | University of Cologne\nTel.: +49 (0)221 470 6234\nhttp://www.geographie.uni-koeln.de/14126.html\nhttp://www.sfb806.de\nhttp://crc806db.uni-koeln.de\nhttp://publons.com/a/1316706/\nhttp://orcid.org/0000-0002-5566-6542",
+      "body_snippet": "Am 04.12.18 um 20:55 schrieb Roger Bivand:\n> You need to wrap the test in try() if it may not succeed (in nc):\n>\n> oo <- try(execGRASS(\"g.findfile\", element=\"cell\", file=\"slope\",\n> ????? mapset=\"'.'\",",
+      "thread_id": "thread-104bf76450f9",
+      "thread_depth": 2,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-14aefeadd290",
+      "message_id": "<e6f6bae646a84cc2afdc91c9ed522bbb@hi.no>",
+      "from_name": "Gonzalez-Mirelis, Genoveva",
+      "from_email_hash": "9e3b84980369aaa1444ca0852eab6e5f4a4baf0e198c531afd92b7f0a8a9eb8a",
+      "date": "2018-12-05T09:06:29Z",
+      "subject": "[R-sig-Geo] [R-sig-eco] raster::predict example doesn't work?",
+      "subject_clean": "raster::predict example doesn't work?",
+      "in_reply_to": "<9b100def-346a-0562-d67c-ae70e99ba151@gmail.com>",
+      "references": [
+        "<b0da65baed4a49eba15be8ad15b8a53d@hi.no>",
+        "<9b100def-346a-0562-d67c-ae70e99ba151@gmail.com>"
+      ],
+      "body_plain": "Thank you ?kos, your solution does work. One caveat, though: the 'predict' function from 'stats' returns a matrix, whereas that from the 'raster' package returns a raster object of identical extent and resolution as the supplied predictor stack, which is very handy. If no other solutions arise I will just convert that matrix to a raster as follows:\n\nr <- raster(ncol=ncol(logo), nrow=nrow(logo))\nextent(r) <- extent(logo)\nvalues(r) <- pc\n\n\n-----Original Message-----\nFrom: R-sig-ecology <r-sig-ecology-bounces at r-project.org> On Behalf Of Bede-Fazekas ?kos\nSent: 4. desember 2018 16:50\nTo: r-sig-ecology at r-project.org; R-sig-geo <r-sig-geo at r-project.org>\nSubject: Re: [R-sig-eco] raster::predict example doesn't work?\n\nDear Genoveva,\n\nAll the examples in the help file of package 'party' \n(https://cran.r-project.org/web/packages/party/party.pdf) use the function predict() from package 'stats' instead of package 'raster'.\nBut converting the RasterStack to data.frame, changing the column 'red' \nfrom numeric to factor, using stats::predict(..., newdata), and create a new layer of the RasterStack can solve the problem.\nlogo_df <- as.data.frame(logo)\nlogo_df$red <- factor(logo_df$red, levels = levels(v$red)) pc <- stats::predict(m, OOB = TRUE, newdata = logo_df) logo$pc <- pc\n\nHTH,\n?kos Bede-Fazekas\nHungarian Academy of Sciences\n\n\n2018.12.04. 15:52 keltez?ssel, Gonzalez-Mirelis, Genoveva ?rta:\n> Dear list,\n>\n> I posted this question recently on another list so I apologize for any cross-posting. Still no solution.\n>\n>\n> I would like to use the 'predict' function in the 'raster' package in an implementation of species distribution modelling with a couple of factor variables. Furthermore, I would like to set this up exactly as the cforest example listed in the help file. Unfortunately, I cannot get the example to work!\n>\n>\n>\n> # create a RasterStack or RasterBrick with with a set of predictor \n> layers\n>\n>\n>\n> logo <- brick(system.file(\"external/rlogo.grd\", package=\"raster\"))\n>\n> names(logo)\n>\n>\n>\n> # known presence and absence points\n>\n> p <- matrix(c(48, 48, 48, 53, 50, 46, 54, 70, 84, 85, 74, 84, 95, 85,\n>\n>                66, 42, 26, 4, 19, 17, 7, 14, 26, 29, 39, 45, 51, 56, \n> 46, 38, 31,\n>\n>                22, 34, 60, 70, 73, 63, 46, 43, 28), ncol=2)\n>\n>\n>\n> a <- matrix(c(22, 33, 64, 85, 92, 94, 59, 27, 30, 64, 60, 33, 31, 9,\n>\n>                99, 67, 15, 5, 4, 30, 8, 37, 42, 27, 19, 69, 60, 73, 3, \n> 5, 21,\n>\n>                37, 52, 70, 74, 9, 13, 4, 17, 47), ncol=2)\n>\n>\n>\n> # extract values for points\n>\n> xy <- rbind(cbind(1, p), cbind(0, a))\n>\n> v <- data.frame(cbind(pa=xy[,1], extract(logo, xy[,2:3])))\n>\n>\n>\n> # cforest (other Random Forest implementation) example with factors \n> argument\n>\n>\n>\n> v$red <- as.factor(round(v$red/100))\n>\n> logo$red <- round(logo[[1]]/100)\n>\n>\n>\n> library(party)\n>\n> m <- cforest(pa~., control=cforest_unbiased(mtry=3), data=v) f <- \n> list(levels(v$red))\n>\n> names(f) <- 'red'\n>\n> pc <- predict(logo, m, OOB=TRUE, factors=f)\n>\n>\n>\n> # Error in v[cells, ] <- predv :\n>\n> # number of items to replace is not a multiple of replacement length\n>\n>\n>\n> # If you change the order of the first two arguments (I read this somewhere) then the error changes, like this:\n>\n>\n>\n> pc <- predict(m, logo, OOB=TRUE, factors=f)\n>\n>\n>\n> # Error in RET at prediction_weights(newdata = newdata, mincriterion = mincriterion,  :\n>\n> # unused argument (factors = f)\n>\n>\n>\n> # Lastly, if I run the line without the 'factors' argument\n>\n> pc <- predict(m, logo, OOB=TRUE)\n>\n>\n>\n> # Then I get no errors, but I don't understand the result. It's a \n> vector of 40 values (predictions?)\n>\n>\n>\n> I am using Package 'raster' version 2.6-7 in RStudio 1.1.453, running off a server. I have tried the on several other computers, though, and the error persisted.\n>\n>\n>\n> Many thanks for any help,\n>\n>\n>\n> Genoveva\n>\n> Genoveva Gonzalez Mirelis, Scientist\n> Institute of Marine Research\n> Nordnesgaten 50\n> 5005 Bergen, Norway\n> Phone number +47 55238510\n>\n>\n> Genoveva Gonzalez Mirelis, Scientist\n> Institute of Marine Research\n> Nordnesgaten 50\n> 5005 Bergen, Norway\n> Phone number +47 55238510\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-ecology mailing list\n> R-sig-ecology at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-ecology\n>\n\n_______________________________________________\nR-sig-ecology mailing list\nR-sig-ecology at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-ecology",
+      "body_snippet": "Thank you ?kos, your solution does work. One caveat, though: the 'predict' function from 'stats' returns a matrix, whereas that from the 'raster' package returns a raster object of identical extent an",
+      "thread_id": "thread-ed247574c66a",
+      "thread_depth": 1,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-906f4d6ddb21",
+      "message_id": "<697c40e7-2d38-f90f-cd79-9f2cade54598@uni-koeln.de>",
+      "from_name": "Christian Willmes",
+      "from_email_hash": "707eb811b69fdf1e0e08ee713f463d6338ef813f1489bf9174390948dad5e34c",
+      "date": "2018-12-06T09:37:29+01:00",
+      "subject": "[R-sig-Geo] clip a raster layer to a mask layer using raster algebra in R?",
+      "subject_clean": "clip a raster layer to a mask layer using raster algebra in R?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\n\nthis should be normally a very basic simple one-liner, but I can't get \nmy head around it. I only find solutions for cliping a raster against a \nvector, but none for clipping a raster against a raster mask.\n\nI want to clip a layer to a mask. In GRASS GIS r.mapcalc the syntax is:\n\nresult = if(RSLmask, gebco, null())\n\nThis clips the GEBCO dataset to the extent of the given raster mask \n'rslmask'. The result raster has heigt values within the raster mask \nextent, the rest of the raster layer has NULL or NA values.\n\nIn R I did the following, but it does not work as expected:\n\ngebco <- raster(gebco2014) #load raster\n\nRSLmask <- gebco >= 0? #create mask layer\n\nRSL <- ifelse(RSLmask, 1, NA)\n\nThe last command gives an error about vector type 'S4'?!\n\n >In is.na(test) :\n ? >is.na() auf nicht-(Liste oder Vektor) des Typs 'S4' angewendet\n\nSo, in short: what is the R way to simply clip a raster to a raster mask?\n\nThanks and best regards,\nChristian\n\nPS: If found many solutions for clipping a raster to a vector polygon, \nbut this is not what I want.\n\n-- \nDr. Christian Willmes\t\nAG GIS & Fernerkundung      | GIS & RS Group\nGeographisches Institut     | Institute of Geography\nUniversit?t zu K?ln         | University of Cologne\nTel.: +49 (0)221 470 6234\nhttp://www.geographie.uni-koeln.de/14126.html\nhttp://www.sfb806.de\nhttp://crc806db.uni-koeln.de\nhttp://publons.com/a/1316706/\nhttp://orcid.org/0000-0002-5566-6542",
+      "body_snippet": "Hello,\n\nthis should be normally a very basic simple one-liner, but I can't get \nmy head around it. I only find solutions for cliping a raster against a \nvector, but none for clipping a raster against ",
+      "thread_id": "thread-906f4d6ddb21",
+      "thread_depth": 0,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-3c25ae1a7fb8",
+      "message_id": "<900eb148-37f5-3389-8e5a-5147d65bbf05@uni-koeln.de>",
+      "from_name": "Christian Willmes",
+      "from_email_hash": "707eb811b69fdf1e0e08ee713f463d6338ef813f1489bf9174390948dad5e34c",
+      "date": "2018-12-06T09:40:14+01:00",
+      "subject": "[R-sig-Geo] clip a raster layer to a mask layer using raster algebra in R?",
+      "subject_clean": "clip a raster layer to a mask layer using raster algebra in R?",
+      "in_reply_to": "<697c40e7-2d38-f90f-cd79-9f2cade54598@uni-koeln.de>",
+      "references": [
+        "<697c40e7-2d38-f90f-cd79-9f2cade54598@uni-koeln.de>"
+      ],
+      "body_plain": "Sorry, I had an error in the main command.\n\nIt should be:\n\ngebco_clipped <- ifelse(RSLmask, gebco, NA)\n\nBut it still gives the same error.\n\nBest,\nChristian\n\nAm 06.12.18 um 09:37 schrieb Christian Willmes:\n> Hello,\n>\n> this should be normally a very basic simple one-liner, but I can't get \n> my head around it. I only find solutions for cliping a raster against \n> a vector, but none for clipping a raster against a raster mask.\n>\n> I want to clip a layer to a mask. In GRASS GIS r.mapcalc the syntax is:\n>\n> result = if(RSLmask, gebco, null())\n>\n> This clips the GEBCO dataset to the extent of the given raster mask \n> 'rslmask'. The result raster has heigt values within the raster mask \n> extent, the rest of the raster layer has NULL or NA values.\n>\n> In R I did the following, but it does not work as expected:\n>\n> gebco <- raster(gebco2014) #load raster\n>\n> RSLmask <- gebco >= 0? #create mask layer\n>\n> RSL <- ifelse(RSLmask, 1, NA)\n>\n> The last command gives an error about vector type 'S4'?!\n>\n> >In is.na(test) :\n> ? >is.na() auf nicht-(Liste oder Vektor) des Typs 'S4' angewendet\n>\n> So, in short: what is the R way to simply clip a raster to a raster mask?\n>\n> Thanks and best regards,\n> Christian\n>\n> PS: If found many solutions for clipping a raster to a vector polygon, \n> but this is not what I want.\n>\n-- \nDr. Christian Willmes\t\nAG GIS & Fernerkundung      | GIS & RS Group\nGeographisches Institut     | Institute of Geography\nUniversit?t zu K?ln         | University of Cologne\nTel.: +49 (0)221 470 6234\nhttp://www.geographie.uni-koeln.de/14126.html\nhttp://www.sfb806.de\nhttp://crc806db.uni-koeln.de\nhttp://publons.com/a/1316706/\nhttp://orcid.org/0000-0002-5566-6542",
+      "body_snippet": "Sorry, I had an error in the main command.\n\nIt should be:\n\ngebco_clipped <- ifelse(RSLmask, gebco, NA)\n\nBut it still gives the same error.\n\nBest,\nChristian\n\nAm 06.12.18 um 09:37 schrieb Christian Will",
+      "thread_id": "thread-906f4d6ddb21",
+      "thread_depth": 1,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-70c0eb7f764f",
+      "message_id": "<cbbe935a-85fd-bf53-5f24-b2a54f083672@gmail.com>",
+      "from_name": "Bede-Fazekas Ákos",
+      "from_email_hash": "0b574eae59a15ec7af272051636497c3f860e4aaceda823e197420edf3f16009",
+      "date": "2018-12-06T10:59:37+01:00",
+      "subject": "[R-sig-Geo] clip a raster layer to a mask layer using raster algebra in R?",
+      "subject_clean": "clip a raster layer to a mask layer using raster algebra in R?",
+      "in_reply_to": "<900eb148-37f5-3389-8e5a-5147d65bbf05@uni-koeln.de>",
+      "references": [
+        "<697c40e7-2d38-f90f-cd79-9f2cade54598@uni-koeln.de>",
+        "<900eb148-37f5-3389-8e5a-5147d65bbf05@uni-koeln.de>"
+      ],
+      "body_plain": "Dear Christian,\nraster::mask() and raster::crop() may solve your problem.\nhttps://www.rdocumentation.org/packages/raster/versions/2.8-4/topics/mask\nhttps://www.rdocumentation.org/packages/raster/versions/2.8-4/topics/crop\n\nHTH,\n?kos Bede-Fazekas\nHungarian Academy of Sciences\n\n2018.12.06. 9:40 keltez?ssel, Christian Willmes ?rta:\n> Sorry, I had an error in the main command.\n>\n> It should be:\n>\n> gebco_clipped <- ifelse(RSLmask, gebco, NA)\n>\n> But it still gives the same error.\n>\n> Best,\n> Christian\n>\n> Am 06.12.18 um 09:37 schrieb Christian Willmes:\n>> Hello,\n>>\n>> this should be normally a very basic simple one-liner, but I can't \n>> get my head around it. I only find solutions for cliping a raster \n>> against a vector, but none for clipping a raster against a raster mask.\n>>\n>> I want to clip a layer to a mask. In GRASS GIS r.mapcalc the syntax is:\n>>\n>> result = if(RSLmask, gebco, null())\n>>\n>> This clips the GEBCO dataset to the extent of the given raster mask \n>> 'rslmask'. The result raster has heigt values within the raster mask \n>> extent, the rest of the raster layer has NULL or NA values.\n>>\n>> In R I did the following, but it does not work as expected:\n>>\n>> gebco <- raster(gebco2014) #load raster\n>>\n>> RSLmask <- gebco >= 0? #create mask layer\n>>\n>> RSL <- ifelse(RSLmask, 1, NA)\n>>\n>> The last command gives an error about vector type 'S4'?!\n>>\n>> >In is.na(test) :\n>> ? >is.na() auf nicht-(Liste oder Vektor) des Typs 'S4' angewendet\n>>\n>> So, in short: what is the R way to simply clip a raster to a raster \n>> mask?\n>>\n>> Thanks and best regards,\n>> Christian\n>>\n>> PS: If found many solutions for clipping a raster to a vector \n>> polygon, but this is not what I want.\n>>",
+      "body_snippet": "Dear Christian,\nraster::mask() and raster::crop() may solve your problem.\nhttps://www.rdocumentation.org/packages/raster/versions/2.8-4/topics/mask\nhttps://www.rdocumentation.org/packages/raster/versi",
+      "thread_id": "thread-906f4d6ddb21",
+      "thread_depth": 2,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-4170de54041a",
+      "message_id": "<3f715b25-8f56-2c6a-8336-8a3aac5fad95@uni-koeln.de>",
+      "from_name": "Christian Willmes",
+      "from_email_hash": "707eb811b69fdf1e0e08ee713f463d6338ef813f1489bf9174390948dad5e34c",
+      "date": "2018-12-06T13:33:29+01:00",
+      "subject": "[R-sig-Geo] clip a raster layer to a mask layer using raster algebra in R?",
+      "subject_clean": "clip a raster layer to a mask layer using raster algebra in R?",
+      "in_reply_to": "<cbbe935a-85fd-bf53-5f24-b2a54f083672@gmail.com>",
+      "references": [
+        "<697c40e7-2d38-f90f-cd79-9f2cade54598@uni-koeln.de>",
+        "<900eb148-37f5-3389-8e5a-5147d65bbf05@uni-koeln.de>",
+        "<cbbe935a-85fd-bf53-5f24-b2a54f083672@gmail.com>"
+      ],
+      "body_plain": "Thank you.\n\nIt seems that both approaches need an additional, very expensive \ncomputation (takes several minutes on a i7-4790 with SSD) to create the \nmask or the extent, and in my case the mask computed by this command \nbelow is already what I want. Only values above a given RSL (Sealevel) \nheight. The rest of the raster needs to be NA or NULL.\n\n >gebco_rsl <- gebco\n >gebco_rsl[gebco < rsl] <- NA\n\n....\n\nThe easy (and faster) approach for creating a mask:\n\n >gebco_mask <- gebco >= rsl\n\nwrites 0's into the remaining cells, which does not work for me (and the \nmask() function).\n\nOn the other hand, the GRASS mapcalc computation (given below) takes \nless than a minute on that same raster.\n\nI wanted to re-implement the whole analysis in R for better/easier \nreproducibility, but now I think I will stick to R + GRASS GIS.\n\nIf anyone knows a faster approach for creating a mask in R, please let \nme know.\n\nThanks and best regards,\nChristian\n\nAm 06.12.18 um 10:59 schrieb Bede-Fazekas ?kos:\n> Dear Christian,\n> raster::mask() and raster::crop() may solve your problem.\n> https://www.rdocumentation.org/packages/raster/versions/2.8-4/topics/mask\n> https://www.rdocumentation.org/packages/raster/versions/2.8-4/topics/crop\n>\n> HTH,\n> ?kos Bede-Fazekas\n> Hungarian Academy of Sciences\n>\n> 2018.12.06. 9:40 keltez?ssel, Christian Willmes ?rta:\n>> Sorry, I had an error in the main command.\n>>\n>> It should be:\n>>\n>> gebco_clipped <- ifelse(RSLmask, gebco, NA)\n>>\n>> But it still gives the same error.\n>>\n>> Best,\n>> Christian\n>>\n>> Am 06.12.18 um 09:37 schrieb Christian Willmes:\n>>> Hello,\n>>>\n>>> this should be normally a very basic simple one-liner, but I can't \n>>> get my head around it. I only find solutions for cliping a raster \n>>> against a vector, but none for clipping a raster against a raster mask.\n>>>\n>>> I want to clip a layer to a mask. In GRASS GIS r.mapcalc the syntax is:\n>>>\n>>> result = if(RSLmask, gebco, null())\n>>>\n>>> This clips the GEBCO dataset to the extent of the given raster mask \n>>> 'rslmask'. The result raster has heigt values within the raster mask \n>>> extent, the rest of the raster layer has NULL or NA values.\n>>>\n>>> In R I did the following, but it does not work as expected:\n>>>\n>>> gebco <- raster(gebco2014) #load raster\n>>>\n>>> RSLmask <- gebco >= 0? #create mask layer\n>>>\n>>> RSL <- ifelse(RSLmask, 1, NA)\n>>>\n>>> The last command gives an error about vector type 'S4'?!\n>>>\n>>> >In is.na(test) :\n>>> ? >is.na() auf nicht-(Liste oder Vektor) des Typs 'S4' angewendet\n>>>\n>>> So, in short: what is the R way to simply clip a raster to a raster \n>>> mask?\n>>>\n>>> Thanks and best regards,\n>>> Christian\n>>>\n>>> PS: If found many solutions for clipping a raster to a vector \n>>> polygon, but this is not what I want.\n>>>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nDr. Christian Willmes\t\nAG GIS & Fernerkundung      | GIS & RS Group\nGeographisches Institut     | Institute of Geography\nUniversit?t zu K?ln         | University of Cologne\nTel.: +49 (0)221 470 6234\nhttp://www.geographie.uni-koeln.de/14126.html\nhttp://www.sfb806.de\nhttp://crc806db.uni-koeln.de\nhttp://publons.com/a/1316706/\nhttp://orcid.org/0000-0002-5566-6542",
+      "body_snippet": "Thank you.\n\nIt seems that both approaches need an additional, very expensive \ncomputation (takes several minutes on a i7-4790 with SSD) to create the \nmask or the extent, and in my case the mask compu",
+      "thread_id": "thread-906f4d6ddb21",
+      "thread_depth": 3,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-fc1fe17f3cb2",
+      "message_id": "<CADvFi5pLJx_xBWAT6jOBkp9Um+OVn2P+N8BAjeexfr+hQKrvGw@mail.gmail.com>",
+      "from_name": "Hugo Costa",
+      "from_email_hash": "4c64adf5443e1d2e49325008067c38549c59ed94523300817f82fea6c728309e",
+      "date": "2018-12-06T14:22:54+01:00",
+      "subject": "[R-sig-Geo] clip a raster layer to a mask layer using raster algebra in R?",
+      "subject_clean": "clip a raster layer to a mask layer using raster algebra in R?",
+      "in_reply_to": "<3f715b25-8f56-2c6a-8336-8a3aac5fad95@uni-koeln.de>",
+      "references": [
+        "<697c40e7-2d38-f90f-cd79-9f2cade54598@uni-koeln.de>",
+        "<900eb148-37f5-3389-8e5a-5147d65bbf05@uni-koeln.de>",
+        "<cbbe935a-85fd-bf53-5f24-b2a54f083672@gmail.com>",
+        "<3f715b25-8f56-2c6a-8336-8a3aac5fad95@uni-koeln.de>"
+      ],
+      "body_plain": "Possibly there are alternatives, like exploring raster::overlay together\nwith raster:clusterR\nHugo\n\nChristian Willmes <c.willmes at uni-koeln.de> escreveu no dia quinta,\n6/12/2018 ?(s) 13:34:\n\n> Thank you.\n>\n> It seems that both approaches need an additional, very expensive\n> computation (takes several minutes on a i7-4790 with SSD) to create the\n> mask or the extent, and in my case the mask computed by this command\n> below is already what I want. Only values above a given RSL (Sealevel)\n> height. The rest of the raster needs to be NA or NULL.\n>\n>  >gebco_rsl <- gebco\n>  >gebco_rsl[gebco < rsl] <- NA\n>\n> ....\n>\n> The easy (and faster) approach for creating a mask:\n>\n>  >gebco_mask <- gebco >= rsl\n>\n> writes 0's into the remaining cells, which does not work for me (and the\n> mask() function).\n>\n> On the other hand, the GRASS mapcalc computation (given below) takes\n> less than a minute on that same raster.\n>\n> I wanted to re-implement the whole analysis in R for better/easier\n> reproducibility, but now I think I will stick to R + GRASS GIS.\n>\n> If anyone knows a faster approach for creating a mask in R, please let\n> me know.\n>\n> Thanks and best regards,\n> Christian\n>\n> Am 06.12.18 um 10:59 schrieb Bede-Fazekas ?kos:\n> > Dear Christian,\n> > raster::mask() and raster::crop() may solve your problem.\n> >\n> https://www.rdocumentation.org/packages/raster/versions/2.8-4/topics/mask\n> >\n> https://www.rdocumentation.org/packages/raster/versions/2.8-4/topics/crop\n> >\n> > HTH,\n> > ?kos Bede-Fazekas\n> > Hungarian Academy of Sciences\n> >\n> > 2018.12.06. 9:40 keltez?ssel, Christian Willmes ?rta:\n> >> Sorry, I had an error in the main command.\n> >>\n> >> It should be:\n> >>\n> >> gebco_clipped <- ifelse(RSLmask, gebco, NA)\n> >>\n> >> But it still gives the same error.\n> >>\n> >> Best,\n> >> Christian\n> >>\n> >> Am 06.12.18 um 09:37 schrieb Christian Willmes:\n> >>> Hello,\n> >>>\n> >>> this should be normally a very basic simple one-liner, but I can't\n> >>> get my head around it. I only find solutions for cliping a raster\n> >>> against a vector, but none for clipping a raster against a raster mask.\n> >>>\n> >>> I want to clip a layer to a mask. In GRASS GIS r.mapcalc the syntax is:\n> >>>\n> >>> result = if(RSLmask, gebco, null())\n> >>>\n> >>> This clips the GEBCO dataset to the extent of the given raster mask\n> >>> 'rslmask'. The result raster has heigt values within the raster mask\n> >>> extent, the rest of the raster layer has NULL or NA values.\n> >>>\n> >>> In R I did the following, but it does not work as expected:\n> >>>\n> >>> gebco <- raster(gebco2014) #load raster\n> >>>\n> >>> RSLmask <- gebco >= 0  #create mask layer\n> >>>\n> >>> RSL <- ifelse(RSLmask, 1, NA)\n> >>>\n> >>> The last command gives an error about vector type 'S4'?!\n> >>>\n> >>> >In is.na(test) :\n> >>>   >is.na() auf nicht-(Liste oder Vektor) des Typs 'S4' angewendet\n> >>>\n> >>> So, in short: what is the R way to simply clip a raster to a raster\n> >>> mask?\n> >>>\n> >>> Thanks and best regards,\n> >>> Christian\n> >>>\n> >>> PS: If found many solutions for clipping a raster to a vector\n> >>> polygon, but this is not what I want.\n> >>>\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> --\n> Dr. Christian Willmes\n> AG GIS & Fernerkundung      | GIS & RS Group\n> Geographisches Institut     | Institute of Geography\n> Universit?t zu K?ln         | University of Cologne\n> Tel.: +49 (0)221 470 6234\n> http://www.geographie.uni-koeln.de/14126.html\n> http://www.sfb806.de\n> http://crc806db.uni-koeln.de\n> http://publons.com/a/1316706/\n> http://orcid.org/0000-0002-5566-6542\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Possibly there are alternatives, like exploring raster::overlay together\nwith raster:clusterR\nHugo\n\nChristian Willmes <c.willmes at uni-koeln.de> escreveu no dia quinta,\n6/12/2018 ?(s) 13:34:\n\n> Thank",
+      "thread_id": "thread-906f4d6ddb21",
+      "thread_depth": 4,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-e29b614042c9",
+      "message_id": "<CALG31BUU7fm=v_eOnEJw8L0y2xgX4LTKePpPg3QQMDB0w5ocig@mail.gmail.com>",
+      "from_name": "obrl soil",
+      "from_email_hash": "dba1d9d35f6940eb75ed920b7f2f0c3b027ba7d4145437bc25336ed8e66f2eb2",
+      "date": "2018-12-09T18:59:19+10:00",
+      "subject": "[R-sig-Geo] clip a raster layer to a mask layer using raster algebra in R?",
+      "subject_clean": "clip a raster layer to a mask layer using raster algebra in R?",
+      "in_reply_to": "<697c40e7-2d38-f90f-cd79-9f2cade54598@uni-koeln.de>",
+      "references": [
+        "<697c40e7-2d38-f90f-cd79-9f2cade54598@uni-koeln.de>"
+      ],
+      "body_plain": "Hello,\n\nin R you're working without the benefit of the GRASS 'region' concept\nfor raster work (and all the hidden helper code that goes with it), so\nits never going to be a one liner - but the following may help.\n\nYou can use raster algebra in R to do masking. Construct your mask so\nthat the cells you want to keep are 0 and the cells you want to lose\nare NA.\n\nThen you can just add the raster and its mask together:\n\nmasked_raster <- raster + mask\n\nbecause data + 0 = data, and data + NA = NA. This will still work even\nif the two rasters don't have the same extent, so long as they have\nthe same cell size and alignment. The operation will throw a warning\nbut will complete successfully, returning the intersection of the two\nobjects. This should complete fairly quickly if the mask extent is\nsmall relative to the target dataset. Try using raster::trim() on the\nmask beforehand if it has a lot of whitespace.\n\nHTH\n@obrl_soil\n\nOn Thu, Dec 6, 2018 at 6:38 PM Christian Willmes <c.willmes at uni-koeln.de> wrote:\n>\n> Hello,\n>\n> this should be normally a very basic simple one-liner, but I can't get\n> my head around it. I only find solutions for cliping a raster against a\n> vector, but none for clipping a raster against a raster mask.\n>\n> I want to clip a layer to a mask. In GRASS GIS r.mapcalc the syntax is:\n>\n> result = if(RSLmask, gebco, null())\n>\n> This clips the GEBCO dataset to the extent of the given raster mask\n> 'rslmask'. The result raster has heigt values within the raster mask\n> extent, the rest of the raster layer has NULL or NA values.\n>\n> In R I did the following, but it does not work as expected:\n>\n> gebco <- raster(gebco2014) #load raster\n>\n> RSLmask <- gebco >= 0  #create mask layer\n>\n> RSL <- ifelse(RSLmask, 1, NA)\n>\n> The last command gives an error about vector type 'S4'?!\n>\n>  >In is.na(test) :\n>    >is.na() auf nicht-(Liste oder Vektor) des Typs 'S4' angewendet\n>\n> So, in short: what is the R way to simply clip a raster to a raster mask?\n>\n> Thanks and best regards,\n> Christian\n>\n> PS: If found many solutions for clipping a raster to a vector polygon,\n> but this is not what I want.\n>\n> --\n> Dr. Christian Willmes\n> AG GIS & Fernerkundung      | GIS & RS Group\n> Geographisches Institut     | Institute of Geography\n> Universit?t zu K?ln         | University of Cologne\n> Tel.: +49 (0)221 470 6234\n> http://www.geographie.uni-koeln.de/14126.html\n> http://www.sfb806.de\n> http://crc806db.uni-koeln.de\n> http://publons.com/a/1316706/\n> http://orcid.org/0000-0002-5566-6542\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hello,\n\nin R you're working without the benefit of the GRASS 'region' concept\nfor raster work (and all the hidden helper code that goes with it), so\nits never going to be a one liner - but the followi",
+      "thread_id": "thread-906f4d6ddb21",
+      "thread_depth": 1,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-f4f72de4aabe",
+      "message_id": "<e36c56ca-8704-7735-6051-d272a30f379d@uni-koeln.de>",
+      "from_name": "Christian Willmes",
+      "from_email_hash": "707eb811b69fdf1e0e08ee713f463d6338ef813f1489bf9174390948dad5e34c",
+      "date": "2018-12-10T15:46:06+01:00",
+      "subject": "[R-sig-Geo] clip a raster layer to a mask layer using raster algebra in R?",
+      "subject_clean": "clip a raster layer to a mask layer using raster algebra in R?",
+      "in_reply_to": "<CALG31BUU7fm=v_eOnEJw8L0y2xgX4LTKePpPg3QQMDB0w5ocig@mail.gmail.com>",
+      "references": [
+        "<697c40e7-2d38-f90f-cd79-9f2cade54598@uni-koeln.de>",
+        "<CALG31BUU7fm=v_eOnEJw8L0y2xgX4LTKePpPg3QQMDB0w5ocig@mail.gmail.com>"
+      ],
+      "body_plain": "Thank you.\n\nBut the most expensive step is constructing the mask with NA values.\n\n >gebco_rsl[gebco < rsl] <- NA\n\nThe rest of the computations is quite fast indeed... Do you know a \nfaster alternative, for creating the mask, to the line above?\n\nBest,\nChristian\n\nAm 09.12.18 um 09:59 schrieb obrl soil:\n> Hello,\n>\n> in R you're working without the benefit of the GRASS 'region' concept\n> for raster work (and all the hidden helper code that goes with it), so\n> its never going to be a one liner - but the following may help.\n>\n> You can use raster algebra in R to do masking. Construct your mask so\n> that the cells you want to keep are 0 and the cells you want to lose\n> are NA.\n>\n> Then you can just add the raster and its mask together:\n>\n> masked_raster <- raster + mask\n>\n> because data + 0 = data, and data + NA = NA. This will still work even\n> if the two rasters don't have the same extent, so long as they have\n> the same cell size and alignment. The operation will throw a warning\n> but will complete successfully, returning the intersection of the two\n> objects. This should complete fairly quickly if the mask extent is\n> small relative to the target dataset. Try using raster::trim() on the\n> mask beforehand if it has a lot of whitespace.\n>\n> HTH\n> @obrl_soil\n>\n> On Thu, Dec 6, 2018 at 6:38 PM Christian Willmes <c.willmes at uni-koeln.de> wrote:\n>> Hello,\n>>\n>> this should be normally a very basic simple one-liner, but I can't get\n>> my head around it. I only find solutions for cliping a raster against a\n>> vector, but none for clipping a raster against a raster mask.\n>>\n>> I want to clip a layer to a mask. In GRASS GIS r.mapcalc the syntax is:\n>>\n>> result = if(RSLmask, gebco, null())\n>>\n>> This clips the GEBCO dataset to the extent of the given raster mask\n>> 'rslmask'. The result raster has heigt values within the raster mask\n>> extent, the rest of the raster layer has NULL or NA values.\n>>\n>> In R I did the following, but it does not work as expected:\n>>\n>> gebco <- raster(gebco2014) #load raster\n>>\n>> RSLmask <- gebco >= 0  #create mask layer\n>>\n>> RSL <- ifelse(RSLmask, 1, NA)\n>>\n>> The last command gives an error about vector type 'S4'?!\n>>\n>>   >In is.na(test) :\n>>     >is.na() auf nicht-(Liste oder Vektor) des Typs 'S4' angewendet\n>>\n>> So, in short: what is the R way to simply clip a raster to a raster mask?\n>>\n>> Thanks and best regards,\n>> Christian\n>>\n>> PS: If found many solutions for clipping a raster to a vector polygon,\n>> but this is not what I want.\n>>\n>> --\n>> Dr. Christian Willmes\n>> AG GIS & Fernerkundung      | GIS & RS Group\n>> Geographisches Institut     | Institute of Geography\n>> Universit?t zu K?ln         | University of Cologne\n>> Tel.: +49 (0)221 470 6234\n>> http://www.geographie.uni-koeln.de/14126.html\n>> http://www.sfb806.de\n>> http://crc806db.uni-koeln.de\n>> http://publons.com/a/1316706/\n>> http://orcid.org/0000-0002-5566-6542\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nDr. Christian Willmes\t\nAG GIS & Fernerkundung      | GIS & RS Group\nGeographisches Institut     | Institute of Geography\nUniversit?t zu K?ln         | University of Cologne\nTel.: +49 (0)221 470 6234\nhttp://www.geographie.uni-koeln.de/14126.html\nhttp://www.sfb806.de\nhttp://crc806db.uni-koeln.de\nhttp://publons.com/a/1316706/\nhttp://orcid.org/0000-0002-5566-6542",
+      "body_snippet": "Thank you.\n\nBut the most expensive step is constructing the mask with NA values.\n\n >gebco_rsl[gebco < rsl] <- NA\n\nThe rest of the computations is quite fast indeed... Do you know a \nfaster alternative",
+      "thread_id": "thread-906f4d6ddb21",
+      "thread_depth": 2,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-ce90ce448957",
+      "message_id": "<CAG4NReLWOcnyjiArEx=NK45PS6W4xqHWnC7n2Ru6YF0nBWZXWg@mail.gmail.com>",
+      "from_name": "Agustin Lobo",
+      "from_email_hash": "1ceaac12c09b1ae4beabcab1289c18094cb8622c5687af51641f19f0cbe4dc74",
+      "date": "2018-12-19T09:56:24+01:00",
+      "subject": "[R-sig-Geo] writeRaster: BSQ despite BIL is requested",
+      "subject_clean": "writeRaster: BSQ despite BIL is requested",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I do\n\nwriteRaster(testin,\nfile=\"testin\",format=\"ENVI\",datatype=\"INT2U\",bandorder=\"BIL\",overwrite=TRUE)\n\nbut get an image with BSQ order\n(rda object: https://www.dropbox.com/s/or5h7yb9nd52e94/testin.rda?dl=0)\nThanks\nAgus\n\nR version 3.5.0 (2018-04-23)\nPlatform: x86_64-pc-linux-gnu (64-bit)\nRunning under: Debian GNU/Linux buster/sid\n\nMatrix products: default\nBLAS: /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.8.0\nLAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.8.0\n\nlocale:\n [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C\nLC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8\nLC_MONETARY=en_GB.UTF-8\n [6] LC_MESSAGES=en_GB.UTF-8    LC_PAPER=en_GB.UTF-8       LC_NAME=C\n               LC_ADDRESS=C               LC_TELEPHONE=C\n[11] LC_MEASUREMENT=en_GB.UTF-8 LC_IDENTIFICATION=C\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base\n\nother attached packages:\n[1] raster_2.7-15 rgdal_1.3-6   sp_1.3-1\n\n\nAgus",
+      "body_snippet": "I do\n\nwriteRaster(testin,\nfile=\"testin\",format=\"ENVI\",datatype=\"INT2U\",bandorder=\"BIL\",overwrite=TRUE)\n\nbut get an image with BSQ order\n(rda object: https://www.dropbox.com/s/or5h7yb9nd52e94/testin.rd",
+      "thread_id": "thread-ce90ce448957",
+      "thread_depth": 0,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-ced5c4c69eaf",
+      "message_id": "<alpine.LFD.2.21.1812191136300.3510@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-12-19T11:51:57+01:00",
+      "subject": "[R-sig-Geo] writeRaster: BSQ despite BIL is requested",
+      "subject_clean": "writeRaster: BSQ despite BIL is requested",
+      "in_reply_to": "<CAG4NReLWOcnyjiArEx=NK45PS6W4xqHWnC7n2Ru6YF0nBWZXWg@mail.gmail.com>",
+      "references": [
+        "<CAG4NReLWOcnyjiArEx=NK45PS6W4xqHWnC7n2Ru6YF0nBWZXWg@mail.gmail.com>"
+      ],
+      "body_plain": "On Wed, 19 Dec 2018, Agustin Lobo wrote:\n\n> I do\n>\n> writeRaster(testin,\n> file=\"testin\",format=\"ENVI\",datatype=\"INT2U\",bandorder=\"BIL\",overwrite=TRUE)\n>\n> but get an image with BSQ order\n> (rda object: https://www.dropbox.com/s/or5h7yb9nd52e94/testin.rda?dl=0)\n\nWhich version of GDAL is under all of this? It doesn't matter here, but \nmight have mattered.\n\nraster::writeRaster() puts interleave = bsq in the *.hdr files. \"BIP\" and \ndoes not seem to do anything. However:\n\nwriteGDAL(as(testin, \"SpatialGridDataFrame\"), fname=\"testinsp.envi\", \ndrivername=\"ENVI\", type=\"UInt16\", options=\"INTERLEAVE=BIL\", \nsetStatistics=TRUE)\n\nyields interleave = bil in the *.hdr file. Using the same route, I get:\n\nwriteRaster(testin, file=\"testin\", format=\"ENVI\", datatype=\"INT2U\", \noptions=\"INTERLEAVE=BIL\", overwrite=TRUE)\n\nwith interleave = bil in the *.hdr file. I'm not sure where \nraster::writeRaster() drops the options definitions given in bandorder=, \nmaybe ENVI is not a 'native' file format?\n\nHope this helps,\n\nRoger\n\n\n> Thanks\n> Agus\n>\n> R version 3.5.0 (2018-04-23)\n> Platform: x86_64-pc-linux-gnu (64-bit)\n> Running under: Debian GNU/Linux buster/sid\n>\n> Matrix products: default\n> BLAS: /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.8.0\n> LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.8.0\n>\n> locale:\n> [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C\n> LC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8\n> LC_MONETARY=en_GB.UTF-8\n> [6] LC_MESSAGES=en_GB.UTF-8    LC_PAPER=en_GB.UTF-8       LC_NAME=C\n>               LC_ADDRESS=C               LC_TELEPHONE=C\n> [11] LC_MEASUREMENT=en_GB.UTF-8 LC_IDENTIFICATION=C\n>\n> attached base packages:\n> [1] stats     graphics  grDevices utils     datasets  methods   base\n>\n> other attached packages:\n> [1] raster_2.7-15 rgdal_1.3-6   sp_1.3-1\n>\n>\n> Agus\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 19 Dec 2018, Agustin Lobo wrote:\n\n> I do\n>\n> writeRaster(testin,\n> file=\"testin\",format=\"ENVI\",datatype=\"INT2U\",bandorder=\"BIL\",overwrite=TRUE)\n>\n> but get an image with BSQ order\n> (rda objec",
+      "thread_id": "thread-ce90ce448957",
+      "thread_depth": 1,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-1eee28ad5b99",
+      "message_id": "<CAG4NReJ-cWEtmKGPh5f5cZSAoqgryJ+MyQZWfqAcM7A5AXctvw@mail.gmail.com>",
+      "from_name": "Agustin Lobo",
+      "from_email_hash": "1ceaac12c09b1ae4beabcab1289c18094cb8622c5687af51641f19f0cbe4dc74",
+      "date": "2018-12-19T14:45:34+01:00",
+      "subject": "[R-sig-Geo] writeRaster: BSQ despite BIL is requested",
+      "subject_clean": "writeRaster: BSQ despite BIL is requested",
+      "in_reply_to": "<alpine.LFD.2.21.1812191136300.3510@reclus.nhh.no>",
+      "references": [
+        "<CAG4NReLWOcnyjiArEx=NK45PS6W4xqHWnC7n2Ru6YF0nBWZXWg@mail.gmail.com>",
+        "<alpine.LFD.2.21.1812191136300.3510@reclus.nhh.no>"
+      ],
+      "body_plain": "Thanks Roger,\n\nJust to summarize, not only the hdr files are correct, the hdr files\nare consistent with the ordering in the data files:\n\nrequire(rgdal)\nrequire(raster)\nm <- matrix(rep(10,20),ncol=5)\nb <- brick(raster(m),raster(10*m),raster(100*m))\nb\nwriteRaster(b, file=\"bwrast\", format=\"ENVI\", datatype=\"INT2U\",\n            bandorder=\"BIL\", overwrite=TRUE)\n\nwrites a correct BSQ file, despite having requested BIL order\n\nwriteRaster(b, file=\"bwrast2\", format=\"ENVI\", datatype=\"INT2U\",\n            options=\"INTERLEAVE=BIL\", overwrite=TRUE)\n\nwrites a correct BIL file (and this is a useful solution, thanks).\n\nI tend to think that the fact that writeRaster() ignores\nbandorder=\"BIL\" is a bug.\n\nAgus\n(mi R is using Loaded GDAL runtime: GDAL 2.3.2, released 2018/09/21)\n\nOn Wed, Dec 19, 2018 at 11:52 AM Roger Bivand <Roger.Bivand at nhh.no> wrote:\n>\n> On Wed, 19 Dec 2018, Agustin Lobo wrote:\n>\n> > I do\n> >\n> > writeRaster(testin,\n> > file=\"testin\",format=\"ENVI\",datatype=\"INT2U\",bandorder=\"BIL\",overwrite=TRUE)\n> >\n> > but get an image with BSQ order\n> > (rda object: https://www.dropbox.com/s/or5h7yb9nd52e94/testin.rda?dl=0)\n>\n> Which version of GDAL is under all of this? It doesn't matter here, but\n> might have mattered.\n>\n> raster::writeRaster() puts interleave = bsq in the *.hdr files. \"BIP\" and\n> does not seem to do anything. However:\n>\n> writeGDAL(as(testin, \"SpatialGridDataFrame\"), fname=\"testinsp.envi\",\n> drivername=\"ENVI\", type=\"UInt16\", options=\"INTERLEAVE=BIL\",\n> setStatistics=TRUE)\n>\n> yields interleave = bil in the *.hdr file. Using the same route, I get:\n>\n> writeRaster(testin, file=\"testin\", format=\"ENVI\", datatype=\"INT2U\",\n> options=\"INTERLEAVE=BIL\", overwrite=TRUE)\n>\n> with interleave = bil in the *.hdr file. I'm not sure where\n> raster::writeRaster() drops the options definitions given in bandorder=,\n> maybe ENVI is not a 'native' file format?\n>\n> Hope this helps,\n>\n> Roger\n>\n>\n> > Thanks\n> > Agus\n> >\n> > R version 3.5.0 (2018-04-23)\n> > Platform: x86_64-pc-linux-gnu (64-bit)\n> > Running under: Debian GNU/Linux buster/sid\n> >\n> > Matrix products: default\n> > BLAS: /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.8.0\n> > LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.8.0\n> >\n> > locale:\n> > [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C\n> > LC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8\n> > LC_MONETARY=en_GB.UTF-8\n> > [6] LC_MESSAGES=en_GB.UTF-8    LC_PAPER=en_GB.UTF-8       LC_NAME=C\n> >               LC_ADDRESS=C               LC_TELEPHONE=C\n> > [11] LC_MEASUREMENT=en_GB.UTF-8 LC_IDENTIFICATION=C\n> >\n> > attached base packages:\n> > [1] stats     graphics  grDevices utils     datasets  methods   base\n> >\n> > other attached packages:\n> > [1] raster_2.7-15 rgdal_1.3-6   sp_1.3-1\n> >\n> >\n> > Agus\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics,\n> Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> https://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Thanks Roger,\n\nJust to summarize, not only the hdr files are correct, the hdr files\nare consistent with the ordering in the data files:\n\nrequire(rgdal)\nrequire(raster)\nm <- matrix(rep(10,20),ncol=5)\nb",
+      "thread_id": "thread-ce90ce448957",
+      "thread_depth": 2,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-091b91f5a578",
+      "message_id": "<338573592.8310602.1545342998814@mail.yahoo.com>",
+      "from_name": "Esu Esu",
+      "from_email_hash": "dd382b98b0a9827db6e9466617ea0d5a3524a945d655e6804660d6a69b3dc820",
+      "date": "2018-12-20T21:56:38Z",
+      "subject": "[R-sig-Geo] R Help",
+      "subject_clean": "R Help",
+      "in_reply_to": null,
+      "references": [
+        "<338573592.8310602.1545342998814.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "Dear All,\nI am new to R-programming. I have question if anyone can help me with:Q: how can I create functions in R to compute the area (A), centroid (Cx and Cy) and perimeter (P) of a polygon list .??I want to write R functions to compute these quantities for individual polygons, as well asan overall function to take a polygon list and return a data frame with four columns and the samenumber of rows as polygons in the list.??Each quantity should?correspond to each column.?it is (sp) class object.?\nHope to find any suggestion or answer?\n?RegardsMuhsien?\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear All,\nI am new to R-programming. I have question if anyone can help me with:Q: how can I create functions in R to compute the area (A), centroid (Cx and Cy) and perimeter (P) of a polygon list .??",
+      "thread_id": "thread-091b91f5a578",
+      "thread_depth": 0,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-0993b65d24be",
+      "message_id": "<CADvFi5qfjfOoNZ3wrOP9P7LZBkgwJfTco37i6qCBOT9+vW0efw@mail.gmail.com>",
+      "from_name": "Hugo Costa",
+      "from_email_hash": "4c64adf5443e1d2e49325008067c38549c59ed94523300817f82fea6c728309e",
+      "date": "2018-12-20T22:08:41Z",
+      "subject": "[R-sig-Geo] R Help",
+      "subject_clean": "R Help",
+      "in_reply_to": "<338573592.8310602.1545342998814@mail.yahoo.com>",
+      "references": [
+        "<338573592.8310602.1545342998814.ref@mail.yahoo.com>",
+        "<338573592.8310602.1545342998814@mail.yahoo.com>"
+      ],
+      "body_plain": "Package rgeos is a good starting point.\n\nEsu Esu via R-sig-Geo <r-sig-geo at r-project.org> escreveu no dia quinta,\n20/12/2018 ?(s) 21:58:\n\n> Dear All,\n> I am new to R-programming. I have question if anyone can help me with:Q:\n> how can I create functions in R to compute the area (A), centroid (Cx and\n> Cy) and perimeter (P) of a polygon list .  I want to write R functions to\n> compute these quantities for individual polygons, as well asan overall\n> function to take a polygon list and return a data frame with four columns\n> and the samenumber of rows as polygons in the list.  Each quantity\n> should correspond to each column. it is (sp) class object.\n> Hope to find any suggestion or answer\n>  RegardsMuhsien\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Package rgeos is a good starting point.\n\nEsu Esu via R-sig-Geo <r-sig-geo at r-project.org> escreveu no dia quinta,\n20/12/2018 ?(s) 21:58:\n\n> Dear All,\n> I am new to R-programming. I have question if ",
+      "thread_id": "thread-091b91f5a578",
+      "thread_depth": 1,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-df88b3d86b53",
+      "message_id": "<13ea731f-0eb8-d18a-4d36-08c903000827@auckland.ac.nz>",
+      "from_name": "Rolf Turner",
+      "from_email_hash": "00507e33f1824331f51be8709ec5385bd35aff4ae21168f5c861d517ac3f52bc",
+      "date": "2018-12-21T11:47:10+13:00",
+      "subject": "[R-sig-Geo] [FORGED]  R Help",
+      "subject_clean": "[FORGED]  R Help",
+      "in_reply_to": "<338573592.8310602.1545342998814@mail.yahoo.com>",
+      "references": [
+        "<338573592.8310602.1545342998814.ref@mail.yahoo.com>",
+        "<338573592.8310602.1545342998814@mail.yahoo.com>"
+      ],
+      "body_plain": "On 12/21/18 10:56 AM, Esu Esu via R-sig-Geo wrote:\n\n> Dear All,\n> I am new to R-programming. \n\nLearn to crawl before you start trying to walk or run.  Study some of \nthe many R tutorials that are available.\n\n> I have question if anyone can help me with:Q: how can I create functions in R to compute the area\n> (A), centroid (Cx and Cy) and perimeter (P) of a polygon list .??I want to write R functions to\n> compute these quantities for individual polygons, as well asan overall function to take a polygon\n> list and return a data frame with four columns and the samenumber of rows as polygons in the list.\n> Each quantity should correspond to each column. it is (sp) class object. > Hope to find any suggestion or answer\n\nThe spatstat package will enable you to do all this pretty easily.  See\n\n     ?centroid.owin\n     ?perimeter\n     ?area.owin\n\nYou will need to convert your polygons to objects of class \"owin\".  The \nas.owin() function should handle this for you.\n\ncheers,\n\nRolf Turner\n\n\n-- \nTechnical Editor ANZJS\nDepartment of Statistics\nUniversity of Auckland\nPhone: +64-9-373-7599 ext. 88276",
+      "body_snippet": "On 12/21/18 10:56 AM, Esu Esu via R-sig-Geo wrote:\n\n> Dear All,\n> I am new to R-programming. \n\nLearn to crawl before you start trying to walk or run.  Study some of \nthe many R tutorials that are avai",
+      "thread_id": "thread-091b91f5a578",
+      "thread_depth": 1,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-9689921c6d13",
+      "message_id": "<CAMXOh=37CdOMZXVs5LB0_-2yZHfAbSKCKppES3jaSZfWSeWppw@mail.gmail.com>",
+      "from_name": "Andres Diaz Loaiza",
+      "from_email_hash": "92302e9fea2e05cc54ef415445ca90df5d0aaa0841105f8212a5a159116f0e72",
+      "date": "2018-12-21T13:33:32+01:00",
+      "subject": "[R-sig-Geo] R Help",
+      "subject_clean": "R Help",
+      "in_reply_to": "<338573592.8310602.1545342998814@mail.yahoo.com>",
+      "references": [
+        "<338573592.8310602.1545342998814.ref@mail.yahoo.com>",
+        "<338573592.8310602.1545342998814@mail.yahoo.com>"
+      ],
+      "body_plain": "Dear Esu,\n\nAbout your question there is huge literature already written.\n\nI recommend to read the sp package manual.\n\nAn example for extract the coordinates you can  find it here:\n\nhttps://gis.stackexchange.com/questions/43543/how-to-calculate-polygon-centroids-in-r-for-non-contiguous-shapes\n\nIf you want to see how works the function remember that r is an open source\ncode and you can find the original functions over the binaries repositories\nor compressed packages.\n\nAll the best,\n\nAndres\n\n\nOn Thu, 20 Dec 2018 at 22:58, Esu Esu via R-sig-Geo <r-sig-geo at r-project.org>\nwrote:\n\n> Dear All,\n> I am new to R-programming. I have question if anyone can help me with:Q:\n> how can I create functions in R to compute the area (A), centroid (Cx and\n> Cy) and perimeter (P) of a polygon list .  I want to write R functions to\n> compute these quantities for individual polygons, as well asan overall\n> function to take a polygon list and return a data frame with four columns\n> and the samenumber of rows as polygons in the list.  Each quantity\n> should correspond to each column. it is (sp) class object.\n> Hope to find any suggestion or answer\n>  RegardsMuhsien\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n-- \nAndr?s D.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Esu,\n\nAbout your question there is huge literature already written.\n\nI recommend to read the sp package manual.\n\nAn example for extract the coordinates you can  find it here:\n\nhttps://gis.stackex",
+      "thread_id": "thread-091b91f5a578",
+      "thread_depth": 1,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-d22760ce87f0",
+      "message_id": "<CAJAunff059DK_LnPcEZEKkBYpoQAQa2SgSMzvN1kf7ZRLuZC_w@mail.gmail.com>",
+      "from_name": "Mirza Cengic",
+      "from_email_hash": "0536d186a3883046921fbcc3d364f5d8f0eb25e8a583fe121fb5297358c51baf",
+      "date": "2018-12-21T14:07:14+01:00",
+      "subject": "[R-sig-Geo] R Help",
+      "subject_clean": "R Help",
+      "in_reply_to": "<CAMXOh=37CdOMZXVs5LB0_-2yZHfAbSKCKppES3jaSZfWSeWppw@mail.gmail.com>",
+      "references": [
+        "<338573592.8310602.1545342998814.ref@mail.yahoo.com>",
+        "<338573592.8310602.1545342998814@mail.yahoo.com>",
+        "<CAMXOh=37CdOMZXVs5LB0_-2yZHfAbSKCKppES3jaSZfWSeWppw@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Esu,\n\nyou can probably solve these tasks using sf package, which uses bit\ndifferent way of representing spatial objects compared to the sp object.\nBelow you'll find an example for the North Carolina dataset. Keep in mind\nthat calculating area and perimeter depends on your coordinate system (i.e.\nyou can use projection that works better for calculating areas, or\ndistances; check the area/perimeter columns in nc dataset versus the output\nof the functions below).\nPackage lwgeom is for the st_perimeter() function, and I converted it to\nequidistant projection, since st_perimeter() doesn't like lat/long data.\nSpatial objects of sp class you can convert to simple feature using\nst_as_sf() function.\n\nHope it helps,\nMirza.\n\nlibrary(sf)\nlibrary(lwgeom)\n\nnc <- st_read(system.file(\"shape/nc.shp\", package=\"sf\"))\nnc <- st_transform(nc, crs = \"+proj=eqc +lat_ts=0 +lat_0=0 +lon_0=0 +x_0=0\n+y_0=0 +a=6371007 +b=6371007 +units=m +no_defs\")\n\nmy_area <- st_area(nc)\nmy_centroid_x = st_coordinates(st_centroid(nc))[, 1]\nmy_centroid_y = st_coordinates(st_centroid(nc))[, 2]\nmy_perimeter = st_perimeter(nc)\n\nOn Fri, Dec 21, 2018 at 1:34 PM Andres Diaz Loaiza <madiazl at gmail.com>\nwrote:\n\n> Dear Esu,\n>\n> About your question there is huge literature already written.\n>\n> I recommend to read the sp package manual.\n>\n> An example for extract the coordinates you can  find it here:\n>\n>\n> https://gis.stackexchange.com/questions/43543/how-to-calculate-polygon-centroids-in-r-for-non-contiguous-shapes\n>\n> If you want to see how works the function remember that r is an open source\n> code and you can find the original functions over the binaries repositories\n> or compressed packages.\n>\n> All the best,\n>\n> Andres\n>\n>\n> On Thu, 20 Dec 2018 at 22:58, Esu Esu via R-sig-Geo <\n> r-sig-geo at r-project.org>\n> wrote:\n>\n> > Dear All,\n> > I am new to R-programming. I have question if anyone can help me with:Q:\n> > how can I create functions in R to compute the area (A), centroid (Cx and\n> > Cy) and perimeter (P) of a polygon list .  I want to write R functions to\n> > compute these quantities for individual polygons, as well asan overall\n> > function to take a polygon list and return a data frame with four columns\n> > and the samenumber of rows as polygons in the list.  Each quantity\n> > should correspond to each column. it is (sp) class object.\n> > Hope to find any suggestion or answer\n> >  RegardsMuhsien\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> --\n> Andr?s D.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \n*Mirza ?engi?*\n\n*Junior Researcher | Department of Environmental Science*\nRadboud University | Heyendaalseweg 135\n6525 AJ Nijmegen | The Netherlands\n\n+31 657020823 | +38761908392\nSkype: mirzacengic\n<https://www.linkedin.com/in/mirzacengic>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Esu,\n\nyou can probably solve these tasks using sf package, which uses bit\ndifferent way of representing spatial objects compared to the sp object.\nBelow you'll find an example for the North Carol",
+      "thread_id": "thread-091b91f5a578",
+      "thread_depth": 2,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-a6222318f88a",
+      "message_id": "<459D4C24-45DE-421A-B690-06ADB822F76B@gmail.com>",
+      "from_name": "Carlos Rodríguez",
+      "from_email_hash": "22fc2d71d1e074389061647a291ed36683b4cfeae06549ece009a97f5a2c6a08",
+      "date": "2018-12-23T13:44:17+01:00",
+      "subject": "[R-sig-Geo] error when trying to use RStudio within GRASS",
+      "subject_clean": "error when trying to use RStudio within GRASS",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi guys,\n\nI have the following error when using Rstudio within GRASS 7.2.2 (stand-alone version) in Windows 10:\n\n\n\nLocation Spearfish_60\n\n> points <- readVECT(\"archsites\")\n\nError in if (get(\"SYS\", envir = .GRASS_CACHE) == \"WinNat\" && nchar(WN_bat) ==  :\n\n  missing value where TRUE/FALSE needed\n\n\n> traceback()\n\n7: parseGRASS(cmd, legacyExec = legacyExec)\n\n6: doGRASS(cmd, flags = flags, ..., parameters = parameters, echoCmd = echoCmd,\n\n       legacyExec = legacyExec)\n\n5: execGRASS(\"v.in.ogr\", flags = ifelse(ignore.stderr, c(\"f\", \"quiet\"),\n\n       \"f\"), intern = TRUE, ignore.stderr = ignore.stderr)\n\n4: .read_vect_non_plugin(vname = vname, layer = layer, type = type,\n\n       remove.duplicates = remove.duplicates, ignore.stderr = ignore.stderr,\n\n       pointDropZ = pointDropZ, driver = driver, with_prj = with_prj,\n\n       with_c = with_c)\n\n3: tryCatchList(expr, classes, parentenv, handlers)\n\n2: tryCatch({\n\n       stopifnot(is.logical(plugin) || is.null(plugin))\n\n       stopifnot(is.logical(ignore.stderr))\n\n       if (missing(layer))\n\n           layer <- \"1\"\n\n       layer <- as.character(layer)\n\n       stopifnot(is.logical(with_c))\n\n       if (!is.null(driver) && driver == \"GRASS\")\n\n           plugin <- TRUE\n\n       if (!requireNamespace(\"rgdal\", quietly = TRUE)) {\n\n           stop(\"rgdal not available\")\n\n       }\n\n       if (is.null(plugin)) {\n\n           ogrD <- rgdal::ogrDrivers()$name\n\n           plugin <- \"GRASS\" %in% ogrD\n\n       }\n\n       if (plugin) {\n\n           res <- .read_vect_plugin(vname = vname, layer = layer,\n\n               type = type, ignore.stderr = ignore.stderr, pointDropZ = pointDropZ,\n\n               mapset = mapset)\n\n       }\n\n       else {\n\n           res <- .read_vect_non_plugin(vname = vname, layer = layer,\n\n               type = type, remove.duplicates = remove.duplicates,\n\n               ignore.stderr = ignore.stderr, pointDropZ = pointDropZ,\n\n               driver = driver, with_prj = with_prj, with_c = with_c)\n\n       }\n\n   }, finally = {\n\n       if (get.suppressEchoCmdInFuncOption()) {\n\n           tull <- set.echoCmdOption(inEchoCmd)\n\n       }\n\n   })\n\n1: readVECT(\"archsites\")\n\n \n\n \n\nThis error does not show when using R instead of RStudio. I?ve searched around and tried to implement the fixes proposed for similar issues (unsuccessfully).  I feel that it might be a very simple issue, but I am stuck and I will appreciate any help. Here the Sys.getenv() and sessionInfo(), in case there are needed.\n\n\n\n\n> Sys.getenv()\n\n__COMPAT_LAYER              RunAsAdmin DetectorsWin7\n\nADSK_CLM_WPAD_PROXY_CHECK   FALSE\n\nALLUSERSPROFILE             C:\\ProgramData\n\nAPPDATA                     C:\\Users\\...\\AppData\\Roaming\n\nCLICOLOR_FORCE              1\n\nCommonProgramFiles          C:\\Program Files\\Common Files\n\nCommonProgramFiles(x86)     C:\\Program Files (x86)\\Common Files\n\nCommonProgramW6432          C:\\Program Files\\Common Files\n\nCOMPUTERNAME               \n\nComSpec                     C:\\WINDOWS\\system32\\cmd.exe\n\nDISPLAY                     :0\n\nDriverData                  C:\\Windows\\System32\\Drivers\\DriverData\n\nFP_NO_HOST_CHECK            NO\n\nGDAL_DATA                   C:/Program Files/R/R-3.5.1/library/rgdal/gdal\n\nGEODA_GDAL_DATA             C:\\Program Files\\GeoDa Software\\data\n\nGEODA_OGR_DRIVER_PATH       C:\\Program Files\\GeoDa Software\n\nGFORTRAN_STDERR_UNIT        -1\n\nGFORTRAN_STDOUT_UNIT        -1\n\nGRASS_MESSAGE_FORMAT        text\n\nGRASS_PAGER                 cat\n\nHOME                        C:/Users/?/Documents\n\nHOMEDRIVE                   C:\n\nHOMEPATH                    \\Users\\...\n\nJRI_HOME                    C:\\Users\\...\\Documents\\R\\win-library\\3.4\\rJava\\jri\n\nLOCALAPPDATA                C:\\Users\\...\\AppData\\Local\n\nLOGONSERVER                 \\\\...\n\nMSYS2_ENV_CONV_EXCL         R_ARCH\n\nNUMBER_OF_PROCESSORS        8\n\nOneDrive                    C:\\Users\\...\\OneDrive\n\nOS                          Windows_NT\n\nPATH                        C:\\Program\n\n                            Files\\R\\R-3.5.1\\bin\\x64;C:\\Rtools\\bin;C:\\ProgramData\\Oracle\\Java\\javapath;c:\\Rtools\\gcc-4.6.3\\bin;C:\\Program\n\n                            Files (x86)\\Intel\\iCLS Client\\;C:\\Program\n\n                            Files\\Intel\\iCLS\n\n                            Client\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program\n\n                            Files\\Intel\\Intel(R) Management Engine\n\n                            Components\\DAL;C:\\Program Files\\Intel\\Intel(R)\n\n                            Management Engine Components\\IPT;C:\\Program Files\n\n                            (x86)\\Intel\\Intel(R) Management Engine\n\n                            Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R)\n\n                            Management Engine Components\\IPT;C:\\Program Files\n\n                            (x86)\\ATI Technologies\\ATI.ACE\\Core-Static;C:\\Program\n\n                            Files\\MiKTeX 2.9\\miktex\\bin\\x64\\;C:\\Program\n\n                            Files\\Git\\cmd;C:\\Program Files\n\n                            (x86)\\Skype\\Phone\\;C:\\Program\n\n                            Files\\R\\R-3.5.1\\bin\\x64;C:\\Program\n\n                            Files\\RStudio\\bin;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program\n\n                            Files (x86)\\Calibre2\\;C:\\Program\n\n                            Files\\Intel\\WiFi\\bin\\;C:\\Program Files\\Common\n\n                            Files\\Intel\\WirelessCommon\\;C:\\Users\\... \\AppData\\Local\\Microsoft\\WindowsApps\n\nPATHEXT                     .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC\n\nPROCESSOR_ARCHITECTURE      AMD64\n\nPROCESSOR_IDENTIFIER        Intel64 Family 6 Model 60 Stepping 3, GenuineIntel\n\nPROCESSOR_LEVEL             6\n\nPROCESSOR_REVISION          3c03\n\nProgramData                 C:\\ProgramData\n\nProgramFiles                C:\\Program Files\n\nProgramFiles(x86)           C:\\Program Files (x86)\n\nProgramW6432                C:\\Program Files\n\nPROJ_LIB                    C:/Program Files/R/R-3.5.1/library/rgdal/proj\n\nPSModulePath                C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules\\\n\nPUBLIC                      C:\\Users\\Public\n\nR_ARCH                      /x64\n\nR_COMPILED_BY               gcc 4.9.3\n\nR_DOC_DIR                   C:/PROGRA~1/R/R-35~1.1/doc\n\nR_HOME                      C:/PROGRA~1/R/R-35~1.1\n\nR_LIBS_USER                 C:\\Program Files\\R\\R-3.5.1\\library\n\nR_MAP_DATA_DIR              C:/Program Files/R/R-3.5.1/library/maps/mapdata/\n\nR_MAP_DATA_DIR_WORLD        C:/Program Files/R/R-3.5.1/library/maps/mapdata/\n\nR_USER                      C:/Users/?/Documents\n\nRCRAN                       C:\\Program Files\\R\\R-3.5.1\\bin\\x64\n\nRMARKDOWN_MATHJAX_PATH      C:/Program Files/RStudio/resources/mathjax-26\n\nRS_LOCAL_PEER               \\\\.\\pipe\\30976-rsession\n\nRS_RPOSTBACK_PATH           C:/Program Files/RStudio/bin/rpostback\n\nRS_SHARED_SECRET            63341846741\n\nRSTUDIO                     1\n\nRSTUDIO_CONSOLE_COLOR       256\n\nRSTUDIO_CONSOLE_WIDTH       80\n\nRSTUDIO_MSYS_SSH            C:/Program Files/RStudio/bin/msys-ssh-1000-18\n\nRSTUDIO_PANDOC              C:/Program Files/RStudio/bin/pandoc\n\nRSTUDIO_SESSION_PORT        30976\n\nRSTUDIO_USER_IDENTITY       ?\n\nRSTUDIO_WINUTILS            C:/Program Files/RStudio/bin/winutils\n\nSystemDrive                 C:\n\nSystemRoot                  C:\\WINDOWS\n\nTEMP                        C:\\Users\\...\\AppData\\Local\\Temp\n\nTERM                        xterm-256color\n\nTMP                         C:\\Users\\...\\AppData\\Local\\Temp\n\nUSERDOMAIN                  ?\n\nUSERDOMAIN_ROAMINGPROFILE   ?\n\nUSERNAME                    ?\n\nUSERPROFILE                 C:\\Users\\...\n\nwindir                      C:\\WINDOWS\n\n \n\n \n\n> sessionInfo()\n\nR version 3.5.1 (2018-07-02)\n\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\n\nRunning under: Windows >= 8 x64 (build 9200)\n\n \n\nMatrix products: default\n\n \n\nlocale:\n\n[1] LC_COLLATE=English_United States.1252  LC_CTYPE=English_United States.1252  \n\n[3] LC_MONETARY=English_United States.1252 LC_NUMERIC=C                         \n\n[5] LC_TIME=English_United States.1252   \n\n \n\nattached base packages:\n\n[1] stats     graphics  grDevices utils     datasets  methods   base    \n\n \n\nother attached packages:\n\n [1] dbscan_1.1-2        rgdal_1.3-4         geostatsp_1.7.2     Matrix_1.2-14     \n\n [5] raster_2.6-7        maptools_0.9-3      maps_3.3.0          spatstat_1.56-1   \n\n [9] rpart_4.1-13        nlme_3.1-137        spatstat.data_1.3-1 rgrass7_0.1-10    \n\n[13] XML_3.98-1.16       sp_1.3-1          \n\n \n\n \n\n \n\nThanks in advance,\n\n \n\nWilliam \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi guys,\n\nI have the following error when using Rstudio within GRASS 7.2.2 (stand-alone version) in Windows 10:\n\n\n\nLocation Spearfish_60\n\n> points <- readVECT(\"archsites\")\n\nError in if (get(\"SYS\", env",
+      "thread_id": "thread-a6222318f88a",
+      "thread_depth": 0,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-ee947d30e318",
+      "message_id": "<CAM_vju=SgRzmnaApV3H+YNc5-xriaMuTzo50bYtd93hpfGRi-w@mail.gmail.com>",
+      "from_name": "Sarah Goslee",
+      "from_email_hash": "ee299eceed817d42b6b4fee16897ec7ff7afd9d6f576ac1fadef606b92dd0187",
+      "date": "2018-12-23T08:06:22-05:00",
+      "subject": "[R-sig-Geo] error when trying to use RStudio within GRASS",
+      "subject_clean": "error when trying to use RStudio within GRASS",
+      "in_reply_to": "<459D4C24-45DE-421A-B690-06ADB822F76B@gmail.com>",
+      "references": [
+        "<459D4C24-45DE-421A-B690-06ADB822F76B@gmail.com>"
+      ],
+      "body_plain": "Hi Carlos,\n\n\"This error does not show when using R instead of RStudio.\"\n\nThen you probably need to use RStudio help channels. You *might* get lucky\nhere, but this is an R help list, not RStudio help.\n\nSarah\n\nOn Sun, Dec 23, 2018 at 7:44 AM Carlos Rodr?guez <arrowtado at gmail.com>\nwrote:\n\n> Hi guys,\n>\n> I have the following error when using Rstudio within GRASS 7.2.2\n> (stand-alone version) in Windows 10:\n>\n>\n>\n> Location Spearfish_60\n>\n> > points <- readVECT(\"archsites\")\n>\n> Error in if (get(\"SYS\", envir = .GRASS_CACHE) == \"WinNat\" && nchar(WN_bat)\n> ==  :\n>\n>   missing value where TRUE/FALSE needed\n>\n>\n> > traceback()\n>\n> 7: parseGRASS(cmd, legacyExec = legacyExec)\n>\n> 6: doGRASS(cmd, flags = flags, ..., parameters = parameters, echoCmd =\n> echoCmd,\n>\n>        legacyExec = legacyExec)\n>\n> 5: execGRASS(\"v.in.ogr\", flags = ifelse(ignore.stderr, c(\"f\", \"quiet\"),\n>\n>        \"f\"), intern = TRUE, ignore.stderr = ignore.stderr)\n>\n> 4: .read_vect_non_plugin(vname = vname, layer = layer, type = type,\n>\n>        remove.duplicates = remove.duplicates, ignore.stderr =\n> ignore.stderr,\n>\n>        pointDropZ = pointDropZ, driver = driver, with_prj = with_prj,\n>\n>        with_c = with_c)\n>\n> 3: tryCatchList(expr, classes, parentenv, handlers)\n>\n> 2: tryCatch({\n>\n>        stopifnot(is.logical(plugin) || is.null(plugin))\n>\n>        stopifnot(is.logical(ignore.stderr))\n>\n>        if (missing(layer))\n>\n>            layer <- \"1\"\n>\n>        layer <- as.character(layer)\n>\n>        stopifnot(is.logical(with_c))\n>\n>        if (!is.null(driver) && driver == \"GRASS\")\n>\n>            plugin <- TRUE\n>\n>        if (!requireNamespace(\"rgdal\", quietly = TRUE)) {\n>\n>            stop(\"rgdal not available\")\n>\n>        }\n>\n>        if (is.null(plugin)) {\n>\n>            ogrD <- rgdal::ogrDrivers()$name\n>\n>            plugin <- \"GRASS\" %in% ogrD\n>\n>        }\n>\n>        if (plugin) {\n>\n>            res <- .read_vect_plugin(vname = vname, layer = layer,\n>\n>                type = type, ignore.stderr = ignore.stderr, pointDropZ =\n> pointDropZ,\n>\n>                mapset = mapset)\n>\n>        }\n>\n>        else {\n>\n>            res <- .read_vect_non_plugin(vname = vname, layer = layer,\n>\n>                type = type, remove.duplicates = remove.duplicates,\n>\n>                ignore.stderr = ignore.stderr, pointDropZ = pointDropZ,\n>\n>                driver = driver, with_prj = with_prj, with_c = with_c)\n>\n>        }\n>\n>    }, finally = {\n>\n>        if (get.suppressEchoCmdInFuncOption()) {\n>\n>            tull <- set.echoCmdOption(inEchoCmd)\n>\n>        }\n>\n>    })\n>\n> 1: readVECT(\"archsites\")\n>\n>\n>\n>\n>\n> This error does not show when using R instead of RStudio. I?ve searched\n> around and tried to implement the fixes proposed for similar issues\n> (unsuccessfully).  I feel that it might be a very simple issue, but I am\n> stuck and I will appreciate any help. Here the Sys.getenv() and\n> sessionInfo(), in case there are needed.\n>\n>\n>\n>\n> > Sys.getenv()\n>\n> __COMPAT_LAYER              RunAsAdmin DetectorsWin7\n>\n> ADSK_CLM_WPAD_PROXY_CHECK   FALSE\n>\n> ALLUSERSPROFILE             C:\\ProgramData\n>\n> APPDATA                     C:\\Users\\...\\AppData\\Roaming\n>\n> CLICOLOR_FORCE              1\n>\n> CommonProgramFiles          C:\\Program Files\\Common Files\n>\n> CommonProgramFiles(x86)     C:\\Program Files (x86)\\Common Files\n>\n> CommonProgramW6432          C:\\Program Files\\Common Files\n>\n> COMPUTERNAME\n>\n> ComSpec                     C:\\WINDOWS\\system32\\cmd.exe\n>\n> DISPLAY                     :0\n>\n> DriverData                  C:\\Windows\\System32\\Drivers\\DriverData\n>\n> FP_NO_HOST_CHECK            NO\n>\n> GDAL_DATA                   C:/Program Files/R/R-3.5.1/library/rgdal/gdal\n>\n> GEODA_GDAL_DATA             C:\\Program Files\\GeoDa Software\\data\n>\n> GEODA_OGR_DRIVER_PATH       C:\\Program Files\\GeoDa Software\n>\n> GFORTRAN_STDERR_UNIT        -1\n>\n> GFORTRAN_STDOUT_UNIT        -1\n>\n> GRASS_MESSAGE_FORMAT        text\n>\n> GRASS_PAGER                 cat\n>\n> HOME                        C:/Users/?/Documents\n>\n> HOMEDRIVE                   C:\n>\n> HOMEPATH                    \\Users\\...\n>\n> JRI_HOME\n> C:\\Users\\...\\Documents\\R\\win-library\\3.4\\rJava\\jri\n>\n> LOCALAPPDATA                C:\\Users\\...\\AppData\\Local\n>\n> LOGONSERVER                 \\\\...\n>\n> MSYS2_ENV_CONV_EXCL         R_ARCH\n>\n> NUMBER_OF_PROCESSORS        8\n>\n> OneDrive                    C:\\Users\\...\\OneDrive\n>\n> OS                          Windows_NT\n>\n> PATH                        C:\\Program\n>\n>\n> Files\\R\\R-3.5.1\\bin\\x64;C:\\Rtools\\bin;C:\\ProgramData\\Oracle\\Java\\javapath;c:\\Rtools\\gcc-4.6.3\\bin;C:\\Program\n>\n>                             Files (x86)\\Intel\\iCLS Client\\;C:\\Program\n>\n>                             Files\\Intel\\iCLS\n>\n>\n> Client\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program\n>\n>                             Files\\Intel\\Intel(R) Management Engine\n>\n>                             Components\\DAL;C:\\Program Files\\Intel\\Intel(R)\n>\n>                             Management Engine Components\\IPT;C:\\Program\n> Files\n>\n>                             (x86)\\Intel\\Intel(R) Management Engine\n>\n>                             Components\\DAL;C:\\Program Files\n> (x86)\\Intel\\Intel(R)\n>\n>                             Management Engine Components\\IPT;C:\\Program\n> Files\n>\n>                             (x86)\\ATI\n> Technologies\\ATI.ACE\\Core-Static;C:\\Program\n>\n>                             Files\\MiKTeX 2.9\\miktex\\bin\\x64\\;C:\\Program\n>\n>                             Files\\Git\\cmd;C:\\Program Files\n>\n>                             (x86)\\Skype\\Phone\\;C:\\Program\n>\n>                             Files\\R\\R-3.5.1\\bin\\x64;C:\\Program\n>\n>\n> Files\\RStudio\\bin;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program\n>\n>                             Files (x86)\\Calibre2\\;C:\\Program\n>\n>                             Files\\Intel\\WiFi\\bin\\;C:\\Program Files\\Common\n>\n>                             Files\\Intel\\WirelessCommon\\;C:\\Users\\...\n> \\AppData\\Local\\Microsoft\\WindowsApps\n>\n> PATHEXT\n>  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC\n>\n> PROCESSOR_ARCHITECTURE      AMD64\n>\n> PROCESSOR_IDENTIFIER        Intel64 Family 6 Model 60 Stepping 3,\n> GenuineIntel\n>\n> PROCESSOR_LEVEL             6\n>\n> PROCESSOR_REVISION          3c03\n>\n> ProgramData                 C:\\ProgramData\n>\n> ProgramFiles                C:\\Program Files\n>\n> ProgramFiles(x86)           C:\\Program Files (x86)\n>\n> ProgramW6432                C:\\Program Files\n>\n> PROJ_LIB                    C:/Program Files/R/R-3.5.1/library/rgdal/proj\n>\n> PSModulePath\n> C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules\\\n>\n> PUBLIC                      C:\\Users\\Public\n>\n> R_ARCH                      /x64\n>\n> R_COMPILED_BY               gcc 4.9.3\n>\n> R_DOC_DIR                   C:/PROGRA~1/R/R-35~1.1/doc\n>\n> R_HOME                      C:/PROGRA~1/R/R-35~1.1\n>\n> R_LIBS_USER                 C:\\Program Files\\R\\R-3.5.1\\library\n>\n> R_MAP_DATA_DIR              C:/Program\n> Files/R/R-3.5.1/library/maps/mapdata/\n>\n> R_MAP_DATA_DIR_WORLD        C:/Program\n> Files/R/R-3.5.1/library/maps/mapdata/\n>\n> R_USER                      C:/Users/?/Documents\n>\n> RCRAN                       C:\\Program Files\\R\\R-3.5.1\\bin\\x64\n>\n> RMARKDOWN_MATHJAX_PATH      C:/Program Files/RStudio/resources/mathjax-26\n>\n> RS_LOCAL_PEER               \\\\.\\pipe\\30976-rsession\n>\n> RS_RPOSTBACK_PATH           C:/Program Files/RStudio/bin/rpostback\n>\n> RS_SHARED_SECRET            63341846741\n>\n> RSTUDIO                     1\n>\n> RSTUDIO_CONSOLE_COLOR       256\n>\n> RSTUDIO_CONSOLE_WIDTH       80\n>\n> RSTUDIO_MSYS_SSH            C:/Program Files/RStudio/bin/msys-ssh-1000-18\n>\n> RSTUDIO_PANDOC              C:/Program Files/RStudio/bin/pandoc\n>\n> RSTUDIO_SESSION_PORT        30976\n>\n> RSTUDIO_USER_IDENTITY       ?\n>\n> RSTUDIO_WINUTILS            C:/Program Files/RStudio/bin/winutils\n>\n> SystemDrive                 C:\n>\n> SystemRoot                  C:\\WINDOWS\n>\n> TEMP                        C:\\Users\\...\\AppData\\Local\\Temp\n>\n> TERM                        xterm-256color\n>\n> TMP                         C:\\Users\\...\\AppData\\Local\\Temp\n>\n> USERDOMAIN                  ?\n>\n> USERDOMAIN_ROAMINGPROFILE   ?\n>\n> USERNAME                    ?\n>\n> USERPROFILE                 C:\\Users\\...\n>\n> windir                      C:\\WINDOWS\n>\n>\n>\n>\n>\n> > sessionInfo()\n>\n> R version 3.5.1 (2018-07-02)\n>\n> Platform: x86_64-w64-mingw32/x64 (64-bit)\n>\n> Running under: Windows >= 8 x64 (build 9200)\n>\n>\n>\n> Matrix products: default\n>\n>\n>\n> locale:\n>\n> [1] LC_COLLATE=English_United States.1252  LC_CTYPE=English_United\n> States.1252\n>\n> [3] LC_MONETARY=English_United States.1252 LC_NUMERIC=C\n>\n>\n> [5] LC_TIME=English_United States.1252\n>\n>\n>\n> attached base packages:\n>\n> [1] stats     graphics  grDevices utils     datasets  methods   base\n>\n>\n>\n> other attached packages:\n>\n>  [1] dbscan_1.1-2        rgdal_1.3-4         geostatsp_1.7.2\n>  Matrix_1.2-14\n>\n>  [5] raster_2.6-7        maptools_0.9-3      maps_3.3.0\n> spatstat_1.56-1\n>\n>  [9] rpart_4.1-13        nlme_3.1-137        spatstat.data_1.3-1\n> rgrass7_0.1-10\n>\n> [13] XML_3.98-1.16       sp_1.3-1\n>\n>\n>\n>\n>\n>\n>\n> Thanks in advance,\n>\n>\n>\n> William\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n-- \nSarah Goslee (she/her)\nhttp://www.sarahgoslee.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Carlos,\n\n\"This error does not show when using R instead of RStudio.\"\n\nThen you probably need to use RStudio help channels. You *might* get lucky\nhere, but this is an R help list, not RStudio help.\n",
+      "thread_id": "thread-a6222318f88a",
+      "thread_depth": 1,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-b7b8aa21e2c5",
+      "message_id": "<alpine.LFD.2.21.1812231938470.27040@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-12-23T19:42:48+01:00",
+      "subject": "[R-sig-Geo] error when trying to use RStudio within GRASS",
+      "subject_clean": "error when trying to use RStudio within GRASS",
+      "in_reply_to": "<CAM_vju=SgRzmnaApV3H+YNc5-xriaMuTzo50bYtd93hpfGRi-w@mail.gmail.com>",
+      "references": [
+        "<459D4C24-45DE-421A-B690-06ADB822F76B@gmail.com>",
+        "<CAM_vju=SgRzmnaApV3H+YNc5-xriaMuTzo50bYtd93hpfGRi-w@mail.gmail.com>"
+      ],
+      "body_plain": "On Sun, 23 Dec 2018, Sarah Goslee wrote:\n\n> Hi Carlos,\n>\n> \"This error does not show when using R instead of RStudio.\"\n>\n> Then you probably need to use RStudio help channels. You *might* get lucky\n> here, but this is an R help list, not RStudio help.\n\nMaybe also try https://lists.osgeo.org/mailman/listinfo/grass-stats, which \nhas a recent thread on this topic. I just tried Win10/GRASS 7.4/RStudio, \nand had no trouble either running rgrass7::initGRASS() in RStudio started \non its own, or running rgrass::parseGRASS() in rstudio started in RStudio \nstarted from the console command line inside GRASS. Consider following up \nthe thread on that list.\n\nRoger\n\n>\n> Sarah\n>\n> On Sun, Dec 23, 2018 at 7:44 AM Carlos Rodr?guez <arrowtado at gmail.com>\n> wrote:\n>\n>> Hi guys,\n>>\n>> I have the following error when using Rstudio within GRASS 7.2.2\n>> (stand-alone version) in Windows 10:\n>>\n>>\n>>\n>> Location Spearfish_60\n>>\n>>> points <- readVECT(\"archsites\")\n>>\n>> Error in if (get(\"SYS\", envir = .GRASS_CACHE) == \"WinNat\" && nchar(WN_bat)\n>> ==  :\n>>\n>>   missing value where TRUE/FALSE needed\n>>\n>>\n>>> traceback()\n>>\n>> 7: parseGRASS(cmd, legacyExec = legacyExec)\n>>\n>> 6: doGRASS(cmd, flags = flags, ..., parameters = parameters, echoCmd =\n>> echoCmd,\n>>\n>>        legacyExec = legacyExec)\n>>\n>> 5: execGRASS(\"v.in.ogr\", flags = ifelse(ignore.stderr, c(\"f\", \"quiet\"),\n>>\n>>        \"f\"), intern = TRUE, ignore.stderr = ignore.stderr)\n>>\n>> 4: .read_vect_non_plugin(vname = vname, layer = layer, type = type,\n>>\n>>        remove.duplicates = remove.duplicates, ignore.stderr =\n>> ignore.stderr,\n>>\n>>        pointDropZ = pointDropZ, driver = driver, with_prj = with_prj,\n>>\n>>        with_c = with_c)\n>>\n>> 3: tryCatchList(expr, classes, parentenv, handlers)\n>>\n>> 2: tryCatch({\n>>\n>>        stopifnot(is.logical(plugin) || is.null(plugin))\n>>\n>>        stopifnot(is.logical(ignore.stderr))\n>>\n>>        if (missing(layer))\n>>\n>>            layer <- \"1\"\n>>\n>>        layer <- as.character(layer)\n>>\n>>        stopifnot(is.logical(with_c))\n>>\n>>        if (!is.null(driver) && driver == \"GRASS\")\n>>\n>>            plugin <- TRUE\n>>\n>>        if (!requireNamespace(\"rgdal\", quietly = TRUE)) {\n>>\n>>            stop(\"rgdal not available\")\n>>\n>>        }\n>>\n>>        if (is.null(plugin)) {\n>>\n>>            ogrD <- rgdal::ogrDrivers()$name\n>>\n>>            plugin <- \"GRASS\" %in% ogrD\n>>\n>>        }\n>>\n>>        if (plugin) {\n>>\n>>            res <- .read_vect_plugin(vname = vname, layer = layer,\n>>\n>>                type = type, ignore.stderr = ignore.stderr, pointDropZ =\n>> pointDropZ,\n>>\n>>                mapset = mapset)\n>>\n>>        }\n>>\n>>        else {\n>>\n>>            res <- .read_vect_non_plugin(vname = vname, layer = layer,\n>>\n>>                type = type, remove.duplicates = remove.duplicates,\n>>\n>>                ignore.stderr = ignore.stderr, pointDropZ = pointDropZ,\n>>\n>>                driver = driver, with_prj = with_prj, with_c = with_c)\n>>\n>>        }\n>>\n>>    }, finally = {\n>>\n>>        if (get.suppressEchoCmdInFuncOption()) {\n>>\n>>            tull <- set.echoCmdOption(inEchoCmd)\n>>\n>>        }\n>>\n>>    })\n>>\n>> 1: readVECT(\"archsites\")\n>>\n>>\n>>\n>>\n>>\n>> This error does not show when using R instead of RStudio. I?ve searched\n>> around and tried to implement the fixes proposed for similar issues\n>> (unsuccessfully).  I feel that it might be a very simple issue, but I am\n>> stuck and I will appreciate any help. Here the Sys.getenv() and\n>> sessionInfo(), in case there are needed.\n>>\n>>\n>>\n>>\n>>> Sys.getenv()\n>>\n>> __COMPAT_LAYER              RunAsAdmin DetectorsWin7\n>>\n>> ADSK_CLM_WPAD_PROXY_CHECK   FALSE\n>>\n>> ALLUSERSPROFILE             C:\\ProgramData\n>>\n>> APPDATA                     C:\\Users\\...\\AppData\\Roaming\n>>\n>> CLICOLOR_FORCE              1\n>>\n>> CommonProgramFiles          C:\\Program Files\\Common Files\n>>\n>> CommonProgramFiles(x86)     C:\\Program Files (x86)\\Common Files\n>>\n>> CommonProgramW6432          C:\\Program Files\\Common Files\n>>\n>> COMPUTERNAME\n>>\n>> ComSpec                     C:\\WINDOWS\\system32\\cmd.exe\n>>\n>> DISPLAY                     :0\n>>\n>> DriverData                  C:\\Windows\\System32\\Drivers\\DriverData\n>>\n>> FP_NO_HOST_CHECK            NO\n>>\n>> GDAL_DATA                   C:/Program Files/R/R-3.5.1/library/rgdal/gdal\n>>\n>> GEODA_GDAL_DATA             C:\\Program Files\\GeoDa Software\\data\n>>\n>> GEODA_OGR_DRIVER_PATH       C:\\Program Files\\GeoDa Software\n>>\n>> GFORTRAN_STDERR_UNIT        -1\n>>\n>> GFORTRAN_STDOUT_UNIT        -1\n>>\n>> GRASS_MESSAGE_FORMAT        text\n>>\n>> GRASS_PAGER                 cat\n>>\n>> HOME                        C:/Users/?/Documents\n>>\n>> HOMEDRIVE                   C:\n>>\n>> HOMEPATH                    \\Users\\...\n>>\n>> JRI_HOME\n>> C:\\Users\\...\\Documents\\R\\win-library\\3.4\\rJava\\jri\n>>\n>> LOCALAPPDATA                C:\\Users\\...\\AppData\\Local\n>>\n>> LOGONSERVER                 \\\\...\n>>\n>> MSYS2_ENV_CONV_EXCL         R_ARCH\n>>\n>> NUMBER_OF_PROCESSORS        8\n>>\n>> OneDrive                    C:\\Users\\...\\OneDrive\n>>\n>> OS                          Windows_NT\n>>\n>> PATH                        C:\\Program\n>>\n>>\n>> Files\\R\\R-3.5.1\\bin\\x64;C:\\Rtools\\bin;C:\\ProgramData\\Oracle\\Java\\javapath;c:\\Rtools\\gcc-4.6.3\\bin;C:\\Program\n>>\n>>                             Files (x86)\\Intel\\iCLS Client\\;C:\\Program\n>>\n>>                             Files\\Intel\\iCLS\n>>\n>>\n>> Client\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program\n>>\n>>                             Files\\Intel\\Intel(R) Management Engine\n>>\n>>                             Components\\DAL;C:\\Program Files\\Intel\\Intel(R)\n>>\n>>                             Management Engine Components\\IPT;C:\\Program\n>> Files\n>>\n>>                             (x86)\\Intel\\Intel(R) Management Engine\n>>\n>>                             Components\\DAL;C:\\Program Files\n>> (x86)\\Intel\\Intel(R)\n>>\n>>                             Management Engine Components\\IPT;C:\\Program\n>> Files\n>>\n>>                             (x86)\\ATI\n>> Technologies\\ATI.ACE\\Core-Static;C:\\Program\n>>\n>>                             Files\\MiKTeX 2.9\\miktex\\bin\\x64\\;C:\\Program\n>>\n>>                             Files\\Git\\cmd;C:\\Program Files\n>>\n>>                             (x86)\\Skype\\Phone\\;C:\\Program\n>>\n>>                             Files\\R\\R-3.5.1\\bin\\x64;C:\\Program\n>>\n>>\n>> Files\\RStudio\\bin;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program\n>>\n>>                             Files (x86)\\Calibre2\\;C:\\Program\n>>\n>>                             Files\\Intel\\WiFi\\bin\\;C:\\Program Files\\Common\n>>\n>>                             Files\\Intel\\WirelessCommon\\;C:\\Users\\...\n>> \\AppData\\Local\\Microsoft\\WindowsApps\n>>\n>> PATHEXT\n>>  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC\n>>\n>> PROCESSOR_ARCHITECTURE      AMD64\n>>\n>> PROCESSOR_IDENTIFIER        Intel64 Family 6 Model 60 Stepping 3,\n>> GenuineIntel\n>>\n>> PROCESSOR_LEVEL             6\n>>\n>> PROCESSOR_REVISION          3c03\n>>\n>> ProgramData                 C:\\ProgramData\n>>\n>> ProgramFiles                C:\\Program Files\n>>\n>> ProgramFiles(x86)           C:\\Program Files (x86)\n>>\n>> ProgramW6432                C:\\Program Files\n>>\n>> PROJ_LIB                    C:/Program Files/R/R-3.5.1/library/rgdal/proj\n>>\n>> PSModulePath\n>> C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules\\\n>>\n>> PUBLIC                      C:\\Users\\Public\n>>\n>> R_ARCH                      /x64\n>>\n>> R_COMPILED_BY               gcc 4.9.3\n>>\n>> R_DOC_DIR                   C:/PROGRA~1/R/R-35~1.1/doc\n>>\n>> R_HOME                      C:/PROGRA~1/R/R-35~1.1\n>>\n>> R_LIBS_USER                 C:\\Program Files\\R\\R-3.5.1\\library\n>>\n>> R_MAP_DATA_DIR              C:/Program\n>> Files/R/R-3.5.1/library/maps/mapdata/\n>>\n>> R_MAP_DATA_DIR_WORLD        C:/Program\n>> Files/R/R-3.5.1/library/maps/mapdata/\n>>\n>> R_USER                      C:/Users/?/Documents\n>>\n>> RCRAN                       C:\\Program Files\\R\\R-3.5.1\\bin\\x64\n>>\n>> RMARKDOWN_MATHJAX_PATH      C:/Program Files/RStudio/resources/mathjax-26\n>>\n>> RS_LOCAL_PEER               \\\\.\\pipe\\30976-rsession\n>>\n>> RS_RPOSTBACK_PATH           C:/Program Files/RStudio/bin/rpostback\n>>\n>> RS_SHARED_SECRET            63341846741\n>>\n>> RSTUDIO                     1\n>>\n>> RSTUDIO_CONSOLE_COLOR       256\n>>\n>> RSTUDIO_CONSOLE_WIDTH       80\n>>\n>> RSTUDIO_MSYS_SSH            C:/Program Files/RStudio/bin/msys-ssh-1000-18\n>>\n>> RSTUDIO_PANDOC              C:/Program Files/RStudio/bin/pandoc\n>>\n>> RSTUDIO_SESSION_PORT        30976\n>>\n>> RSTUDIO_USER_IDENTITY       ?\n>>\n>> RSTUDIO_WINUTILS            C:/Program Files/RStudio/bin/winutils\n>>\n>> SystemDrive                 C:\n>>\n>> SystemRoot                  C:\\WINDOWS\n>>\n>> TEMP                        C:\\Users\\...\\AppData\\Local\\Temp\n>>\n>> TERM                        xterm-256color\n>>\n>> TMP                         C:\\Users\\...\\AppData\\Local\\Temp\n>>\n>> USERDOMAIN                  ?\n>>\n>> USERDOMAIN_ROAMINGPROFILE   ?\n>>\n>> USERNAME                    ?\n>>\n>> USERPROFILE                 C:\\Users\\...\n>>\n>> windir                      C:\\WINDOWS\n>>\n>>\n>>\n>>\n>>\n>>> sessionInfo()\n>>\n>> R version 3.5.1 (2018-07-02)\n>>\n>> Platform: x86_64-w64-mingw32/x64 (64-bit)\n>>\n>> Running under: Windows >= 8 x64 (build 9200)\n>>\n>>\n>>\n>> Matrix products: default\n>>\n>>\n>>\n>> locale:\n>>\n>> [1] LC_COLLATE=English_United States.1252  LC_CTYPE=English_United\n>> States.1252\n>>\n>> [3] LC_MONETARY=English_United States.1252 LC_NUMERIC=C\n>>\n>>\n>> [5] LC_TIME=English_United States.1252\n>>\n>>\n>>\n>> attached base packages:\n>>\n>> [1] stats     graphics  grDevices utils     datasets  methods   base\n>>\n>>\n>>\n>> other attached packages:\n>>\n>>  [1] dbscan_1.1-2        rgdal_1.3-4         geostatsp_1.7.2\n>>  Matrix_1.2-14\n>>\n>>  [5] raster_2.6-7        maptools_0.9-3      maps_3.3.0\n>> spatstat_1.56-1\n>>\n>>  [9] rpart_4.1-13        nlme_3.1-137        spatstat.data_1.3-1\n>> rgrass7_0.1-10\n>>\n>> [13] XML_3.98-1.16       sp_1.3-1\n>>\n>>\n>>\n>>\n>>\n>>\n>>\n>> Thanks in advance,\n>>\n>>\n>>\n>> William\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Sun, 23 Dec 2018, Sarah Goslee wrote:\n\n> Hi Carlos,\n>\n> \"This error does not show when using R instead of RStudio.\"\n>\n> Then you probably need to use RStudio help channels. You *might* get lucky\n> ",
+      "thread_id": "thread-a6222318f88a",
+      "thread_depth": 2,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-e7f014ffd4de",
+      "message_id": "<CAE8g1gPz2x21yDAW7i3kOVBESwRx0ppgM11ycHRTSti0rGMQ1w@mail.gmail.com>",
+      "from_name": "Antonio Silva",
+      "from_email_hash": "b11530f256cd9869b8c1fd5eed338459d1114ceb85468d2650295adb05320037",
+      "date": "2018-12-26T18:42:19-02:00",
+      "subject": "[R-sig-Geo] get data from nc file",
+      "subject_clean": "get data from nc file",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list members\n\nI downloaded some nc files with precipitation data from\nhttps://pmm.nasa.gov/data-access/downloads/trmm (Level 3 3B43:\nMultisatellite Precipitation). For the image link see the global attribute\n\"history\" (below).\n\nWith ncdf4::nc_open I cloud open the file (nc.data <- nc_open(\"\n3B43.20080101.7A.HDF.nc\")\n\nI want to extract the \"StartGranuleDateTime\" but it is inside the global\nattribute FileHeader (see below).\n\nWith ncatt_get(nc.data,0,\"FileHeader\")$value I got\n[1]\n\"AlgorithmID=3B43;\\nAlgorithmVersion=3B43_7.0;\\nFileName=3B43.20080101.7A.HDF;\\nGenerationDateTime=2012-11-29T19:12:01.000Z;\\nStartGranuleDateTime=2008-01-01T00:00:00.000Z;\\nStopGranuleDateTime=2008-01-31T23:59:59.999Z;\\nGranuleNumber=;\\nNumberOfSwaths=0;\\nNumberOfGrids=1;\\nGranuleStart=;\\nTimeInterval=MONTH;\\nProcessingSystem=PPS;\\nProductVersion=7A;\\nMissingData=;\\n\"\n\nIs there any way to extract only the string \"2008-01-01T00:00:00.000Z\"?\n\nThe best I could do was\nas.Date(substr(strsplit(ncatt_get(nc.data,0,\"FileHeader\")$value,\";\\n\")[[1]][5],22,45),\"%Y-%m-%dT%H:%M:%OSZ\")\n\nbut probably, I suppose, there must be a more direct way of getting the\ndata. I appreciate any suggestions.\n\nBest regards,\n\nAntonio Olinto\nFisheries Institute\nBrazil\n\nnc.data\nFile 3B43.20080101.7A.HDF.nc (NC_FORMAT_CLASSIC):\n\n     1 variables (excluding dimension variables):\n        float precipitation[nlat,nlon]\n            units: mm/hr\n            coordinates: nlon nlat\n            _FillValue: -9999.900390625\n\n     2 dimensions:\n        nlon  Size:33\n            long_name: longitude\n            standard_name: longitude\n            units: degrees_east\n        nlat  Size:41\n            long_name: latitude\n            standard_name: latitude\n            units: degrees_north\n\n    5 global attributes:\n        Grid.GridHeader: BinMethod=ARITHMETIC_MEAN;\nRegistration=CENTER;\nLatitudeResolution=0.25;\nLongitudeResolution=0.25;\nNorthBoundingCoordinate=50;\nSouthBoundingCoordinate=-50;\nEastBoundingCoordinate=180;\nWestBoundingCoordinate=-180;\nOrigin=SOUTHWEST;\n\n        FileHeader: AlgorithmID=3B43;\nAlgorithmVersion=3B43_7.0;\nFileName=3B43.20080101.7A.HDF;\nGenerationDateTime=2012-11-29T19:12:01.000Z;\nStartGranuleDateTime=2008-01-01T00:00:00.000Z;\nStopGranuleDateTime=2008-01-31T23:59:59.999Z;\nGranuleNumber=;\nNumberOfSwaths=0;\nNumberOfGrids=1;\nGranuleStart=;\nTimeInterval=MONTH;\nProcessingSystem=PPS;\nProductVersion=7A;\nMissingData=;\n\n        FileInfo: DataFormatVersion=m;\nTKCodeBuildVersion=1;\nMetadataVersion=m;\nFormatPackage=HDF Version 4.2 Release 4, January 25, 2009;\nBlueprintFilename=TRMM.V7.3B43.blueprint.xml;\nBlueprintVersion=BV_13;\nTKIOVersion=1.6;\nMetadataStyle=PVL;\nEndianType=LITTLE_ENDIAN;\n\n        GridHeader: BinMethod=ARITHMETIC_MEAN;\nRegistration=CENTER;\nLatitudeResolution=0.25;\nLongitudeResolution=0.25;\nNorthBoundingCoordinate=50;\nSouthBoundingCoordinate=-50;\nEastBoundingCoordinate=180;\nWestBoundingCoordinate=-180;\nOrigin=SOUTHWEST;\n\n        history: 2018-12-26 17:57:56 GMT Hyrax-1.13.4\nhttps://disc2.gesdisc.eosdis.nasa.gov:443/opendap/TRMM_L3/TRMM_3B43.7/2008/3B43.20080101.7A.HDF.nc?precipitation[604:636][3:43],nlat[3:43],nlon[604:636]\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list members\n\nI downloaded some nc files with precipitation data from\nhttps://pmm.nasa.gov/data-access/downloads/trmm (Level 3 3B43:\nMultisatellite Precipitation). For the image link see the glob",
+      "thread_id": "thread-e7f014ffd4de",
+      "thread_depth": 0,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-d8210c3cb6bd",
+      "message_id": "<6BB9421A-0E8E-4928-B299-3C8D5097D61E@bigelow.org>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "6e7d86f4413dff7c730c0abdb2ea4fcffc49b14a0d6c91aa033e0c14630f8056",
+      "date": "2018-12-26T19:01:29-05:00",
+      "subject": "[R-sig-Geo] get data from nc file",
+      "subject_clean": "get data from nc file",
+      "in_reply_to": "<CAE8g1gPz2x21yDAW7i3kOVBESwRx0ppgM11ycHRTSti0rGMQ1w@mail.gmail.com>",
+      "references": [
+        "<CAE8g1gPz2x21yDAW7i3kOVBESwRx0ppgM11ycHRTSti0rGMQ1w@mail.gmail.com>"
+      ],
+      "body_plain": "Hi,\n\nYikes.  I don't think there is any other way as the attributes are sort of buried in the string; that's unfortunate.  I guess you could at least make a reusable function assuming you'll be doing this again or looking to pull other attributes.  Something like this...\n\n\n#' Extract one of the GLobal Attributes of a TRMM NetCDF as a named vector \n#'\n#' @param nc the ncdf4 object\n#' @param name the name of the global attribute\n#' @param sep the separator used to delimit fields in the attribute\n#' @return named character vector of attributes\nnc_att_split <- function(nc, name = \"FileHeader\", sep = \";\\n\"){\n\t\n\ta1 <- ncdf4::ncatt_get(nc, 0)[[name[1]]]\n\tif (is.null(a1)) return(a1)\n\t\n\ta2 <- strsplit(a1,\";\\n\", fixed = TRUE)[[1]]\n\taa <- strsplit(a2, \"=\", fixed = TRUE)\n\t\n\tx <- sapply(aa,\n\t\tfunction(s) x = if(length(s) <= 1) \"\" else s[2]\n\t\t)\t\n\tnames(x) <- sapply(aa,\n\t\tfunction(s) x = if(length(s) <= 1) \"unknown\" else s[1]\n\t\t)\n\t\n\tx\n}\n\n\nnc <- ncdf4::nc_open(\"3B43.20080101.7A.HDF.nc\")\nx <- nc_att_split(nc)\nas.Date(x[['StartGranuleDateTime']], format = \"%Y-%m-%dT%H:%M:%OSZ\")\n[1] \"2008-01-01\"\n\n\nCheers,\nBen\n\n> On Dec 26, 2018, at 3:42 PM, Antonio Silva <aolinto.lst at gmail.com> wrote:\n> \n> Dear list members\n> \n> I downloaded some nc files with precipitation data from\n> https://pmm.nasa.gov/data-access/downloads/trmm (Level 3 3B43:\n> Multisatellite Precipitation). For the image link see the global attribute\n> \"history\" (below).\n> \n> With ncdf4::nc_open I cloud open the file (nc.data <- nc_open(\"\n> 3B43.20080101.7A.HDF.nc\")\n> \n> I want to extract the \"StartGranuleDateTime\" but it is inside the global\n> attribute FileHeader (see below).\n> \n> With ncatt_get(nc.data,0,\"FileHeader\")$value I got\n> [1]\n> \"AlgorithmID=3B43;\\nAlgorithmVersion=3B43_7.0;\\nFileName=3B43.20080101.7A.HDF;\\nGenerationDateTime=2012-11-29T19:12:01.000Z;\\nStartGranuleDateTime=2008-01-01T00:00:00.000Z;\\nStopGranuleDateTime=2008-01-31T23:59:59.999Z;\\nGranuleNumber=;\\nNumberOfSwaths=0;\\nNumberOfGrids=1;\\nGranuleStart=;\\nTimeInterval=MONTH;\\nProcessingSystem=PPS;\\nProductVersion=7A;\\nMissingData=;\\n\"\n> \n> Is there any way to extract only the string \"2008-01-01T00:00:00.000Z\"?\n> \n> The best I could do was\n> as.Date(substr(strsplit(ncatt_get(nc.data,0,\"FileHeader\")$value,\";\\n\")[[1]][5],22,45),\"%Y-%m-%dT%H:%M:%OSZ\")\n> \n> but probably, I suppose, there must be a more direct way of getting the\n> data. I appreciate any suggestions.\n> \n> Best regards,\n> \n> Antonio Olinto\n> Fisheries Institute\n> Brazil\n> \n> nc.data\n> File 3B43.20080101.7A.HDF.nc (NC_FORMAT_CLASSIC):\n> \n>     1 variables (excluding dimension variables):\n>        float precipitation[nlat,nlon]\n>            units: mm/hr\n>            coordinates: nlon nlat\n>            _FillValue: -9999.900390625\n> \n>     2 dimensions:\n>        nlon  Size:33\n>            long_name: longitude\n>            standard_name: longitude\n>            units: degrees_east\n>        nlat  Size:41\n>            long_name: latitude\n>            standard_name: latitude\n>            units: degrees_north\n> \n>    5 global attributes:\n>        Grid.GridHeader: BinMethod=ARITHMETIC_MEAN;\n> Registration=CENTER;\n> LatitudeResolution=0.25;\n> LongitudeResolution=0.25;\n> NorthBoundingCoordinate=50;\n> SouthBoundingCoordinate=-50;\n> EastBoundingCoordinate=180;\n> WestBoundingCoordinate=-180;\n> Origin=SOUTHWEST;\n> \n>        FileHeader: AlgorithmID=3B43;\n> AlgorithmVersion=3B43_7.0;\n> FileName=3B43.20080101.7A.HDF;\n> GenerationDateTime=2012-11-29T19:12:01.000Z;\n> StartGranuleDateTime=2008-01-01T00:00:00.000Z;\n> StopGranuleDateTime=2008-01-31T23:59:59.999Z;\n> GranuleNumber=;\n> NumberOfSwaths=0;\n> NumberOfGrids=1;\n> GranuleStart=;\n> TimeInterval=MONTH;\n> ProcessingSystem=PPS;\n> ProductVersion=7A;\n> MissingData=;\n> \n>        FileInfo: DataFormatVersion=m;\n> TKCodeBuildVersion=1;\n> MetadataVersion=m;\n> FormatPackage=HDF Version 4.2 Release 4, January 25, 2009;\n> BlueprintFilename=TRMM.V7.3B43.blueprint.xml;\n> BlueprintVersion=BV_13;\n> TKIOVersion=1.6;\n> MetadataStyle=PVL;\n> EndianType=LITTLE_ENDIAN;\n> \n>        GridHeader: BinMethod=ARITHMETIC_MEAN;\n> Registration=CENTER;\n> LatitudeResolution=0.25;\n> LongitudeResolution=0.25;\n> NorthBoundingCoordinate=50;\n> SouthBoundingCoordinate=-50;\n> EastBoundingCoordinate=180;\n> WestBoundingCoordinate=-180;\n> Origin=SOUTHWEST;\n> \n>        history: 2018-12-26 17:57:56 GMT Hyrax-1.13.4\n> https://disc2.gesdisc.eosdis.nasa.gov:443/opendap/TRMM_L3/TRMM_3B43.7/2008/3B43.20080101.7A.HDF.nc?precipitation[604:636][3:43],nlat[3:43],nlon[604:636]\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\nBen Tupper\nBigelow Laboratory for Ocean Sciences\n60 Bigelow Drive, P.O. Box 380\nEast Boothbay, Maine 04544\nhttp://www.bigelow.org\n\nEcological Forecasting: https://eco.bigelow.org/",
+      "body_snippet": "Hi,\n\nYikes.  I don't think there is any other way as the attributes are sort of buried in the string; that's unfortunate.  I guess you could at least make a reusable function assuming you'll be doing ",
+      "thread_id": "thread-e7f014ffd4de",
+      "thread_depth": 1,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-75746a7927ec",
+      "message_id": "<CAE8g1gMQ9O18A0JyM7uwT-0BoPxOVmObpuH_piV_BVu45_4wAw@mail.gmail.com>",
+      "from_name": "Antonio Silva",
+      "from_email_hash": "b11530f256cd9869b8c1fd5eed338459d1114ceb85468d2650295adb05320037",
+      "date": "2018-12-27T15:15:01-02:00",
+      "subject": "[R-sig-Geo] get data from nc file",
+      "subject_clean": "get data from nc file",
+      "in_reply_to": "<6BB9421A-0E8E-4928-B299-3C8D5097D61E@bigelow.org>",
+      "references": [
+        "<CAE8g1gPz2x21yDAW7i3kOVBESwRx0ppgM11ycHRTSti0rGMQ1w@mail.gmail.com>",
+        "<6BB9421A-0E8E-4928-B299-3C8D5097D61E@bigelow.org>"
+      ],
+      "body_plain": "Thanks for you nice idea and code Ben. I will use them for sure.\n\nHave a wonderful 2019. All the best\n\nAntonio Olinto\nFisheries Institute\nBrazil\n\n\nEm qua, 26 de dez de 2018 ?s 22:01, Ben Tupper <btupper at bigelow.org>\nescreveu:\n\n> Hi,\n>\n> .  I don't think there is any other way as the attributes are sort of\n> buried in the string; that's unfortunate.  I guess you could at least make\n> a reusable function assuming you'll be doing this again or looking to pull\n> other attributes.  Something like this...\n>\n>\n> #' Extract one of the GLobal Attributes of a TRMM NetCDF as a named vector\n> #'\n> #' @param nc the ncdf4 object\n> #' @param name the name of the global attribute\n> #' @param sep the separator used to delimit fields in the attribute\n> #' @return named character vector of attributes\n> nc_att_split <- function(nc, name = \"FileHeader\", sep = \";\\n\"){\n>\n>         a1 <- ncdf4::ncatt_get(nc, 0)[[name[1]]]\n>         if (is.null(a1)) return(a1)\n>\n>         a2 <- strsplit(a1,\";\\n\", fixed = TRUE)[[1]]\n>         aa <- strsplit(a2, \"=\", fixed = TRUE)\n>\n>         x <- sapply(aa,\n>                 function(s) x = if(length(s) <= 1) \"\" else s[2]\n>                 )\n>         names(x) <- sapply(aa,\n>                 function(s) x = if(length(s) <= 1) \"unknown\" else s[1]\n>                 )\n>\n>         x\n> }\n>\n>\n> nc <- ncdf4::nc_open(\"3B43.20080101.7A.HDF.nc\")\n> x <- nc_att_split(nc)\n> as.Date(x[['StartGranuleDateTime']], format = \"%Y-%m-%dT%H:%M:%OSZ\")\n> [1] \"2008-01-01\"\n>\n>\n> Cheers,\n> Ben\n>\n> > On Dec 26, 2018, at 3:42 PM, Antonio Silva <aolinto.lst at gmail.com>\n> wrote:\n> >\n> > Dear list members\n> >\n> > I downloaded some nc files with precipitation data from\n> > https://pmm.nasa.gov/data-access/downloads/trmm (Level 3 3B43:\n> > Multisatellite Precipitation). For the image link see the global\n> attribute\n> > \"history\" (below).\n> >\n> > With ncdf4::nc_open I cloud open the file (nc.data <- nc_open(\"\n> > 3B43.20080101.7A.HDF.nc\")\n> >\n> > I want to extract the \"StartGranuleDateTime\" but it is inside the global\n> > attribute FileHeader (see below).\n> >\n> > With ncatt_get(nc.data,0,\"FileHeader\")$value I got\n> > [1]\n> >\n> \"AlgorithmID=3B43;\\nAlgorithmVersion=3B43_7.0;\\nFileName=3B43.20080101.7A.HDF;\\nGenerationDateTime=2012-11-29T19:12:01.000Z;\\nStartGranuleDateTime=2008-01-01T00:00:00.000Z;\\nStopGranuleDateTime=2008-01-31T23:59:59.999Z;\\nGranuleNumber=;\\nNumberOfSwaths=0;\\nNumberOfGrids=1;\\nGranuleStart=;\\nTimeInterval=MONTH;\\nProcessingSystem=PPS;\\nProductVersion=7A;\\nMissingData=;\\n\"\n> >\n> > Is there any way to extract only the string \"2008-01-01T00:00:00.000Z\"?\n> >\n> > The best I could do was\n> >\n> as.Date(substr(strsplit(ncatt_get(nc.data,0,\"FileHeader\")$value,\";\\n\")[[1]][5],22,45),\"%Y-%m-%dT%H:%M:%OSZ\")\n> >\n> > but probably, I suppose, there must be a more direct way of getting the\n> > data. I appreciate any suggestions.\n> >\n> > Best regards,\n> >\n> > Antonio Olinto\n> > Fisheries Institute\n> > Brazil\n> >\n> > nc.data\n> > File 3B43.20080101.7A.HDF.nc (NC_FORMAT_CLASSIC):\n> >\n> >     1 variables (excluding dimension variables):\n> >        float precipitation[nlat,nlon]\n> >            units: mm/hr\n> >            coordinates: nlon nlat\n> >            _FillValue: -9999.900390625\n> >\n> >     2 dimensions:\n> >        nlon  Size:33\n> >            long_name: longitude\n> >            standard_name: longitude\n> >            units: degrees_east\n> >        nlat  Size:41\n> >            long_name: latitude\n> >            standard_name: latitude\n> >            units: degrees_north\n> >\n> >    5 global attributes:\n> >        Grid.GridHeader: BinMethod=ARITHMETIC_MEAN;\n> > Registration=CENTER;\n> > LatitudeResolution=0.25;\n> > LongitudeResolution=0.25;\n> > NorthBoundingCoordinate=50;\n> > SouthBoundingCoordinate=-50;\n> > EastBoundingCoordinate=180;\n> > WestBoundingCoordinate=-180;\n> > Origin=SOUTHWEST;\n> >\n> >        FileHeader: AlgorithmID=3B43;\n> > AlgorithmVersion=3B43_7.0;\n> > FileName=3B43.20080101.7A.HDF;\n> > GenerationDateTime=2012-11-29T19:12:01.000Z;\n> > StartGranuleDateTime=2008-01-01T00:00:00.000Z;\n> > StopGranuleDateTime=2008-01-31T23:59:59.999Z;\n> > GranuleNumber=;\n> > NumberOfSwaths=0;\n> > NumberOfGrids=1;\n> > GranuleStart=;\n> > TimeInterval=MONTH;\n> > ProcessingSystem=PPS;\n> > ProductVersion=7A;\n> > MissingData=;\n> >\n> >        FileInfo: DataFormatVersion=m;\n> > TKCodeBuildVersion=1;\n> > MetadataVersion=m;\n> > FormatPackage=HDF Version 4.2 Release 4, January 25, 2009;\n> > BlueprintFilename=TRMM.V7.3B43.blueprint.xml;\n> > BlueprintVersion=BV_13;\n> > TKIOVersion=1.6;\n> > MetadataStyle=PVL;\n> > EndianType=LITTLE_ENDIAN;\n> >\n> >        GridHeader: BinMethod=ARITHMETIC_MEAN;\n> > Registration=CENTER;\n> > LatitudeResolution=0.25;\n> > LongitudeResolution=0.25;\n> > NorthBoundingCoordinate=50;\n> > SouthBoundingCoordinate=-50;\n> > EastBoundingCoordinate=180;\n> > WestBoundingCoordinate=-180;\n> > Origin=SOUTHWEST;\n> >\n> >        history: 2018-12-26 17:57:56 GMT Hyrax-1.13.4\n> >\n> https://disc2.gesdisc.eosdis.nasa.gov:443/opendap/TRMM_L3/TRMM_3B43.7/2008/3B43.20080101.7A.HDF.nc?precipitation[604:636][3:43],nlat[3:43],nlon[604:636]\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> Ben Tupper\n> Bigelow Laboratory for Ocean Sciences\n> 60 Bigelow Drive, P.O. Box 380\n> East Boothbay, Maine 04544\n> http://www.bigelow.org\n>\n> Ecological Forecasting: https://eco.bigelow.org\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks for you nice idea and code Ben. I will use them for sure.\n\nHave a wonderful 2019. All the best\n\nAntonio Olinto\nFisheries Institute\nBrazil\n\n\nEm qua, 26 de dez de 2018 ?s 22:01, Ben Tupper <btupp",
+      "thread_id": "thread-e7f014ffd4de",
+      "thread_depth": 2,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-8c13b7ddec9a",
+      "message_id": "<CAE8g1gM5VjJPAxzQcMoUxL4u2KwntUBcdr3hxvKGWf8f6oD5KA@mail.gmail.com>",
+      "from_name": "Antonio Silva",
+      "from_email_hash": "b11530f256cd9869b8c1fd5eed338459d1114ceb85468d2650295adb05320037",
+      "date": "2018-12-28T13:04:59-02:00",
+      "subject": "[R-sig-Geo] how to get an attribute from a raster layer",
+      "subject_clean": "how to get an attribute from a raster layer",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list members\n\nI need help to do something that should be easy but I could not execute.\n\nI just want to plot a raster layer and use \"z-value\" as the title.\n\nrst.data[[1]]\nclass       : RasterLayer\nband        : 1  (of  4  bands)\ndimensions  : 33, 45, 1485  (nrow, ncol, ncell)\nresolution  : 0.25, 0.25  (x, y)\nextent      : -50.25, -39, -29, -20.75  (xmin, xmax, ymin, ymax)\ncoord. ref. : +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0\ndata source : /mnt/.../dataset-sss-ssd-rep-monthly_2016-11-12_sos.nc\nnames       : X2016.11.15.1\nz-value     : 2016-11-15\nzvar        : sos\n\nIs it possible to extract the z-value value directly (2016-11-15)?\n\nThe best I could do was\n\nplot(rst.data[[1]],main=substr(names(rst.data[[1]]),2,11))\n\nThanks a lot\n\nAntonio Olinto\nFisheries Institute\nS?o Paulo, Brazil\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list members\n\nI need help to do something that should be easy but I could not execute.\n\nI just want to plot a raster layer and use \"z-value\" as the title.\n\nrst.data[[1]]\nclass       : RasterLayer",
+      "thread_id": "thread-8c13b7ddec9a",
+      "thread_depth": 0,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-93e7c099e4cd",
+      "message_id": "<EA2D9528-3FA6-4DAD-A8FF-671E00168B87@bigelow.org>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "6e7d86f4413dff7c730c0abdb2ea4fcffc49b14a0d6c91aa033e0c14630f8056",
+      "date": "2018-12-28T10:19:47-05:00",
+      "subject": "[R-sig-Geo] how to get an attribute from a raster layer",
+      "subject_clean": "how to get an attribute from a raster layer",
+      "in_reply_to": "<CAE8g1gM5VjJPAxzQcMoUxL4u2KwntUBcdr3hxvKGWf8f6oD5KA@mail.gmail.com>",
+      "references": [
+        "<CAE8g1gM5VjJPAxzQcMoUxL4u2KwntUBcdr3hxvKGWf8f6oD5KA@mail.gmail.com>"
+      ],
+      "body_plain": "Hi,\n\nYou are looking for raster::getZ() but be aware that the Z value can be of any type - in this case I would guess it is a Date class so you will need to cast it to character using format() to get a label you desire.\n\nhttps://www.rdocumentation.org/packages/raster/versions/2.8-4/topics/z-values\n\n\nCheers,\nBen\n> On Dec 28, 2018, at 10:04 AM, Antonio Silva <aolinto.lst at gmail.com> wrote:\n> \n> Dear list members\n> \n> I need help to do something that should be easy but I could not execute.\n> \n> I just want to plot a raster layer and use \"z-value\" as the title.\n> \n> rst.data[[1]]\n> class       : RasterLayer\n> band        : 1  (of  4  bands)\n> dimensions  : 33, 45, 1485  (nrow, ncol, ncell)\n> resolution  : 0.25, 0.25  (x, y)\n> extent      : -50.25, -39, -29, -20.75  (xmin, xmax, ymin, ymax)\n> coord. ref. : +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0\n> data source : /mnt/.../dataset-sss-ssd-rep-monthly_2016-11-12_sos.nc\n> names       : X2016.11.15.1\n> z-value     : 2016-11-15\n> zvar        : sos\n> \n> Is it possible to extract the z-value value directly (2016-11-15)?\n> \n> The best I could do was\n> \n> plot(rst.data[[1]],main=substr(names(rst.data[[1]]),2,11))\n> \n> Thanks a lot\n> \n> Antonio Olinto\n> Fisheries Institute\n> S?o Paulo, Brazil\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\nBen Tupper\nBigelow Laboratory for Ocean Sciences\n60 Bigelow Drive, P.O. Box 380\nEast Boothbay, Maine 04544\nhttp://www.bigelow.org\n\nEcological Forecasting: https://eco.bigelow.org/\n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nYou are looking for raster::getZ() but be aware that the Z value can be of any type - in this case I would guess it is a Date class so you will need to cast it to character using format() to get ",
+      "thread_id": "thread-8c13b7ddec9a",
+      "thread_depth": 1,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-101a78b90b48",
+      "message_id": "<CAE8g1gO9w1DMfJ9hMp5-C5WhFs6n20JdLCyBBF6CwAyTJ-nt0g@mail.gmail.com>",
+      "from_name": "Antonio Silva",
+      "from_email_hash": "b11530f256cd9869b8c1fd5eed338459d1114ceb85468d2650295adb05320037",
+      "date": "2018-12-28T14:39:21-02:00",
+      "subject": "[R-sig-Geo] how to get an attribute from a raster layer",
+      "subject_clean": "how to get an attribute from a raster layer",
+      "in_reply_to": "<EA2D9528-3FA6-4DAD-A8FF-671E00168B87@bigelow.org>",
+      "references": [
+        "<CAE8g1gM5VjJPAxzQcMoUxL4u2KwntUBcdr3hxvKGWf8f6oD5KA@mail.gmail.com>",
+        "<EA2D9528-3FA6-4DAD-A8FF-671E00168B87@bigelow.org>"
+      ],
+      "body_plain": "Dear Ben\n\nThanks again. I didn't find this function in my search.\n\nHappy new year to all.\n\nAntonio Olinto\n\nEm sex, 28 de dez de 2018 ?s 13:19, Ben Tupper <btupper at bigelow.org>\nescreveu:\n\n> Hi,\n>\n> You are looking for raster::getZ() but be aware that the Z value can be of\n> any type - in this case I would guess it is a Date class so you will need\n> to cast it to character using format() to get a label you desire.\n>\n>\n> https://www.rdocumentation.org/packages/raster/versions/2.8-4/topics/z-values\n>\n>\n> Cheers,\n> Ben\n>\n> On Dec 28, 2018, at 10:04 AM, Antonio Silva <aolinto.lst at gmail.com> wrote:\n>\n> Dear list members\n>\n> I need help to do something that should be easy but I could not execute.\n>\n> I just want to plot a raster layer and use \"z-value\" as the title.\n>\n> rst.data[[1]]\n> class       : RasterLayer\n> band        : 1  (of  4  bands)\n> dimensions  : 33, 45, 1485  (nrow, ncol, ncell)\n> resolution  : 0.25, 0.25  (x, y)\n> extent      : -50.25, -39, -29, -20.75  (xmin, xmax, ymin, ymax)\n> coord. ref. : +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0\n> data source : /mnt/.../dataset-sss-ssd-rep-monthly_2016-11-12_sos.nc\n> names       : X2016.11.15.1\n> z-value     : 2016-11-15\n> zvar        : sos\n>\n> Is it possible to extract the z-value value directly (2016-11-15)?\n>\n> The best I could do was\n>\n> plot(rst.data[[1]],main=substr(names(rst.data[[1]]),2,11))\n>\n> Thanks a lot\n>\n> Antonio Olinto\n> Fisheries Institute\n> S?o Paulo, Brazil\n>\n> [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> Ben Tupper\n> Bigelow Laboratory for Ocean Sciences\n> 60 Bigelow Drive, P.O. Box 380\n> East Boothbay, Maine 04544\n> http://www.bigelow.org\n>\n> Ecological Forecasting: https://eco.bigelow.org/\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Ben\n\nThanks again. I didn't find this function in my search.\n\nHappy new year to all.\n\nAntonio Olinto\n\nEm sex, 28 de dez de 2018 ?s 13:19, Ben Tupper <btupper at bigelow.org>\nescreveu:\n\n> Hi,\n>\n> ",
+      "thread_id": "thread-8c13b7ddec9a",
+      "thread_depth": 2,
+      "month": "2018-12"
+    },
+    {
+      "id": "msg-0aafb4061bb7",
+      "message_id": "<d28ead0e531d46dbb37d82641bed3c79@tamu.edu>",
+      "from_name": "David L Carlson",
+      "from_email_hash": "e1b59e9698f85319c51036b7be38375ca2d514289b08c1e55741bca05e6c0931",
+      "date": "2018-12-29T19:04:38Z",
+      "subject": "[R-sig-Geo] how to get an attribute from a raster layer",
+      "subject_clean": "how to get an attribute from a raster layer",
+      "in_reply_to": "<CAE8g1gO9w1DMfJ9hMp5-C5WhFs6n20JdLCyBBF6CwAyTJ-nt0g@mail.gmail.com>",
+      "references": [
+        "<CAE8g1gM5VjJPAxzQcMoUxL4u2KwntUBcdr3hxvKGWf8f6oD5KA@mail.gmail.com>",
+        "<EA2D9528-3FA6-4DAD-A8FF-671E00168B87@bigelow.org>",
+        "<CAE8g1gO9w1DMfJ9hMp5-C5WhFs6n20JdLCyBBF6CwAyTJ-nt0g@mail.gmail.com>"
+      ],
+      "body_plain": "Where did you search? My google search for \"getZ package raster\" found it easily. If you have loaded the raster package, then the command ?getZ brings up the manual page:\n\n> library(raster)\nLoading required package: sp\n> ?getZ\n\n--------------------------------------\nDavid L. Carlson\nDepartment of Anthropology\nTexas A&M University\n\n\n-----Original Message-----\nFrom: R-sig-Geo [mailto:r-sig-geo-bounces at r-project.org] On Behalf Of Antonio Silva\nSent: Friday, December 28, 2018 10:39 AM\nTo: Ben Tupper <btupper at bigelow.org>\nCc: R-mailing list <r-sig-geo at r-project.org>\nSubject: Re: [R-sig-Geo] how to get an attribute from a raster layer\n\nDear Ben\n\nThanks again. I didn't find this function in my search.\n\nHappy new year to all.\n\nAntonio Olinto\n\nEm sex, 28 de dez de 2018 ?s 13:19, Ben Tupper <btupper at bigelow.org>\nescreveu:\n\n> Hi,\n>\n> You are looking for raster::getZ() but be aware that the Z value can be of\n> any type - in this case I would guess it is a Date class so you will need\n> to cast it to character using format() to get a label you desire.\n>\n>\n> https://www.rdocumentation.org/packages/raster/versions/2.8-4/topics/z-values\n>\n>\n> Cheers,\n> Ben\n>\n> On Dec 28, 2018, at 10:04 AM, Antonio Silva <aolinto.lst at gmail.com> wrote:\n>\n> Dear list members\n>\n> I need help to do something that should be easy but I could not execute.\n>\n> I just want to plot a raster layer and use \"z-value\" as the title.\n>\n> rst.data[[1]]\n> class       : RasterLayer\n> band        : 1  (of  4  bands)\n> dimensions  : 33, 45, 1485  (nrow, ncol, ncell)\n> resolution  : 0.25, 0.25  (x, y)\n> extent      : -50.25, -39, -29, -20.75  (xmin, xmax, ymin, ymax)\n> coord. ref. : +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0\n> data source : /mnt/.../dataset-sss-ssd-rep-monthly_2016-11-12_sos.nc\n> names       : X2016.11.15.1\n> z-value     : 2016-11-15\n> zvar        : sos\n>\n> Is it possible to extract the z-value value directly (2016-11-15)?\n>\n> The best I could do was\n>\n> plot(rst.data[[1]],main=substr(names(rst.data[[1]]),2,11))\n>\n> Thanks a lot\n>\n> Antonio Olinto\n> Fisheries Institute\n> S?o Paulo, Brazil\n>\n> [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> Ben Tupper\n> Bigelow Laboratory for Ocean Sciences\n> 60 Bigelow Drive, P.O. Box 380\n> East Boothbay, Maine 04544\n> http://www.bigelow.org\n>\n> Ecological Forecasting: https://eco.bigelow.org/\n>\n\n\t[[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Where did you search? My google search for \"getZ package raster\" found it easily. If you have loaded the raster package, then the command ?getZ brings up the manual page:\n\n> library(raster)\nLoading re",
+      "thread_id": "thread-8c13b7ddec9a",
+      "thread_depth": 3,
+      "month": "2018-12"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-104bf76450f9",
+      "subject": "How to test for a layer in GRASS GIS mapset using rgrass7",
+      "message_count": 5,
+      "participants": [
+        "Christian Willmes",
+        "Micha Silver",
+        "Rich Shepard",
+        "Roger Bivand"
+      ],
+      "started": "2018-12-04T16:42:33+01:00",
+      "last_reply": "2018-12-05T09:24:20+01:00",
+      "root_message_id": "msg-104bf76450f9"
+    },
+    {
+      "id": "thread-ed247574c66a",
+      "subject": "raster::predict example doesn't work?",
+      "message_count": 2,
+      "participants": [
+        "Bede-Fazekas Ákos",
+        "Gonzalez-Mirelis, Genoveva"
+      ],
+      "started": "2018-12-04T16:50:29+01:00",
+      "last_reply": "2018-12-05T09:06:29+00:00",
+      "root_message_id": "msg-ed247574c66a"
+    },
+    {
+      "id": "thread-906f4d6ddb21",
+      "subject": "clip a raster layer to a mask layer using raster algebra in R?",
+      "message_count": 7,
+      "participants": [
+        "Bede-Fazekas Ákos",
+        "Christian Willmes",
+        "Hugo Costa",
+        "obrl soil"
+      ],
+      "started": "2018-12-06T09:37:29+01:00",
+      "last_reply": "2018-12-10T15:46:06+01:00",
+      "root_message_id": "msg-906f4d6ddb21"
+    },
+    {
+      "id": "thread-ce90ce448957",
+      "subject": "writeRaster: BSQ despite BIL is requested",
+      "message_count": 3,
+      "participants": [
+        "Agustin Lobo",
+        "Roger Bivand"
+      ],
+      "started": "2018-12-19T09:56:24+01:00",
+      "last_reply": "2018-12-19T14:45:34+01:00",
+      "root_message_id": "msg-ce90ce448957"
+    },
+    {
+      "id": "thread-091b91f5a578",
+      "subject": "R Help",
+      "message_count": 5,
+      "participants": [
+        "Andres Diaz Loaiza",
+        "Esu Esu",
+        "Hugo Costa",
+        "Mirza Cengic",
+        "Rolf Turner"
+      ],
+      "started": "2018-12-20T21:56:38+00:00",
+      "last_reply": "2018-12-21T14:07:14+01:00",
+      "root_message_id": "msg-091b91f5a578"
+    },
+    {
+      "id": "thread-a6222318f88a",
+      "subject": "error when trying to use RStudio within GRASS",
+      "message_count": 3,
+      "participants": [
+        "Carlos Rodríguez",
+        "Roger Bivand",
+        "Sarah Goslee"
+      ],
+      "started": "2018-12-23T13:44:17+01:00",
+      "last_reply": "2018-12-23T19:42:48+01:00",
+      "root_message_id": "msg-a6222318f88a"
+    },
+    {
+      "id": "thread-e7f014ffd4de",
+      "subject": "get data from nc file",
+      "message_count": 3,
+      "participants": [
+        "Antonio Silva",
+        "Ben Tupper"
+      ],
+      "started": "2018-12-26T18:42:19-02:00",
+      "last_reply": "2018-12-27T15:15:01-02:00",
+      "root_message_id": "msg-e7f014ffd4de"
+    },
+    {
+      "id": "thread-8c13b7ddec9a",
+      "subject": "how to get an attribute from a raster layer",
+      "message_count": 4,
+      "participants": [
+        "Antonio Silva",
+        "Ben Tupper",
+        "David L Carlson"
+      ],
+      "started": "2018-12-28T13:04:59-02:00",
+      "last_reply": "2018-12-29T19:04:38+00:00",
+      "root_message_id": "msg-8c13b7ddec9a"
+    }
+  ]
+}

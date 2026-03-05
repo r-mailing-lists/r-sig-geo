@@ -1,0 +1,690 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2022-09",
+  "messages": [
+    {
+      "id": "msg-5548604811c7",
+      "message_id": "<CAH5tCz01y2274apH9PwYfttRCz1godjiE15V4un1_7A1-EqG9A@mail.gmail.com>",
+      "from_name": "sownal chand",
+      "from_email_hash": "ffc77914e4223ee36804d8fb5d0dd2c15c57c7fae734d3bdc7772ae8a1735864",
+      "date": "2022-09-02T21:34:57+12:00",
+      "subject": "[R-sig-Geo] Fwd: TRMM data Analysis",
+      "subject_clean": "TRMM data Analysis",
+      "in_reply_to": "<CAH5tCz10OSznJbFnpsGTWXykWW_1vpFf6tjrFwPa_bUmhNkHLA@mail.gmail.com>",
+      "references": [
+        "<CAH5tCz10OSznJbFnpsGTWXykWW_1vpFf6tjrFwPa_bUmhNkHLA@mail.gmail.com>"
+      ],
+      "body_plain": "https://drive.google.com/file/d/1krtBKQUIhupvYKEG1gBV8bgQaQxx96pb/view?usp=drivesdk\n\n\nAttached is the link for the data\n\n\n---------- Forwarded message ---------\nFrom: sownal chand <sownalchandfms at gmail.com>\nDate: Fri, Sep 2, 2022, 10:10\nSubject: TRMM data Analysis\nTo: <r-sig-geo at r-project.org>\n\n\nDear sir/madam\n\nI have a data set in NCDF file and was visualizing the data precipitation\ndata set but ran into some small errors.\nThe code is below:\n*******************************************************\nlibrary(ncdf4)\n\nncin <- nc_open(\"c:/Users/Downloads/PreNCDF.nc\")\n\n#get longitutes and latitudes\n\nlon <<- ncvar_get(ncin,\"lon\")\n\nnlon <- dim(lon)\n\nlat <<- ncvar_get(ncin,\"lat\", verbose=F)\n\nnlat <- dim(lat)\n\nprint(ncin)\n#get the time variable and attributes\n\ntori <<- ncvar_get(ncin,\"TRMM_3B42RT_7_precipitation\") #for time original\n\ntunits <<- ncatt_get(ncin,\"TRMM_3B42RT_7_precipitation\",\"units\")\n\nnt <- dim(tori)\n\n\nView(nt)\n#get the variable and its attributes\n\nTRMM.array <<- ncvar_get(ncin,\"TRMM_3B42RT_7_precipitation\") #dimensions\n(lon,lat,time)\nprint(TRMM.array)\n\ndim(TRMM.array)\n\n#m is the time slice you want to plot\n\ntmp.slice <- TRMM.array[, , 1]\n\nimage(lon, lat, tmp.slice, col = rev(brewer.pal(10, \"RdBu\")))\n\n#betterway to plot\n\nTRMM.Precip <- tmp.array [, , m]  #note this is the same as above\n\nmapCDFtemp <- function(lat,lon,precip) #model and perc should be a string\n\n{\n\n  titletext <- \"title\"\n\n  expand.grid(lon, lat) %>%\n\n    rename(lon = Var1, lat = Var2) %>%\n\n    mutate(lon = ifelse(lon > 180, -(360 - lon), lon),\n\n           precip = as.vector(precip)) %>%\n\n    #mutate(tas = convert_precip(, \"k\", \"c\")) %>%\n\n\n\n    ggplot() +\n\n    geom_point(aes(x = lon, y = lat, color = precip),\n\n               size = 0.8) +\n\n    borders(\"world\", colour=\"black\", fill=NA) +\n\n    scale_color_viridis(na.value=\"white\",name = \"precip\") +\n\n    theme(legend.direction=\"vertical\", legend.position=\"right\",\nlegend.key.width=unit(0.4,\"cm\"), legend.key.heigh=unit(2,\"cm\")) +\n\n    coord_quickmap() +\n\n    ggtitle(titletext)\n\n}\n\n\n*******************************************\nWould really appreciate if it could be corrected and really appreciate your\nassistance\n\nthanking you in advance\nsownalc\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "https://drive.google.com/file/d/1krtBKQUIhupvYKEG1gBV8bgQaQxx96pb/view?usp=drivesdk\n\n\nAttached is the link for the data\n\n\n---------- Forwarded message ---------\nFrom: sownal chand <sownalchandfms at g",
+      "thread_id": "thread-5548604811c7",
+      "thread_depth": 0,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-51781c955885",
+      "message_id": "<CADeM3-wgKhJ4XDhq4UKG8bCMc6Jh_T1tKp6DF0gf69iOworKJw@mail.gmail.com>",
+      "from_name": "H. Joe Lee",
+      "from_email_hash": "edaad808702071820c5cbcb68b0cc2be9be71a0cc06ab45a9d74fc775e6852c0",
+      "date": "2022-09-02T10:19:55-05:00",
+      "subject": "[R-sig-Geo] Fwd: TRMM data Analysis",
+      "subject_clean": "TRMM data Analysis",
+      "in_reply_to": "<CAH5tCz01y2274apH9PwYfttRCz1godjiE15V4un1_7A1-EqG9A@mail.gmail.com>",
+      "references": [
+        "<CAH5tCz10OSznJbFnpsGTWXykWW_1vpFf6tjrFwPa_bUmhNkHLA@mail.gmail.com>",
+        "<CAH5tCz01y2274apH9PwYfttRCz1godjiE15V4un1_7A1-EqG9A@mail.gmail.com>"
+      ],
+      "body_plain": "Hi,\n\n  I wanted to look at the data but could not access it.\n  I made a request.\n  Please allow me to access the data to try your script on it.\n\n\n- Joe\n---\nBuild the Metaverse w/ HDF.\n\n\n\nOn Fri, Sep 2, 2022 at 4:34 AM sownal chand <sownalchandfms at gmail.com>\nwrote:\n\n>\n> https://drive.google.com/file/d/1krtBKQUIhupvYKEG1gBV8bgQaQxx96pb/view?usp=drivesdk\n>\n>\n> Attached is the link for the data\n>\n>\n> ---------- Forwarded message ---------\n> From: sownal chand <sownalchandfms at gmail.com>\n> Date: Fri, Sep 2, 2022, 10:10\n> Subject: TRMM data Analysis\n> To: <r-sig-geo at r-project.org>\n>\n>\n> Dear sir/madam\n>\n> I have a data set in NCDF file and was visualizing the data precipitation\n> data set but ran into some small errors.\n> The code is below:\n> *******************************************************\n> library(ncdf4)\n>\n> ncin <- nc_open(\"c:/Users/Downloads/PreNCDF.nc\")\n>\n> #get longitutes and latitudes\n>\n> lon <<- ncvar_get(ncin,\"lon\")\n>\n> nlon <- dim(lon)\n>\n> lat <<- ncvar_get(ncin,\"lat\", verbose=F)\n>\n> nlat <- dim(lat)\n>\n> print(ncin)\n> #get the time variable and attributes\n>\n> tori <<- ncvar_get(ncin,\"TRMM_3B42RT_7_precipitation\") #for time original\n>\n> tunits <<- ncatt_get(ncin,\"TRMM_3B42RT_7_precipitation\",\"units\")\n>\n> nt <- dim(tori)\n>\n>\n> View(nt)\n> #get the variable and its attributes\n>\n> TRMM.array <<- ncvar_get(ncin,\"TRMM_3B42RT_7_precipitation\") #dimensions\n> (lon,lat,time)\n> print(TRMM.array)\n>\n> dim(TRMM.array)\n>\n> #m is the time slice you want to plot\n>\n> tmp.slice <- TRMM.array[, , 1]\n>\n> image(lon, lat, tmp.slice, col = rev(brewer.pal(10, \"RdBu\")))\n>\n> #betterway to plot\n>\n> TRMM.Precip <- tmp.array [, , m]  #note this is the same as above\n>\n> mapCDFtemp <- function(lat,lon,precip) #model and perc should be a string\n>\n> {\n>\n>   titletext <- \"title\"\n>\n>   expand.grid(lon, lat) %>%\n>\n>     rename(lon = Var1, lat = Var2) %>%\n>\n>     mutate(lon = ifelse(lon > 180, -(360 - lon), lon),\n>\n>            precip = as.vector(precip)) %>%\n>\n>     #mutate(tas = convert_precip(, \"k\", \"c\")) %>%\n>\n>\n>\n>     ggplot() +\n>\n>     geom_point(aes(x = lon, y = lat, color = precip),\n>\n>                size = 0.8) +\n>\n>     borders(\"world\", colour=\"black\", fill=NA) +\n>\n>     scale_color_viridis(na.value=\"white\",name = \"precip\") +\n>\n>     theme(legend.direction=\"vertical\", legend.position=\"right\",\n> legend.key.width=unit(0.4,\"cm\"), legend.key.heigh=unit(2,\"cm\")) +\n>\n>     coord_quickmap() +\n>\n>     ggtitle(titletext)\n>\n> }\n>\n>\n> *******************************************\n> Would really appreciate if it could be corrected and really appreciate your\n> assistance\n>\n> thanking you in advance\n> sownalc\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\n  I wanted to look at the data but could not access it.\n  I made a request.\n  Please allow me to access the data to try your script on it.\n\n\n- Joe\n---\nBuild the Metaverse w/ HDF.\n\n\n\nOn Fri, Sep 2",
+      "thread_id": "thread-5548604811c7",
+      "thread_depth": 1,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-b35ff937320c",
+      "message_id": "<AFBDC230-1D1E-452D-B580-E60FF5BCFD76@noaa.gov>",
+      "from_name": "Roy Mendelssohn - NOAA Federal",
+      "from_email_hash": "85b144d8f821c255c37ab81c3161d7be181befc9b6dd8f140f0346a2dce36d36",
+      "date": "2022-09-02T10:05:26-07:00",
+      "subject": "[R-sig-Geo] TRMM data Analysis",
+      "subject_clean": "TRMM data Analysis",
+      "in_reply_to": "<CAH5tCz01y2274apH9PwYfttRCz1godjiE15V4un1_7A1-EqG9A@mail.gmail.com>",
+      "references": [
+        "<CAH5tCz10OSznJbFnpsGTWXykWW_1vpFf6tjrFwPa_bUmhNkHLA@mail.gmail.com>",
+        "<CAH5tCz01y2274apH9PwYfttRCz1godjiE15V4un1_7A1-EqG9A@mail.gmail.com>"
+      ],
+      "body_plain": "I think you might get more responses if you also post the error message(s),  and/or what came out incorrectly.\n\nHTH,\n\n-Roy\n\n\n> On Sep 2, 2022, at 2:34 AM, sownal chand <sownalchandfms at gmail.com> wrote:\n> \n> https://drive.google.com/file/d/1krtBKQUIhupvYKEG1gBV8bgQaQxx96pb/view?usp=drivesdk\n> \n> \n> Attached is the link for the data\n> \n> \n> ---------- Forwarded message ---------\n> From: sownal chand <sownalchandfms at gmail.com>\n> Date: Fri, Sep 2, 2022, 10:10\n> Subject: TRMM data Analysis\n> To: <r-sig-geo at r-project.org>\n> \n> \n> Dear sir/madam\n> \n> I have a data set in NCDF file and was visualizing the data precipitation\n> data set but ran into some small errors.\n> The code is below:\n> *******************************************************\n> library(ncdf4)\n> \n> ncin <- nc_open(\"c:/Users/Downloads/PreNCDF.nc\")\n> \n> #get longitutes and latitudes\n> \n> lon <<- ncvar_get(ncin,\"lon\")\n> \n> nlon <- dim(lon)\n> \n> lat <<- ncvar_get(ncin,\"lat\", verbose=F)\n> \n> nlat <- dim(lat)\n> \n> print(ncin)\n> #get the time variable and attributes\n> \n> tori <<- ncvar_get(ncin,\"TRMM_3B42RT_7_precipitation\") #for time original\n> \n> tunits <<- ncatt_get(ncin,\"TRMM_3B42RT_7_precipitation\",\"units\")\n> \n> nt <- dim(tori)\n> \n> \n> View(nt)\n> #get the variable and its attributes\n> \n> TRMM.array <<- ncvar_get(ncin,\"TRMM_3B42RT_7_precipitation\") #dimensions\n> (lon,lat,time)\n> print(TRMM.array)\n> \n> dim(TRMM.array)\n> \n> #m is the time slice you want to plot\n> \n> tmp.slice <- TRMM.array[, , 1]\n> \n> image(lon, lat, tmp.slice, col = rev(brewer.pal(10, \"RdBu\")))\n> \n> #betterway to plot\n> \n> TRMM.Precip <- tmp.array [, , m]  #note this is the same as above\n> \n> mapCDFtemp <- function(lat,lon,precip) #model and perc should be a string\n> \n> {\n> \n>  titletext <- \"title\"\n> \n>  expand.grid(lon, lat) %>%\n> \n>    rename(lon = Var1, lat = Var2) %>%\n> \n>    mutate(lon = ifelse(lon > 180, -(360 - lon), lon),\n> \n>           precip = as.vector(precip)) %>%\n> \n>    #mutate(tas = convert_precip(, \"k\", \"c\")) %>%\n> \n> \n> \n>    ggplot() +\n> \n>    geom_point(aes(x = lon, y = lat, color = precip),\n> \n>               size = 0.8) +\n> \n>    borders(\"world\", colour=\"black\", fill=NA) +\n> \n>    scale_color_viridis(na.value=\"white\",name = \"precip\") +\n> \n>    theme(legend.direction=\"vertical\", legend.position=\"right\",\n> legend.key.width=unit(0.4,\"cm\"), legend.key.heigh=unit(2,\"cm\")) +\n> \n>    coord_quickmap() +\n> \n>    ggtitle(titletext)\n> \n> }\n> \n> \n> *******************************************\n> Would really appreciate if it could be corrected and really appreciate your\n> assistance\n> \n> thanking you in advance\n> sownalc\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n**********************\n\"The contents of this message do not reflect any position of the U.S. Government or NOAA.\"\n**********************\nRoy Mendelssohn\nSupervisory Operations Research Analyst\nNOAA/NMFS\nEnvironmental Research Division\nSouthwest Fisheries Science Center\n***Note new street address***\n110 McAllister Way\nSanta Cruz, CA 95060\nPhone: (831)-420-3666\nFax: (831) 420-3980\ne-mail: Roy.Mendelssohn at noaa.gov www: https://www.pfeg.noaa.gov/\n\n\"Old age and treachery will overcome youth and skill.\"\n\"From those who have been given much, much will be expected\" \n\"the arc of the moral universe is long, but it bends toward justice\" -MLK Jr.",
+      "body_snippet": "I think you might get more responses if you also post the error message(s),  and/or what came out incorrectly.\n\nHTH,\n\n-Roy\n\n\n> On Sep 2, 2022, at 2:34 AM, sownal chand <sownalchandfms at gmail.com> wr",
+      "thread_id": "thread-5548604811c7",
+      "thread_depth": 1,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-b8776a384999",
+      "message_id": "<CAH5tCz09aaMCJy9mw5EFRphQZbCBuodNqt9G8nKDzFEEk-G8Dw@mail.gmail.com>",
+      "from_name": "sownal chand",
+      "from_email_hash": "ffc77914e4223ee36804d8fb5d0dd2c15c57c7fae734d3bdc7772ae8a1735864",
+      "date": "2022-09-03T05:21:25+12:00",
+      "subject": "[R-sig-Geo] Fwd: TRMM data Analysis",
+      "subject_clean": "TRMM data Analysis",
+      "in_reply_to": "<CADeM3-wgKhJ4XDhq4UKG8bCMc6Jh_T1tKp6DF0gf69iOworKJw@mail.gmail.com>",
+      "references": [
+        "<CAH5tCz10OSznJbFnpsGTWXykWW_1vpFf6tjrFwPa_bUmhNkHLA@mail.gmail.com>",
+        "<CAH5tCz01y2274apH9PwYfttRCz1godjiE15V4un1_7A1-EqG9A@mail.gmail.com>",
+        "<CADeM3-wgKhJ4XDhq4UKG8bCMc6Jh_T1tKp6DF0gf69iOworKJw@mail.gmail.com>"
+      ],
+      "body_plain": "Sure sir\n\nOn Sat, Sep 3, 2022, 03:20 H. Joe Lee <hyoklee at hdfgroup.org> wrote:\n\n> Hi,\n>\n>   I wanted to look at the data but could not access it.\n>   I made a request.\n>   Please allow me to access the data to try your script on it.\n>\n>\n> - Joe\n> ---\n> Build the Metaverse w/ HDF.\n>\n>\n>\n> On Fri, Sep 2, 2022 at 4:34 AM sownal chand <sownalchandfms at gmail.com>\n> wrote:\n>\n>>\n>> https://drive.google.com/file/d/1krtBKQUIhupvYKEG1gBV8bgQaQxx96pb/view?usp=drivesdk\n>>\n>>\n>> Attached is the link for the data\n>>\n>>\n>> ---------- Forwarded message ---------\n>> From: sownal chand <sownalchandfms at gmail.com>\n>> Date: Fri, Sep 2, 2022, 10:10\n>> Subject: TRMM data Analysis\n>> To: <r-sig-geo at r-project.org>\n>>\n>>\n>> Dear sir/madam\n>>\n>> I have a data set in NCDF file and was visualizing the data precipitation\n>> data set but ran into some small errors.\n>> The code is below:\n>> *******************************************************\n>> library(ncdf4)\n>>\n>> ncin <- nc_open(\"c:/Users/Downloads/PreNCDF.nc\")\n>>\n>> #get longitutes and latitudes\n>>\n>> lon <<- ncvar_get(ncin,\"lon\")\n>>\n>> nlon <- dim(lon)\n>>\n>> lat <<- ncvar_get(ncin,\"lat\", verbose=F)\n>>\n>> nlat <- dim(lat)\n>>\n>> print(ncin)\n>> #get the time variable and attributes\n>>\n>> tori <<- ncvar_get(ncin,\"TRMM_3B42RT_7_precipitation\") #for time original\n>>\n>> tunits <<- ncatt_get(ncin,\"TRMM_3B42RT_7_precipitation\",\"units\")\n>>\n>> nt <- dim(tori)\n>>\n>>\n>> View(nt)\n>> #get the variable and its attributes\n>>\n>> TRMM.array <<- ncvar_get(ncin,\"TRMM_3B42RT_7_precipitation\") #dimensions\n>> (lon,lat,time)\n>> print(TRMM.array)\n>>\n>> dim(TRMM.array)\n>>\n>> #m is the time slice you want to plot\n>>\n>> tmp.slice <- TRMM.array[, , 1]\n>>\n>> image(lon, lat, tmp.slice, col = rev(brewer.pal(10, \"RdBu\")))\n>>\n>> #betterway to plot\n>>\n>> TRMM.Precip <- tmp.array [, , m]  #note this is the same as above\n>>\n>> mapCDFtemp <- function(lat,lon,precip) #model and perc should be a string\n>>\n>> {\n>>\n>>   titletext <- \"title\"\n>>\n>>   expand.grid(lon, lat) %>%\n>>\n>>     rename(lon = Var1, lat = Var2) %>%\n>>\n>>     mutate(lon = ifelse(lon > 180, -(360 - lon), lon),\n>>\n>>            precip = as.vector(precip)) %>%\n>>\n>>     #mutate(tas = convert_precip(, \"k\", \"c\")) %>%\n>>\n>>\n>>\n>>     ggplot() +\n>>\n>>     geom_point(aes(x = lon, y = lat, color = precip),\n>>\n>>                size = 0.8) +\n>>\n>>     borders(\"world\", colour=\"black\", fill=NA) +\n>>\n>>     scale_color_viridis(na.value=\"white\",name = \"precip\") +\n>>\n>>     theme(legend.direction=\"vertical\", legend.position=\"right\",\n>> legend.key.width=unit(0.4,\"cm\"), legend.key.heigh=unit(2,\"cm\")) +\n>>\n>>     coord_quickmap() +\n>>\n>>     ggtitle(titletext)\n>>\n>> }\n>>\n>>\n>> *******************************************\n>> Would really appreciate if it could be corrected and really appreciate\n>> your\n>> assistance\n>>\n>> thanking you in advance\n>> sownalc\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Sure sir\n\nOn Sat, Sep 3, 2022, 03:20 H. Joe Lee <hyoklee at hdfgroup.org> wrote:\n\n> Hi,\n>\n>   I wanted to look at the data but could not access it.\n>   I made a request.\n>   Please allow me to access ",
+      "thread_id": "thread-5548604811c7",
+      "thread_depth": 2,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-c5f3804ec11e",
+      "message_id": "<CAEGXkYUL0hxE=vsgw20zfwVysp=77Ejyudi+LTQe1jDKVCK9ow@mail.gmail.com>",
+      "from_name": "Bhaskar Mitra",
+      "from_email_hash": "f2e1ec595d71ebb310af8718f3dee4dfc599711267e47cbfc04a1c11761bea1f",
+      "date": "2022-09-05T10:10:17-07:00",
+      "subject": "[R-sig-Geo] Shapefile clipping operation help request",
+      "subject_clean": "Shapefile clipping operation help request",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello All,\n\n\n\n I am new to geospatial analysis and would really appreciate some help in\nshapefile clipping operation in R. I want to use a clipping function (or\nsomething equivalent), whereby, if the majority of  shapefile 2 (e.x:\ngreater than 50 % area of shapefile 2) is within shapefile 1, I can\nincorporate\n\nshapefile 2 within shapefile 1 and generate shapefile 3.\n\n\nHowever, if less than 50% area of shapefile 2 is within shapefile 1, then\nit will be discarded.\n\n\n\nI would really appreciate some help in this regard.\n\n\n\nSincerely,\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello All,\n\n\n\n I am new to geospatial analysis and would really appreciate some help in\nshapefile clipping operation in R. I want to use a clipping function (or\nsomething equivalent), whereby, if the ",
+      "thread_id": "thread-c5f3804ec11e",
+      "thread_depth": 0,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-0a3dd7e8cdef",
+      "message_id": "<039b2f71-51aa-d426-7646-e15b8f2a2758@gmail.com>",
+      "from_name": "Micha Silver",
+      "from_email_hash": "86a446f0e02a9a64c82549e8099ffb13525e0c2e5405536a3c4150e1bbd36549",
+      "date": "2022-09-05T22:21:13+03:00",
+      "subject": "[R-sig-Geo] Shapefile clipping operation help request",
+      "subject_clean": "Shapefile clipping operation help request",
+      "in_reply_to": "<CAEGXkYUL0hxE=vsgw20zfwVysp=77Ejyudi+LTQe1jDKVCK9ow@mail.gmail.com>",
+      "references": [
+        "<CAEGXkYUL0hxE=vsgw20zfwVysp=77Ejyudi+LTQe1jDKVCK9ow@mail.gmail.com>"
+      ],
+      "body_plain": "On 05/09/2022 20:10, Bhaskar Mitra wrote:\n> Hello All,\n>\n>\n>\n>   I am new to geospatial analysis and would really appreciate some help in\n> shapefile clipping operation in R. I want to use a clipping function (or\n> something equivalent), whereby, if the majority of  shapefile 2 (e.x:\n> greater than 50 % area of shapefile 2) is within shapefile 1, I can\n> incorporate\n>\n> shapefile 2 within shapefile 1 and generate shapefile 3.\n>\n>\n> However, if less than 50% area of shapefile 2 is within shapefile 1, then\n> it will be discarded.\n>\n\n>From your question, I assume that the two shapefiles contain polygon \nfeatures. (\"Shapefile\" can also be points or lines). What you want is \nthe intersection between two polygon shapefiles if that intersection is \nlarger in area than half the area of the second shapefile.\n\nShapefiles are read into R with the sf package. So this might help:\n\n\nlibrary(sf)\n\n\nPartialOverlap <- function(p1, p2, overlap_portion = 0.5) {\n\n ??? area2 <- st_area(p2)\n\n ??? intersection <- st_intersection(p1, p2)\n\n ??? area_overlap = st_area(intersection)\n\n ??? if (area_overlap/area2 >= overlap_portion) {\n\n ??? ??? return(intersection)\n\n ??? }\n\n ??? else {\n\n ??? ??? return(NULL)\n\n ??? }\n\n}\n\n\np1 <- st_read(\"your_first.shp\")\n\np2 <- st_read(\"your_second.shp\")\n\np3 <- PartialOverlap(p1, p2)\n\n\nHowever, I would point out that polygon shapefiles can contain several \npolygon features, and also multi-polygons. You probably want to consider \nhow you want to handle these cases. For example, your shapefile2 might \ncontain many polygons outside of shapefile1, and only a few that \noverlap. Those individual overlaps might each be larger than half of the \nindividual polygon areas but smaller than the total area of all polygons \nin shapefile2. How do you want to treat this case?\n\n ?Refer to Chapter 2 of: \nhttps://geocompr.robinlovelace.net/spatial-class.html? or any other \nbasic introduction to GIS vector features for a better explanation.\n\n\n\n>\n> I would really appreciate some help in this regard.\n>\n>\n>\n> Sincerely,\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nMicha Silver\nBen Gurion Univ.\nSde Boker, Remote Sensing Lab\ncell: +972-523-665918",
+      "body_snippet": "On 05/09/2022 20:10, Bhaskar Mitra wrote:\n> Hello All,\n>\n>\n>\n>   I am new to geospatial analysis and would really appreciate some help in\n> shapefile clipping operation in R. I want to use a clipping ",
+      "thread_id": "thread-c5f3804ec11e",
+      "thread_depth": 1,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-90372d4f020b",
+      "message_id": "<CAEGXkYUWQhv7fiD_42w87EXncfw7o1+XNMp4oQSmzpuSdpYmtA@mail.gmail.com>",
+      "from_name": "Bhaskar Mitra",
+      "from_email_hash": "f2e1ec595d71ebb310af8718f3dee4dfc599711267e47cbfc04a1c11761bea1f",
+      "date": "2022-09-05T16:07:15-07:00",
+      "subject": "[R-sig-Geo] Shapefile clipping operation help request",
+      "subject_clean": "Shapefile clipping operation help request",
+      "in_reply_to": "<039b2f71-51aa-d426-7646-e15b8f2a2758@gmail.com>",
+      "references": [
+        "<CAEGXkYUL0hxE=vsgw20zfwVysp=77Ejyudi+LTQe1jDKVCK9ow@mail.gmail.com>",
+        "<039b2f71-51aa-d426-7646-e15b8f2a2758@gmail.com>"
+      ],
+      "body_plain": "Thanks for your help. This is really helpful.\n\nWith regard to your comments about shapefile 2 having multiple\npolygons, maybe run a loop over every polygon in shapefile 2 and run the\nPartialOverlap function?\n\n\n\n\nOn Mon, Sep 5, 2022 at 12:21 PM Micha Silver <tsvibar at gmail.com> wrote:\n\n>\n> On 05/09/2022 20:10, Bhaskar Mitra wrote:\n> > Hello All,\n> >\n> >\n> >\n> >   I am new to geospatial analysis and would really appreciate some help\n> in\n> > shapefile clipping operation in R. I want to use a clipping function (or\n> > something equivalent), whereby, if the majority of  shapefile 2 (e.x:\n> > greater than 50 % area of shapefile 2) is within shapefile 1, I can\n> > incorporate\n> >\n> > shapefile 2 within shapefile 1 and generate shapefile 3.\n> >\n> >\n> > However, if less than 50% area of shapefile 2 is within shapefile 1, then\n> > it will be discarded.\n> >\n>\n> From your question, I assume that the two shapefiles contain polygon\n> features. (\"Shapefile\" can also be points or lines). What you want is\n> the intersection between two polygon shapefiles if that intersection is\n> larger in area than half the area of the second shapefile.\n>\n> Shapefiles are read into R with the sf package. So this might help:\n>\n>\n> library(sf)\n>\n>\n> PartialOverlap <- function(p1, p2, overlap_portion = 0.5) {\n>\n>      area2 <- st_area(p2)\n>\n>      intersection <- st_intersection(p1, p2)\n>\n>      area_overlap = st_area(intersection)\n>\n>      if (area_overlap/area2 >= overlap_portion) {\n>\n>          return(intersection)\n>\n>      }\n>\n>      else {\n>\n>          return(NULL)\n>\n>      }\n>\n> }\n>\n>\n> p1 <- st_read(\"your_first.shp\")\n>\n> p2 <- st_read(\"your_second.shp\")\n>\n> p3 <- PartialOverlap(p1, p2)\n>\n>\n> However, I would point out that polygon shapefiles can contain several\n> polygon features, and also multi-polygons. You probably want to consider\n> how you want to handle these cases. For example, your shapefile2 might\n> contain many polygons outside of shapefile1, and only a few that\n> overlap. Those individual overlaps might each be larger than half of the\n> individual polygon areas but smaller than the total area of all polygons\n> in shapefile2. How do you want to treat this case?\n>\n>   Refer to Chapter 2 of:\n> https://geocompr.robinlovelace.net/spatial-class.html  or any other\n> basic introduction to GIS vector features for a better explanation.\n>\n>\n>\n> >\n> > I would really appreciate some help in this regard.\n> >\n> >\n> >\n> > Sincerely,\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> --\n> Micha Silver\n> Ben Gurion Univ.\n> Sde Boker, Remote Sensing Lab\n> cell: +972-523-665918\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks for your help. This is really helpful.\n\nWith regard to your comments about shapefile 2 having multiple\npolygons, maybe run a loop over every polygon in shapefile 2 and run the\nPartialOverlap fu",
+      "thread_id": "thread-c5f3804ec11e",
+      "thread_depth": 2,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-a818380ffc6e",
+      "message_id": "<CAOtZwhAOWjaWyOUDGUcqqe0KkjdT7LiqpPFEy9JTfCz5Zujbhw@mail.gmail.com>",
+      "from_name": "sandeep thakur",
+      "from_email_hash": "a3e42e0d1aba0cb0331b9952927ecd05c15899de7da0d062fbfecedf17a04a08",
+      "date": "2022-09-06T09:51:48+05:30",
+      "subject": "[R-sig-Geo] performing hydrological analysis in R.reg",
+      "subject_clean": "performing hydrological analysis in R.reg",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello all,\nI am new to geospatial analysis and would really appreciate some help in\nperforming hydrological analysis using SRTM for a river basin. I want to\nestimate Morphometric indices and Geomorphic indices such as Stream Length\ngradient Index, Transverse topographic index, Hypsometric integral, Basin\nshape and valley to width ratio. I have been using ARC GIS and have done\nsome processing but am in need of some guidance.\n\nI would really appreciate some help in this regard.\n\n\n\nSincerely,\nSandeep Thakur\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello all,\nI am new to geospatial analysis and would really appreciate some help in\nperforming hydrological analysis using SRTM for a river basin. I want to\nestimate Morphometric indices and Geomorphi",
+      "thread_id": "thread-a818380ffc6e",
+      "thread_depth": 0,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-a4b2d52adf5b",
+      "message_id": "<CAJuCY5wc5AYjZ=fqkn+kBy8SX3v+jxZO3Bkb0oa_ZC+t3RzQVg@mail.gmail.com>",
+      "from_name": "Thierry Onkelinx",
+      "from_email_hash": "1183e720326bc91ec429d1a20d015e292579537392780a0fcfc24d392942c637",
+      "date": "2022-09-06T17:06:30+02:00",
+      "subject": "[R-sig-Geo] problem installing sf",
+      "subject_clean": "problem installing sf",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\nI'm having problems installing sf on my ubuntu machine (session info\nbelow). Here is the screen output of the installation. I removed the \"g++\"\noutput from the log.\n\nThe problem might be due to the installation of PROJ 9.0.1 from source. Any\nclues on how to remove this?\n\nBest regards,\n\nThierry\n\n> install.packages(\"sf\")\nInstalling package into ?/home/thierry/R/x86_64-pc-linux-gnu-library/4.0?\n(as ?lib? is unspecified)\ntrying URL 'https://cloud.r-project.org/src/contrib/sf_1.0-8.tar.gz'\nContent type 'application/x-gzip' length 3472914 bytes (3.3 MB)\n==================================================\ndownloaded 3.3 MB\n\n* installing *source* package ?sf? ...\n** package ?sf? successfully unpacked and MD5 sums checked\n** using staged installation\nconfigure: CC: gcc\nconfigure: CXX: g++ -std=gnu++11\nchecking for gdal-config... /usr/bin/gdal-config\nchecking gdal-config usability... yes\nconfigure: GDAL: 3.4.3\nchecking GDAL version >= 2.0.1... yes\nchecking for gcc... gcc\nchecking whether the C compiler works... yes\nchecking for C compiler default output file name... a.out\nchecking for suffix of executables...\nchecking whether we are cross compiling... no\nchecking for suffix of object files... o\nchecking whether we are using the GNU C compiler... yes\nchecking whether gcc accepts -g... yes\nchecking for gcc option to accept ISO C89... none needed\nchecking how to run the C preprocessor... gcc -E\nchecking for grep that handles long lines and -e... /bin/grep\nchecking for egrep... /bin/grep -E\nchecking for ANSI C header files... yes\nchecking for sys/types.h... yes\nchecking for sys/stat.h... yes\nchecking for stdlib.h... yes\nchecking for string.h... yes\nchecking for memory.h... yes\nchecking for strings.h... yes\nchecking for inttypes.h... yes\nchecking for stdint.h... yes\nchecking for unistd.h... yes\nchecking gdal.h usability... yes\nchecking gdal.h presence... yes\nchecking for gdal.h... yes\nchecking GDAL: linking with --libs only... yes\nchecking GDAL: /usr/share/gdal/pcs.csv readable... no\nchecking GDAL: checking whether PROJ is available for linking:... yes\nchecking GDAL: checking whether PROJ is available fur running:... yes\nconfigure: GDAL: 3.4.3\nconfigure: pkg-config proj exists, will use it\nconfigure: using proj.h.\nconfigure: PROJ: 9.0.1\nchecking PROJ: checking whether PROJ and sqlite3 are available for\nlinking:... yes\nchecking for geos-config... /usr/bin/geos-config\nchecking geos-config usability... yes\nconfigure: GEOS: 3.10.2\nchecking GEOS version >= 3.4.0... yes\nchecking geos_c.h usability... yes\nchecking geos_c.h presence... yes\nchecking for geos_c.h... yes\nchecking geos: linking with -L/usr/lib/x86_64-linux-gnu -lgeos_c... yes\nconfigure: Package CPP flags:  -I/usr/local/include\n-I/usr/include/x86_64-linux-gnu -DHAVE_PROJ_H -I/usr/include/gdal\n-I/usr/include\nconfigure: Package LIBS: -L/usr/local/lib -lproj   -L/usr/lib -lgdal\n-L/usr/lib/x86_64-linux-gnu -lgeos_c\nconfigure: creating ./config.status\nconfig.status: creating src/Makevars\n** libs\ninstalling to\n/home/thierry/R/x86_64-pc-linux-gnu-library/4.0/00LOCK-sf/00new/sf/libs\n** R\n** demo\n** inst\n** byte-compile and prepare package for lazy loading\nin method for ?dbWriteTable? with signature\n?\"PostgreSQLConnection\",\"character\",\"sf\"?: no definition for class\n?PostgreSQLConnection?\nin method for ?dbDataType? with signature ?\"PostgreSQLConnection\",\"sf\"?: no\ndefinition for class ?PostgreSQLConnection?\nin method for ?coerce? with signature ?\"Spatial\",\"sf\"?: no definition for\nclass ?Spatial?\nin method for ?coerce? with signature ?\"Spatial\",\"sfc\"?: no definition for\nclass ?Spatial?\nin method for ?coerce? with signature ?\"sf\",\"Spatial\"?: no definition for\nclass ?Spatial?\nin method for ?coerce? with signature ?\"sfc\",\"Spatial\"?: no definition for\nclass ?Spatial?\nin method for ?coerce? with signature ?\"XY\",\"Spatial\"?: no definition for\nclass ?Spatial?\nin method for ?coerce? with signature ?\"crs\",\"CRS\"?: no definition for\nclass ?CRS?\nin method for ?coerce? with signature ?\"sgbp\",\"sparseMatrix\"?: no\ndefinition for class ?sparseMatrix?\n** help\n*** installing help indices\n*** copying figures\n** building package indices\n** installing vignettes\n** testing if installed package can be loaded from temporary location\ndouble free or corruption (out)\nAborted (core dumped)\nERROR: loading failed\n* removing ?/home/thierry/R/x86_64-pc-linux-gnu-library/4.0/sf?\n\nThe downloaded source packages are in\n?/tmp/RtmpUVf9he/downloaded_packages?\nWarning message:\nIn install.packages(\"sf\") :\n  installation of package ?sf? had non-zero exit status\n\nsessioninfo::session_info()\n? Session info\n??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????\n setting  value\n version  R version 4.2.1 (2022-06-23)\n os       Ubuntu 20.04.5 LTS\n system   x86_64, linux-gnu\n ui       X11\n language nl_BE:nl\n collate  nl_BE.UTF-8\n ctype    nl_BE.UTF-8\n tz       Europe/Brussels\n date     2022-09-06\n pandoc   2.14.0.3 @ /usr/bin/pandoc\n\n? Packages\n??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????\n package     * version date (UTC) lib source\n cli           3.3.0   2022-04-25 [1] CRAN (R 4.2.0)\n fortunes      1.5-4   2016-12-29 [1] CRAN (R 4.2.0)\n sessioninfo   1.2.2   2021-12-06 [1] CRAN (R 4.2.0)\n\n [1] /home/thierry/R/x86_64-pc-linux-gnu-library/4.0\n [2] /usr/local/lib/R/site-library\n [3] /usr/lib/R/site-library\n [4] /usr/lib/R/library\n\n\nir. Thierry Onkelinx\nStatisticus / Statistician\n\nVlaamse Overheid / Government of Flanders\nINSTITUUT VOOR NATUUR- EN BOSONDERZOEK / RESEARCH INSTITUTE FOR NATURE AND\nFOREST\nTeam Biometrie & Kwaliteitszorg / Team Biometrics & Quality Assurance\nthierry.onkelinx at inbo.be\nHavenlaan 88 bus 73, 1000 Brussel\nwww.inbo.be\n\n///////////////////////////////////////////////////////////////////////////////////////////\nTo call in the statistician after the experiment is done may be no more\nthan asking him to perform a post-mortem examination: he may be able to say\nwhat the experiment died of. ~ Sir Ronald Aylmer Fisher\nThe plural of anecdote is not data. ~ Roger Brinner\nThe combination of some data and an aching desire for an answer does not\nensure that a reasonable answer can be extracted from a given body of data.\n~ John Tukey\n///////////////////////////////////////////////////////////////////////////////////////////\n\n<https://www.inbo.be>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nI'm having problems installing sf on my ubuntu machine (session info\nbelow). Here is the screen output of the installation. I removed the \"g++\"\noutput from the log.\n\nThe problem might be du",
+      "thread_id": "thread-a4b2d52adf5b",
+      "thread_depth": 0,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-ddc12325b2b7",
+      "message_id": "<5cda0ec9-c81e-e11d-6a51-53b4277c25fa@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2022-09-06T17:53:55+02:00",
+      "subject": "[R-sig-Geo] problem installing sf",
+      "subject_clean": "problem installing sf",
+      "in_reply_to": "<CAJuCY5wc5AYjZ=fqkn+kBy8SX3v+jxZO3Bkb0oa_ZC+t3RzQVg@mail.gmail.com>",
+      "references": [
+        "<CAJuCY5wc5AYjZ=fqkn+kBy8SX3v+jxZO3Bkb0oa_ZC+t3RzQVg@mail.gmail.com>"
+      ],
+      "body_plain": "Remove any other installations of PROJ from your machine, and recompile \nanything that linked to it to the new PROJ install.\n\nOn 06/09/2022 17:06, Thierry Onkelinx via R-sig-Geo wrote:\n> Dear all,\n> \n> I'm having problems installing sf on my ubuntu machine (session info\n> below). Here is the screen output of the installation. I removed the \"g++\"\n> output from the log.\n> \n> The problem might be due to the installation of PROJ 9.0.1 from source. Any\n> clues on how to remove this?\n> \n> Best regards,\n> \n> Thierry\n> \n>> install.packages(\"sf\")\n> Installing package into ?/home/thierry/R/x86_64-pc-linux-gnu-library/4.0?\n> (as ?lib? is unspecified)\n> trying URL 'https://cloud.r-project.org/src/contrib/sf_1.0-8.tar.gz'\n> Content type 'application/x-gzip' length 3472914 bytes (3.3 MB)\n> ==================================================\n> downloaded 3.3 MB\n> \n> * installing *source* package ?sf? ...\n> ** package ?sf? successfully unpacked and MD5 sums checked\n> ** using staged installation\n> configure: CC: gcc\n> configure: CXX: g++ -std=gnu++11\n> checking for gdal-config... /usr/bin/gdal-config\n> checking gdal-config usability... yes\n> configure: GDAL: 3.4.3\n> checking GDAL version >= 2.0.1... yes\n> checking for gcc... gcc\n> checking whether the C compiler works... yes\n> checking for C compiler default output file name... a.out\n> checking for suffix of executables...\n> checking whether we are cross compiling... no\n> checking for suffix of object files... o\n> checking whether we are using the GNU C compiler... yes\n> checking whether gcc accepts -g... yes\n> checking for gcc option to accept ISO C89... none needed\n> checking how to run the C preprocessor... gcc -E\n> checking for grep that handles long lines and -e... /bin/grep\n> checking for egrep... /bin/grep -E\n> checking for ANSI C header files... yes\n> checking for sys/types.h... yes\n> checking for sys/stat.h... yes\n> checking for stdlib.h... yes\n> checking for string.h... yes\n> checking for memory.h... yes\n> checking for strings.h... yes\n> checking for inttypes.h... yes\n> checking for stdint.h... yes\n> checking for unistd.h... yes\n> checking gdal.h usability... yes\n> checking gdal.h presence... yes\n> checking for gdal.h... yes\n> checking GDAL: linking with --libs only... yes\n> checking GDAL: /usr/share/gdal/pcs.csv readable... no\n> checking GDAL: checking whether PROJ is available for linking:... yes\n> checking GDAL: checking whether PROJ is available fur running:... yes\n> configure: GDAL: 3.4.3\n> configure: pkg-config proj exists, will use it\n> configure: using proj.h.\n> configure: PROJ: 9.0.1\n> checking PROJ: checking whether PROJ and sqlite3 are available for\n> linking:... yes\n> checking for geos-config... /usr/bin/geos-config\n> checking geos-config usability... yes\n> configure: GEOS: 3.10.2\n> checking GEOS version >= 3.4.0... yes\n> checking geos_c.h usability... yes\n> checking geos_c.h presence... yes\n> checking for geos_c.h... yes\n> checking geos: linking with -L/usr/lib/x86_64-linux-gnu -lgeos_c... yes\n> configure: Package CPP flags:  -I/usr/local/include\n> -I/usr/include/x86_64-linux-gnu -DHAVE_PROJ_H -I/usr/include/gdal\n> -I/usr/include\n> configure: Package LIBS: -L/usr/local/lib -lproj   -L/usr/lib -lgdal\n> -L/usr/lib/x86_64-linux-gnu -lgeos_c\n> configure: creating ./config.status\n> config.status: creating src/Makevars\n> ** libs\n> installing to\n> /home/thierry/R/x86_64-pc-linux-gnu-library/4.0/00LOCK-sf/00new/sf/libs\n> ** R\n> ** demo\n> ** inst\n> ** byte-compile and prepare package for lazy loading\n> in method for ?dbWriteTable? with signature\n> ?\"PostgreSQLConnection\",\"character\",\"sf\"?: no definition for class\n> ?PostgreSQLConnection?\n> in method for ?dbDataType? with signature ?\"PostgreSQLConnection\",\"sf\"?: no\n> definition for class ?PostgreSQLConnection?\n> in method for ?coerce? with signature ?\"Spatial\",\"sf\"?: no definition for\n> class ?Spatial?\n> in method for ?coerce? with signature ?\"Spatial\",\"sfc\"?: no definition for\n> class ?Spatial?\n> in method for ?coerce? with signature ?\"sf\",\"Spatial\"?: no definition for\n> class ?Spatial?\n> in method for ?coerce? with signature ?\"sfc\",\"Spatial\"?: no definition for\n> class ?Spatial?\n> in method for ?coerce? with signature ?\"XY\",\"Spatial\"?: no definition for\n> class ?Spatial?\n> in method for ?coerce? with signature ?\"crs\",\"CRS\"?: no definition for\n> class ?CRS?\n> in method for ?coerce? with signature ?\"sgbp\",\"sparseMatrix\"?: no\n> definition for class ?sparseMatrix?\n> ** help\n> *** installing help indices\n> *** copying figures\n> ** building package indices\n> ** installing vignettes\n> ** testing if installed package can be loaded from temporary location\n> double free or corruption (out)\n> Aborted (core dumped)\n> ERROR: loading failed\n> * removing ?/home/thierry/R/x86_64-pc-linux-gnu-library/4.0/sf?\n> \n> The downloaded source packages are in\n> ?/tmp/RtmpUVf9he/downloaded_packages?\n> Warning message:\n> In install.packages(\"sf\") :\n>    installation of package ?sf? had non-zero exit status\n> \n> sessioninfo::session_info()\n> ? Session info\n> ??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????\n>   setting  value\n>   version  R version 4.2.1 (2022-06-23)\n>   os       Ubuntu 20.04.5 LTS\n>   system   x86_64, linux-gnu\n>   ui       X11\n>   language nl_BE:nl\n>   collate  nl_BE.UTF-8\n>   ctype    nl_BE.UTF-8\n>   tz       Europe/Brussels\n>   date     2022-09-06\n>   pandoc   2.14.0.3 @ /usr/bin/pandoc\n> \n> ? Packages\n> ??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????\n>   package     * version date (UTC) lib source\n>   cli           3.3.0   2022-04-25 [1] CRAN (R 4.2.0)\n>   fortunes      1.5-4   2016-12-29 [1] CRAN (R 4.2.0)\n>   sessioninfo   1.2.2   2021-12-06 [1] CRAN (R 4.2.0)\n> \n>   [1] /home/thierry/R/x86_64-pc-linux-gnu-library/4.0\n>   [2] /usr/local/lib/R/site-library\n>   [3] /usr/lib/R/site-library\n>   [4] /usr/lib/R/library\n> \n> \n> ir. Thierry Onkelinx\n> Statisticus / Statistician\n> \n> Vlaamse Overheid / Government of Flanders\n> INSTITUUT VOOR NATUUR- EN BOSONDERZOEK / RESEARCH INSTITUTE FOR NATURE AND\n> FOREST\n> Team Biometrie & Kwaliteitszorg / Team Biometrics & Quality Assurance\n> thierry.onkelinx at inbo.be\n> Havenlaan 88 bus 73, 1000 Brussel\n> www.inbo.be\n> \n> ///////////////////////////////////////////////////////////////////////////////////////////\n> To call in the statistician after the experiment is done may be no more\n> than asking him to perform a post-mortem examination: he may be able to say\n> what the experiment died of. ~ Sir Ronald Aylmer Fisher\n> The plural of anecdote is not data. ~ Roger Brinner\n> The combination of some data and an aching desire for an answer does not\n> ensure that a reasonable answer can be extracted from a given body of data.\n> ~ John Tukey\n> ///////////////////////////////////////////////////////////////////////////////////////////\n> \n> <https://www.inbo.be>\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48151 Muenster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "Remove any other installations of PROJ from your machine, and recompile \nanything that linked to it to the new PROJ install.\n\nOn 06/09/2022 17:06, Thierry Onkelinx via R-sig-Geo wrote:\n> Dear all,\n> \n",
+      "thread_id": "thread-a4b2d52adf5b",
+      "thread_depth": 1,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-aee1957696d0",
+      "message_id": "<CAGg5H0b5JOs2oA8SHzmvw7Jx41fGEH6Gor=9cDo9tYxKcSV6nQ@mail.gmail.com>",
+      "from_name": "Nikolaos Tziokas",
+      "from_email_hash": "8312105e7618a0b91bd7038dde37c1862aea2c44337b9a99a2f8e8cdbaab259c",
+      "date": "2022-09-06T17:45:56+01:00",
+      "subject": "[R-sig-Geo] How to upscale (reduce the spatial resolution) an image using a Gaussian filter in R?",
+      "subject_clean": "How to upscale (reduce the spatial resolution) an image using a Gaussian filter in R?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n\nI want to resample a raster from 15m to 460m (pixel size) using a Gaussian\nfilter.\n\n*The goal*\n\nI am having a coarse image which I want to downscale. I also have a fine\nresolution band to assist the downscaling. The downscaling method I am\nusing is called geographically weighted area-to-point regression Kriging\n(GWATPRK). The method consists of two steps:\n\n   1. GWR\n   2. area-to-point Kriging on the GWR's residuals\n\nIn order to perform GWR using raster data, those needs to have the same\npixel size. This means that, my fine resolution image needs to be upscaled\nto match the spatial resolution of the coarse band. This upscaling of the\nfine band needs to be done using a Gaussian kernel with ?=0.5(i.e., the\nPSF).\n\nHow can I upscale (reduce the spatial resolution) a satellite image using a\nGaussian kernel (i.e., point spread function)?\n\nFor reference, I am following the paper The effect of point spread function\non downscaling continua\n<https://www.sciencedirect.com/science/article/pii/S092427162030229X> where\nthe authors at p.253 in Eq (9) mention:\n\n*the coarse image produced by upscaling the corresponding fine band k using\na PSF.*\n\nI googled how I can achieve that but unfortunately I couldn't find any\nsolution. So to do this, how can I use this Gaussian filter to change the\nresolution (pixel size) of my image?\n\nHere is the image\n<https://drive.google.com/drive/folders/18_1Kshb8WbT04gwOw4d_xhfQenULDXdB?usp=sharing>\nI\nam trying to convolve.\n\n\nMany thanks\n\n\n-- \nTziokas Nikolaos\nCartographer\n\nTel:(+44)07561120302\nLinkedIn <http://linkedin.com/in/nikolaos-tziokas-896081130>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nI want to resample a raster from 15m to 460m (pixel size) using a Gaussian\nfilter.\n\n*The goal*\n\nI am having a coarse image which I want to downscale. I also have a fine\nresolution band to assist ",
+      "thread_id": "thread-aee1957696d0",
+      "thread_depth": 0,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-e467523b75f9",
+      "message_id": "<CAAcGz9_RqnSUmtLneoM18Kaun5HYHUC2DfEnq5VoOf7Xz4OKhA@mail.gmail.com>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "ec02820eba6228afb61925d60b233042e6d048081cc8b7f7e46a034ba5ad3d90",
+      "date": "2022-09-07T09:41:19+10:00",
+      "subject": "[R-sig-Geo]  How to upscale (reduce the spatial resolution) an image using a Gaussian filter in R?",
+      "subject_clean": "How to upscale (reduce the spatial resolution) an image using a Gaussian filter in R?",
+      "in_reply_to": "<CAGg5H0b5JOs2oA8SHzmvw7Jx41fGEH6Gor=9cDo9tYxKcSV6nQ@mail.gmail.com>",
+      "references": [
+        "<CAGg5H0b5JOs2oA8SHzmvw7Jx41fGEH6Gor=9cDo9tYxKcSV6nQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hi,  I would construct the kernel and push it through terra::focal.\n\nIt should be easy enough to find the right kernel matrix but (below, as a\nkind of strange alt -  to give you something to compare with) -  you might\ninvoke gauss resampling with overviews:\n\nMake a dummy copy with GDAL\n\ngdal_translate pan15.tif dummy.tif -outsize 200% 200%\n\nthen add overviews with gauss resampling, then your 2nd level will have the\nsame resolution as your input tif\n\ngdaladdo dummy.tif -r gauss\n\nthen extract that level (you can't do this with gdal_translate until GDAL\n3.6 but it can be arranged in R, and if you gdal_translate to the exact\noutsize of the 2nd level you probably will get it exactly):\n\nYou otherwise can't control the parameters  with the app, but you possibly\ncould with a computed band in VRT.\n\nCheers, Mike\n\nOn Wed, Sep 7, 2022 at 2:46 AM Nikolaos Tziokas <nikos.tziokas at gmail.com>\nwrote:\n\n> Hi,\n>\n> I want to resample a raster from 15m to 460m (pixel size) using a Gaussian\n> filter.\n>\n> *The goal*\n>\n> I am having a coarse image which I want to downscale. I also have a fine\n> resolution band to assist the downscaling. The downscaling method I am\n> using is called geographically weighted area-to-point regression Kriging\n> (GWATPRK). The method consists of two steps:\n>\n>    1. GWR\n>    2. area-to-point Kriging on the GWR's residuals\n>\n> In order to perform GWR using raster data, those needs to have the same\n> pixel size. This means that, my fine resolution image needs to be upscaled\n> to match the spatial resolution of the coarse band. This upscaling of the\n> fine band needs to be done using a Gaussian kernel with ?=0.5(i.e., the\n> PSF).\n>\n> How can I upscale (reduce the spatial resolution) a satellite image using a\n> Gaussian kernel (i.e., point spread function)?\n>\n> For reference, I am following the paper The effect of point spread function\n> on downscaling continua\n> <https://www.sciencedirect.com/science/article/pii/S092427162030229X>\n> where\n> the authors at p.253 in Eq (9) mention:\n>\n> *the coarse image produced by upscaling the corresponding fine band k using\n> a PSF.*\n>\n> I googled how I can achieve that but unfortunately I couldn't find any\n> solution. So to do this, how can I use this Gaussian filter to change the\n> resolution (pixel size) of my image?\n>\n> Here is the image\n> <\n> https://drive.google.com/drive/folders/18_1Kshb8WbT04gwOw4d_xhfQenULDXdB?usp=sharing\n> >\n> I\n> am trying to convolve.\n>\n>\n> Many thanks\n>\n>\n> --\n> Tziokas Nikolaos\n> Cartographer\n>\n> Tel:(+44)07561120302\n> LinkedIn <http://linkedin.com/in/nikolaos-tziokas-896081130>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \nMichael Sumner\nSoftware and Database Engineer\nAustralian Antarctic Division\nHobart, Australia\ne-mail: mdsumner at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,  I would construct the kernel and push it through terra::focal.\n\nIt should be easy enough to find the right kernel matrix but (below, as a\nkind of strange alt -  to give you something to compare w",
+      "thread_id": "thread-aee1957696d0",
+      "thread_depth": 1,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-544333b4f3cd",
+      "message_id": "<CAFEqCdzvEDrhs4n0JRzn1LPTGCPdgc816DHS54bjk91szCaRfQ@mail.gmail.com>",
+      "from_name": "Greg Snow",
+      "from_email_hash": "aa36935f061fe6abd6e7a2e3ec0c60df009f5972868b73d8b185d0c3227e13fc",
+      "date": "2022-09-07T08:46:37-06:00",
+      "subject": "[R-sig-Geo]  How to upscale (reduce the spatial resolution) an image using a Gaussian filter in R?",
+      "subject_clean": "How to upscale (reduce the spatial resolution) an image using a Gaussian filter in R?",
+      "in_reply_to": "<CAGg5H0b5JOs2oA8SHzmvw7Jx41fGEH6Gor=9cDo9tYxKcSV6nQ@mail.gmail.com>",
+      "references": [
+        "<CAGg5H0b5JOs2oA8SHzmvw7Jx41fGEH6Gor=9cDo9tYxKcSV6nQ@mail.gmail.com>"
+      ],
+      "body_plain": "The `image_resize` function in the `magick` package may be a simple\noption.  A gaussian filter is one of the options.  This uses the\nImageMagick program behind the scenes, but is a quick and easy\ninterface within R for images (raster data).\n\nOn Tue, Sep 6, 2022 at 10:46 AM Nikolaos Tziokas\n<nikos.tziokas at gmail.com> wrote:\n>\n> Hi,\n>\n> I want to resample a raster from 15m to 460m (pixel size) using a Gaussian\n> filter.\n>\n> *The goal*\n>\n> I am having a coarse image which I want to downscale. I also have a fine\n> resolution band to assist the downscaling. The downscaling method I am\n> using is called geographically weighted area-to-point regression Kriging\n> (GWATPRK). The method consists of two steps:\n>\n>    1. GWR\n>    2. area-to-point Kriging on the GWR's residuals\n>\n> In order to perform GWR using raster data, those needs to have the same\n> pixel size. This means that, my fine resolution image needs to be upscaled\n> to match the spatial resolution of the coarse band. This upscaling of the\n> fine band needs to be done using a Gaussian kernel with ?=0.5(i.e., the\n> PSF).\n>\n> How can I upscale (reduce the spatial resolution) a satellite image using a\n> Gaussian kernel (i.e., point spread function)?\n>\n> For reference, I am following the paper The effect of point spread function\n> on downscaling continua\n> <https://www.sciencedirect.com/science/article/pii/S092427162030229X> where\n> the authors at p.253 in Eq (9) mention:\n>\n> *the coarse image produced by upscaling the corresponding fine band k using\n> a PSF.*\n>\n> I googled how I can achieve that but unfortunately I couldn't find any\n> solution. So to do this, how can I use this Gaussian filter to change the\n> resolution (pixel size) of my image?\n>\n> Here is the image\n> <https://drive.google.com/drive/folders/18_1Kshb8WbT04gwOw4d_xhfQenULDXdB?usp=sharing>\n> I\n> am trying to convolve.\n>\n>\n> Many thanks\n>\n>\n> --\n> Tziokas Nikolaos\n> Cartographer\n>\n> Tel:(+44)07561120302\n> LinkedIn <http://linkedin.com/in/nikolaos-tziokas-896081130>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n-- \nGregory (Greg) L. Snow Ph.D.\n538280 at gmail.com",
+      "body_snippet": "The `image_resize` function in the `magick` package may be a simple\noption.  A gaussian filter is one of the options.  This uses the\nImageMagick program behind the scenes, but is a quick and easy\ninte",
+      "thread_id": "thread-aee1957696d0",
+      "thread_depth": 1,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-df1d904fd92b",
+      "message_id": "<BYAPR06MB519249406E363F2E4B9394EDE7419@BYAPR06MB5192.namprd06.prod.outlook.com>",
+      "from_name": "Renan Serenini Bernardes",
+      "from_email_hash": "f990471bdeb1b370c8eb19379968fd8a71c4d80e48fe5a161a3d5c4509486a0e",
+      "date": "2022-09-07T23:00:51Z",
+      "subject": "[R-sig-Geo] Estimate Spatial Autoregressive model using weighted least squares",
+      "subject_clean": "Estimate Spatial Autoregressive model using weighted least squares",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I have a regression estimated via OLS and WLS and would like to test for spatial effects (estimate SAR) in both models, but I didn't find how to use WLS in SAR model. The package spatialreg offers the option to include weights just for the Spatial Error Model (function errorsarlm). By reading the manual I thought the function spautolm with the argument SAR should do it, but the results seem to be exactly the same of SEM.\nReplication:\nlibrary(spatialreg)\ndata(oldcol, package=\"spdep\")\nlistw <- spdep::nb2listw(COL.nb, style=\"W\")\nCOL.OLD$POP <- rnorm(49, 1000, 400)\n\nmodel1 <- errorsarlm(CRIME ~ INC + HOVAL, data=COL.OLD,\n                 weights=POP,listw=listw)\nmodel2 <- spautolm(CRIME ~ INC + HOVAL, data=COL.OLD,family = \"SAR\",\n               weights=POP,listw=listw)\nsummary(model1)\nsummary(model2)\nHow can I estimate the SAR model?\nRespectfully,\nRenan\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I have a regression estimated via OLS and WLS and would like to test for spatial effects (estimate SAR) in both models, but I didn't find how to use WLS in SAR model. The package spatialreg offers the",
+      "thread_id": "thread-df1d904fd92b",
+      "thread_depth": 0,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-14aa98be9393",
+      "message_id": "<00f28e9a-53c5-ba9d-f76b-2c0925afa392@mbacou.com>",
+      "from_name": "Melanie Bacou",
+      "from_email_hash": "5c81096d55abd34e703ffa1377a7ff0fd373feb65a5df014e46c31d2da952066",
+      "date": "2022-09-08T01:49:42+01:00",
+      "subject": "[R-sig-Geo] performing hydrological analysis in R.reg",
+      "subject_clean": "performing hydrological analysis in R.reg",
+      "in_reply_to": "<CAOtZwhAOWjaWyOUDGUcqqe0KkjdT7LiqpPFEy9JTfCz5Zujbhw@mail.gmail.com>",
+      "references": [
+        "<CAOtZwhAOWjaWyOUDGUcqqe0KkjdT7LiqpPFEy9JTfCz5Zujbhw@mail.gmail.com>"
+      ],
+      "body_plain": "Sandeep,\n\nYou can take a look at the Hydrological R taskview (under section \nHydrograph Analysis) https://cran.r-project.org/web/views/Hydrology.html \nfor a list of relevant packages and functions, in particular the \nvignette for package *HydroTSM*.\n\n--Mel.\n\nOn 9/6/22 5:21 AM, sandeep thakur wrote:\n> Hello all,\n> I am new to geospatial analysis and would really appreciate some help in\n> performing hydrological analysis using SRTM for a river basin. I want to\n> estimate Morphometric indices and Geomorphic indices such as Stream Length\n> gradient Index, Transverse topographic index, Hypsometric integral, Basin\n> shape and valley to width ratio. I have been using ARC GIS and have done\n> some processing but am in need of some guidance.\n>\n> I would really appreciate some help in this regard.\n>\n>\n>\n> Sincerely,\n> Sandeep Thakur\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Sandeep,\n\nYou can take a look at the Hydrological R taskview (under section \nHydrograph Analysis) https://cran.r-project.org/web/views/Hydrology.html \nfor a list of relevant packages and functions, in",
+      "thread_id": "thread-a818380ffc6e",
+      "thread_depth": 1,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-a7ae8c6f7c83",
+      "message_id": "<7e63d573-286-36b0-9259-3c0591d2c33@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2022-09-08T10:29:03+02:00",
+      "subject": "[R-sig-Geo]  Estimate Spatial Autoregressive model using weighted least squares",
+      "subject_clean": "Estimate Spatial Autoregressive model using weighted least squares",
+      "in_reply_to": "<BYAPR06MB519249406E363F2E4B9394EDE7419@BYAPR06MB5192.namprd06.prod.outlook.com>",
+      "references": [
+        "<BYAPR06MB519249406E363F2E4B9394EDE7419@BYAPR06MB5192.namprd06.prod.outlook.com>"
+      ],
+      "body_plain": "On Wed, 7 Sep 2022, Renan Serenini Bernardes wrote:\n\n> I have a regression estimated via OLS and WLS and would like to test for \n> spatial effects (estimate SAR) in both models, but I didn't find how to \n> use WLS in SAR model. The package spatialreg offers the option to \n> include weights just for the Spatial Error Model (function errorsarlm). \n> By reading the manual I thought the function spautolm with the argument \n> SAR should do it, but the results seem to be exactly the same of SEM.\n\nNo, SAR in spautolm() means \"simultaneous autoregressive\" contrasting with \nCAR \"conditional autoregressive\", both SAR and CAR model autocorrelation \nin the error, so spautolm() and errorsarlm() should give the same results.\n\nIf by SAR you mean \"spatial autoregressive\", you actually mean SLM \n\"spatial lag model\", contrasting with SEM \"spatial error model\".\n\nThe theory for including case weights in models except those with the \nspatially lagged response (SLM, SDM, GNM) is known, for models with the \nspatially lagged response it is not known (it might be possible to \nestimate the models, but the variance-covariance matrix of the \ncoefficients is not at present known as far as I understand).\n\nDo you have a robust reason for not using SEM, SDEM or SLX rather than \nSLM or SDM? See perhaps https://doi.org/10.18335/region.v4i1.107 and the \nreference there to Solon et al. (2015) on case weights in econometric \nmodels.\n\nHope this helps,\n\nRoger\n\n> Replication:\n> library(spatialreg)\n> data(oldcol, package=\"spdep\")\n> listw <- spdep::nb2listw(COL.nb, style=\"W\")\n> COL.OLD$POP <- rnorm(49, 1000, 400)\n>\n> model1 <- errorsarlm(CRIME ~ INC + HOVAL, data=COL.OLD,\n>                 weights=POP,listw=listw)\n> model2 <- spautolm(CRIME ~ INC + HOVAL, data=COL.OLD,family = \"SAR\",\n>               weights=POP,listw=listw)\n> summary(model1)\n> summary(model2)\n> How can I estimate the SAR model?\n> Respectfully,\n> Renan\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=05%7C01%7CRoger.Bivand%40nhh.no%7Cd7ef94c7458e48bfd80c08da9124e210%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637981884997172815%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&amp;sdata=sMFvdS9V4ndEij35aycL2QQ4T8cqziN79DOADM41TEY%3D&amp;reserved=0\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 7 Sep 2022, Renan Serenini Bernardes wrote:\n\n> I have a regression estimated via OLS and WLS and would like to test for \n> spatial effects (estimate SAR) in both models, but I didn't find how ",
+      "thread_id": "thread-df1d904fd92b",
+      "thread_depth": 1,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-8d5343bbdca2",
+      "message_id": "<CAH5tCz3xkwzxHEr_0eP-wURHr2dvgJmn=uN8uzj617tHRpZqWQ@mail.gmail.com>",
+      "from_name": "sownal chand",
+      "from_email_hash": "ffc77914e4223ee36804d8fb5d0dd2c15c57c7fae734d3bdc7772ae8a1735864",
+      "date": "2022-09-11T15:22:19+12:00",
+      "subject": "[R-sig-Geo] Extract Lightning Flash Time series data",
+      "subject_clean": "Extract Lightning Flash Time series data",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello Sir/Madam,\n\nI have downloaded a TRMM_LIS.nc File with lightning time series data and\nwas trying to extract it into a CSV file but I am not sure on how to do it.\n\nI am also attaching the TRMM_LIS file via this link:\nhttps://drive.google.com/drive/u/0/folders/19nJNwPKlJaPlkHn_NGzmjMHMaoUevH04\n\nRequest if someone can guide me and thanking you in advance\nsownalc\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello Sir/Madam,\n\nI have downloaded a TRMM_LIS.nc File with lightning time series data and\nwas trying to extract it into a CSV file but I am not sure on how to do it.\n\nI am also attaching the TRMM_LIS",
+      "thread_id": "thread-8d5343bbdca2",
+      "thread_depth": 0,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-3e3beb5daacb",
+      "message_id": "<CAAcGz9-paRfVchNWG2HC73AVXnXBEuELExDbKfz1d=Q8qZAUdQ@mail.gmail.com>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "ec02820eba6228afb61925d60b233042e6d048081cc8b7f7e46a034ba5ad3d90",
+      "date": "2022-09-11T14:50:58+10:00",
+      "subject": "[R-sig-Geo] Extract Lightning Flash Time series data",
+      "subject_clean": "Extract Lightning Flash Time series data",
+      "in_reply_to": "<CAH5tCz3xkwzxHEr_0eP-wURHr2dvgJmn=uN8uzj617tHRpZqWQ@mail.gmail.com>",
+      "references": [
+        "<CAH5tCz3xkwzxHEr_0eP-wURHr2dvgJmn=uN8uzj617tHRpZqWQ@mail.gmail.com>"
+      ],
+      "body_plain": "I don't understand this file structure yet, but you might try tidync:\n\nlibrary(tidync)\n## open the file and get a summary of all vars and the dimensions they use\n(nc <- tidync::tidync(\"TRMM_LIS.nc\"))\n\nSee how viewtime_lat, viewtime_lon (and others) exist on the grid\nidentified by \"D0\" (other grids include multiple dims and so have\nidentifiers like \"D1,D2\" - this concept doesn't exist in NetCDF itself but\ntidync wanted to group variables by the dims they use).\n\nThe grid \"D0\" is not active by default, so you can do\n\nnc |> activate(\"D0\")\n\n(everything is lazy up to this point, no data has been read)\n\nConvert to dataframe with\n\nnc |> activate(\"D0\") |> hyper_tibble()\n\nYou can use hyper_array() to get in native array format with some informal\nmetadata on the output.\n\nHTH, otherwise package stars has another approach and some similar\nfacilities.  I often use tidync just to understand what's there, but I\nmight craft a solution with a different tool after I've explored. RNetCDF\nwill give you direct low level access to this format, for example.\n\nCheers, Mike\n\n\n\n\nOn Sun, Sep 11, 2022 at 1:22 PM sownal chand <sownalchandfms at gmail.com>\nwrote:\n\n> Hello Sir/Madam,\n>\n> I have downloaded a TRMM_LIS.nc File with lightning time series data and\n> was trying to extract it into a CSV file but I am not sure on how to do it.\n>\n> I am also attaching the TRMM_LIS file via this link:\n>\n> https://drive.google.com/drive/u/0/folders/19nJNwPKlJaPlkHn_NGzmjMHMaoUevH04\n>\n> Request if someone can guide me and thanking you in advance\n> sownalc\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \nMichael Sumner\nSoftware and Database Engineer\nAustralian Antarctic Division\nHobart, Australia\ne-mail: mdsumner at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I don't understand this file structure yet, but you might try tidync:\n\nlibrary(tidync)\n## open the file and get a summary of all vars and the dimensions they use\n(nc <- tidync::tidync(\"TRMM_LIS.nc\"))\n",
+      "thread_id": "thread-8d5343bbdca2",
+      "thread_depth": 1,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-e683f1c6818c",
+      "message_id": "<CAH5tCz2YCu2G4xKoFALBwqGvhUju6ahq9mnDaPA0c_LMJ7AhVA@mail.gmail.com>",
+      "from_name": "sownal chand",
+      "from_email_hash": "ffc77914e4223ee36804d8fb5d0dd2c15c57c7fae734d3bdc7772ae8a1735864",
+      "date": "2022-09-11T17:16:19+12:00",
+      "subject": "[R-sig-Geo] Extract Lightning Flash Time series data",
+      "subject_clean": "Extract Lightning Flash Time series data",
+      "in_reply_to": "<CAAcGz9-paRfVchNWG2HC73AVXnXBEuELExDbKfz1d=Q8qZAUdQ@mail.gmail.com>",
+      "references": [
+        "<CAH5tCz3xkwzxHEr_0eP-wURHr2dvgJmn=uN8uzj617tHRpZqWQ@mail.gmail.com>",
+        "<CAAcGz9-paRfVchNWG2HC73AVXnXBEuELExDbKfz1d=Q8qZAUdQ@mail.gmail.com>"
+      ],
+      "body_plain": "Thanks Michael\n\n\nBut i will try out your approach and let see how it goes.\n\nKind regards\nSownalc\n\nOn Sun, Sep 11, 2022, 16:51 Michael Sumner <mdsumner at gmail.com> wrote:\n\n> I don't understand this file structure yet, but you might try tidync:\n>\n> library(tidync)\n> ## open the file and get a summary of all vars and the dimensions they use\n> (nc <- tidync::tidync(\"TRMM_LIS.nc\"))\n>\n> See how viewtime_lat, viewtime_lon (and others) exist on the grid\n> identified by \"D0\" (other grids include multiple dims and so have\n> identifiers like \"D1,D2\" - this concept doesn't exist in NetCDF itself but\n> tidync wanted to group variables by the dims they use).\n>\n> The grid \"D0\" is not active by default, so you can do\n>\n> nc |> activate(\"D0\")\n>\n> (everything is lazy up to this point, no data has been read)\n>\n> Convert to dataframe with\n>\n> nc |> activate(\"D0\") |> hyper_tibble()\n>\n> You can use hyper_array() to get in native array format with some informal\n> metadata on the output.\n>\n> HTH, otherwise package stars has another approach and some similar\n> facilities.  I often use tidync just to understand what's there, but I\n> might craft a solution with a different tool after I've explored. RNetCDF\n> will give you direct low level access to this format, for example.\n>\n> Cheers, Mike\n>\n>\n>\n>\n> On Sun, Sep 11, 2022 at 1:22 PM sownal chand <sownalchandfms at gmail.com>\n> wrote:\n>\n>> Hello Sir/Madam,\n>>\n>> I have downloaded a TRMM_LIS.nc File with lightning time series data and\n>> was trying to extract it into a CSV file but I am not sure on how to do\n>> it.\n>>\n>> I am also attaching the TRMM_LIS file via this link:\n>>\n>> https://drive.google.com/drive/u/0/folders/19nJNwPKlJaPlkHn_NGzmjMHMaoUevH04\n>>\n>> Request if someone can guide me and thanking you in advance\n>> sownalc\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>\n> --\n> Michael Sumner\n> Software and Database Engineer\n> Australian Antarctic Division\n> Hobart, Australia\n> e-mail: mdsumner at gmail.com\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks Michael\n\n\nBut i will try out your approach and let see how it goes.\n\nKind regards\nSownalc\n\nOn Sun, Sep 11, 2022, 16:51 Michael Sumner <mdsumner at gmail.com> wrote:\n\n> I don't understand this f",
+      "thread_id": "thread-8d5343bbdca2",
+      "thread_depth": 2,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-96b80abc298f",
+      "message_id": "<6fa68ce4-a473-dcac-b597-cdb7393e0a47@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2022-09-12T11:42:14+02:00",
+      "subject": "[R-sig-Geo] Extract Lightning Flash Time series data",
+      "subject_clean": "Extract Lightning Flash Time series data",
+      "in_reply_to": "<CAH5tCz2YCu2G4xKoFALBwqGvhUju6ahq9mnDaPA0c_LMJ7AhVA@mail.gmail.com>",
+      "references": [
+        "<CAH5tCz3xkwzxHEr_0eP-wURHr2dvgJmn=uN8uzj617tHRpZqWQ@mail.gmail.com>",
+        "<CAAcGz9-paRfVchNWG2HC73AVXnXBEuELExDbKfz1d=Q8qZAUdQ@mail.gmail.com>",
+        "<CAH5tCz2YCu2G4xKoFALBwqGvhUju6ahq9mnDaPA0c_LMJ7AhVA@mail.gmail.com>"
+      ],
+      "body_plain": "Someone tried to pack a lot of different things in that netcdf file! Is \nthere one particular variable that is of main interest to you? AFAICT \nthe primary observations seem like (long,lat,time,something_measured)\nsets, as if along a trajectory. Finding the variables that depend on \ndimension viewtime_dim give you 2097 records of them.\n\nPackage stars is not so well equiped for one-dimensional arrays - sf \nwould be more suitable in terms of data structure but GDAL doesn't seem \nto understand the file to contain vector (POINT) geometries.\n\nI think I would go for using packages like RNetCDF or ncdf4 and \nextracting the one-dimensional variables of interest, then cbind-ing them.\n\nOn 11/09/2022 07:16, sownal chand wrote:\n> Thanks Michael\n> \n> \n> But i will try out your approach and let see how it goes.\n> \n> Kind regards\n> Sownalc\n> \n> On Sun, Sep 11, 2022, 16:51 Michael Sumner <mdsumner at gmail.com> wrote:\n> \n>> I don't understand this file structure yet, but you might try tidync:\n>>\n>> library(tidync)\n>> ## open the file and get a summary of all vars and the dimensions they use\n>> (nc <- tidync::tidync(\"TRMM_LIS.nc\"))\n>>\n>> See how viewtime_lat, viewtime_lon (and others) exist on the grid\n>> identified by \"D0\" (other grids include multiple dims and so have\n>> identifiers like \"D1,D2\" - this concept doesn't exist in NetCDF itself but\n>> tidync wanted to group variables by the dims they use).\n>>\n>> The grid \"D0\" is not active by default, so you can do\n>>\n>> nc |> activate(\"D0\")\n>>\n>> (everything is lazy up to this point, no data has been read)\n>>\n>> Convert to dataframe with\n>>\n>> nc |> activate(\"D0\") |> hyper_tibble()\n>>\n>> You can use hyper_array() to get in native array format with some informal\n>> metadata on the output.\n>>\n>> HTH, otherwise package stars has another approach and some similar\n>> facilities.  I often use tidync just to understand what's there, but I\n>> might craft a solution with a different tool after I've explored. RNetCDF\n>> will give you direct low level access to this format, for example.\n>>\n>> Cheers, Mike\n>>\n>>\n>>\n>>\n>> On Sun, Sep 11, 2022 at 1:22 PM sownal chand <sownalchandfms at gmail.com>\n>> wrote:\n>>\n>>> Hello Sir/Madam,\n>>>\n>>> I have downloaded a TRMM_LIS.nc File with lightning time series data and\n>>> was trying to extract it into a CSV file but I am not sure on how to do\n>>> it.\n>>>\n>>> I am also attaching the TRMM_LIS file via this link:\n>>>\n>>> https://drive.google.com/drive/u/0/folders/19nJNwPKlJaPlkHn_NGzmjMHMaoUevH04\n>>>\n>>> Request if someone can guide me and thanking you in advance\n>>> sownalc\n>>>\n>>>          [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>\n>>\n>> --\n>> Michael Sumner\n>> Software and Database Engineer\n>> Australian Antarctic Division\n>> Hobart, Australia\n>> e-mail: mdsumner at gmail.com\n>>\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48151 Muenster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "Someone tried to pack a lot of different things in that netcdf file! Is \nthere one particular variable that is of main interest to you? AFAICT \nthe primary observations seem like (long,lat,time,someth",
+      "thread_id": "thread-8d5343bbdca2",
+      "thread_depth": 3,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-60c3ceb56b6e",
+      "message_id": "<CANvsoOuEw6N5c8OAfix5hqscASmZsywpayY99BbLdA_By7K5-g@mail.gmail.com>",
+      "from_name": "rpaolo1967 RP",
+      "from_email_hash": "1097c9040ef17bebb17a762af170b24739609c3849299849c16adef783bb035f",
+      "date": "2022-09-12T07:17:41-03:00",
+      "subject": "[R-sig-Geo] On simultaneous autoregressive spatial models",
+      "subject_clean": "On simultaneous autoregressive spatial models",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi everyone,\nPerhaps a dummy question. Can anybody please tell me whether is it\npossible to fit a simultaneous autoregressive spatial model with both\nquantitative and qualitative variables?\n\nPaolo Ramoni\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi everyone,\nPerhaps a dummy question. Can anybody please tell me whether is it\npossible to fit a simultaneous autoregressive spatial model with both\nquantitative and qualitative variables?\n\nPaolo Ram",
+      "thread_id": "thread-60c3ceb56b6e",
+      "thread_depth": 0,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-facecb91ac3e",
+      "message_id": "<348a24ca-fc4b-baca-e572-d7ac6f6dd72c@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2022-09-13T17:28:48+02:00",
+      "subject": "[R-sig-Geo] On simultaneous autoregressive spatial models",
+      "subject_clean": "On simultaneous autoregressive spatial models",
+      "in_reply_to": "<CANvsoOuEw6N5c8OAfix5hqscASmZsywpayY99BbLdA_By7K5-g@mail.gmail.com>",
+      "references": [
+        "<CANvsoOuEw6N5c8OAfix5hqscASmZsywpayY99BbLdA_By7K5-g@mail.gmail.com>"
+      ],
+      "body_plain": "On Mon, 12 Sep 2022, rpaolo1967 RP wrote:\n\n> Hi everyone,\n> Perhaps a dummy question. Can anybody please tell me whether is it\n> possible to fit a simultaneous autoregressive spatial model with both\n> quantitative and qualitative variables?\n\nOn the RHS, yes, LHS would be limited dependent variables for qualitative, \nso not so easy - spatial probit etc. are available, but it isn't clear \nwhat your needs are.\n\nHope this helps,\n\nRoger\n\n>\n> Paolo Ramoni\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=05%7C01%7CRoger.Bivand%40nhh.no%7C4f147d649a654598498908da94a82056%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637985747221500971%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&amp;sdata=CDAxvMFToVha7hEoyhn2wQqGyMxpNGbxbiujwbDGm7g%3D&amp;reserved=0\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Mon, 12 Sep 2022, rpaolo1967 RP wrote:\n\n> Hi everyone,\n> Perhaps a dummy question. Can anybody please tell me whether is it\n> possible to fit a simultaneous autoregressive spatial model with both\n>",
+      "thread_id": "thread-60c3ceb56b6e",
+      "thread_depth": 1,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-81ad7fecf051",
+      "message_id": "<CANvsoOvGO-HOFgkMuF3hHL6fzqLVr75yUtX1PTVcr6hLXDQ4Fw@mail.gmail.com>",
+      "from_name": "rpaolo1967 RP",
+      "from_email_hash": "1097c9040ef17bebb17a762af170b24739609c3849299849c16adef783bb035f",
+      "date": "2022-09-13T13:34:55-03:00",
+      "subject": "[R-sig-Geo] On simultaneous autoregressive spatial models",
+      "subject_clean": "On simultaneous autoregressive spatial models",
+      "in_reply_to": "<348a24ca-fc4b-baca-e572-d7ac6f6dd72c@reclus2.nhh.no>",
+      "references": [
+        "<CANvsoOuEw6N5c8OAfix5hqscASmZsywpayY99BbLdA_By7K5-g@mail.gmail.com>",
+        "<348a24ca-fc4b-baca-e572-d7ac6f6dd72c@reclus2.nhh.no>"
+      ],
+      "body_plain": "Thank you, Dr. Bivand. I'm modeling species distributions and need to\n\"thin\" my data to reduce the effect of spatial autocorrelation. I'm using\nboth continuous (climate, etc.) and categorical (soil, etc.) variables. The\nidea would be to fit simultaneous autoregressive models to the occurrence\ndata, use the resulting autoregressive coefficients to estimate the degrees\nof freedom in the dataset, and consider them as the number of spatially\nindependent occurrences.\n\nAgain, thank you!\n\nPaolo\n\nEl mar, 13 sept 2022 a las 12:28, Roger Bivand (<Roger.Bivand at nhh.no>)\nescribi?:\n\n> On Mon, 12 Sep 2022, rpaolo1967 RP wrote:\n>\n> > Hi everyone,\n> > Perhaps a dummy question. Can anybody please tell me whether is it\n> > possible to fit a simultaneous autoregressive spatial model with both\n> > quantitative and qualitative variables?\n>\n> On the RHS, yes, LHS would be limited dependent variables for qualitative,\n> so not so easy - spatial probit etc. are available, but it isn't clear\n> what your needs are.\n>\n> Hope this helps,\n>\n> Roger\n>\n> >\n> > Paolo Ramoni\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> >\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=05%7C01%7CRoger.Bivand%40nhh.no%7C4f147d649a654598498908da94a82056%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637985747221500971%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&amp;sdata=CDAxvMFToVha7hEoyhn2wQqGyMxpNGbxbiujwbDGm7g%3D&amp;reserved=0\n> >\n>\n> --\n> Roger Bivand\n> Emeritus Professor\n> Department of Economics, Norwegian School of Economics,\n> Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\n> e-mail: Roger.Bivand at nhh.no\n> https://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you, Dr. Bivand. I'm modeling species distributions and need to\n\"thin\" my data to reduce the effect of spatial autocorrelation. I'm using\nboth continuous (climate, etc.) and categorical (soil, e",
+      "thread_id": "thread-60c3ceb56b6e",
+      "thread_depth": 2,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-2a4548eb5a06",
+      "message_id": "<CAGmiv2KLeMSeU5ThSZdwCgwfc8NBJ4ipB+soDW1Zd6i7Gs5E_g@mail.gmail.com>",
+      "from_name": "Raman Mishra",
+      "from_email_hash": "f40e2ac410c609bcb633ecb918bb3993bbcfce4719bc710aec8b070d5b7c277c",
+      "date": "2022-09-24T23:37:15+05:30",
+      "subject": "[R-sig-Geo] tmap_dots issue",
+      "subject_clean": "tmap_dots issue",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear Members,\nI am using tm_dots with a factor variable (to identify regions with\nsymbols), I need to identify only one category (regions with symbols) I do\nnot want to plot the second category. I tried a lot but couldn't find a\nsolution. Further, instead of the title, the variable name appears.\nPlease find the code below and provide a solution.\n\ntm_shape(myshape1) +\n  tm_polygons(col = \"open4\", palette=\"Oranges\" , border.col = \"red\",\nborder.alpha = 0.5, legend.hist = FALSE, title=\"Prevalence open\",\nstyle=\"cont\", colorNA=\"white\")  +\n  tm_legend(legend.outside = TRUE) + tm_scale_bar() +\n  tm_layout( frame=F, legend.title.size = 1, legend.text.size = .65) +\n  tm_dots(\"T_AD_707_1\", size=0.06 ,col=\"black\",  title = \"Districts Type\")\n\n\nThanks & regards,\nRaman Mishra\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Members,\nI am using tm_dots with a factor variable (to identify regions with\nsymbols), I need to identify only one category (regions with symbols) I do\nnot want to plot the second category. I tri",
+      "thread_id": "thread-2a4548eb5a06",
+      "thread_depth": 0,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-af28277c9ead",
+      "message_id": "<CAGg5H0b0PaQMEm=vyZuq6G_O4HHwgwk3e5K9RsJzU4Hz3ghzOg@mail.gmail.com>",
+      "from_name": "Nikolaos Tziokas",
+      "from_email_hash": "8312105e7618a0b91bd7038dde37c1862aea2c44337b9a99a2f8e8cdbaab259c",
+      "date": "2022-09-24T19:13:56+01:00",
+      "subject": "[R-sig-Geo]  How to upscale (reduce the spatial resolution) an image using a Gaussian filter in R?",
+      "subject_clean": "How to upscale (reduce the spatial resolution) an image using a Gaussian filter in R?",
+      "in_reply_to": "<CAFEqCdzvEDrhs4n0JRzn1LPTGCPdgc816DHS54bjk91szCaRfQ@mail.gmail.com>",
+      "references": [
+        "<CAGg5H0b5JOs2oA8SHzmvw7Jx41fGEH6Gor=9cDo9tYxKcSV6nQ@mail.gmail.com>",
+        "<CAFEqCdzvEDrhs4n0JRzn1LPTGCPdgc816DHS54bjk91szCaRfQ@mail.gmail.com>"
+      ],
+      "body_plain": "I managed to solve the issue using the OpenImageR package and the function\ndown_sample_image.\n\nlibrary(raster)\nlibrary(OpenImageR)\n\nr = raster(\"path/tirs.tif\")\n\nm = as.matrix(r)\n\npsf = down_sample_image(m,\n                        factor = 4.6, # zoom factor\n                        gaussian_blur = T,\n                        gauss_sigma = 0.5 * 100) # sigma * pixel size\n\ne <- extent(r)\n\nm2r <- raster(psf)\nextent(m2r) <- e\nraster::crs(m2r) <- \"EPSG:7767\"\nres(m2r)\n\nwriteRaster(m2r, \"path/tirs460.tif\")\n\nThe function seems to do exactly what the creator of the area-to-point\nregression Kriging, Qunming Wang, did with in his Matlab code (\nhttps://github.com/qunmingwang/Code-for-S2-fusion/blob/master/PSF_template.m).\nThat is, he multiplied the width of the PSF with scale factor.\n\n\n???? ???, 7 ??? 2022, 15:46 ? ??????? Greg Snow <538280 at gmail.com> ??????:\n\n> The `image_resize` function in the `magick` package may be a simple\n> option.  A gaussian filter is one of the options.  This uses the\n> ImageMagick program behind the scenes, but is a quick and easy\n> interface within R for images (raster data).\n>\n> On Tue, Sep 6, 2022 at 10:46 AM Nikolaos Tziokas\n> <nikos.tziokas at gmail.com> wrote:\n> >\n> > Hi,\n> >\n> > I want to resample a raster from 15m to 460m (pixel size) using a\n> Gaussian\n> > filter.\n> >\n> > *The goal*\n> >\n> > I am having a coarse image which I want to downscale. I also have a fine\n> > resolution band to assist the downscaling. The downscaling method I am\n> > using is called geographically weighted area-to-point regression Kriging\n> > (GWATPRK). The method consists of two steps:\n> >\n> >    1. GWR\n> >    2. area-to-point Kriging on the GWR's residuals\n> >\n> > In order to perform GWR using raster data, those needs to have the same\n> > pixel size. This means that, my fine resolution image needs to be\n> upscaled\n> > to match the spatial resolution of the coarse band. This upscaling of the\n> > fine band needs to be done using a Gaussian kernel with ?=0.5(i.e., the\n> > PSF).\n> >\n> > How can I upscale (reduce the spatial resolution) a satellite image\n> using a\n> > Gaussian kernel (i.e., point spread function)?\n> >\n> > For reference, I am following the paper The effect of point spread\n> function\n> > on downscaling continua\n> > <https://www.sciencedirect.com/science/article/pii/S092427162030229X>\n> where\n> > the authors at p.253 in Eq (9) mention:\n> >\n> > *the coarse image produced by upscaling the corresponding fine band k\n> using\n> > a PSF.*\n> >\n> > I googled how I can achieve that but unfortunately I couldn't find any\n> > solution. So to do this, how can I use this Gaussian filter to change the\n> > resolution (pixel size) of my image?\n> >\n> > Here is the image\n> > <\n> https://drive.google.com/drive/folders/18_1Kshb8WbT04gwOw4d_xhfQenULDXdB?usp=sharing\n> >\n> > I\n> > am trying to convolve.\n> >\n> >\n> > Many thanks\n> >\n> >\n> > --\n> > Tziokas Nikolaos\n> > Cartographer\n> >\n> > Tel:(+44)07561120302\n> > LinkedIn <http://linkedin.com/in/nikolaos-tziokas-896081130>\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n> --\n> Gregory (Greg) L. Snow Ph.D.\n> 538280 at gmail.com\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I managed to solve the issue using the OpenImageR package and the function\ndown_sample_image.\n\nlibrary(raster)\nlibrary(OpenImageR)\n\nr = raster(\"path/tirs.tif\")\n\nm = as.matrix(r)\n\npsf = down_sample_ima",
+      "thread_id": "thread-aee1957696d0",
+      "thread_depth": 2,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-2a07eef0f118",
+      "message_id": "<CAGg5H0Y42TdYcoy2i=A7mHvcVwvdYWay2+PE-eBMP4R48kM+HQ@mail.gmail.com>",
+      "from_name": "Nikolaos Tziokas",
+      "from_email_hash": "8312105e7618a0b91bd7038dde37c1862aea2c44337b9a99a2f8e8cdbaab259c",
+      "date": "2022-09-26T18:59:13+01:00",
+      "subject": "[R-sig-Geo] How to check which model of an ensemble algorithm has been selected to perform regression?",
+      "subject_clean": "How to check which model of an ensemble algorithm has been selected to perform regression?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I am using the R package machisplin\n<https://github.com/jasonleebrown/machisplin> (it's not on CRAN) to\ndownscale a satellite image. According to the description of the package:\n\n*The machisplin.mltps function simultaneously evaluates different\ncombinations of the six algorithms to predict the input data. During model\ntuning, each algorithm is systematically weighted from 0-1 and the fit of\nthe ensembled model is evaluated. The best performing model is determined\nthrough k-fold cross validation (k=10) and the model that has the lowest\nresidual sum of squares of test data is chosen. After determining the best\nmodel algorithms and weights, a final model is created using the full\ntraining dataset.*\n\nMy question is how can I check which model out of the 6 has been selected\nfor the downscaling? To put it differently, when I export the downscaled\nimage, I would like to know which algorithm (out of the 6) has been used to\nperform the downscaling.\n\nHere is the code:\n\nlibrary(MACHISPLIN)\nlibrary(raster)\nlibrary(gbm)\n\nevi = raster(\"path/evi.tif\") # covariate\nntl = raster(\"path/ntl_1600.tif\") # raster to be downscaled\n##convert one of the rasters to a point dataframe to sample.  Use any\nraster input.\nntl.points<-rasterToPoints(ntl,\nfun = NULL,\nspatial = FALSE)\n##subset only the x and y data\nntl.points<- ntl.points[,1:2]\n##Extract values to points from rasters\nRAST_VAL<-data.frame(extract(ntl, ntl.points))\n##merge sampled data to input\nInInterp<-cbind(ntl.points, RAST_VAL)\n#run an ensemble machine learning thin plate spline\ninterp.rast<-machisplin.mltps(int.values = InInterp,\n                              covar.ras = evi,\n                              smooth.outputs.only = T,\n                              tps = T,\n                              n.cores = 4)\n#set negative values to 0\ninterp.rast[[1]]$final[interp.rast[[1]]$final <= 0] <- 0\n\nwriteRaster(interp.rast[[1]]$final,\n            filename = \"path/ntl_splines.tif\")\n\nI vied all the output parameters (please refer to *Example 2* in the\npackage description) but I couldn't find anything relevant to my question.\n\nI have posted a question\n<https://github.com/jasonleebrown/machisplin/issues/10> on GitHub as well.\n>From here\n<https://drive.google.com/drive/folders/17SnegdgZ0192nqtP-95O55ZNPLngNMQH?usp=sharing>\nyou\ncan download my images.\n\n-- \nTziokas Nikolaos\nCartographer\n\nTel:(+44)07561120302\nLinkedIn <http://linkedin.com/in/nikolaos-tziokas-896081130>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am using the R package machisplin\n<https://github.com/jasonleebrown/machisplin> (it's not on CRAN) to\ndownscale a satellite image. According to the description of the package:\n\n*The machisplin.mltps",
+      "thread_id": "thread-2a07eef0f118",
+      "thread_depth": 0,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-c8f004646607",
+      "message_id": "<CD717392-6081-44D5-A8A0-8B5A7C34E40F@ilstu.edu>",
+      "from_name": "Thayn, Jonathan",
+      "from_email_hash": "0e6b28d5e9f846e95798da2f7dec924df67b5a436400b3155ed752fda9d2c64a",
+      "date": "2022-09-29T03:27:16Z",
+      "subject": "[R-sig-Geo] terra::app",
+      "subject_clean": "terra::app",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I keep getting the following message when using terra:app ?? Error: [app] the number of values returned by 'fun' is not appropriate. I can?t figure out what I?m doing wrong. A sample code is below:\n\n\n\n\nlibrary(terra)\nthe.raster <- rast(ncol=4,nrow=4)\nthe.raster[] <- sample(0:65535,16)\n\nget.snow <- function(j){\nk <- as.numeric(intToBits(j)[10:11])\nm <- k%*%1:2\nreturn(m)\n}\n\nnew.raster <- app(the.raster,get.snow)\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I keep getting the following message when using terra:app ?? Error: [app] the number of values returned by 'fun' is not appropriate. I can?t figure out what I?m doing wrong. A sample code is below:\n\n\n",
+      "thread_id": "thread-c8f004646607",
+      "thread_depth": 0,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-9cb7c0c4d10f",
+      "message_id": "<fd89428b-f776-0c0a-ce41-0bf0f8bf16db@gmail.com>",
+      "from_name": "Bede-Fazekas Ákos",
+      "from_email_hash": "f2e2e122dfd4dbb8b8973b23d149555486ccb4290cb5f11779739fdbbcf5b93d",
+      "date": "2022-09-29T14:18:53+02:00",
+      "subject": "[R-sig-Geo] terra::app",
+      "subject_clean": "terra::app",
+      "in_reply_to": "<CD717392-6081-44D5-A8A0-8B5A7C34E40F@ilstu.edu>",
+      "references": [
+        "<CD717392-6081-44D5-A8A0-8B5A7C34E40F@ilstu.edu>"
+      ],
+      "body_plain": "Dear Jonathan,\n\nFunction get.snow() is not vectorized, i.e. it does not return a vector \nof the same length as its input. According to the help of app(), \"The \nfunction should return a vector or matrix that is divisible by ncell(x).\".\n\nHTH,\n?kos Bede-Fazekas\nCentre for Ecological Research\nHungary\n\n2022.09.29. 5:27 keltez?ssel, Thayn, Jonathan ?rta:\n> I keep getting the following message when using terra:app ?? Error: [app] the number of values returned by 'fun' is not appropriate. I can?t figure out what I?m doing wrong. A sample code is below:\n>\n>\n>\n>\n> library(terra)\n> the.raster <- rast(ncol=4,nrow=4)\n> the.raster[] <- sample(0:65535,16)\n>\n> get.snow <- function(j){\n> k <- as.numeric(intToBits(j)[10:11])\n> m <- k%*%1:2\n> return(m)\n> }\n>\n> new.raster <- app(the.raster,get.snow)\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Dear Jonathan,\n\nFunction get.snow() is not vectorized, i.e. it does not return a vector \nof the same length as its input. According to the help of app(), \"The \nfunction should return a vector or matri",
+      "thread_id": "thread-c8f004646607",
+      "thread_depth": 1,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-9238e295cfed",
+      "message_id": "<2152114e-2499-ec74-214b-b1baf207b4e1@gmail.com>",
+      "from_name": "Tomislav Hengl",
+      "from_email_hash": "1c592038322bbeaa3bb702d8d64ab9c83a31b70d7020477c6836f5af383d3072",
+      "date": "2022-09-29T15:11:12+02:00",
+      "subject": "[R-sig-Geo] 2 post-doctoral data scientists + 1 geovisualization expert at OpenGeoHub",
+      "subject_clean": "2 post-doctoral data scientists + 1 geovisualization expert at OpenGeoHub",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "We are hiring 3 new researchers to help with our EU Horizon + Int \nprojects aiming at building Data Cubes, mapping dynamic soil properties \n& building data science dashboards: 1 Post-doctoral data scientist: \nGlobal Earth Observation data sets, 2 Post-doctoral data scientist: \ndynamic soil-landscape modeler, 3 Data scientist: Geovisualization and \ndashboard building expert: https://opengeohub.org/category/jobs/\n\nOur special interest is R / Python / OSGeo enthusiast eager to help \ndevelop open source solutions and establish and strengthen open \ndevelopment communities.\n\nApplication deadline: 1st of November 2022\n\nCome and work with us on using data science to solve global & EU \nenvironmental problems!\n\n\"Post-doctoral data scientist: Global Earth Observation data sets\"\nApplication Deadline: 1st of November 2022\nPossible start date: 1st of January 2023\nDuration: 3+ years,\nJob location: Agro Business Park 10, Wageningen\nBruto monthly salary: starting at ?4,078 gross per month depending on \nexperience\nJob type: post-doctoral researcher\nFields: geocomputation, environmental sciences, Earth Observation, big \ndata, data science, HPC, Digital Twin Earth, \nhttps://opengeohub.org/jobs/post-doctoral-data-scientist-global-earth-observation-data-sets/\n\n\"Post-doctoral data scientist: dynamic soil-landscape modeler\"\nApplication Deadline: 1st of November 2022\nPossible start date: 1st of January 2023\nDuration: 3+ years,\nJob location: Agro Business Park 10, Wageningen\nBruto monthly salary: starting at ?3.807 gross per month depending on \nexperience\nJob type: post-doctoral researcher\nFields: Fields: pedometrics, geocomputation, global datasets, \nenvironmental sciences, Earth observation, data science, HPC\nhttps://opengeohub.org/jobs/post-doctoral-data-scientist-dynamic-soil-landscape-modeler/\n\n\"Data scientist: Geovisualization and dashboard building\"\nPossible start date: 1st of January 2023\nDuration: 2+ years,\nJob location: Agro Business Park 10, Wageningen\nBruto monthly salary: ?2.836 gross per month (with possible bonuses)\nJob type: research assistant\nFields: geovisualization, econometrics, geocomputation, environmental \nsciences, Earth observation, data science, environmental-economic accounting\nhttps://opengeohub.org/jobs/data-scientist-geovisualization-and-dashboard-building/\n\n-- \nT. (Tom) Hengl\nTechnical director / Vice Chair\nThe OpenGeoHub Foundation\nVisiting address: Agro Business Park 10, 6708PW Wageningen, NL\nTel: +31 (0)317 427537\nUrl: https://opengeohub.org/about\nTwitter: https://twitter.com/opengeohub\nMedium: https://opengeohub.medium.com/\nTIB: https://av.tib.eu/publisher/OpenGeoHub_Foundation\nhttps://www.youtube.com/c/OpenGeoHubFoundation\nskype:tom.hengl?chat\nPublications: http://scholar.google.com/citations?user=2oYU7S8AAAAJ",
+      "body_snippet": "We are hiring 3 new researchers to help with our EU Horizon + Int \nprojects aiming at building Data Cubes, mapping dynamic soil properties \n& building data science dashboards: 1 Post-doctoral data sci",
+      "thread_id": "thread-9238e295cfed",
+      "thread_depth": 0,
+      "month": "2022-09"
+    },
+    {
+      "id": "msg-31416ed76e93",
+      "message_id": "<CABkCotSjmKgEafW5STMdJr368KYdzLoKHSnKiZh821eniR4O8A@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2022-09-30T09:08:09-06:00",
+      "subject": "[R-sig-Geo] How to use st_rasterize (stars) for a categorical field like terra does?",
+      "subject_clean": "How to use st_rasterize (stars) for a categorical field like terra does?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list members,\n\nWhen using the terra package:\n\nf <- system.file(\"ex/lux.shp\", package=\"terra\")\nv <- vect(f)\nr <- rast(v, ncols=75, nrows=100)\nz <- rasterize(v, r, \"NAME_2\")\nplot(z)\nlines(v)\n\nHow can I obtain the same result using st_rasterize from stars?\n\nManuel\n\n-- \n*Manuel Sp?nola, Ph.D.*\nInstituto Internacional en Conservaci?n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.cr <mspinola at una.ac.cr>\nmspinola10 at gmail.com\nTel?fono: (506) 8706 - 4662\nInstitutional website: ICOMVIS\n<http://www.icomvis.una.ac.cr/index.php/manuel>\nBlog sobre Ciencia de Datos: https://mspinola-ciencia-de-datos.netlify.app\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list members,\n\nWhen using the terra package:\n\nf <- system.file(\"ex/lux.shp\", package=\"terra\")\nv <- vect(f)\nr <- rast(v, ncols=75, nrows=100)\nz <- rasterize(v, r, \"NAME_2\")\nplot(z)\nlines(v)\n\nHow c",
+      "thread_id": "thread-31416ed76e93",
+      "thread_depth": 0,
+      "month": "2022-09"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-5548604811c7",
+      "subject": "TRMM data Analysis",
+      "message_count": 4,
+      "participants": [
+        "H. Joe Lee",
+        "Roy Mendelssohn - NOAA Federal",
+        "sownal chand"
+      ],
+      "started": "2022-09-02T21:34:57+12:00",
+      "last_reply": "2022-09-03T05:21:25+12:00",
+      "root_message_id": "msg-5548604811c7"
+    },
+    {
+      "id": "thread-c5f3804ec11e",
+      "subject": "Shapefile clipping operation help request",
+      "message_count": 3,
+      "participants": [
+        "Bhaskar Mitra",
+        "Micha Silver"
+      ],
+      "started": "2022-09-05T10:10:17-07:00",
+      "last_reply": "2022-09-05T16:07:15-07:00",
+      "root_message_id": "msg-c5f3804ec11e"
+    },
+    {
+      "id": "thread-a818380ffc6e",
+      "subject": "performing hydrological analysis in R.reg",
+      "message_count": 2,
+      "participants": [
+        "Melanie Bacou",
+        "sandeep thakur"
+      ],
+      "started": "2022-09-06T09:51:48+05:30",
+      "last_reply": "2022-09-08T01:49:42+01:00",
+      "root_message_id": "msg-a818380ffc6e"
+    },
+    {
+      "id": "thread-a4b2d52adf5b",
+      "subject": "problem installing sf",
+      "message_count": 2,
+      "participants": [
+        "Edzer Pebesma",
+        "Thierry Onkelinx"
+      ],
+      "started": "2022-09-06T17:06:30+02:00",
+      "last_reply": "2022-09-06T17:53:55+02:00",
+      "root_message_id": "msg-a4b2d52adf5b"
+    },
+    {
+      "id": "thread-aee1957696d0",
+      "subject": "How to upscale (reduce the spatial resolution) an image using a Gaussian filter in R?",
+      "message_count": 4,
+      "participants": [
+        "Greg Snow",
+        "Michael Sumner",
+        "Nikolaos Tziokas"
+      ],
+      "started": "2022-09-06T17:45:56+01:00",
+      "last_reply": "2022-09-24T19:13:56+01:00",
+      "root_message_id": "msg-aee1957696d0"
+    },
+    {
+      "id": "thread-df1d904fd92b",
+      "subject": "Estimate Spatial Autoregressive model using weighted least squares",
+      "message_count": 2,
+      "participants": [
+        "Renan Serenini Bernardes",
+        "Roger Bivand"
+      ],
+      "started": "2022-09-07T23:00:51+00:00",
+      "last_reply": "2022-09-08T10:29:03+02:00",
+      "root_message_id": "msg-df1d904fd92b"
+    },
+    {
+      "id": "thread-8d5343bbdca2",
+      "subject": "Extract Lightning Flash Time series data",
+      "message_count": 4,
+      "participants": [
+        "Edzer Pebesma",
+        "Michael Sumner",
+        "sownal chand"
+      ],
+      "started": "2022-09-11T15:22:19+12:00",
+      "last_reply": "2022-09-12T11:42:14+02:00",
+      "root_message_id": "msg-8d5343bbdca2"
+    },
+    {
+      "id": "thread-60c3ceb56b6e",
+      "subject": "On simultaneous autoregressive spatial models",
+      "message_count": 3,
+      "participants": [
+        "Roger Bivand",
+        "rpaolo1967 RP"
+      ],
+      "started": "2022-09-12T07:17:41-03:00",
+      "last_reply": "2022-09-13T13:34:55-03:00",
+      "root_message_id": "msg-60c3ceb56b6e"
+    },
+    {
+      "id": "thread-2a4548eb5a06",
+      "subject": "tmap_dots issue",
+      "message_count": 1,
+      "participants": [
+        "Raman Mishra"
+      ],
+      "started": "2022-09-24T23:37:15+05:30",
+      "last_reply": "2022-09-24T23:37:15+05:30",
+      "root_message_id": "msg-2a4548eb5a06"
+    },
+    {
+      "id": "thread-2a07eef0f118",
+      "subject": "How to check which model of an ensemble algorithm has been selected to perform regression?",
+      "message_count": 1,
+      "participants": [
+        "Nikolaos Tziokas"
+      ],
+      "started": "2022-09-26T18:59:13+01:00",
+      "last_reply": "2022-09-26T18:59:13+01:00",
+      "root_message_id": "msg-2a07eef0f118"
+    },
+    {
+      "id": "thread-c8f004646607",
+      "subject": "terra::app",
+      "message_count": 2,
+      "participants": [
+        "Bede-Fazekas Ákos",
+        "Thayn, Jonathan"
+      ],
+      "started": "2022-09-29T03:27:16+00:00",
+      "last_reply": "2022-09-29T14:18:53+02:00",
+      "root_message_id": "msg-c8f004646607"
+    },
+    {
+      "id": "thread-9238e295cfed",
+      "subject": "2 post-doctoral data scientists + 1 geovisualization expert at OpenGeoHub",
+      "message_count": 1,
+      "participants": [
+        "Tomislav Hengl"
+      ],
+      "started": "2022-09-29T15:11:12+02:00",
+      "last_reply": "2022-09-29T15:11:12+02:00",
+      "root_message_id": "msg-9238e295cfed"
+    },
+    {
+      "id": "thread-31416ed76e93",
+      "subject": "How to use st_rasterize (stars) for a categorical field like terra does?",
+      "message_count": 1,
+      "participants": [
+        "Manuel Spínola"
+      ],
+      "started": "2022-09-30T09:08:09-06:00",
+      "last_reply": "2022-09-30T09:08:09-06:00",
+      "root_message_id": "msg-31416ed76e93"
+    }
+  ]
+}

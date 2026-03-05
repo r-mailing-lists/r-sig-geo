@@ -1,0 +1,329 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2022-08",
+  "messages": [
+    {
+      "id": "msg-d3faeffbb3d4",
+      "message_id": "<CACxE24kchH0oD+418fKs7ciqa5dw7XNUN4v0cKxW6N7DktgFSg@mail.gmail.com>",
+      "from_name": "Erin Hodgess",
+      "from_email_hash": "ac639128bb874866c754d5dc13bfc895ac4076b6eeee1c741127f9a3c34dd723",
+      "date": "2022-08-02T11:37:03-04:00",
+      "subject": "[R-sig-Geo] selecting a subset of a raster layer",
+      "subject_clean": "selecting a subset of a raster layer",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello!\n\nI have a raster with the following bbox:\n\n> bbox(import_raster)\n          min       max\ns1 -180.00417 180.00417\ns2  -65.00417  75.00417\n\nI would like to create a subset of that raster layer with the following\ndimensions:\n> r\nclass      : RasterLayer\ndimensions : 180, 360, 64800  (nrow, ncol, ncell)\nresolution : 0.02222147, 0.003172611  (x, y)\nextent     : -90.4184, -82.41867, 41.69613, 42.2672  (xmin, xmax, ymin,\nymax)\ncrs        : +proj=longlat +datum=WGS84 +no_defs\n\nIs there an easy way to do this, please?\n\nI did a \"which\" subset, but it produced an incredibly long vector.\n\nAny suggestions much appreciated.\n\nSincerely,\nErin\n\n\nErin Hodgess, PhD\nmailto: erinm.hodgess at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello!\n\nI have a raster with the following bbox:\n\n> bbox(import_raster)\n          min       max\ns1 -180.00417 180.00417\ns2  -65.00417  75.00417\n\nI would like to create a subset of that raster layer wi",
+      "thread_id": "thread-d3faeffbb3d4",
+      "thread_depth": 0,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-4d5707622230",
+      "message_id": "<CAP8THHV+nkOaL01UBGEbUUxn1Mt2gOaABQce-=eMwS0zY=vGOw@mail.gmail.com>",
+      "from_name": "Ahmadou Dicko",
+      "from_email_hash": "3a79afcf0e2ce3070bae97d81e61df73c524ec5838133945dff9dac73eef2adf",
+      "date": "2022-08-02T15:46:56Z",
+      "subject": "[R-sig-Geo] selecting a subset of a raster layer",
+      "subject_clean": "selecting a subset of a raster layer",
+      "in_reply_to": "<CACxE24kchH0oD+418fKs7ciqa5dw7XNUN4v0cKxW6N7DktgFSg@mail.gmail.com>",
+      "references": [
+        "<CACxE24kchH0oD+418fKs7ciqa5dw7XNUN4v0cKxW6N7DktgFSg@mail.gmail.com>"
+      ],
+      "body_plain": "Hi Erin,\n\nNot sure if understood well the problem, but it looks like a crop can do\nthe job here.\nYou'll need to build a rectangular polygon from the desired extent\n(sf::st_bbox -> SpatialPolygon), and crop your raster with it.\n\nBest,\nAhmadou\n\n\n\n\n\nOn Tue, Aug 2, 2022 at 3:37 PM Erin Hodgess <erinm.hodgess at gmail.com> wrote:\n\n> Hello!\n>\n> I have a raster with the following bbox:\n>\n> > bbox(import_raster)\n>           min       max\n> s1 -180.00417 180.00417\n> s2  -65.00417  75.00417\n>\n> I would like to create a subset of that raster layer with the following\n> dimensions:\n> > r\n> class      : RasterLayer\n> dimensions : 180, 360, 64800  (nrow, ncol, ncell)\n> resolution : 0.02222147, 0.003172611  (x, y)\n> extent     : -90.4184, -82.41867, 41.69613, 42.2672  (xmin, xmax, ymin,\n> ymax)\n> crs        : +proj=longlat +datum=WGS84 +no_defs\n>\n> Is there an easy way to do this, please?\n>\n> I did a \"which\" subset, but it produced an incredibly long vector.\n>\n> Any suggestions much appreciated.\n>\n> Sincerely,\n> Erin\n>\n>\n> Erin Hodgess, PhD\n> mailto: erinm.hodgess at gmail.com\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \nAhmadou H. DICKO, PhD\n\nStatistical consultant\nMobile: (+221) 77 123 81 69\nSkype: dicko.ahmadou.h\nTwitter : @dickoah\nGitlab: gitlab/dickoa\nGithub: github/dickoa\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Erin,\n\nNot sure if understood well the problem, but it looks like a crop can do\nthe job here.\nYou'll need to build a rectangular polygon from the desired extent\n(sf::st_bbox -> SpatialPolygon), and",
+      "thread_id": "thread-d3faeffbb3d4",
+      "thread_depth": 1,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-9720c28f84cd",
+      "message_id": "<CACxE24ns5Y=VkBE4JzOGDYgmCw=nL=Jhrizi9CUPsMf_ZJD18A@mail.gmail.com>",
+      "from_name": "Erin Hodgess",
+      "from_email_hash": "ac639128bb874866c754d5dc13bfc895ac4076b6eeee1c741127f9a3c34dd723",
+      "date": "2022-08-02T11:48:10-04:00",
+      "subject": "[R-sig-Geo] selecting a subset of a raster layer",
+      "subject_clean": "selecting a subset of a raster layer",
+      "in_reply_to": "<CAP8THHV+nkOaL01UBGEbUUxn1Mt2gOaABQce-=eMwS0zY=vGOw@mail.gmail.com>",
+      "references": [
+        "<CACxE24kchH0oD+418fKs7ciqa5dw7XNUN4v0cKxW6N7DktgFSg@mail.gmail.com>",
+        "<CAP8THHV+nkOaL01UBGEbUUxn1Mt2gOaABQce-=eMwS0zY=vGOw@mail.gmail.com>"
+      ],
+      "body_plain": "Wow!  This is great!\n\nThank you so much.\n\nSincerely,\nErin\n\nOn Tue, Aug 2, 2022 at 11:47 AM Ahmadou Dicko <dicko.ahmadou at gmail.com>\nwrote:\n\n> Hi Erin,\n>\n> Not sure if understood well the problem, but it looks like a crop can do\n> the job here.\n> You'll need to build a rectangular polygon from the desired extent\n> (sf::st_bbox -> SpatialPolygon), and crop your raster with it.\n>\n> Best,\n> Ahmadou\n>\n>\n>\n>\n>\n> On Tue, Aug 2, 2022 at 3:37 PM Erin Hodgess <erinm.hodgess at gmail.com>\n> wrote:\n>\n>> Hello!\n>>\n>> I have a raster with the following bbox:\n>>\n>> > bbox(import_raster)\n>>           min       max\n>> s1 -180.00417 180.00417\n>> s2  -65.00417  75.00417\n>>\n>> I would like to create a subset of that raster layer with the following\n>> dimensions:\n>> > r\n>> class      : RasterLayer\n>> dimensions : 180, 360, 64800  (nrow, ncol, ncell)\n>> resolution : 0.02222147, 0.003172611  (x, y)\n>> extent     : -90.4184, -82.41867, 41.69613, 42.2672  (xmin, xmax, ymin,\n>> ymax)\n>> crs        : +proj=longlat +datum=WGS84 +no_defs\n>>\n>> Is there an easy way to do this, please?\n>>\n>> I did a \"which\" subset, but it produced an incredibly long vector.\n>>\n>> Any suggestions much appreciated.\n>>\n>> Sincerely,\n>> Erin\n>>\n>>\n>> Erin Hodgess, PhD\n>> mailto: erinm.hodgess at gmail.com\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>>\n>\n> --\n> Ahmadou H. DICKO, PhD\n>\n> Statistical consultant\n> Mobile: (+221) 77 123 81 69\n> Skype: dicko.ahmadou.h\n> Twitter : @dickoah\n> Gitlab: gitlab/dickoa\n> Github: github/dickoa\n>\n-- \nErin Hodgess, PhD\nmailto: erinm.hodgess at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Wow!  This is great!\n\nThank you so much.\n\nSincerely,\nErin\n\nOn Tue, Aug 2, 2022 at 11:47 AM Ahmadou Dicko <dicko.ahmadou at gmail.com>\nwrote:\n\n> Hi Erin,\n>\n> Not sure if understood well the problem, bu",
+      "thread_id": "thread-d3faeffbb3d4",
+      "thread_depth": 2,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-89a4bdf9c48e",
+      "message_id": "<d6caba35-1af5-5f81-5bee-0bf7147a15c2@gmail.com>",
+      "from_name": "Bede-Fazekas Ákos",
+      "from_email_hash": "f2e2e122dfd4dbb8b8973b23d149555486ccb4290cb5f11779739fdbbcf5b93d",
+      "date": "2022-08-02T18:00:14+02:00",
+      "subject": "[R-sig-Geo] selecting a subset of a raster layer",
+      "subject_clean": "selecting a subset of a raster layer",
+      "in_reply_to": "<CACxE24kchH0oD+418fKs7ciqa5dw7XNUN4v0cKxW6N7DktgFSg@mail.gmail.com>",
+      "references": [
+        "<CACxE24kchH0oD+418fKs7ciqa5dw7XNUN4v0cKxW6N7DktgFSg@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Erin,\nI think that projectRaster(from = import_raster, to = r) or crop(x = \nimport_raster, y = r) is what you need. crop() simply crop x with the \nextent of y, while projectRaster(from, to) create a raster from from \nthat has exactly the same structure (resolution, origin, nrow, ncol, \ncrs) as to.\nHTH,\n?kos\n--------\n?kos Bede-Fazekas\nCentre for Ecological Research, Hungary\n\n2022.08.02. 17:37 keltez?ssel, Erin Hodgess ?rta:\n> Hello!\n>\n> I have a raster with the following bbox:\n>\n>> bbox(import_raster)\n>            min       max\n> s1 -180.00417 180.00417\n> s2  -65.00417  75.00417\n>\n> I would like to create a subset of that raster layer with the following\n> dimensions:\n>> r\n> class      : RasterLayer\n> dimensions : 180, 360, 64800  (nrow, ncol, ncell)\n> resolution : 0.02222147, 0.003172611  (x, y)\n> extent     : -90.4184, -82.41867, 41.69613, 42.2672  (xmin, xmax, ymin,\n> ymax)\n> crs        : +proj=longlat +datum=WGS84 +no_defs\n>\n> Is there an easy way to do this, please?\n>\n> I did a \"which\" subset, but it produced an incredibly long vector.\n>\n> Any suggestions much appreciated.\n>\n> Sincerely,\n> Erin\n>\n>\n> Erin Hodgess, PhD\n> mailto: erinm.hodgess at gmail.com\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Dear Erin,\nI think that projectRaster(from = import_raster, to = r) or crop(x = \nimport_raster, y = r) is what you need. crop() simply crop x with the \nextent of y, while projectRaster(from, to) creat",
+      "thread_id": "thread-d3faeffbb3d4",
+      "thread_depth": 1,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-ddbdd827acf5",
+      "message_id": "<CACxE24mM+OmZsP90t=hNJMVRWb1XXMo1=e27NuJrgmXPJqn59w@mail.gmail.com>",
+      "from_name": "Erin Hodgess",
+      "from_email_hash": "ac639128bb874866c754d5dc13bfc895ac4076b6eeee1c741127f9a3c34dd723",
+      "date": "2022-08-02T12:21:50-04:00",
+      "subject": "[R-sig-Geo] selecting a subset of a raster layer",
+      "subject_clean": "selecting a subset of a raster layer",
+      "in_reply_to": "<d6caba35-1af5-5f81-5bee-0bf7147a15c2@gmail.com>",
+      "references": [
+        "<CACxE24kchH0oD+418fKs7ciqa5dw7XNUN4v0cKxW6N7DktgFSg@mail.gmail.com>",
+        "<d6caba35-1af5-5f81-5bee-0bf7147a15c2@gmail.com>"
+      ],
+      "body_plain": "Thank you so much!\n\nSincerely,\nErin\n\n\nOn Tue, Aug 2, 2022 at 12:15 PM Bede-Fazekas ?kos <bfalevlist at gmail.com>\nwrote:\n\n> Dear Erin,\n> I think that projectRaster(from = import_raster, to = r) or crop(x =\n> import_raster, y = r) is what you need. crop() simply crop x with the\n> extent of y, while projectRaster(from, to) create a raster from from\n> that has exactly the same structure (resolution, origin, nrow, ncol,\n> crs) as to.\n> HTH,\n> ?kos\n> --------\n> ?kos Bede-Fazekas\n> Centre for Ecological Research, Hungary\n>\n> 2022.08.02. 17:37 keltez?ssel, Erin Hodgess ?rta:\n> > Hello!\n> >\n> > I have a raster with the following bbox:\n> >\n> >> bbox(import_raster)\n> >            min       max\n> > s1 -180.00417 180.00417\n> > s2  -65.00417  75.00417\n> >\n> > I would like to create a subset of that raster layer with the following\n> > dimensions:\n> >> r\n> > class      : RasterLayer\n> > dimensions : 180, 360, 64800  (nrow, ncol, ncell)\n> > resolution : 0.02222147, 0.003172611  (x, y)\n> > extent     : -90.4184, -82.41867, 41.69613, 42.2672  (xmin, xmax, ymin,\n> > ymax)\n> > crs        : +proj=longlat +datum=WGS84 +no_defs\n> >\n> > Is there an easy way to do this, please?\n> >\n> > I did a \"which\" subset, but it produced an incredibly long vector.\n> >\n> > Any suggestions much appreciated.\n> >\n> > Sincerely,\n> > Erin\n> >\n> >\n> > Erin Hodgess, PhD\n> > mailto: erinm.hodgess at gmail.com\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n-- \nErin Hodgess, PhD\nmailto: erinm.hodgess at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you so much!\n\nSincerely,\nErin\n\n\nOn Tue, Aug 2, 2022 at 12:15 PM Bede-Fazekas ?kos <bfalevlist at gmail.com>\nwrote:\n\n> Dear Erin,\n> I think that projectRaster(from = import_raster, to = r) or cro",
+      "thread_id": "thread-d3faeffbb3d4",
+      "thread_depth": 2,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-69916acb55df",
+      "message_id": "<CAOiHCtTqCGOZHTd1M+yb+2b40UUxJLTO9cG14VgFL=Ki8t-ezw@mail.gmail.com>",
+      "from_name": "Kunal Bali",
+      "from_email_hash": "e30fdbe8da997bfaac775f7777d76f90842c41ee426161b93c910678f1a3150d",
+      "date": "2022-08-02T12:06:19-08:00",
+      "subject": "[R-sig-Geo] Question about trasport time calculation",
+      "subject_clean": "Question about trasport time calculation",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n\nIs it possible to calculate the transport time (of a particle) between 2\ncoordinates using wind speed and distance?\nI know I can't simply apply Velocity = Distance/time over here because\ncoordinates have different angles (lat, lon).\nSo, could anyone provide some thoughts on it?\n\nI have some coordinates e.g.\n\nlocation 1(64.8, -147.7)\nlocation 2(64.8, -149.5)\nlocation 3(66.2, -150.0)\n\nthe distance between (2 and 1)  coordinates are ~ 35 km\nthe distance between (3 and 1)  coordinates are ~ 133 km\n\nthe wind speed over (1, 2) coordinates is ~ 6 m/s\nthe wind speed over (1,3) coordinates is  ~ 2 m/s\n\nSo, how much time will be taken by a particle from locations 2 and 3 to\nlocation 1 with the given distance and wind speed?\n\nThanks\n---\nKunal Bali\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nIs it possible to calculate the transport time (of a particle) between 2\ncoordinates using wind speed and distance?\nI know I can't simply apply Velocity = Distance/time over here because\ncoordina",
+      "thread_id": "thread-69916acb55df",
+      "thread_depth": 0,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-d406651129df",
+      "message_id": "<e007d1bc-a00d-806d-6907-b7632a2f7ecd@binghamton.edu>",
+      "from_name": "Christopher W. Ryan",
+      "from_email_hash": "1713305274d2c1816a07f0aa50c9577759f9e9c6829b63a608da0a2c0dd2c647",
+      "date": "2022-08-02T16:14:00-04:00",
+      "subject": "[R-sig-Geo] Question about trasport time calculation",
+      "subject_clean": "Question about trasport time calculation",
+      "in_reply_to": "<CAOiHCtTqCGOZHTd1M+yb+2b40UUxJLTO9cG14VgFL=Ki8t-ezw@mail.gmail.com>",
+      "references": [
+        "<CAOiHCtTqCGOZHTd1M+yb+2b40UUxJLTO9cG14VgFL=Ki8t-ezw@mail.gmail.com>"
+      ],
+      "body_plain": "If\n\nyou have the distances between the starting point and the ending point\n(you provide approximations below),\n\nand you assume the particle travels at the velocity of the wind,\n\nand you assume the particles travel in straight lines,\n\nthen why can't you use time = distance/velocity?\n\n--Chris  Ryan\n\nKunal Bali wrote:\n> Hi,\n> \n> Is it possible to calculate the transport time (of a particle) between 2\n> coordinates using wind speed and distance?\n> I know I can't simply apply Velocity = Distance/time over here because\n> coordinates have different angles (lat, lon).\n> So, could anyone provide some thoughts on it?\n> \n> I have some coordinates e.g.\n> \n> location 1(64.8, -147.7)\n> location 2(64.8, -149.5)\n> location 3(66.2, -150.0)\n> \n> the distance between (2 and 1)  coordinates are ~ 35 km\n> the distance between (3 and 1)  coordinates are ~ 133 km\n> \n> the wind speed over (1, 2) coordinates is ~ 6 m/s\n> the wind speed over (1,3) coordinates is  ~ 2 m/s\n> \n> So, how much time will be taken by a particle from locations 2 and 3 to\n> location 1 with the given distance and wind speed?\n> \n> Thanks\n> ---\n> Kunal Bali\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_snippet": "If\n\nyou have the distances between the starting point and the ending point\n(you provide approximations below),\n\nand you assume the particle travels at the velocity of the wind,\n\nand you assume the par",
+      "thread_id": "thread-69916acb55df",
+      "thread_depth": 1,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-c0cfdd8dfc9d",
+      "message_id": "<CAKtE6yNpdeH87XCjBagi9rjZ9vrstZXd7E6EyZ6o7uBfBRNjPQ@mail.gmail.com>",
+      "from_name": "Zivan Karaman",
+      "from_email_hash": "f608a153dd427cba2b35b76e0770fde2c77ce66784745838abdf743368ce538c",
+      "date": "2022-08-02T22:47:29+02:00",
+      "subject": "[R-sig-Geo] Question about trasport time calculation",
+      "subject_clean": "Question about trasport time calculation",
+      "in_reply_to": "<CAOiHCtTqCGOZHTd1M+yb+2b40UUxJLTO9cG14VgFL=Ki8t-ezw@mail.gmail.com>",
+      "references": [
+        "<CAOiHCtTqCGOZHTd1M+yb+2b40UUxJLTO9cG14VgFL=Ki8t-ezw@mail.gmail.com>"
+      ],
+      "body_plain": "Hi,\n\nIf your question is how to compute (more or less) exact distances from the\nlon/lat coordinates, you can try the dist* functions from the package\ngeosphere.\n\nHTH.\n\nZivan\n\nOn Tue, Aug 2, 2022 at 10:07 PM Kunal Bali <kunal.bali9 at gmail.com> wrote:\n\n> Hi,\n>\n> Is it possible to calculate the transport time (of a particle) between 2\n> coordinates using wind speed and distance?\n> I know I can't simply apply Velocity = Distance/time over here because\n> coordinates have different angles (lat, lon).\n> So, could anyone provide some thoughts on it?\n>\n> I have some coordinates e.g.\n>\n> location 1(64.8, -147.7)\n> location 2(64.8, -149.5)\n> location 3(66.2, -150.0)\n>\n> the distance between (2 and 1)  coordinates are ~ 35 km\n> the distance between (3 and 1)  coordinates are ~ 133 km\n>\n> the wind speed over (1, 2) coordinates is ~ 6 m/s\n> the wind speed over (1,3) coordinates is  ~ 2 m/s\n>\n> So, how much time will be taken by a particle from locations 2 and 3 to\n> location 1 with the given distance and wind speed?\n>\n> Thanks\n> ---\n> Kunal Bali\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nIf your question is how to compute (more or less) exact distances from the\nlon/lat coordinates, you can try the dist* functions from the package\ngeosphere.\n\nHTH.\n\nZivan\n\nOn Tue, Aug 2, 2022 at 10",
+      "thread_id": "thread-69916acb55df",
+      "thread_depth": 1,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-80bb76e22a7f",
+      "message_id": "<CAH5tCz1cdoNtFMLNV5wf5SPvR-DvSv6HwV4jQ3Ln5J4WGa05Hw@mail.gmail.com>",
+      "from_name": "sownal chand",
+      "from_email_hash": "ffc77914e4223ee36804d8fb5d0dd2c15c57c7fae734d3bdc7772ae8a1735864",
+      "date": "2022-08-28T19:59:06+12:00",
+      "subject": "[R-sig-Geo] Satellite Image analysis-TRMM Data",
+      "subject_clean": "Satellite Image analysis-TRMM Data",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello Sir/Madam,\n\nI was looking for some information on satellite data analysis using R. If\nsomeone can provide me with a link or some materials for reading it\nwould be great.\n\nThanking you in advance\nsownalc\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello Sir/Madam,\n\nI was looking for some information on satellite data analysis using R. If\nsomeone can provide me with a link or some materials for reading it\nwould be great.\n\nThanking you in advance",
+      "thread_id": "thread-80bb76e22a7f",
+      "thread_depth": 0,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-f403c5a89c50",
+      "message_id": "<FC637F74-CB90-4460-ACD3-AEC15D62F7A2@dal.ca>",
+      "from_name": "Daniel Kelley",
+      "from_email_hash": "d639e07aa10625bca6c646bb4ef647355c8353979fbfecc34603ebc8263ec115",
+      "date": "2022-08-28T10:57:41Z",
+      "subject": "[R-sig-Geo] Satellite Image analysis-TRMM Data",
+      "subject_clean": "Satellite Image analysis-TRMM Data",
+      "in_reply_to": "<mailman.29041.3.1661680801.45650.r-sig-geo@r-project.org>",
+      "references": [
+        "<mailman.29041.3.1661680801.45650.r-sig-geo@r-project.org>"
+      ],
+      "body_plain": "I've not tried downloading any data, since https://disc2.gesdisc.eosdis.nasa.gov/data/TRMM_L3/TRMM_3B43/2019/ requires a username and a password, but a websearch got me to https://disc2.gesdisc.eosdis.nasa.gov/data/TRMM_L3/TRMM_3B43/doc/README.TRMM_V7.pdf, Table 3 of which indicaes that the format is HDF4. From https://stackoverflow.com/questions/36772341/reading-hdf-files-into-r-and-converting-them-to-geotiff-rasters it seems that R can read HDF5 but not HDF4, so you may be out of luck for direct reading by R, and might need to install some other commandline tools to first transform the data into another format.\n\nOn Aug 28, 2022, at 7:00 AM, r-sig-geo-request at r-project.org wrote:\n\nMessage: 1\nDate: Sun, 28 Aug 2022 19:59:06 +1200\nFrom: sownal chand <sownalchandfms at gmail.com<mailto:sownalchandfms at gmail.com>>\nTo: r-sig-geo at r-project.org<mailto:r-sig-geo at r-project.org>\nSubject: [R-sig-Geo] Satellite Image analysis-TRMM Data\nMessage-ID:\n       <CAH5tCz1cdoNtFMLNV5wf5SPvR-DvSv6HwV4jQ3Ln5J4WGa05Hw at mail.gmail.com<mailto:CAH5tCz1cdoNtFMLNV5wf5SPvR-DvSv6HwV4jQ3Ln5J4WGa05Hw at mail.gmail.com>>\nContent-Type: text/plain; charset=\"utf-8\"\n\nHello Sir/Madam,\n\nI was looking for some information on satellite data analysis using R. If\nsomeone can provide me with a link or some materials for reading it\nwould be great.\n\nThanking you in advance\nsownalc\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I've not tried downloading any data, since https://disc2.gesdisc.eosdis.nasa.gov/data/TRMM_L3/TRMM_3B43/2019/ requires a username and a password, but a websearch got me to https://disc2.gesdisc.eosdis",
+      "thread_id": "thread-f403c5a89c50",
+      "thread_depth": 0,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-0a198a014c38",
+      "message_id": "<7acd1997-3e9f-f6f-99ae-2d6d262df80@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2022-08-28T15:00:25+02:00",
+      "subject": "[R-sig-Geo] Satellite Image analysis-TRMM Data",
+      "subject_clean": "Satellite Image analysis-TRMM Data",
+      "in_reply_to": "<FC637F74-CB90-4460-ACD3-AEC15D62F7A2@dal.ca>",
+      "references": [
+        "<mailman.29041.3.1661680801.45650.r-sig-geo@r-project.org>",
+        "<FC637F74-CB90-4460-ACD3-AEC15D62F7A2@dal.ca>"
+      ],
+      "body_plain": "On Sun, 28 Aug 2022, Daniel Kelley wrote:\n\n> I've not tried downloading any data, since \n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdisc2.gesdisc.eosdis.nasa.gov%2Fdata%2FTRMM_L3%2FTRMM_3B43%2F2019%2F&amp;data=05%7C01%7CRoger.Bivand%40nhh.no%7C866347cd5f494fb9a75f08da88e435e4%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637972811138889948%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&amp;sdata=W3OALAwTPSZCO%2FNFpof20Z4gMZHanXQmyrCilrSFXWo%3D&amp;reserved=0 \n> requires a username and a password, but a websearch got me to \n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdisc2.gesdisc.eosdis.nasa.gov%2Fdata%2FTRMM_L3%2FTRMM_3B43%2Fdoc%2FREADME.TRMM_V7.pdf&amp;data=05%7C01%7CRoger.Bivand%40nhh.no%7C866347cd5f494fb9a75f08da88e435e4%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637972811138889948%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&amp;sdata=6UPwX9x4Bju%2BqEizVUFjHCcVWYkP2dhA0du5bTLU6j0%3D&amp;reserved=0, \n> Table 3 of which indicaes that the format is HDF4. From \n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F36772341%2Freading-hdf-files-into-r-and-converting-them-to-geotiff-rasters&amp;data=05%7C01%7CRoger.Bivand%40nhh.no%7C866347cd5f494fb9a75f08da88e435e4%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637972811138889948%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&amp;sdata=ppuoQ9O5CcRnQ7xRqydhURwhJQuQHSS2KKHEgDCNTKY%3D&amp;reserved=0 \n> it seems that R can read HDF5 but not HDF4, so you may be out of luck \n> for direct reading by R, and might need to install some other \n> commandline tools to first transform the data into another format.\n\nDan, thanks for looking to try to determine the format!\n\nPlease check whether the GDAL HDF4 driver is present in the version of \nthe packages with for example:\n\nx <- terra::gdal(drivers=TRUE)\nx[grep(\"HDF\", x$name),]\n\non your platform. I think that you will see:\n\n         name   type        can   vsi                          long.name\n54      HDF4 raster       read FALSE Hierarchical Data Format Release 4\n55 HDF4Image raster read/write FALSE                       HDF4 Dataset\n56      HDF5 raster       read  TRUE Hierarchical Data Format Release 5\n57 HDF5Image raster       read  TRUE                       HDF5 Dataset\n\nThe row numbers may vary depending on the driver count on your platform.\n\nHope this helps,\n\nRoger\n\n>\n> On Aug 28, 2022, at 7:00 AM, r-sig-geo-request at r-project.org wrote:\n>\n> Message: 1\n> Date: Sun, 28 Aug 2022 19:59:06 +1200\n> From: sownal chand <sownalchandfms at gmail.com<mailto:sownalchandfms at gmail.com>>\n> To: r-sig-geo at r-project.org<mailto:r-sig-geo at r-project.org>\n> Subject: [R-sig-Geo] Satellite Image analysis-TRMM Data\n> Message-ID:\n>       <CAH5tCz1cdoNtFMLNV5wf5SPvR-DvSv6HwV4jQ3Ln5J4WGa05Hw at mail.gmail.com<mailto:CAH5tCz1cdoNtFMLNV5wf5SPvR-DvSv6HwV4jQ3Ln5J4WGa05Hw at mail.gmail.com>>\n> Content-Type: text/plain; charset=\"utf-8\"\n>\n> Hello Sir/Madam,\n>\n> I was looking for some information on satellite data analysis using R. If\n> someone can provide me with a link or some materials for reading it\n> would be great.\n>\n> Thanking you in advance\n> sownalc\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=05%7C01%7CRoger.Bivand%40nhh.no%7C866347cd5f494fb9a75f08da88e435e4%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637972811138889948%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&amp;sdata=Vp08qpnKWJcTfWrEiGc4ac3LgeryauvZc64kwfRp6co%3D&amp;reserved=0\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Sun, 28 Aug 2022, Daniel Kelley wrote:\n\n> I've not tried downloading any data, since \n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdisc2.gesdisc.eosdis.nasa.gov%2Fdata%2FTRMM",
+      "thread_id": "thread-f403c5a89c50",
+      "thread_depth": 1,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-cab35c81153f",
+      "message_id": "<C91942C7-335B-42A5-A7C9-0A21B1CBC504@inpe.br>",
+      "from_name": "GilbertoCamara",
+      "from_email_hash": "6f36678742286512daca61c61146bf7b46200acda50a1a27383d1c3ef47f7624",
+      "date": "2022-08-28T12:04:44-03:00",
+      "subject": "[R-sig-Geo] Satellite Image analysis-TRMM Data",
+      "subject_clean": "Satellite Image analysis-TRMM Data",
+      "in_reply_to": "<CAH5tCz1cdoNtFMLNV5wf5SPvR-DvSv6HwV4jQ3Ln5J4WGa05Hw@mail.gmail.com>",
+      "references": [
+        "<CAH5tCz1cdoNtFMLNV5wf5SPvR-DvSv6HwV4jQ3Ln5J4WGa05Hw@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Sownal\n\nIf you are interested in satellite image time series analysis, please take a look at the ?sits? package, available on CRAN. Documentation is available at \n\nhttps://e-sensing.github.io/sitsbook/index.html\n\nBest\nGilberto\n============================\nProf Dr Gilberto Camara\nSenior Researcher\nNational Institute for Space Research (INPE), Brazil\nhttps://gilbertocamara.org/\n=============================\n\n\n\n\n> On 28 Aug 2022, at 04:59, sownal chand <sownalchandfms at gmail.com> wrote:\n> \n> Hello Sir/Madam,\n> \n> I was looking for some information on satellite data analysis using R. If\n> someone can provide me with a link or some materials for reading it\n> would be great.\n> \n> Thanking you in advance\n> sownalc\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Dear Sownal\n\nIf you are interested in satellite image time series analysis, please take a look at the ?sits? package, available on CRAN. Documentation is available at \n\nhttps://e-sensing.github.io/sit",
+      "thread_id": "thread-80bb76e22a7f",
+      "thread_depth": 1,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-44be0e3a6a40",
+      "message_id": "<YT2PR01MB4783959F3501353BD92D396EB3769@YT2PR01MB4783.CANPRD01.PROD.OUTLOOK.COM>",
+      "from_name": "Alaba Boluwade",
+      "from_email_hash": "2328389be26acb07981ad5a4577eb92ba51bdbf50cafd832c8f7e5d8314a4bd3",
+      "date": "2022-08-29T00:30:34Z",
+      "subject": "[R-sig-Geo] Satellite Image analysis-TRMM Data",
+      "subject_clean": "Satellite Image analysis-TRMM Data",
+      "in_reply_to": "<CAH5tCz1cdoNtFMLNV5wf5SPvR-DvSv6HwV4jQ3Ln5J4WGa05Hw@mail.gmail.com>",
+      "references": [
+        "<CAH5tCz1cdoNtFMLNV5wf5SPvR-DvSv6HwV4jQ3Ln5J4WGa05Hw@mail.gmail.com>"
+      ],
+      "body_plain": "Hi Sownal,\n\nIn addition to other information you have been given, you can register or create an account at NASA Geovanni (https://giovanni.gsfc.nasa.gov/giovanni/).\n\nThe platform will allow you to download the data recursively using a wget (for large samples).\n\nThe format will be in NetCDF.\n\ndaymetr  package is pretty efficient to batch convert the NetCDF to TIFF\n> nc2tif(path = getwd(), files = NULL, overwrite = FALSE, silent = FALSE)\n\nCheers,\nAlaba\n\nGiovanni<https://giovanni.gsfc.nasa.gov/giovanni/>\nThe Bridge Between Data and Science v 4.37. Feedback Help. User Guide; Release Notes Known Issues\ngiovanni.gsfc.nasa.gov\n\n________________________________\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of sownal chand <sownalchandfms at gmail.com>\nSent: August 28, 2022 1:59 AM\nTo: r-sig-geo at r-project.org <r-sig-geo at r-project.org>\nSubject: [R-sig-Geo] Satellite Image analysis-TRMM Data\n\nHello Sir/Madam,\n\nI was looking for some information on satellite data analysis using R. If\nsomeone can provide me with a link or some materials for reading it\nwould be great.\n\nThanking you in advance\nsownalc\n\n        [[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Sownal,\n\nIn addition to other information you have been given, you can register or create an account at NASA Geovanni (https://giovanni.gsfc.nasa.gov/giovanni/).\n\nThe platform will allow you to dow",
+      "thread_id": "thread-80bb76e22a7f",
+      "thread_depth": 1,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-4bcb333f741f",
+      "message_id": "<CADeM3-yNfXsJYUxUAU2TfzVonKgZVmPW-n7_M_zy445y3MzFMw@mail.gmail.com>",
+      "from_name": "H. Joe Lee",
+      "from_email_hash": "edaad808702071820c5cbcb68b0cc2be9be71a0cc06ab45a9d74fc775e6852c0",
+      "date": "2022-08-29T00:10:00-05:00",
+      "subject": "[R-sig-Geo] Satellite Image analysis-TRMM Data",
+      "subject_clean": "Satellite Image analysis-TRMM Data",
+      "in_reply_to": "<CAH5tCz1cdoNtFMLNV5wf5SPvR-DvSv6HwV4jQ3Ln5J4WGa05Hw@mail.gmail.com>",
+      "references": [
+        "<CAH5tCz1cdoNtFMLNV5wf5SPvR-DvSv6HwV4jQ3Ln5J4WGa05Hw@mail.gmail.com>"
+      ],
+      "body_plain": "I hope the following page can help your research with TRMM HDF4 files:\n\nhttps://hdfeos.org/software/r.php\n\nPlease let me know if there's anything outdated in the above page.\n\n- Joe\n---\nBuild the Metaverse w/ HDF.\n\n\n\nOn Sun, Aug 28, 2022 at 2:59 AM sownal chand <sownalchandfms at gmail.com>\nwrote:\n\n> Hello Sir/Madam,\n>\n> I was looking for some information on satellite data analysis using R. If\n> someone can provide me with a link or some materials for reading it\n> would be great.\n>\n> Thanking you in advance\n> sownalc\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I hope the following page can help your research with TRMM HDF4 files:\n\nhttps://hdfeos.org/software/r.php\n\nPlease let me know if there's anything outdated in the above page.\n\n- Joe\n---\nBuild the Metav",
+      "thread_id": "thread-80bb76e22a7f",
+      "thread_depth": 1,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-be0d0b5c95b4",
+      "message_id": "<CAH5tCz0yOvZqcd14pyTOJzwQC3uZ4JDR-F8=8LumPzCR2eTG-Q@mail.gmail.com>",
+      "from_name": "sownal chand",
+      "from_email_hash": "ffc77914e4223ee36804d8fb5d0dd2c15c57c7fae734d3bdc7772ae8a1735864",
+      "date": "2022-08-29T18:04:41+12:00",
+      "subject": "[R-sig-Geo] Satellite Image analysis-TRMM Data",
+      "subject_clean": "Satellite Image analysis-TRMM Data",
+      "in_reply_to": "<CADeM3-yNfXsJYUxUAU2TfzVonKgZVmPW-n7_M_zy445y3MzFMw@mail.gmail.com>",
+      "references": [
+        "<CAH5tCz1cdoNtFMLNV5wf5SPvR-DvSv6HwV4jQ3Ln5J4WGa05Hw@mail.gmail.com>",
+        "<CADeM3-yNfXsJYUxUAU2TfzVonKgZVmPW-n7_M_zy445y3MzFMw@mail.gmail.com>"
+      ],
+      "body_plain": "Thanks, I'll check them out.\n\nOn Mon, Aug 29, 2022, 17:10 H. Joe Lee <hyoklee at hdfgroup.org> wrote:\n\n> I hope the following page can help your research with TRMM HDF4 files:\n>\n> https://hdfeos.org/software/r.php\n>\n> Please let me know if there's anything outdated in the above page.\n>\n> - Joe\n> ---\n> Build the Metaverse w/ HDF.\n>\n>\n>\n> On Sun, Aug 28, 2022 at 2:59 AM sownal chand <sownalchandfms at gmail.com>\n> wrote:\n>\n>> Hello Sir/Madam,\n>>\n>> I was looking for some information on satellite data analysis using R. If\n>> someone can provide me with a link or some materials for reading it\n>> would be great.\n>>\n>> Thanking you in advance\n>> sownalc\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks, I'll check them out.\n\nOn Mon, Aug 29, 2022, 17:10 H. Joe Lee <hyoklee at hdfgroup.org> wrote:\n\n> I hope the following page can help your research with TRMM HDF4 files:\n>\n> https://hdfeos.org/s",
+      "thread_id": "thread-80bb76e22a7f",
+      "thread_depth": 2,
+      "month": "2022-08"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-d3faeffbb3d4",
+      "subject": "selecting a subset of a raster layer",
+      "message_count": 5,
+      "participants": [
+        "Ahmadou Dicko",
+        "Bede-Fazekas Ákos",
+        "Erin Hodgess"
+      ],
+      "started": "2022-08-02T11:37:03-04:00",
+      "last_reply": "2022-08-02T12:21:50-04:00",
+      "root_message_id": "msg-d3faeffbb3d4"
+    },
+    {
+      "id": "thread-69916acb55df",
+      "subject": "Question about trasport time calculation",
+      "message_count": 3,
+      "participants": [
+        "Christopher W. Ryan",
+        "Kunal Bali",
+        "Zivan Karaman"
+      ],
+      "started": "2022-08-02T12:06:19-08:00",
+      "last_reply": "2022-08-02T22:47:29+02:00",
+      "root_message_id": "msg-69916acb55df"
+    },
+    {
+      "id": "thread-f403c5a89c50",
+      "subject": "Satellite Image analysis-TRMM Data",
+      "message_count": 2,
+      "participants": [
+        "Daniel Kelley",
+        "Roger Bivand"
+      ],
+      "started": "2022-08-28T10:57:41+00:00",
+      "last_reply": "2022-08-28T15:00:25+02:00",
+      "root_message_id": "msg-f403c5a89c50"
+    },
+    {
+      "id": "thread-80bb76e22a7f",
+      "subject": "Satellite Image analysis-TRMM Data",
+      "message_count": 5,
+      "participants": [
+        "Alaba Boluwade",
+        "GilbertoCamara",
+        "H. Joe Lee",
+        "sownal chand"
+      ],
+      "started": "2022-08-28T19:59:06+12:00",
+      "last_reply": "2022-08-29T18:04:41+12:00",
+      "root_message_id": "msg-80bb76e22a7f"
+    }
+  ]
+}

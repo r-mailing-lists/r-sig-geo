@@ -1,0 +1,1004 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2018-07",
+  "messages": [
+    {
+      "id": "msg-3680b39ba752",
+      "message_id": "<CAFoeBZ=E4nvAEzKyJoS4VpmXpg3h-rGe-n70_=H8LV2izK0q2Q@mail.gmail.com>",
+      "from_name": "Yalemzewod Gelaw",
+      "from_email_hash": "78e67105a44c504b1014150694dd53e0eea4372aaea51f84e570e70fdb35feb2",
+      "date": "2018-07-01T20:05:11+10:00",
+      "subject": "[R-sig-Geo] Fwd: Spatiotemporal analysis r command",
+      "subject_clean": "Spatiotemporal analysis r command",
+      "in_reply_to": "<CAFoeBZ=fS3XyyZ9hSNhtsP5g1bNhs2BHbYru-Pus6fAKy0bsnw@mail.gmail.com>",
+      "references": [
+        "<CAFoeBZ=fS3XyyZ9hSNhtsP5g1bNhs2BHbYru-Pus6fAKy0bsnw@mail.gmail.com>"
+      ],
+      "body_plain": "Hello everyone,\nI am planning to do a spatiotemporal distribution of hiv/tb coinfection and\nthe effects of socio-demographic variables. I have a shapefile for 128\ndistricts.  For this ecological area  analysis I am planning to use\nBayesian Poisson regression analysis.\n?I here with looking for your help tutorial/notes/ r commands for the\nspatiotemporal analysis and Bayesian Poisson regression.?\n\n?Thank you for any help.?\n\n*Regards, *\n\nYalem\n-- \nBest, Yalemzewod Assefa Gelaw (Yalem)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello everyone,\nI am planning to do a spatiotemporal distribution of hiv/tb coinfection and\nthe effects of socio-demographic variables. I have a shapefile for 128\ndistricts.  For this ecological area ",
+      "thread_id": "thread-3680b39ba752",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-add552361964",
+      "message_id": "<CAG4NReKY4dWupSuAZc=s5-OOLCXnkBV2+cHHTVO-9FVc+X_Vjg@mail.gmail.com>",
+      "from_name": "Agustin Lobo",
+      "from_email_hash": "1ceaac12c09b1ae4beabcab1289c18094cb8622c5687af51641f19f0cbe4dc74",
+      "date": "2018-07-02T12:35:59+01:00",
+      "subject": "[R-sig-Geo] intersections to individual polygons",
+      "subject_clean": "intersections to individual polygons",
+      "in_reply_to": "<dcc8724a-c5a9-3cb2-d84d-982a396da17a@auckland.ac.nz>",
+      "references": [
+        "<CAG4NReJodevNNhVeVoodaRejfDjFCb3962NNtBpX5A_2fijDeQ@mail.gmail.com>",
+        "<dcc8724a-c5a9-3cb2-d84d-982a396da17a@auckland.ac.nz>"
+      ],
+      "body_plain": "Mimicking your vignette:\n\nrequire(rgdal)\nrequire(raster)\nrequire(spatstat)\nrequire(rgeos)\nrequire(maptools)\n\ndzfile <-\"https://www.dropbox.com/s/xxujcwqy3ec21sa/TDM1_DEM__04_S63W062_epsg32720.zip?dl=0\"\ndownload.file(dzfile,\"TDM1_DEM__04_S63W062_epsg32720.zip\",method=\"wget\")\nunzip(\"TDM1_DEM__04_S63W062_epsg32720.zip\")\nv <- readOGR(dsn=\"TDM1_DEM__04_S63W062_epsg32720\",\n             layer=\"TDM1_DEM__04_S63W062_epsg32720\", stringsAsFactors = FALSE)\nplot(v)\np <- slot(v, \"polygons\")\np2 <- lapply(p, function(x) { SpatialPolygons(list(x)) })\nw <- lapply(p2, as.owin) #maptools required\n\nte <- tess(tiles=w)\nclass(te)\nplot.tess(te,do.labels=TRUE)\n\nBut this is still the original polygons,\nnot the mosaic of polygon parts I'm looking for.\nWould I need to go doing all possible intersections and then\nadding the \"A not B\" and \"B not A\" parts for all possible pairs?\n\nOr is there a function in spatstat to convert \"te\" into a tesselation\nof adjacent polygons?\n\nThanks\n\n\n\nOn Thu, Jun 28, 2018 at 2:02 PM, Rolf Turner <r.turner at auckland.ac.nz> wrote:\n>\n> On 29/06/18 00:51, Agustin Lobo wrote:\n>\n>> Given an SpatialPolygons DF with i.e. 2 intersecting polygons, A and\n>> ,B,  is there a function\n>> that would split the original polygons into \"onlyA\", \"onlyB\" and\n>> \"AintersectingB\" polygons?\n>\n>\n> You can do this easily in spatstat by converting your polygons to \"owin\"\n> objects.\n>\n> cheers,\n>\n> Rolf Turner\n>\n> --\n> Technical Editor ANZJS\n> Department of Statistics\n> University of Auckland\n> Phone: +64-9-373-7599 ext. 88276\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Mimicking your vignette:\n\nrequire(rgdal)\nrequire(raster)\nrequire(spatstat)\nrequire(rgeos)\nrequire(maptools)\n\ndzfile <-\"https://www.dropbox.com/s/xxujcwqy3ec21sa/TDM1_DEM__04_S63W062_epsg32720.zip?dl=0",
+      "thread_id": "thread-add552361964",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-cafbcaf76a09",
+      "message_id": "<CAP6VarvUhet=3yRNeBurbuuFCJqyOa1yX-bk-VKpvbn2+gnqaQ@mail.gmail.com>",
+      "from_name": "Mauricio Zambrano Bigiarini",
+      "from_email_hash": "b839b1d74a27c9e25f59d2faf2c24e690b341468be6dec31a2fc0be683767842",
+      "date": "2018-07-02T12:25:55-04:00",
+      "subject": "[R-sig-Geo] Fwd: Spatiotemporal analysis r command",
+      "subject_clean": "Spatiotemporal analysis r command",
+      "in_reply_to": "<CAFoeBZ=E4nvAEzKyJoS4VpmXpg3h-rGe-n70_=H8LV2izK0q2Q@mail.gmail.com>",
+      "references": [
+        "<CAFoeBZ=fS3XyyZ9hSNhtsP5g1bNhs2BHbYru-Pus6fAKy0bsnw@mail.gmail.com>",
+        "<CAFoeBZ=E4nvAEzKyJoS4VpmXpg3h-rGe-n70_=H8LV2izK0q2Q@mail.gmail.com>"
+      ],
+      "body_plain": "https://www.r-project.org/posting-guide.html\n\nIHTH\n\n\n\n\nMauricio Zambrano-Bigiarini, PhD\n\n=====================================\nDepartment of Civil Engineering\nFaculty of Engineering and Sciences\nUniversidad de La Frontera, Temuco, Chile\nhttp://hzambran.github.io/\n=====================================\nmailto : mauricio.zambrano at ufrontera.cl\nwork-phone : +56 45 259 2812\n=====================================\n\"Focus is about saying No\" (Steve Jobs)\n=====================================\nLinux user #454569 -- Linux Mint user\n\n\nOn 1 July 2018 at 06:05, Yalemzewod Gelaw <yalassefa at gmail.com> wrote:\n> Hello everyone,\n> I am planning to do a spatiotemporal distribution of hiv/tb coinfection and\n> the effects of socio-demographic variables. I have a shapefile for 128\n> districts.  For this ecological area  analysis I am planning to use\n> Bayesian Poisson regression analysis.\n> I here with looking for your help tutorial/notes/ r commands for the\n> spatiotemporal analysis and Bayesian Poisson regression.\n>\n> Thank you for any help.\n>\n> *Regards, *\n>\n> Yalem\n> --\n> Best, Yalemzewod Assefa Gelaw (Yalem)\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nLa informaci?n contenida en este correo electr?nico y cualquier anexo o \nrespuesta relacionada, puede contener datos e informaci?n confidencial y no \npuede ser usada o difundida por personas distintas a su(s) destinatario(s). \nSi usted no es el destinatario de esta comunicaci?n, le informamos que \ncualquier divulgaci?n, distribuci?n o copia de esta informaci?n constituye \nun delito conforme a la ley chilena. Si lo ha recibido por error, por favor \nborre el mensaje y todos sus anexos y notifique al remitente.",
+      "body_snippet": "https://www.r-project.org/posting-guide.html\n\nIHTH\n\n\n\n\nMauricio Zambrano-Bigiarini, PhD\n\n=====================================\nDepartment of Civil Engineering\nFaculty of Engineering and Sciences\nUnive",
+      "thread_id": "thread-3680b39ba752",
+      "thread_depth": 1,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-0db48c52ccb6",
+      "message_id": "<432980a8-4a26-c4f6-d78e-9a8efe6a9bf5@auckland.ac.nz>",
+      "from_name": "Rolf Turner",
+      "from_email_hash": "00507e33f1824331f51be8709ec5385bd35aff4ae21168f5c861d517ac3f52bc",
+      "date": "2018-07-03T13:07:25+12:00",
+      "subject": "[R-sig-Geo] intersections to individual polygons",
+      "subject_clean": "intersections to individual polygons",
+      "in_reply_to": "<CAG4NReKY4dWupSuAZc=s5-OOLCXnkBV2+cHHTVO-9FVc+X_Vjg@mail.gmail.com>",
+      "references": [
+        "<CAG4NReJodevNNhVeVoodaRejfDjFCb3962NNtBpX5A_2fijDeQ@mail.gmail.com>",
+        "<dcc8724a-c5a9-3cb2-d84d-982a396da17a@auckland.ac.nz>",
+        "<CAG4NReKY4dWupSuAZc=s5-OOLCXnkBV2+cHHTVO-9FVc+X_Vjg@mail.gmail.com>"
+      ],
+      "body_plain": "Agustin:\n\nI have attached a function that I think does what you want.\nIt returns either a tessellation (if you leave tess=TRUE) or\na list of owin objects otherwise.\n\nI *think* that attachments with .R extensions make it through to the \nlist.  The attachment should at least get through to Agustin (who is\nthe person of central interest!).\n\nIt produces all non-empty intersections between sets of tiles\nin the tessellation argument \"ttt\".  If singles=TRUE (the default)\nthese \"intersections\" include the tiles themselves.  Otherwise\nat least two tiles are involved in each intersection.\n\nE.g.\n\nx1 <- allIntersections(te) # a tessellation\nx2 <- allIntersections(te,tess=FALSE) # a list of windows\nx3 <- allIntersections(te,singles=FALSE) # tiles themselves omitted.\n\nNote that the code includes a work-around for an infelicity in\nin intersect.owin().  This infelicity will very likely be fixed\nin a future release of spatstat.\n\ncheers,\n\nRolf\n\n-- \nTechnical Editor ANZJS\nDepartment of Statistics\nUniversity of Auckland\nPhone: +64-9-373-7599 ext. 88276\n\nOn 02/07/18 23:35, Agustin Lobo wrote:\n> Mimicking your vignette:\n> \n> require(rgdal)\n> require(raster)\n> require(spatstat)\n> require(rgeos)\n> require(maptools)\n> \n> dzfile <-\"https://www.dropbox.com/s/xxujcwqy3ec21sa/TDM1_DEM__04_S63W062_epsg32720.zip?dl=0\"\n> download.file(dzfile,\"TDM1_DEM__04_S63W062_epsg32720.zip\",method=\"wget\")\n> unzip(\"TDM1_DEM__04_S63W062_epsg32720.zip\")\n> v <- readOGR(dsn=\"TDM1_DEM__04_S63W062_epsg32720\",\n>               layer=\"TDM1_DEM__04_S63W062_epsg32720\", stringsAsFactors = FALSE)\n> plot(v)\n> p <- slot(v, \"polygons\")\n> p2 <- lapply(p, function(x) { SpatialPolygons(list(x)) })\n> w <- lapply(p2, as.owin) #maptools required\n> \n> te <- tess(tiles=w)\n> class(te)\n> plot.tess(te,do.labels=TRUE)\n> \n> But this is still the original polygons,\n> not the mosaic of polygon parts I'm looking for.\n> Would I need to go doing all possible intersections and then\n> adding the \"A not B\" and \"B not A\" parts for all possible pairs?\n> \n> Or is there a function in spatstat to convert \"te\" into a tesselation\n> of adjacent polygons?\n> \n> Thanks\n> \n> \n> \n> On Thu, Jun 28, 2018 at 2:02 PM, Rolf Turner <r.turner at auckland.ac.nz> wrote:\n>>\n>> On 29/06/18 00:51, Agustin Lobo wrote:\n>>\n>>> Given an SpatialPolygons DF with i.e. 2 intersecting polygons, A and\n>>> ,B,  is there a function\n>>> that would split the original polygons into \"onlyA\", \"onlyB\" and\n>>> \"AintersectingB\" polygons?\n>>\n>>\n>> You can do this easily in spatstat by converting your polygons to \"owin\"\n>> objects.\n>>\n>> cheers,\n>>\n>> Rolf Turner\n>>\n>> --\n>> Technical Editor ANZJS\n>> Department of Statistics\n>> University of Auckland\n>> Phone: +64-9-373-7599 ext. 88276\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-------------- next part --------------\nAn embedded and charset-unspecified text was scrubbed...\nName: allIntersections.R\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20180703/1a9b7f2c/attachment.ksh>",
+      "body_snippet": "Agustin:\n\nI have attached a function that I think does what you want.\nIt returns either a tessellation (if you leave tess=TRUE) or\na list of owin objects otherwise.\n\nI *think* that attachments with .R",
+      "thread_id": "thread-add552361964",
+      "thread_depth": 1,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-fefb002c7b1d",
+      "message_id": "<ME1PR01MB0659A87E19546D901A37A076A4420@ME1PR01MB0659.ausprd01.prod.outlook.com>",
+      "from_name": "Adrian Baddeley",
+      "from_email_hash": "a5377266a8a414e5a7ec23fad745605eaa862debb72cabdbb321e5104810e9cf",
+      "date": "2018-07-03T03:44:13Z",
+      "subject": "[R-sig-Geo] intersections to individual polygons",
+      "subject_clean": "intersections to individual polygons",
+      "in_reply_to": "<432980a8-4a26-c4f6-d78e-9a8efe6a9bf5@auckland.ac.nz>",
+      "references": [
+        "<CAG4NReJodevNNhVeVoodaRejfDjFCb3962NNtBpX5A_2fijDeQ@mail.gmail.com>",
+        "<dcc8724a-c5a9-3cb2-d84d-982a396da17a@auckland.ac.nz>",
+        "<CAG4NReKY4dWupSuAZc=s5-OOLCXnkBV2+cHHTVO-9FVc+X_Vjg@mail.gmail.com>",
+        "<432980a8-4a26-c4f6-d78e-9a8efe6a9bf5@auckland.ac.nz>"
+      ],
+      "body_plain": "Agustin Lobo writes:\n\n\n>>> Given an SpatialPolygons DF with i.e. 2 intersecting polygons, A and B,\n>>> is there a function that would split the original polygons into \"onlyA\", \"onlyB\" and\n>>> \"AintersectingB\" polygons?\n\n\nFirst convert the SpatialPolygons to spatstat 'owin' objects using as.owin.\n\n\nIf there are two polygons A and B, you can just use intersect.owin and setminus.owin to get what you want:\n\n      AandB <- intersect.owin(A, B )\n\n      AnotB <- setminus.owin(A, B )\n\n      BnotA <- setminus.owin(B, A)\n\n\nIf there are several windows, make a list P containing the windows.\n\nThen call\n\n     Z <- kaleido(P)\n\n     plot(Z, do.col=TRUE)\n\nusing the following code. The result Z is a tessellation. Extract the individual pieces as tiles(Z).\n\n\n      kaleido <- function(P) {\n\n           U <- union.owin(as.solist(P))\n\n            V <- lapply(P, onesplit, U=U)\n\n            Z <- Reduce(intersect.tess, V)\n\n            return(Z)\n\n      }\n\n      onesplit <- function(X, U) tess(tiles=list(A=X, NotA=setminus.owin(U, X)), W=U)\n\n\n\nProf Adrian Baddeley DSc FAA\n\nJohn Curtin Distinguished Professor\n\nDepartment of Mathematics and Statistics\n\nCurtin University, Perth, Western Australia\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Agustin Lobo writes:\n\n\n>>> Given an SpatialPolygons DF with i.e. 2 intersecting polygons, A and B,\n>>> is there a function that would split the original polygons into \"onlyA\", \"onlyB\" and\n>>> \"Ainters",
+      "thread_id": "thread-add552361964",
+      "thread_depth": 2,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-aabd3c1efd77",
+      "message_id": "<YQXPR0101MB1397E6F476B341C5994FC30290410@YQXPR0101MB1397.CANPRD01.PROD.OUTLOOK.COM>",
+      "from_name": "Joelle k. Akram",
+      "from_email_hash": "3087c42440375f50221ee5e93ba994bf00b12f2d644bf2a29ec127c7aaee3e89",
+      "date": "2018-07-04T16:14:31Z",
+      "subject": "[R-sig-Geo] How to use gstat 'variogram' function for nonlinear formulae?",
+      "subject_clean": "How to use gstat 'variogram' function for nonlinear formulae?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\n\nFor a linear model I use the 'variogram' function in gstat as follows:\n\n\ncoordinates(data) <- c('x','y')\nmyvario <- variogram(dep~var1+var2+var3, data)\n\nNow, I have the following Nonlinear formula that I want to use in variogram.\n\ndep~ var1*var2^3\n\n\nMy 2 questions are:\n\ni) Can the variogram function in gstat handle nonlinear models as this formula?\n\nii) What is the syntax to use this nonlinear formulae within the variogram function? is it simply :\n\nmyvario <- variogram(dep~ var1*var2^3, data)\n\nAny advice is appeciated.\n\n\ncheers\n\nChris Akram\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\n\nFor a linear model I use the 'variogram' function in gstat as follows:\n\n\ncoordinates(data) <- c('x','y')\nmyvario <- variogram(dep~var1+var2+var3, data)\n\nNow, I have the following Nonlinear",
+      "thread_id": "thread-aabd3c1efd77",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-6e11f64ba30f",
+      "message_id": "<c44bd54f-c3c9-9845-488f-fdb8376fc164@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "66aa041123109049e85426fdc58f734b4efd3e78a701238b45aec105982d5e4e",
+      "date": "2018-07-04T18:28:21+02:00",
+      "subject": "[R-sig-Geo] How to use gstat 'variogram' function for nonlinear formulae?",
+      "subject_clean": "How to use gstat 'variogram' function for nonlinear formulae?",
+      "in_reply_to": "<YQXPR0101MB1397E6F476B341C5994FC30290410@YQXPR0101MB1397.CANPRD01.PROD.OUTLOOK.COM>",
+      "references": [
+        "<YQXPR0101MB1397E6F476B341C5994FC30290410@YQXPR0101MB1397.CANPRD01.PROD.OUTLOOK.COM>"
+      ],
+      "body_plain": "On 07/04/2018 06:14 PM, Joelle k. Akram wrote:\n> Dear all,\n> \n> \n> For a linear model I use the 'variogram' function in gstat as follows:\n> \n> \n> coordinates(data) <- c('x','y')\n> myvario <- variogram(dep~var1+var2+var3, data)\n> \n> Now, I have the following Nonlinear formula that I want to use in variogram.\n> \n> dep~ var1*var2^3\n\nThis is still a linear model.\n\n> \n> \n> My 2 questions are:\n> \n> i) Can the variogram function in gstat handle nonlinear models as this formula?\n> \n> ii) What is the syntax to use this nonlinear formulae within the variogram function? is it simply :\n> \n> myvario <- variogram(dep~ var1*var2^3, data)\n\nI think that like in other areas of R you'll have to use\n\nmyvario <- variogram(dep~ var1*I(var2)^3, data)\n\nNote that the * will be interpreted as indicating you want main effects\nand an interaction, not simply the product of var1*var3^3; see ?formula\n\n> \n> Any advice is appeciated.\n> \n> \n> cheers\n> \n> Chris Akram\n> \n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48151 Muenster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "On 07/04/2018 06:14 PM, Joelle k. Akram wrote:\n> Dear all,\n> \n> \n> For a linear model I use the 'variogram' function in gstat as follows:\n> \n> \n> coordinates(data) <- c('x','y')\n> myvario <- variogram",
+      "thread_id": "thread-aabd3c1efd77",
+      "thread_depth": 1,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-777f67a6e228",
+      "message_id": "<CAFnjcD39OL4z24bQMZ42jUbRXWb8i1okd-4B8bzJ6O9izdcVRg@mail.gmail.com>",
+      "from_name": "Bruno Sesti",
+      "from_email_hash": "c8bacd13d5549498e63961bfe1a3ed5bb175ae4b78473a02370e70700152ce24",
+      "date": "2018-07-05T08:34:00+02:00",
+      "subject": "[R-sig-Geo] Kriging and Spatio temporal kriging on air quality data",
+      "subject_clean": "Kriging and Spatio temporal kriging on air quality data",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi, I am using kriging and spatio temporal kriging for studying and\nanalyzing air quality data from mobile sensors.\nI would like to ask some question about the following issues:\n1) is possible to gave the same values scale to different kriging result\n(maps from different measures in the same study area). That is if I have a\nkriging map with values in the range of 0-20 and another map with values in\nthe range of 5-30, can I gave to both the maps a values (and colours) scale\nin the range of 0-30, in order to compare the values from the two maps.\n2) is there some particular package and or tecnique specifically indicated\nto make spatial kriging from air quality data from mobile sensor.\n\nKind regards.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi, I am using kriging and spatio temporal kriging for studying and\nanalyzing air quality data from mobile sensors.\nI would like to ask some question about the following issues:\n1) is possible to gave",
+      "thread_id": "thread-777f67a6e228",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-3e962243f7c2",
+      "message_id": "<MW2PR0901MB2330CE0B2302911D488BD50EEB470@MW2PR0901MB2330.namprd09.prod.outlook.com>",
+      "from_name": "Gregovich, Dave P (DFG)",
+      "from_email_hash": "9401a4fab417eefda5bf4a6d9c31c5fcf5804c3ebcad12f307522a3389dda6d0",
+      "date": "2018-07-06T16:22:48Z",
+      "subject": "[R-sig-Geo] Distance from not NA cells in a raster",
+      "subject_clean": "Distance from not NA cells in a raster",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\nI would like to obtain the distance from all not NA cells in a raster. This works for smaller rasters, but seems difficult for the size of rasters (~ 8000 pixel square)  I am working with.\nBelow is what I've tried. I would be OK calling other software from R, or using some parallelization, if it might help.\nThanks so much for your help!  If I could just calculate this distance in two hours or less (or so) I would be satisfied.\nDave.\n\nrm(list=ls())\nlibrary(raster)\n\n#make raster\nrast <- raster(nrow = 8000, ncol = 8000, ext = extent(0,1,0,1))\n\n#generate cells to calculate distance from.\nrast[sample(8000^2, 10000)] <- 1\n\n#try two different methods...\ndist1 <- gridDistance(rast, origin = 1)#throws an error after x minutes\n#'Error: cannot allocate vector of size 3.8 Gb'\ndist2 <- distance(rast)#ran all night, R was hung up in the morning and had to force shutdown.\n\n___________________________________________\nDave Gregovich\nResearch Analyst\nAlaska Department of Fish and Game\nDivision of Wildlife Conservation\n802 3rd Street\nDouglas, AK 99824\n907-465-4291\n___________________________________________\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\nI would like to obtain the distance from all not NA cells in a raster. This works for smaller rasters, but seems difficult for the size of rasters (~ 8000 pixel square)  I am working with.\nBelow i",
+      "thread_id": "thread-3e962243f7c2",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-c8283313db1d",
+      "message_id": "<MW2PR0901MB2330EEE84EA1468C2E501784EB470@MW2PR0901MB2330.namprd09.prod.outlook.com>",
+      "from_name": "Gregovich, Dave P (DFG)",
+      "from_email_hash": "9401a4fab417eefda5bf4a6d9c31c5fcf5804c3ebcad12f307522a3389dda6d0",
+      "date": "2018-07-06T17:47:48Z",
+      "subject": "[R-sig-Geo] Distance from not NA cells in a raster",
+      "subject_clean": "Distance from not NA cells in a raster",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Sorry, I forgot to include session info to associate my issue...thanks!\n> sessionInfo()\nR version 3.4.3 (2017-11-30)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 7 x64 (build 7601) Service Pack 1\n\nother attached packages:\n[1] RSAGA_1.2.0    plyr_1.8.4     shapefiles_0.7 foreign_0.8-69 gstat_1.1-6    rgdal_1.2-16\n[7] raster_2.6-7   sp_1.2-5\n\n\nFrom: Gregovich, Dave P (DFG)\nSent: Friday, July 06, 2018 8:23 AM\nTo: 'r-sig-geo at r-project.org'\nSubject: Distance from not NA cells in a raster\n\nHi,\nI would like to obtain the distance from all not NA cells in a raster. This works for smaller rasters, but seems difficult for the size of rasters (~ 8000 pixel square)  I am working with.\nBelow is what I've tried. I would be OK calling other software from R, or using some parallelization, if it might help.\nThanks so much for your help!  If I could just calculate this distance in two hours or less (or so) I would be satisfied.\nDave.\n\nrm(list=ls())\nlibrary(raster)\n\n#make raster\nrast <- raster(nrow = 8000, ncol = 8000, ext = extent(0,1,0,1))\n\n#generate cells to calculate distance from.\nrast[sample(8000^2, 10000)] <- 1\n\n#try two different methods...\ndist1 <- gridDistance(rast, origin = 1)#throws an error after x minutes\n#'Error: cannot allocate vector of size 3.8 Gb'\ndist2 <- distance(rast)#ran all night, R was hung up in the morning and had to force shutdown.\n\n___________________________________________\nDave Gregovich\nResearch Analyst\nAlaska Department of Fish and Game\nDivision of Wildlife Conservation\n802 3rd Street\nDouglas, AK 99824\n907-465-4291\n___________________________________________\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Sorry, I forgot to include session info to associate my issue...thanks!\n> sessionInfo()\nR version 3.4.3 (2017-11-30)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 7 x64 (build 7601)",
+      "thread_id": "thread-c8283313db1d",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-a3c0985946da",
+      "message_id": "<CAM8MRF00Z7M1j5O1dzykvF=7mZ8dQH26U7nK0CjH-fDV_DwaSw@mail.gmail.com>",
+      "from_name": "Krushil Naik",
+      "from_email_hash": "395ef385a074ed6b93f1fd3f459f35b36d973920566db5d1e84e8f7392d5e8e6",
+      "date": "2018-07-06T17:30:43-04:00",
+      "subject": "[R-sig-Geo] geom_contour",
+      "subject_clean": "geom_contour",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi, I'm trying to generate a contour plot from a data set I have in Excel\nshowing how a given set of three of the 8 columns/categories are related to\neach other. I pulled out three arbitrary columns using the subset function,\nbut I'm kinda lost with what to do from there.\n\nLets say I have this subset:\n\n      x       y       z\n-------------------------\n      7       6      5.3\n      1     3.14   4.0\n      5      2.7    6.1\n\nHow would I plot a contour graph of the subset? Is that even possible?\nThanks.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi, I'm trying to generate a contour plot from a data set I have in Excel\nshowing how a given set of three of the 8 columns/categories are related to\neach other. I pulled out three arbitrary columns u",
+      "thread_id": "thread-a3c0985946da",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-b3fd40bbf4b0",
+      "message_id": "<A33B7BD8-3D56-4DFC-B034-C48E2FA127E1@gmail.com>",
+      "from_name": "Axel Urbiz",
+      "from_email_hash": "9c50f5da47cacfc58e4d062985081da5d3d4de85c739b2505a69dba805a7d927",
+      "date": "2018-07-08T07:52:27-04:00",
+      "subject": "[R-sig-Geo] Spatial clustering with spdep::skater",
+      "subject_clean": "Spatial clustering with spdep::skater",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear Experts, \n\nMy apologies in advance as this is more a statistical question, rather than an R programming question, but hope you can point me in the right direction. \n\nI?m working with spdep::skater to fit clusters to spatial data subject to contiguity constraints. This function fits clusters by edge removal from Minimum Spanning Trees. \n\nIn this context, I?d appreciate any pointers on how to tune the number of clusters. What is a sensible criteria to use?\n\nThanks,\nAxel.",
+      "body_snippet": "Dear Experts, \n\nMy apologies in advance as this is more a statistical question, rather than an R programming question, but hope you can point me in the right direction. \n\nI?m working with spdep::skate",
+      "thread_id": "thread-b3fd40bbf4b0",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-67754690c7fd",
+      "message_id": "<d4b5e8db-fd17-abf1-75e1-385d73a744dd@gmail.com>",
+      "from_name": "Elias T Krainski",
+      "from_email_hash": "e0785f534fedbf4121c4ed56ff1777a501f0931da1b08a742b10ec1abea94d6c",
+      "date": "2018-07-09T09:22:32-03:00",
+      "subject": "[R-sig-Geo] Spatial clustering with spdep::skater",
+      "subject_clean": "Spatial clustering with spdep::skater",
+      "in_reply_to": "<A33B7BD8-3D56-4DFC-B034-C48E2FA127E1@gmail.com>",
+      "references": [
+        "<A33B7BD8-3D56-4DFC-B034-C48E2FA127E1@gmail.com>"
+      ],
+      "body_plain": "Hi Axel,\n\nThe original paper suggests to look at the SSW decay. You can visualize \nit easily as it is returned in the output from skater().\n\nBest,\n\nElias\n\n\nOn 08/07/18 08:52, Axel Urbiz wrote:\n> Dear Experts,\n>\n> My apologies in advance as this is more a statistical question, rather than an R programming question, but hope you can point me in the right direction.\n>\n> I?m working with spdep::skater to fit clusters to spatial data subject to contiguity constraints. This function fits clusters by edge removal from Minimum Spanning Trees.\n>\n> In this context, I?d appreciate any pointers on how to tune the number of clusters. What is a sensible criteria to use?\n>\n> Thanks,\n> Axel.\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hi Axel,\n\nThe original paper suggests to look at the SSW decay. You can visualize \nit easily as it is returned in the output from skater().\n\nBest,\n\nElias\n\n\nOn 08/07/18 08:52, Axel Urbiz wrote:\n> Dear ",
+      "thread_id": "thread-b3fd40bbf4b0",
+      "thread_depth": 1,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-b12b39f48de5",
+      "message_id": "<C1524BE4BF45454293B8DF38FB9B5ECA011BA5C1BA@MS-EX1VKS.erdc.dren.mil>",
+      "from_name": "Wall, Wade A ERDC-RDE-CERL-IL CIV",
+      "from_email_hash": "6e3823c9962bafe7858038b027d6554655cdf356f59cbc57664c12023a032aef",
+      "date": "2018-07-09T13:44:41Z",
+      "subject": "[R-sig-Geo] Memory issues using raster::subs",
+      "subject_clean": "Memory issues using raster::subs",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi all,\n\nI am having issues with using the subs function in the raster package. In the past, I have successfully used the function to reclassify a raster, but now when I try to use it, I am receiving the error \" Error: cannot allocate vector of size 2.0 Gb\". The code is the same as what I had used before with a larger raster and data.frame. \n\nFor example, this code works:\n\nsegments = raster(D:/path/To/InputRaster.tif) ### objects raster\nobj_predicted = data.frame(zone,predicted)\nfilename=\"D:/path/To/Raster.tif\"\nsubs(segments,obj_predicted,by=1,which=2,filename=filename,progress=\"text\")\n\nThe segments raster is of size 71026 by 78701. obj_predicted is a 1,693,839 X 2 column data frame, with each row of the first column of the data frame corresponding to a pixel value in the segments raster. \n\nHowever, when I replace the segments raster with another raster that is 14157 by 11923  and the obj_predicted data frame is 6588 x 2, I receive the error message. The crs of both rasters is the same, both data frames are essentially the same etc. \n\nSorry that I can't really provide the data to attempt reproduction. Any help would be appreciated. I am going to attempt to process by block, but this seems \n\nWade",
+      "body_snippet": "Hi all,\n\nI am having issues with using the subs function in the raster package. In the past, I have successfully used the function to reclassify a raster, but now when I try to use it, I am receiving ",
+      "thread_id": "thread-b12b39f48de5",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-7b28d9302500",
+      "message_id": "<11fea5edb1684c7fbfc02515a3043e5c@sgu.se>",
+      "from_name": "Francis Freire",
+      "from_email_hash": "a4202294eb9c70bee68191b9470dc4fd44ffa9753d27e35a437c7305035172de",
+      "date": "2018-07-10T11:20:59Z",
+      "subject": "[R-sig-Geo] converting from MSL EGM2008 to RH2000",
+      "subject_clean": "converting from MSL EGM2008 to RH2000",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n\nI am particularly new to R and would like to ask a question. I have looking all over the net for a way to convert the vertical reference system of our z values in our xyz text file from MSL EGM2008 to RH2000 using R. Has anyone done this before or can point me in the right directions?\n\nBest,\n\nFrancis",
+      "body_snippet": "Hi,\n\nI am particularly new to R and would like to ask a question. I have looking all over the net for a way to convert the vertical reference system of our z values in our xyz text file from MSL EGM20",
+      "thread_id": "thread-7b28d9302500",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-fe81e90a365e",
+      "message_id": "<MWHPR09MB22568A1C08455F4148FE1F58D15B0@MWHPR09MB2256.namprd09.prod.outlook.com>",
+      "from_name": "Harp, Nathen (DOT)",
+      "from_email_hash": "830ae37f1faad2ff26d091d7b1d6f9b662253f2c2a2eb8790fc811829572f3e9",
+      "date": "2018-07-10T12:45:36Z",
+      "subject": "[R-sig-Geo] converting from MSL EGM2008 to RH2000",
+      "subject_clean": "converting from MSL EGM2008 to RH2000",
+      "in_reply_to": "<11fea5edb1684c7fbfc02515a3043e5c@sgu.se>",
+      "references": [
+        "<11fea5edb1684c7fbfc02515a3043e5c@sgu.se>"
+      ],
+      "body_plain": "I don't believe R has geodetic packages but that is what you need.  See NGS for examples,,\nhttps://www.ngs.noaa.gov/PC_PROD/pc_prod.shtml\n________________________________\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Francis Freire <Francis.Freire at sgu.se>\nSent: Tuesday, July 10, 2018 7:20:59 AM\nTo: 'r-sig-geo at r-project.org'\nSubject: [R-sig-Geo] converting from MSL EGM2008 to RH2000\n\nATTENTION: This email came from an external source. Do not open attachments or click on links from unknown senders or unexpected emails.\n\n\nHi,\n\nI am particularly new to R and would like to ask a question. I have looking all over the net for a way to convert the vertical reference system of our z values in our xyz text file from MSL EGM2008 to RH2000 using R. Has anyone done this before or can point me in the right directions?\n\nBest,\n\nFrancis\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I don't believe R has geodetic packages but that is what you need.  See NGS for examples,,\nhttps://www.ngs.noaa.gov/PC_PROD/pc_prod.shtml\n________________________________\nFrom: R-sig-Geo <r-sig-geo-bo",
+      "thread_id": "thread-7b28d9302500",
+      "thread_depth": 1,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-09f0611e0c78",
+      "message_id": "<alpine.LFD.2.21.1807101512000.20776@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-07-10T15:14:09+02:00",
+      "subject": "[R-sig-Geo] converting from MSL EGM2008 to RH2000",
+      "subject_clean": "converting from MSL EGM2008 to RH2000",
+      "in_reply_to": "<MWHPR09MB22568A1C08455F4148FE1F58D15B0@MWHPR09MB2256.namprd09.prod.outlook.com>",
+      "references": [
+        "<11fea5edb1684c7fbfc02515a3043e5c@sgu.se>",
+        "<MWHPR09MB22568A1C08455F4148FE1F58D15B0@MWHPR09MB2256.namprd09.prod.outlook.com>"
+      ],
+      "body_plain": "On Tue, 10 Jul 2018, Harp, Nathen (DOT) via R-sig-Geo wrote:\n\n> I don't believe R has geodetic packages but that is what you need.  See NGS for examples,,\n> https://www.ngs.noaa.gov/PC_PROD/pc_prod.shtml\n\nWhile this is currently the case, we hope that PROJ >=5 will make this \npossible - for now please also consider using PROJ command line tools with \ngeodetic pipelines, maybe ask on the proj list, and keep everyone \ninformed!\n\nRoger\n\n> ________________________________\n> From: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Francis Freire <Francis.Freire at sgu.se>\n> Sent: Tuesday, July 10, 2018 7:20:59 AM\n> To: 'r-sig-geo at r-project.org'\n> Subject: [R-sig-Geo] converting from MSL EGM2008 to RH2000\n>\n> ATTENTION: This email came from an external source. Do not open attachments or click on links from unknown senders or unexpected emails.\n>\n>\n> Hi,\n>\n> I am particularly new to R and would like to ask a question. I have looking all over the net for a way to convert the vertical reference system of our z values in our xyz text file from MSL EGM2008 to RH2000 using R. Has anyone done this before or can point me in the right directions?\n>\n> Best,\n>\n> Francis\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Tue, 10 Jul 2018, Harp, Nathen (DOT) via R-sig-Geo wrote:\n\n> I don't believe R has geodetic packages but that is what you need.  See NGS for examples,,\n> https://www.ngs.noaa.gov/PC_PROD/pc_prod.sh",
+      "thread_id": "thread-7b28d9302500",
+      "thread_depth": 2,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-cbc11580e996",
+      "message_id": "<448E53F2-7C18-42A5-BF51-1618EF24712C@ieu.uzh.ch>",
+      "from_name": "Dechen Lham",
+      "from_email_hash": "f94ee38dde21e09c4640edb3cf6db065a36ad5b6e9191f140ec0ebea33f56d56",
+      "date": "2018-07-10T19:46:21+02:00",
+      "subject": "[R-sig-Geo] Spatial autocorrelation help",
+      "subject_clean": "Spatial autocorrelation help",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello all,\n\nI would like some help in my problem below:\n\nI am running a logistic regression and my best model residuals has spatial autocorrelation  (SAC) when checked as below and also on the raw data of the response type. My response is binary 0 and 1 (type of prey and to be predicted by several predictors). These type of prey are obtained from  a total of  200 locations (where the faecal samples are collected from).   In order to account for this SAC , I used the auto_covdist function from spdep package. But when i use this as a new predictor in my model, and then check for spatial autocorrelation in the residues of the model, there is still spatial autocorrelation,?..could u see if i am doing something wrong please?\n\n#account for SAC in the model using weights\n# auto_covariate is a distance weighted covariate\ndata$response <- as.numeric(data$response)\nauto_weight <- autocov_dist(data$prey.type, xy=coords, nbs=1, type=\"inverse\", zero.policy = TRUE,style=\"W\", longlat = TRUE)\n\nm5_auto <- glm(response ~  predictor1 + predictor2 + predictor3 + predictor4 + predictor1:predictor4, weight=auto_weight, family=quasibinomial(\"logit\"), data=data)\n\n# check spatial autocorrelation - first convert data to spatial points dataframe\ndat <- SpatialPointsDataFrame(cbind(data$long, data$lat), data)\nlstw  <- nb2listw(knn2nb(knearneigh(dat, k = 2)))\n\n# check SAC in model residuals\nmoran.test(residuals.glm(m5_auto), lstw) # and gives the below:\n\nMoran I test under randomisation\n\ndata:  residuals.glm(m5)  \nweights: lstw  \n\nMoran I statistic standard deviate = 1.9194, p-value = 0.02747\nalternative hypothesis: greater\nsample estimates:\nMoran I statistic       Expectation          Variance \n     0.160824328      -0.004608295       0.007428642 \n\n-Someone said its stupid to account for spatial autocorrelation in a logistic regression when you have a significant SAC using moran?s I. So i am now wondering how this can be solved? or does a SAC in a logistic regression be just ignored? \n\nI am new to spatial statistics and now idea how to move with such. I only know that my data has spatial\n autocorrelation (which i hope to have checked correctly using morans I as above) and now need to account for this in my analysis. Some advice would be greatly appreciated by people who have used to account for SAC in their logistic models.  Is a logistic mixed models an option to consider?especially if your covariates are spatial in nature,?i read somewhere that if you cant account for SAC in glm then you can move to mixed models esp if your covariates are spatial which is expected to digest the SAC. \n\nHelp and advice would be greatly appreciated.",
+      "body_snippet": "Hello all,\n\nI would like some help in my problem below:\n\nI am running a logistic regression and my best model residuals has spatial autocorrelation  (SAC) when checked as below and also on the raw dat",
+      "thread_id": "thread-cbc11580e996",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-af8f3b9f6f89",
+      "message_id": "<1531247501.local-c5e9d1a7-7905-v1.2.2-96fb3a99@getmailspring.com>",
+      "from_name": "Patrick Schratz",
+      "from_email_hash": "7f30c9515fae6434131a55cf2abb792496b4bdc4da7e82bfe3d7f15494c5a910",
+      "date": "2018-07-10T20:38:26+02:00",
+      "subject": "[R-sig-Geo] Spatial autocorrelation help",
+      "subject_clean": "Spatial autocorrelation help",
+      "in_reply_to": "<448E53F2-7C18-42A5-BF51-1618EF24712C@ieu.uzh.ch>",
+      "references": [
+        "<448E53F2-7C18-42A5-BF51-1618EF24712C@ieu.uzh.ch>"
+      ],
+      "body_plain": "Hi Dechen,\n\nit is very important to account for SAC in any model. This can be done in various ways. In log.reg it is common to include spatial autocorrelation structures that describe the underlying SAC. To do so, you can use mixed models, e.g. MASS::glmmPQL().\nAlso have a look at Wood (2017) Generalized Additive Models in R.\nI did account for it in my master thesis.Even though the code is not attached, it may help you: https://zenodo.org/record/814262\nCheers, Patrick\nOn Jul 10 2018, at 7:46 pm, Dechen Lham <dechen.lham at ieu.uzh.ch> wrote:\n>\n> Hello all,\n> I would like some help in my problem below:\n> I am running a logistic regression and my best model residuals has spatial autocorrelation (SAC) when checked as below and also on the raw data of the response type. My response is binary 0 and 1 (type of prey and to be predicted by several predictors). These type of prey are obtained from a total of 200 locations (where the faecal samples are collected from). In order to account for this SAC , I used the auto_covdist function from spdep package. But when i use this as a new predictor in my model, and then check for spatial autocorrelation in the residues of the model, there is still spatial autocorrelation,?..could u see if i am doing something wrong please?\n> #account for SAC in the model using weights\n> # auto_covariate is a distance weighted covariate\n> data$response <- as.numeric(data$response)\n> auto_weight <- autocov_dist(data$prey.type, xy=coords, nbs=1, type=\"inverse\", zero.policy = TRUE,style=\"W\", longlat = TRUE)\n>\n> m5_auto <- glm(response ~ predictor1 + predictor2 + predictor3 + predictor4 + predictor1:predictor4, weight=auto_weight, family=quasibinomial(\"logit\"), data=data)\n> # check spatial autocorrelation - first convert data to spatial points dataframe\n> dat <- SpatialPointsDataFrame(cbind(data$long, data$lat), data)\n> lstw <- nb2listw(knn2nb(knearneigh(dat, k = 2)))\n>\n> # check SAC in model residuals\n> moran.test(residuals.glm(m5_auto), lstw) # and gives the below:\n>\n> Moran I test under randomisation\n> data: residuals.glm(m5)\n> weights: lstw\n>\n> Moran I statistic standard deviate = 1.9194, p-value = 0.02747\n> alternative hypothesis: greater\n> sample estimates:\n> Moran I statistic Expectation Variance\n> 0.160824328 -0.004608295 0.007428642\n>\n> -Someone said its stupid to account for spatial autocorrelation in a logistic regression when you have a significant SAC using moran?s I. So i am now wondering how this can be solved? or does a SAC in a logistic regression be just ignored?\n> I am new to spatial statistics and now idea how to move with such. I only know that my data has spatial\n> autocorrelation (which i hope to have checked correctly using morans I as above) and now need to account for this in my analysis. Some advice would be greatly appreciated by people who have used to account for SAC in their logistic models. Is a logistic mixed models an option to consider?especially if your covariates are spatial in nature,?i read somewhere that if you cant account for SAC in glm then you can move to mixed models esp if your covariates are spatial which is expected to digest the SAC.\n>\n> Help and advice would be greatly appreciated.\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Dechen,\n\nit is very important to account for SAC in any model. This can be done in various ways. In log.reg it is common to include spatial autocorrelation structures that describe the underlying S",
+      "thread_id": "thread-cbc11580e996",
+      "thread_depth": 1,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-079048c7a887",
+      "message_id": "<E6291F79-3D2E-4DC4-B74B-E8C457648E9A@ieu.uzh.ch>",
+      "from_name": "Dechen Lham",
+      "from_email_hash": "f94ee38dde21e09c4640edb3cf6db065a36ad5b6e9191f140ec0ebea33f56d56",
+      "date": "2018-07-10T21:57:58+02:00",
+      "subject": "[R-sig-Geo] Spatial autocorrelation help",
+      "subject_clean": "Spatial autocorrelation help",
+      "in_reply_to": "<1531247501.local-c5e9d1a7-7905-v1.2.2-96fb3a99@getmailspring.com>",
+      "references": [
+        "<448E53F2-7C18-42A5-BF51-1618EF24712C@ieu.uzh.ch>",
+        "<1531247501.local-c5e9d1a7-7905-v1.2.2-96fb3a99@getmailspring.com>"
+      ],
+      "body_plain": "Hi Patrick\n\nThank you for your quick response and i went through your thesis and its very useful information. One thing that i was wondering was, you could potentially also use quadratic terms of the predictors which may have non-linear relation with the response variable right? rather than to use GAMM.\n\nBesides i need to still figure out how to check the SAC correctly in my data as there is the global morans I and a local morans I right? Further need to figure out how to plot them correctly to see the patterns. I did make a correlogram of the raw data and from the residuals of the best model but both looked very similar and also after accounting for SAC, the morans I was significant and SAC was not accounted for. So it would be great if you can see I am doing something wrong while accepting for the SAC below?please\n\n\nregards\n\n\n> On 10 Jul 2018, at 8:38 PM, Patrick Schratz <patrick.schratz at gmail.com> wrote:\n> \n> Hi Dechen,\n> \n> it is very important to account for SAC in any model. This can be done in various ways. In log.reg it is common to include spatial autocorrelation structures that describe the underlying SAC. To do so, you can use mixed models, e.g. MASS::glmmPQL().\n> \n> Also have a look at Wood (2017) Generalized Additive Models in R.\n> \n> I did account for it in my master thesis.Even though the code is not attached, it may help you: https://zenodo.org/record/814262 <https://zenodo.org/record/814262>\n> Cheers, Patrick\n> On Jul 10 2018, at 7:46 pm, Dechen Lham <dechen.lham at ieu.uzh.ch> wrote:\n> \n> Hello all,\n> \n> I would like some help in my problem below:\n> \n> I am running a logistic regression and my best model residuals has spatial autocorrelation (SAC) when checked as below and also on the raw data of the response type. My response is binary 0 and 1 (type of prey and to be predicted by several predictors). These type of prey are obtained from a total of 200 locations (where the faecal samples are collected from). In order to account for this SAC , I used the auto_covdist function from spdep package. But when i use this as a new predictor in my model, and then check for spatial autocorrelation in the residues of the model, there is still spatial autocorrelation,?..could u see if i am doing something wrong please?\n> \n> #account for SAC in the model using weights\n> # auto_covariate is a distance weighted covariate\n> data$response <- as.numeric(data$response)\n> auto_weight <- autocov_dist(data$prey.type, xy=coords, nbs=1, type=\"inverse\", zero.policy = TRUE,style=\"W\", longlat = TRUE)\n> \n> m5_auto <- glm(response ~ predictor1 + predictor2 + predictor3 + predictor4 + predictor1:predictor4, weight=auto_weight, family=quasibinomial(\"logit\"), data=data)\n> \n> # check spatial autocorrelation - first convert data to spatial points dataframe\n> dat <- SpatialPointsDataFrame(cbind(data$long, data$lat), data)\n> lstw <- nb2listw(knn2nb(knearneigh(dat, k = 2)))\n> \n> # check SAC in model residuals\n> moran.test(residuals.glm(m5_auto), lstw) # and gives the below:\n> \n> Moran I test under randomisation\n> \n> data: residuals.glm(m5)\n> weights: lstw\n> \n> Moran I statistic standard deviate = 1.9194, p-value = 0.02747\n> alternative hypothesis: greater\n> sample estimates:\n> Moran I statistic Expectation Variance\n> 0.160824328 -0.004608295 0.007428642\n> \n> -Someone said its stupid to account for spatial autocorrelation in a logistic regression when you have a significant SAC using moran?s I. So i am now wondering how this can be solved? or does a SAC in a logistic regression be just ignored?\n> \n> I am new to spatial statistics and now idea how to move with such. I only know that my data has spatial\n> autocorrelation (which i hope to have checked correctly using morans I as above) and now need to account for this in my analysis. Some advice would be greatly appreciated by people who have used to account for SAC in their logistic models. Is a logistic mixed models an option to consider?especially if your covariates are spatial in nature,?i read somewhere that if you cant account for SAC in glm then you can move to mixed models esp if your covariates are spatial which is expected to digest the SAC.\n> \n> Help and advice would be greatly appreciated.\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Patrick\n\nThank you for your quick response and i went through your thesis and its very useful information. One thing that i was wondering was, you could potentially also use quadratic terms of the ",
+      "thread_id": "thread-cbc11580e996",
+      "thread_depth": 2,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-124698ba4270",
+      "message_id": "<f52726f6-a364-fe9d-ff0d-2bdf9b7354b8@gmail.com>",
+      "from_name": "Orcun Morali",
+      "from_email_hash": "3daa3ad9672cc8e654955b7ad6cd7cd3c142ddbe95f2d0f063811848df73889c",
+      "date": "2018-07-11T20:01:58+03:00",
+      "subject": "[R-sig-Geo] Spatial autocorrelation help",
+      "subject_clean": "Spatial autocorrelation help",
+      "in_reply_to": "<448E53F2-7C18-42A5-BF51-1618EF24712C@ieu.uzh.ch>",
+      "references": [
+        "<448E53F2-7C18-42A5-BF51-1618EF24712C@ieu.uzh.ch>"
+      ],
+      "body_plain": "Hi Dechen,\n\nAs for measuring spatial autocorrelation, one thing I noticed about your \noutput is that you are using the randomization assumption in \nspdep::moran.test. Randomization assumption is not appropriate for \nMoran's I of regression residuals and spdep::lm.morantest is the \nfunction to correctly calculate moments of the measure for regression \nresiduals anyway. Before using lm.morantest though, if I were you, I \nwould check whether its inference applies to logistic regression \nresiduals as well, since the theory was initially based on the classical \nregression.\n\nAs for fitting a spatial logistic model if you need it, McSpatial \npackage in R might help you.\n\nBest Regards,\n\nOrcun\n\nOn 10/07/18 20:46, Dechen Lham wrote:\n> Hello all,\n>\n> I would like some help in my problem below:\n>\n> I am running a logistic regression and my best model residuals has spatial autocorrelation  (SAC) when checked as below and also on the raw data of the response type. My response is binary 0 and 1 (type of prey and to be predicted by several predictors). These type of prey are obtained from  a total of  200 locations (where the faecal samples are collected from).   In order to account for this SAC , I used the auto_covdist function from spdep package. But when i use this as a new predictor in my model, and then check for spatial autocorrelation in the residues of the model, there is still spatial autocorrelation,?..could u see if i am doing something wrong please?\n>\n> #account for SAC in the model using weights\n> # auto_covariate is a distance weighted covariate\n> data$response <- as.numeric(data$response)\n> auto_weight <- autocov_dist(data$prey.type, xy=coords, nbs=1, type=\"inverse\", zero.policy = TRUE,style=\"W\", longlat = TRUE)\n>\n> m5_auto <- glm(response ~  predictor1 + predictor2 + predictor3 + predictor4 + predictor1:predictor4, weight=auto_weight, family=quasibinomial(\"logit\"), data=data)\n>\n> # check spatial autocorrelation - first convert data to spatial points dataframe\n> dat <- SpatialPointsDataFrame(cbind(data$long, data$lat), data)\n> lstw  <- nb2listw(knn2nb(knearneigh(dat, k = 2)))\n>\n> # check SAC in model residuals\n> moran.test(residuals.glm(m5_auto), lstw) # and gives the below:\n>\n> Moran I test under randomisation\n>\n> data:  residuals.glm(m5)\n> weights: lstw\n>\n> Moran I statistic standard deviate = 1.9194, p-value = 0.02747\n> alternative hypothesis: greater\n> sample estimates:\n> Moran I statistic       Expectation          Variance\n>       0.160824328      -0.004608295       0.007428642\n>\n> -Someone said its stupid to account for spatial autocorrelation in a logistic regression when you have a significant SAC using moran?s I. So i am now wondering how this can be solved? or does a SAC in a logistic regression be just ignored?\n>\n> I am new to spatial statistics and now idea how to move with such. I only know that my data has spatial\n>   autocorrelation (which i hope to have checked correctly using morans I as above) and now need to account for this in my analysis. Some advice would be greatly appreciated by people who have used to account for SAC in their logistic models.  Is a logistic mixed models an option to consider?especially if your covariates are spatial in nature,?i read somewhere that if you cant account for SAC in glm then you can move to mixed models esp if your covariates are spatial which is expected to digest the SAC.\n>\n> Help and advice would be greatly appreciated.\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hi Dechen,\n\nAs for measuring spatial autocorrelation, one thing I noticed about your \noutput is that you are using the randomization assumption in \nspdep::moran.test. Randomization assumption is not a",
+      "thread_id": "thread-cbc11580e996",
+      "thread_depth": 1,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-2670466747b5",
+      "message_id": "<BD916057-E1B1-4E9C-86EA-76E6823EA2EE@ieu.uzh.ch>",
+      "from_name": "Dechen Lham",
+      "from_email_hash": "f94ee38dde21e09c4640edb3cf6db065a36ad5b6e9191f140ec0ebea33f56d56",
+      "date": "2018-07-12T13:44:02+02:00",
+      "subject": "[R-sig-Geo] Spatial autocorrelation help",
+      "subject_clean": "Spatial autocorrelation help",
+      "in_reply_to": "<f52726f6-a364-fe9d-ff0d-2bdf9b7354b8@gmail.com>",
+      "references": [
+        "<448E53F2-7C18-42A5-BF51-1618EF24712C@ieu.uzh.ch>",
+        "<f52726f6-a364-fe9d-ff0d-2bdf9b7354b8@gmail.com>"
+      ],
+      "body_plain": "Hi Orcun\n\nI am not quite sure if im doing this correctly but I do understand that i first need to check spatial autocorrelation occurs in my data. so i did this below steps and after that checked it again in best model residuals\n\n# Another approach to find SAC by creating neighbors first, then get distances between each point and neighbors, then\n# inverse the distance and then check the SAC using mora's I\ncoord <- cbind(data$long, data$lat)\ncoords <- coordinates(coord)\n\n# creates a matrix of nn indexes - knearneigh to get nearest neighbors\nnn5 <- knearneigh(coords, k=5)  \nmi5.nlist <- knn2nb(nn5, row.names = NULL, sym=FALSE)\n\n# creates a sp weights matrix\nmi5.sw <- nb2listw(mi5.nlist) \n\n# cal moran's I using distance as weights\n# calculates the distance\nmi5.dist <- nbdists(mi5.nlist, coords) \n\n# now invert the distnace to determine weights (closer =higher)\nmi5.dist1 <- lapply(mi5.dist, function(x){ifelse(is.finite(1/x), (1/x), (1/0.001))})\nmi5.dist2 <- lapply(mi5.dist, function(x){ifelse(is.finite(1/x^2), (1/x^2), (1/0.001^2))})\n\n# check the distance between the distribution\nsummary(unlist(mi5.dist1)) \n\n# now create sp weights matrix weighted on distance\nmi5.d1sw <- nb2listw(mi5.nlist, glist=mi5.dist1)\nmi5.d2sw <- nb2listw(mi5.nlist, glist=mi5.dist2)\n\n# morans test\nmoran.test(as.numeric(data$response), mi5.d1sw)\nmoran.test(as.numeric(data$response), mi5.d2sw)\n\nThis first moran?s test gives :\nMoran I statistic standard deviate = 2.0328, p-value = 0.02104\nalternative hypothesis: greater\nsample estimates:\nMoran I statistic       Expectation          Variance \n      0.105850408      -0.004608295       0.002952729 \n\nSecond morans test gives:\n\nMoran I statistic standard deviate = 2.3848, p-value = 0.008545\nalternative hypothesis: greater\nsample estimates:\nMoran I statistic       Expectation          Variance \n      0.154097396      -0.004608295       0.004428848 \n\nAnd both indicates presence of spatial autocorrelation in the raw data.\n\nShould i account for this in all models or if i perform logistic mixed model it is fine??help is much appreciated. Difficult to understand what the problem is and how to solve it\n\n\n\n> On 11 Jul 2018, at 7:01 PM, Orcun Morali <orcunmorali at gmail.com> wrote:\n> \n> Hi Dechen,\n> \n> As for measuring spatial autocorrelation, one thing I noticed about your output is that you are using the randomization assumption in spdep::moran.test. Randomization assumption is not appropriate for Moran's I of regression residuals and spdep::lm.morantest is the function to correctly calculate moments of the measure for regression residuals anyway. Before using lm.morantest though, if I were you, I would check whether its inference applies to logistic regression residuals as well, since the theory was initially based on the classical regression.\n> \n> As for fitting a spatial logistic model if you need it, McSpatial package in R might help you.\n> \n> Best Regards,\n> \n> Orcun\n> \n> On 10/07/18 20:46, Dechen Lham wrote:\n>> Hello all,\n>> \n>> I would like some help in my problem below:\n>> \n>> I am running a logistic regression and my best model residuals has spatial autocorrelation  (SAC) when checked as below and also on the raw data of the response type. My response is binary 0 and 1 (type of prey and to be predicted by several predictors). These type of prey are obtained from  a total of  200 locations (where the faecal samples are collected from).   In order to account for this SAC , I used the auto_covdist function from spdep package. But when i use this as a new predictor in my model, and then check for spatial autocorrelation in the residues of the model, there is still spatial autocorrelation,?..could u see if i am doing something wrong please?\n>> \n>> #account for SAC in the model using weights\n>> # auto_covariate is a distance weighted covariate\n>> data$response <- as.numeric(data$response)\n>> auto_weight <- autocov_dist(data$prey.type, xy=coords, nbs=1, type=\"inverse\", zero.policy = TRUE,style=\"W\", longlat = TRUE)\n>> \n>> m5_auto <- glm(response ~  predictor1 + predictor2 + predictor3 + predictor4 + predictor1:predictor4, weight=auto_weight, family=quasibinomial(\"logit\"), data=data)\n>> \n>> # check spatial autocorrelation - first convert data to spatial points dataframe\n>> dat <- SpatialPointsDataFrame(cbind(data$long, data$lat), data)\n>> lstw  <- nb2listw(knn2nb(knearneigh(dat, k = 2)))\n>> \n>> # check SAC in model residuals\n>> moran.test(residuals.glm(m5_auto), lstw) # and gives the below:\n>> \n>> Moran I test under randomisation\n>> \n>> data:  residuals.glm(m5)\n>> weights: lstw\n>> \n>> Moran I statistic standard deviate = 1.9194, p-value = 0.02747\n>> alternative hypothesis: greater\n>> sample estimates:\n>> Moran I statistic       Expectation          Variance\n>>      0.160824328      -0.004608295       0.007428642\n>> \n>> -Someone said its stupid to account for spatial autocorrelation in a logistic regression when you have a significant SAC using moran?s I. So i am now wondering how this can be solved? or does a SAC in a logistic regression be just ignored?\n>> \n>> I am new to spatial statistics and now idea how to move with such. I only know that my data has spatial\n>>  autocorrelation (which i hope to have checked correctly using morans I as above) and now need to account for this in my analysis. Some advice would be greatly appreciated by people who have used to account for SAC in their logistic models.  Is a logistic mixed models an option to consider?especially if your covariates are spatial in nature,?i read somewhere that if you cant account for SAC in glm then you can move to mixed models esp if your covariates are spatial which is expected to digest the SAC.\n>> \n>> Help and advice would be greatly appreciated.\n>> \n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hi Orcun\n\nI am not quite sure if im doing this correctly but I do understand that i first need to check spatial autocorrelation occurs in my data. so i did this below steps and after that checked it a",
+      "thread_id": "thread-cbc11580e996",
+      "thread_depth": 2,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-90c5e2c71cad",
+      "message_id": "<F955428E-97F8-4A65-BF3C-C9C80F9733D4@bigelow.org>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "6e7d86f4413dff7c730c0abdb2ea4fcffc49b14a0d6c91aa033e0c14630f8056",
+      "date": "2018-07-12T08:12:28-04:00",
+      "subject": "[R-sig-Geo] Distance from not NA cells in a raster",
+      "subject_clean": "Distance from not NA cells in a raster",
+      "in_reply_to": "<MW2PR0901MB2330CE0B2302911D488BD50EEB470@MW2PR0901MB2330.namprd09.prod.outlook.com>",
+      "references": [
+        "<MW2PR0901MB2330CE0B2302911D488BD50EEB470@MW2PR0901MB2330.namprd09.prod.outlook.com>"
+      ],
+      "body_plain": "Hi,\n\nYou may have solved this already, but I get tripped up on the \"the distance from all not NA cells in a raster\".  Is it the distance each NA cell is from each non-NA cell?  Also, I'm wondering why you want to know the distance to ALL non-NA cells - what is your big-picture purpose for wanting these distances?  \n\nCheers,\nBen\n\n> On Jul 6, 2018, at 12:22 PM, Gregovich, Dave P (DFG) <dave.gregovich at alaska.gov> wrote:\n> \n> Hi,\n> I would like to obtain the distance from all not NA cells in a raster. This works for smaller rasters, but seems difficult for the size of rasters (~ 8000 pixel square)  I am working with.\n> Below is what I've tried. I would be OK calling other software from R, or using some parallelization, if it might help.\n> Thanks so much for your help!  If I could just calculate this distance in two hours or less (or so) I would be satisfied.\n> Dave.\n> \n> rm(list=ls())\n> library(raster)\n> \n> #make raster\n> rast <- raster(nrow = 8000, ncol = 8000, ext = extent(0,1,0,1))\n> \n> #generate cells to calculate distance from.\n> rast[sample(8000^2, 10000)] <- 1\n> \n> #try two different methods...\n> dist1 <- gridDistance(rast, origin = 1)#throws an error after x minutes\n> #'Error: cannot allocate vector of size 3.8 Gb'\n> dist2 <- distance(rast)#ran all night, R was hung up in the morning and had to force shutdown.\n> \n> ___________________________________________\n> Dave Gregovich\n> Research Analyst\n> Alaska Department of Fish and Game\n> Division of Wildlife Conservation\n> 802 3rd Street\n> Douglas, AK 99824\n> 907-465-4291\n> ___________________________________________\n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\nBen Tupper\nBigelow Laboratory for Ocean Sciences\n60 Bigelow Drive, P.O. Box 380\nEast Boothbay, Maine 04544\nhttp://www.bigelow.org\n\nEcological Forecasting: https://eco.bigelow.org/\n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nYou may have solved this already, but I get tripped up on the \"the distance from all not NA cells in a raster\".  Is it the distance each NA cell is from each non-NA cell?  Also, I'm wondering why",
+      "thread_id": "thread-3e962243f7c2",
+      "thread_depth": 1,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-19cfa2bf861d",
+      "message_id": "<16296D3E-B6E1-4C1C-A437-6C6615A84EA5@muhlenberg.edu>",
+      "from_name": "Benjamin Lieberman",
+      "from_email_hash": "370519eea89af927515a8b3c67be7e186e2a694dd78562c7bfa2f4dad5a483a3",
+      "date": "2018-07-12T15:00:13-04:00",
+      "subject": "[R-sig-Geo] How to find all first order neighbors of a collection of points",
+      "subject_clean": "How to find all first order neighbors of a collection of points",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi all,\n\nCurrently, I am working with U.S. voter data. Below, I included a brief example of the structure of the data with some reproducible code. My data set consists of roughly 233,000 (233k) entries, each specifying a voter and their particular latitude/longitude pair. I have been using the spdep package with the hope of creating a CAR model. To begin the analysis, we need to find all first order neighbors of every point in the data. \n\nWhile spdep has fantastic commands for finding k nearest neighbors (knearneigh), and a useful command for finding lag of order 3 or more (nblag), I have yet to find a method which is suitable for our purposes (lag = 1, or lag =2). Additionally, I looked into altering the nblag command to accommodate maxlag = 1 or maxlag = 2, but the command relies on an nb format, which is problematic as we are looking for the underlying neighborhood structure.\n\nThere has been numerous work done with polygons, or data which already is in ?nb? format, but after reading the literature, it seems that polygons are not appropriate, nor are distance based neighbor techniques, due to density fluctuations over the area of interest. \n\nBelow is some reproducible code I wrote. I would like to note that I am currently working in R 1.1.453 on a MacBook.\n\n# Create a data frame of 10 voters, picked at random\nvoter.1 = c(1, -75.52187, 40.62320)\nvoter.2 = c(2,-75.56373, 40.55216)\nvoter.3 = c(3,-75.39587, 40.55416)\nvoter.4 = c(4,-75.42248, 40.64326)\nvoter.5 = c(5,-75.56654, 40.54948)\nvoter.6 = c(6,-75.56257, 40.67375)\nvoter.7 = c(7, -75.51888, 40.59715)\nvoter.8 = c(8, -75.59879, 40.60014)\nvoter.9 = c(9, -75.59879, 40.60014)\nvoter.10 = c(10, -75.50877, 40.53129)\n\n# Bind the vectors together\nvoter.subset = rbind(voter.1, voter.2, voter.3, voter.4, voter.5, voter.6, voter.7, voter.8, voter.9, voter.10)\n\n# Rename the columns\ncolnames(voter.subset) = c(\"Voter.ID\", \"Longitude\", \"Latitude\")\n\n# Change the class from a matrix to a data frame\nvoter.subset = as.data.frame(voter.subset)\n\n# Load in the required packages\nlibrary(spdep)\nlibrary(sp)\n\n# Set the coordinates\ncoordinates(voter.subset) = c(\"Longitude\", \"Latitude\")\ncoords = coordinates(voter.subset)\n\n# Jitter to ensure no duplicate points\ncoords = jitter(coords, factor = 1)\n\n# Find the first nearest neighbor of each point\none.nn = knearneigh(coords, k=1)\n\n# Convert the first nearest neighbor to format \"nb\"\none.nn_nb = knn2nb(one.nn, sym = F)\n\nThank you in advance for any help you may offer, and for taking the time to read this. I have consulted Applied Spatial Data Analysis with R (Bivand, Pebesma, Gomez-Rubio), as well as other Sig-Geo threads, the spdep documentation, and the nb vignette (Bivand, April 3, 2018) from earlier this year.\n\nWarmest,\nBen\n--\nBenjamin Lieberman\nMuhlenberg College 2019\nMobile: 301.299.8928\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all,\n\nCurrently, I am working with U.S. voter data. Below, I included a brief example of the structure of the data with some reproducible code. My data set consists of roughly 233,000 (233k) entrie",
+      "thread_id": "thread-19cfa2bf861d",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-120b27f96b67",
+      "message_id": "<ae3039b9-ca41-5332-4230-88675496e5d2@cirad.fr>",
+      "from_name": "Facundo Muñoz",
+      "from_email_hash": "141a0886ba1f3a394b1c381260ae4bb94a52ae6f11894208d144908297556cc2",
+      "date": "2018-07-13T11:32:04+02:00",
+      "subject": "[R-sig-Geo]  How to find all first order neighbors of a collection of points",
+      "subject_clean": "How to find all first order neighbors of a collection of points",
+      "in_reply_to": "<16296D3E-B6E1-4C1C-A437-6C6615A84EA5@muhlenberg.edu>",
+      "references": [
+        "<16296D3E-B6E1-4C1C-A437-6C6615A84EA5@muhlenberg.edu>"
+      ],
+      "body_plain": "Dear Benjamin,\n\nI'm not sure how you define \"first order neighbors\" for a point. The\nfirst thing that comes to my mind is to use their corresponding voronoi\npolygons and define neighborhood from there. Following your code:\n\nv <- dismo::voronoi(coords)\npar(mfrow = c(1, 2), xaxt = \"n\", yaxt = \"n\", mgp = c(0, 0, 0))\nplot(coords, type = \"n\", xlab = NA, ylab = NA)\nplot(v, add = TRUE)\ntext(x = coords[, 1], y = coords[, 2], labels = voter.subset$Voter.ID)\nplot(coords, type = \"n\", xlab = NA, ylab = NA)\nplot(poly2nb(v), coords, add = TRUE, col = \"gray\")\n\n?acu.-\n\n\nOn 07/12/2018 09:00 PM, Benjamin Lieberman wrote:\n> Hi all,\n>\n> Currently, I am working with U.S. voter data. Below, I included a brief example of the structure of the data with some reproducible code. My data set consists of roughly 233,000 (233k) entries, each specifying a voter and their particular latitude/longitude pair. I have been using the spdep package with the hope of creating a CAR model. To begin the analysis, we need to find all first order neighbors of every point in the data. \n>\n> While spdep has fantastic commands for finding k nearest neighbors (knearneigh), and a useful command for finding lag of order 3 or more (nblag), I have yet to find a method which is suitable for our purposes (lag = 1, or lag =2). Additionally, I looked into altering the nblag command to accommodate maxlag = 1 or maxlag = 2, but the command relies on an nb format, which is problematic as we are looking for the underlying neighborhood structure.\n>\n> There has been numerous work done with polygons, or data which already is in ?nb? format, but after reading the literature, it seems that polygons are not appropriate, nor are distance based neighbor techniques, due to density fluctuations over the area of interest. \n>\n> Below is some reproducible code I wrote. I would like to note that I am currently working in R 1.1.453 on a MacBook.\n>\n> # Create a data frame of 10 voters, picked at random\n> voter.1 = c(1, -75.52187, 40.62320)\n> voter.2 = c(2,-75.56373, 40.55216)\n> voter.3 = c(3,-75.39587, 40.55416)\n> voter.4 = c(4,-75.42248, 40.64326)\n> voter.5 = c(5,-75.56654, 40.54948)\n> voter.6 = c(6,-75.56257, 40.67375)\n> voter.7 = c(7, -75.51888, 40.59715)\n> voter.8 = c(8, -75.59879, 40.60014)\n> voter.9 = c(9, -75.59879, 40.60014)\n> voter.10 = c(10, -75.50877, 40.53129)\n>\n> # Bind the vectors together\n> voter.subset = rbind(voter.1, voter.2, voter.3, voter.4, voter.5, voter.6, voter.7, voter.8, voter.9, voter.10)\n>\n> # Rename the columns\n> colnames(voter.subset) = c(\"Voter.ID\", \"Longitude\", \"Latitude\")\n>\n> # Change the class from a matrix to a data frame\n> voter.subset = as.data.frame(voter.subset)\n>\n> # Load in the required packages\n> library(spdep)\n> library(sp)\n>\n> # Set the coordinates\n> coordinates(voter.subset) = c(\"Longitude\", \"Latitude\")\n> coords = coordinates(voter.subset)\n>\n> # Jitter to ensure no duplicate points\n> coords = jitter(coords, factor = 1)\n>\n> # Find the first nearest neighbor of each point\n> one.nn = knearneigh(coords, k=1)\n>\n> # Convert the first nearest neighbor to format \"nb\"\n> one.nn_nb = knn2nb(one.nn, sym = F)\n>\n> Thank you in advance for any help you may offer, and for taking the time to read this. I have consulted Applied Spatial Data Analysis with R (Bivand, Pebesma, Gomez-Rubio), as well as other Sig-Geo threads, the spdep documentation, and the nb vignette (Bivand, April 3, 2018) from earlier this year.\n>\n> Warmest,\n> Ben\n> --\n> Benjamin Lieberman\n> Muhlenberg College 2019\n> Mobile: 301.299.8928\n>\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Benjamin,\n\nI'm not sure how you define \"first order neighbors\" for a point. The\nfirst thing that comes to my mind is to use their corresponding voronoi\npolygons and define neighborhood from there",
+      "thread_id": "thread-19cfa2bf861d",
+      "thread_depth": 1,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-9f8de42b5ec5",
+      "message_id": "<alpine.LFD.2.21.1807131149002.15461@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-07-13T12:11:35+02:00",
+      "subject": "[R-sig-Geo]  How to find all first order neighbors of a collection of points",
+      "subject_clean": "How to find all first order neighbors of a collection of points",
+      "in_reply_to": "<ae3039b9-ca41-5332-4230-88675496e5d2@cirad.fr>",
+      "references": [
+        "<16296D3E-B6E1-4C1C-A437-6C6615A84EA5@muhlenberg.edu>",
+        "<ae3039b9-ca41-5332-4230-88675496e5d2@cirad.fr>"
+      ],
+      "body_plain": "On Fri, 13 Jul 2018, Facundo Mu?oz wrote:\n\n> Dear Benjamin,\n>\n> I'm not sure how you define \"first order neighbors\" for a point. The\n> first thing that comes to my mind is to use their corresponding voronoi\n> polygons and define neighborhood from there. Following your code:\n\nThanks, the main source of confusion is that \"first order neighbors\" are \nnot defined. A k=1 neighbour could be (as below), as could k=6, or voronoi \nneighbours, or sphere of influence etc. So reading vignette(\"nb\") would be \na starting point.\n\nAlso note that voronoi and other graph-based neighbours should only use \nplanar coordinates - including dismo::voronoi, which uses deldir::deldir() \n- just like spdep::tri2nb(). Triangulation can lead to spurious neighbours \non the convex hull.\n\n>\n> v <- dismo::voronoi(coords)\n> par(mfrow = c(1, 2), xaxt = \"n\", yaxt = \"n\", mgp = c(0, 0, 0))\n> plot(coords, type = \"n\", xlab = NA, ylab = NA)\n> plot(v, add = TRUE)\n> text(x = coords[, 1], y = coords[, 2], labels = voter.subset$Voter.ID)\n> plot(coords, type = \"n\", xlab = NA, ylab = NA)\n> plot(poly2nb(v), coords, add = TRUE, col = \"gray\")\n>\n> ?acu.-\n>\n>\n> On 07/12/2018 09:00 PM, Benjamin Lieberman wrote:\n>> Hi all,\n>>\n>> Currently, I am working with U.S. voter data. Below, I included a brief \n>> example of the structure of the data with some reproducible code. My \n>> data set consists of roughly 233,000 (233k) entries, each specifying a \n>> voter and their particular latitude/longitude pair.\n\nUsing individual voter data is highly dangerous, and must in every case be \nsubject to the strictest privacy rules. Voter data does not in essence \nhave position - the only valid voting data that has position is of the \nvoting station/precinct, and those data are aggregated to preserve \nanonymity.\n\nWhy does position and voter data not have position? Which location should \nyou use - residence, workplace, what? What are these locations proxying? \nNothing valid can be drawn from \"just voter data\" - you can get \nconclusions from carefully constructed stratified exit polls, but there \nthe key gender/age/ethnicity/social class/etc. confounders are handled by \ndesign. Why should voting decisions be influenced by proximity (they are \nnot)? The missing element here is looking carefully at relevant covariates \nat more aggregated levels (in the US typically zoning controlling social \nclass positional segregation, etc.).\n\n>> I have been using the spdep package with the hope of creating a CAR \n>> model. To begin the analysis, we need to find all first order neighbors \n>> of every point in the data.\n>>\n>> While spdep has fantastic commands for finding k nearest neighbors \n>> (knearneigh), and a useful command for finding lag of order 3 or more \n>> (nblag), I have yet to find a method which is suitable for our purposes \n>> (lag = 1, or lag =2). Additionally, I looked into altering the nblag \n>> command to accommodate maxlag = 1 or maxlag = 2, but the command relies \n>> on an nb format, which is problematic as we are looking for the \n>> underlying neighborhood structure.\n>>\n>> There has been numerous work done with polygons, or data which already \n>> is in ?nb? format, but after reading the literature, it seems that \n>> polygons are not appropriate, nor are distance based neighbor \n>> techniques, due to density fluctuations over the area of interest.\n>>\n>> Below is some reproducible code I wrote. I would like to note that I am \n>> currently working in R 1.1.453 on a MacBook.\n\nYou mean RStudio, there is no such version of R.\n\n>>\n>> # Create a data frame of 10 voters, picked at random\n>> voter.1 = c(1, -75.52187, 40.62320)\n>> voter.2 = c(2,-75.56373, 40.55216)\n>> voter.3 = c(3,-75.39587, 40.55416)\n>> voter.4 = c(4,-75.42248, 40.64326)\n>> voter.5 = c(5,-75.56654, 40.54948)\n>> voter.6 = c(6,-75.56257, 40.67375)\n>> voter.7 = c(7, -75.51888, 40.59715)\n>> voter.8 = c(8, -75.59879, 40.60014)\n>> voter.9 = c(9, -75.59879, 40.60014)\n>> voter.10 = c(10, -75.50877, 40.53129)\n>>\n\nThese are in geographical coordinates.\n\n>> # Bind the vectors together\n>> voter.subset = rbind(voter.1, voter.2, voter.3, voter.4, voter.5, voter.6, voter.7, voter.8, voter.9, voter.10)\n>>\n>> # Rename the columns\n>> colnames(voter.subset) = c(\"Voter.ID\", \"Longitude\", \"Latitude\")\n>>\n>> # Change the class from a matrix to a data frame\n>> voter.subset = as.data.frame(voter.subset)\n>>\n>> # Load in the required packages\n>> library(spdep)\n>> library(sp)\n>>\n>> # Set the coordinates\n>> coordinates(voter.subset) = c(\"Longitude\", \"Latitude\")\n>> coords = coordinates(voter.subset)\n>>\n>> # Jitter to ensure no duplicate points\n>> coords = jitter(coords, factor = 1)\n>>\n\njitter does not respect geographical coordinated (decimal degree metric).\n\n>> # Find the first nearest neighbor of each point\n>> one.nn = knearneigh(coords, k=1)\n\nSee the help page (hint: longlat=TRUE to use Great Circle distances, much \nslower than planar).\n\n>>\n>> # Convert the first nearest neighbor to format \"nb\"\n>> one.nn_nb = knn2nb(one.nn, sym = F)\n>>\n>> Thank you in advance for any help you may offer, and for taking the \n>> time to read this. I have consulted Applied Spatial Data Analysis with \n>> R (Bivand, Pebesma, Gomez-Rubio), as well as other Sig-Geo threads, the \n>> spdep documentation, and the nb vignette (Bivand, April 3, 2018) from \n>> earlier this year.\n>>\n>> Warmest,\n>> Ben\n>> --\n>> Benjamin Lieberman\n>> Muhlenberg College 2019\n>> Mobile: 301.299.8928\n>>\n>>\n>>\n>> \t[[alternative HTML version deleted]]\n\nPlain text only, please.\n\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Fri, 13 Jul 2018, Facundo Mu?oz wrote:\n\n> Dear Benjamin,\n>\n> I'm not sure how you define \"first order neighbors\" for a point. The\n> first thing that comes to my mind is to use their corresponding v",
+      "thread_id": "thread-19cfa2bf861d",
+      "thread_depth": 2,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-d047e0cc44ed",
+      "message_id": "<C860FAFF-9E8E-443A-A117-0B7C5C35190B@muhlenberg.edu>",
+      "from_name": "Benjamin Lieberman",
+      "from_email_hash": "370519eea89af927515a8b3c67be7e186e2a694dd78562c7bfa2f4dad5a483a3",
+      "date": "2018-07-13T06:58:25-04:00",
+      "subject": "[R-sig-Geo]  How to find all first order neighbors of a collection of points",
+      "subject_clean": "How to find all first order neighbors of a collection of points",
+      "in_reply_to": "<alpine.LFD.2.21.1807131149002.15461@reclus.nhh.no>",
+      "references": [
+        "<16296D3E-B6E1-4C1C-A437-6C6615A84EA5@muhlenberg.edu>",
+        "<ae3039b9-ca41-5332-4230-88675496e5d2@cirad.fr>",
+        "<alpine.LFD.2.21.1807131149002.15461@reclus.nhh.no>"
+      ],
+      "body_plain": "Roger anf Facu,\n\nThank you very much for the help. In terms of the data, I only provided the ID and Lat/Long pairs because they were the only covariates which were necessary. The data set we are using was purchased and contains voter registration information, voter history, and census tract information, after some geocoding took place. The locations are the residents houses, in this instance. \n\nI have rerun the knn with longlat = T, but I am still hung up on the idea of the first order neighbors. I have reread the vignette and section 5 discusses High-Order Neighbors, but there isn?t any mention of first or second order neighbors, as you mentioned above (?first order neighbors are not defined?). One of the pieces of literature I found said that polygons are problematic to work with, as are tesslations for precisely the reason you mentioned, non-planarity. For this reason, I am hung up on the idea of how to find all first order neighbors for a point, especially as the number of first order neighbors varies from point to point, and such knearneigh would not be appropriate here. \n\nIf this is something that does not seem feasible, maybe another tactic is necessary.\n\nAgain, thank you all for the help.\n\nWarmest\n--\nBenjamin Lieberman\nMuhlenberg College 2019\nMobile: 301.299.8928\n\n> On Jul 13, 2018, at 6:11 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> \n> On Fri, 13 Jul 2018, Facundo Mu?oz wrote:\n> \n>> Dear Benjamin,\n>> \n>> I'm not sure how you define \"first order neighbors\" for a point. The\n>> first thing that comes to my mind is to use their corresponding voronoi\n>> polygons and define neighborhood from there. Following your code:\n> \n> Thanks, the main source of confusion is that \"first order neighbors\" are not defined. A k=1 neighbour could be (as below), as could k=6, or voronoi neighbours, or sphere of influence etc. So reading vignette(\"nb\") would be a starting point.\n> \n> Also note that voronoi and other graph-based neighbours should only use planar coordinates - including dismo::voronoi, which uses deldir::deldir() - just like spdep::tri2nb(). Triangulation can lead to spurious neighbours on the convex hull.\n> \n>> \n>> v <- dismo::voronoi(coords)\n>> par(mfrow = c(1, 2), xaxt = \"n\", yaxt = \"n\", mgp = c(0, 0, 0))\n>> plot(coords, type = \"n\", xlab = NA, ylab = NA)\n>> plot(v, add = TRUE)\n>> text(x = coords[, 1], y = coords[, 2], labels = voter.subset$Voter.ID)\n>> plot(coords, type = \"n\", xlab = NA, ylab = NA)\n>> plot(poly2nb(v), coords, add = TRUE, col = \"gray\")\n>> \n>> ?acu.-\n>> \n>> \n>> On 07/12/2018 09:00 PM, Benjamin Lieberman wrote:\n>>> Hi all,\n>>> \n>>> Currently, I am working with U.S. voter data. Below, I included a brief example of the structure of the data with some reproducible code. My data set consists of roughly 233,000 (233k) entries, each specifying a voter and their particular latitude/longitude pair.\n> \n> Using individual voter data is highly dangerous, and must in every case be subject to the strictest privacy rules. Voter data does not in essence have position - the only valid voting data that has position is of the voting station/precinct, and those data are aggregated to preserve anonymity.\n> \n> Why does position and voter data not have position? Which location should you use - residence, workplace, what? What are these locations proxying? Nothing valid can be drawn from \"just voter data\" - you can get conclusions from carefully constructed stratified exit polls, but there the key gender/age/ethnicity/social class/etc. confounders are handled by design. Why should voting decisions be influenced by proximity (they are not)? The missing element here is looking carefully at relevant covariates at more aggregated levels (in the US typically zoning controlling social class positional segregation, etc.).\n> \n>>> I have been using the spdep package with the hope of creating a CAR model. To begin the analysis, we need to find all first order neighbors of every point in the data.\n>>> \n>>> While spdep has fantastic commands for finding k nearest neighbors (knearneigh), and a useful command for finding lag of order 3 or more (nblag), I have yet to find a method which is suitable for our purposes (lag = 1, or lag =2). Additionally, I looked into altering the nblag command to accommodate maxlag = 1 or maxlag = 2, but the command relies on an nb format, which is problematic as we are looking for the underlying neighborhood structure.\n>>> \n>>> There has been numerous work done with polygons, or data which already is in ?nb? format, but after reading the literature, it seems that polygons are not appropriate, nor are distance based neighbor techniques, due to density fluctuations over the area of interest.\n>>> \n>>> Below is some reproducible code I wrote. I would like to note that I am currently working in R 1.1.453 on a MacBook.\n> \n> You mean RStudio, there is no such version of R.\n> \n>>> \n>>> # Create a data frame of 10 voters, picked at random\n>>> voter.1 = c(1, -75.52187, 40.62320)\n>>> voter.2 = c(2,-75.56373, 40.55216)\n>>> voter.3 = c(3,-75.39587, 40.55416)\n>>> voter.4 = c(4,-75.42248, 40.64326)\n>>> voter.5 = c(5,-75.56654, 40.54948)\n>>> voter.6 = c(6,-75.56257, 40.67375)\n>>> voter.7 = c(7, -75.51888, 40.59715)\n>>> voter.8 = c(8, -75.59879, 40.60014)\n>>> voter.9 = c(9, -75.59879, 40.60014)\n>>> voter.10 = c(10, -75.50877, 40.53129)\n>>> \n> \n> These are in geographical coordinates.\n> \n>>> # Bind the vectors together\n>>> voter.subset = rbind(voter.1, voter.2, voter.3, voter.4, voter.5, voter.6, voter.7, voter.8, voter.9, voter.10)\n>>> \n>>> # Rename the columns\n>>> colnames(voter.subset) = c(\"Voter.ID\", \"Longitude\", \"Latitude\")\n>>> \n>>> # Change the class from a matrix to a data frame\n>>> voter.subset = as.data.frame(voter.subset)\n>>> \n>>> # Load in the required packages\n>>> library(spdep)\n>>> library(sp)\n>>> \n>>> # Set the coordinates\n>>> coordinates(voter.subset) = c(\"Longitude\", \"Latitude\")\n>>> coords = coordinates(voter.subset)\n>>> \n>>> # Jitter to ensure no duplicate points\n>>> coords = jitter(coords, factor = 1)\n>>> \n> \n> jitter does not respect geographical coordinated (decimal degree metric).\n> \n>>> # Find the first nearest neighbor of each point\n>>> one.nn = knearneigh(coords, k=1)\n> \n> See the help page (hint: longlat=TRUE to use Great Circle distances, much slower than planar).\n> \n>>> \n>>> # Convert the first nearest neighbor to format \"nb\"\n>>> one.nn_nb = knn2nb(one.nn, sym = F)\n>>> \n>>> Thank you in advance for any help you may offer, and for taking the time to read this. I have consulted Applied Spatial Data Analysis with R (Bivand, Pebesma, Gomez-Rubio), as well as other Sig-Geo threads, the spdep documentation, and the nb vignette (Bivand, April 3, 2018) from earlier this year.\n>>> \n>>> Warmest,\n>>> Ben\n>>> --\n>>> Benjamin Lieberman\n>>> Muhlenberg College 2019\n>>> Mobile: 301.299.8928\n>>> \n>>> \n>>> \n>>> \t[[alternative HTML version deleted]]\n> \n> Plain text only, please.\n> \n>>> \n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n>> \n>> \n>> \t[[alternative HTML version deleted]]\n>> \n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n>> \n> \n> -- \n> Roger Bivand\n> Department of Economics, Norwegian School of Economics,\n> Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no>\n> http://orcid.org/0000-0003-2392-6140 <http://orcid.org/0000-0003-2392-6140>\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________ <https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________>\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Roger anf Facu,\n\nThank you very much for the help. In terms of the data, I only provided the ID and Lat/Long pairs because they were the only covariates which were necessary. The data set we are using",
+      "thread_id": "thread-19cfa2bf861d",
+      "thread_depth": 3,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-cb9cfb657ea8",
+      "message_id": "<BF38A110-FAB9-43F0-B9FC-E09043B0C420@muhlenberg.edu>",
+      "from_name": "Benjamin Lieberman",
+      "from_email_hash": "370519eea89af927515a8b3c67be7e186e2a694dd78562c7bfa2f4dad5a483a3",
+      "date": "2018-07-13T07:16:17-04:00",
+      "subject": "[R-sig-Geo]  How to find all first order neighbors of a collection of points",
+      "subject_clean": "How to find all first order neighbors of a collection of points",
+      "in_reply_to": "<C860FAFF-9E8E-443A-A117-0B7C5C35190B@muhlenberg.edu>",
+      "references": [
+        "<16296D3E-B6E1-4C1C-A437-6C6615A84EA5@muhlenberg.edu>",
+        "<ae3039b9-ca41-5332-4230-88675496e5d2@cirad.fr>",
+        "<alpine.LFD.2.21.1807131149002.15461@reclus.nhh.no>",
+        "<C860FAFF-9E8E-443A-A117-0B7C5C35190B@muhlenberg.edu>"
+      ],
+      "body_plain": "All-\n\nI would like to note that as the data is proprietary, and for obvious privacy concerns, the lat/long pairs were randomly generated, and were not taken directly from the data.\n\n\n--\nBenjamin Lieberman\nMuhlenberg College 2019 \nMobile: 301.299.8928\n\n> On Jul 13, 2018, at 6:58 AM, Benjamin Lieberman <bl250604 at muhlenberg.edu> wrote:\n> \n> Roger anf Facu,\n> \n> Thank you very much for the help. In terms of the data, I only provided the ID and Lat/Long pairs because they were the only covariates which were necessary. The data set we are using was purchased and contains voter registration information, voter history, and census tract information, after some geocoding took place. The locations are the residents houses, in this instance. \n> \n> I have rerun the knn with longlat = T, but I am still hung up on the idea of the first order neighbors. I have reread the vignette and section 5 discusses High-Order Neighbors, but there isn?t any mention of first or second order neighbors, as you mentioned above (?first order neighbors are not defined?). One of the pieces of literature I found said that polygons are problematic to work with, as are tesslations for precisely the reason you mentioned, non-planarity. For this reason, I am hung up on the idea of how to find all first order neighbors for a point, especially as the number of first order neighbors varies from point to point, and such knearneigh would not be appropriate here. \n> \n> If this is something that does not seem feasible, maybe another tactic is necessary.\n> \n> Again, thank you all for the help.\n> \n> Warmest\n> --\n> Benjamin Lieberman\n> Muhlenberg College 2019\n> Mobile: 301.299.8928\n> \n>> On Jul 13, 2018, at 6:11 AM, Roger Bivand <Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no>> wrote:\n>> \n>> On Fri, 13 Jul 2018, Facundo Mu?oz wrote:\n>> \n>>> Dear Benjamin,\n>>> \n>>> I'm not sure how you define \"first order neighbors\" for a point. The\n>>> first thing that comes to my mind is to use their corresponding voronoi\n>>> polygons and define neighborhood from there. Following your code:\n>> \n>> Thanks, the main source of confusion is that \"first order neighbors\" are not defined. A k=1 neighbour could be (as below), as could k=6, or voronoi neighbours, or sphere of influence etc. So reading vignette(\"nb\") would be a starting point.\n>> \n>> Also note that voronoi and other graph-based neighbours should only use planar coordinates - including dismo::voronoi, which uses deldir::deldir() - just like spdep::tri2nb(). Triangulation can lead to spurious neighbours on the convex hull.\n>> \n>>> \n>>> v <- dismo::voronoi(coords)\n>>> par(mfrow = c(1, 2), xaxt = \"n\", yaxt = \"n\", mgp = c(0, 0, 0))\n>>> plot(coords, type = \"n\", xlab = NA, ylab = NA)\n>>> plot(v, add = TRUE)\n>>> text(x = coords[, 1], y = coords[, 2], labels = voter.subset$Voter.ID)\n>>> plot(coords, type = \"n\", xlab = NA, ylab = NA)\n>>> plot(poly2nb(v), coords, add = TRUE, col = \"gray\")\n>>> \n>>> ?acu.-\n>>> \n>>> \n>>> On 07/12/2018 09:00 PM, Benjamin Lieberman wrote:\n>>>> Hi all,\n>>>> \n>>>> Currently, I am working with U.S. voter data. Below, I included a brief example of the structure of the data with some reproducible code. My data set consists of roughly 233,000 (233k) entries, each specifying a voter and their particular latitude/longitude pair.\n>> \n>> Using individual voter data is highly dangerous, and must in every case be subject to the strictest privacy rules. Voter data does not in essence have position - the only valid voting data that has position is of the voting station/precinct, and those data are aggregated to preserve anonymity.\n>> \n>> Why does position and voter data not have position? Which location should you use - residence, workplace, what? What are these locations proxying? Nothing valid can be drawn from \"just voter data\" - you can get conclusions from carefully constructed stratified exit polls, but there the key gender/age/ethnicity/social class/etc. confounders are handled by design. Why should voting decisions be influenced by proximity (they are not)? The missing element here is looking carefully at relevant covariates at more aggregated levels (in the US typically zoning controlling social class positional segregation, etc.).\n>> \n>>>> I have been using the spdep package with the hope of creating a CAR model. To begin the analysis, we need to find all first order neighbors of every point in the data.\n>>>> \n>>>> While spdep has fantastic commands for finding k nearest neighbors (knearneigh), and a useful command for finding lag of order 3 or more (nblag), I have yet to find a method which is suitable for our purposes (lag = 1, or lag =2). Additionally, I looked into altering the nblag command to accommodate maxlag = 1 or maxlag = 2, but the command relies on an nb format, which is problematic as we are looking for the underlying neighborhood structure.\n>>>> \n>>>> There has been numerous work done with polygons, or data which already is in ?nb? format, but after reading the literature, it seems that polygons are not appropriate, nor are distance based neighbor techniques, due to density fluctuations over the area of interest.\n>>>> \n>>>> Below is some reproducible code I wrote. I would like to note that I am currently working in R 1.1.453 on a MacBook.\n>> \n>> You mean RStudio, there is no such version of R.\n>> \n>>>> \n>>>> # Create a data frame of 10 voters, picked at random\n>>>> voter.1 = c(1, -75.52187, 40.62320)\n>>>> voter.2 = c(2,-75.56373, 40.55216)\n>>>> voter.3 = c(3,-75.39587, 40.55416)\n>>>> voter.4 = c(4,-75.42248, 40.64326)\n>>>> voter.5 = c(5,-75.56654, 40.54948)\n>>>> voter.6 = c(6,-75.56257, 40.67375)\n>>>> voter.7 = c(7, -75.51888, 40.59715)\n>>>> voter.8 = c(8, -75.59879, 40.60014)\n>>>> voter.9 = c(9, -75.59879, 40.60014)\n>>>> voter.10 = c(10, -75.50877, 40.53129)\n>>>> \n>> \n>> These are in geographical coordinates.\n>> \n>>>> # Bind the vectors together\n>>>> voter.subset = rbind(voter.1, voter.2, voter.3, voter.4, voter.5, voter.6, voter.7, voter.8, voter.9, voter.10)\n>>>> \n>>>> # Rename the columns\n>>>> colnames(voter.subset) = c(\"Voter.ID\", \"Longitude\", \"Latitude\")\n>>>> \n>>>> # Change the class from a matrix to a data frame\n>>>> voter.subset = as.data.frame(voter.subset)\n>>>> \n>>>> # Load in the required packages\n>>>> library(spdep)\n>>>> library(sp)\n>>>> \n>>>> # Set the coordinates\n>>>> coordinates(voter.subset) = c(\"Longitude\", \"Latitude\")\n>>>> coords = coordinates(voter.subset)\n>>>> \n>>>> # Jitter to ensure no duplicate points\n>>>> coords = jitter(coords, factor = 1)\n>>>> \n>> \n>> jitter does not respect geographical coordinated (decimal degree metric).\n>> \n>>>> # Find the first nearest neighbor of each point\n>>>> one.nn = knearneigh(coords, k=1)\n>> \n>> See the help page (hint: longlat=TRUE to use Great Circle distances, much slower than planar).\n>> \n>>>> \n>>>> # Convert the first nearest neighbor to format \"nb\"\n>>>> one.nn_nb = knn2nb(one.nn, sym = F)\n>>>> \n>>>> Thank you in advance for any help you may offer, and for taking the time to read this. I have consulted Applied Spatial Data Analysis with R (Bivand, Pebesma, Gomez-Rubio), as well as other Sig-Geo threads, the spdep documentation, and the nb vignette (Bivand, April 3, 2018) from earlier this year.\n>>>> \n>>>> Warmest,\n>>>> Ben\n>>>> --\n>>>> Benjamin Lieberman\n>>>> Muhlenberg College 2019\n>>>> Mobile: 301.299.8928\n>>>> \n>>>> \n>>>> \n>>>> \t[[alternative HTML version deleted]]\n>> \n>> Plain text only, please.\n>> \n>>>> \n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n>>> \n>>> \n>>> \t[[alternative HTML version deleted]]\n>>> \n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n>>> \n>> \n>> -- \n>> Roger Bivand\n>> Department of Economics, Norwegian School of Economics,\n>> Helleveien 30, N-5045 Bergen, Norway.\n>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no>\n>> http://orcid.org/0000-0003-2392-6140 <http://orcid.org/0000-0003-2392-6140>\n>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________ <https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________>\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "All-\n\nI would like to note that as the data is proprietary, and for obvious privacy concerns, the lat/long pairs were randomly generated, and were not taken directly from the data.\n\n\n--\nBenjamin Liebe",
+      "thread_id": "thread-19cfa2bf861d",
+      "thread_depth": 4,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-6f4d30bdc1e8",
+      "message_id": "<alpine.LFD.2.21.1807131319040.15461@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-07-13T13:26:08+02:00",
+      "subject": "[R-sig-Geo]  How to find all first order neighbors of a collection of points",
+      "subject_clean": "How to find all first order neighbors of a collection of points",
+      "in_reply_to": "<C860FAFF-9E8E-443A-A117-0B7C5C35190B@muhlenberg.edu>",
+      "references": [
+        "<16296D3E-B6E1-4C1C-A437-6C6615A84EA5@muhlenberg.edu>",
+        "<ae3039b9-ca41-5332-4230-88675496e5d2@cirad.fr>",
+        "<alpine.LFD.2.21.1807131149002.15461@reclus.nhh.no>",
+        "<C860FAFF-9E8E-443A-A117-0B7C5C35190B@muhlenberg.edu>"
+      ],
+      "body_plain": "On Fri, 13 Jul 2018, Benjamin Lieberman wrote:\n\n> Roger anf Facu,\n>\n> Thank you very much for the help. In terms of the data, I only provided \n> the ID and Lat/Long pairs because they were the only covariates which \n> were necessary. The data set we are using was purchased and contains \n> voter registration information, voter history, and census tract \n> information, after some geocoding took place. The locations are the \n> residents houses, in this instance.\n>\n> I have rerun the knn with longlat = T, but I am still hung up on the \n> idea of the first order neighbors. I have reread the vignette and \n> section 5 discusses High-Order Neighbors, but there isn?t any mention of \n> first or second order neighbors, as you mentioned above (?first order \n> neighbors are not defined?). One of the pieces of literature I found \n> said that polygons are problematic to work with, as are tesslations for \n> precisely the reason you mentioned, non-planarity. For this reason, I am \n> hung up on the idea of how to find all first order neighbors for a \n> point, especially as the number of first order neighbors varies from \n> point to point, and such knearneigh would not be appropriate here.\n\nSo project them, and use Euclidean distances in distance or graph-based \nmethods (or knn). You still have not defined \"first order neighbors\". That \nis your call alone. If you believe that voter behaviour is like a \ncontagious disease, define contagion, and from that \"first order \nneighbours\". If you are simply accounting for missing background \ncovariates that have a larger spatial footprint rather than voter-voter \ninteraction, it probably doesn't matter much. What is the implied model \nhere - that voters behave by observing the behaviour of their proximate \nneighbours (giving similar behaviour for near neighbours) or that voters \nare patched/segregated by residence, and near neighbours behave similarly \nnot because of information spillovers between voters, but because the \nvoters are subject to aggregate social/economic conditions?\n\nRoger\n\n>\n> If this is something that does not seem feasible, maybe another tactic \n> is necessary.\n>\n> Again, thank you all for the help.\n>\n> Warmest\n> --\n> Benjamin Lieberman\n> Muhlenberg College 2019\n> Mobile: 301.299.8928\n>\n>> On Jul 13, 2018, at 6:11 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n>>\n>> On Fri, 13 Jul 2018, Facundo Mu?oz wrote:\n>>\n>>> Dear Benjamin,\n>>>\n>>> I'm not sure how you define \"first order neighbors\" for a point. The\n>>> first thing that comes to my mind is to use their corresponding voronoi\n>>> polygons and define neighborhood from there. Following your code:\n>>\n>> Thanks, the main source of confusion is that \"first order neighbors\" are not defined. A k=1 neighbour could be (as below), as could k=6, or voronoi neighbours, or sphere of influence etc. So reading vignette(\"nb\") would be a starting point.\n>>\n>> Also note that voronoi and other graph-based neighbours should only use planar coordinates - including dismo::voronoi, which uses deldir::deldir() - just like spdep::tri2nb(). Triangulation can lead to spurious neighbours on the convex hull.\n>>\n>>>\n>>> v <- dismo::voronoi(coords)\n>>> par(mfrow = c(1, 2), xaxt = \"n\", yaxt = \"n\", mgp = c(0, 0, 0))\n>>> plot(coords, type = \"n\", xlab = NA, ylab = NA)\n>>> plot(v, add = TRUE)\n>>> text(x = coords[, 1], y = coords[, 2], labels = voter.subset$Voter.ID)\n>>> plot(coords, type = \"n\", xlab = NA, ylab = NA)\n>>> plot(poly2nb(v), coords, add = TRUE, col = \"gray\")\n>>>\n>>> ?acu.-\n>>>\n>>>\n>>> On 07/12/2018 09:00 PM, Benjamin Lieberman wrote:\n>>>> Hi all,\n>>>>\n>>>> Currently, I am working with U.S. voter data. Below, I included a brief example of the structure of the data with some reproducible code. My data set consists of roughly 233,000 (233k) entries, each specifying a voter and their particular latitude/longitude pair.\n>>\n>> Using individual voter data is highly dangerous, and must in every case be subject to the strictest privacy rules. Voter data does not in essence have position - the only valid voting data that has position is of the voting station/precinct, and those data are aggregated to preserve anonymity.\n>>\n>> Why does position and voter data not have position? Which location should you use - residence, workplace, what? What are these locations proxying? Nothing valid can be drawn from \"just voter data\" - you can get conclusions from carefully constructed stratified exit polls, but there the key gender/age/ethnicity/social class/etc. confounders are handled by design. Why should voting decisions be influenced by proximity (they are not)? The missing element here is looking carefully at relevant covariates at more aggregated levels (in the US typically zoning controlling social class positional segregation, etc.).\n>>\n>>>> I have been using the spdep package with the hope of creating a CAR model. To begin the analysis, we need to find all first order neighbors of every point in the data.\n>>>>\n>>>> While spdep has fantastic commands for finding k nearest neighbors (knearneigh), and a useful command for finding lag of order 3 or more (nblag), I have yet to find a method which is suitable for our purposes (lag = 1, or lag =2). Additionally, I looked into altering the nblag command to accommodate maxlag = 1 or maxlag = 2, but the command relies on an nb format, which is problematic as we are looking for the underlying neighborhood structure.\n>>>>\n>>>> There has been numerous work done with polygons, or data which already is in ?nb? format, but after reading the literature, it seems that polygons are not appropriate, nor are distance based neighbor techniques, due to density fluctuations over the area of interest.\n>>>>\n>>>> Below is some reproducible code I wrote. I would like to note that I am currently working in R 1.1.453 on a MacBook.\n>>\n>> You mean RStudio, there is no such version of R.\n>>\n>>>>\n>>>> # Create a data frame of 10 voters, picked at random\n>>>> voter.1 = c(1, -75.52187, 40.62320)\n>>>> voter.2 = c(2,-75.56373, 40.55216)\n>>>> voter.3 = c(3,-75.39587, 40.55416)\n>>>> voter.4 = c(4,-75.42248, 40.64326)\n>>>> voter.5 = c(5,-75.56654, 40.54948)\n>>>> voter.6 = c(6,-75.56257, 40.67375)\n>>>> voter.7 = c(7, -75.51888, 40.59715)\n>>>> voter.8 = c(8, -75.59879, 40.60014)\n>>>> voter.9 = c(9, -75.59879, 40.60014)\n>>>> voter.10 = c(10, -75.50877, 40.53129)\n>>>>\n>>\n>> These are in geographical coordinates.\n>>\n>>>> # Bind the vectors together\n>>>> voter.subset = rbind(voter.1, voter.2, voter.3, voter.4, voter.5, voter.6, voter.7, voter.8, voter.9, voter.10)\n>>>>\n>>>> # Rename the columns\n>>>> colnames(voter.subset) = c(\"Voter.ID\", \"Longitude\", \"Latitude\")\n>>>>\n>>>> # Change the class from a matrix to a data frame\n>>>> voter.subset = as.data.frame(voter.subset)\n>>>>\n>>>> # Load in the required packages\n>>>> library(spdep)\n>>>> library(sp)\n>>>>\n>>>> # Set the coordinates\n>>>> coordinates(voter.subset) = c(\"Longitude\", \"Latitude\")\n>>>> coords = coordinates(voter.subset)\n>>>>\n>>>> # Jitter to ensure no duplicate points\n>>>> coords = jitter(coords, factor = 1)\n>>>>\n>>\n>> jitter does not respect geographical coordinated (decimal degree metric).\n>>\n>>>> # Find the first nearest neighbor of each point\n>>>> one.nn = knearneigh(coords, k=1)\n>>\n>> See the help page (hint: longlat=TRUE to use Great Circle distances, much slower than planar).\n>>\n>>>>\n>>>> # Convert the first nearest neighbor to format \"nb\"\n>>>> one.nn_nb = knn2nb(one.nn, sym = F)\n>>>>\n>>>> Thank you in advance for any help you may offer, and for taking the time to read this. I have consulted Applied Spatial Data Analysis with R (Bivand, Pebesma, Gomez-Rubio), as well as other Sig-Geo threads, the spdep documentation, and the nb vignette (Bivand, April 3, 2018) from earlier this year.\n>>>>\n>>>> Warmest,\n>>>> Ben\n>>>> --\n>>>> Benjamin Lieberman\n>>>> Muhlenberg College 2019\n>>>> Mobile: 301.299.8928\n>>>>\n>>>>\n>>>>\n>>>> \t[[alternative HTML version deleted]]\n>>\n>> Plain text only, please.\n>>\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n>>>\n>>>\n>>> \t[[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n>>>\n>>\n>> --\n>> Roger Bivand\n>> Department of Economics, Norwegian School of Economics,\n>> Helleveien 30, N-5045 Bergen, Norway.\n>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no>\n>> http://orcid.org/0000-0003-2392-6140 <http://orcid.org/0000-0003-2392-6140>\n>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________ <https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________>\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Fri, 13 Jul 2018, Benjamin Lieberman wrote:\n\n> Roger anf Facu,\n>\n> Thank you very much for the help. In terms of the data, I only provided \n> the ID and Lat/Long pairs because they were the only co",
+      "thread_id": "thread-19cfa2bf861d",
+      "thread_depth": 4,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-5cd05b3abad7",
+      "message_id": "<alpine.LFD.2.21.1807131327220.15461@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-07-13T13:30:12+02:00",
+      "subject": "[R-sig-Geo]  How to find all first order neighbors of a collection of points",
+      "subject_clean": "How to find all first order neighbors of a collection of points",
+      "in_reply_to": "<BF38A110-FAB9-43F0-B9FC-E09043B0C420@muhlenberg.edu>",
+      "references": [
+        "<16296D3E-B6E1-4C1C-A437-6C6615A84EA5@muhlenberg.edu>",
+        "<ae3039b9-ca41-5332-4230-88675496e5d2@cirad.fr>",
+        "<alpine.LFD.2.21.1807131149002.15461@reclus.nhh.no>",
+        "<C860FAFF-9E8E-443A-A117-0B7C5C35190B@muhlenberg.edu>",
+        "<BF38A110-FAB9-43F0-B9FC-E09043B0C420@muhlenberg.edu>"
+      ],
+      "body_plain": "On Fri, 13 Jul 2018, Benjamin Lieberman wrote:\n\n> All-\n>\n> I would like to note that as the data is proprietary, and for obvious \n> privacy concerns, the lat/long pairs were randomly generated, and were \n> not taken directly from the data.\n\nThanks for the clarification. Note that if the data are a sample, that is \nnot a complete listing for one or more study areas, you don't know who the \nfirst order neighbour (the most proximate other voter) is, because that \nindidivual may not be in the sample. Your fallback then is to treat the \ndata as aggregates, unless you rule out local sampling variability.\n\nRoger\n\n>\n>\n> --\n> Benjamin Lieberman\n> Muhlenberg College 2019\n> Mobile: 301.299.8928\n>\n>> On Jul 13, 2018, at 6:58 AM, Benjamin Lieberman <bl250604 at muhlenberg.edu> wrote:\n>>\n>> Roger anf Facu,\n>>\n>> Thank you very much for the help. In terms of the data, I only provided the ID and Lat/Long pairs because they were the only covariates which were necessary. The data set we are using was purchased and contains voter registration information, voter history, and census tract information, after some geocoding took place. The locations are the residents houses, in this instance.\n>>\n>> I have rerun the knn with longlat = T, but I am still hung up on the idea of the first order neighbors. I have reread the vignette and section 5 discusses High-Order Neighbors, but there isn?t any mention of first or second order neighbors, as you mentioned above (?first order neighbors are not defined?). One of the pieces of literature I found said that polygons are problematic to work with, as are tesslations for precisely the reason you mentioned, non-planarity. For this reason, I am hung up on the idea of how to find all first order neighbors for a point, especially as the number of first order neighbors varies from point to point, and such knearneigh would not be appropriate here.\n>>\n>> If this is something that does not seem feasible, maybe another tactic is necessary.\n>>\n>> Again, thank you all for the help.\n>>\n>> Warmest\n>> --\n>> Benjamin Lieberman\n>> Muhlenberg College 2019\n>> Mobile: 301.299.8928\n>>\n>>> On Jul 13, 2018, at 6:11 AM, Roger Bivand <Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no>> wrote:\n>>>\n>>> On Fri, 13 Jul 2018, Facundo Mu?oz wrote:\n>>>\n>>>> Dear Benjamin,\n>>>>\n>>>> I'm not sure how you define \"first order neighbors\" for a point. The\n>>>> first thing that comes to my mind is to use their corresponding voronoi\n>>>> polygons and define neighborhood from there. Following your code:\n>>>\n>>> Thanks, the main source of confusion is that \"first order neighbors\" are not defined. A k=1 neighbour could be (as below), as could k=6, or voronoi neighbours, or sphere of influence etc. So reading vignette(\"nb\") would be a starting point.\n>>>\n>>> Also note that voronoi and other graph-based neighbours should only use planar coordinates - including dismo::voronoi, which uses deldir::deldir() - just like spdep::tri2nb(). Triangulation can lead to spurious neighbours on the convex hull.\n>>>\n>>>>\n>>>> v <- dismo::voronoi(coords)\n>>>> par(mfrow = c(1, 2), xaxt = \"n\", yaxt = \"n\", mgp = c(0, 0, 0))\n>>>> plot(coords, type = \"n\", xlab = NA, ylab = NA)\n>>>> plot(v, add = TRUE)\n>>>> text(x = coords[, 1], y = coords[, 2], labels = voter.subset$Voter.ID)\n>>>> plot(coords, type = \"n\", xlab = NA, ylab = NA)\n>>>> plot(poly2nb(v), coords, add = TRUE, col = \"gray\")\n>>>>\n>>>> ?acu.-\n>>>>\n>>>>\n>>>> On 07/12/2018 09:00 PM, Benjamin Lieberman wrote:\n>>>>> Hi all,\n>>>>>\n>>>>> Currently, I am working with U.S. voter data. Below, I included a brief example of the structure of the data with some reproducible code. My data set consists of roughly 233,000 (233k) entries, each specifying a voter and their particular latitude/longitude pair.\n>>>\n>>> Using individual voter data is highly dangerous, and must in every case be subject to the strictest privacy rules. Voter data does not in essence have position - the only valid voting data that has position is of the voting station/precinct, and those data are aggregated to preserve anonymity.\n>>>\n>>> Why does position and voter data not have position? Which location should you use - residence, workplace, what? What are these locations proxying? Nothing valid can be drawn from \"just voter data\" - you can get conclusions from carefully constructed stratified exit polls, but there the key gender/age/ethnicity/social class/etc. confounders are handled by design. Why should voting decisions be influenced by proximity (they are not)? The missing element here is looking carefully at relevant covariates at more aggregated levels (in the US typically zoning controlling social class positional segregation, etc.).\n>>>\n>>>>> I have been using the spdep package with the hope of creating a CAR model. To begin the analysis, we need to find all first order neighbors of every point in the data.\n>>>>>\n>>>>> While spdep has fantastic commands for finding k nearest neighbors (knearneigh), and a useful command for finding lag of order 3 or more (nblag), I have yet to find a method which is suitable for our purposes (lag = 1, or lag =2). Additionally, I looked into altering the nblag command to accommodate maxlag = 1 or maxlag = 2, but the command relies on an nb format, which is problematic as we are looking for the underlying neighborhood structure.\n>>>>>\n>>>>> There has been numerous work done with polygons, or data which already is in ?nb? format, but after reading the literature, it seems that polygons are not appropriate, nor are distance based neighbor techniques, due to density fluctuations over the area of interest.\n>>>>>\n>>>>> Below is some reproducible code I wrote. I would like to note that I am currently working in R 1.1.453 on a MacBook.\n>>>\n>>> You mean RStudio, there is no such version of R.\n>>>\n>>>>>\n>>>>> # Create a data frame of 10 voters, picked at random\n>>>>> voter.1 = c(1, -75.52187, 40.62320)\n>>>>> voter.2 = c(2,-75.56373, 40.55216)\n>>>>> voter.3 = c(3,-75.39587, 40.55416)\n>>>>> voter.4 = c(4,-75.42248, 40.64326)\n>>>>> voter.5 = c(5,-75.56654, 40.54948)\n>>>>> voter.6 = c(6,-75.56257, 40.67375)\n>>>>> voter.7 = c(7, -75.51888, 40.59715)\n>>>>> voter.8 = c(8, -75.59879, 40.60014)\n>>>>> voter.9 = c(9, -75.59879, 40.60014)\n>>>>> voter.10 = c(10, -75.50877, 40.53129)\n>>>>>\n>>>\n>>> These are in geographical coordinates.\n>>>\n>>>>> # Bind the vectors together\n>>>>> voter.subset = rbind(voter.1, voter.2, voter.3, voter.4, voter.5, voter.6, voter.7, voter.8, voter.9, voter.10)\n>>>>>\n>>>>> # Rename the columns\n>>>>> colnames(voter.subset) = c(\"Voter.ID\", \"Longitude\", \"Latitude\")\n>>>>>\n>>>>> # Change the class from a matrix to a data frame\n>>>>> voter.subset = as.data.frame(voter.subset)\n>>>>>\n>>>>> # Load in the required packages\n>>>>> library(spdep)\n>>>>> library(sp)\n>>>>>\n>>>>> # Set the coordinates\n>>>>> coordinates(voter.subset) = c(\"Longitude\", \"Latitude\")\n>>>>> coords = coordinates(voter.subset)\n>>>>>\n>>>>> # Jitter to ensure no duplicate points\n>>>>> coords = jitter(coords, factor = 1)\n>>>>>\n>>>\n>>> jitter does not respect geographical coordinated (decimal degree metric).\n>>>\n>>>>> # Find the first nearest neighbor of each point\n>>>>> one.nn = knearneigh(coords, k=1)\n>>>\n>>> See the help page (hint: longlat=TRUE to use Great Circle distances, much slower than planar).\n>>>\n>>>>>\n>>>>> # Convert the first nearest neighbor to format \"nb\"\n>>>>> one.nn_nb = knn2nb(one.nn, sym = F)\n>>>>>\n>>>>> Thank you in advance for any help you may offer, and for taking the time to read this. I have consulted Applied Spatial Data Analysis with R (Bivand, Pebesma, Gomez-Rubio), as well as other Sig-Geo threads, the spdep documentation, and the nb vignette (Bivand, April 3, 2018) from earlier this year.\n>>>>>\n>>>>> Warmest,\n>>>>> Ben\n>>>>> --\n>>>>> Benjamin Lieberman\n>>>>> Muhlenberg College 2019\n>>>>> Mobile: 301.299.8928\n>>>>>\n>>>>>\n>>>>>\n>>>>> \t[[alternative HTML version deleted]]\n>>>\n>>> Plain text only, please.\n>>>\n>>>>>\n>>>>> _______________________________________________\n>>>>> R-sig-Geo mailing list\n>>>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n>>>>\n>>>>\n>>>> \t[[alternative HTML version deleted]]\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n>>>>\n>>>\n>>> --\n>>> Roger Bivand\n>>> Department of Economics, Norwegian School of Economics,\n>>> Helleveien 30, N-5045 Bergen, Norway.\n>>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no>\n>>> http://orcid.org/0000-0003-2392-6140 <http://orcid.org/0000-0003-2392-6140>\n>>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________ <https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________>\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Fri, 13 Jul 2018, Benjamin Lieberman wrote:\n\n> All-\n>\n> I would like to note that as the data is proprietary, and for obvious \n> privacy concerns, the lat/long pairs were randomly generated, and we",
+      "thread_id": "thread-19cfa2bf861d",
+      "thread_depth": 5,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-5379c9d70057",
+      "message_id": "<EDF5AB41-4EAA-4619-A2B0-897070A7373A@muhlenberg.edu>",
+      "from_name": "Benjamin Lieberman",
+      "from_email_hash": "370519eea89af927515a8b3c67be7e186e2a694dd78562c7bfa2f4dad5a483a3",
+      "date": "2018-07-13T07:44:50-04:00",
+      "subject": "[R-sig-Geo]  How to find all first order neighbors of a collection of points",
+      "subject_clean": "How to find all first order neighbors of a collection of points",
+      "in_reply_to": "<alpine.LFD.2.21.1807131327220.15461@reclus.nhh.no>",
+      "references": [
+        "<16296D3E-B6E1-4C1C-A437-6C6615A84EA5@muhlenberg.edu>",
+        "<ae3039b9-ca41-5332-4230-88675496e5d2@cirad.fr>",
+        "<alpine.LFD.2.21.1807131149002.15461@reclus.nhh.no>",
+        "<C860FAFF-9E8E-443A-A117-0B7C5C35190B@muhlenberg.edu>",
+        "<BF38A110-FAB9-43F0-B9FC-E09043B0C420@muhlenberg.edu>",
+        "<alpine.LFD.2.21.1807131327220.15461@reclus.nhh.no>"
+      ],
+      "body_plain": "Roger-\n\nThank you so much for the help. In our case, first order neighbors are all neighbors who are adjacent to a voter. Second order neighbors are then all neighbors who are adjacent to the first order neighbors. Hope that this could clarify what I have been referencing this time.\n\nI will try the method you suggested, thank you.\n\nBest,\nBen\n--\nBenjamin Lieberman\nMuhlenberg College 2019\nMobile: 301.299.8928\n\n> On Jul 13, 2018, at 7:30 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> \n> On Fri, 13 Jul 2018, Benjamin Lieberman wrote:\n> \n>> All-\n>> \n>> I would like to note that as the data is proprietary, and for obvious privacy concerns, the lat/long pairs were randomly generated, and were not taken directly from the data.\n> \n> Thanks for the clarification. Note that if the data are a sample, that is not a complete listing for one or more study areas, you don't know who the first order neighbour (the most proximate other voter) is, because that indidivual may not be in the sample. Your fallback then is to treat the data as aggregates, unless you rule out local sampling variability.\n> \n> Roger\n> \n>> \n>> \n>> --\n>> Benjamin Lieberman\n>> Muhlenberg College 2019\n>> Mobile: 301.299.8928\n>> \n>>> On Jul 13, 2018, at 6:58 AM, Benjamin Lieberman <bl250604 at muhlenberg.edu> wrote:\n>>> \n>>> Roger anf Facu,\n>>> \n>>> Thank you very much for the help. In terms of the data, I only provided the ID and Lat/Long pairs because they were the only covariates which were necessary. The data set we are using was purchased and contains voter registration information, voter history, and census tract information, after some geocoding took place. The locations are the residents houses, in this instance.\n>>> \n>>> I have rerun the knn with longlat = T, but I am still hung up on the idea of the first order neighbors. I have reread the vignette and section 5 discusses High-Order Neighbors, but there isn?t any mention of first or second order neighbors, as you mentioned above (?first order neighbors are not defined?). One of the pieces of literature I found said that polygons are problematic to work with, as are tesslations for precisely the reason you mentioned, non-planarity. For this reason, I am hung up on the idea of how to find all first order neighbors for a point, especially as the number of first order neighbors varies from point to point, and such knearneigh would not be appropriate here.\n>>> \n>>> If this is something that does not seem feasible, maybe another tactic is necessary.\n>>> \n>>> Again, thank you all for the help.\n>>> \n>>> Warmest\n>>> --\n>>> Benjamin Lieberman\n>>> Muhlenberg College 2019\n>>> Mobile: 301.299.8928\n>>> \n>>>> On Jul 13, 2018, at 6:11 AM, Roger Bivand <Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no> <mailto:Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no>>> wrote:\n>>>> \n>>>> On Fri, 13 Jul 2018, Facundo Mu?oz wrote:\n>>>> \n>>>>> Dear Benjamin,\n>>>>> \n>>>>> I'm not sure how you define \"first order neighbors\" for a point. The\n>>>>> first thing that comes to my mind is to use their corresponding voronoi\n>>>>> polygons and define neighborhood from there. Following your code:\n>>>> \n>>>> Thanks, the main source of confusion is that \"first order neighbors\" are not defined. A k=1 neighbour could be (as below), as could k=6, or voronoi neighbours, or sphere of influence etc. So reading vignette(\"nb\") would be a starting point.\n>>>> \n>>>> Also note that voronoi and other graph-based neighbours should only use planar coordinates - including dismo::voronoi, which uses deldir::deldir() - just like spdep::tri2nb(). Triangulation can lead to spurious neighbours on the convex hull.\n>>>> \n>>>>> \n>>>>> v <- dismo::voronoi(coords)\n>>>>> par(mfrow = c(1, 2), xaxt = \"n\", yaxt = \"n\", mgp = c(0, 0, 0))\n>>>>> plot(coords, type = \"n\", xlab = NA, ylab = NA)\n>>>>> plot(v, add = TRUE)\n>>>>> text(x = coords[, 1], y = coords[, 2], labels = voter.subset$Voter.ID)\n>>>>> plot(coords, type = \"n\", xlab = NA, ylab = NA)\n>>>>> plot(poly2nb(v), coords, add = TRUE, col = \"gray\")\n>>>>> \n>>>>> ?acu.-\n>>>>> \n>>>>> \n>>>>> On 07/12/2018 09:00 PM, Benjamin Lieberman wrote:\n>>>>>> Hi all,\n>>>>>> \n>>>>>> Currently, I am working with U.S. voter data. Below, I included a brief example of the structure of the data with some reproducible code. My data set consists of roughly 233,000 (233k) entries, each specifying a voter and their particular latitude/longitude pair.\n>>>> \n>>>> Using individual voter data is highly dangerous, and must in every case be subject to the strictest privacy rules. Voter data does not in essence have position - the only valid voting data that has position is of the voting station/precinct, and those data are aggregated to preserve anonymity.\n>>>> \n>>>> Why does position and voter data not have position? Which location should you use - residence, workplace, what? What are these locations proxying? Nothing valid can be drawn from \"just voter data\" - you can get conclusions from carefully constructed stratified exit polls, but there the key gender/age/ethnicity/social class/etc. confounders are handled by design. Why should voting decisions be influenced by proximity (they are not)? The missing element here is looking carefully at relevant covariates at more aggregated levels (in the US typically zoning controlling social class positional segregation, etc.).\n>>>> \n>>>>>> I have been using the spdep package with the hope of creating a CAR model. To begin the analysis, we need to find all first order neighbors of every point in the data.\n>>>>>> \n>>>>>> While spdep has fantastic commands for finding k nearest neighbors (knearneigh), and a useful command for finding lag of order 3 or more (nblag), I have yet to find a method which is suitable for our purposes (lag = 1, or lag =2). Additionally, I looked into altering the nblag command to accommodate maxlag = 1 or maxlag = 2, but the command relies on an nb format, which is problematic as we are looking for the underlying neighborhood structure.\n>>>>>> \n>>>>>> There has been numerous work done with polygons, or data which already is in ?nb? format, but after reading the literature, it seems that polygons are not appropriate, nor are distance based neighbor techniques, due to density fluctuations over the area of interest.\n>>>>>> \n>>>>>> Below is some reproducible code I wrote. I would like to note that I am currently working in R 1.1.453 on a MacBook.\n>>>> \n>>>> You mean RStudio, there is no such version of R.\n>>>> \n>>>>>> \n>>>>>> # Create a data frame of 10 voters, picked at random\n>>>>>> voter.1 = c(1, -75.52187, 40.62320)\n>>>>>> voter.2 = c(2,-75.56373, 40.55216)\n>>>>>> voter.3 = c(3,-75.39587, 40.55416)\n>>>>>> voter.4 = c(4,-75.42248, 40.64326)\n>>>>>> voter.5 = c(5,-75.56654, 40.54948)\n>>>>>> voter.6 = c(6,-75.56257, 40.67375)\n>>>>>> voter.7 = c(7, -75.51888, 40.59715)\n>>>>>> voter.8 = c(8, -75.59879, 40.60014)\n>>>>>> voter.9 = c(9, -75.59879, 40.60014)\n>>>>>> voter.10 = c(10, -75.50877, 40.53129)\n>>>>>> \n>>>> \n>>>> These are in geographical coordinates.\n>>>> \n>>>>>> # Bind the vectors together\n>>>>>> voter.subset = rbind(voter.1, voter.2, voter.3, voter.4, voter.5, voter.6, voter.7, voter.8, voter.9, voter.10)\n>>>>>> \n>>>>>> # Rename the columns\n>>>>>> colnames(voter.subset) = c(\"Voter.ID\", \"Longitude\", \"Latitude\")\n>>>>>> \n>>>>>> # Change the class from a matrix to a data frame\n>>>>>> voter.subset = as.data.frame(voter.subset)\n>>>>>> \n>>>>>> # Load in the required packages\n>>>>>> library(spdep)\n>>>>>> library(sp)\n>>>>>> \n>>>>>> # Set the coordinates\n>>>>>> coordinates(voter.subset) = c(\"Longitude\", \"Latitude\")\n>>>>>> coords = coordinates(voter.subset)\n>>>>>> \n>>>>>> # Jitter to ensure no duplicate points\n>>>>>> coords = jitter(coords, factor = 1)\n>>>>>> \n>>>> \n>>>> jitter does not respect geographical coordinated (decimal degree metric).\n>>>> \n>>>>>> # Find the first nearest neighbor of each point\n>>>>>> one.nn = knearneigh(coords, k=1)\n>>>> \n>>>> See the help page (hint: longlat=TRUE to use Great Circle distances, much slower than planar).\n>>>> \n>>>>>> \n>>>>>> # Convert the first nearest neighbor to format \"nb\"\n>>>>>> one.nn_nb = knn2nb(one.nn, sym = F)\n>>>>>> \n>>>>>> Thank you in advance for any help you may offer, and for taking the time to read this. I have consulted Applied Spatial Data Analysis with R (Bivand, Pebesma, Gomez-Rubio), as well as other Sig-Geo threads, the spdep documentation, and the nb vignette (Bivand, April 3, 2018) from earlier this year.\n>>>>>> \n>>>>>> Warmest,\n>>>>>> Ben\n>>>>>> --\n>>>>>> Benjamin Lieberman\n>>>>>> Muhlenberg College 2019\n>>>>>> Mobile: 301.299.8928\n>>>>>> \n>>>>>> \n>>>>>> \n>>>>>> \t[[alternative HTML version deleted]]\n>>>> \n>>>> Plain text only, please.\n>>>> \n>>>>>> \n>>>>>> _______________________________________________\n>>>>>> R-sig-Geo mailing list\n>>>>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org> <mailto:R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>>\n>>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo> <https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>>\n>>>>> \n>>>>> \n>>>>> \t[[alternative HTML version deleted]]\n>>>>> \n>>>>> _______________________________________________\n>>>>> R-sig-Geo mailing list\n>>>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org> <mailto:R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>>\n>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo> <https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>>\n>>>>> \n>>>> \n>>>> --\n>>>> Roger Bivand\n>>>> Department of Economics, Norwegian School of Economics,\n>>>> Helleveien 30, N-5045 Bergen, Norway.\n>>>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no> <mailto:Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no>>\n>>>> http://orcid.org/0000-0003-2392-6140 <http://orcid.org/0000-0003-2392-6140> <http://orcid.org/0000-0003-2392-6140 <http://orcid.org/0000-0003-2392-6140>>\n>>>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________ <https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________><https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________ <https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________>>\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org> <mailto:R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>>\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo> <https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>>\n>> \n>> \n>> \t[[alternative HTML version deleted]]\n>> \n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n>> \n> \n> -- \n> Roger Bivand\n> Department of Economics, Norwegian School of Economics,\n> Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no>\n> http://orcid.org/0000-0003-2392-6140 <http://orcid.org/0000-0003-2392-6140>\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en <https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Roger-\n\nThank you so much for the help. In our case, first order neighbors are all neighbors who are adjacent to a voter. Second order neighbors are then all neighbors who are adjacent to the first or",
+      "thread_id": "thread-19cfa2bf861d",
+      "thread_depth": 6,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-c28beccfe3be",
+      "message_id": "<alpine.LFD.2.21.1807131355150.15461@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-07-13T13:56:39+02:00",
+      "subject": "[R-sig-Geo]  How to find all first order neighbors of a collection of points",
+      "subject_clean": "How to find all first order neighbors of a collection of points",
+      "in_reply_to": "<EDF5AB41-4EAA-4619-A2B0-897070A7373A@muhlenberg.edu>",
+      "references": [
+        "<16296D3E-B6E1-4C1C-A437-6C6615A84EA5@muhlenberg.edu>",
+        "<ae3039b9-ca41-5332-4230-88675496e5d2@cirad.fr>",
+        "<alpine.LFD.2.21.1807131149002.15461@reclus.nhh.no>",
+        "<C860FAFF-9E8E-443A-A117-0B7C5C35190B@muhlenberg.edu>",
+        "<BF38A110-FAB9-43F0-B9FC-E09043B0C420@muhlenberg.edu>",
+        "<alpine.LFD.2.21.1807131327220.15461@reclus.nhh.no>",
+        "<EDF5AB41-4EAA-4619-A2B0-897070A7373A@muhlenberg.edu>"
+      ],
+      "body_plain": "On Fri, 13 Jul 2018, Benjamin Lieberman wrote:\n\n> Roger-\n>\n> Thank you so much for the help. In our case, first order neighbors are \n> all neighbors who are adjacent to a voter. Second order neighbors are \n> then all neighbors who are adjacent to the first order neighbors. Hope \n> that this could clarify what I have been referencing this time.\n\nSo you need to define what you mean by adjacent for the purposes of your \nstudy. This depends on knowing the underlying behavioural patterns \naffecting interaction.\n\nRoger\n\n>\n> I will try the method you suggested, thank you.\n>\n> Best,\n> Ben\n> --\n> Benjamin Lieberman\n> Muhlenberg College 2019\n> Mobile: 301.299.8928\n>\n>> On Jul 13, 2018, at 7:30 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n>>\n>> On Fri, 13 Jul 2018, Benjamin Lieberman wrote:\n>>\n>>> All-\n>>>\n>>> I would like to note that as the data is proprietary, and for obvious privacy concerns, the lat/long pairs were randomly generated, and were not taken directly from the data.\n>>\n>> Thanks for the clarification. Note that if the data are a sample, that is not a complete listing for one or more study areas, you don't know who the first order neighbour (the most proximate other voter) is, because that indidivual may not be in the sample. Your fallback then is to treat the data as aggregates, unless you rule out local sampling variability.\n>>\n>> Roger\n>>\n>>>\n>>>\n>>> --\n>>> Benjamin Lieberman\n>>> Muhlenberg College 2019\n>>> Mobile: 301.299.8928\n>>>\n>>>> On Jul 13, 2018, at 6:58 AM, Benjamin Lieberman <bl250604 at muhlenberg.edu> wrote:\n>>>>\n>>>> Roger anf Facu,\n>>>>\n>>>> Thank you very much for the help. In terms of the data, I only provided the ID and Lat/Long pairs because they were the only covariates which were necessary. The data set we are using was purchased and contains voter registration information, voter history, and census tract information, after some geocoding took place. The locations are the residents houses, in this instance.\n>>>>\n>>>> I have rerun the knn with longlat = T, but I am still hung up on the idea of the first order neighbors. I have reread the vignette and section 5 discusses High-Order Neighbors, but there isn?t any mention of first or second order neighbors, as you mentioned above (?first order neighbors are not defined?). One of the pieces of literature I found said that polygons are problematic to work with, as are tesslations for precisely the reason you mentioned, non-planarity. For this reason, I am hung up on the idea of how to find all first order neighbors for a point, especially as the number of first order neighbors varies from point to point, and such knearneigh would not be appropriate here.\n>>>>\n>>>> If this is something that does not seem feasible, maybe another tactic is necessary.\n>>>>\n>>>> Again, thank you all for the help.\n>>>>\n>>>> Warmest\n>>>> --\n>>>> Benjamin Lieberman\n>>>> Muhlenberg College 2019\n>>>> Mobile: 301.299.8928\n>>>>\n>>>>> On Jul 13, 2018, at 6:11 AM, Roger Bivand <Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no> <mailto:Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no>>> wrote:\n>>>>>\n>>>>> On Fri, 13 Jul 2018, Facundo Mu?oz wrote:\n>>>>>\n>>>>>> Dear Benjamin,\n>>>>>>\n>>>>>> I'm not sure how you define \"first order neighbors\" for a point. The\n>>>>>> first thing that comes to my mind is to use their corresponding voronoi\n>>>>>> polygons and define neighborhood from there. Following your code:\n>>>>>\n>>>>> Thanks, the main source of confusion is that \"first order neighbors\" are not defined. A k=1 neighbour could be (as below), as could k=6, or voronoi neighbours, or sphere of influence etc. So reading vignette(\"nb\") would be a starting point.\n>>>>>\n>>>>> Also note that voronoi and other graph-based neighbours should only use planar coordinates - including dismo::voronoi, which uses deldir::deldir() - just like spdep::tri2nb(). Triangulation can lead to spurious neighbours on the convex hull.\n>>>>>\n>>>>>>\n>>>>>> v <- dismo::voronoi(coords)\n>>>>>> par(mfrow = c(1, 2), xaxt = \"n\", yaxt = \"n\", mgp = c(0, 0, 0))\n>>>>>> plot(coords, type = \"n\", xlab = NA, ylab = NA)\n>>>>>> plot(v, add = TRUE)\n>>>>>> text(x = coords[, 1], y = coords[, 2], labels = voter.subset$Voter.ID)\n>>>>>> plot(coords, type = \"n\", xlab = NA, ylab = NA)\n>>>>>> plot(poly2nb(v), coords, add = TRUE, col = \"gray\")\n>>>>>>\n>>>>>> ?acu.-\n>>>>>>\n>>>>>>\n>>>>>> On 07/12/2018 09:00 PM, Benjamin Lieberman wrote:\n>>>>>>> Hi all,\n>>>>>>>\n>>>>>>> Currently, I am working with U.S. voter data. Below, I included a brief example of the structure of the data with some reproducible code. My data set consists of roughly 233,000 (233k) entries, each specifying a voter and their particular latitude/longitude pair.\n>>>>>\n>>>>> Using individual voter data is highly dangerous, and must in every case be subject to the strictest privacy rules. Voter data does not in essence have position - the only valid voting data that has position is of the voting station/precinct, and those data are aggregated to preserve anonymity.\n>>>>>\n>>>>> Why does position and voter data not have position? Which location should you use - residence, workplace, what? What are these locations proxying? Nothing valid can be drawn from \"just voter data\" - you can get conclusions from carefully constructed stratified exit polls, but there the key gender/age/ethnicity/social class/etc. confounders are handled by design. Why should voting decisions be influenced by proximity (they are not)? The missing element here is looking carefully at relevant covariates at more aggregated levels (in the US typically zoning controlling social class positional segregation, etc.).\n>>>>>\n>>>>>>> I have been using the spdep package with the hope of creating a CAR model. To begin the analysis, we need to find all first order neighbors of every point in the data.\n>>>>>>>\n>>>>>>> While spdep has fantastic commands for finding k nearest neighbors (knearneigh), and a useful command for finding lag of order 3 or more (nblag), I have yet to find a method which is suitable for our purposes (lag = 1, or lag =2). Additionally, I looked into altering the nblag command to accommodate maxlag = 1 or maxlag = 2, but the command relies on an nb format, which is problematic as we are looking for the underlying neighborhood structure.\n>>>>>>>\n>>>>>>> There has been numerous work done with polygons, or data which already is in ?nb? format, but after reading the literature, it seems that polygons are not appropriate, nor are distance based neighbor techniques, due to density fluctuations over the area of interest.\n>>>>>>>\n>>>>>>> Below is some reproducible code I wrote. I would like to note that I am currently working in R 1.1.453 on a MacBook.\n>>>>>\n>>>>> You mean RStudio, there is no such version of R.\n>>>>>\n>>>>>>>\n>>>>>>> # Create a data frame of 10 voters, picked at random\n>>>>>>> voter.1 = c(1, -75.52187, 40.62320)\n>>>>>>> voter.2 = c(2,-75.56373, 40.55216)\n>>>>>>> voter.3 = c(3,-75.39587, 40.55416)\n>>>>>>> voter.4 = c(4,-75.42248, 40.64326)\n>>>>>>> voter.5 = c(5,-75.56654, 40.54948)\n>>>>>>> voter.6 = c(6,-75.56257, 40.67375)\n>>>>>>> voter.7 = c(7, -75.51888, 40.59715)\n>>>>>>> voter.8 = c(8, -75.59879, 40.60014)\n>>>>>>> voter.9 = c(9, -75.59879, 40.60014)\n>>>>>>> voter.10 = c(10, -75.50877, 40.53129)\n>>>>>>>\n>>>>>\n>>>>> These are in geographical coordinates.\n>>>>>\n>>>>>>> # Bind the vectors together\n>>>>>>> voter.subset = rbind(voter.1, voter.2, voter.3, voter.4, voter.5, voter.6, voter.7, voter.8, voter.9, voter.10)\n>>>>>>>\n>>>>>>> # Rename the columns\n>>>>>>> colnames(voter.subset) = c(\"Voter.ID\", \"Longitude\", \"Latitude\")\n>>>>>>>\n>>>>>>> # Change the class from a matrix to a data frame\n>>>>>>> voter.subset = as.data.frame(voter.subset)\n>>>>>>>\n>>>>>>> # Load in the required packages\n>>>>>>> library(spdep)\n>>>>>>> library(sp)\n>>>>>>>\n>>>>>>> # Set the coordinates\n>>>>>>> coordinates(voter.subset) = c(\"Longitude\", \"Latitude\")\n>>>>>>> coords = coordinates(voter.subset)\n>>>>>>>\n>>>>>>> # Jitter to ensure no duplicate points\n>>>>>>> coords = jitter(coords, factor = 1)\n>>>>>>>\n>>>>>\n>>>>> jitter does not respect geographical coordinated (decimal degree metric).\n>>>>>\n>>>>>>> # Find the first nearest neighbor of each point\n>>>>>>> one.nn = knearneigh(coords, k=1)\n>>>>>\n>>>>> See the help page (hint: longlat=TRUE to use Great Circle distances, much slower than planar).\n>>>>>\n>>>>>>>\n>>>>>>> # Convert the first nearest neighbor to format \"nb\"\n>>>>>>> one.nn_nb = knn2nb(one.nn, sym = F)\n>>>>>>>\n>>>>>>> Thank you in advance for any help you may offer, and for taking the time to read this. I have consulted Applied Spatial Data Analysis with R (Bivand, Pebesma, Gomez-Rubio), as well as other Sig-Geo threads, the spdep documentation, and the nb vignette (Bivand, April 3, 2018) from earlier this year.\n>>>>>>>\n>>>>>>> Warmest,\n>>>>>>> Ben\n>>>>>>> --\n>>>>>>> Benjamin Lieberman\n>>>>>>> Muhlenberg College 2019\n>>>>>>> Mobile: 301.299.8928\n>>>>>>>\n>>>>>>>\n>>>>>>>\n>>>>>>> \t[[alternative HTML version deleted]]\n>>>>>\n>>>>> Plain text only, please.\n>>>>>\n>>>>>>>\n>>>>>>> _______________________________________________\n>>>>>>> R-sig-Geo mailing list\n>>>>>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org> <mailto:R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>>\n>>>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo> <https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>>\n>>>>>>\n>>>>>>\n>>>>>> \t[[alternative HTML version deleted]]\n>>>>>>\n>>>>>> _______________________________________________\n>>>>>> R-sig-Geo mailing list\n>>>>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org> <mailto:R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>>\n>>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo> <https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>>\n>>>>>>\n>>>>>\n>>>>> --\n>>>>> Roger Bivand\n>>>>> Department of Economics, Norwegian School of Economics,\n>>>>> Helleveien 30, N-5045 Bergen, Norway.\n>>>>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no> <mailto:Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no>>\n>>>>> http://orcid.org/0000-0003-2392-6140 <http://orcid.org/0000-0003-2392-6140> <http://orcid.org/0000-0003-2392-6140 <http://orcid.org/0000-0003-2392-6140>>\n>>>>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________ <https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________><https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________ <https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en_______________________________________________>>\n>>>>> R-sig-Geo mailing list\n>>>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org> <mailto:R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>>\n>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo> <https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>>\n>>>\n>>>\n>>> \t[[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n>>>\n>>\n>> --\n>> Roger Bivand\n>> Department of Economics, Norwegian School of Economics,\n>> Helleveien 30, N-5045 Bergen, Norway.\n>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no <mailto:Roger.Bivand at nhh.no>\n>> http://orcid.org/0000-0003-2392-6140 <http://orcid.org/0000-0003-2392-6140>\n>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en <https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Fri, 13 Jul 2018, Benjamin Lieberman wrote:\n\n> Roger-\n>\n> Thank you so much for the help. In our case, first order neighbors are \n> all neighbors who are adjacent to a voter. Second order neighbors",
+      "thread_id": "thread-19cfa2bf861d",
+      "thread_depth": 7,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-a68c80de3b04",
+      "message_id": "<CAHDuK189fW5pOiCT53An4B+w82zY1J1fLso-d-wX0L6StYcFzA@mail.gmail.com>",
+      "from_name": "Shabir A.Bangroo",
+      "from_email_hash": "5290ad735431637fdd2397e0a657d7b16457466d860d3fc8f6fe3ce2cdc99140",
+      "date": "2018-07-13T22:23:06+02:00",
+      "subject": "[R-sig-Geo] How to use covariate files for regression kriging",
+      "subject_clean": "How to use covariate files for regression kriging",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi all,\n\nI am new to R and geostatistics.\nI have raster files (NDVI and DEM) and I want to use them as covariates for\nregression kriging.\nDo I need to project them first to same projected coordinate system\nand resample\nto same cell size before converting them to txt file for use in r.\n\nThanks\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all,\n\nI am new to R and geostatistics.\nI have raster files (NDVI and DEM) and I want to use them as covariates for\nregression kriging.\nDo I need to project them first to same projected coordinate s",
+      "thread_id": "thread-a68c80de3b04",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-c3356073983f",
+      "message_id": "<CAFs5Q4K+kSd+RNikoQj01nOTnStrcG5PQd60v7RTmiv9Fikydg@mail.gmail.com>",
+      "from_name": "Waldir de Carvalho Junior",
+      "from_email_hash": "e6a22827a8368600d104faac3797ecdc1bbb736e536ae22fc3f68c4d46188c27",
+      "date": "2018-07-17T11:21:18-03:00",
+      "subject": "[R-sig-Geo] colors in AQP plot SoilProfileCollection",
+      "subject_clean": "colors in AQP plot SoilProfileCollection",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi All\nI would like to know how can I change the colors in 'plot' a\nSoilProfileCollection .\nThe colors automatically range from blue to red.\nI would like to represent the depth variation in gray scale or another\ncolor scale.\nAn example of command line is:\nplot(CX, name='Horizons', color='pHH20')\n\nthanks in advance\n\nWaldir de Carvalho\nResearcher Embrapa Soils - Brazil\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi All\nI would like to know how can I change the colors in 'plot' a\nSoilProfileCollection .\nThe colors automatically range from blue to red.\nI would like to represent the depth variation in gray scale",
+      "thread_id": "thread-c3356073983f",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-501945872250",
+      "message_id": "<CAKkiGbsD_rh2hRuxGVeV40FieSgUriLrc7winRa_oi20By7waQ@mail.gmail.com>",
+      "from_name": "Vijay Lulla",
+      "from_email_hash": "769e14ff37fcc533dfe9697702386b4f5976d94b2c7ee7c19461cd22dd9312e4",
+      "date": "2018-07-25T17:37:38-04:00",
+      "subject": "[R-sig-Geo] Strange behavior when using writeRaster?",
+      "subject_clean": "Strange behavior when using writeRaster?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Consider the following code snippet:\n\n> library(raster)\n> r <- raster(nrows=5, ncols=5)\n> rf <- writeRaster(r, 'tst123') ## (1)\n>\n> d <- raster('tst123.grd')\n> d[] <- 0\n> df <- writeRaster(d, 'tst123', overwrite=TRUE) # We're overwriting\ntst123!! (2)\n>\n> df  ## Shows that datasource is tst123.grd with values 0, 0 (min,max)\n> rf  ## Still shows that datasource is tst123.grd with values NA, NA (min,\nmax)!  Error?\n>\n> df[] ## Expected\n> rf[] ## Unexpected!!  Is this an error?\n> rf  ## Should rf reread the data from the file to update its metadata?\n\nIs it possible to keep track of open connections (for e.g., in (1) and (2)\nabove) and update metadata of files that may have changed?  I am also not\nsure why all examples of raster package show examples of assigning value of\nwriteRaster function when it is intended to be used for side-effects of\nwriting to a file?  I would not have stumbled upon this if the examples had\nsimple `writeRaster(d, 'tst123')` instead of the common `df <-\nwriteRaster(d, 'tst123')` used in the documentation!\n\nThanks,\nVijay.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Consider the following code snippet:\n\n> library(raster)\n> r <- raster(nrows=5, ncols=5)\n> rf <- writeRaster(r, 'tst123') ## (1)\n>\n> d <- raster('tst123.grd')\n> d[] <- 0\n> df <- writeRaster(d, 'tst123'",
+      "thread_id": "thread-501945872250",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-58d048df1d45",
+      "message_id": "<CAASFQpSJWC5Xw63Tc9D1H+-chLtCoiujMt=KgPsGp0B=59ojwA@mail.gmail.com>",
+      "from_name": "chris english",
+      "from_email_hash": "be708bd65c67bf9dc569aaca2fc47c514fda1d8378ae8bda3840b371a5ad8aac",
+      "date": "2018-07-29T00:26:37-04:00",
+      "subject": "[R-sig-Geo] Transform hexagonal to raster - a wife's question",
+      "subject_clean": "Transform hexagonal to raster - a wife's question",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "My wife showed me a beading pattern that she was working on that looks to\nmy eye like a hexagonal grid, its called a peyote stitch, and she needs to\ntransform it to a loom stitch, essentially a raster. In the beading world\nthey suggest combining two rows into one. If asked, what have you tried, I\nwould say I tried to duck, but... In practical application, the two rows\nequals one doesn't appear to preserve the desired pattern when beading the\nloom, probably something like netting out the half-steps when you're going\nfrom two rows to one = n+1 or n +2 for bead count on the combined row.\n40x40 hex grid, OK, I'll get out my graph paper. Summer.\n\nThank you for your forbearance, and any very general thoughts appreciated,\nie transforms sans datums & etc.\n\nChris\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "My wife showed me a beading pattern that she was working on that looks to\nmy eye like a hexagonal grid, its called a peyote stitch, and she needs to\ntransform it to a loom stitch, essentially a raster",
+      "thread_id": "thread-58d048df1d45",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-a17d08365547",
+      "message_id": "<3561511532952684@iva7-7c2970ec7645.qloud-c.yandex.net>",
+      "from_name": "Антон Морковин",
+      "from_email_hash": "623fee9f8848b44d411d82d1b019601db8c5f48e796e80e58a090c15ba7c3bbb",
+      "date": "2018-07-30T15:11:24+03:00",
+      "subject": "[R-sig-Geo] Combining SpatialLines into SpatialPolygons",
+      "subject_clean": "Combining SpatialLines into SpatialPolygons",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20180730/c924cda1/attachment.html>",
+      "body_snippet": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20180730/c924cda1/attachment.html>",
+      "thread_id": "thread-a17d08365547",
+      "thread_depth": 0,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-325bcfb5c2da",
+      "message_id": "<751A41D4-5621-4E60-A242-5F210F700BFC@bigelow.org>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "6e7d86f4413dff7c730c0abdb2ea4fcffc49b14a0d6c91aa033e0c14630f8056",
+      "date": "2018-07-30T09:12:33-04:00",
+      "subject": "[R-sig-Geo] Transform hexagonal to raster - a wife's question",
+      "subject_clean": "Transform hexagonal to raster - a wife's question",
+      "in_reply_to": "<CAASFQpSJWC5Xw63Tc9D1H+-chLtCoiujMt=KgPsGp0B=59ojwA@mail.gmail.com>",
+      "references": [
+        "<CAASFQpSJWC5Xw63Tc9D1H+-chLtCoiujMt=KgPsGp0B=59ojwA@mail.gmail.com>"
+      ],
+      "body_plain": "If I were in your shoes I would be doing a hop-skip to ring Sarah Goslee's doorbell.  She's our resident ecology-spatial-textiles guru...\n\nhttp://www.stringpage.com/ <http://www.stringpage.com/>\n\n\n\n\n\n\n\n> On Jul 29, 2018, at 12:26 AM, chris english <englishchristophera at gmail.com> wrote:\n> \n> My wife showed me a beading pattern that she was working on that looks to\n> my eye like a hexagonal grid, its called a peyote stitch, and she needs to\n> transform it to a loom stitch, essentially a raster. In the beading world\n> they suggest combining two rows into one. If asked, what have you tried, I\n> would say I tried to duck, but... In practical application, the two rows\n> equals one doesn't appear to preserve the desired pattern when beading the\n> loom, probably something like netting out the half-steps when you're going\n> from two rows to one = n+1 or n +2 for bead count on the combined row.\n> 40x40 hex grid, OK, I'll get out my graph paper. Summer.\n> \n> Thank you for your forbearance, and any very general thoughts appreciated,\n> ie transforms sans datums & etc.\n> \n> Chris\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\nBen Tupper\nBigelow Laboratory for Ocean Sciences\n60 Bigelow Drive, P.O. Box 380\nEast Boothbay, Maine 04544\nhttp://www.bigelow.org\n\nEcological Forecasting: https://eco.bigelow.org/\n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "If I were in your shoes I would be doing a hop-skip to ring Sarah Goslee's doorbell.  She's our resident ecology-spatial-textiles guru...\n\nhttp://www.stringpage.com/ <http://www.stringpage.com/>\n\n\n\n\n\n",
+      "thread_id": "thread-58d048df1d45",
+      "thread_depth": 1,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-0371e946fffd",
+      "message_id": "<alpine.LFD.2.21.1807301532110.19586@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "62eb9306dc98eeb78f2d1fefb3b1d50bb32592b14447c5beea3d517d9117fbac",
+      "date": "2018-07-30T15:37:33+02:00",
+      "subject": "[R-sig-Geo] Combining SpatialLines into SpatialPolygons",
+      "subject_clean": "Combining SpatialLines into SpatialPolygons",
+      "in_reply_to": "<3561511532952684@iva7-7c2970ec7645.qloud-c.yandex.net>",
+      "references": [
+        "<3561511532952684@iva7-7c2970ec7645.qloud-c.yandex.net>"
+      ],
+      "body_plain": "Please use plain text only, and provide a small reproducible example, \npossibly demonstrating in code and data what you claim about \"finding \nsolutions\". I assume that you have already tried rgeos::gPolygonize(). \nConsider using its example to generate your reproducible example. You may \nfind that scaling also matters.\n\nRoger\n\nOn Mon, 30 Jul 2018, ????? ???????? wrote:\n\n> ?\n> Dear all,\n> ?\n> I have a kml file with a huge set of lines, which actually depict a grid of\n> many rectangles. I want to unite these lines into polygons (i.e., each\n> rectangle must be a separate spatial polygon), but I failed to find a\n> function which does it directly.\n> ?\n> I found several solutions on how to convert to polygons a set of isolated\n> closed lines. But with my file, these methods can produce nothing more than\n> a set of \"polygons\" with only one line each. The only way I can imagine is\n> to convert these lines into a raster and then polygonize it, but this method\n> probably would lack accuracy.\n> If anyone knows how to deal with such tasks, please help me. Thank you in\n> advance!\n> ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?\n> ? ? ??\n> Best regards,\n> Anton A. Morkovin\n> ?\n> Zoological Museum of M.V. Lomonosov Moscow State University\n> Russia, 125009 Moscow, Bolshaya Nikitskaya Str. 2.\n>  *  Personal page:?http://istina.msu.ru/profile/Anton_Morkovin/\n>  *  Bibliography of scientific works?on birds of Russia\n>  *  The Birdwatchers union \"Birds of Moscow and the Moscow\n>     region\"?||?Facebook?||?VK?||?Twitter\n> ?\n> ?\n> \n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "Please use plain text only, and provide a small reproducible example, \npossibly demonstrating in code and data what you claim about \"finding \nsolutions\". I assume that you have already tried rgeos::gP",
+      "thread_id": "thread-a17d08365547",
+      "thread_depth": 1,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-839f91faa3aa",
+      "message_id": "<CAASFQpQo+wiwvYmF6hJv3-mEit7fLNdwN5JD7VGuNjNkK-xrtg@mail.gmail.com>",
+      "from_name": "chris english",
+      "from_email_hash": "be708bd65c67bf9dc569aaca2fc47c514fda1d8378ae8bda3840b371a5ad8aac",
+      "date": "2018-07-30T10:40:53-04:00",
+      "subject": "[R-sig-Geo] Transform hexagonal to raster - a wife's question",
+      "subject_clean": "Transform hexagonal to raster - a wife's question",
+      "in_reply_to": "<751A41D4-5621-4E60-A242-5F210F700BFC@bigelow.org>",
+      "references": [
+        "<CAASFQpSJWC5Xw63Tc9D1H+-chLtCoiujMt=KgPsGp0B=59ojwA@mail.gmail.com>",
+        "<751A41D4-5621-4E60-A242-5F210F700BFC@bigelow.org>"
+      ],
+      "body_plain": "Thank you Ben!, I'll actually send her directly\nto Sarah, http://www.sarahgoslee.com/ .\nDr. Massa, meet Dr. Goslee, Professor of indeterminate studies & weaver,\nand writer,\nDr. Goslee, meet Dr. Massa, cognitive neuro research scientist, felter and\nloom beader.\nThanks again,\nChris\n\nOn Mon, Jul 30, 2018 at 9:12 AM, Ben Tupper <btupper at bigelow.org> wrote:\n\n> If I were in your shoes I would be doing a hop-skip to ring Sarah Goslee's\n> doorbell.  She's our resident ecology-spatial-textiles guru...\n>\n> http://www.stringpage.com/\n>\n>\n>\n>\n>\n>\n>\n> On Jul 29, 2018, at 12:26 AM, chris english <englishchristophera at gmail.com>\n> wrote:\n>\n> My wife showed me a beading pattern that she was working on that looks to\n> my eye like a hexagonal grid, its called a peyote stitch, and she needs to\n> transform it to a loom stitch, essentially a raster. In the beading world\n> they suggest combining two rows into one. If asked, what have you tried, I\n> would say I tried to duck, but... In practical application, the two rows\n> equals one doesn't appear to preserve the desired pattern when beading the\n> loom, probably something like netting out the half-steps when you're going\n> from two rows to one = n+1 or n +2 for bead count on the combined row.\n> 40x40 hex grid, OK, I'll get out my graph paper. Summer.\n>\n> Thank you for your forbearance, and any very general thoughts appreciated,\n> ie transforms sans datums & etc.\n>\n> Chris\n>\n> [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> Ben Tupper\n> Bigelow Laboratory for Ocean Sciences\n> 60 Bigelow Drive\n> <https://maps.google.com/?q=60+Bigelow+Drive&entry=gmail&source=g>, P.O.\n> Box 380\n> East Boothbay, Maine 04544\n> http://www.bigelow.org\n>\n> Ecological Forecasting: https://eco.bigelow.org/\n>\n>\n>\n>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you Ben!, I'll actually send her directly\nto Sarah, http://www.sarahgoslee.com/ .\nDr. Massa, meet Dr. Goslee, Professor of indeterminate studies & weaver,\nand writer,\nDr. Goslee, meet Dr. Massa,",
+      "thread_id": "thread-58d048df1d45",
+      "thread_depth": 2,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-47a5eea1f384",
+      "message_id": "<CAM_vjumKg6E=T3tW+-V7xH+R1h-jqrej2cU+NZBc=+mzq+q+1Q@mail.gmail.com>",
+      "from_name": "Sarah Goslee",
+      "from_email_hash": "ee299eceed817d42b6b4fee16897ec7ff7afd9d6f576ac1fadef606b92dd0187",
+      "date": "2018-07-30T12:53:07-04:00",
+      "subject": "[R-sig-Geo] Transform hexagonal to raster - a wife's question",
+      "subject_clean": "Transform hexagonal to raster - a wife's question",
+      "in_reply_to": "<CAASFQpQo+wiwvYmF6hJv3-mEit7fLNdwN5JD7VGuNjNkK-xrtg@mail.gmail.com>",
+      "references": [
+        "<CAASFQpSJWC5Xw63Tc9D1H+-chLtCoiujMt=KgPsGp0B=59ojwA@mail.gmail.com>",
+        "<751A41D4-5621-4E60-A242-5F210F700BFC@bigelow.org>",
+        "<CAASFQpQo+wiwvYmF6hJv3-mEit7fLNdwN5JD7VGuNjNkK-xrtg@mail.gmail.com>"
+      ],
+      "body_plain": "Hi!\n\nI nearly didn't open this email thread: glad I did!\n\nI have some odd R tools for weaving, but nothing for beading.\n\nI suspect this is the best way to do it, although the actual result\nwould depend on the particular pattern.\n\nhttp://www.bellaonline.com/articles/art61406.asp\n\nWhether it's worth writing R code to perform this task depends a lot\non how many patterns need to be converted.\n\nA more R-geo approach might be to import the original pattern from an\nimage file, turn it into spatial polygons, then rasterize it,\ncompletely ignoring the hexagonal nature of the original. With some\nplaying with the raster grid size, you could probably get a decent\napproximation.\n\nSarah\n\n\nOn Mon, Jul 30, 2018 at 10:40 AM, chris english\n<englishchristophera at gmail.com> wrote:\n> Thank you Ben!, I'll actually send her directly\n> to Sarah, http://www.sarahgoslee.com/ .\n> Dr. Massa, meet Dr. Goslee, Professor of indeterminate studies & weaver,\n> and writer,\n> Dr. Goslee, meet Dr. Massa, cognitive neuro research scientist, felter and\n> loom beader.\n> Thanks again,\n> Chris\n>\n> On Mon, Jul 30, 2018 at 9:12 AM, Ben Tupper <btupper at bigelow.org> wrote:\n>\n>> If I were in your shoes I would be doing a hop-skip to ring Sarah Goslee's\n>> doorbell.  She's our resident ecology-spatial-textiles guru...\n>>\n>> http://www.stringpage.com/\n>>\n>>\n>>\n>>\n>>\n>>\n>>\n>> On Jul 29, 2018, at 12:26 AM, chris english <englishchristophera at gmail.com>\n>> wrote:\n>>\n>> My wife showed me a beading pattern that she was working on that looks to\n>> my eye like a hexagonal grid, its called a peyote stitch, and she needs to\n>> transform it to a loom stitch, essentially a raster. In the beading world\n>> they suggest combining two rows into one. If asked, what have you tried, I\n>> would say I tried to duck, but... In practical application, the two rows\n>> equals one doesn't appear to preserve the desired pattern when beading the\n>> loom, probably something like netting out the half-steps when you're going\n>> from two rows to one = n+1 or n +2 for bead count on the combined row.\n>> 40x40 hex grid, OK, I'll get out my graph paper. Summer.\n>>\n>> Thank you for your forbearance, and any very general thoughts appreciated,\n>> ie transforms sans datums & etc.\n>>\n>> Chris\n>>",
+      "body_snippet": "Hi!\n\nI nearly didn't open this email thread: glad I did!\n\nI have some odd R tools for weaving, but nothing for beading.\n\nI suspect this is the best way to do it, although the actual result\nwould depen",
+      "thread_id": "thread-58d048df1d45",
+      "thread_depth": 3,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-0edb88ef96a8",
+      "message_id": "<CAASFQpQv3=TerteqHMZcgN12VHG0cHJ+xLY-zXzcF8hz3LrsBA@mail.gmail.com>",
+      "from_name": "chris english",
+      "from_email_hash": "be708bd65c67bf9dc569aaca2fc47c514fda1d8378ae8bda3840b371a5ad8aac",
+      "date": "2018-07-30T13:25:30-04:00",
+      "subject": "[R-sig-Geo] Transform hexagonal to raster - a wife's question",
+      "subject_clean": "Transform hexagonal to raster - a wife's question",
+      "in_reply_to": "<CAM_vjumKg6E=T3tW+-V7xH+R1h-jqrej2cU+NZBc=+mzq+q+1Q@mail.gmail.com>",
+      "references": [
+        "<CAASFQpSJWC5Xw63Tc9D1H+-chLtCoiujMt=KgPsGp0B=59ojwA@mail.gmail.com>",
+        "<751A41D4-5621-4E60-A242-5F210F700BFC@bigelow.org>",
+        "<CAASFQpQo+wiwvYmF6hJv3-mEit7fLNdwN5JD7VGuNjNkK-xrtg@mail.gmail.com>",
+        "<CAM_vjumKg6E=T3tW+-V7xH+R1h-jqrej2cU+NZBc=+mzq+q+1Q@mail.gmail.com>"
+      ],
+      "body_plain": "Sarah,\n\nI'll try the R-geo approach suggested for a small, sought after kokopeli,\nand duck an integrated raster colorizer (five years to proto-type given my\nskills.) I've forwarded all this to Dr Massa. I would say though that things\n'loom' tend to work both for fabric and bead. Glad you checked the thread.\n\nHappy summer,\nChris\n\nOn Mon, Jul 30, 2018 at 12:53 PM, Sarah Goslee <sarah.goslee at gmail.com>\nwrote:\n\n> Hi!\n>\n> I nearly didn't open this email thread: glad I did!\n>\n> I have some odd R tools for weaving, but nothing for beading.\n>\n> I suspect this is the best way to do it, although the actual result\n> would depend on the particular pattern.\n>\n> http://www.bellaonline.com/articles/art61406.asp\n>\n> Whether it's worth writing R code to perform this task depends a lot\n> on how many patterns need to be converted.\n>\n> A more R-geo approach might be to import the original pattern from an\n> image file, turn it into spatial polygons, then rasterize it,\n> completely ignoring the hexagonal nature of the original. With some\n> playing with the raster grid size, you could probably get a decent\n> approximation.\n>\n> Sarah\n>\n>\n> On Mon, Jul 30, 2018 at 10:40 AM, chris english\n> <englishchristophera at gmail.com> wrote:\n> > Thank you Ben!, I'll actually send her directly\n> > to Sarah, http://www.sarahgoslee.com/ .\n> > Dr. Massa, meet Dr. Goslee, Professor of indeterminate studies & weaver,\n> > and writer,\n> > Dr. Goslee, meet Dr. Massa, cognitive neuro research scientist, felter\n> and\n> > loom beader.\n> > Thanks again,\n> > Chris\n> >\n> > On Mon, Jul 30, 2018 at 9:12 AM, Ben Tupper <btupper at bigelow.org> wrote:\n> >\n> >> If I were in your shoes I would be doing a hop-skip to ring Sarah\n> Goslee's\n> >> doorbell.  She's our resident ecology-spatial-textiles guru...\n> >>\n> >> http://www.stringpage.com/\n> >>\n> >>\n> >>\n> >>\n> >>\n> >>\n> >>\n> >> On Jul 29, 2018, at 12:26 AM, chris english <\n> englishchristophera at gmail.com>\n> >> wrote:\n> >>\n> >> My wife showed me a beading pattern that she was working on that looks\n> to\n> >> my eye like a hexagonal grid, its called a peyote stitch, and she needs\n> to\n> >> transform it to a loom stitch, essentially a raster. In the beading\n> world\n> >> they suggest combining two rows into one. If asked, what have you\n> tried, I\n> >> would say I tried to duck, but... In practical application, the two rows\n> >> equals one doesn't appear to preserve the desired pattern when beading\n> the\n> >> loom, probably something like netting out the half-steps when you're\n> going\n> >> from two rows to one = n+1 or n +2 for bead count on the combined row.\n> >> 40x40 hex grid, OK, I'll get out my graph paper. Summer.\n> >>\n> >> Thank you for your forbearance, and any very general thoughts\n> appreciated,\n> >> ie transforms sans datums & etc.\n> >>\n> >> Chris\n> >>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Sarah,\n\nI'll try the R-geo approach suggested for a small, sought after kokopeli,\nand duck an integrated raster colorizer (five years to proto-type given my\nskills.) I've forwarded all this to Dr Mass",
+      "thread_id": "thread-58d048df1d45",
+      "thread_depth": 4,
+      "month": "2018-07"
+    },
+    {
+      "id": "msg-d2af751d2f5d",
+      "message_id": "<CAFnjcD27m32+CZNKbi98xWD7-J7nXrUBbd+fKkCgQCcHyWsPSg@mail.gmail.com>",
+      "from_name": "Bruno Sesti",
+      "from_email_hash": "c8bacd13d5549498e63961bfe1a3ed5bb175ae4b78473a02370e70700152ce24",
+      "date": "2018-07-31T11:02:28+02:00",
+      "subject": "[R-sig-Geo] Spatio temporal data modeling and variography - function (gstat) variogramST",
+      "subject_clean": "Spatio temporal data modeling and variography - function (gstat) variogramST",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi, I am working with spatio temporal data using spatio temporal kriging.\nI saw that the function variogramST also considers days (and months, and\nyears) to determine temporal lags for the creation of spatio temporal\nvariogram. I would like to ask if someone could tell me if this is correct\nand, if yes, if it would be possible to let the funcrion variogramST\n(gstat) to consider only hours, minutes and seconds of the times associated\nto each data for the definition of temporal lags.\n\nKind regards.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi, I am working with spatio temporal data using spatio temporal kriging.\nI saw that the function variogramST also considers days (and months, and\nyears) to determine temporal lags for the creation of",
+      "thread_id": "thread-d2af751d2f5d",
+      "thread_depth": 0,
+      "month": "2018-07"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-3680b39ba752",
+      "subject": "Spatiotemporal analysis r command",
+      "message_count": 2,
+      "participants": [
+        "Mauricio Zambrano Bigiarini",
+        "Yalemzewod Gelaw"
+      ],
+      "started": "2018-07-01T20:05:11+10:00",
+      "last_reply": "2018-07-02T12:25:55-04:00",
+      "root_message_id": "msg-3680b39ba752"
+    },
+    {
+      "id": "thread-add552361964",
+      "subject": "intersections to individual polygons",
+      "message_count": 3,
+      "participants": [
+        "Adrian Baddeley",
+        "Agustin Lobo",
+        "Rolf Turner"
+      ],
+      "started": "2018-07-02T12:35:59+01:00",
+      "last_reply": "2018-07-03T03:44:13+00:00",
+      "root_message_id": "msg-add552361964"
+    },
+    {
+      "id": "thread-aabd3c1efd77",
+      "subject": "How to use gstat 'variogram' function for nonlinear formulae?",
+      "message_count": 2,
+      "participants": [
+        "Edzer Pebesma",
+        "Joelle k. Akram"
+      ],
+      "started": "2018-07-04T16:14:31+00:00",
+      "last_reply": "2018-07-04T18:28:21+02:00",
+      "root_message_id": "msg-aabd3c1efd77"
+    },
+    {
+      "id": "thread-777f67a6e228",
+      "subject": "Kriging and Spatio temporal kriging on air quality data",
+      "message_count": 1,
+      "participants": [
+        "Bruno Sesti"
+      ],
+      "started": "2018-07-05T08:34:00+02:00",
+      "last_reply": "2018-07-05T08:34:00+02:00",
+      "root_message_id": "msg-777f67a6e228"
+    },
+    {
+      "id": "thread-3e962243f7c2",
+      "subject": "Distance from not NA cells in a raster",
+      "message_count": 2,
+      "participants": [
+        "Ben Tupper",
+        "Gregovich, Dave P (DFG)"
+      ],
+      "started": "2018-07-06T16:22:48+00:00",
+      "last_reply": "2018-07-12T08:12:28-04:00",
+      "root_message_id": "msg-3e962243f7c2"
+    },
+    {
+      "id": "thread-a3c0985946da",
+      "subject": "geom_contour",
+      "message_count": 1,
+      "participants": [
+        "Krushil Naik"
+      ],
+      "started": "2018-07-06T17:30:43-04:00",
+      "last_reply": "2018-07-06T17:30:43-04:00",
+      "root_message_id": "msg-a3c0985946da"
+    },
+    {
+      "id": "thread-c8283313db1d",
+      "subject": "Distance from not NA cells in a raster",
+      "message_count": 1,
+      "participants": [
+        "Gregovich, Dave P (DFG)"
+      ],
+      "started": "2018-07-06T17:47:48+00:00",
+      "last_reply": "2018-07-06T17:47:48+00:00",
+      "root_message_id": "msg-c8283313db1d"
+    },
+    {
+      "id": "thread-b3fd40bbf4b0",
+      "subject": "Spatial clustering with spdep::skater",
+      "message_count": 2,
+      "participants": [
+        "Axel Urbiz",
+        "Elias T Krainski"
+      ],
+      "started": "2018-07-08T07:52:27-04:00",
+      "last_reply": "2018-07-09T09:22:32-03:00",
+      "root_message_id": "msg-b3fd40bbf4b0"
+    },
+    {
+      "id": "thread-b12b39f48de5",
+      "subject": "Memory issues using raster::subs",
+      "message_count": 1,
+      "participants": [
+        "Wall, Wade A ERDC-RDE-CERL-IL CIV"
+      ],
+      "started": "2018-07-09T13:44:41+00:00",
+      "last_reply": "2018-07-09T13:44:41+00:00",
+      "root_message_id": "msg-b12b39f48de5"
+    },
+    {
+      "id": "thread-7b28d9302500",
+      "subject": "converting from MSL EGM2008 to RH2000",
+      "message_count": 3,
+      "participants": [
+        "Francis Freire",
+        "Harp, Nathen (DOT)",
+        "Roger Bivand"
+      ],
+      "started": "2018-07-10T11:20:59+00:00",
+      "last_reply": "2018-07-10T15:14:09+02:00",
+      "root_message_id": "msg-7b28d9302500"
+    },
+    {
+      "id": "thread-cbc11580e996",
+      "subject": "Spatial autocorrelation help",
+      "message_count": 5,
+      "participants": [
+        "Dechen Lham",
+        "Orcun Morali",
+        "Patrick Schratz"
+      ],
+      "started": "2018-07-10T19:46:21+02:00",
+      "last_reply": "2018-07-12T13:44:02+02:00",
+      "root_message_id": "msg-cbc11580e996"
+    },
+    {
+      "id": "thread-19cfa2bf861d",
+      "subject": "How to find all first order neighbors of a collection of points",
+      "message_count": 9,
+      "participants": [
+        "Benjamin Lieberman",
+        "Facundo Muñoz",
+        "Roger Bivand"
+      ],
+      "started": "2018-07-12T15:00:13-04:00",
+      "last_reply": "2018-07-13T13:56:39+02:00",
+      "root_message_id": "msg-19cfa2bf861d"
+    },
+    {
+      "id": "thread-a68c80de3b04",
+      "subject": "How to use covariate files for regression kriging",
+      "message_count": 1,
+      "participants": [
+        "Shabir A.Bangroo"
+      ],
+      "started": "2018-07-13T22:23:06+02:00",
+      "last_reply": "2018-07-13T22:23:06+02:00",
+      "root_message_id": "msg-a68c80de3b04"
+    },
+    {
+      "id": "thread-c3356073983f",
+      "subject": "colors in AQP plot SoilProfileCollection",
+      "message_count": 1,
+      "participants": [
+        "Waldir de Carvalho Junior"
+      ],
+      "started": "2018-07-17T11:21:18-03:00",
+      "last_reply": "2018-07-17T11:21:18-03:00",
+      "root_message_id": "msg-c3356073983f"
+    },
+    {
+      "id": "thread-501945872250",
+      "subject": "Strange behavior when using writeRaster?",
+      "message_count": 1,
+      "participants": [
+        "Vijay Lulla"
+      ],
+      "started": "2018-07-25T17:37:38-04:00",
+      "last_reply": "2018-07-25T17:37:38-04:00",
+      "root_message_id": "msg-501945872250"
+    },
+    {
+      "id": "thread-58d048df1d45",
+      "subject": "Transform hexagonal to raster - a wife's question",
+      "message_count": 5,
+      "participants": [
+        "Ben Tupper",
+        "Sarah Goslee",
+        "chris english"
+      ],
+      "started": "2018-07-29T00:26:37-04:00",
+      "last_reply": "2018-07-30T13:25:30-04:00",
+      "root_message_id": "msg-58d048df1d45"
+    },
+    {
+      "id": "thread-a17d08365547",
+      "subject": "Combining SpatialLines into SpatialPolygons",
+      "message_count": 2,
+      "participants": [
+        "Roger Bivand",
+        "Антон Морковин"
+      ],
+      "started": "2018-07-30T15:11:24+03:00",
+      "last_reply": "2018-07-30T15:37:33+02:00",
+      "root_message_id": "msg-a17d08365547"
+    },
+    {
+      "id": "thread-d2af751d2f5d",
+      "subject": "Spatio temporal data modeling and variography - function (gstat) variogramST",
+      "message_count": 1,
+      "participants": [
+        "Bruno Sesti"
+      ],
+      "started": "2018-07-31T11:02:28+02:00",
+      "last_reply": "2018-07-31T11:02:28+02:00",
+      "root_message_id": "msg-d2af751d2f5d"
+    }
+  ]
+}

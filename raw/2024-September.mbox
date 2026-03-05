@@ -1,0 +1,2059 @@
+From m@p|no|@10 @end|ng |rom gm@||@com  Mon Sep 23 23:44:41 2024
+From: m@p|no|@10 @end|ng |rom gm@||@com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Mon, 23 Sep 2024 15:44:41 -0600
+Subject: [R-sig-Geo] How to randomly select polygons
+Message-ID: <CABkCotQ6ZahFnonKgP9ieRMCQxE1fzHLYPa+3n2M7=RaY979Sw@mail.gmail.com>
+
+Dear list members,
+
+How can I select polygons at random from an sf or terra vector (polygon or
+multipolygon geometry).
+
+For example for the nc file:
+
+nc = st_read(system.file("shape/nc.shp", package="sf"))
+
+Manuel
+
+
+-- 
+*Manuel Sp?nola, Ph.D.*
+Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola at una.cr <mspinola at una.ac.cr>
+mspinola10 at gmail.com
+Tel?fono: (506) 8706 - 4662
+Sitio web institucional: ICOMVIS
+<http://www.icomvis.una.ac.cr/index.php/manuel>
+Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>
+Blog sobre Ciencia de Datos: Blog de Ciencia de Datos
+<https://mspinola-ciencia-de-datos.netlify.app>
+
+	[[alternative HTML version deleted]]
+
+
+From jo@|@h@p@rry @end|ng |rom gm@||@com  Mon Sep 23 23:53:50 2024
+From: jo@|@h@p@rry @end|ng |rom gm@||@com (Josiah Parry)
+Date: Mon, 23 Sep 2024 14:53:50 -0700
+Subject: [R-sig-Geo] How to randomly select polygons
+In-Reply-To: <CABkCotQ6ZahFnonKgP9ieRMCQxE1fzHLYPa+3n2M7=RaY979Sw@mail.gmail.com>
+References: <CABkCotQ6ZahFnonKgP9ieRMCQxE1fzHLYPa+3n2M7=RaY979Sw@mail.gmail.com>
+Message-ID: <CAL3ufUJwdx_kgEe8P1jMHmpagWt-KN=7t194APE5w3z7Y4kMJQ@mail.gmail.com>
+
+I would take the same approach I would for most other things.
+
+1. Count the number of observations
+2. Define your sample size
+3. Sample `n` from 1:N
+4. Use those as an index to subset from
+
+nc  <- sf::st_read(system.file("shape/nc.shp", package = "sf"))
+
+n <- 10
+idx <- sample(1:nrow(nc), n)
+nc[idx, ]
+
+On Mon, Sep 23, 2024 at 2:45?PM Manuel Sp?nola <mspinola10 at gmail.com> wrote:
+
+> Dear list members,
+>
+> How can I select polygons at random from an sf or terra vector (polygon or
+> multipolygon geometry).
+>
+> For example for the nc file:
+>
+> nc = st_read(system.file("shape/nc.shp", package="sf"))
+>
+> Manuel
+>
+>
+> --
+> *Manuel Sp?nola, Ph.D.*
+> Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre
+> Universidad Nacional
+> Apartado 1350-3000
+> Heredia
+> COSTA RICA
+> mspinola at una.cr <mspinola at una.ac.cr>
+> mspinola10 at gmail.com
+> Tel?fono: (506) 8706 - 4662
+> Sitio web institucional: ICOMVIS
+> <http://www.icomvis.una.ac.cr/index.php/manuel>
+> Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>
+> Blog sobre Ciencia de Datos: Blog de Ciencia de Datos
+> <https://mspinola-ciencia-de-datos.netlify.app>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-sig-Geo mailing list
+> R-sig-Geo at r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+>
+
+	[[alternative HTML version deleted]]
+
+
+From m@p|no|@10 @end|ng |rom gm@||@com  Tue Sep 24 00:07:57 2024
+From: m@p|no|@10 @end|ng |rom gm@||@com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Mon, 23 Sep 2024 16:07:57 -0600
+Subject: [R-sig-Geo] How to randomly select polygons
+In-Reply-To: <CAL3ufUJwdx_kgEe8P1jMHmpagWt-KN=7t194APE5w3z7Y4kMJQ@mail.gmail.com>
+References: <CABkCotQ6ZahFnonKgP9ieRMCQxE1fzHLYPa+3n2M7=RaY979Sw@mail.gmail.com>
+ <CAL3ufUJwdx_kgEe8P1jMHmpagWt-KN=7t194APE5w3z7Y4kMJQ@mail.gmail.com>
+Message-ID: <CABkCotQnGL4jw6O87QaqyyW6OLoPXMFLWSUWmSxE3UqH+2XVtA@mail.gmail.com>
+
+Thank you very much Josiah,
+
+That works for me.
+
+Manuel
+
+El lun, 23 sept 2024 a las 15:54, Josiah Parry (<josiah.parry at gmail.com>)
+escribi?:
+
+> I would take the same approach I would for most other things.
+>
+> 1. Count the number of observations
+> 2. Define your sample size
+> 3. Sample `n` from 1:N
+> 4. Use those as an index to subset from
+>
+> nc  <- sf::st_read(system.file("shape/nc.shp", package = "sf"))
+>
+> n <- 10
+> idx <- sample(1:nrow(nc), n)
+> nc[idx, ]
+>
+> On Mon, Sep 23, 2024 at 2:45?PM Manuel Sp?nola <mspinola10 at gmail.com>
+> wrote:
+>
+>> Dear list members,
+>>
+>> How can I select polygons at random from an sf or terra vector (polygon or
+>> multipolygon geometry).
+>>
+>> For example for the nc file:
+>>
+>> nc = st_read(system.file("shape/nc.shp", package="sf"))
+>>
+>> Manuel
+>>
+>>
+>> --
+>> *Manuel Sp?nola, Ph.D.*
+>> Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre
+>> Universidad Nacional
+>> Apartado 1350-3000
+>> Heredia
+>> COSTA RICA
+>> mspinola at una.cr <mspinola at una.ac.cr>
+>> mspinola10 at gmail.com
+>> Tel?fono: (506) 8706 - 4662
+>> Sitio web institucional: ICOMVIS
+>> <http://www.icomvis.una.ac.cr/index.php/manuel>
+>> Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app
+>> >
+>> Blog sobre Ciencia de Datos: Blog de Ciencia de Datos
+>> <https://mspinola-ciencia-de-datos.netlify.app>
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-sig-Geo mailing list
+>> R-sig-Geo at r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+>>
+>
+
+-- 
+*Manuel Sp?nola, Ph.D.*
+Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola at una.cr <mspinola at una.ac.cr>
+mspinola10 at gmail.com
+Tel?fono: (506) 8706 - 4662
+Sitio web institucional: ICOMVIS
+<http://www.icomvis.una.ac.cr/index.php/manuel>
+Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>
+Blog sobre Ciencia de Datos: Blog de Ciencia de Datos
+<https://mspinola-ciencia-de-datos.netlify.app>
+
+	[[alternative HTML version deleted]]
+
+
+From dexter@|ocke @end|ng |rom gm@||@com  Tue Sep 24 00:28:59 2024
+From: dexter@|ocke @end|ng |rom gm@||@com (Dexter Locke)
+Date: Mon, 23 Sep 2024 18:28:59 -0400
+Subject: [R-sig-Geo] How to randomly select polygons
+In-Reply-To: <CAL3ufUJwdx_kgEe8P1jMHmpagWt-KN=7t194APE5w3z7Y4kMJQ@mail.gmail.com>
+References: <CAL3ufUJwdx_kgEe8P1jMHmpagWt-KN=7t194APE5w3z7Y4kMJQ@mail.gmail.com>
+Message-ID: <DD2380CA-A49C-4F95-8EBF-5076ABA62033@gmail.com>
+
+or in a tidy way
+
+nc  <- sf::st_read(system.file("shape/nc.shp", package = "sf"))
+
+nc_10 <- nc |> dplyr::sample_n(10)
+
+-Dexter
+
+> On Sep 23, 2024, at 5:55?PM, Josiah Parry <josiah.parry at gmail.com> wrote:
+> 
+> nc  <- sf::st_read(system.file("shape/nc.shp", package = "sf"))
+
+	[[alternative HTML version deleted]]
+
+
+From m@p|no|@10 @end|ng |rom gm@||@com  Tue Sep 24 00:41:07 2024
+From: m@p|no|@10 @end|ng |rom gm@||@com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Mon, 23 Sep 2024 16:41:07 -0600
+Subject: [R-sig-Geo] How to randomly select polygons
+In-Reply-To: <DD2380CA-A49C-4F95-8EBF-5076ABA62033@gmail.com>
+References: <CAL3ufUJwdx_kgEe8P1jMHmpagWt-KN=7t194APE5w3z7Y4kMJQ@mail.gmail.com>
+ <DD2380CA-A49C-4F95-8EBF-5076ABA62033@gmail.com>
+Message-ID: <CABkCotSGvGQ7S-y9k9vFwhbz6nvba0kRNsG8qEeaWKtkQ13L+Q@mail.gmail.com>
+
+Thank you very much Dexter.
+
+Manuel
+
+El lun, 23 sept 2024 a las 16:29, Dexter Locke (<dexter.locke at gmail.com>)
+escribi?:
+
+> or in a tidy way
+>
+> nc  <- sf::st_read(system.file("shape/nc.shp", package = "sf"))
+>
+> nc_10 <- nc |> dplyr::sample_n(10)
+>
+> -Dexter
+>
+> On Sep 23, 2024, at 5:55?PM, Josiah Parry <josiah.parry at gmail.com> wrote:
+>
+> nc  <- sf::st_read(system.file("shape/nc.shp", package = "sf"))
+>
+>
+
+-- 
+*Manuel Sp?nola, Ph.D.*
+Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola at una.cr <mspinola at una.ac.cr>
+mspinola10 at gmail.com
+Tel?fono: (506) 8706 - 4662
+Sitio web institucional: ICOMVIS
+<http://www.icomvis.una.ac.cr/index.php/manuel>
+Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>
+Blog sobre Ciencia de Datos: Blog de Ciencia de Datos
+<https://mspinola-ciencia-de-datos.netlify.app>
+
+	[[alternative HTML version deleted]]
+
+
+From mgm917391 @end|ng |rom gm@||@com  Wed Sep 25 03:21:25 2024
+From: mgm917391 @end|ng |rom gm@||@com (mgm mgm)
+Date: Tue, 24 Sep 2024 20:21:25 -0500
+Subject: [R-sig-Geo] How to randomly select polygons
+In-Reply-To: <CABkCotSGvGQ7S-y9k9vFwhbz6nvba0kRNsG8qEeaWKtkQ13L+Q@mail.gmail.com>
+References: <CAL3ufUJwdx_kgEe8P1jMHmpagWt-KN=7t194APE5w3z7Y4kMJQ@mail.gmail.com>
+ <DD2380CA-A49C-4F95-8EBF-5076ABA62033@gmail.com>
+ <CABkCotSGvGQ7S-y9k9vFwhbz6nvba0kRNsG8qEeaWKtkQ13L+Q@mail.gmail.com>
+Message-ID: <CAJWFm93Hwg=Five6VMVzSGzM62a2UvK9ckKbAbrs__GV2dMMbA@mail.gmail.com>
+
+You could also draw a random spatially balanced sample of polygons using
+the the R spsurvey package.
+https://cran.r-project.org/web/packages/spsurvey/index.html
+
+Mike
+
+On Monday, September 23, 2024, Manuel Sp?nola <mspinola10 at gmail.com> wrote:
+> Thank you very much Dexter.
+>
+> Manuel
+>
+> El lun, 23 sept 2024 a las 16:29, Dexter Locke (<dexter.locke at gmail.com>)
+> escribi?:
+>
+>> or in a tidy way
+>>
+>> nc  <- sf::st_read(system.file("shape/nc.shp", package = "sf"))
+>>
+>> nc_10 <- nc |> dplyr::sample_n(10)
+>>
+>> -Dexter
+>>
+>> On Sep 23, 2024, at 5:55?PM, Josiah Parry <josiah.parry at gmail.com> wrote:
+>>
+>> nc  <- sf::st_read(system.file("shape/nc.shp", package = "sf"))
+>>
+>>
+>
+> --
+> *Manuel Sp?nola, Ph.D.*
+> Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre
+> Universidad Nacional
+> Apartado 1350-3000
+> Heredia
+> COSTA RICA
+> mspinola at una.cr <mspinola at una.ac.cr>
+> mspinola10 at gmail.com
+> Tel?fono: (506) 8706 - 4662
+> Sitio web institucional: ICOMVIS
+> <http://www.icomvis.una.ac.cr/index.php/manuel>
+> Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>
+> Blog sobre Ciencia de Datos: Blog de Ciencia de Datos
+> <https://mspinola-ciencia-de-datos.netlify.app>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-sig-Geo mailing list
+> R-sig-Geo at r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+>
+
+	[[alternative HTML version deleted]]
+
+
+From m@p|no|@10 @end|ng |rom gm@||@com  Wed Sep 25 15:43:26 2024
+From: m@p|no|@10 @end|ng |rom gm@||@com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Wed, 25 Sep 2024 07:43:26 -0600
+Subject: [R-sig-Geo] How to randomly select polygons
+In-Reply-To: <CAJWFm93Hwg=Five6VMVzSGzM62a2UvK9ckKbAbrs__GV2dMMbA@mail.gmail.com>
+References: <CAL3ufUJwdx_kgEe8P1jMHmpagWt-KN=7t194APE5w3z7Y4kMJQ@mail.gmail.com>
+ <DD2380CA-A49C-4F95-8EBF-5076ABA62033@gmail.com>
+ <CABkCotSGvGQ7S-y9k9vFwhbz6nvba0kRNsG8qEeaWKtkQ13L+Q@mail.gmail.com>
+ <CAJWFm93Hwg=Five6VMVzSGzM62a2UvK9ckKbAbrs__GV2dMMbA@mail.gmail.com>
+Message-ID: <CABkCotRMwEm0yC42CMpwe-_g2KgGR5nKF11eSA5TJVama2sSrA@mail.gmail.com>
+
+Thank you Mike.  That will be very useful.
+
+Manuel
+
+El mar, 24 sept 2024 a las 19:21, mgm mgm (<mgm917391 at gmail.com>) escribi?:
+
+> You could also draw a random spatially balanced sample of polygons using
+> the the R spsurvey package.
+> https://cran.r-project.org/web/packages/spsurvey/index.html
+>
+> Mike
+>
+> On Monday, September 23, 2024, Manuel Sp?nola <mspinola10 at gmail.com>
+> wrote:
+> > Thank you very much Dexter.
+> >
+> > Manuel
+> >
+> > El lun, 23 sept 2024 a las 16:29, Dexter Locke (<dexter.locke at gmail.com
+> >)
+> > escribi?:
+> >
+> >> or in a tidy way
+> >>
+> >> nc  <- sf::st_read(system.file("shape/nc.shp", package = "sf"))
+> >>
+> >> nc_10 <- nc |> dplyr::sample_n(10)
+> >>
+> >> -Dexter
+> >>
+> >> On Sep 23, 2024, at 5:55?PM, Josiah Parry <josiah.parry at gmail.com>
+> wrote:
+> >>
+> >> nc  <- sf::st_read(system.file("shape/nc.shp", package = "sf"))
+> >>
+> >>
+> >
+> > --
+> > *Manuel Sp?nola, Ph.D.*
+> > Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre
+> > Universidad Nacional
+> > Apartado 1350-3000
+> > Heredia
+> > COSTA RICA
+> > mspinola at una.cr <mspinola at una.ac.cr>
+> > mspinola10 at gmail.com
+> > Tel?fono: (506) 8706 - 4662
+> > Sitio web institucional: ICOMVIS
+> > <http://www.icomvis.una.ac.cr/index.php/manuel>
+> > Sitio web personal: Sitio personal <
+> https://mspinola-sitioweb.netlify.app>
+> > Blog sobre Ciencia de Datos: Blog de Ciencia de Datos
+> > <https://mspinola-ciencia-de-datos.netlify.app>
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-sig-Geo mailing list
+> > R-sig-Geo at r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+> >
+
+
+
+-- 
+*Manuel Sp?nola, Ph.D.*
+Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola at una.cr <mspinola at una.ac.cr>
+mspinola10 at gmail.com
+Tel?fono: (506) 8706 - 4662
+Sitio web institucional: ICOMVIS
+<http://www.icomvis.una.ac.cr/index.php/manuel>
+Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>
+Blog sobre Ciencia de Datos: Blog de Ciencia de Datos
+<https://mspinola-ciencia-de-datos.netlify.app>
+
+	[[alternative HTML version deleted]]
+
+
+From m@p|no|@10 @end|ng |rom gm@||@com  Thu Sep 26 21:42:14 2024
+From: m@p|no|@10 @end|ng |rom gm@||@com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Thu, 26 Sep 2024 13:42:14 -0600
+Subject: [R-sig-Geo] Species distribution models based on areal data instead
+ of point pattern
+Message-ID: <CABkCotRXcNTFT9enJY2UrQTwDvQzwUepp35fD5Hdi+yAV2RX5Q@mail.gmail.com>
+
+Dear list members,
+
+Are there any R packages focused on species distribution models based on
+areal data (specifically grids) instead of point pattern?
+
+
+Manuel
+
+-- 
+*Manuel Sp?nola, Ph.D.*
+Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola at una.cr <mspinola at una.ac.cr>
+mspinola10 at gmail.com
+Tel?fono: (506) 8706 - 4662
+Sitio web institucional: ICOMVIS
+<http://www.icomvis.una.ac.cr/index.php/manuel>
+Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>
+Blog sobre Ciencia de Datos: Blog de Ciencia de Datos
+<https://mspinola-ciencia-de-datos.netlify.app>
+
+	[[alternative HTML version deleted]]
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Thu Sep 26 22:02:34 2024
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Thu, 26 Sep 2024 22:02:34 +0200
+Subject: [R-sig-Geo] 
+ Species distribution models based on areal data instead
+ of point pattern
+In-Reply-To: <CABkCotRXcNTFT9enJY2UrQTwDvQzwUepp35fD5Hdi+yAV2RX5Q@mail.gmail.com>
+References: <CABkCotRXcNTFT9enJY2UrQTwDvQzwUepp35fD5Hdi+yAV2RX5Q@mail.gmail.com>
+Message-ID: <01369753-3bfa-43c8-a8e1-7d509813ee16@urjc.es>
+
+
+https://cran.r-project.org/package=dismo
+
+https://rspatial.org/sdm/index.html
+
+
+El 26/09/2024 a las 21:42, Manuel Sp?nola escribi?:
+> Dear list members,
+>
+> Are there any R packages focused on species distribution models based on
+> areal data (specifically grids) instead of point pattern?
+>
+>
+> Manuel
+>
+
+-- 
+Marcelino de la Cruz Rot
+Coordinador funcional de Biolog?a
+Depto. de Biolog?a y Geolog?a
+F?sica y Qu?mica Inorg?nica
+Universidad Rey Juan Carlos
+M?stoles Espa?a
+
+Instituto de Investigaci?n en Cambio Global (IICG-URJC)
+Universidad Rey Juan Carlos,
+Tulip?n s/n,
+28933 M?stoles, Espa?a
+
+
+From mgm917391 @end|ng |rom gm@||@com  Thu Sep 26 22:25:01 2024
+From: mgm917391 @end|ng |rom gm@||@com (mgm mgm)
+Date: Thu, 26 Sep 2024 15:25:01 -0500
+Subject: [R-sig-Geo] 
+ Species distribution models based on areal data instead
+ of point pattern
+In-Reply-To: <01369753-3bfa-43c8-a8e1-7d509813ee16@urjc.es>
+References: <CABkCotRXcNTFT9enJY2UrQTwDvQzwUepp35fD5Hdi+yAV2RX5Q@mail.gmail.com>
+ <01369753-3bfa-43c8-a8e1-7d509813ee16@urjc.es>
+Message-ID: <CAJWFm91ghvz2eywBUyvrNZL3h+mJ_09jgtbcT_LiU4CEy9jOAQ@mail.gmail.com>
+
+See the vignette in the Spmodel package
+https://cran.r-project.org/web/packages/spmodel/index.html
+Mike
+
+On Thursday, September 26, 2024, Marcelino de la Cruz Rot <
+marcelino.delacruz at urjc.es> wrote:
+>
+> https://cran.r-project.org/package=dismo
+>
+> https://rspatial.org/sdm/index.html
+>
+>
+> El 26/09/2024 a las 21:42, Manuel Sp?nola escribi?:
+>>
+>> Dear list members,
+>>
+>> Are there any R packages focused on species distribution models based on
+>> areal data (specifically grids) instead of point pattern?
+>>
+>>
+>> Manuel
+>>
+>
+> --
+> Marcelino de la Cruz Rot
+> Coordinador funcional de Biolog?a
+> Depto. de Biolog?a y Geolog?a
+> F?sica y Qu?mica Inorg?nica
+> Universidad Rey Juan Carlos
+> M?stoles Espa?a
+>
+> Instituto de Investigaci?n en Cambio Global (IICG-URJC)
+> Universidad Rey Juan Carlos,
+> Tulip?n s/n,
+> 28933 M?stoles, Espa?a
+>
+> _______________________________________________
+> R-sig-Geo mailing list
+> R-sig-Geo at r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+>
+
+	[[alternative HTML version deleted]]
+
+
+From n|ko@@tz|ok@@ @end|ng |rom gm@||@com  Fri Sep 27 02:19:00 2024
+From: n|ko@@tz|ok@@ @end|ng |rom gm@||@com (Nikolaos Tziokas)
+Date: Fri, 27 Sep 2024 01:19:00 +0100
+Subject: [R-sig-Geo] Parameter tuning of the bfastlite function
+Message-ID: <CAGg5H0Z1-WjSAWTgz-0TXG9BtzNJujHmHJjL7=s9pg+R0c9XAQ@mail.gmail.com>
+
+I am using the bfastlite() function from the BFAST package to run a
+time-series analysis. From the author's paper (BFAST Lite: A Lightweight
+Break Detection Method for Time Series Analysis) (table 2), I quote:
+
+"Needs parameter tuning to optimise performance, does not differentiate
+between breaks in seasonality and trend"
+
+So far, I was fine-tuning the model manually, that is, I was changing the
+parameters one by one, which is time-consuming. Does someone have a better
+solution regarding the fine-tuning of the model?
+
+To see which parameters of the model achieve the best results, I was
+checking the dates in the detected breakpoints (visual inspection). I am
+not sure if that method (visual inspection) is appropriate.
+
+I apologize if this question sound a bit vague, so let me expand a little
+bit. After running the bfastlite() using the default parameters (i.e., bp =
+bfastlite(datats)), we get a result. Is there a way to measure (something
+like rmse, or r-squared) how well the algorithm modeled the ts? What I
+basically mean is that if there is an index equivalent to let's say rmse
+when someone is running a linear regression. For example, what if the
+parameter breaks with BIC instead of LWZ detects more accurate the
+breakpoints (by visually inspecting the detected breakpoints)? Apart from
+the visual inspection, shouldn't be some other way to measure the
+performance of the model?
+
+Based on the above, is there a more efficient way to optimize the
+parameters of the model (based on some metric)? What do I mean by
+optimizing the parameters? I think with an example I can explain it better.
+When someone is tuning a random forest model, he/she can perform a full
+grid search to find the optimal parameters of the model (mtry, number of
+trees, etc) by searching all the possible combinations and for each
+combination he/she checks the rmse (or mse, r-squared). Is this what the
+authors of the paper meant when they said "Needs parameter tuning to
+optimise performance"? And if so, how did they do it?
+
+library(bfast)
+
+plot(simts) # stl object containing simulated NDVI time series
+datats <- ts(rowSums(simts$time.series))
+
+# sum of all the components (season,abrupt,remainder)
+tsp(datats) <- tsp(simts$time.series) # assign correct time series
+attributes
+plot(datats)
+
+# Detect breaks. default parameters
+bp = bfastlite(datats)
+plot(bp)
+
+# optimized model ??????
+bp_opt <- bfastlite()
+
+R 4.4.1, bfast 1.6.1, Windows 11.
+
+	[[alternative HTML version deleted]]
+
+
+From Roger@B|v@nd @end|ng |rom nhh@no  Fri Sep 27 09:47:12 2024
+From: Roger@B|v@nd @end|ng |rom nhh@no (Roger Bivand)
+Date: Fri, 27 Sep 2024 07:47:12 +0000
+Subject: [R-sig-Geo] Parameter tuning of the bfastlite function
+In-Reply-To: <CAGg5H0Z1-WjSAWTgz-0TXG9BtzNJujHmHJjL7=s9pg+R0c9XAQ@mail.gmail.com>
+References: <CAGg5H0Z1-WjSAWTgz-0TXG9BtzNJujHmHJjL7=s9pg+R0c9XAQ@mail.gmail.com>
+Message-ID: <SV0P279MB0475389EABDE5FE32791645DEE6B2@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>
+
+Could I suggest waiting until https://github.com/bfast2/bfast/issues/113 which contains the same content has been attended to? Alternatively link to the list archives in the github issue to ensure that any responses to one channel do not get overlooked on the other channel (I've linked for now)? Emailing directly or github pinging the package developers may also help if this is urgent. Also consider reaching out to authors/maintainers of packages using bfast https://cran.r-project.org/package=bfast, and look (I'm sure you already have looked) among the many articles citing the underlying work. The package description mentions a forthcoming paper on BFAST Lite - this seems to be https://doi.org/10.3390/rs13163308. This isn't my field, but I think that bfast isn't being developed actively, and you may need to search broadly to try to resolve your issues, so looking at how other users handle this may help.
+
+Hope this helps,
+
+ Roger
+
+--
+Roger Bivand
+Emeritus Professor
+Norwegian School of Economics
+Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway
+Roger.Bivand at nhh.no
+
+________________________________________
+From: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Nikolaos Tziokas <nikos.tziokas at gmail.com>
+Sent: 27 September 2024 02:19
+To: r-sig-geo
+Subject: [R-sig-Geo] Parameter tuning of the bfastlite function
+
+[You don't often get email from nikos.tziokas at gmail.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+
+I am using the bfastlite() function from the BFAST package to run a
+time-series analysis. From the author's paper (BFAST Lite: A Lightweight
+Break Detection Method for Time Series Analysis) (table 2), I quote:
+
+"Needs parameter tuning to optimise performance, does not differentiate
+between breaks in seasonality and trend"
+
+So far, I was fine-tuning the model manually, that is, I was changing the
+parameters one by one, which is time-consuming. Does someone have a better
+solution regarding the fine-tuning of the model?
+
+To see which parameters of the model achieve the best results, I was
+checking the dates in the detected breakpoints (visual inspection). I am
+not sure if that method (visual inspection) is appropriate.
+
+I apologize if this question sound a bit vague, so let me expand a little
+bit. After running the bfastlite() using the default parameters (i.e., bp =
+bfastlite(datats)), we get a result. Is there a way to measure (something
+like rmse, or r-squared) how well the algorithm modeled the ts? What I
+basically mean is that if there is an index equivalent to let's say rmse
+when someone is running a linear regression. For example, what if the
+parameter breaks with BIC instead of LWZ detects more accurate the
+breakpoints (by visually inspecting the detected breakpoints)? Apart from
+the visual inspection, shouldn't be some other way to measure the
+performance of the model?
+
+Based on the above, is there a more efficient way to optimize the
+parameters of the model (based on some metric)? What do I mean by
+optimizing the parameters? I think with an example I can explain it better.
+When someone is tuning a random forest model, he/she can perform a full
+grid search to find the optimal parameters of the model (mtry, number of
+trees, etc) by searching all the possible combinations and for each
+combination he/she checks the rmse (or mse, r-squared). Is this what the
+authors of the paper meant when they said "Needs parameter tuning to
+optimise performance"? And if so, how did they do it?
+
+library(bfast)
+
+plot(simts) # stl object containing simulated NDVI time series
+datats <- ts(rowSums(simts$time.series))
+
+# sum of all the components (season,abrupt,remainder)
+tsp(datats) <- tsp(simts$time.series) # assign correct time series
+attributes
+plot(datats)
+
+# Detect breaks. default parameters
+bp = bfastlite(datats)
+plot(bp)
+
+# optimized model ??????
+bp_opt <- bfastlite()
+
+R 4.4.1, bfast 1.6.1, Windows 11.
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-sig-Geo mailing list
+R-sig-Geo at r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+
+
+From i@io m@iii@g oii phys@ii@-courses@org  Fri Sep 27 09:54:02 2024
+From: i@io m@iii@g oii phys@ii@-courses@org (i@io m@iii@g oii phys@ii@-courses@org)
+Date: Fri, 27 Sep 2024 09:54:02 +0200 (CEST)
+Subject: [R-sig-Geo] Online course on Spatial Statistics with Prof. Edzer
+ Pebesma
+Message-ID: <1727423642.941317143@webmail.jimdo.com>
+
+
+Dear all,
+ 
+We are excited to announce our upcoming online course, Spatial Statistics with R (2nd edition), from 11-15 November 2024. 
+ 
+Instructor: Prof. Edzer Pebesma [ (University of Muenster, Germany) ]( https://scholar.google.de/citations?user=d6jdqdQAAAAJ&hl=en )
+ 
+Course website: [ https://www.physalia-courses.org/courses-workshops/spatial-statistics/ ]( https://www.physalia-courses.org/courses-workshops/spatial-statistics/ )
+ 
+ 
+This course will cover spatial statistical methods including point pattern analysis, geostatistics, mixed models, and machine learning for spatial data. You'll also learn how to handle large datasets and satellite imagery.
+ 
+
+Ideal for research students and early career researchers in biology, ecology, or related fields with an interest in spatial data analysis. Some familiarity with R and basic statistics is recommended.
+ 
+
+Best regards,
+Carlo
+ 
+ 
+
+--------------------
+
+Carlo Pecoraro, Ph.D
+
+
+Physalia-courses DIRECTOR
+
+info at physalia-courses.org
+
+mobile: +49 17645230846
+
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From hugo@gco@t@ @end|ng |rom gm@||@com  Fri Sep 27 10:00:17 2024
+From: hugo@gco@t@ @end|ng |rom gm@||@com (Hugo Costa)
+Date: Fri, 27 Sep 2024 09:00:17 +0100
+Subject: [R-sig-Geo] Parameter tuning of the bfastlite function
+In-Reply-To: <SV0P279MB0475389EABDE5FE32791645DEE6B2@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>
+References: <CAGg5H0Z1-WjSAWTgz-0TXG9BtzNJujHmHJjL7=s9pg+R0c9XAQ@mail.gmail.com>
+ <SV0P279MB0475389EABDE5FE32791645DEE6B2@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>
+Message-ID: <CADvFi5qrymZROPgatYDtuRHrksbroXgbBrGf-fgiCGWb4po2MA@mail.gmail.com>
+
+It's a pity if BFAST is not developed and maintained...
+Hugo
+
+Roger Bivand <Roger.Bivand at nhh.no> escreveu (sexta, 27/09/2024 ?(s) 08:47):
+
+> Could I suggest waiting until https://github.com/bfast2/bfast/issues/113
+> which contains the same content has been attended to? Alternatively link to
+> the list archives in the github issue to ensure that any responses to one
+> channel do not get overlooked on the other channel (I've linked for now)?
+> Emailing directly or github pinging the package developers may also help if
+> this is urgent. Also consider reaching out to authors/maintainers of
+> packages using bfast https://cran.r-project.org/package=bfast, and look
+> (I'm sure you already have looked) among the many articles citing the
+> underlying work. The package description mentions a forthcoming paper on
+> BFAST Lite - this seems to be https://doi.org/10.3390/rs13163308. This
+> isn't my field, but I think that bfast isn't being developed actively, and
+> you may need to search broadly to try to resolve your issues, so looking at
+> how other users handle this may help.
+>
+> Hope this helps,
+>
+>  Roger
+>
+> --
+> Roger Bivand
+> Emeritus Professor
+> Norwegian School of Economics
+> Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway
+> Roger.Bivand at nhh.no
+>
+> ________________________________________
+> From: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Nikolaos
+> Tziokas <nikos.tziokas at gmail.com>
+> Sent: 27 September 2024 02:19
+> To: r-sig-geo
+> Subject: [R-sig-Geo] Parameter tuning of the bfastlite function
+>
+> [You don't often get email from nikos.tziokas at gmail.com. Learn why this
+> is important at https://aka.ms/LearnAboutSenderIdentification ]
+>
+> I am using the bfastlite() function from the BFAST package to run a
+> time-series analysis. From the author's paper (BFAST Lite: A Lightweight
+> Break Detection Method for Time Series Analysis) (table 2), I quote:
+>
+> "Needs parameter tuning to optimise performance, does not differentiate
+> between breaks in seasonality and trend"
+>
+> So far, I was fine-tuning the model manually, that is, I was changing the
+> parameters one by one, which is time-consuming. Does someone have a better
+> solution regarding the fine-tuning of the model?
+>
+> To see which parameters of the model achieve the best results, I was
+> checking the dates in the detected breakpoints (visual inspection). I am
+> not sure if that method (visual inspection) is appropriate.
+>
+> I apologize if this question sound a bit vague, so let me expand a little
+> bit. After running the bfastlite() using the default parameters (i.e., bp =
+> bfastlite(datats)), we get a result. Is there a way to measure (something
+> like rmse, or r-squared) how well the algorithm modeled the ts? What I
+> basically mean is that if there is an index equivalent to let's say rmse
+> when someone is running a linear regression. For example, what if the
+> parameter breaks with BIC instead of LWZ detects more accurate the
+> breakpoints (by visually inspecting the detected breakpoints)? Apart from
+> the visual inspection, shouldn't be some other way to measure the
+> performance of the model?
+>
+> Based on the above, is there a more efficient way to optimize the
+> parameters of the model (based on some metric)? What do I mean by
+> optimizing the parameters? I think with an example I can explain it better.
+> When someone is tuning a random forest model, he/she can perform a full
+> grid search to find the optimal parameters of the model (mtry, number of
+> trees, etc) by searching all the possible combinations and for each
+> combination he/she checks the rmse (or mse, r-squared). Is this what the
+> authors of the paper meant when they said "Needs parameter tuning to
+> optimise performance"? And if so, how did they do it?
+>
+> library(bfast)
+>
+> plot(simts) # stl object containing simulated NDVI time series
+> datats <- ts(rowSums(simts$time.series))
+>
+> # sum of all the components (season,abrupt,remainder)
+> tsp(datats) <- tsp(simts$time.series) # assign correct time series
+> attributes
+> plot(datats)
+>
+> # Detect breaks. default parameters
+> bp = bfastlite(datats)
+> plot(bp)
+>
+> # optimized model ??????
+> bp_opt <- bfastlite()
+>
+> R 4.4.1, bfast 1.6.1, Windows 11.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-sig-Geo mailing list
+> R-sig-Geo at r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+>
+> _______________________________________________
+> R-sig-Geo mailing list
+> R-sig-Geo at r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+>
+
+	[[alternative HTML version deleted]]
+
+
+From |v@|ery @end|ng |rom out|ook@|r  Fri Sep 27 10:10:17 2024
+From: |v@|ery @end|ng |rom out|ook@|r (=?iso-8859-1?Q?Lo=EFc_Val=E9ry?=)
+Date: Fri, 27 Sep 2024 08:10:17 +0000
+Subject: [R-sig-Geo] Polygons changed when the geom column is converted to
+ text and then back to sfc
+Message-ID: <PA4PR02MB8099930A4A1E72F0A8AF8FB6D06B2@PA4PR02MB8099.eurprd02.prod.outlook.com>
+
+Dear?list members,
+
+I hope this message finds you well.
+I submit?to you a problem with which I have been struggling for several days without finding the beginning of a solution.
+
+I need (i) to convert the geom column of a sf object into text and transform the sf object into a dataframe,
+? ? ? ? ?? (ii) then convert this dataframe back into an sf object.?
+My problem is that this only operation changes the shape of the original polygons. 
+I guess the problem lies with the layer itself, but so far I haven't been able to find the cause (the crs seems O.K., the geometry seems valid).
+
+Please find attached a test layer containing only three contiguous polygons and, below, the code needed to reproduce the problem :
+
+
+test <- sf::st_read("Please add your path/polygons.gpkg")
+
+# Converting the sf object into a dataframe with geom as text
+test_chr <- test |>
+? dplyr::mutate(geom = sf::st_as_text(geom, EWKT = TRUE)) |>
+? as.data.frame()
+
+# Converting back to a sf object
+test_new <- test_chr |>
+? dplyr::mutate(geom = sf::st_as_sfc(geom)) |>
+? sf::st_sf()
+
+# Comparing the original ('test') and the new ('test_new') sf objects
+plot(test$geom, lwd = 1, border = "blue")
+plot(test_new$geom, lwd = 2, lty = 2, border = "red", add = TRUE)
+
+
+Thank you in advance for your help.
+Cheers,
+Lo?c
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: polygons.zip
+Type: application/x-zip-compressed
+Size: 5544 bytes
+Desc: polygons.zip
+URL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20240927/47dd18ad/attachment.bin>
+
+From Roger@B|v@nd @end|ng |rom nhh@no  Fri Sep 27 10:23:03 2024
+From: Roger@B|v@nd @end|ng |rom nhh@no (Roger Bivand)
+Date: Fri, 27 Sep 2024 08:23:03 +0000
+Subject: [R-sig-Geo] Parameter tuning of the bfastlite function
+In-Reply-To: <CADvFi5qrymZROPgatYDtuRHrksbroXgbBrGf-fgiCGWb4po2MA@mail.gmail.com>
+References: <CAGg5H0Z1-WjSAWTgz-0TXG9BtzNJujHmHJjL7=s9pg+R0c9XAQ@mail.gmail.com>
+ <SV0P279MB0475389EABDE5FE32791645DEE6B2@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>
+ <CADvFi5qrymZROPgatYDtuRHrksbroXgbBrGf-fgiCGWb4po2MA@mail.gmail.com>
+Message-ID: <SV0P279MB04752FC0B87DD2F9B3665BE4EE6B2@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>
+
+The last update was 2021-05-10; the package is available on CRAN, so no worries, but also only one small correction to documentation since then. On that basis, I'd reach out to the maintainer directly.
+
+Roger
+
+--
+Roger Bivand
+Emeritus Professor
+Norwegian School of Economics
+Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway
+Roger.Bivand at nhh.no
+
+________________________________________
+From: Hugo Costa <hugoagcosta at gmail.com>
+Sent: 27 September 2024 10:00
+To: Roger Bivand
+Cc: Nikolaos Tziokas; r-sig-geo
+Subject: Re: [R-sig-Geo] Parameter tuning of the bfastlite function
+
+You don't often get email from hugoagcosta at gmail.com. Learn why this is important<https://aka.ms/LearnAboutSenderIdentification>
+It's a pity if BFAST is not developed and maintained...
+Hugo
+
+Roger Bivand <Roger.Bivand at nhh.no<mailto:Roger.Bivand at nhh.no>> escreveu (sexta, 27/09/2024 ?(s) 08:47):
+Could I suggest waiting until https://github.com/bfast2/bfast/issues/113<https://github.com/bfast2/bfast/issues/113> which contains the same content has been attended to? Alternatively link to the list archives in the github issue to ensure that any responses to one channel do not get overlooked on the other channel (I've linked for now)? Emailing directly or github pinging the package developers may also help if this is urgent. Also consider reaching out to authors/maintainers of packages using bfast https://cran.r-project.org/package=bfast<https://cran.r-project.org/package=bfast>, and look (I'm sure you already have looked) among the many articles citing the underlying work. The package description mentions a forthcoming paper on BFAST Lite - this seems to be https://doi.org/10.3390/rs13163308<https://doi.org/10.3390/rs13163308>. This isn't my field, but I think that bfast isn't being developed actively, and you may need to search broadly to try to resolve your issues, so looking at how other users handle this may help.
+
+Hope this helps,
+
+ Roger
+
+--
+Roger Bivand
+Emeritus Professor
+Norwegian School of Economics
+Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway
+Roger.Bivand at nhh.no<mailto:Roger.Bivand at nhh.no>
+
+________________________________________
+From: R-sig-Geo <r-sig-geo-bounces at r-project.org<mailto:r-sig-geo-bounces at r-project.org>> on behalf of Nikolaos Tziokas <nikos.tziokas at gmail.com<mailto:nikos.tziokas at gmail.com>>
+Sent: 27 September 2024 02:19
+To: r-sig-geo
+Subject: [R-sig-Geo] Parameter tuning of the bfastlite function
+
+[You don't often get email from nikos.tziokas at gmail.com<mailto:nikos.tziokas at gmail.com>. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+
+I am using the bfastlite() function from the BFAST package to run a
+time-series analysis. From the author's paper (BFAST Lite: A Lightweight
+Break Detection Method for Time Series Analysis) (table 2), I quote:
+
+"Needs parameter tuning to optimise performance, does not differentiate
+between breaks in seasonality and trend"
+
+So far, I was fine-tuning the model manually, that is, I was changing the
+parameters one by one, which is time-consuming. Does someone have a better
+solution regarding the fine-tuning of the model?
+
+To see which parameters of the model achieve the best results, I was
+checking the dates in the detected breakpoints (visual inspection). I am
+not sure if that method (visual inspection) is appropriate.
+
+I apologize if this question sound a bit vague, so let me expand a little
+bit. After running the bfastlite() using the default parameters (i.e., bp =
+bfastlite(datats)), we get a result. Is there a way to measure (something
+like rmse, or r-squared) how well the algorithm modeled the ts? What I
+basically mean is that if there is an index equivalent to let's say rmse
+when someone is running a linear regression. For example, what if the
+parameter breaks with BIC instead of LWZ detects more accurate the
+breakpoints (by visually inspecting the detected breakpoints)? Apart from
+the visual inspection, shouldn't be some other way to measure the
+performance of the model?
+
+Based on the above, is there a more efficient way to optimize the
+parameters of the model (based on some metric)? What do I mean by
+optimizing the parameters? I think with an example I can explain it better.
+When someone is tuning a random forest model, he/she can perform a full
+grid search to find the optimal parameters of the model (mtry, number of
+trees, etc) by searching all the possible combinations and for each
+combination he/she checks the rmse (or mse, r-squared). Is this what the
+authors of the paper meant when they said "Needs parameter tuning to
+optimise performance"? And if so, how did they do it?
+
+library(bfast)
+
+plot(simts) # stl object containing simulated NDVI time series
+datats <- ts(rowSums(simts$time.series))
+
+# sum of all the components (season,abrupt,remainder)
+tsp(datats) <- tsp(simts$time.series) # assign correct time series
+attributes
+plot(datats)
+
+# Detect breaks. default parameters
+bp = bfastlite(datats)
+plot(bp)
+
+# optimized model ??????
+bp_opt <- bfastlite()
+
+R 4.4.1, bfast 1.6.1, Windows 11.
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-sig-Geo mailing list
+R-sig-Geo at r-project.org<mailto:R-sig-Geo at r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-sig-geo<https://stat.ethz.ch/mailman/listinfo/r-sig-geo>
+
+_______________________________________________
+R-sig-Geo mailing list
+R-sig-Geo at r-project.org<mailto:R-sig-Geo at r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-sig-geo<https://stat.ethz.ch/mailman/listinfo/r-sig-geo>
+
+
+From Roger@B|v@nd @end|ng |rom nhh@no  Fri Sep 27 10:45:03 2024
+From: Roger@B|v@nd @end|ng |rom nhh@no (Roger Bivand)
+Date: Fri, 27 Sep 2024 08:45:03 +0000
+Subject: [R-sig-Geo] Parameter tuning of the bfastlite function
+In-Reply-To: <SV0P279MB04752FC0B87DD2F9B3665BE4EE6B2@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>
+References: <CAGg5H0Z1-WjSAWTgz-0TXG9BtzNJujHmHJjL7=s9pg+R0c9XAQ@mail.gmail.com>
+ <SV0P279MB0475389EABDE5FE32791645DEE6B2@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>
+ <CADvFi5qrymZROPgatYDtuRHrksbroXgbBrGf-fgiCGWb4po2MA@mail.gmail.com>
+ <SV0P279MB04752FC0B87DD2F9B3665BE4EE6B2@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>
+Message-ID: <SV0P279MB047512099074E3D4DC3262F2EE6B2@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>
+
+Please follow up on https://github.com/bfast2/bfast/issues/113.
+
+Roger
+
+---
+Roger Bivand
+Emeritus Professor
+Department of Economics
+Norwegian School of Economics, Bergen, Norway
+
+________________________________
+Fra: R-sig-Geo <r-sig-geo-bounces at r-project.org> p? vegne av Roger Bivand <Roger.Bivand at nhh.no>
+Sendt: fredag, september 27, 2024 10:33:25 a.m.
+Til: Hugo Costa <hugoagcosta at gmail.com>
+Kopi: r-sig-geo <r-sig-geo at r-project.org>
+Emne: Re: [R-sig-Geo] Parameter tuning of the bfastlite function
+
+The last update was 2021-05-10; the package is available on CRAN, so no worries, but also only one small correction to documentation since then. On that basis, I'd reach out to the maintainer directly.
+
+Roger
+
+--
+Roger Bivand
+Emeritus Professor
+Norwegian School of Economics
+Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway
+Roger.Bivand at nhh.no
+
+________________________________________
+From: Hugo Costa <hugoagcosta at gmail.com>
+Sent: 27 September 2024 10:00
+To: Roger Bivand
+Cc: Nikolaos Tziokas; r-sig-geo
+Subject: Re: [R-sig-Geo] Parameter tuning of the bfastlite function
+
+You don't often get email from hugoagcosta at gmail.com. Learn why this is important<https://aka.ms/LearnAboutSenderIdentification>
+It's a pity if BFAST is not developed and maintained...
+Hugo
+
+Roger Bivand <Roger.Bivand at nhh.no<mailto:Roger.Bivand at nhh.no>> escreveu (sexta, 27/09/2024 ?(s) 08:47):
+Could I suggest waiting until https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2Fbfast2%2Fbfast%2Fissues%2F113&data=05%7C02%7CRoger.Bivand%40nhh.no%7C57a12d2f8ad64b7a256408dcdecf0bd3%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638630228055257289%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=ABYk2bkfc06Mg2%2FjDRQ%2FVyF2Ip1t25i9Pk05kMD0nWg%3D&reserved=0<https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2Fbfast2%2Fbfast%2Fissues%2F113&data=05%7C02%7CRoger.Bivand%40nhh.no%7C57a12d2f8ad64b7a256408dcdecf0bd3%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638630228055277013%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=70FJ6V8Tbwys%2FGgzXeEqcLGvZ4AAYOFp05l3noQobts%3D&reserved=0><https://github.com/bfast2/bfast/issues/113> which contains the same content has been attended to? Alternatively link to the list archives in the github issue to ensure that any responses to one channel do not get overlooked on the other channel (I've linked for now)? Emailing directly or github pinging the package developers may also help if this is urgent. Also consider reaching out to authors/maintainers of packages using bfast https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fcran.r-project.org%2Fpackage%3Dbfast&data=05%7C02%7CRoger.Bivand%40nhh.no%7C57a12d2f8ad64b7a256408dcdecf0bd3%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638630228055287053%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=AimFwdWsVSLJPtJam5bP8pTX85fv1IdgGgeX6pSnb%2Bs%3D&reserved=0<https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fcran.r-project.org%2Fpackage%3Dbfast&data=05%7C02%7CRoger.Bivand%40nhh.no%7C57a12d2f8ad64b7a256408dcdecf0bd3%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638630228055298284%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=P%2B%2BSDER6GodY%2BUwdIQnheP6q%2B8iHi75lccuUMDRy6tY%3D&reserved=0><https://cran.r-project.org/package=bfast>, and look (I'm sure you already have looked) among the many articles citing the underlying work. The package description mentions a forthcoming paper on BFAST Lite - this seems to be https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdoi.org%2F10.3390%2Frs13163308&data=05%7C02%7CRoger.Bivand%40nhh.no%7C57a12d2f8ad64b7a256408dcdecf0bd3%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638630228055308702%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=v2NugDxN7r7kI6RWHCkCQy%2BnuNAYFv3EqvNc71wiM3M%3D&reserved=0<https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdoi.org%2F10.3390%2Frs13163308&data=05%7C02%7CRoger.Bivand%40nhh.no%7C57a12d2f8ad64b7a256408dcdecf0bd3%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638630228055318828%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=sfeir%2BQ4PTWJ1h2JS%2F8uns5V9pNAFY4iPC2hIdtm8sc%3D&reserved=0><https://doi.org/10.3390/rs13163308>. This isn't my field, but I think that bfast isn't being developed actively, and you may need to search broadly to try to resolve your issues, so looking at how other users handle this may help.
+
+Hope this helps,
+
+ Roger
+
+--
+Roger Bivand
+Emeritus Professor
+Norwegian School of Economics
+Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway
+Roger.Bivand at nhh.no<mailto:Roger.Bivand at nhh.no>
+
+________________________________________
+From: R-sig-Geo <r-sig-geo-bounces at r-project.org<mailto:r-sig-geo-bounces at r-project.org>> on behalf of Nikolaos Tziokas <nikos.tziokas at gmail.com<mailto:nikos.tziokas at gmail.com>>
+Sent: 27 September 2024 02:19
+To: r-sig-geo
+Subject: [R-sig-Geo] Parameter tuning of the bfastlite function
+
+[You don't often get email from nikos.tziokas at gmail.com<mailto:nikos.tziokas at gmail.com>. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+
+I am using the bfastlite() function from the BFAST package to run a
+time-series analysis. From the author's paper (BFAST Lite: A Lightweight
+Break Detection Method for Time Series Analysis) (table 2), I quote:
+
+"Needs parameter tuning to optimise performance, does not differentiate
+between breaks in seasonality and trend"
+
+So far, I was fine-tuning the model manually, that is, I was changing the
+parameters one by one, which is time-consuming. Does someone have a better
+solution regarding the fine-tuning of the model?
+
+To see which parameters of the model achieve the best results, I was
+checking the dates in the detected breakpoints (visual inspection). I am
+not sure if that method (visual inspection) is appropriate.
+
+I apologize if this question sound a bit vague, so let me expand a little
+bit. After running the bfastlite() using the default parameters (i.e., bp =
+bfastlite(datats)), we get a result. Is there a way to measure (something
+like rmse, or r-squared) how well the algorithm modeled the ts? What I
+basically mean is that if there is an index equivalent to let's say rmse
+when someone is running a linear regression. For example, what if the
+parameter breaks with BIC instead of LWZ detects more accurate the
+breakpoints (by visually inspecting the detected breakpoints)? Apart from
+the visual inspection, shouldn't be some other way to measure the
+performance of the model?
+
+Based on the above, is there a more efficient way to optimize the
+parameters of the model (based on some metric)? What do I mean by
+optimizing the parameters? I think with an example I can explain it better.
+When someone is tuning a random forest model, he/she can perform a full
+grid search to find the optimal parameters of the model (mtry, number of
+trees, etc) by searching all the possible combinations and for each
+combination he/she checks the rmse (or mse, r-squared). Is this what the
+authors of the paper meant when they said "Needs parameter tuning to
+optimise performance"? And if so, how did they do it?
+
+library(bfast)
+
+plot(simts) # stl object containing simulated NDVI time series
+datats <- ts(rowSums(simts$time.series))
+
+# sum of all the components (season,abrupt,remainder)
+tsp(datats) <- tsp(simts$time.series) # assign correct time series
+attributes
+plot(datats)
+
+# Detect breaks. default parameters
+bp = bfastlite(datats)
+plot(bp)
+
+# optimized model ??????
+bp_opt <- bfastlite()
+
+R 4.4.1, bfast 1.6.1, Windows 11.
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-sig-Geo mailing list
+R-sig-Geo at r-project.org<mailto:R-sig-Geo at r-project.org>
+https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7CRoger.Bivand%40nhh.no%7C57a12d2f8ad64b7a256408dcdecf0bd3%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638630228055328661%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=X%2FmG6ekEMUibqmKjwvz8UR9nhbCHdJ1z6OeXYVt1xHE%3D&reserved=0<https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7CRoger.Bivand%40nhh.no%7C57a12d2f8ad64b7a256408dcdecf0bd3%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638630228055338301%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=SuOLT4Vf2VMd3o1ZC6BmuYE%2FDvZ44AAAfxn15o%2FZbQ0%3D&reserved=0><https://stat.ethz.ch/mailman/listinfo/r-sig-geo>
+
+_______________________________________________
+R-sig-Geo mailing list
+R-sig-Geo at r-project.org<mailto:R-sig-Geo at r-project.org>
+https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7CRoger.Bivand%40nhh.no%7C57a12d2f8ad64b7a256408dcdecf0bd3%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638630228055353091%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=GrzbjPKmla%2FLhevetGcO4HIQCOKXgKE5NwctDq%2BxdY0%3D&reserved=0<https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7CRoger.Bivand%40nhh.no%7C57a12d2f8ad64b7a256408dcdecf0bd3%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638630228055365368%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=KuVSz78osdOp7zKPXsjBCi%2F4zXORxLuyRMnDVVMxAfM%3D&reserved=0><https://stat.ethz.ch/mailman/listinfo/r-sig-geo>
+
+_______________________________________________
+R-sig-Geo mailing list
+R-sig-Geo at r-project.org
+https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7CRoger.Bivand%40nhh.no%7C57a12d2f8ad64b7a256408dcdecf0bd3%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638630228055377528%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=p5kzfUhUW0Ju78MaYLQsXfciAbzLsViEKyLIP2nluOc%3D&reserved=0<https://stat.ethz.ch/mailman/listinfo/r-sig-geo>
+
+
+	[[alternative HTML version deleted]]
+
+
+From md@umner @end|ng |rom gm@||@com  Fri Sep 27 12:08:07 2024
+From: md@umner @end|ng |rom gm@||@com (Michael Sumner)
+Date: Fri, 27 Sep 2024 20:08:07 +1000
+Subject: [R-sig-Geo] 
+ Polygons changed when the geom column is converted to
+ text and then back to sfc
+In-Reply-To: <PA4PR02MB8099930A4A1E72F0A8AF8FB6D06B2@PA4PR02MB8099.eurprd02.prod.outlook.com>
+References: <PA4PR02MB8099930A4A1E72F0A8AF8FB6D06B2@PA4PR02MB8099.eurprd02.prod.outlook.com>
+Message-ID: <CAAcGz9-OHyCEHme7OdoUS1sHOwxSPKLAFHt5rqDJzA63oxq+4A@mail.gmail.com>
+
+try 'digits = 8' or higher in st_as_text e.g.
+
+test_chr <- test |>
+  dplyr::mutate(geom = sf::st_as_text(geom, EWKT = TRUE, digits = 8)) |>
+  as.data.frame()
+
+(or set with options("digits" = <8 or higher>))
+
+Default value doesn't seem to be documented in sf, but the source shows it
+calls out to lwgeom::st_astext which defaults to whatever options("digits")
+value is.
+
+HTH
+
+
+
+
+
+On Fri, Sep 27, 2024 at 6:23?PM Lo?c Val?ry <lvalery at outlook.fr> wrote:
+
+> Dear list members,
+>
+> I hope this message finds you well.
+> I submit to you a problem with which I have been struggling for several
+> days without finding the beginning of a solution.
+>
+> I need (i) to convert the geom column of a sf object into text and
+> transform the sf object into a dataframe,
+>            (ii) then convert this dataframe back into an sf object.
+> My problem is that this only operation changes the shape of the original
+> polygons.
+> I guess the problem lies with the layer itself, but so far I haven't been
+> able to find the cause (the crs seems O.K., the geometry seems valid).
+>
+> Please find attached a test layer containing only three contiguous
+> polygons and, below, the code needed to reproduce the problem :
+>
+>
+> test <- sf::st_read("Please add your path/polygons.gpkg")
+>
+> # Converting the sf object into a dataframe with geom as text
+> test_chr <- test |>
+>   dplyr::mutate(geom = sf::st_as_text(geom, EWKT = TRUE)) |>
+>   as.data.frame()
+>
+> # Converting back to a sf object
+> test_new <- test_chr |>
+>   dplyr::mutate(geom = sf::st_as_sfc(geom)) |>
+>   sf::st_sf()
+>
+> # Comparing the original ('test') and the new ('test_new') sf objects
+> plot(test$geom, lwd = 1, border = "blue")
+> plot(test_new$geom, lwd = 2, lty = 2, border = "red", add = TRUE)
+>
+>
+> Thank you in advance for your help.
+> Cheers,
+> Lo?c
+> _______________________________________________
+> R-sig-Geo mailing list
+> R-sig-Geo at r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+>
+
+
+-- 
+Michael Sumner
+Research Software Engineer
+Australian Antarctic Division
+Hobart, Australia
+e-mail: mdsumner at gmail.com
+
+	[[alternative HTML version deleted]]
+
+
+From |v@|ery @end|ng |rom out|ook@|r  Fri Sep 27 12:37:15 2024
+From: |v@|ery @end|ng |rom out|ook@|r (=?utf-8?B?TG/Dr2MgVmFsw6lyeQ==?=)
+Date: Fri, 27 Sep 2024 10:37:15 +0000
+Subject: [R-sig-Geo] 
+ Polygons changed when the geom column is converted to
+ text and then back to sfc
+In-Reply-To: <CAAcGz9-OHyCEHme7OdoUS1sHOwxSPKLAFHt5rqDJzA63oxq+4A@mail.gmail.com>
+References: <PA4PR02MB8099930A4A1E72F0A8AF8FB6D06B2@PA4PR02MB8099.eurprd02.prod.outlook.com>
+ <CAAcGz9-OHyCEHme7OdoUS1sHOwxSPKLAFHt5rqDJzA63oxq+4A@mail.gmail.com>
+Message-ID: <PA4PR02MB8099D2E0FB61907122D1DA27D06B2@PA4PR02MB8099.eurprd02.prod.outlook.com>
+
+Dear Michael,
+
+Thank you very much for your prompt and efficient reply : it solved the problem (the default value of the number of digits was set to 7).
+
+To tell you the truth, I don't think I'd have found it on my own !
+Cheers,
+Lo?c
+
+________________________________________
+De :?Michael Sumner <mdsumner at gmail.com>
+Envoy? :?vendredi 27 septembre 2024 12:08
+? :?Lo?c Val?ry <lvalery at outlook.fr>
+Cc?:?R-sig-geo Mailing List <R-sig-Geo at r-project.org>
+Objet :?Re: [R-sig-Geo] Polygons changed when the geom column is converted to text and then back to sfc
+?
+try 'digits = 8' or higher in st_as_text e.g.?
+
+test_chr <- test |>
+? dplyr::mutate(geom = sf::st_as_text(geom, EWKT = TRUE, digits = 8)) |>
+? as.data.frame()
+
+(or set with?options("digits" = <8 or higher>))
+
+Default value doesn't seem to be documented in sf, but the source shows it calls out to lwgeom::st_astext which defaults to whatever?options("digits") value is.?
+
+HTH
+
+
+
+
+
+On Fri, Sep 27, 2024 at 6:23?PM Lo?c Val?ry <lvalery at outlook.fr> wrote:
+Dear?list members,
+
+I hope this message finds you well.
+I submit?to you a problem with which I have been struggling for several days without finding the beginning of a solution.
+
+I need (i) to convert the geom column of a sf object into text and transform the sf object into a dataframe,
+? ? ? ? ?? (ii) then convert this dataframe back into an sf object.?
+My problem is that this only operation changes the shape of the original polygons.
+I guess the problem lies with the layer itself, but so far I haven't been able to find the cause (the crs seems O.K., the geometry seems valid).
+
+Please find attached a test layer containing only three contiguous polygons and, below, the code needed to reproduce the problem :
+
+
+test <- sf::st_read("Please add your path/polygons.gpkg")
+
+# Converting the sf object into a dataframe with geom as text
+test_chr <- test |>
+? dplyr::mutate(geom = sf::st_as_text(geom, EWKT = TRUE)) |>
+? as.data.frame()
+
+# Converting back to a sf object
+test_new <- test_chr |>
+? dplyr::mutate(geom = sf::st_as_sfc(geom)) |>
+? sf::st_sf()
+
+# Comparing the original ('test') and the new ('test_new') sf objects
+plot(test$geom, lwd = 1, border = "blue")
+plot(test_new$geom, lwd = 2, lty = 2, border = "red", add = TRUE)
+
+
+Thank you in advance for your help.
+Cheers,
+Lo?c
+_______________________________________________
+R-sig-Geo mailing list
+R-sig-Geo at r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+
+
+--
+Michael Sumner
+Research Software Engineer
+Australian Antarctic Division
+Hobart, Australia
+e-mail: mdsumner at gmail.com
+
+From Scott@W@|ch|er @end|ng |rom pnn|@gov  Fri Sep 27 16:37:39 2024
+From: Scott@W@|ch|er @end|ng |rom pnn|@gov (Waichler, Scott R)
+Date: Fri, 27 Sep 2024 14:37:39 +0000
+Subject: [R-sig-Geo] unexpected attribute plotting with sf polygons
+In-Reply-To: <PH0PR09MB8217C719E4B41195A3F87D78E86B2@PH0PR09MB8217.namprd09.prod.outlook.com>
+References: <PH0PR09MB8217C719E4B41195A3F87D78E86B2@PH0PR09MB8217.namprd09.prod.outlook.com>
+Message-ID: <CO6PR09MB8216D4BC2CB22C48B289CC99E86B2@CO6PR09MB8216.namprd09.prod.outlook.com>
+
+Hi, When I plot the "sf" and "data.frame" object my.poly2 below, all of the polygons are the same color, despite my setting two different values for the Attribute.  What have I done wrong?
+
+my.text <-
+c("POLYGON ((0 2.69, 4.483057 2.86, 4.483057 2.76, 0 2.59, 0 2.69))",
+  "POLYGON ((0 2.59, 4.483057 2.76, 4.483057 2.26, 0 2.09, 0 2.59))",
+  "POLYGON ((0 2.09, 4.483057 2.26, 4.483057 1.26, 0 1.09, 0 2.09))",
+  "POLYGON ((0 1.09, 4.483057 1.26, 4.483057 -0.74, 0 -0.91, 0 1.09))")
+my.poly <- st_as_sfc(my.text)
+mat <- matrix(c(rep(1, 4), rep(2, 4)), byrow=F, ncol=2)
+my.poly2 <- st_sf(Attribute = mat, geom = my.poly)
+plot(my.poly2, breaks = c(0.5, 1.5, 2.5))
+
+Thank you,
+
+Scott Waichler, PhD
+
+Pacific Northwest National Lab
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From m@p|no|@10 @end|ng |rom gm@||@com  Fri Sep 27 17:29:04 2024
+From: m@p|no|@10 @end|ng |rom gm@||@com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Fri, 27 Sep 2024 09:29:04 -0600
+Subject: [R-sig-Geo] 
+ Species distribution models based on areal data instead
+ of point pattern
+In-Reply-To: <CAJWFm91ghvz2eywBUyvrNZL3h+mJ_09jgtbcT_LiU4CEy9jOAQ@mail.gmail.com>
+References: <CABkCotRXcNTFT9enJY2UrQTwDvQzwUepp35fD5Hdi+yAV2RX5Q@mail.gmail.com>
+ <01369753-3bfa-43c8-a8e1-7d509813ee16@urjc.es>
+ <CAJWFm91ghvz2eywBUyvrNZL3h+mJ_09jgtbcT_LiU4CEy9jOAQ@mail.gmail.com>
+Message-ID: <CABkCotS_FaS3OJKgjTERjFpSJJ727KUtjB3EWDry3WhZjbyNJg@mail.gmail.com>
+
+Thank you very much Marcelino and MIke.
+
+spmodel should be a good option.  I also learned that CARBayes also works
+with areal data.
+
+Manuel
+
+El jue, 26 sept 2024 a las 14:25, mgm mgm (<mgm917391 at gmail.com>) escribi?:
+
+> See the vignette in the Spmodel package
+> https://cran.r-project.org/web/packages/spmodel/index.html
+> Mike
+>
+> On Thursday, September 26, 2024, Marcelino de la Cruz Rot <
+> marcelino.delacruz at urjc.es> wrote:
+> >
+> > https://cran.r-project.org/package=dismo
+> >
+> > https://rspatial.org/sdm/index.html
+> >
+> >
+> > El 26/09/2024 a las 21:42, Manuel Sp?nola escribi?:
+> >>
+> >> Dear list members,
+> >>
+> >> Are there any R packages focused on species distribution models based on
+> >> areal data (specifically grids) instead of point pattern?
+> >>
+> >>
+> >> Manuel
+> >>
+> >
+> > --
+> > Marcelino de la Cruz Rot
+> > Coordinador funcional de Biolog?a
+> > Depto. de Biolog?a y Geolog?a
+> > F?sica y Qu?mica Inorg?nica
+> > Universidad Rey Juan Carlos
+> > M?stoles Espa?a
+> >
+> > Instituto de Investigaci?n en Cambio Global (IICG-URJC)
+> > Universidad Rey Juan Carlos,
+> > Tulip?n s/n,
+> > 28933 M?stoles, Espa?a
+> >
+> > _______________________________________________
+> > R-sig-Geo mailing list
+> > R-sig-Geo at r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-sig-Geo mailing list
+> R-sig-Geo at r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+>
+
+
+-- 
+*Manuel Sp?nola, Ph.D.*
+Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola at una.cr <mspinola at una.ac.cr>
+mspinola10 at gmail.com
+Tel?fono: (506) 8706 - 4662
+Sitio web institucional: ICOMVIS
+<http://www.icomvis.una.ac.cr/index.php/manuel>
+Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>
+Blog sobre Ciencia de Datos: Blog de Ciencia de Datos
+<https://mspinola-ciencia-de-datos.netlify.app>
+
+	[[alternative HTML version deleted]]
+
+
+From z|v@n@k@r@m@n @end|ng |rom gm@||@com  Fri Sep 27 18:37:48 2024
+From: z|v@n@k@r@m@n @end|ng |rom gm@||@com (Zivan Karaman)
+Date: Fri, 27 Sep 2024 18:37:48 +0200
+Subject: [R-sig-Geo] unexpected attribute plotting with sf polygons
+In-Reply-To: <CO6PR09MB8216D4BC2CB22C48B289CC99E86B2@CO6PR09MB8216.namprd09.prod.outlook.com>
+References: <PH0PR09MB8217C719E4B41195A3F87D78E86B2@PH0PR09MB8217.namprd09.prod.outlook.com>
+ <CO6PR09MB8216D4BC2CB22C48B289CC99E86B2@CO6PR09MB8216.namprd09.prod.outlook.com>
+Message-ID: <CAKtE6yN5pfd47F=eNsijrx_iiMdoh-MsARaimhJMTRoyCxspog@mail.gmail.com>
+
+You have defined two attributes that are constant across your geometries,
+so they are shown in the same color.
+The code `mat <- matrix(c(rep(1, 2), rep(2, 2)), byrow=FALSE, ncol=1)` will
+define one attribute with two distinct values that will be shown in two
+colors.
+Hope this helps!
+
+On Fri, Sep 27, 2024 at 4:37?PM Waichler, Scott R via R-sig-Geo <
+r-sig-geo at r-project.org> wrote:
+
+> Hi, When I plot the "sf" and "data.frame" object my.poly2 below, all of
+> the polygons are the same color, despite my setting two different values
+> for the Attribute.  What have I done wrong?
+>
+> my.text <-
+> c("POLYGON ((0 2.69, 4.483057 2.86, 4.483057 2.76, 0 2.59, 0 2.69))",
+>   "POLYGON ((0 2.59, 4.483057 2.76, 4.483057 2.26, 0 2.09, 0 2.59))",
+>   "POLYGON ((0 2.09, 4.483057 2.26, 4.483057 1.26, 0 1.09, 0 2.09))",
+>   "POLYGON ((0 1.09, 4.483057 1.26, 4.483057 -0.74, 0 -0.91, 0 1.09))")
+> my.poly <- st_as_sfc(my.text)
+> mat <- matrix(c(rep(1, 4), rep(2, 4)), byrow=F, ncol=2)
+> my.poly2 <- st_sf(Attribute = mat, geom = my.poly)
+> plot(my.poly2, breaks = c(0.5, 1.5, 2.5))
+>
+> Thank you,
+>
+> Scott Waichler, PhD
+>
+> Pacific Northwest National Lab
+>
+>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-sig-Geo mailing list
+> R-sig-Geo at r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+>
+
+	[[alternative HTML version deleted]]
+
+
+From jcg@ntunez @end|ng |rom gm@||@com  Fri Sep 27 20:05:54 2024
+From: jcg@ntunez @end|ng |rom gm@||@com (=?UTF-8?Q?Jos=C3=A9_Carlos_Guerrero_Ant=C3=BAnez?=)
+Date: Fri, 27 Sep 2024 15:05:54 -0300
+Subject: [R-sig-Geo] 
+ Species distribution models based on areal data instead
+ of point pattern
+In-Reply-To: <CABkCotS_FaS3OJKgjTERjFpSJJ727KUtjB3EWDry3WhZjbyNJg@mail.gmail.com>
+References: <CABkCotRXcNTFT9enJY2UrQTwDvQzwUepp35fD5Hdi+yAV2RX5Q@mail.gmail.com>
+ <01369753-3bfa-43c8-a8e1-7d509813ee16@urjc.es>
+ <CAJWFm91ghvz2eywBUyvrNZL3h+mJ_09jgtbcT_LiU4CEy9jOAQ@mail.gmail.com>
+ <CABkCotS_FaS3OJKgjTERjFpSJJ727KUtjB3EWDry3WhZjbyNJg@mail.gmail.com>
+Message-ID: <CAEO28jeheGv13X4AGPggHN68BxM2EuraeRVC5n5_wir5eHy+cw@mail.gmail.com>
+
+Hi Manuel,
+
+Other r package is *fuzzySim*
+https://cran.r-project.org/web/packages/fuzzySim/index.html
+
+More information at
+https://modtools.wordpress.com/packages/fuzzysim/
+
+Regards,
+
+El vie, 27 sept 2024 a las 12:29, Manuel Sp?nola (<mspinola10 at gmail.com>)
+escribi?:
+
+> Thank you very much Marcelino and MIke.
+>
+> spmodel should be a good option.  I also learned that CARBayes also works
+> with areal data.
+>
+> Manuel
+>
+> El jue, 26 sept 2024 a las 14:25, mgm mgm (<mgm917391 at gmail.com>)
+> escribi?:
+>
+> > See the vignette in the Spmodel package
+> > https://cran.r-project.org/web/packages/spmodel/index.html
+> > Mike
+> >
+> > On Thursday, September 26, 2024, Marcelino de la Cruz Rot <
+> > marcelino.delacruz at urjc.es> wrote:
+> > >
+> > > https://cran.r-project.org/package=dismo
+> > >
+> > > https://rspatial.org/sdm/index.html
+> > >
+> > >
+> > > El 26/09/2024 a las 21:42, Manuel Sp?nola escribi?:
+> > >>
+> > >> Dear list members,
+> > >>
+> > >> Are there any R packages focused on species distribution models based
+> on
+> > >> areal data (specifically grids) instead of point pattern?
+> > >>
+> > >>
+> > >> Manuel
+> > >>
+> > >
+> > > --
+> > > Marcelino de la Cruz Rot
+> > > Coordinador funcional de Biolog?a
+> > > Depto. de Biolog?a y Geolog?a
+> > > F?sica y Qu?mica Inorg?nica
+> > > Universidad Rey Juan Carlos
+> > > M?stoles Espa?a
+> > >
+> > > Instituto de Investigaci?n en Cambio Global (IICG-URJC)
+> > > Universidad Rey Juan Carlos,
+> > > Tulip?n s/n,
+> > > 28933 M?stoles, Espa?a
+> > >
+> > > _______________________________________________
+> > > R-sig-Geo mailing list
+> > > R-sig-Geo at r-project.org
+> > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+> > >
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-sig-Geo mailing list
+> > R-sig-Geo at r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+> >
+>
+>
+> --
+> *Manuel Sp?nola, Ph.D.*
+> Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre
+> Universidad Nacional
+> Apartado 1350-3000
+> Heredia
+> COSTA RICA
+> mspinola at una.cr <mspinola at una.ac.cr>
+> mspinola10 at gmail.com
+> Tel?fono: (506) 8706 - 4662
+> Sitio web institucional: ICOMVIS
+> <http://www.icomvis.una.ac.cr/index.php/manuel>
+> Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>
+> Blog sobre Ciencia de Datos: Blog de Ciencia de Datos
+> <https://mspinola-ciencia-de-datos.netlify.app>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-sig-Geo mailing list
+> R-sig-Geo at r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+>
+
+
+-- 
+Jos? Carlos Guerrero
+
+	[[alternative HTML version deleted]]
+
+
+From Scott@W@|ch|er @end|ng |rom pnn|@gov  Fri Sep 27 20:23:54 2024
+From: Scott@W@|ch|er @end|ng |rom pnn|@gov (Waichler, Scott R)
+Date: Fri, 27 Sep 2024 18:23:54 +0000
+Subject: [R-sig-Geo] unexpected attribute plotting with sf polygons
+In-Reply-To: <CAKtE6yN5pfd47F=eNsijrx_iiMdoh-MsARaimhJMTRoyCxspog@mail.gmail.com>
+References: <PH0PR09MB8217C719E4B41195A3F87D78E86B2@PH0PR09MB8217.namprd09.prod.outlook.com>
+ <CO6PR09MB8216D4BC2CB22C48B289CC99E86B2@CO6PR09MB8216.namprd09.prod.outlook.com>
+ <CAKtE6yN5pfd47F=eNsijrx_iiMdoh-MsARaimhJMTRoyCxspog@mail.gmail.com>
+Message-ID: <CO6PR09MB82165C7F9C8F5B8E9D316026E86B2@CO6PR09MB8216.namprd09.prod.outlook.com>
+
+Thanks for the comments, but it's still not working.  The version below uses vectors instead of a matrix for the attributes, but it's still making two plots all of the same color.  Time1 should be one color, Time2 should be the other.   As should be clear from my attribute names, I am trying to use the lattice-like paneling capability to represent values at different times of the same variable.
+
+my.text <-
+c("POLYGON ((0 2.69, 4.483057 2.86, 4.483057 2.76, 0 2.59, 0 2.69))",
+  "POLYGON ((0 2.59, 4.483057 2.76, 4.483057 2.26, 0 2.09, 0 2.59))",
+  "POLYGON ((0 2.09, 4.483057 2.26, 4.483057 1.26, 0 1.09, 0 2.09))",
+  "POLYGON ((0 1.09, 4.483057 1.26, 4.483057 -0.74, 0 -0.91, 0 1.09))")
+my.poly <- st_as_sfc(my.text)
+my.poly2 <- st_sf(Time1 = rep(1,4), Time2 = rep(2,4), geom = my.poly)
+plot(my.poly2, breaks = c(0.5, 1.5, 2.5))
+
+--Scott Waichler
+________________________________
+From: Zivan Karaman <zivan.karaman at gmail.com>
+Sent: Friday, September 27, 2024 9:37 AM
+To: Waichler, Scott R <Scott.Waichler at pnnl.gov>
+Cc: r-sig-geo at r-project.org <r-sig-geo at r-project.org>
+Subject: Re: [R-sig-Geo] unexpected attribute plotting with sf polygons
+
+Check twice before you click! This email originated from outside PNNL.
+
+You have defined two attributes that are constant across your geometries, so they are shown in the same color.
+The code `mat <- matrix(c(rep(1, 2), rep(2, 2)), byrow=FALSE, ncol=1)` will define one attribute with two distinct values that will be shown in two colors.
+Hope this helps!
+
+On Fri, Sep 27, 2024 at 4:37?PM Waichler, Scott R via R-sig-Geo <r-sig-geo at r-project.org<mailto:r-sig-geo at r-project.org>> wrote:
+Hi, When I plot the "sf" and "data.frame" object my.poly2 below, all of the polygons are the same color, despite my setting two different values for the Attribute.  What have I done wrong?
+
+my.text <-
+c("POLYGON ((0 2.69, 4.483057 2.86, 4.483057 2.76, 0 2.59, 0 2.69))",
+  "POLYGON ((0 2.59, 4.483057 2.76, 4.483057 2.26, 0 2.09, 0 2.59))",
+  "POLYGON ((0 2.09, 4.483057 2.26, 4.483057 1.26, 0 1.09, 0 2.09))",
+  "POLYGON ((0 1.09, 4.483057 1.26, 4.483057 -0.74, 0 -0.91, 0 1.09))")
+my.poly <- st_as_sfc(my.text)
+mat <- matrix(c(rep(1, 4), rep(2, 4)), byrow=F, ncol=2)
+my.poly2 <- st_sf(Attribute = mat, geom = my.poly)
+plot(my.poly2, breaks = c(0.5, 1.5, 2.5))
+
+Thank you,
+
+Scott Waichler, PhD
+
+Pacific Northwest National Lab
+
+
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-sig-Geo mailing list
+R-sig-Geo at r-project.org<mailto:R-sig-Geo at r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+
+	[[alternative HTML version deleted]]
+
+
+From z|v@n@k@r@m@n @end|ng |rom gm@||@com  Fri Sep 27 21:47:30 2024
+From: z|v@n@k@r@m@n @end|ng |rom gm@||@com (Zivan Karaman)
+Date: Fri, 27 Sep 2024 21:47:30 +0200
+Subject: [R-sig-Geo] unexpected attribute plotting with sf polygons
+In-Reply-To: <CO6PR09MB82165C7F9C8F5B8E9D316026E86B2@CO6PR09MB8216.namprd09.prod.outlook.com>
+References: <PH0PR09MB8217C719E4B41195A3F87D78E86B2@PH0PR09MB8217.namprd09.prod.outlook.com>
+ <CO6PR09MB8216D4BC2CB22C48B289CC99E86B2@CO6PR09MB8216.namprd09.prod.outlook.com>
+ <CAKtE6yN5pfd47F=eNsijrx_iiMdoh-MsARaimhJMTRoyCxspog@mail.gmail.com>
+ <CO6PR09MB82165C7F9C8F5B8E9D316026E86B2@CO6PR09MB8216.namprd09.prod.outlook.com>
+Message-ID: <CAKtE6yMhtX_y878YF-dBm6cwynVcns03kDWwaeS2w8vKxCKN1w@mail.gmail.com>
+
+When I run your code I get Time1 in one color and Time2 in another
+color, as expected.
+[image: image.png]
+
+On Fri, Sep 27, 2024 at 8:23?PM Waichler, Scott R <Scott.Waichler at pnnl.gov>
+wrote:
+
+> Thanks for the comments, but it's still not working.  The version below
+> uses vectors instead of a matrix for the attributes, but it's still making
+> two plots all of the same color.  Time1 should be one color, Time2 should
+> be the other.   As should be clear from my attribute names, I am trying to
+> use the lattice-like paneling capability to represent values at different
+> times of the same variable.
+>
+> my.text <-
+> c("POLYGON ((0 2.69, 4.483057 2.86, 4.483057 2.76, 0 2.59, 0 2.69))",
+>   "POLYGON ((0 2.59, 4.483057 2.76, 4.483057 2.26, 0 2.09, 0 2.59))",
+>   "POLYGON ((0 2.09, 4.483057 2.26, 4.483057 1.26, 0 1.09, 0 2.09))",
+>   "POLYGON ((0 1.09, 4.483057 1.26, 4.483057 -0.74, 0 -0.91, 0 1.09))")
+> my.poly <- st_as_sfc(my.text)
+> my.poly2 <- st_sf(Time1 = rep(1,4), Time2 = rep(2,4), geom = my.poly)
+> plot(my.poly2, breaks = c(0.5, 1.5, 2.5))
+>
+> --Scott Waichler
+> ------------------------------
+> *From:* Zivan Karaman <zivan.karaman at gmail.com>
+> *Sent:* Friday, September 27, 2024 9:37 AM
+> *To:* Waichler, Scott R <Scott.Waichler at pnnl.gov>
+> *Cc:* r-sig-geo at r-project.org <r-sig-geo at r-project.org>
+> *Subject:* Re: [R-sig-Geo] unexpected attribute plotting with sf polygons
+>
+> Check twice before you click! This email originated from outside PNNL.
+>
+> You have defined two attributes that are constant across your geometries,
+> so they are shown in the same color.
+> The code `mat <- matrix(c(rep(1, 2), rep(2, 2)), byrow=FALSE, ncol=1)`
+> will define one attribute with two distinct values that will be shown in
+> two colors.
+> Hope this helps!
+>
+> On Fri, Sep 27, 2024 at 4:37?PM Waichler, Scott R via R-sig-Geo <
+> r-sig-geo at r-project.org> wrote:
+>
+> Hi, When I plot the "sf" and "data.frame" object my.poly2 below, all of
+> the polygons are the same color, despite my setting two different values
+> for the Attribute.  What have I done wrong?
+>
+> my.text <-
+> c("POLYGON ((0 2.69, 4.483057 2.86, 4.483057 2.76, 0 2.59, 0 2.69))",
+>   "POLYGON ((0 2.59, 4.483057 2.76, 4.483057 2.26, 0 2.09, 0 2.59))",
+>   "POLYGON ((0 2.09, 4.483057 2.26, 4.483057 1.26, 0 1.09, 0 2.09))",
+>   "POLYGON ((0 1.09, 4.483057 1.26, 4.483057 -0.74, 0 -0.91, 0 1.09))")
+> my.poly <- st_as_sfc(my.text)
+> mat <- matrix(c(rep(1, 4), rep(2, 4)), byrow=F, ncol=2)
+> my.poly2 <- st_sf(Attribute = mat, geom = my.poly)
+> plot(my.poly2, breaks = c(0.5, 1.5, 2.5))
+>
+> Thank you,
+>
+> Scott Waichler, PhD
+>
+> Pacific Northwest National Lab
+>
+>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-sig-Geo mailing list
+> R-sig-Geo at r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+>
+>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20240927/f814caae/attachment.html>
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 22014 bytes
+Desc: not available
+URL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20240927/f814caae/attachment.png>
+
+From Scott@W@|ch|er @end|ng |rom pnn|@gov  Fri Sep 27 22:08:45 2024
+From: Scott@W@|ch|er @end|ng |rom pnn|@gov (Waichler, Scott R)
+Date: Fri, 27 Sep 2024 20:08:45 +0000
+Subject: [R-sig-Geo] unexpected attribute plotting with sf polygons
+In-Reply-To: <CAKtE6yMhtX_y878YF-dBm6cwynVcns03kDWwaeS2w8vKxCKN1w@mail.gmail.com>
+References: <PH0PR09MB8217C719E4B41195A3F87D78E86B2@PH0PR09MB8217.namprd09.prod.outlook.com>
+ <CO6PR09MB8216D4BC2CB22C48B289CC99E86B2@CO6PR09MB8216.namprd09.prod.outlook.com>
+ <CAKtE6yN5pfd47F=eNsijrx_iiMdoh-MsARaimhJMTRoyCxspog@mail.gmail.com>
+ <CO6PR09MB82165C7F9C8F5B8E9D316026E86B2@CO6PR09MB8216.namprd09.prod.outlook.com>
+ <CAKtE6yMhtX_y878YF-dBm6cwynVcns03kDWwaeS2w8vKxCKN1w@mail.gmail.com>
+Message-ID: <CO6PR09MB8216E62DFA4C099B13FB3F38E86B2@CO6PR09MB8216.namprd09.prod.outlook.com>
+
+Thank you for this.  I think my software may be too old and has caused the problem.  I am running R version 4.2.2 Patched (2023-01-29 r83721) and sf_1.0-9 .  I will get it updated.
+
+Thanks,
+Scott
+________________________________
+From: Zivan Karaman <zivan.karaman at gmail.com>
+Sent: Friday, September 27, 2024 12:47 PM
+To: Waichler, Scott R <Scott.Waichler at pnnl.gov>
+Cc: r-sig-geo at r-project.org <r-sig-geo at r-project.org>; edzer.pebesma at uni-muenster.de <edzer.pebesma at uni-muenster.de>
+Subject: Re: [R-sig-Geo] unexpected attribute plotting with sf polygons
+
+When I run your code I get Time1 in one color and Time2 in another color, as expected.
+[image.png]
+
+On Fri, Sep 27, 2024 at 8:23?PM Waichler, Scott R <Scott.Waichler at pnnl.gov<mailto:Scott.Waichler at pnnl.gov>> wrote:
+Thanks for the comments, but it's still not working.  The version below uses vectors instead of a matrix for the attributes, but it's still making two plots all of the same color.  Time1 should be one color, Time2 should be the other.   As should be clear from my attribute names, I am trying to use the lattice-like paneling capability to represent values at different times of the same variable.
+
+my.text <-
+c("POLYGON ((0 2.69, 4.483057 2.86, 4.483057 2.76, 0 2.59, 0 2.69))",
+  "POLYGON ((0 2.59, 4.483057 2.76, 4.483057 2.26, 0 2.09, 0 2.59))",
+  "POLYGON ((0 2.09, 4.483057 2.26, 4.483057 1.26, 0 1.09, 0 2.09))",
+  "POLYGON ((0 1.09, 4.483057 1.26, 4.483057 -0.74, 0 -0.91, 0 1.09))")
+my.poly <- st_as_sfc(my.text)
+my.poly2 <- st_sf(Time1 = rep(1,4), Time2 = rep(2,4), geom = my.poly)
+plot(my.poly2, breaks = c(0.5, 1.5, 2.5))
+
+--Scott Waichler
+________________________________
+From: Zivan Karaman <zivan.karaman at gmail.com<mailto:zivan.karaman at gmail.com>>
+Sent: Friday, September 27, 2024 9:37 AM
+To: Waichler, Scott R <Scott.Waichler at pnnl.gov<mailto:Scott.Waichler at pnnl.gov>>
+Cc: r-sig-geo at r-project.org<mailto:r-sig-geo at r-project.org> <r-sig-geo at r-project.org<mailto:r-sig-geo at r-project.org>>
+Subject: Re: [R-sig-Geo] unexpected attribute plotting with sf polygons
+
+Check twice before you click! This email originated from outside PNNL.
+
+You have defined two attributes that are constant across your geometries, so they are shown in the same color.
+The code `mat <- matrix(c(rep(1, 2), rep(2, 2)), byrow=FALSE, ncol=1)` will define one attribute with two distinct values that will be shown in two colors.
+Hope this helps!
+
+On Fri, Sep 27, 2024 at 4:37?PM Waichler, Scott R via R-sig-Geo <r-sig-geo at r-project.org<mailto:r-sig-geo at r-project.org>> wrote:
+Hi, When I plot the "sf" and "data.frame" object my.poly2 below, all of the polygons are the same color, despite my setting two different values for the Attribute.  What have I done wrong?
+
+my.text <-
+c("POLYGON ((0 2.69, 4.483057 2.86, 4.483057 2.76, 0 2.59, 0 2.69))",
+  "POLYGON ((0 2.59, 4.483057 2.76, 4.483057 2.26, 0 2.09, 0 2.59))",
+  "POLYGON ((0 2.09, 4.483057 2.26, 4.483057 1.26, 0 1.09, 0 2.09))",
+  "POLYGON ((0 1.09, 4.483057 1.26, 4.483057 -0.74, 0 -0.91, 0 1.09))")
+my.poly <- st_as_sfc(my.text)
+mat <- matrix(c(rep(1, 4), rep(2, 4)), byrow=F, ncol=2)
+my.poly2 <- st_sf(Attribute = mat, geom = my.poly)
+plot(my.poly2, breaks = c(0.5, 1.5, 2.5))
+
+Thank you,
+
+Scott Waichler, PhD
+
+Pacific Northwest National Lab
+
+
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-sig-Geo mailing list
+R-sig-Geo at r-project.org<mailto:R-sig-Geo at r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20240927/17e4463d/attachment.html>
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 22014 bytes
+Desc: image.png
+URL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20240927/17e4463d/attachment.png>
+
+From m@p|no|@10 @end|ng |rom gm@||@com  Fri Sep 27 23:12:19 2024
+From: m@p|no|@10 @end|ng |rom gm@||@com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Fri, 27 Sep 2024 15:12:19 -0600
+Subject: [R-sig-Geo] 
+ Species distribution models based on areal data instead
+ of point pattern
+In-Reply-To: <CAEO28jeheGv13X4AGPggHN68BxM2EuraeRVC5n5_wir5eHy+cw@mail.gmail.com>
+References: <CABkCotRXcNTFT9enJY2UrQTwDvQzwUepp35fD5Hdi+yAV2RX5Q@mail.gmail.com>
+ <01369753-3bfa-43c8-a8e1-7d509813ee16@urjc.es>
+ <CAJWFm91ghvz2eywBUyvrNZL3h+mJ_09jgtbcT_LiU4CEy9jOAQ@mail.gmail.com>
+ <CABkCotS_FaS3OJKgjTERjFpSJJ727KUtjB3EWDry3WhZjbyNJg@mail.gmail.com>
+ <CAEO28jeheGv13X4AGPggHN68BxM2EuraeRVC5n5_wir5eHy+cw@mail.gmail.com>
+Message-ID: <CABkCotR5WVmXraP0VAZc_MOZ=kmnsk2u=ONixCTuj8G6NxXu2g@mail.gmail.com>
+
+Thank you very much Jos? Carlos.
+
+Manuel
+
+El vie, 27 sept 2024 a las 12:06, Jos? Carlos Guerrero Ant?nez (<
+jcgantunez at gmail.com>) escribi?:
+
+> Hi Manuel,
+>
+> Other r package is *fuzzySim*
+> https://cran.r-project.org/web/packages/fuzzySim/index.html
+>
+> More information at
+> https://modtools.wordpress.com/packages/fuzzysim/
+>
+> Regards,
+>
+> El vie, 27 sept 2024 a las 12:29, Manuel Sp?nola (<mspinola10 at gmail.com>)
+> escribi?:
+>
+>> Thank you very much Marcelino and MIke.
+>>
+>> spmodel should be a good option.  I also learned that CARBayes also works
+>> with areal data.
+>>
+>> Manuel
+>>
+>> El jue, 26 sept 2024 a las 14:25, mgm mgm (<mgm917391 at gmail.com>)
+>> escribi?:
+>>
+>> > See the vignette in the Spmodel package
+>> > https://cran.r-project.org/web/packages/spmodel/index.html
+>> > Mike
+>> >
+>> > On Thursday, September 26, 2024, Marcelino de la Cruz Rot <
+>> > marcelino.delacruz at urjc.es> wrote:
+>> > >
+>> > > https://cran.r-project.org/package=dismo
+>> > >
+>> > > https://rspatial.org/sdm/index.html
+>> > >
+>> > >
+>> > > El 26/09/2024 a las 21:42, Manuel Sp?nola escribi?:
+>> > >>
+>> > >> Dear list members,
+>> > >>
+>> > >> Are there any R packages focused on species distribution models
+>> based on
+>> > >> areal data (specifically grids) instead of point pattern?
+>> > >>
+>> > >>
+>> > >> Manuel
+>> > >>
+>> > >
+>> > > --
+>> > > Marcelino de la Cruz Rot
+>> > > Coordinador funcional de Biolog?a
+>> > > Depto. de Biolog?a y Geolog?a
+>> > > F?sica y Qu?mica Inorg?nica
+>> > > Universidad Rey Juan Carlos
+>> > > M?stoles Espa?a
+>> > >
+>> > > Instituto de Investigaci?n en Cambio Global (IICG-URJC)
+>> > > Universidad Rey Juan Carlos,
+>> > > Tulip?n s/n,
+>> > > 28933 M?stoles, Espa?a
+>> > >
+>> > > _______________________________________________
+>> > > R-sig-Geo mailing list
+>> > > R-sig-Geo at r-project.org
+>> > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+>> > >
+>> >
+>> >         [[alternative HTML version deleted]]
+>> >
+>> > _______________________________________________
+>> > R-sig-Geo mailing list
+>> > R-sig-Geo at r-project.org
+>> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+>> >
+>>
+>>
+>> --
+>> *Manuel Sp?nola, Ph.D.*
+>> Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre
+>> Universidad Nacional
+>> Apartado 1350-3000
+>> Heredia
+>> COSTA RICA
+>> mspinola at una.cr <mspinola at una.ac.cr>
+>> mspinola10 at gmail.com
+>> Tel?fono: (506) 8706 - 4662
+>> Sitio web institucional: ICOMVIS
+>> <http://www.icomvis.una.ac.cr/index.php/manuel>
+>> Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app
+>> >
+>> Blog sobre Ciencia de Datos: Blog de Ciencia de Datos
+>> <https://mspinola-ciencia-de-datos.netlify.app>
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-sig-Geo mailing list
+>> R-sig-Geo at r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo
+>>
+>
+>
+> --
+> Jos? Carlos Guerrero
+>
+
+
+-- 
+*Manuel Sp?nola, Ph.D.*
+Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola at una.cr <mspinola at una.ac.cr>
+mspinola10 at gmail.com
+Tel?fono: (506) 8706 - 4662
+Sitio web institucional: ICOMVIS
+<http://www.icomvis.una.ac.cr/index.php/manuel>
+Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>
+Blog sobre Ciencia de Datos: Blog de Ciencia de Datos
+<https://mspinola-ciencia-de-datos.netlify.app>
+
+	[[alternative HTML version deleted]]
+
+

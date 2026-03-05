@@ -1,0 +1,38 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2003-11",
+  "messages": [
+    {
+      "id": "msg-109c509fbd85",
+      "message_id": "<00b201c39fd0$da72b3b0$818001db@webgis>",
+      "from_name": "Hisaji Ono",
+      "from_email_hash": "4857db17b7e848ab1379157d08a470dfc3f16a2fe4d02ed4b21725afd9ea2f9d",
+      "date": "2003-11-01T02:03:06+09:00",
+      "subject": "[R-sig-Geo] shapefiles plotting and colouring",
+      "subject_clean": "shapefiles plotting and colouring",
+      "in_reply_to": null,
+      "references": [
+        "<200310311557.16227.cavallini@faunalia.it>"
+      ],
+      "body_plain": "Hi.\n\nI've tried to draw choropleth maps by rmap package as follows.\n\nlibrary(rmap)\n\nmySF <- shapefile(\"columbus.shp\")\n\n crime <- mySF$CRIME\n\n# user-defined legend\n classes <- c(50,100,500,1000,5000)\n breaks <- length(classes) + 1\n classNo <- crime < classes[1]\n for(i in 1:(breaks - 1))\n   classNo <- classNo + (crime >= classes[i] & crime < classes[i + 1]) * i\n\n classNo <- classNo + (crime >= max(classes)) * breaks\n plot(mySF, f=gray(1 - classNo/breaks)) # draw map\n lines(mySF, col=\"red\") # draw outlines\n\n----- Original Message ----- \nFrom: \"Paolo Cavallini\" <cavallini at faunalia.it>\nTo: <r-sig-geo at stat.math.ethz.ch>\nSent: Friday, October 31, 2003 11:57 PM\nSubject: [R-sig-Geo] shapefiles plotting and colouring\n\n\n> -----BEGIN PGP SIGNED MESSAGE-----\n> Hash: SHA1\n>\n> Hi all.\n> it may be a silly question, but: how can I, after reading a shapefile with\nthe\n> appropriate library, draw them with different colours (or grey shades)\n> according to different database fields (read through RODBC)? The idea is\n> similar to the polygon command, but using shp as polygons and database\nfields\n> as qualifiers.\n> Thanks for any suggestions.\n> Ciao.\n> paolo",
+      "body_snippet": "Hi.\n\nI've tried to draw choropleth maps by rmap package as follows.\n\nlibrary(rmap)\n\nmySF <- shapefile(\"columbus.shp\")\n\n crime <- mySF$CRIME\n\n# user-defined legend\n classes <- c(50,100,500,1000,5000)\n ",
+      "thread_id": "thread-109c509fbd85",
+      "thread_depth": 0,
+      "month": "2003-11"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-109c509fbd85",
+      "subject": "shapefiles plotting and colouring",
+      "message_count": 1,
+      "participants": [
+        "Hisaji Ono"
+      ],
+      "started": "2003-11-01T02:03:06+09:00",
+      "last_reply": "2003-11-01T02:03:06+09:00",
+      "root_message_id": "msg-109c509fbd85"
+    }
+  ]
+}

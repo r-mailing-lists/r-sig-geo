@@ -1,0 +1,993 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2005-10",
+  "messages": [
+    {
+      "id": "msg-3f69de5e3458",
+      "message_id": "<Pine.LNX.4.44.0510011035320.17631-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-10-01T10:47:15+02:00",
+      "subject": "[R-sig-Geo] convertion to polygon for coloring, shading (was:  clipping in maptools)",
+      "subject_clean": "convertion to polygon for coloring, shading (was:  clipping in maptools)",
+      "in_reply_to": "<87k6gyfa50.fsf@mun.ca>",
+      "references": [],
+      "body_plain": "On Fri, 30 Sep 2005, Sebastian Luque wrote:\n\n> On Fri, 30 Sep 2005 23:38:39 +0200 (CEST),\n> Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> \n> [...]\n> \n> > Using the plot method for sp class SpatialPolygons, the xlim= and ylim=\n> > arguments do what you want. They do in plot.polylist() too, but in\n> > plot.Map() you get warnings when the arguments are passed to plotting\n> > functions that don't know about them.\n> \n> I should have imagined that xlim and ylim could be passed to these\n> functions.  Thank you, that helped!\n> \n> On a related note, I'm also trying to color some of these maps, so IIUC\n> they need to be converted to polygons.  I thought that Map2poly would be a\n> good candidate, but I its main argument needs to be a Map object as\n> imported from a GIS polygon vector file.  It seems my Map object doesn't\n> fit this description, as I'm getting this error:\n> \n\nTry:\n\n> getinfo.shape(\"your_file.shp\")\n\nand see what it says. If it is not type (5)  - or since version 0.4-15\n(15) - it is not a polygon file. If the lines are known to form rings,\nthere are ways of doing this using sp classes, but you have to know\ndefinitely that the lines are rings, not spaghetti. Ask again if you have \na type (3) or (13), and know that all the lines really are rings.\n\nWhich version of maptools are you using - enter maptools() to see?\n\n> ,-----\n> | Error in Map2poly(myMap) : maptype not poly\n> `-----\n> \n> Finally and with apologies if it's somewhat OT: for things like including\n> a scale and north arrow, is it better to export the shape file and do\n> these in Arcview or Grass, or can it be done within R?  I thought I'd ask\n> more experienced users.\n\nThe scale and north arrow are available in sp - see ?\"spplot-methods\" for \nhow to use them in lattice graphics. In base graphics, arrows() and a \ncombination of lines() and/or rect() should do it, but they are not \npre-programmed (yet).\n\n> \n> Any pointers would be most welcome.  Thanks a lot once again.\n> \n> \n> Cheers,\n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Fri, 30 Sep 2005, Sebastian Luque wrote:\n\n> On Fri, 30 Sep 2005 23:38:39 +0200 (CEST),\n> Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> \n> [...]\n> \n> > Using the plot method for sp class SpatialPol",
+      "thread_id": "thread-3f69de5e3458",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-902696758592",
+      "message_id": "<874q811d5v.fsf@gmail.com>",
+      "from_name": "Sebastian Luque",
+      "from_email_hash": "2cd4815ed8883e0c35c16bacf1be9d88d662c4a9f03492384d48d7b9ac92a1d5",
+      "date": "2005-10-01T10:15:40-05:00",
+      "subject": "[R-sig-Geo] convertion to polygon for coloring, shading",
+      "subject_clean": "convertion to polygon for coloring, shading",
+      "in_reply_to": null,
+      "references": [
+        "<87k6gyfa50.fsf@mun.ca>",
+        "<Pine.LNX.4.44.0510011035320.17631-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n[...]\n\n> Try:\n\n>> getinfo.shape(\"your_file.shp\")\n\nOk, I got:\n\n--8<---------------cut here---------------start------------->8---\nR> getinfo.shape(\"general01.shp\")\nShapefile type: PolyLine, (3), # of Shapes: 11343\nR> maptools()\nmaptools, version 0.5-2, 2005-09-13\n--8<---------------cut here---------------end--------------->8---\n\nand because of the extent of the map, it's surely a mixture of rings\n(mostly tiny islands) and spaghetti (at the edges of the map, because the\ngiven shape doesn't fit entirely).  I cannot increase the extent of the\nmap, so that all shapes are rings, because the map would have to be\nridiculously large.  I guess I'll have to turn them into rings manually.\nIn that case, what's a good tool to use for that?\n\n\n[...]\n\n> The scale and north arrow are available in sp - see ?\"spplot-methods\" for\n> how to use them in lattice graphics.\n\nExcellent, I'll use that.\n\n\nThank you,\n\n-- \nSebastian P. Luque",
+      "body_snippet": "Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n[...]\n\n> Try:\n\n>> getinfo.shape(\"your_file.shp\")\n\nOk, I got:\n\n--8<---------------cut here---------------start------------->8---\nR> getinfo.shape(\"general0",
+      "thread_id": "thread-3f69de5e3458",
+      "thread_depth": 1,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-e149aa241fe9",
+      "message_id": "<Pine.LNX.4.44.0510011734370.17631-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-10-01T17:41:31+02:00",
+      "subject": "[R-sig-Geo] convertion to polygon for coloring, shading",
+      "subject_clean": "convertion to polygon for coloring, shading",
+      "in_reply_to": "<874q811d5v.fsf@gmail.com>",
+      "references": [],
+      "body_plain": "On Sat, 1 Oct 2005, Sebastian Luque wrote:\n\n> Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> \n> [...]\n> \n> > Try:\n> \n> >> getinfo.shape(\"your_file.shp\")\n> \n> Ok, I got:\n> \n> --8<---------------cut here---------------start------------->8---\n> R> getinfo.shape(\"general01.shp\")\n> Shapefile type: PolyLine, (3), # of Shapes: 11343\n> R> maptools()\n> maptools, version 0.5-2, 2005-09-13\n> --8<---------------cut here---------------end--------------->8---\n> \n> and because of the extent of the map, it's surely a mixture of rings\n> (mostly tiny islands) and spaghetti (at the edges of the map, because the\n> given shape doesn't fit entirely).  I cannot increase the extent of the\n> map, so that all shapes are rings, because the map would have to be\n> ridiculously large.  I guess I'll have to turn them into rings manually.\n> In that case, what's a good tool to use for that?\n> \n\nSo the origin was a map of rings that has been clipped (by a rectangle?)? \nCould you try to simplify this for testing purposes to a small number of \nshapes (a much smaller rectangle) and let me see it? I've written a small \nfunctio using sp classes that just rbind()'s the line coordinates with the \nfirst coordinate if the first and last are not identical. It may work, if \nthe lines start and stop on the same rectangle edge (but will not if they \nare on different edges). \n\nIf the lines go outside the rectangle a little, the same approach will\nwork, but will need clipping with functions in spgpc on r-spatial, not a\nbig problem. If the rectangle is known, it could be given to the function\nas an argument, which would maybe allow the corner case to be handled too.\n\nRoger\n\n> \n> [...]\n> \n> > The scale and north arrow are available in sp - see ?\"spplot-methods\" for\n> > how to use them in lattice graphics.\n> \n> Excellent, I'll use that.\n> \n> \n> Thank you,\n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Sat, 1 Oct 2005, Sebastian Luque wrote:\n\n> Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> \n> [...]\n> \n> > Try:\n> \n> >> getinfo.shape(\"your_file.shp\")\n> \n> Ok, I got:\n> \n> --8<---------------cut her",
+      "thread_id": "thread-3f69de5e3458",
+      "thread_depth": 2,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-a4fbc9b1df1b",
+      "message_id": "<IPEFKICOHOECENGJBAGLKEDBEFAA.arv@ono.com>",
+      "from_name": "antonio rodriguez",
+      "from_email_hash": "774cddfa8c8105243485b5b21d96edd37afa9295dec8f33701b2622a144989d5",
+      "date": "2005-10-03T08:38:31+02:00",
+      "subject": "[R-sig-Geo] Adding maps to a filled contour plot",
+      "subject_clean": "Adding maps to a filled contour plot",
+      "in_reply_to": "<web-7086743@atmos.uiuc.edu>",
+      "references": [],
+      "body_plain": "Hi,\n\n\nSome time ago, Roger Peng posted this solution, which I found very useful:\n\n\njunk.mat <- matrix(rnorm(1600), 16, 100)\ncontour.mat <- ifelse(junk.mat < 2, 0, junk.mat)\nfilled.contour(junk.mat, color = terrain.colors,\nplot.axes = contour(contour.mat, levels = 1,\ndrawlabels = FALSE, axes = FALSE,\nframe.plot = FFALSE, add = TRUE))\n\n\nThe 'plot.axes' argument to filled.contour() gives you access to the\ncoordinate system in the actual plotting area. However, you will notice\nthat the axes are missing. You need to add them explicitly, as in:\n\n\nfilled.contour(junk.mat, color = terrain.colors,\nplot.axes = { contour(contour.mat, levels = 1,\ndrawlabels = FALSE, axes = FALSE,\nframe.plot = FFALSE, add = TRUE);\naxis(1); axis(2) } )\n\n\n\nCheers,\n\n\nAntonio\n\n\n\n> -----Mensaje original-----\n> De: r-sig-geo-bounces at stat.math.ethz.ch\n> [mailto:r-sig-geo-bounces at stat.math.ethz.ch]En nombre de Anne Hertel\n> Enviado el: jueves, 29 de septiembre de 2005 21:42\n> Para: r-sig-geo at stat.math.ethz.ch\n> Asunto: [R-sig-Geo] Adding maps to a filled contour plot\n>\n>\n> Hi,\n>\n> I am trying to plot a filled contour map and overlay it with a\n> map, but I'm having trouble with the map. The map is plotted, but\n> it is stretched out over the color bar, and doesn't stay within\n> the plotting area. If I just use the 'contour' function the 'map'\n> function works fine, but I want the contours filled in.\n>\n> Here's the code:\n> filled.contour(cor.enso.map,\n> x=seq(-126.5625,-64.6875,,23),y=seq(23.720175,51.625732,,11),xlab=\n> 'longitude',ylab='latitude')\n> map(xlim=c(-127,-65),ylim=c(23,52),add=T)\n>\n> where cor.enso.map is a matrix of size [23,11].\n>\n> How do I make the map stay within the plotting area?\n>\n> Thanks,\n> Anne Hertel\n>\n>\n> ------------------------------------------------------------\n> Anne M. K. Hertel\n> Grad. Student & Research Assistant\n> Department of Atmospheric Sciences\n> University of Illinois at Urbana-Champaign\n> Annex II, room 204\n> Phone: (217) 333 6296\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> --\n> No virus found in this incoming message.\n> Checked by AVG Anti-Virus.\n> Version: 7.0.344 / Virus Database: 267.11.8/114 - Release Date: 28/09/2005\n>\n--",
+      "body_snippet": "Hi,\n\n\nSome time ago, Roger Peng posted this solution, which I found very useful:\n\n\njunk.mat <- matrix(rnorm(1600), 16, 100)\ncontour.mat <- ifelse(junk.mat < 2, 0, junk.mat)\nfilled.contour(junk.mat, co",
+      "thread_id": "thread-a4fbc9b1df1b",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-4777a61b32c3",
+      "message_id": "<A527689D36C527459F58091EA54212F352E738@MDX-CLX-DC1.uni.mdx.ac.uk>",
+      "from_name": "Yilin Liu",
+      "from_email_hash": "8a447717205030fad05ebd4263d43bfb4f130830014bc4d4bb82fc14743ec445",
+      "date": "2005-10-11T12:58:08+01:00",
+      "subject": "[R-sig-Geo] The length of common boundaries",
+      "subject_clean": "The length of common boundaries",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\nAny way to get the length of common boundaries shared by neighbouring\ncounties in a map in R?\n\n\nYilin",
+      "body_snippet": "Dear all,\n\nAny way to get the length of common boundaries shared by neighbouring\ncounties in a map in R?\n\n\nYilin",
+      "thread_id": "thread-4777a61b32c3",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-ecbfdc6a385f",
+      "message_id": "<Pine.LNX.4.44.0510111538480.18933-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-10-11T15:50:05+02:00",
+      "subject": "[R-sig-Geo] The length of common boundaries",
+      "subject_clean": "The length of common boundaries",
+      "in_reply_to": "<A527689D36C527459F58091EA54212F352E738@MDX-CLX-DC1.uni.mdx.ac.uk>",
+      "references": [],
+      "body_plain": "On Tue, 11 Oct 2005, Yilin Liu wrote:\n\n> Dear all,\n> \n> Any way to get the length of common boundaries shared by neighbouring\n> counties in a map in R?\n> \n\nThe short answer is no. The R polygon objects do not have topology. \n\nThe longer answer is that if you have e00 or ArcInfo binary vector layers,\nthen the polygons are built from lists of directed arcs, and the arcs have\nlengths. So if your input data are in this format, it is feasible but is \nnot implemented.\n\nIt looks as though the GRASS6 vector format also provides similar\ninformation. But topology is a GIS thing rather than an R thing, so no\nsolution within R is available.\n\nIf you use GRASS, it would be possible to look at how this might be done\n(read a shapefile into GRASS, output an ASCII dump of the arcs, which\npolygons they separate, and how long they are, and do something with this,\nnot losing trace of which polygon(s)  belong to which observation - this\nwas where progress stopped the last time I looked). Arc lengths would be\nnice for cartograms too.\n\nRoger\n\n> \n> Yilin\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 11 Oct 2005, Yilin Liu wrote:\n\n> Dear all,\n> \n> Any way to get the length of common boundaries shared by neighbouring\n> counties in a map in R?\n> \n\nThe short answer is no. The R polygon object",
+      "thread_id": "thread-4777a61b32c3",
+      "thread_depth": 1,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-e4e8726b9958",
+      "message_id": "<200510120853.j9C8rOSa007388@corinna.its.utas.edu.au>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "4d8db92248257cf58a15282ef4b057029dbd45ad2b2c007fbad56eff8864a080",
+      "date": "2005-10-12T10:53:24+02:00",
+      "subject": "[R-sig-Geo] The length of common boundaries",
+      "subject_clean": "The length of common boundaries",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20051012/747f601d/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20051012/747f601d/attachment.pl>",
+      "thread_id": "thread-e4e8726b9958",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-dc351cc59db8",
+      "message_id": "<434CD49C.7010103@lancaster.ac.uk>",
+      "from_name": "Barry Rowlingson",
+      "from_email_hash": "94f5c718996fafe3dcf7003ba82c6656414e43b8d3f2b04af298250f493ba5eb",
+      "date": "2005-10-12T10:17:16+01:00",
+      "subject": "[R-sig-Geo] The length of common boundaries",
+      "subject_clean": "The length of common boundaries",
+      "in_reply_to": "<200510120853.j9C8rOSa007388@corinna.its.utas.edu.au>",
+      "references": [
+        "<200510120853.j9C8rOSa007388@corinna.its.utas.edu.au>"
+      ],
+      "body_plain": "Michael Sumner wrote:\n\n> Hello, could you expand on what you mean by \"topology\" in this context?\n> I assume it means that any area/polygon object in a given set is a\n> subdivision of the plane - i.e. no \"overlaps\"?  Since, if that were true\n> of the dataset then \"common shared boundaries\" is something that can be\n> assumed reliably.  \n\n  Each polygon in an sp Polygon object is just a set of (x,y) coordinate \npairs that make up the ring that is the polygon. There's no data that \ndescribes polygon adjacency, and boundary lines between polygons are \nstored twice, once for each polygon. This is sometimes known as \n'doubly-digitised polygons'. The polygons are the fundamental unit.\n\n  Another way of storing GIS data is to use Arc-Node topology. You have \na table of Nodes (which are where arcs meet), and a table of Arcs. Each \nArc has a set of (x,y) coordinate pairs. You then have a table of \nPolygons, which is a set of Arcs. To draw polygon X, you find its Arcs, \nthen you look up the coordinates in the Arc table. Each line is only \nstored once, but referenced twice - by the polygons on either side.\n\n  The advantage of this is that you can easily figure out adjacency \nmatrices by looking at the Polygon-Arc relationship.\n\n  It's possible to reconstruct Arc-Node topology from doubly-digitised \npolygons, but its a very complex operation to do right, and best left to \nGIS programs such as Arc/Info.\n\n  Hope this helps!\n\nBaz",
+      "body_snippet": "Michael Sumner wrote:\n\n> Hello, could you expand on what you mean by \"topology\" in this context?\n> I assume it means that any area/polygon object in a given set is a\n> subdivision of the plane - i.e. ",
+      "thread_id": "thread-e4e8726b9958",
+      "thread_depth": 1,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-ef81ce08939d",
+      "message_id": "<200510120930.j9C9UOSa020453@corinna.its.utas.edu.au>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "4d8db92248257cf58a15282ef4b057029dbd45ad2b2c007fbad56eff8864a080",
+      "date": "2005-10-12T11:30:24+02:00",
+      "subject": "[R-sig-Geo] The length of common boundaries",
+      "subject_clean": "The length of common boundaries",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20051012/06abb1d0/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20051012/06abb1d0/attachment.pl>",
+      "thread_id": "thread-ef81ce08939d",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-3a9db30a7f97",
+      "message_id": "<20051012154335.GU24589@thuille.itc.it>",
+      "from_name": "Markus Neteler",
+      "from_email_hash": "6699469fcb2a74ef796d0e883e27624d3663973e457278083d48e5b55c1da876",
+      "date": "2005-10-12T17:43:35+02:00",
+      "subject": "[R-sig-Geo] The length of common boundaries",
+      "subject_clean": "The length of common boundaries",
+      "in_reply_to": "<Pine.LNX.4.44.0510111538480.18933-100000@reclus.nhh.no>",
+      "references": [
+        "<A527689D36C527459F58091EA54212F352E738@MDX-CLX-DC1.uni.mdx.ac.uk>",
+        "<Pine.LNX.4.44.0510111538480.18933-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "On Tue, Oct 11, 2005 at 03:50:05PM +0200, Roger Bivand wrote:\n> On Tue, 11 Oct 2005, Yilin Liu wrote:\n> \n> > Dear all,\n> > \n> > Any way to get the length of common boundaries shared by neighbouring\n> > counties in a map in R?\n> > \n> \n> The short answer is no. The R polygon objects do not have topology. \n> \n> The longer answer is that if you have e00 or ArcInfo binary vector layers,\n> then the polygons are built from lists of directed arcs, and the arcs have\n> lengths. So if your input data are in this format, it is feasible but is \n> not implemented.\n> \n> It looks as though the GRASS6 vector format also provides similar\n> information. But topology is a GIS thing rather than an R thing, so no\n> solution within R is available.\n> \n> If you use GRASS, it would be possible to look at how this might be done\n> (read a shapefile into GRASS, output an ASCII dump of the arcs, which\n> polygons they separate, and how long they are, and do something with this,\n> not losing trace of which polygon(s)  belong to which observation - this\n> was where progress stopped the last time I looked). Arc lengths would be\n> nice for cartograms too.\n> \n\nIn GRASS 6 you can use v.to.db [1] to generate this information (should be\nthe combination of the options 'sides' and 'length'.\n\nMarkus\n\n[1] http://grass.itc.it/grass60/manuals/html60_user/v.to.db.html\n\n\n-- \nMarkus Neteler     <neteler itc it>       http://mpa.itc.it\nITC-irst -  Centro per la Ricerca Scientifica e Tecnologica\nMPBA - Predictive Models for Biol. & Environ. Data Analysis\nVia Sommarive, 18        -       38050 Povo (Trento), Italy",
+      "body_snippet": "On Tue, Oct 11, 2005 at 03:50:05PM +0200, Roger Bivand wrote:\n> On Tue, 11 Oct 2005, Yilin Liu wrote:\n> \n> > Dear all,\n> > \n> > Any way to get the length of common boundaries shared by neighbouring\n> ",
+      "thread_id": "thread-4777a61b32c3",
+      "thread_depth": 2,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-a06078ebfb08",
+      "message_id": "<20051013153406.GQ6915@thuille.itc.it>",
+      "from_name": "Markus Neteler",
+      "from_email_hash": "6699469fcb2a74ef796d0e883e27624d3663973e457278083d48e5b55c1da876",
+      "date": "2005-10-13T17:34:06+02:00",
+      "subject": "[R-sig-Geo] The length of common boundaries",
+      "subject_clean": "The length of common boundaries",
+      "in_reply_to": "<20051012154335.GU24589@thuille.itc.it>",
+      "references": [
+        "<A527689D36C527459F58091EA54212F352E738@MDX-CLX-DC1.uni.mdx.ac.uk>",
+        "<Pine.LNX.4.44.0510111538480.18933-100000@reclus.nhh.no>",
+        "<20051012154335.GU24589@thuille.itc.it>"
+      ],
+      "body_plain": "(cc grass user list)\n\nOn Wed, Oct 12, 2005 at 05:43:35PM +0200, Markus Neteler wrote:\n> On Tue, Oct 11, 2005 at 03:50:05PM +0200, Roger Bivand wrote:\n> > On Tue, 11 Oct 2005, Yilin Liu wrote:\n> > \n> > > Dear all,\n> > > \n> > > Any way to get the length of common boundaries shared by neighbouring\n> > > counties in a map in R?\n> > > \n> > \n> > The short answer is no. The R polygon objects do not have topology. \n> > \n> > The longer answer is that if you have e00 or ArcInfo binary vector layers,\n> > then the polygons are built from lists of directed arcs, and the arcs have\n> > lengths. So if your input data are in this format, it is feasible but is \n> > not implemented.\n> > \n> > It looks as though the GRASS6 vector format also provides similar\n> > information. But topology is a GIS thing rather than an R thing, so no\n> > solution within R is available.\n> > \n> > If you use GRASS, it would be possible to look at how this might be done\n> > (read a shapefile into GRASS, output an ASCII dump of the arcs, which\n> > polygons they separate, and how long they are, and do something with this,\n> > not losing trace of which polygon(s)  belong to which observation - this\n> > was where progress stopped the last time I looked). Arc lengths would be\n> > nice for cartograms too.\n> > \n> \n> In GRASS 6 you can use v.to.db [1] to generate this information (should be\n> the combination of the options 'sides' and 'length'.\n> \n> Markus\n> \n> [1] http://grass.itc.it/grass60/manuals/html60_user/v.to.db.html\n> \n\nWith the help of Radim I managed to find out how to do it.\nIt's pretty easy (but you need the today's version of GRASS 6.1-CVS\ndue to a related bugfix in v.db.addtable).\n\n\nEXERCISE: HOW LONG ARE COMMON BOUNDARIES OF POLYGONS?\n\n\n# Requires: GRASS 6.1-CVS from 13 Oct 2005 or later\n#\n# data: sudden infant deaths data from North Carolina\n# data imported from SHAPE file with v.in.ogr\n\n#let's have a look\n d.mon x0\n d.vect sids\n\n#we work on a copy:\n g.copy vect=sids,sids_nc\n\n#we add a second layer to the map which references the boundaries of\n#polygons. In the vector geometry we generate an ID (category) for each\n#boundary:\n v.category sids_nc out=sids_nc2 layer=2 type=boundary option=add\n\n#Underlying idea:\n#we'll fetch the IDs (categories) of the polygons left and right from\n#each boundary and store it into the attribute table linked to layer 2.\n#In general:\n# cat_of_boundary | cat_of_left_polygon | cat_of_right_polygon | length_of_boundary\n#\n#We want only one category per boundary, that's why the sides check is\n#needed (a boundary may consist of several pieces)\n#\n#So we create a new attribute table and link it to the new layer 2\n#of the vector map:\n v.db.addtable sids_nc2 layer=2 col=\"left integer,right integer,length integer\"\n\n#Now we query the polygon/boundary relationsships and store it into\n#the attribute table linked to layer 2:\n v.to.db map=sids_nc2 option=sides col=left,right layer=2 \n\n#Now we have unique categories for the boundaries and can calculate the\n#lengths:\n v.to.db map=sids_nc2 option=length col=length layer=2 \n\n#Done.\n\n#See the new attribute table containing the boundary lengths:\n v.db.select sids_nc2 layer=2\n\n# verification (let's check boundary #193):\n d.vect sids_nc2 cat=193 layer=2 col=red type=boundary\n d.zoom\n d.measure\n# LEN:     12756.00 meters\n\n#what does the attribute table say:\n v.db.select sids_nc2 layer=2 | grep '^193'\n#190|65|68|12814\n\n#This is reasonably close since on screen digitization in d.measure\n#isn't always that precise ...\n\n\nBest\n\n Markus",
+      "body_snippet": "(cc grass user list)\n\nOn Wed, Oct 12, 2005 at 05:43:35PM +0200, Markus Neteler wrote:\n> On Tue, Oct 11, 2005 at 03:50:05PM +0200, Roger Bivand wrote:\n> > On Tue, 11 Oct 2005, Yilin Liu wrote:\n> > \n> >",
+      "thread_id": "thread-4777a61b32c3",
+      "thread_depth": 3,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-912d1ee46e51",
+      "message_id": "<Pine.LNX.4.44.0510131834170.20724-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-10-13T18:39:15+02:00",
+      "subject": "[R-sig-Geo] The length of common boundaries",
+      "subject_clean": "The length of common boundaries",
+      "in_reply_to": "<20051013153406.GQ6915@thuille.itc.it>",
+      "references": [],
+      "body_plain": "On Thu, 13 Oct 2005, Markus Neteler wrote:\n\n> (cc grass user list)\n> \n> On Wed, Oct 12, 2005 at 05:43:35PM +0200, Markus Neteler wrote:\n> > On Tue, Oct 11, 2005 at 03:50:05PM +0200, Roger Bivand wrote:\n> > > On Tue, 11 Oct 2005, Yilin Liu wrote:\n> > > \n> > > > Dear all,\n> > > > \n> > > > Any way to get the length of common boundaries shared by neighbouring\n> > > > counties in a map in R?\n> > > > \n> > > \n> > > The short answer is no. The R polygon objects do not have topology. \n> > > \n> > > The longer answer is that if you have e00 or ArcInfo binary vector layers,\n> > > then the polygons are built from lists of directed arcs, and the arcs have\n> > > lengths. So if your input data are in this format, it is feasible but is \n> > > not implemented.\n> > > \n> > > It looks as though the GRASS6 vector format also provides similar\n> > > information. But topology is a GIS thing rather than an R thing, so no\n> > > solution within R is available.\n> > > \n> > > If you use GRASS, it would be possible to look at how this might be done\n> > > (read a shapefile into GRASS, output an ASCII dump of the arcs, which\n> > > polygons they separate, and how long they are, and do something with this,\n> > > not losing trace of which polygon(s)  belong to which observation - this\n> > > was where progress stopped the last time I looked). Arc lengths would be\n> > > nice for cartograms too.\n> > > \n> > \n> > In GRASS 6 you can use v.to.db [1] to generate this information (should be\n> > the combination of the options 'sides' and 'length'.\n> > \n> > Markus\n> > \n> > [1] http://grass.itc.it/grass60/manuals/html60_user/v.to.db.html\n> > \n> \n> With the help of Radim I managed to find out how to do it.\n> It's pretty easy (but you need the today's version of GRASS 6.1-CVS\n> due to a related bugfix in v.db.addtable).\n> \n> \n> EXERCISE: HOW LONG ARE COMMON BOUNDARIES OF POLYGONS?\n> \n> \n> # Requires: GRASS 6.1-CVS from 13 Oct 2005 or later\n> #\n> # data: sudden infant deaths data from North Carolina\n> # data imported from SHAPE file with v.in.ogr\n> \n> #let's have a look\n>  d.mon x0\n>  d.vect sids\n> \n> #we work on a copy:\n>  g.copy vect=sids,sids_nc\n> \n> #we add a second layer to the map which references the boundaries of\n> #polygons. In the vector geometry we generate an ID (category) for each\n> #boundary:\n>  v.category sids_nc out=sids_nc2 layer=2 type=boundary option=add\n> \n> #Underlying idea:\n> #we'll fetch the IDs (categories) of the polygons left and right from\n> #each boundary and store it into the attribute table linked to layer 2.\n> #In general:\n> # cat_of_boundary | cat_of_left_polygon | cat_of_right_polygon | length_of_boundary\n> #\n> #We want only one category per boundary, that's why the sides check is\n> #needed (a boundary may consist of several pieces)\n> #\n> #So we create a new attribute table and link it to the new layer 2\n> #of the vector map:\n>  v.db.addtable sids_nc2 layer=2 col=\"left integer,right integer,length integer\"\n> \n> #Now we query the polygon/boundary relationsships and store it into\n> #the attribute table linked to layer 2:\n>  v.to.db map=sids_nc2 option=sides col=left,right layer=2 \n> \n> #Now we have unique categories for the boundaries and can calculate the\n> #lengths:\n>  v.to.db map=sids_nc2 option=length col=length layer=2 \n> \n> #Done.\n> \n> #See the new attribute table containing the boundary lengths:\n>  v.db.select sids_nc2 layer=2\n> \n> # verification (let's check boundary #193):\n>  d.vect sids_nc2 cat=193 layer=2 col=red type=boundary\n>  d.zoom\n>  d.measure\n> # LEN:     12756.00 meters\n> \n> #what does the attribute table say:\n>  v.db.select sids_nc2 layer=2 | grep '^193'\n> #190|65|68|12814\n> \n> #This is reasonably close since on screen digitization in d.measure\n> #isn't always that precise ...\n> \n\nApart from changing the declaration of length from integer to double, this \nreally does the job very well. Thank you, Markus and Radim! The output of \nv.db.select sids_nc2 layer=2 gives all that is needed to construct the \nneeded files, a *.gal contiguous neighbour file, a *.gwt file with \nneighbours and lengths per neighbour, and a simple perimeter file per \nunique ID. Something along these lines will reach spgrass6 soon.\n\nBest wishes,\n\nRoger\n\n\n> \n> Best\n> \n>  Markus\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Thu, 13 Oct 2005, Markus Neteler wrote:\n\n> (cc grass user list)\n> \n> On Wed, Oct 12, 2005 at 05:43:35PM +0200, Markus Neteler wrote:\n> > On Tue, Oct 11, 2005 at 03:50:05PM +0200, Roger Bivand wrote",
+      "thread_id": "thread-4777a61b32c3",
+      "thread_depth": 4,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-ebf6a0bd4fcf",
+      "message_id": "<434EF058.1070509@infinito.it>",
+      "from_name": "Luigi Ponti",
+      "from_email_hash": "d6bc90d0063a232f0e1cf94c3768b8c4d074f11624576c77ab7ca3ac9aa97232",
+      "date": "2005-10-13T16:40:08-07:00",
+      "subject": "[R-sig-Geo] Interpolating and mapping the output of ecosystem models with R",
+      "subject_clean": "Interpolating and mapping the output of ecosystem models with R",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear R-sig-Geo Mailing List,\n\nI would like to ask some advice on using R to map the output of \nweather-driven population models for ecosystem analysis.\n\nOur group is considering R as a way to map the georeferenced output of \nthe ecosystem models developed in our lab. In short, once meteorological \ndata (i.e., model input) and geographic data are acquired for a \nparticular landscape, an ecosystem model is run for each weather station \nlocation of interest. Therefore, the output of the model consists of a \nsummary table combining the point locations of the weather stations with \nthe output value of interest.\n\nIn order for this output to be mapped, an interpolation process is \nneeded to retrieve the spatial distribution of the values estimated by \nthe ecological model across the landscape. Another critical point is the \nability to 'clip' and eliminate areas which are not of interest to the \nstudy, such as elevation which is too high, or other tracts of land or \nwater which are not of interest to the study.\n\nWould R be able to interpolate such spatial distribution and also 'clip' \nthe out-of-interest areas? I am an R beginner, but looking at the R \nwebsite it seems that such capabilities are already in place in R. \nStarting from the summary output table mentioned above, what is the \namount of work needed to implement such functionalities? Any hint is \nappreciated.\n\nKind regards,\n\nLuigi Ponti\nVisiting Scholar\nUniversity of California, Berkeley\nEnvironmental Science, Policy & Management\nlponti at nature.berkeley.edu",
+      "body_snippet": "Dear R-sig-Geo Mailing List,\n\nI would like to ask some advice on using R to map the output of \nweather-driven population models for ecosystem analysis.\n\nOur group is considering R as a way to map the ",
+      "thread_id": "thread-ebf6a0bd4fcf",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-bc57d1dc71af",
+      "message_id": "<99449F52-343F-431C-8D02-593B5A6B35E2@globetrotter.net>",
+      "from_name": "Denis Chabot",
+      "from_email_hash": "e2249e269df0e661c38b38980d7e2138ea9c3c744598b7c43d3a5acd35478707",
+      "date": "2005-10-16T11:28:09-04:00",
+      "subject": "[R-sig-Geo] Accessing gshhs database of world coastlines",
+      "subject_clean": "Accessing gshhs database of world coastlines",
+      "in_reply_to": "<mailman.11.1128333602.5859.r-sig-geo@stat.math.ethz.ch>",
+      "references": [
+        "<mailman.11.1128333602.5859.r-sig-geo@stat.math.ethz.ch>"
+      ],
+      "body_plain": "Hi,\n\nForgive me if this should be posted to another list relating to GMT  \nor the gshhs database. I do not know of any such list at the moment,  \nand my goal is to use the data in R anyway.\n\nUntil now I have made maps with the high-resolution world map that  \ncomes with PBSmapping. As explained in the user guide, these are a  \nlower resolution version of the gshhs full-resolution database. But  \nit is not quite good enough for maps of my part of the world. A few  \nislands are missing that I'd like to have, and the details of the  \ncoastline are not always at a sufficient resolution.\n\nI would have like to make my own coastline database from the original  \ngshhs database, a version that would only have covered -80 to -20 in  \nlongitude, and 35 to 75 in latitude. I can lower resolution and clip  \nto smaller areas with functions provided in PBSmapping so I'd be fine  \nfor most maps I have to make.\n\nThe problem is that I have next to no experience with compiling  \nprograms and I don't know how to install GMT (which I could use to  \nextract the coastline) or the smaller programs provided just to  \ninteract with the database.\n\nI thought I did not need to because a shapefile version of the  \ndatabase exists, and I have managed (with help from Roger in  \nparticular) to import such files in R before. But this one is huge  \n(154 MB for the shp file alone). The function read.shape refuses to  \nopen it, telling me right way\n\nErreur dans read.shape(\"gshhs_land.shp\") : unable to open file\n\nI tried with function read.shapefile, which attempts to open the  \nshapefile but never finishes (I stopped it after 12 h. Thus the  \nshapefile is either a bit weird (it had more than the usual 3 files  \non the web site, I just downloaded the shp, dbf and shx files) or it  \nis too big, though I have 1 GB of RAM on my Mac.\n\nIt appears I'll have to compile and learn to use the programs  \nprovided with that database to extract the data I want to import to R.\n\nHas anyone done this before? Can you point me to a site that explains  \nhow to compile these small c programs on Mac OS X, as a first step?  \nAre there instructions, somewhere, on how you'd specify the lat long  \nyou want to extract to an ascii file? I did not see any on the GMT site.\n\nMaybe I'm doing all this for nothing and there is already a world  \ncoastline (preferably with main lakes and rivers too) database at  \nhigh resolution available for R, beside the ones that come with maps  \n(which does not allow me enough flexibility) and PBSmapping (not  \nquite high enough resolution)?\n\nSincerely,\n\nDenis Chabot",
+      "body_snippet": "Hi,\n\nForgive me if this should be posted to another list relating to GMT  \nor the gshhs database. I do not know of any such list at the moment,  \nand my goal is to use the data in R anyway.\n\nUntil now",
+      "thread_id": "thread-bc57d1dc71af",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-4311631938f2",
+      "message_id": "<Pine.LNX.4.44.0510161951280.12372-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-10-16T20:09:48+02:00",
+      "subject": "[R-sig-Geo] Accessing gshhs database of world coastlines",
+      "subject_clean": "Accessing gshhs database of world coastlines",
+      "in_reply_to": "<99449F52-343F-431C-8D02-593B5A6B35E2@globetrotter.net>",
+      "references": [],
+      "body_plain": "On Sun, 16 Oct 2005, Denis Chabot wrote:\n\n> Hi,\n> \n> Forgive me if this should be posted to another list relating to GMT  \n> or the gshhs database. I do not know of any such list at the moment,  \n> and my goal is to use the data in R anyway.\n> \n> Until now I have made maps with the high-resolution world map that  \n> comes with PBSmapping. As explained in the user guide, these are a  \n> lower resolution version of the gshhs full-resolution database. But  \n> it is not quite good enough for maps of my part of the world. A few  \n> islands are missing that I'd like to have, and the details of the  \n> coastline are not always at a sufficient resolution.\n> \n> I would have like to make my own coastline database from the original  \n> gshhs database, a version that would only have covered -80 to -20 in  \n> longitude, and 35 to 75 in latitude. I can lower resolution and clip  \n> to smaller areas with functions provided in PBSmapping so I'd be fine  \n> for most maps I have to make.\n> \n> The problem is that I have next to no experience with compiling  \n> programs and I don't know how to install GMT (which I could use to  \n> extract the coastline) or the smaller programs provided just to  \n> interact with the database.\n> \n> I thought I did not need to because a shapefile version of the  \n> database exists, and I have managed (with help from Roger in  \n> particular) to import such files in R before. But this one is huge  \n> (154 MB for the shp file alone). The function read.shape refuses to  \n> open it, telling me right way\n> \n> Erreur dans read.shape(\"gshhs_land.shp\") : unable to open file\n\nThis means read.shape() cannot see the file. I managed to read \ngshhs_land.shp into R with current maptools:\n\n> try1 <- read.shape(\"gshhs_land.shp\")\nShapefile type: PolyLine, (3), # of Shapes: 191811\n> object.size(try1)\n[1] 395387692\n\nbut it is a shapefile of lines, not polygons - the base GSHHS is now \npolygonal. I have 1GB under linux, so I think memory management is \neffectively the same as yours. I've put a PDF (33MB) of your area on:\n\nhttp://spatial.nhh.no/misc/nw_atlantic.pdf\n\nplease save link as, and open locally, otherwise you'll be sitting looking \nat a blank screen for a long time. I did this so that you can use the \nAcroread zoom to find out if your islands are there.\n\nread.shape() was not too slow, it seemed to go quite well.\n\nIs there any use in writing an R function on top of the gshhs program for \nextracting polygons from the gshhs databases directly into sp class \nobjects - it doesn't look too difficult, and would give direct access \nwithout having to use the shapefile?\n\nRoger\n\n\n> \n> I tried with function read.shapefile, which attempts to open the  \n> shapefile but never finishes (I stopped it after 12 h. Thus the  \n> shapefile is either a bit weird (it had more than the usual 3 files  \n> on the web site, I just downloaded the shp, dbf and shx files) or it  \n> is too big, though I have 1 GB of RAM on my Mac.\n> \n> It appears I'll have to compile and learn to use the programs  \n> provided with that database to extract the data I want to import to R.\n> \n> Has anyone done this before? Can you point me to a site that explains  \n> how to compile these small c programs on Mac OS X, as a first step?  \n> Are there instructions, somewhere, on how you'd specify the lat long  \n> you want to extract to an ascii file? I did not see any on the GMT site.\n> \n> Maybe I'm doing all this for nothing and there is already a world  \n> coastline (preferably with main lakes and rivers too) database at  \n> high resolution available for R, beside the ones that come with maps  \n> (which does not allow me enough flexibility) and PBSmapping (not  \n> quite high enough resolution)?\n> \n> Sincerely,\n> \n> Denis Chabot\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Sun, 16 Oct 2005, Denis Chabot wrote:\n\n> Hi,\n> \n> Forgive me if this should be posted to another list relating to GMT  \n> or the gshhs database. I do not know of any such list at the moment,  \n> an",
+      "thread_id": "thread-bc57d1dc71af",
+      "thread_depth": 1,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-59a07762a46b",
+      "message_id": "<B7F6151B-57EC-4878-9B6C-E7304000CE1E@globetrotter.net>",
+      "from_name": "Denis Chabot",
+      "from_email_hash": "e2249e269df0e661c38b38980d7e2138ea9c3c744598b7c43d3a5acd35478707",
+      "date": "2005-10-16T19:21:42-04:00",
+      "subject": "[R-sig-Geo] Accessing gshhs database of world coastlines",
+      "subject_clean": "Accessing gshhs database of world coastlines",
+      "in_reply_to": "<Pine.LNX.4.44.0510161951280.12372-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0510161951280.12372-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Hi Roger,\n\nLe 05-10-16 ? 14:09, Roger Bivand a ?crit :\n\n> On Sun, 16 Oct 2005, Denis Chabot wrote:\n>\n>> ...\n\n>> I thought I did not need to because a shapefile version of the\n>> database exists, and I have managed (with help from Roger in\n>> particular) to import such files in R before. But this one is huge\n>> (154 MB for the shp file alone). The function read.shape refuses to\n>> open it, telling me right way\n>>\n>> Erreur dans read.shape(\"gshhs_land.shp\") : unable to open file\n>>\n>\n> This means read.shape() cannot see the file.\nMaybe my copy is correupted? I tried again giving the full pathname  \nto the file to insure I had not screwed up with defining my working  \ndirectory, and got yet the same (or close to):\n > test <- read.shape(\"Macintosh  \nHD:Users:dchabot:Documents:Cartographie:Shapefiles:gshhs:gshhs_land.shp\" \n)\nErreur dans read.shape(\"Macintosh  \nHD:Users:dchabot:Documents:Cartographie:Shapefiles:gshhs:gshhs_land.shp\" \n) :\n     unable to open file\n(I had used a utility to give me the full pathname of the shp file).\n\nAlternative explanation: I just upgraded to R2.2, and wiped out my  \n2.1 install. Because R2.2 is not officially on line at CRAN yet, I  \ncould not download mac binaries for maptools and sp and compiled them  \nmyself. I did get a warning about some name being used twice, and  \nalthough the package seems to work (it certainly imports a smaller  \nshapefile) maybe it is not 100% functional.\n\n> I managed to read\n> gshhs_land.shp into R with current maptools:\n>\n>\n>> try1 <- read.shape(\"gshhs_land.shp\")\n>>\n> Shapefile type: PolyLine, (3), # of Shapes: 191811\n>\n>> object.size(try1)\n>>\n> [1] 395387692\n>\n> but it is a shapefile of lines, not polygons - the base GSHHS is now\n> polygonal.\nI don't understand this part. the \"gshhs_land\" is not \"base GSHHS\"? I  \nthought I downloaded the most recent version, at the highest  \nresolution. Where did you find the version with polygons?\n\n> I have 1GB under linux, so I think memory management is\n> effectively the same as yours. I've put a PDF (33MB) of your area on:\n>\n> http://spatial.nhh.no/misc/nw_atlantic.pdf\n>\n> please save link as, and open locally, otherwise you'll be sitting  \n> looking\n> at a blank screen for a long time. I did this so that you can use the\n> Acroread zoom to find out if your islands are there.\n\n\nYes the islands are there! This coastline is an improvement on what I  \nhave!\n\n\n>\n> read.shape() was not too slow, it seemed to go quite well.\n>\n> Is there any use in writing an R function on top of the gshhs  \n> program for\n> extracting polygons from the gshhs databases directly into sp class\n> objects - it doesn't look too difficult, and would give direct access\n> without having to use the shapefile?\n>\nI would love to have it. At a minimum, I'd need clear(er)  \ninstructions as to how to compile and use the programs provided on  \nGSHHS's site. But until now I valued being able to work with my  \ndataset in R as I am used to, and produce maps for the right subset  \nof data I'm interested in. So I don't plan to use GMT any time soon  \nand would much prefer R functions to access the very nice gshhs  \ndatabases and take what I need out of them.\n\nAs an aside, to you know of a way to do map borders in R that look  \nlike those in GMT and many paper maps (thick borders, alternating  \nfrom white to black from one degree of lat or long to the next)? This  \nis a cosmetic issue only but it would be a nice touch to be able to  \ndo this in R.\n\nAnyway, I'll wait a few days for the full R2.2 Mac to be at CRAN and  \nget fresh binaries of maptools and sp to see if I can open that  \nshapefile, since you were able to. It irritates me to have failed.\n\nWith many thanks,\n\n\nDenis",
+      "body_snippet": "Hi Roger,\n\nLe 05-10-16 ? 14:09, Roger Bivand a ?crit :\n\n> On Sun, 16 Oct 2005, Denis Chabot wrote:\n>\n>> ...\n\n>> I thought I did not need to because a shapefile version of the\n>> database exists, and I",
+      "thread_id": "thread-bc57d1dc71af",
+      "thread_depth": 2,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-e4d784b657f0",
+      "message_id": "<Pine.LNX.4.44.0510170806530.15941-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-10-17T08:21:33+02:00",
+      "subject": "[R-sig-Geo] Accessing gshhs database of world coastlines",
+      "subject_clean": "Accessing gshhs database of world coastlines",
+      "in_reply_to": "<B7F6151B-57EC-4878-9B6C-E7304000CE1E@globetrotter.net>",
+      "references": [],
+      "body_plain": "On Sun, 16 Oct 2005, Denis Chabot wrote:\n\n> Hi Roger,\n> \n> Le 05-10-16 ? 14:09, Roger Bivand a ?crit :\n> \n> > On Sun, 16 Oct 2005, Denis Chabot wrote:\n> >\n> >> ...\n> \n> >> I thought I did not need to because a shapefile version of the\n> >> database exists, and I have managed (with help from Roger in\n> >> particular) to import such files in R before. But this one is huge\n> >> (154 MB for the shp file alone). The function read.shape refuses to\n> >> open it, telling me right way\n> >>\n> >> Erreur dans read.shape(\"gshhs_land.shp\") : unable to open file\n> >>\n> >\n> > This means read.shape() cannot see the file.\n> Maybe my copy is correupted? I tried again giving the full pathname  \n> to the file to insure I had not screwed up with defining my working  \n> directory, and got yet the same (or close to):\n>  > test <- read.shape(\"Macintosh  \n> HD:Users:dchabot:Documents:Cartographie:Shapefiles:gshhs:gshhs_land.shp\" \n> )\n> Erreur dans read.shape(\"Macintosh  \n> HD:Users:dchabot:Documents:Cartographie:Shapefiles:gshhs:gshhs_land.shp\" \n> ) :\n>      unable to open file\n> (I had used a utility to give me the full pathname of the shp file).\n\nI have no access to OSX, I'm afraid. If you do setwd() to the directory \nwhere gshhs_land.shp is placed, and then list.files(pattern=\"shp\"), is the \nfile visible?`What does getwd() say when you are there? The error message \nis from:\n\n    hSHP = SHPOpen(CHAR(STRING_ELT(shpnm,0)), \"rb\" );\n    if( hSHP == NULL )    \n\terror(\"unable to open file\");\n\nin src/Rshapeget.c, where shpnm is the file name given to read.shape(). So \neither the compilation failed, or the file isn't there. Try \n\ngetinfo.shape(\"gshhs_land.shp\")\n\nthe error message there should say \"Unable to open: gshhs_land.shp\".\n\n> \n> Alternative explanation: I just upgraded to R2.2, and wiped out my  \n> 2.1 install. Because R2.2 is not officially on line at CRAN yet, I  \n> could not download mac binaries for maptools and sp and compiled them  \n> myself. I did get a warning about some name being used twice, and  \n> although the package seems to work (it certainly imports a smaller  \n> shapefile) maybe it is not 100% functional.\n> \n> > I managed to read\n> > gshhs_land.shp into R with current maptools:\n> >\n> >\n> >> try1 <- read.shape(\"gshhs_land.shp\")\n> >>\n> > Shapefile type: PolyLine, (3), # of Shapes: 191811\n> >\n> >> object.size(try1)\n> >>\n> > [1] 395387692\n> >\n> > but it is a shapefile of lines, not polygons - the base GSHHS is now\n> > polygonal.\n> I don't understand this part. the \"gshhs_land\" is not \"base GSHHS\"? I  \n> thought I downloaded the most recent version, at the highest  \n> resolution. Where did you find the version with polygons?\n\nIt is not a shapefile, but in GSHHS format. It is formatted as polygons. \nThe problem with the shapefile as lines is that it cannot be used for \nfilling land or sea, just for drawing coastlines.\n\n> \n> > I have 1GB under linux, so I think memory management is\n> > effectively the same as yours. I've put a PDF (33MB) of your area on:\n> >\n> > http://spatial.nhh.no/misc/nw_atlantic.pdf\n> >\n> > please save link as, and open locally, otherwise you'll be sitting  \n> > looking\n> > at a blank screen for a long time. I did this so that you can use the\n> > Acroread zoom to find out if your islands are there.\n> \n> \n> Yes the islands are there! This coastline is an improvement on what I  \n> have!\n\nOK, so I'll follow this route as well.\n\n> \n> \n> >\n> > read.shape() was not too slow, it seemed to go quite well.\n> >\n> > Is there any use in writing an R function on top of the gshhs  \n> > program for\n> > extracting polygons from the gshhs databases directly into sp class\n> > objects - it doesn't look too difficult, and would give direct access\n> > without having to use the shapefile?\n> >\n> I would love to have it. At a minimum, I'd need clear(er)  \n> instructions as to how to compile and use the programs provided on  \n> GSHHS's site. But until now I valued being able to work with my  \n> dataset in R as I am used to, and produce maps for the right subset  \n> of data I'm interested in. So I don't plan to use GMT any time soon  \n> and would much prefer R functions to access the very nice gshhs  \n> databases and take what I need out of them.\n> \n\nI think it can be done.\n\n> As an aside, to you know of a way to do map borders in R that look  \n> like those in GMT and many paper maps (thick borders, alternating  \n> from white to black from one degree of lat or long to the next)? This  \n> is a cosmetic issue only but it would be a nice touch to be able to  \n> do this in R.\n\nFor unprojected it could be done, for projected like GMT is more trouble. \nIf anyone would like to contribute GMTaxis() to work like GMT, please say, \ncontributions welcome!\n\n> \n> Anyway, I'll wait a few days for the full R2.2 Mac to be at CRAN and  \n> get fresh binaries of maptools and sp to see if I can open that  \n> shapefile, since you were able to. It irritates me to have failed.\n> \n\nRoger\n\n\n> With many thanks,\n> \n> \n> Denis\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Sun, 16 Oct 2005, Denis Chabot wrote:\n\n> Hi Roger,\n> \n> Le 05-10-16 ? 14:09, Roger Bivand a ?crit :\n> \n> > On Sun, 16 Oct 2005, Denis Chabot wrote:\n> >\n> >> ...\n> \n> >> I thought I did not need to ",
+      "thread_id": "thread-bc57d1dc71af",
+      "thread_depth": 3,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-d68565a7f733",
+      "message_id": "<A898EFD1-DA63-4E44-99DD-3AC4FD0704CC@globetrotter.net>",
+      "from_name": "Denis Chabot",
+      "from_email_hash": "e2249e269df0e661c38b38980d7e2138ea9c3c744598b7c43d3a5acd35478707",
+      "date": "2005-10-17T09:06:24-04:00",
+      "subject": "[R-sig-Geo] Accessing gshhs database of world coastlines",
+      "subject_clean": "Accessing gshhs database of world coastlines",
+      "in_reply_to": "<Pine.LNX.4.44.0510170806530.15941-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0510170806530.15941-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Hi Roger,\n\n\nLe 05-10-17 ? 02:21, Roger Bivand a ?crit :\n\n> I have no access to OSX, I'm afraid. If you do setwd() to the  \n> directory\n> where gshhs_land.shp is placed, and then list.files(pattern=\"shp\"),  \n> is the\n> file visible?`\n\nYes, I got\n > list.files(pattern=\"shp\")\n[1] \"gshhs_land.shp\"\n\n\n\n> What does getwd() say when you are there? The error message\n> is from:\n>\n > getwd()\n[1] \"/Users/dchabot/Documents/Cartographie/Shapefiles/gshhs\"\n\n>     hSHP = SHPOpen(CHAR(STRING_ELT(shpnm,0)), \"rb\" );\n>     if( hSHP == NULL )\n>     error(\"unable to open file\");\n>\n> in src/Rshapeget.c, where shpnm is the file name given to read.shape \n> (). So\n> either the compilation failed, or the file isn't there. Try\n>\n> getinfo.shape(\"gshhs_land.shp\")\n\n > getinfo.shape(\"gshhs_land.shp\")\nErreur dans getinfo.shape(\"gshhs_land.shp\") :\n     No such file\n\nWow, these were R commands I did not know! But I just found the  \nproblem. OS X can \"hide\" the extension of file names. The names of  \nthe 3 files appeared correct to me, but I fired Terminal and listed  \nthe files that way (which I admit I don't do often), and here what I  \ngot:\n\nLAUchabotd-QC-DFO-MPO-GC-CA:~/Documents/Cartographie/Shapefiles/gshhs  \ndchabot$ ls -l\ntotal 336928\n-rw-r--r--   1 dchabot  dchabot    8823500 Oct 11 13:07  \ngshhs_land.dbf.txt\n-rw-r--r--   1 dchabot  dchabot  162143644 Oct 11 13:07 gshhs_land.shp\n-rw-r--r--   1 dchabot  dchabot    1534588 Oct 11 13:07  \ngshhs_land.shx.txt\n\n2 of the files had a hidden \".txt\" which I did not see, but R sure  \ndid. I fixed these 2 file names and read.shape gave me the same  \nnumber of shapes you got, and it did not take so long. Sorry for this.\n\n> ...\n> It is not a shapefile, but in GSHHS format. It is formatted as  \n> polygons.\n> The problem with the shapefile as lines is that it cannot be used for\n> filling land or sea, just for drawing coastlines.\nSo you accessed it using gshhs programs?\n\nYou mentioned you could work on a way to adapt gshhs programs so  \nthey'd be called from R, or bringing the same functionality in R, I'm  \nnot sure exactly what you meant. But you can save you the trouble for  \none program, \"gshhs_dp\". I think thinPolys, from PBSmapping,  \nimplements this already.\n\n> OK, so I'll follow this route as well.\n>\n\n>>> Is there any use in writing an R function on top of the gshhs\n>>> program for\n>>> extracting polygons from the gshhs databases directly into sp class\n>>> objects - it doesn't look too difficult, and would give direct  \n>>> access\n>>> without having to use the shapefile?\n>>>\n>>>\n>> I would love to have it. At a minimum, I'd need clear(er)\n>> instructions as to how to compile and use the programs provided on\n>> GSHHS's site. But until now I valued being able to work with my\n>> dataset in R as I am used to, and produce maps for the right subset\n>> of data I'm interested in. So I don't plan to use GMT any time soon\n>> and would much prefer R functions to access the very nice gshhs\n>> databases and take what I need out of them.\n>>\n>>\n>\n> I think it can be done.\n>\n>\n>> As an aside, to you know of a way to do map borders in R that look\n>> like those in GMT and many paper maps (thick borders, alternating\n>> from white to black from one degree of lat or long to the next)? This\n>> is a cosmetic issue only but it would be a nice touch to be able to\n>> do this in R.\n>>\n>\n> For unprojected it could be done, for projected like GMT is more  \n> trouble.\n> If anyone would like to contribute GMTaxis() to work like GMT,  \n> please say,\n> contributions welcome!\n>\n>\nI wish I could help, but I really do not have the background to do  \nso. I will be happy to test for you though.\n\nDenis",
+      "body_snippet": "Hi Roger,\n\n\nLe 05-10-17 ? 02:21, Roger Bivand a ?crit :\n\n> I have no access to OSX, I'm afraid. If you do setwd() to the  \n> directory\n> where gshhs_land.shp is placed, and then list.files(pattern=\"sh",
+      "thread_id": "thread-bc57d1dc71af",
+      "thread_depth": 4,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-ab60e9983ee1",
+      "message_id": "<F07A3234E1CDF74399E254240638883001E80948@bernina.fibl.ch>",
+      "from_name": "Schlatter Christian",
+      "from_email_hash": "910961146e152eefd2b94be0e3aa57a14f1e14e3945c0eadeda81b9029b679a5",
+      "date": "2005-10-17T16:03:53+02:00",
+      "subject": "[R-sig-Geo] rGeo vs. gstat",
+      "subject_clean": "rGeo vs. gstat",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20051017/a387c454/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20051017/a387c454/attachment.pl>",
+      "thread_id": "thread-ab60e9983ee1",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-d4215f8fdeeb",
+      "message_id": "<28A48768-84B6-4A3C-BF20-9C6A6524D2F3@globetrotter.net>",
+      "from_name": "Denis Chabot",
+      "from_email_hash": "e2249e269df0e661c38b38980d7e2138ea9c3c744598b7c43d3a5acd35478707",
+      "date": "2005-10-17T13:47:14-04:00",
+      "subject": "[R-sig-Geo] Srings",
+      "subject_clean": "Srings",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi Roger,\n\nI don't know what is happening, maybe a mismatch of some packages  \nfrom my R2.1 (old) install and my new R2.2 install, but I'm having  \nproblems with function\n\nasSpatialRingsShapes\n\nthat was used in the method you developed to import shapefiles into  \nfiles that are compatible with PBSmapping. The problem is not with  \nthe functions you wrote for me, actually, but with a function that is  \npart of maptools. This is actually part of the example given in the  \nhelp file for asSpatialRingsShapes. R chokes on Sring:\n\n > library(maptools)\n > nc.shp <- read.shape(system.file(\"shapes/sids.shp\",  \npackage=\"maptools\")[1])\nShapefile type: Polygon, (5), # of Shapes: 100\n > nc1 <- asSpatialRingsShapes(nc.shp$Shapes, as.character(nc.shp \n$att.data$FIPS))\nErreur : impossible de trouver la fonction \"Sring\"\n\n\nDo others have problems with this function?\n\nSincerely,\n\nDenis",
+      "body_snippet": "Hi Roger,\n\nI don't know what is happening, maybe a mismatch of some packages  \nfrom my R2.1 (old) install and my new R2.2 install, but I'm having  \nproblems with function\n\nasSpatialRingsShapes\n\nthat w",
+      "thread_id": "thread-d4215f8fdeeb",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-e13a75d40640",
+      "message_id": "<Pine.LNX.4.44.0510171951090.16392-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-10-17T19:57:27+02:00",
+      "subject": "[R-sig-Geo] Srings",
+      "subject_clean": "Srings",
+      "in_reply_to": "<28A48768-84B6-4A3C-BF20-9C6A6524D2F3@globetrotter.net>",
+      "references": [],
+      "body_plain": "On Mon, 17 Oct 2005, Denis Chabot wrote:\n\n> Hi Roger,\n> \n> I don't know what is happening, maybe a mismatch of some packages  \n> from my R2.1 (old) install and my new R2.2 install, but I'm having  \n> problems with function\n> \n> asSpatialRingsShapes\n> \n> that was used in the method you developed to import shapefiles into  \n> files that are compatible with PBSmapping. The problem is not with  \n> the functions you wrote for me, actually, but with a function that is  \n> part of maptools. This is actually part of the example given in the  \n> help file for asSpatialRingsShapes. R chokes on Sring:\n> \n>  > library(maptools)\n>  > nc.shp <- read.shape(system.file(\"shapes/sids.shp\",  \n> package=\"maptools\")[1])\n> Shapefile type: Polygon, (5), # of Shapes: 100\n>  > nc1 <- asSpatialRingsShapes(nc.shp$Shapes, as.character(nc.shp \n> $att.data$FIPS))\n> Erreur : impossible de trouver la fonction \"Sring\"\n> \n> \n> Do others have problems with this function?\n\nThe name changed with a major improvement in the internal structure: the \nclasses are (were/are) Sring|Polygon, Srings|Polygons, etc. Recent \nreleases of maptools (since 0.5) depend on sp, and readShapePoly() now \nimports a shapefile into a SpatialPolygonsDataFrame object directly. We \ndid announce the change, and the posting is available at:\n\nhttp://r-spatial.sourceforge.net/changes081.txt\n\nwhere we also wrote:\n\n\"Following very useful input from users, a number of incompatible changes \nare being introduced into sp from release 0.8-*. We hope that users will \nexport data objects in the deprecated formats before updating.\"\n\nOlder versions of sp are available from the CRAN archive if needed.\n\nHope this helps,\n\nRoger\n\n\n> \n> Sincerely,\n> \n> Denis\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 17 Oct 2005, Denis Chabot wrote:\n\n> Hi Roger,\n> \n> I don't know what is happening, maybe a mismatch of some packages  \n> from my R2.1 (old) install and my new R2.2 install, but I'm having  \n> ",
+      "thread_id": "thread-d4215f8fdeeb",
+      "thread_depth": 1,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-d61375868c93",
+      "message_id": "<43541AD5.3060008@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2005-10-17T23:42:45+02:00",
+      "subject": "[R-sig-Geo] rGeo vs. gstat",
+      "subject_clean": "rGeo vs. gstat",
+      "in_reply_to": "<F07A3234E1CDF74399E254240638883001E80948@bernina.fibl.ch>",
+      "references": [
+        "<F07A3234E1CDF74399E254240638883001E80948@bernina.fibl.ch>"
+      ],
+      "body_plain": "Schlatter Christian wrote:\n\n>Dear list members\n>\n> \n>\n>I'm very new to R but a little informed about geostatistics. \n>\n>As I was looking for possibilities of geostatistical analysis in R I encountered at least two very interesting packages: \n>\n> \n>\n>Rgeo and gstat\n>\n> \n>\n>And of course I'm wondering now about the one which fits better my needs which are the comparison of spatial data (insect parasitism rates) for different fields in which we collected data. \n>\n> \n>\nChristian, I too find these two packages very interesting. Another \npackage that you might\nfind interesting besides geoR is geoRglm. However, you've told us too \nlittle about what\nyour problem is to give you advise about which methods to use, and where \nto find them.\n\nYou will find even more packages for geostatistical analysis on the \nspatial task view:\nR home page -> CRAN -> CRAN mirror -> Task Views -> Spatial.\n\nBest regards,\n--\nEdzer",
+      "body_snippet": "Schlatter Christian wrote:\n\n>Dear list members\n>\n> \n>\n>I'm very new to R but a little informed about geostatistics. \n>\n>As I was looking for possibilities of geostatistical analysis in R I encountered",
+      "thread_id": "thread-ab60e9983ee1",
+      "thread_depth": 1,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-13d5e2e23e9f",
+      "message_id": "<17236.53620.81133.98689@maths.uwa.edu.au>",
+      "from_name": "Adrian Baddeley",
+      "from_email_hash": "0a0e76f6b108d4a1bad3941837d331be1eae194226d8adc0ceddc0672c5984c8",
+      "date": "2005-10-18T18:41:56+08:00",
+      "subject": "[R-sig-Geo] spatstat.org",
+      "subject_clean": "spatstat.org",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Please be advised that the home page for 'spatstat'\nhas moved to\n    www.spatstat.org\n\n---\nAdrian Baddeley",
+      "body_snippet": "Please be advised that the home page for 'spatstat'\nhas moved to\n    www.spatstat.org\n\n---\nAdrian Baddeley",
+      "thread_id": "thread-13d5e2e23e9f",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-601667ae975e",
+      "message_id": "<200510181637.j9IGbAZ6025352@expredir6.cites.uiuc.edu>",
+      "from_name": "Saket Sarraf",
+      "from_email_hash": "df47a4d5f18af953a5e2e1be6530b471b6829bab6d607ea866345c7bf3fdb467",
+      "date": "2005-10-18T11:37:52-05:00",
+      "subject": "[R-sig-Geo] system of equations with spatial dependence in error terms",
+      "subject_clean": "system of equations with spatial dependence in error terms",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20051018/52837341/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20051018/52837341/attachment.pl>",
+      "thread_id": "thread-601667ae975e",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-5e3e0a1ce501",
+      "message_id": "<F07A3234E1CDF74399E254240638883001E80DAE@bernina.fibl.ch>",
+      "from_name": "Schlatter Christian",
+      "from_email_hash": "910961146e152eefd2b94be0e3aa57a14f1e14e3945c0eadeda81b9029b679a5",
+      "date": "2005-10-19T09:13:46+02:00",
+      "subject": "[R-sig-Geo] rGeo vs. gstat; Question on geostatistical method for specific experimental design",
+      "subject_clean": "rGeo vs. gstat; Question on geostatistical method for specific experimental design",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear Edzer, dear list members\n\nThank you very much for your comments. It made me investigate quite well. \n\nThe answer to the question \"rGeo vs. gstat\" is answered by your very helpful article of the DSC 2003 meeting in Vienna (chapter \"introduction\"): http://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/Pebesma.pdf\n\nAs I'm new and not yet so familiar with the customs of [R-sig-Geo], I did not feel about asking about my personal statistical problems but more about general statistical questions. \n\nBut as you asked for more detail I will gladly describe them (please let me know if this should not be the place for it):\n\nWe are looking at parasitism rates in cabbage pests eggs (Lepidoptera: mainly Mamestra brassicae, Pieris rapae) in relation to distance effects from flowering strips. Specifically the following question: In what relation is the parasitism rate to the distance from the flower source (which in the case are sown flower strips). \n\nMany practical restrictions led to a somehow \"compromisical\" experimental design consisting of four blocks in one cabbage field (two with flower strips, two without). Each block has two grids of 6x 8 plants (distance in between each plant: 3m) on each side of the flower strip (cp. Image), 96 plants per block. On each plant we collected pest eggs to determine parasitism rate. (Addtionaly we sampled on 4 different days).\n\nThe main problem is the low parasitism rate in the field (only about 15-20% of all eggs have been parasitized), consequently many 0 values. \n\nMy idea was to calculate for each of the four blocks variogram parameters and to compare them afterwards (as we had two study sites, we have 8 blocks all in all, making 4 with flowers and 4 without). With so many \"0\" samples difficult to manage. \n\nNow I found in Edzers article and the gstat manual the possibility of block kriging. Without knowing exactly what it is, I suppose there is the possibility to keep all four blocks together and defining the blocks with the rectangular block-defining possibility. \n\nIs this a valid procedure?\n\nBest wishes \n\nChristian Schlatter (Research institute for organic farming, Switzerland)\n\n-----Urspr?ngliche Nachricht-----\nVon: Edzer J. Pebesma [mailto:e.pebesma at geo.uu.nl] \nGesendet: Montag, 17. Oktober 2005 23:43\nAn: Schlatter Christian\nCc: r-sig-geo at stat.math.ethz.ch\nBetreff: Re: [R-sig-Geo] rGeo vs. gstat\n\nSchlatter Christian wrote:\n\n>Dear list members\n>\n>I'm very new to R but a little informed about geostatistics. \n>\n>As I was looking for possibilities of geostatistical analysis in R I encountered at least two very interesting packages: \n>\n>Rgeo and gstat\n>\n>And of course I'm wondering now about the one which fits better my needs which are the comparison of spatial data (insect parasitism rates) for different fields in which we collected data. \n>\n> \n>\nChristian, I too find these two packages very interesting. Another \npackage that you might\nfind interesting besides geoR is geoRglm. However, you've told us too \nlittle about what\nyour problem is to give you advise about which methods to use, and where \nto find them.\n\nYou will find even more packages for geostatistical analysis on the \nspatial task view:\nR home page -> CRAN -> CRAN mirror -> Task Views -> Spatial.\n\nBest regards,\n--\nEdzer\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: S4MamMuri.jpg\nType: image/jpeg\nSize: 53018 bytes\nDesc: S4MamMuri.jpg\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20051019/78a8bcf8/attachment.jpg>",
+      "body_snippet": "Dear Edzer, dear list members\n\nThank you very much for your comments. It made me investigate quite well. \n\nThe answer to the question \"rGeo vs. gstat\" is answered by your very helpful article of the D",
+      "thread_id": "thread-5e3e0a1ce501",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-12861be67699",
+      "message_id": "<43565CAC.1070603@geog.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "a7fb0ca623e251a5aff6aa466eb7f50e3c643594fe03e3232d546a007043eef0",
+      "date": "2005-10-19T16:48:12+02:00",
+      "subject": "[R-sig-Geo] rGeo vs. gstat; Question on geostatistical method for specific experimental design",
+      "subject_clean": "rGeo vs. gstat; Question on geostatistical method for specific experimental design",
+      "in_reply_to": "<F07A3234E1CDF74399E254240638883001E80DAE@bernina.fibl.ch>",
+      "references": [
+        "<F07A3234E1CDF74399E254240638883001E80DAE@bernina.fibl.ch>"
+      ],
+      "body_plain": "Schlatter Christian wrote:\n\n>Dear Edzer, dear list members\n>\n>Thank you very much for your comments. It made me investigate quite well. \n>\n>The answer to the question \"rGeo vs. gstat\" is answered by your very helpful article of the DSC 2003 meeting in Vienna (chapter \"introduction\"): http://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/Pebesma.pdf\n>\n>As I'm new and not yet so familiar with the customs of [R-sig-Geo], I did not feel about asking about my personal statistical problems but more about general statistical questions. \n>\n>But as you asked for more detail I will gladly describe them (please let me know if this should not be the place for it):\n>\n>We are looking at parasitism rates in cabbage pests eggs (Lepidoptera: mainly Mamestra brassicae, Pieris rapae) in relation to distance effects from flowering strips. Specifically the following question: In what relation is the parasitism rate to the distance from the flower source (which in the case are sown flower strips). \n>\n>Many practical restrictions led to a somehow \"compromisical\" experimental design consisting of four blocks in one cabbage field (two with flower strips, two without). Each block has two grids of 6x 8 plants (distance in between each plant: 3m) on each side of the flower strip (cp. Image), 96 plants per block. On each plant we collected pest eggs to determine parasitism rate. (Addtionaly we sampled on 4 different days).\n>\n>The main problem is the low parasitism rate in the field (only about 15-20% of all eggs have been parasitized), consequently many 0 values. \n>\n>My idea was to calculate for each of the four blocks variogram parameters and to compare them afterwards (as we had two study sites, we have 8 blocks all in all, making 4 with flowers and 4 without). With so many \"0\" samples difficult to manage. \n>\n>Now I found in Edzers article and the gstat manual the possibility of block kriging. Without knowing exactly what it is, I suppose there is the possibility to keep all four blocks together and defining the blocks with the rectangular block-defining possibility. \n>\n>Is this a valid procedure?\n>  \n>\nBefore you apply block kriging I would strongly encourage you to\nread an appropriate text book about what block kriging is. Blocks\nin geostatistics usually refer to specific spatially contiguous regions, not\na combined effect of blocking in experimental design. Kriging refers\nto spatial prediction, not the estimation of effect size.\n\nBest regards,\n--\nEdzer",
+      "body_snippet": "Schlatter Christian wrote:\n\n>Dear Edzer, dear list members\n>\n>Thank you very much for your comments. It made me investigate quite well. \n>\n>The answer to the question \"rGeo vs. gstat\" is answered by y",
+      "thread_id": "thread-5e3e0a1ce501",
+      "thread_depth": 1,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-35034cdd04ec",
+      "message_id": "<Pine.LNX.4.63.0510191309090.12995@est.ufpr.br>",
+      "from_name": "Paulo Justiniano Ribeiro Jr",
+      "from_email_hash": "2b858444caa126e4d481e2fc2bbba608bd14deecadbdf1fe319682ae8329d0bb",
+      "date": "2005-10-19T13:12:10-02:00",
+      "subject": "[R-sig-Geo] rGeo vs. gstat; Question on geostatistical method for specific experimental design",
+      "subject_clean": "rGeo vs. gstat; Question on geostatistical method for specific experimental design",
+      "in_reply_to": "<43565CAC.1070603@geog.uu.nl>",
+      "references": [
+        "<F07A3234E1CDF74399E254240638883001E80DAE@bernina.fibl.ch>",
+        "<43565CAC.1070603@geog.uu.nl>"
+      ],
+      "body_plain": "Following Edzer comments my impression is that you are trying to use\nthe spatial correlation in the analysis of an experiment.\n\nThere are indeed some attemps in the literature using geostatistical \nmodels.\nIn this case there is no prediction involved but  just a non-independent\nvariance matrix for the error terms of your model.\n\nFor some designs this can be achieve using likfit() in geoR or functions \nin the packlage nlme\n\nbest\nP.J.\n\n\n\n\nOn Wed, 19 Oct 2005, Edzer J. Pebesma wrote:\n\n> Schlatter Christian wrote:\n>\n>> Dear Edzer, dear list members\n>>\n>> Thank you very much for your comments. It made me investigate quite well.\n>>\n>> The answer to the question \"rGeo vs. gstat\" is answered by your very helpful article of the DSC 2003 meeting in Vienna (chapter \"introduction\"): http://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/Pebesma.pdf\n>>\n>> As I'm new and not yet so familiar with the customs of [R-sig-Geo], I did not feel about asking about my personal statistical problems but more about general statistical questions.\n>>\n>> But as you asked for more detail I will gladly describe them (please let me know if this should not be the place for it):\n>>\n>> We are looking at parasitism rates in cabbage pests eggs (Lepidoptera: mainly Mamestra brassicae, Pieris rapae) in relation to distance effects from flowering strips. Specifically the following question: In what relation is the parasitism rate to the distance from the flower source (which in the case are sown flower strips).\n>>\n>> Many practical restrictions led to a somehow \"compromisical\" experimental design consisting of four blocks in one cabbage field (two with flower strips, two without). Each block has two grids of 6x 8 plants (distance in between each plant: 3m) on each side of the flower strip (cp. Image), 96 plants per block. On each plant we collected pest eggs to determine parasitism rate. (Addtionaly we sampled on 4 different days).\n>>\n>> The main problem is the low parasitism rate in the field (only about 15-20% of all eggs have been parasitized), consequently many 0 values.\n>>\n>> My idea was to calculate for each of the four blocks variogram parameters and to compare them afterwards (as we had two study sites, we have 8 blocks all in all, making 4 with flowers and 4 without). With so many \"0\" samples difficult to manage.\n>>\n>> Now I found in Edzers article and the gstat manual the possibility of block kriging. Without knowing exactly what it is, I suppose there is the possibility to keep all four blocks together and defining the blocks with the rectangular block-defining possibility.\n>>\n>> Is this a valid procedure?\n>>\n>>\n> Before you apply block kriging I would strongly encourage you to\n> read an appropriate text book about what block kriging is. Blocks\n> in geostatistics usually refer to specific spatially contiguous regions, not\n> a combined effect of blocking in experimental design. Kriging refers\n> to spatial prediction, not the estimation of effect size.\n>\n> Best regards,\n> --\n> Edzer\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\nPaulo Justiniano Ribeiro Jr\nLEG (Laborat?rio de Estat?stica e Geoinforma??o)\nDepartamento de Estat?stica\nUniversidade Federal do Paran?\nCaixa Postal 19.081\nCEP 81.531-990\nCuritiba, PR  -  Brasil\nTel: (+55) 41 3361 3573\nFax: (+55) 41 3361 3141\ne-mail: paulojus at est.ufpr.br\nhttp://www.est.ufpr.br/~paulojus",
+      "body_snippet": "Following Edzer comments my impression is that you are trying to use\nthe spatial correlation in the analysis of an experiment.\n\nThere are indeed some attemps in the literature using geostatistical \nmo",
+      "thread_id": "thread-5e3e0a1ce501",
+      "thread_depth": 2,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-0ae49ce5fd84",
+      "message_id": "<03DCBBA079F2324786E8715BE538968A3DC505@FIGMAIL-CLUS01.FIG.FK>",
+      "from_name": "Ruben Roa",
+      "from_email_hash": "54521b1a0eeaed1cb0e0e122be18a16d7f62db28732958fc417687d4d0cb5509",
+      "date": "2005-10-19T14:43:26-02:00",
+      "subject": "[R-sig-Geo] 2 questions about likfit in geoR",
+      "subject_clean": "2 questions about likfit in geoR",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "> -----Original Message-----\n> From:\tr-sig-geo-bounces at stat.math.ethz.ch [SMTP:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of liyun ma\n> Sent:\tWednesday, October 19, 2005 2:45 PM\n> To:\tr-sig-geo at stat.math.ethz.ch\n> Subject:\t[R-sig-Geo] 2 questions about likfit in geoR\n> \n> Dear all,\n> \n> I have two questions about using the likfit function in geoR.\n> One is about the trend estimation. The likfit function estimates the mean \n> parameters and the covariance parameters at the same time. Is there any way \n> to specify the trend function to be a fixed number? For example let mean be \n> zero?\n> \n> The second question is the function gives beta.var,  which is the estimated \n> variance  for the mean\n> parameter beta. Can we also get the estimated variance for the covariance \n> parameters kappa, sigma^2 and phi?\n> \n> Thanks a lot!\n> \n> Lauren Ma\n> \n--------------\nHi Lauren, \nFirst, you have to pass the argument Hessian=TRUE in likfit\nThen to see the Hessian, you can use:\nyourlikfitobject$info.minimisation.function\nThe Hessian will be the last item. By inverting the Hessian you will have the observed\ncovariance matrix. The observed variances will be in the main diagonal. In the Hessian the order\nof parameters is as follows: phi, ratio of sigma^2 over tau^2, kappa, and lambda (the \nlatter when you have included the Box-Cox parameter, recommended).\nIn my experience (always with lambda<>1) the parameter beta is underestimated. I have \ncompared it with what you get after predictions (with mean(krige.object$predict); this should \nbe similar to, though not identical with beta) and with the simple sample mean of the original data and \nbeta has always been much smaller. I contacted the author of geoR (Paulo Ribeiro Jr) and he said that \nhe would check the code. To get beta in the original units you have to back-transform it (assuming\nlambda is <>1) usign the BCtransform function.\nI hope this helps.\nRuben",
+      "body_snippet": "> -----Original Message-----\n> From:\tr-sig-geo-bounces at stat.math.ethz.ch [SMTP:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of liyun ma\n> Sent:\tWednesday, October 19, 2005 2:45 PM\n> To:\tr-sig-",
+      "thread_id": "thread-0ae49ce5fd84",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-ce1e9f21777e",
+      "message_id": "<BAY101-F27E8318C43B266CB246841C3700@phx.gbl>",
+      "from_name": "liyun ma",
+      "from_email_hash": "2c33da20d79a90e6154674eff6aa31b269b7dcbf4a7ead6afe36ca124c30354c",
+      "date": "2005-10-19T16:45:13Z",
+      "subject": "[R-sig-Geo] 2 questions about likfit in geoR",
+      "subject_clean": "2 questions about likfit in geoR",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\nI have two questions about using the likfit function in geoR.\nOne is about the trend estimation. The likfit function estimates the mean \nparameters and the covariance parameters at the same time. Is there any way \nto specify the trend function to be a fixed number? For example let mean be \nzero?\n\nThe second question is the function gives beta.var,  which is the estimated \nvariance  for the mean\nparameter beta. Can we also get the estimated variance for the covariance \nparameters kappa, sigma^2 and phi?\n\nThanks a lot!\n\nLauren Ma",
+      "body_snippet": "Dear all,\n\nI have two questions about using the likfit function in geoR.\nOne is about the trend estimation. The likfit function estimates the mean \nparameters and the covariance parameters at the same",
+      "thread_id": "thread-ce1e9f21777e",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-dbe659df09ab",
+      "message_id": "<1129750014.7662.245553319@webmail.messagingengine.com>",
+      "from_name": "Nicholas Lewin-Koh",
+      "from_email_hash": "ce1a5dad09cdf256c2a72906ae1e563f0d7ec3457957c4a1a53c9b3862a71eac",
+      "date": "2005-10-19T14:26:54-05:00",
+      "subject": "[R-sig-Geo] rGeo vs. gstat; Question on geostatistical method for specific experimental design",
+      "subject_clean": "rGeo vs. gstat; Question on geostatistical method for specific experimental design",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi Christian,\nI think in this particular case geostatistics is not entirely\nappropriate. Given your design you have a generalized\nlinear mixed model (glmm) where you have plants nested in plots, plots\nnested in blocks, and your flowerstrip effect \nat the block level. Then you have your field effect which in statistical\nparlance would be a blocking factor. Since\nyour data is binary on each plant, you have a binomial error structure.\n\nOn the other hand, what might be interesting is you have 16 replicated\ngrids of 96 plants. Aside from the above design\nyou may want to look at some spatial aggregation measure of parasitism\nevents and compare those across plots.\n\nCheers\nNicholas\n\n\nDate: Wed, 19 Oct 2005 09:13:46 +0200\nFrom: \"Schlatter Christian\" <christian.schlatter at fibl.org>\nSubject: Re: [R-sig-Geo] rGeo vs. gstat;        Question on\ngeostatistical\n        method for specific experimental design\nTo: \"Edzer J. Pebesma\" <e.pebesma at geo.uu.nl>\nCc: r-sig-geo at stat.math.ethz.ch\nMessage-ID: <F07A3234E1CDF74399E254240638883001E80DAE at bernina.fibl.ch>\nContent-Type: text/plain; charset=\"iso-8859-1\"\n\nDear Edzer, dear list members\n\nThank you very much for your comments. It made me investigate quite\nwell.\n\nThe answer to the question \"rGeo vs. gstat\" is answered by your very\nhelpful article of the DSC 2003 meeting in Vienna (chapter\n\"introduction\"):\nhttp://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/Pebesma.pdf\n\nAs I'm new and not yet so familiar with the customs of [R-sig-Geo], I\ndid not feel about asking about my personal statistical problems but\nmore about general statistical questions.\n\nBut as you asked for more detail I will gladly describe them (please let\nme know if this should not be the place for it):\n\nWe are looking at parasitism rates in cabbage pests eggs (Lepidoptera:\nmainly Mamestra brassicae, Pieris rapae) in relation to distance effects\nfrom flowering strips. Specifically the following question: In what\nrelation is the parasitism rate to the distance from the flower source\n(which in the case are sown flower strips).\n\nMany practical restrictions led to a somehow \"compromisical\"\nexperimental design consisting of four blocks in one cabbage field (two\nwith flower strips, two without). Each block has two grids of 6x 8\nplants (distance in between each plant: 3m) on each side of the flower\nstrip (cp. Image), 96 plants per block. On each plant we collected pest\neggs to determine parasitism rate. (Addtionaly we sampled on 4 different\ndays).\n\nThe main problem is the low parasitism rate in the field (only about\n15-20% of all eggs have been parasitized), consequently many 0 values.\n\nMy idea was to calculate for each of the four blocks variogram\nparameters and to compare them afterwards (as we had two study sites, we\nhave 8 blocks all in all, making 4 with flowers and 4 without). With so\nmany \"0\" samples difficult to manage.\n\nNow I found in Edzers article and the gstat manual the possibility of\nblock kriging. Without knowing exactly what it is, I suppose there is\nthe possibility to keep all four blocks together and defining the blocks\nwith the rectangular block-defining possibility.\n\nIs this a valid procedure?\n\nBest wishes\n\nChristian Schlatter (Research institute for organic farming,\nSwitzerland)\n\n-----Urspr?ngliche Nachricht-----\nVon: Edzer J. Pebesma [mailto:e.pebesma at geo.uu.nl]\nGesendet: Montag, 17. Oktober 2005 23:43\nAn: Schlatter Christian\nCc: r-sig-geo at stat.math.ethz.ch\nBetreff: Re: [R-sig-Geo] rGeo vs. gstat\n\nSchlatter Christian wrote:\n\n>Dear list members\n>\n>I'm very new to R but a little informed about geostatistics.\n>\n>As I was looking for possibilities of geostatistical analysis in R I encountered at least two very interesting packages:\n>\n>Rgeo and gstat\n>\n>And of course I'm wondering now about the one which fits better my needs which are the comparison of spatial data (insect parasitism rates) for different fields in which we collected data.\n>\n>\n>\nChristian, I too find these two packages very interesting. Another\npackage that you might\nfind interesting besides geoR is geoRglm. However, you've told us too\nlittle about what\nyour problem is to give you advise about which methods to use, and where\nto find them.\n\nYou will find even more packages for geostatistical analysis on the\nspatial task view:\nR home page -> CRAN -> CRAN mirror -> Task Views -> Spatial.\n\nBest regards,\n--\nEdzer",
+      "body_snippet": "Hi Christian,\nI think in this particular case geostatistics is not entirely\nappropriate. Given your design you have a generalized\nlinear mixed model (glmm) where you have plants nested in plots, plots",
+      "thread_id": "thread-dbe659df09ab",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-36a95de1d83e",
+      "message_id": "<20051020154607.96355.qmail@web33315.mail.mud.yahoo.com>",
+      "from_name": "Narendran Kodandapani",
+      "from_email_hash": "78c5a2f71a9131c8e0bd2d076a710e596d75b6d6b5af66c94bd8d8bb7e4ec73e",
+      "date": "2005-10-20T08:46:07-07:00",
+      "subject": "[R-sig-Geo] remove first trend from dataset",
+      "subject_clean": "remove first trend from dataset",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\nI am modeling fire occurrence in a landscape.  I have\n150 points spread across the landscape.  However I\nnotice a 1st order trend when I fit the variogram.  Is\nthere someway that I can remove this trend from the\ndata, before I begin the modeling process.\n\nThanks in advance,\n\nNaren",
+      "body_snippet": "Dear all,\n\nI am modeling fire occurrence in a landscape.  I have\n150 points spread across the landscape.  However I\nnotice a 1st order trend when I fit the variogram.  Is\nthere someway that I can remo",
+      "thread_id": "thread-36a95de1d83e",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-46f401da4284",
+      "message_id": "<43580553.70804@umn.edu>",
+      "from_name": "Jose A. Hernandez",
+      "from_email_hash": "87b2ee7a046f55a4f040260c7428552fb0b37638d5f542d4db857662dad4b52d",
+      "date": "2005-10-20T16:00:03-05:00",
+      "subject": "[R-sig-Geo] remove first trend from dataset",
+      "subject_clean": "remove first trend from dataset",
+      "in_reply_to": "<20051020154607.96355.qmail@web33315.mail.mud.yahoo.com>",
+      "references": [
+        "<20051020154607.96355.qmail@web33315.mail.mud.yahoo.com>"
+      ],
+      "body_plain": "Hi Naren,\n\nIf understand your problem correctly, all you have to do is to remove \nyour trend by using linear regression.\n\nAssuming you have geostatiscal data (point observations of a \ncontinuously varying quantity over a region), then you want to estimate \nthe mean function, remove the trend (large scale variation) using linear \nregression and plot the variogram of the residuals (micro scale variation).\n\nI believe geoR has implemented the trend removal quite nicely, but I am \nsure other packages have done it as well.\n\nThere is an example of trend removal in this paper by Paulo, Ole and Peter:\n\nhttp://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/RibeiroEtAl.pdf\n\nYou can do it by hand by fitting a this model using lm():\n\nz ~ b0 + b1 x + b2 y + e\n\nand plotting the variogram of the residuals. If you wish to predict z, \nfor mapping using kriging, then, you would have to add the trend back to \nthe predicted residuals.\n\nOther methods such as median polish are also used, here is a nice \nexample of the trend removal using the median polish on R by Petrutza \nCaragea from IA State:\n\nhttp://www.public.iastate.edu/~pcaragea/S4_506/coal_analysis.txt\n\nCheers,\n\nJose\n\n\nNarendran Kodandapani wrote:\n> Dear all,\n> \n> I am modeling fire occurrence in a landscape.  I have\n> 150 points spread across the landscape.  However I\n> notice a 1st order trend when I fit the variogram.  Is\n> there someway that I can remove this trend from the\n> data, before I begin the modeling process.\n> \n> Thanks in advance,\n> \n> Naren\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nJose A. Hernandez\nPh.D. Candidate\nPrecision Agriculture Center\n\nDepartment of Soil, Water, and Climate\nUniversity of Minnesota\n1991 Upper Buford Circle\nSt. Paul, MN 55108\n\nPh. (612) 625-0445, Fax. (612) 625-2208",
+      "body_snippet": "Hi Naren,\n\nIf understand your problem correctly, all you have to do is to remove \nyour trend by using linear regression.\n\nAssuming you have geostatiscal data (point observations of a \ncontinuously var",
+      "thread_id": "thread-36a95de1d83e",
+      "thread_depth": 1,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-d4a3b3fe227c",
+      "message_id": "<Pine.LNX.4.44.0510211454280.19619-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-10-21T15:10:43+02:00",
+      "subject": "[R-sig-Geo] New sp add-on packages on sourceforge repository",
+      "subject_clean": "New sp add-on packages on sourceforge repository",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I have released two new sp add-on packages on the r-spatial repository.\n\nRgshhs converts GSHHS shorelines (as closed polygons) to sp class\nSpatialPolygons, which can then be written out as shapefiles for the\nchosen region. It's now very slow for full resolution, because clipping\nthe largest land polygons takes a lot of time, but hopefully people don't\ndo that every time they need data. It is provided with the coarse dataset,\nbut works with the full and the others. It leaves the longitude \ncoordinates in the -20 to 360 range like the data source. Details of the \nGlobal Self-consistent, Hierarchical, High-resolution Shoreline Database \nare avialable from:\n\nhttp://www.soest.hawaii.edu/wessel/gshhs/gshhs.html\n\nwhere the low, intermediate, high, and full resolution data may be \ndownloaded from. I'd be grateful for ideas for making it faster, and am \nlooking at providing indices of which level polygons are included in \nnext-level polygons preprocessed in the package rather than computing them \neach time for chosen polygons.\n\nA second package is spspatstat, providing interfaces between some sp \nclasses and the well-supported point pattern analysis package spatstat. \nThe spatstat ppp and owin classes are matched with sp equivalents.\n\nTo get a feel for where sp is going, (and after installing sp and \nspatstat from CRAN with their dependencies, and the new packages from \nhttp://r-spatial.sourceforge.net/R), try:\n\nlibrary(Rgshhs)\nlibrary(spspatstat)\ngshhs.c.b <- system.file(\"share/gshhs_c.b\", package = \"Rgshhs\")\nNZx <- c(160, 180)\nNZy <- c(-50, -30)\nNZ <- Rgshhs(gshhs.c.b, xlim = NZx, ylim = NZy)\nplot(runifpoint(500, as(NZ$SP, \"owin\")))\n\nHoping for feedback,\n\nRoger\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "I have released two new sp add-on packages on the r-spatial repository.\n\nRgshhs converts GSHHS shorelines (as closed polygons) to sp class\nSpatialPolygons, which can then be written out as shapefiles ",
+      "thread_id": "thread-d4a3b3fe227c",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-264014b73852",
+      "message_id": "<20051024170712.c3dcc6da.stanimura-ngs@umin.ac.jp>",
+      "from_name": "Susumu Tanimura",
+      "from_email_hash": "c9cad7a77d7512d2d8e67aecb8780c9c60c996929e92e5d28812d5c1af088077",
+      "date": "2005-10-24T17:07:12+09:00",
+      "subject": "[R-sig-Geo] historical descriptions for mapping function in R",
+      "subject_clean": "historical descriptions for mapping function in R",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi there,\n\nPlease someone tell me about the initial release date of maptools and\nfriends' packages, history about these packages, or related references for\ncitation.  I am writing about a review of mapping function in R for\nJapanese readers.  \n\nmaptools(changes = T) showed only after 0.4-2.\n\nIt is somewhat easy to review the status quo, but hard to find out\nhistorical descriptions.\n\nThanks,\n\n--\nSusumu Tanimura",
+      "body_snippet": "Hi there,\n\nPlease someone tell me about the initial release date of maptools and\nfriends' packages, history about these packages, or related references for\ncitation.  I am writing about a review of ma",
+      "thread_id": "thread-264014b73852",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-69e1482eab0a",
+      "message_id": "<Pine.LNX.4.44.0510241033210.32683-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-10-24T10:45:03+02:00",
+      "subject": "[R-sig-Geo] historical descriptions for mapping function in R",
+      "subject_clean": "historical descriptions for mapping function in R",
+      "in_reply_to": "<20051024170712.c3dcc6da.stanimura-ngs@umin.ac.jp>",
+      "references": [],
+      "body_plain": "On Mon, 24 Oct 2005, Susumu Tanimura wrote:\n\n> Hi there,\n> \n> Please someone tell me about the initial release date of maptools and\n> friends' packages, history about these packages, or related references for\n> citation.  I am writing about a review of mapping function in R for\n> Japanese readers.  \n> \n> maptools(changes = T) showed only after 0.4-2.\n> \n> It is somewhat easy to review the status quo, but hard to find out\n> historical descriptions.\n\nMy copy of 0.1-alpha is dated 15 August 2000, and was written by Nicholas\nLewin-Koh. It contained the first implementations of read.shape() and\nplot.Map(). The package was first published on CRAN in September 2003,\nsee http://cran.r-project.org/src/contrib/Archive/M/. The polylist S3\nobjects were moved to maptools from spdep in 2003.\n\nHope this helps,\n\nRoger\n\n> \n> Thanks,\n> \n> --\n> Susumu Tanimura\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 24 Oct 2005, Susumu Tanimura wrote:\n\n> Hi there,\n> \n> Please someone tell me about the initial release date of maptools and\n> friends' packages, history about these packages, or related refere",
+      "thread_id": "thread-264014b73852",
+      "thread_depth": 1,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-e825ed94ef5a",
+      "message_id": "<20051024200518.3999bf09.stanimura-ngs@umin.ac.jp>",
+      "from_name": "Susumu Tanimura",
+      "from_email_hash": "c9cad7a77d7512d2d8e67aecb8780c9c60c996929e92e5d28812d5c1af088077",
+      "date": "2005-10-24T20:05:18+09:00",
+      "subject": "[R-sig-Geo] historical descriptions for mapping function in R",
+      "subject_clean": "historical descriptions for mapping function in R",
+      "in_reply_to": "<Pine.LNX.4.44.0510241033210.32683-100000@reclus.nhh.no>",
+      "references": [
+        "<20051024170712.c3dcc6da.stanimura-ngs@umin.ac.jp>",
+        "<Pine.LNX.4.44.0510241033210.32683-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Dear Roger,\n\n> My copy of 0.1-alpha is dated 15 August 2000, and was written by\n> Nicholas Lewin-Koh. It contained the first implementations of read.shape\n> () and plot.Map(). The package was first published on CRAN in September\n> 2003, see http://cran.r-project.org/src/contrib/Archive/M/. The\n> polylist S3 objects were moved to maptools from spdep in 2003.\n\nThis is a great help for me.  I greatly appreciate your kindness.\n\nIt is interesting that the first publishing year of maptools is the\nsame as the year of pre-DSC'03 spatial data workshop. I enjoy\nreviewing the history of map functions in R, although most of web\nresources are in your site http://sal.uiuc.edu/csiss/Rgeo/.\n\nBest regards,\n\n--\nSusumu Tanimura",
+      "body_snippet": "Dear Roger,\n\n> My copy of 0.1-alpha is dated 15 August 2000, and was written by\n> Nicholas Lewin-Koh. It contained the first implementations of read.shape\n> () and plot.Map(). The package was first pu",
+      "thread_id": "thread-264014b73852",
+      "thread_depth": 2,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-47b3286dcd41",
+      "message_id": "<EADCB054-D5E2-4B68-BAAA-745A2B1558B2@globetrotter.net>",
+      "from_name": "Denis Chabot",
+      "from_email_hash": "e2249e269df0e661c38b38980d7e2138ea9c3c744598b7c43d3a5acd35478707",
+      "date": "2005-10-24T09:39:50-04:00",
+      "subject": "[R-sig-Geo] R-sig-Geo Digest, Vol 26, Issue 12",
+      "subject_clean": "R-sig-Geo Digest, Vol 26, Issue 12",
+      "in_reply_to": "<mailman.21.1129975202.22918.r-sig-geo@stat.math.ethz.ch>",
+      "references": [
+        "<mailman.21.1129975202.22918.r-sig-geo@stat.math.ethz.ch>"
+      ],
+      "body_plain": "Hi Roger,\n\nMany thanks for Rgshhs. I am very glad to have this additional source  \nof coastlines.\n\nA few comments.\n\nI am impressed with axis label handling when using the \"plot\" command  \non the spatial polygons imported by Rghhs. I like the suffix given to  \neach number, e.g. \"300?E\". How do you do this? Setting some kind of  \n\"unit\" attribute to the longitudes and latitudes? I don't know how to  \ndo this, otherwise I'd implement it in the maps I produce with  \nPBSmapping.\n\nSecond surprise: I reimported the same area but using the option  \n\"shift=TRUE\" to get longitudes West. I'm used to these numbers being  \nnegative, and indeed they still are here as I must select negative  \nlongitudes to define xlim. But when issuing the plot command, they  \nare labelled properly, i.e. -70 becomes \"70?W\". In PBSmapping I must  \nturn automatic xaxis labelling off and relabel myself. I may switch  \nto your classes and methods yet!\n\nHowever in my first test, I got the lakes to be coloured \"azure2\" but  \nnot the ocean, which was white:\n\nNWA.i <- Rgshhs(\"gshhs_i.b\", shift=TRUE, xlim = c(280,340), ylim = c \n(35,75), verbose = TRUE)\nplot(NWA.i$SP, xlim=c(-70, -55), ylim=c(45, 51), col=\"khaki\",  \npbg=\"lightblue\", axes=T)\n\nSo I read the html doc on sp and discovered pbg was the color of  \n\"holes\", which lakes are but not the ocean, which is just the absence  \nof polygons. So I added a bg color to the above plot command, which  \nshould have taken care of that, but it did not. Do you know why?\n\nAnother question: the help on Rgshhs says we can import only land,  \nfor instance, instead of the 4 hierarchic types in gshhs files, by  \nadding \"level=1\". But if I import everything, can I decide later to  \nmake a plot with land only? Or to create a layer with only lakes (no  \ncoastline)? I consulted the help for sp as well as the documentation  \nfor sp but could not figure out how to do this. When I print the list  \ncreated by Rgshhs or even just the SP part of it, I see that SP is  \nmade of \"slots\", one of which contains the level. This information is  \nalso available in the spatialdata part. But I don't know how to  \nselect just the polygons with \"level==2\".\n\nCheers,\n\nDenis\nLe 05-10-22 ? 06:00, r-sig-geo-request at stat.math.ethz.ch a ?crit :\n\n> Send R-sig-Geo mailing list submissions to\n>     r-sig-geo at stat.math.ethz.ch\n>\n> To subscribe or unsubscribe via the World Wide Web, visit\n>     https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> or, via email, send a message with subject or body 'help' to\n>     r-sig-geo-request at stat.math.ethz.ch\n>\n> You can reach the person managing the list at\n>     r-sig-geo-owner at stat.math.ethz.ch\n>\n> When replying, please edit your Subject line so it is more specific\n> than \"Re: Contents of R-sig-Geo digest...\"\n>\n>\n> Today's Topics:\n>\n>    1. New sp add-on packages on sourceforge repository (Roger Bivand)\n>\n>\n> ----------------------------------------------------------------------\n>\n> Message: 1\n> Date: Fri, 21 Oct 2005 15:10:43 +0200 (CEST)\n> From: Roger Bivand <Roger.Bivand at nhh.no>\n> Subject: [R-sig-Geo] New sp add-on packages on sourceforge repository\n> To: r-sig-geo at stat.math.ethz.ch\n> Message-ID: <Pine.LNX.4.44.0510211454280.19619-100000 at reclus.nhh.no>\n> Content-Type: TEXT/PLAIN; charset=US-ASCII\n>\n> I have released two new sp add-on packages on the r-spatial  \n> repository.\n>\n> Rgshhs converts GSHHS shorelines (as closed polygons) to sp class\n> SpatialPolygons, which can then be written out as shapefiles for the\n> chosen region. It's now very slow for full resolution, because  \n> clipping\n> the largest land polygons takes a lot of time, but hopefully people  \n> don't\n> do that every time they need data. It is provided with the coarse  \n> dataset,\n> but works with the full and the others. It leaves the longitude\n> coordinates in the -20 to 360 range like the data source. Details  \n> of the\n> Global Self-consistent, Hierarchical, High-resolution Shoreline  \n> Database\n> are avialable from:\n>\n> http://www.soest.hawaii.edu/wessel/gshhs/gshhs.html\n>\n> where the low, intermediate, high, and full resolution data may be\n> downloaded from. I'd be grateful for ideas for making it faster,  \n> and am\n> looking at providing indices of which level polygons are included in\n> next-level polygons preprocessed in the package rather than  \n> computing them\n> each time for chosen polygons.\n>\n> A second package is spspatstat, providing interfaces between some sp\n> classes and the well-supported point pattern analysis package  \n> spatstat.\n> The spatstat ppp and owin classes are matched with sp equivalents.\n>\n> To get a feel for where sp is going, (and after installing sp and\n> spatstat from CRAN with their dependencies, and the new packages from\n> http://r-spatial.sourceforge.net/R), try:\n>\n> library(Rgshhs)\n> library(spspatstat)\n> gshhs.c.b <- system.file(\"share/gshhs_c.b\", package = \"Rgshhs\")\n> NZx <- c(160, 180)\n> NZy <- c(-50, -30)\n> NZ <- Rgshhs(gshhs.c.b, xlim = NZx, ylim = NZy)\n> plot(runifpoint(500, as(NZ$SP, \"owin\")))\n>\n> Hoping for feedback,\n>\n> Roger\n>\n> -- \n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian  \n> School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>\n>\n>\n> ------------------------------\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> End of R-sig-Geo Digest, Vol 26, Issue 12\n> *****************************************\n>",
+      "body_snippet": "Hi Roger,\n\nMany thanks for Rgshhs. I am very glad to have this additional source  \nof coastlines.\n\nA few comments.\n\nI am impressed with axis label handling when using the \"plot\" command  \non the spati",
+      "thread_id": "thread-47b3286dcd41",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-3b7674c44fe8",
+      "message_id": "<Pine.LNX.4.44.0510241747410.1705-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-10-24T18:04:45+02:00",
+      "subject": "[R-sig-Geo] New sp add-on packages on sourceforge repository",
+      "subject_clean": "New sp add-on packages on sourceforge repository",
+      "in_reply_to": "<EADCB054-D5E2-4B68-BAAA-745A2B1558B2@globetrotter.net>",
+      "references": [],
+      "body_plain": "On Mon, 24 Oct 2005, Denis Chabot wrote:\n\n> Hi Roger,\n> \n> Many thanks for Rgshhs. I am very glad to have this additional source  \n> of coastlines.\n> \n> A few comments.\n> \n> I am impressed with axis label handling when using the \"plot\" command  \n> on the spatial polygons imported by Rghhs. I like the suffix given to  \n> each number, e.g. \"300?E\". How do you do this? Setting some kind of  \n> \"unit\" attribute to the longitudes and latitudes? I don't know how to  \n> do this, otherwise I'd implement it in the maps I produce with  \n> PBSmapping.\n\nIt is sp parsing the projection slot of the object and finding \"longlat\", \ninserted here automatically because we know the coordinate reference \nsystem of the data. The actual code is in sp, and was written by Edzer \nPebesma, it is rather neat; look at sp:::degreeLabelsNS, \nsp:::degreeLabelsEW, and sp:::plot.Spatial - something similar should work \nin PBSmapping with a test on LL.\n\n> \n> Second surprise: I reimported the same area but using the option  \n> \"shift=TRUE\" to get longitudes West. I'm used to these numbers being  \n> negative, and indeed they still are here as I must select negative  \n> longitudes to define xlim. But when issuing the plot command, they  \n> are labelled properly, i.e. -70 becomes \"70?W\". In PBSmapping I must  \n> turn automatic xaxis labelling off and relabel myself. I may switch  \n> to your classes and methods yet!\n\nThe next release of sp will label 300?E as 60?W, but the underlying \ncoordinates will stay in the GSHHS format, so you'll still need shift. The \nshift argument works badly for polygons crossing 180?, but maybe that \nisn't a practical problem, because people working there probably want to \nstay in the 150-210 range anyway.\n\n> \n> However in my first test, I got the lakes to be coloured \"azure2\" but  \n> not the ocean, which was white:\n> \n> NWA.i <- Rgshhs(\"gshhs_i.b\", shift=TRUE, xlim = c(280,340), ylim = c \n> (35,75), verbose = TRUE)\n> plot(NWA.i$SP, xlim=c(-70, -55), ylim=c(45, 51), col=\"khaki\",  \n> pbg=\"lightblue\", axes=T)\n> \n> So I read the html doc on sp and discovered pbg was the color of  \n> \"holes\", which lakes are but not the ocean, which is just the absence  \n> of polygons. So I added a bg color to the above plot command, which  \n> should have taken care of that, but it did not. Do you know why?\n\nThe next release of sp will pass the bg= argument through plot.Spatial \nproperly, thanks for reminding me.\n\n> \n> Another question: the help on Rgshhs says we can import only land,  \n> for instance, instead of the 4 hierarchic types in gshhs files, by  \n> adding \"level=1\". But if I import everything, can I decide later to  \n> make a plot with land only? Or to create a layer with only lakes (no  \n> coastline)? I consulted the help for sp as well as the documentation  \n> for sp but could not figure out how to do this. When I print the list  \n> created by Rgshhs or even just the SP part of it, I see that SP is  \n> made of \"slots\", one of which contains the level. This information is  \n> also available in the spatialdata part. But I don't know how to  \n> select just the polygons with \"level==2\".\n\nThe sp polygons do not know about levels, so once things are inside a \nPolygons object, there is no way back out. I think this means separate \nimports for levels 1, 1:2, 1:3 or 1:4. \n\nI'm running several jobs now to pre-can the inclusion data of which GSHHS \npolygons at levels 4:2 belong to which at level 1, which should make \nimporting shorelines much faster, so a revision will be along before too \nmany days have gone, I hope.\n\nBest wishes,\n\nRoger\n\n> \n> Cheers,\n> \n> Denis\n> Le 05-10-22 ? 06:00, r-sig-geo-request at stat.math.ethz.ch a ?crit :\n> \n> > Send R-sig-Geo mailing list submissions to\n> >     r-sig-geo at stat.math.ethz.ch\n> >\n> > To subscribe or unsubscribe via the World Wide Web, visit\n> >     https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > or, via email, send a message with subject or body 'help' to\n> >     r-sig-geo-request at stat.math.ethz.ch\n> >\n> > You can reach the person managing the list at\n> >     r-sig-geo-owner at stat.math.ethz.ch\n> >\n> > When replying, please edit your Subject line so it is more specific\n> > than \"Re: Contents of R-sig-Geo digest...\"\n> >\n> >\n> > Today's Topics:\n> >\n> >    1. New sp add-on packages on sourceforge repository (Roger Bivand)\n> >\n> >\n> > ----------------------------------------------------------------------\n> >\n> > Message: 1\n> > Date: Fri, 21 Oct 2005 15:10:43 +0200 (CEST)\n> > From: Roger Bivand <Roger.Bivand at nhh.no>\n> > Subject: [R-sig-Geo] New sp add-on packages on sourceforge repository\n> > To: r-sig-geo at stat.math.ethz.ch\n> > Message-ID: <Pine.LNX.4.44.0510211454280.19619-100000 at reclus.nhh.no>\n> > Content-Type: TEXT/PLAIN; charset=US-ASCII\n> >\n> > I have released two new sp add-on packages on the r-spatial  \n> > repository.\n> >\n> > Rgshhs converts GSHHS shorelines (as closed polygons) to sp class\n> > SpatialPolygons, which can then be written out as shapefiles for the\n> > chosen region. It's now very slow for full resolution, because  \n> > clipping\n> > the largest land polygons takes a lot of time, but hopefully people  \n> > don't\n> > do that every time they need data. It is provided with the coarse  \n> > dataset,\n> > but works with the full and the others. It leaves the longitude\n> > coordinates in the -20 to 360 range like the data source. Details  \n> > of the\n> > Global Self-consistent, Hierarchical, High-resolution Shoreline  \n> > Database\n> > are avialable from:\n> >\n> > http://www.soest.hawaii.edu/wessel/gshhs/gshhs.html\n> >\n> > where the low, intermediate, high, and full resolution data may be\n> > downloaded from. I'd be grateful for ideas for making it faster,  \n> > and am\n> > looking at providing indices of which level polygons are included in\n> > next-level polygons preprocessed in the package rather than  \n> > computing them\n> > each time for chosen polygons.\n> >\n> > A second package is spspatstat, providing interfaces between some sp\n> > classes and the well-supported point pattern analysis package  \n> > spatstat.\n> > The spatstat ppp and owin classes are matched with sp equivalents.\n> >\n> > To get a feel for where sp is going, (and after installing sp and\n> > spatstat from CRAN with their dependencies, and the new packages from\n> > http://r-spatial.sourceforge.net/R), try:\n> >\n> > library(Rgshhs)\n> > library(spspatstat)\n> > gshhs.c.b <- system.file(\"share/gshhs_c.b\", package = \"Rgshhs\")\n> > NZx <- c(160, 180)\n> > NZy <- c(-50, -30)\n> > NZ <- Rgshhs(gshhs.c.b, xlim = NZx, ylim = NZy)\n> > plot(runifpoint(500, as(NZ$SP, \"owin\")))\n> >\n> > Hoping for feedback,\n> >\n> > Roger\n> >\n> > -- \n> > Roger Bivand\n> > Economic Geography Section, Department of Economics, Norwegian  \n> > School of\n> > Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> > Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> > e-mail: Roger.Bivand at nhh.no\n> >\n> >\n> >\n> > ------------------------------\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> >\n> > End of R-sig-Geo Digest, Vol 26, Issue 12\n> > *****************************************\n> >\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 24 Oct 2005, Denis Chabot wrote:\n\n> Hi Roger,\n> \n> Many thanks for Rgshhs. I am very glad to have this additional source  \n> of coastlines.\n> \n> A few comments.\n> \n> I am impressed with axis l",
+      "thread_id": "thread-47b3286dcd41",
+      "thread_depth": 1,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-d61cbb7c55f4",
+      "message_id": "<435DDAEF.300@tkk.fi>",
+      "from_name": "Ari Jolma",
+      "from_email_hash": "02cd38aeb4c46fb77b8f6a01eccda409874a1c60c9f07bc6d5ef2fb86945a937",
+      "date": "2005-10-25T10:12:47+03:00",
+      "subject": "[R-sig-Geo] iEMSs 2006 conference and workshop for free and open geospatial tools",
+      "subject_clean": "iEMSs 2006 conference and workshop for free and open geospatial tools",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear R-spatial users,\n\nMaybe this is a good moment to advocate the iEMSs 2006 meeting in \nBurlington, Vermont. The URL of this conference is \nhttp://www.iemss.org/iemss2006/ I usually don't feel very confident \nabout sending a bit OT messages like this to focused lists, so please \nforgive me.\n\nThis is the third conference of iEMSs (the first two were in Switzerland \nand Germany), which is an independent international scientific \norganisation for advancing environmental modelling and software and \nuniting people working in that domain. iEMSs has strong links to MODSIM, \nwhich has had several successful conferences in Australia and New Zealand.\n\nWhat makes iEMSs 2006 particularly interesting, and why I'm advocting it \nfor you, is the workshop nr 13 \"Open geospatial tools and methods in \nenvironmental modeling and management\", which I'm organizing with Ned \nHorning. The president of iEMSs has this to say about iEMSs 2006:\n\nThe Summit is incorporating a very innovative program of workshops (some \n15 at present), as well as the more standard sessions (another 15 or so) \nwith presentations. The website has a list of themes currently and we \nwould be pleased to consider other topics from you. But we refer you to \nthe website and accompanying blog to examine which existing sessions you \nmay wish to join - in which case you should contact the organisers of \nthat session. For most of you, we expect that the current sessions on \noffer will cover your interests.\n\nFor workshop organisers we are requesting at least one rough draft \nINVITED POSITION PAPER (IPP) of the issues (opportunities, challenges \netc.) by the end of November, with other contributed papers optional for \nworkshop attendees. All serious participants would at least be required \nto have an abstract. Position papers, other full papers and abstracts \nwould be peer-reviewed and pre-published in the Summit Proceedings \nbefore the Summit. We will reserve at least one book in the Elsevier \nIDEA Series that publishes a chapter on the findings of each workshop \nand their IPP  - these would be updated versions of the Position papers, \nrevised based on the workshop outcomes. We also have special journal \nissues available.\n\nFor standard sessions there will be a more formal structure where there \nis a 20 minute or so slot for presentation, and pre-published papers for \nthese are mandatory, albeit with a timeline of February 2006 for \nsubmission to reviewers. However standard sessions could easily be \nconverted to a workshop format anytime, subject to the session \norganisers and authors agreeing.\n\nI'd like to encourage you to participate in the conference and I'd \nespecially like to see a contribution about R-spatial and its use in \nadvancing environmental modeling  in the geospatial tools workshop.\n\nPlease do not hesitate to contact me if you're interested in attending \nand contributing to the geospatial tools workshop.\n\nBest regards,\n\nAri Jolma\n\n-- \nProf. Ari Jolma\nKartografia ja Geoinformatiikka / Cartography and Geoinformatics\nTeknillinen Korkeakoulu / Helsinki University of Technology\nPOBox 1200, 02015 TKK, Finland\nEmail: ari.jolma at tkk.fi URL: http://www.tkk.fi/~jolma",
+      "body_snippet": "Dear R-spatial users,\n\nMaybe this is a good moment to advocate the iEMSs 2006 meeting in \nBurlington, Vermont. The URL of this conference is \nhttp://www.iemss.org/iemss2006/ I usually don't feel very ",
+      "thread_id": "thread-d61cbb7c55f4",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-e1c2b23b10a6",
+      "message_id": "<BAY105-F29C8132C3BFF04CE838D67F86B0@phx.gbl>",
+      "from_name": "Mihai Nica",
+      "from_email_hash": "31bc1f6598f4485757043d15243be5e520858a811350856dadb463fe84dea24b",
+      "date": "2005-10-28T17:37:42-05:00",
+      "subject": "[R-sig-Geo] 3D map",
+      "subject_clean": "3D map",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Could someone advise about a way to draw a 3D map... say the map of US \nstates having as elevation the number of people in each state. Am I missing \nsomething? A 3D map search revealed nothing helpful.\n\nThanks,\n\nmihai\n\nMihai Nica, ABD\nJackson State University\n170 East Griffith Street G5\nJackson, MS 39201\n601 914 0361",
+      "body_snippet": "Could someone advise about a way to draw a 3D map... say the map of US \nstates having as elevation the number of people in each state. Am I missing \nsomething? A 3D map search revealed nothing helpful",
+      "thread_id": "thread-e1c2b23b10a6",
+      "thread_depth": 0,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-142cf669a354",
+      "message_id": "<43631CD9.40906@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2005-10-29T08:55:21+02:00",
+      "subject": "[R-sig-Geo] 3D map",
+      "subject_clean": "3D map",
+      "in_reply_to": "<BAY105-F29C8132C3BFF04CE838D67F86B0@phx.gbl>",
+      "references": [
+        "<BAY105-F29C8132C3BFF04CE838D67F86B0@phx.gbl>"
+      ],
+      "body_plain": "Mihai Nica wrote:\n\n>Could someone advise about a way to draw a 3D map... say the map of US \n>states having as elevation the number of people in each state. Am I missing \n>something? A 3D map search revealed nothing helpful.\n>\n>Thanks,\n>\n>mihai\n>\n>Mihai Nica, ABD\n>Jackson State University\n>170 East Griffith Street G5\n>Jackson, MS 39201\n>601 914 0361\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>  \n>\nYou may want to try persp, or wireframe in lattice.\n--\nEdzer",
+      "body_snippet": "Mihai Nica wrote:\n\n>Could someone advise about a way to draw a 3D map... say the map of US \n>states having as elevation the number of people in each state. Am I missing \n>something? A 3D map search re",
+      "thread_id": "thread-e1c2b23b10a6",
+      "thread_depth": 1,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-3dd0b77d04b8",
+      "message_id": "<Pine.LNX.4.44.0510290939100.5805-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-10-29T09:45:29+02:00",
+      "subject": "[R-sig-Geo] 3D map",
+      "subject_clean": "3D map",
+      "in_reply_to": "<43631CD9.40906@geo.uu.nl>",
+      "references": [],
+      "body_plain": "On Sat, 29 Oct 2005, Edzer J. Pebesma wrote:\n\n> Mihai Nica wrote:\n> \n> >Could someone advise about a way to draw a 3D map... say the map of US \n> >states having as elevation the number of people in each state. Am I missing \n> >something? A 3D map search revealed nothing helpful.\n> >\n> >Thanks,\n> >\n> >mihai\n> >\n> >Mihai Nica, ABD\n> >Jackson State University\n> >170 East Griffith Street G5\n> >Jackson, MS 39201\n> >601 914 0361\n> >\n> >_______________________________________________\n> >R-sig-Geo mailing list\n> >R-sig-Geo at stat.math.ethz.ch\n> >https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >  \n> >\n> You may want to try persp, or wireframe in lattice.\n\nThat was what I thought first, but I think it actually is the 3D histogram \nor exploding pie chart question, how to make a 3D representation of \ncolumns of regular or irregular polygons scaled by some z variable in \nheight. The reader will see different things depending on viewing point \nand height, I would not in general recommend it as either a presentation \nor analytic graphic.\n\nRoger\n\n> --\n> Edzer\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Sat, 29 Oct 2005, Edzer J. Pebesma wrote:\n\n> Mihai Nica wrote:\n> \n> >Could someone advise about a way to draw a 3D map... say the map of US \n> >states having as elevation the number of people in ea",
+      "thread_id": "thread-e1c2b23b10a6",
+      "thread_depth": 2,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-79d2c6027880",
+      "message_id": "<BAY105-F34F8DF12CA4C9822F51B69F86A0@phx.gbl>",
+      "from_name": "Mihai Nica",
+      "from_email_hash": "31bc1f6598f4485757043d15243be5e520858a811350856dadb463fe84dea24b",
+      "date": "2005-10-29T13:55:47-05:00",
+      "subject": "[R-sig-Geo] 3D map",
+      "subject_clean": "3D map",
+      "in_reply_to": "<Pine.LNX.4.44.0510290939100.5805-100000@reclus.nhh.no>",
+      "references": [],
+      "body_plain": "Yes, I kind of thought about that myself... Thanks! I will just drop it.\n\nMihai Nica, ABD\nJackson State University\n170 East Griffith Street G5\nJackson, MS 39201\n601 914 0361\n\n\n\n\n\n>From: Roger Bivand <Roger.Bivand at nhh.no>\n>Reply-To: Roger.Bivand at nhh.no\n>To: \"Edzer J. Pebesma\" <e.pebesma at geo.uu.nl>\n>CC: Mihai Nica <m_nica at hotmail.com>,  <r-sig-geo at stat.math.ethz.ch>\n>Subject: Re: [R-sig-Geo] 3D map\n>Date: Sat, 29 Oct 2005 09:45:29 +0200 (CEST)\n>\n>On Sat, 29 Oct 2005, Edzer J. Pebesma wrote:\n>\n> > Mihai Nica wrote:\n> >\n> > >Could someone advise about a way to draw a 3D map... say the map of US\n> > >states having as elevation the number of people in each state. Am I \n>missing\n> > >something? A 3D map search revealed nothing helpful.\n> > >\n> > >Thanks,\n> > >\n> > >mihai\n> > >\n> > >Mihai Nica, ABD\n> > >Jackson State University\n> > >170 East Griffith Street G5\n> > >Jackson, MS 39201\n> > >601 914 0361\n> > >\n> > >_______________________________________________\n> > >R-sig-Geo mailing list\n> > >R-sig-Geo at stat.math.ethz.ch\n> > >https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > >\n> > >\n> > You may want to try persp, or wireframe in lattice.\n>\n>That was what I thought first, but I think it actually is the 3D histogram\n>or exploding pie chart question, how to make a 3D representation of\n>columns of regular or irregular polygons scaled by some z variable in\n>height. The reader will see different things depending on viewing point\n>and height, I would not in general recommend it as either a presentation\n>or analytic graphic.\n>\n>Roger\n>\n> > --\n> > Edzer\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n>--\n>Roger Bivand\n>Economic Geography Section, Department of Economics, Norwegian School of\n>Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n>Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n>e-mail: Roger.Bivand at nhh.no\n>",
+      "body_snippet": "Yes, I kind of thought about that myself... Thanks! I will just drop it.\n\nMihai Nica, ABD\nJackson State University\n170 East Griffith Street G5\nJackson, MS 39201\n601 914 0361\n\n\n\n\n\n>From: Roger Bivand <",
+      "thread_id": "thread-e1c2b23b10a6",
+      "thread_depth": 3,
+      "month": "2005-10"
+    },
+    {
+      "id": "msg-6be1d51b178d",
+      "message_id": "<OF1578BA53.DFC46049-ON882570AA.006B4052-882570AA.006C8EEA@epamail.epa.gov>",
+      "from_name": "White.Denis at epamail.epa.gov",
+      "from_email_hash": "16ee480d874c5ee3c0b0c97bcdbbca111811e4431c2a806cee0092c240eacedb",
+      "date": "2005-10-30T11:45:29-08:00",
+      "subject": "[R-sig-Geo] 3D map",
+      "subject_clean": "3D map",
+      "in_reply_to": "<BAY105-F34F8DF12CA4C9822F51B69F86A0@phx.gbl>",
+      "references": [],
+      "body_plain": "As with any graphic technique, the utility and appropriateness depend on\nthe objective of the presentation.  Showing polygons in persective\naccording to some attribute is certainly not inherently a bad idea.\nHere are a couple of examples from experimental GIS software develped in\nthe 1970s.  ESRI's 3D Analyst has these capabilities and there are\nexamples of that software on the web.\n\nDenis White\n   US EPA, 200 SW 35th St, Corvallis, Oregon, 97333 USA\n   voice: 541.754.4476, email: white.denis at epa.gov\n   web: www.epa.gov/wed/pages/staff/white/\n\n(See attached file: example1.prism.jpg)(See attached file:\nexample2.prism.jpg)\n\nr-sig-geo-bounces at stat.math.ethz.ch wrote on 2005-10-29 11:55:47:\n\n> Yes, I kind of thought about that myself... Thanks! I will just drop\nit.\n>\n> Mihai Nica, ABD\n> Jackson State University\n> 170 East Griffith Street G5\n> Jackson, MS 39201\n> 601 914 0361\n>\n>\n> >From: Roger Bivand <Roger.Bivand at nhh.no>\n> >Reply-To: Roger.Bivand at nhh.no\n> >To: \"Edzer J. Pebesma\" <e.pebesma at geo.uu.nl>\n> >CC: Mihai Nica <m_nica at hotmail.com>,  <r-sig-geo at stat.math.ethz.ch>\n> >Subject: Re: [R-sig-Geo] 3D map\n> >Date: Sat, 29 Oct 2005 09:45:29 +0200 (CEST)\n> >\n> >On Sat, 29 Oct 2005, Edzer J. Pebesma wrote:\n> >\n> > > Mihai Nica wrote:\n> > >\n> > > >Could someone advise about a way to draw a 3D map... say the map\nof US\n> > > >states having as elevation the number of people in each state. Am\nI\n> >missing\n> > > >something? A 3D map search revealed nothing helpful.\n> > > >\n> > > >Thanks,\n> > > >\n> > > >mihai\n> > > >\n> > > >Mihai Nica, ABD\n> > > >Jackson State University\n> > > >170 East Griffith Street G5\n> > > >Jackson, MS 39201\n> > > >601 914 0361\n> > > >\n> > > >_______________________________________________\n> > > >R-sig-Geo mailing list\n> > > >R-sig-Geo at stat.math.ethz.ch\n> > > >https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > > >\n> > > >\n> > > You may want to try persp, or wireframe in lattice.\n> >\n> >That was what I thought first, but I think it actually is the 3D\nhistogram\n> >or exploding pie chart question, how to make a 3D representation of\n> >columns of regular or irregular polygons scaled by some z variable in\n> >height. The reader will see different things depending on viewing\npoint\n> >and height, I would not in general recommend it as either a\npresentation\n> >or analytic graphic.\n> >\n> >Roger\n> >\n> > > --\n> > > Edzer\n> > >\n> >\n> >--\n> >Roger Bivand\n> >Economic Geography Section, Department of Economics, Norwegian School\nof\n> >Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> >Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> >e-mail: Roger.Bivand at nhh.no\n> >\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: example1.prism.jpg\nType: image/jpeg\nSize: 20699 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20051030/3c813a72/attachment.jpg>\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: example2.prism.jpg\nType: image/jpeg\nSize: 40552 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20051030/3c813a72/attachment-0001.jpg>",
+      "body_snippet": "As with any graphic technique, the utility and appropriateness depend on\nthe objective of the presentation.  Showing polygons in persective\naccording to some attribute is certainly not inherently a ba",
+      "thread_id": "thread-e1c2b23b10a6",
+      "thread_depth": 4,
+      "month": "2005-10"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-3f69de5e3458",
+      "subject": "convertion to polygon for coloring, shading (was:  clipping in maptools)",
+      "message_count": 3,
+      "participants": [
+        "Roger Bivand",
+        "Sebastian Luque"
+      ],
+      "started": "2005-10-01T10:47:15+02:00",
+      "last_reply": "2005-10-01T17:41:31+02:00",
+      "root_message_id": "msg-3f69de5e3458"
+    },
+    {
+      "id": "thread-a4fbc9b1df1b",
+      "subject": "Adding maps to a filled contour plot",
+      "message_count": 1,
+      "participants": [
+        "antonio rodriguez"
+      ],
+      "started": "2005-10-03T08:38:31+02:00",
+      "last_reply": "2005-10-03T08:38:31+02:00",
+      "root_message_id": "msg-a4fbc9b1df1b"
+    },
+    {
+      "id": "thread-4777a61b32c3",
+      "subject": "The length of common boundaries",
+      "message_count": 5,
+      "participants": [
+        "Markus Neteler",
+        "Roger Bivand",
+        "Yilin Liu"
+      ],
+      "started": "2005-10-11T12:58:08+01:00",
+      "last_reply": "2005-10-13T18:39:15+02:00",
+      "root_message_id": "msg-4777a61b32c3"
+    },
+    {
+      "id": "thread-e4e8726b9958",
+      "subject": "The length of common boundaries",
+      "message_count": 2,
+      "participants": [
+        "Barry Rowlingson",
+        "Michael Sumner"
+      ],
+      "started": "2005-10-12T10:53:24+02:00",
+      "last_reply": "2005-10-12T10:17:16+01:00",
+      "root_message_id": "msg-e4e8726b9958"
+    },
+    {
+      "id": "thread-ef81ce08939d",
+      "subject": "The length of common boundaries",
+      "message_count": 1,
+      "participants": [
+        "Michael Sumner"
+      ],
+      "started": "2005-10-12T11:30:24+02:00",
+      "last_reply": "2005-10-12T11:30:24+02:00",
+      "root_message_id": "msg-ef81ce08939d"
+    },
+    {
+      "id": "thread-ebf6a0bd4fcf",
+      "subject": "Interpolating and mapping the output of ecosystem models with R",
+      "message_count": 1,
+      "participants": [
+        "Luigi Ponti"
+      ],
+      "started": "2005-10-13T16:40:08-07:00",
+      "last_reply": "2005-10-13T16:40:08-07:00",
+      "root_message_id": "msg-ebf6a0bd4fcf"
+    },
+    {
+      "id": "thread-bc57d1dc71af",
+      "subject": "Accessing gshhs database of world coastlines",
+      "message_count": 5,
+      "participants": [
+        "Denis Chabot",
+        "Roger Bivand"
+      ],
+      "started": "2005-10-16T11:28:09-04:00",
+      "last_reply": "2005-10-17T09:06:24-04:00",
+      "root_message_id": "msg-bc57d1dc71af"
+    },
+    {
+      "id": "thread-d4215f8fdeeb",
+      "subject": "Srings",
+      "message_count": 2,
+      "participants": [
+        "Denis Chabot",
+        "Roger Bivand"
+      ],
+      "started": "2005-10-17T13:47:14-04:00",
+      "last_reply": "2005-10-17T19:57:27+02:00",
+      "root_message_id": "msg-d4215f8fdeeb"
+    },
+    {
+      "id": "thread-ab60e9983ee1",
+      "subject": "rGeo vs. gstat",
+      "message_count": 2,
+      "participants": [
+        "Edzer J. Pebesma",
+        "Schlatter Christian"
+      ],
+      "started": "2005-10-17T16:03:53+02:00",
+      "last_reply": "2005-10-17T23:42:45+02:00",
+      "root_message_id": "msg-ab60e9983ee1"
+    },
+    {
+      "id": "thread-601667ae975e",
+      "subject": "system of equations with spatial dependence in error terms",
+      "message_count": 1,
+      "participants": [
+        "Saket Sarraf"
+      ],
+      "started": "2005-10-18T11:37:52-05:00",
+      "last_reply": "2005-10-18T11:37:52-05:00",
+      "root_message_id": "msg-601667ae975e"
+    },
+    {
+      "id": "thread-13d5e2e23e9f",
+      "subject": "spatstat.org",
+      "message_count": 1,
+      "participants": [
+        "Adrian Baddeley"
+      ],
+      "started": "2005-10-18T18:41:56+08:00",
+      "last_reply": "2005-10-18T18:41:56+08:00",
+      "root_message_id": "msg-13d5e2e23e9f"
+    },
+    {
+      "id": "thread-5e3e0a1ce501",
+      "subject": "rGeo vs. gstat; Question on geostatistical method for specific experimental design",
+      "message_count": 3,
+      "participants": [
+        "Edzer J. Pebesma",
+        "Paulo Justiniano Ribeiro Jr",
+        "Schlatter Christian"
+      ],
+      "started": "2005-10-19T09:13:46+02:00",
+      "last_reply": "2005-10-19T13:12:10-02:00",
+      "root_message_id": "msg-5e3e0a1ce501"
+    },
+    {
+      "id": "thread-dbe659df09ab",
+      "subject": "rGeo vs. gstat; Question on geostatistical method for specific experimental design",
+      "message_count": 1,
+      "participants": [
+        "Nicholas Lewin-Koh"
+      ],
+      "started": "2005-10-19T14:26:54-05:00",
+      "last_reply": "2005-10-19T14:26:54-05:00",
+      "root_message_id": "msg-dbe659df09ab"
+    },
+    {
+      "id": "thread-0ae49ce5fd84",
+      "subject": "2 questions about likfit in geoR",
+      "message_count": 1,
+      "participants": [
+        "Ruben Roa"
+      ],
+      "started": "2005-10-19T14:43:26-02:00",
+      "last_reply": "2005-10-19T14:43:26-02:00",
+      "root_message_id": "msg-0ae49ce5fd84"
+    },
+    {
+      "id": "thread-ce1e9f21777e",
+      "subject": "2 questions about likfit in geoR",
+      "message_count": 1,
+      "participants": [
+        "liyun ma"
+      ],
+      "started": "2005-10-19T16:45:13+00:00",
+      "last_reply": "2005-10-19T16:45:13+00:00",
+      "root_message_id": "msg-ce1e9f21777e"
+    },
+    {
+      "id": "thread-36a95de1d83e",
+      "subject": "remove first trend from dataset",
+      "message_count": 2,
+      "participants": [
+        "Jose A. Hernandez",
+        "Narendran Kodandapani"
+      ],
+      "started": "2005-10-20T08:46:07-07:00",
+      "last_reply": "2005-10-20T16:00:03-05:00",
+      "root_message_id": "msg-36a95de1d83e"
+    },
+    {
+      "id": "thread-d4a3b3fe227c",
+      "subject": "New sp add-on packages on sourceforge repository",
+      "message_count": 1,
+      "participants": [
+        "Roger Bivand"
+      ],
+      "started": "2005-10-21T15:10:43+02:00",
+      "last_reply": "2005-10-21T15:10:43+02:00",
+      "root_message_id": "msg-d4a3b3fe227c"
+    },
+    {
+      "id": "thread-47b3286dcd41",
+      "subject": "R-sig-Geo Digest, Vol 26, Issue 12",
+      "message_count": 2,
+      "participants": [
+        "Denis Chabot",
+        "Roger Bivand"
+      ],
+      "started": "2005-10-24T09:39:50-04:00",
+      "last_reply": "2005-10-24T18:04:45+02:00",
+      "root_message_id": "msg-47b3286dcd41"
+    },
+    {
+      "id": "thread-264014b73852",
+      "subject": "historical descriptions for mapping function in R",
+      "message_count": 3,
+      "participants": [
+        "Roger Bivand",
+        "Susumu Tanimura"
+      ],
+      "started": "2005-10-24T17:07:12+09:00",
+      "last_reply": "2005-10-24T20:05:18+09:00",
+      "root_message_id": "msg-264014b73852"
+    },
+    {
+      "id": "thread-d61cbb7c55f4",
+      "subject": "iEMSs 2006 conference and workshop for free and open geospatial tools",
+      "message_count": 1,
+      "participants": [
+        "Ari Jolma"
+      ],
+      "started": "2005-10-25T10:12:47+03:00",
+      "last_reply": "2005-10-25T10:12:47+03:00",
+      "root_message_id": "msg-d61cbb7c55f4"
+    },
+    {
+      "id": "thread-e1c2b23b10a6",
+      "subject": "3D map",
+      "message_count": 5,
+      "participants": [
+        "Edzer J. Pebesma",
+        "Mihai Nica",
+        "Roger Bivand",
+        "White.Denis at epamail.epa.gov"
+      ],
+      "started": "2005-10-28T17:37:42-05:00",
+      "last_reply": "2005-10-30T11:45:29-08:00",
+      "root_message_id": "msg-e1c2b23b10a6"
+    }
+  ]
+}

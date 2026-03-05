@@ -1,0 +1,380 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2024-05",
+  "messages": [
+    {
+      "id": "msg-1694413f840a",
+      "message_id": "<1909033753.55613.1715125761625@mail.yahoo.com>",
+      "from_name": "Alexandre Santos",
+      "from_email_hash": "9c328798782fdba9a5eb7253ec556480706d126689efca25bdfbcd5bdfb8dc96",
+      "date": "2024-05-07T23:49:21Z",
+      "subject": "[R-sig-Geo] as.im in spatstat::ppm not working as before",
+      "subject_clean": "as.im in spatstat::ppm not working as before",
+      "in_reply_to": null,
+      "references": [
+        "<1909033753.55613.1715125761625.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "Dear Members,\n\nI'll calculate some old codes for a paper review, and I'm astonished that as.im() for fitting the Poisson model is not working as before. In my example:\n\nlibrary(raster)\nlibrary(spatstat)\n\n\n# Elevation\nr.grid.world <- raster('https://raw.githubusercontent.com/Leprechault/trash/main/wc2.1_10m_elev.tif')\nproj4string(r.grid.world) <- CRS(\"+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0\")\nr.grid.world.SGDF.F <- as(r.grid.world, \"SpatialGridDataFrame\")\n\n\n#Fitting Poisson model\nfit.c <- ppm(nztrees, ~ elev,\ncovariates=list(elev=as.im(r.grid.world.SGDF.F[[1]])))\n#\n# Error in as.im.default(r.grid.world.SGDF.F[[1]]) : \n# ? Can't convert X to a pixel image\n\nI tried as matrix and rotate, and the final real-valued pixel image didn't work as a covariate in the model.?\n\nPlease, any help with it?\n\nThanks in advance\n\nAlexandre",
+      "body_snippet": "Dear Members,\n\nI'll calculate some old codes for a paper review, and I'm astonished that as.im() for fitting the Poisson model is not working as before. In my example:\n\nlibrary(raster)\nlibrary(spatsta",
+      "thread_id": "thread-1694413f840a",
+      "thread_depth": 0,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-d1a9e25d3f40",
+      "message_id": "<d02c9618-2922-414b-8999-434a158967fb@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2024-05-08T09:21:31+02:00",
+      "subject": "[R-sig-Geo] as.im in spatstat::ppm not working as before",
+      "subject_clean": "as.im in spatstat::ppm not working as before",
+      "in_reply_to": "<1909033753.55613.1715125761625@mail.yahoo.com>",
+      "references": [
+        "<1909033753.55613.1715125761625.ref@mail.yahoo.com>",
+        "<1909033753.55613.1715125761625@mail.yahoo.com>"
+      ],
+      "body_plain": "r.grid.world.SGDF.F[[1]] is a numerical vector, not even a matrix, so \nclearly as.im.default doesn't know what it should do with it.\n\nMaybe there was once a method as.im for r.grid.world.SGDF.F, which is of \nclass SpatialGridDataFrame, but no longer - software evolves.\n\nA way you could approach this is converting that object to a stars object:\n\n > library(stars)\nLoading required package: abind\nLoading required package: sf\nLinking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.3.1; sf_use_s2() is TRUE\n > as.im(st_as_stars(r.grid.world.SGDF.F))\nError: Only projected coordinates may be converted to spatstat class objects\n\nand that points you to another issue you have: spatstat works with data \nin Cartesian coordiantes (R2), not with geodetic coordinates (S2). So \nthat's a helpful error message.\n\n\nOn 08/05/2024 01:49, Alexandre Santos via R-sig-Geo wrote:\n> Dear Members,\n> \n> I'll calculate some old codes for a paper review, and I'm astonished that as.im() for fitting the Poisson model is not working as before. In my example:\n> \n> library(raster)\n> library(spatstat)\n> \n> \n> # Elevation\n> r.grid.world <- raster('https://raw.githubusercontent.com/Leprechault/trash/main/wc2.1_10m_elev.tif')\n> proj4string(r.grid.world) <- CRS(\"+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0\")\n> r.grid.world.SGDF.F <- as(r.grid.world, \"SpatialGridDataFrame\")\n> \n> \n> #Fitting Poisson model\n> fit.c <- ppm(nztrees, ~ elev,\n> covariates=list(elev=as.im(r.grid.world.SGDF.F[[1]])))\n> #\n> # Error in as.im.default(r.grid.world.SGDF.F[[1]]) :\n> # ? Can't convert X to a pixel image\n> \n> I tried as matrix and rotate, and the final real-valued pixel image didn't work as a covariate in the model.\n> \n> Please, any help with it?\n> \n> Thanks in advance\n> \n> Alexandre\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma (he/him)\nUniversit?t M?nster, Institute for Geoinformatics\nHeisenbergstrasse 2, 48149 M?nster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "r.grid.world.SGDF.F[[1]] is a numerical vector, not even a matrix, so \nclearly as.im.default doesn't know what it should do with it.\n\nMaybe there was once a method as.im for r.grid.world.SGDF.F, which",
+      "thread_id": "thread-1694413f840a",
+      "thread_depth": 1,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-3b157121f41f",
+      "message_id": "<SV0P279MB0475C3977CE38395318EBC8AEEE52@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2024-05-08T09:40:39Z",
+      "subject": "[R-sig-Geo] as.im in spatstat::ppm not working as before",
+      "subject_clean": "as.im in spatstat::ppm not working as before",
+      "in_reply_to": "<d02c9618-2922-414b-8999-434a158967fb@uni-muenster.de>",
+      "references": [
+        "<1909033753.55613.1715125761625.ref@mail.yahoo.com>",
+        "<1909033753.55613.1715125761625@mail.yahoo.com>",
+        "<d02c9618-2922-414b-8999-434a158967fb@uni-muenster.de>"
+      ],
+      "body_plain": "as.im() was in maptools, which was retired last year. If you need to recreate old work, install maptools from source from the CRAN package archive\nhttps://cran.r-project.org/src/contrib/Archive/maptools/.\n\nFor non-archival work, update the workflow. See also https://github.com/r-spatial/evolution/issues/8.\n\nHope this clarifies,\n\nRoger\n\n---\nRoger Bivand\nEmeritus Professor\nDepartment of Economics\nNorwegian School of Economics, Bergen, Norway\n\n________________________________\nFra: R-sig-Geo <r-sig-geo-bounces at r-project.org> p? vegne av Edzer Pebesma <edzer.pebesma at uni-muenster.de>\nSendt: onsdag, mai 8, 2024 9:28:54 a.m.\nTil: r-sig-geo at r-project.org <r-sig-geo at r-project.org>\nEmne: Re: [R-sig-Geo] as.im in spatstat::ppm not working as before\n\nr.grid.world.SGDF.F[[1]] is a numerical vector, not even a matrix, so\nclearly as.im.default doesn't know what it should do with it.\n\nMaybe there was once a method as.im for r.grid.world.SGDF.F, which is of\nclass SpatialGridDataFrame, but no longer - software evolves.\n\nA way you could approach this is converting that object to a stars object:\n\n > library(stars)\nLoading required package: abind\nLoading required package: sf\nLinking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.3.1; sf_use_s2() is TRUE\n > as.im(st_as_stars(r.grid.world.SGDF.F))\nError: Only projected coordinates may be converted to spatstat class objects\n\nand that points you to another issue you have: spatstat works with data\nin Cartesian coordiantes (R2), not with geodetic coordinates (S2). So\nthat's a helpful error message.\n\n\nOn 08/05/2024 01:49, Alexandre Santos via R-sig-Geo wrote:\n> Dear Members,\n>\n> I'll calculate some old codes for a paper review, and I'm astonished that as.im() for fitting the Poisson model is not working as before. In my example:\n>\n> library(raster)\n> library(spatstat)\n>\n>\n> # Elevation\n> r.grid.world <- raster('https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fraw.githubusercontent.com%2FLeprechault%2Ftrash%2Fmain%2Fwc2.1_10m_elev.tif&data=05%7C02%7CRoger.Bivand%40nhh.no%7Cd2a2b64634a7462f860708dc6f3082d5%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638507501339842669%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=cyducyKF16yIdtfuykXUSifCR8clFtxDhiG1eY4waFU%3D&reserved=0<https://raw.githubusercontent.com/Leprechault/trash/main/wc2.1_10m_elev.tif>')\n> proj4string(r.grid.world) <- CRS(\"+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0\")\n> r.grid.world.SGDF.F <- as(r.grid.world, \"SpatialGridDataFrame\")\n>\n>\n> #Fitting Poisson model\n> fit.c <- ppm(nztrees, ~ elev,\n> covariates=list(elev=as.im(r.grid.world.SGDF.F[[1]])))\n> #\n> # Error in as.im.default(r.grid.world.SGDF.F[[1]]) :\n> #   Can't convert X to a pixel image\n>\n> I tried as matrix and rotate, and the final real-valued pixel image didn't work as a covariate in the model.\n>\n> Please, any help with it?\n>\n> Thanks in advance\n>\n> Alexandre\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7CRoger.Bivand%40nhh.no%7Cd2a2b64634a7462f860708dc6f3082d5%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638507501339851113%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=LeMCUv%2F8%2FJCZFGehLYaPgDEGRfsPeZZbkV5aCia8l60%3D&reserved=0<https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n\n--\nEdzer Pebesma (he/him)\nUniversit?t M?nster, Institute for Geoinformatics\nHeisenbergstrasse 2, 48149 M?nster, Germany\nPhone: +49 251 8333081\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7CRoger.Bivand%40nhh.no%7Cd2a2b64634a7462f860708dc6f3082d5%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638507501339856786%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=6H%2F9HQ%2BV1nyf2AdWabq0eoG3b8zqCQEC3ZC%2BFoRYvUI%3D&reserved=0<https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "as.im() was in maptools, which was retired last year. If you need to recreate old work, install maptools from source from the CRAN package archive\nhttps://cran.r-project.org/src/contrib/Archive/maptoo",
+      "thread_id": "thread-1694413f840a",
+      "thread_depth": 2,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-a64710cb8feb",
+      "message_id": "<CA+H-716wZ6Q1oWhmRpy=aK8MbEkgTucrFYcmZxeh4dCviuiAyA@mail.gmail.com>",
+      "from_name": "Roozbeh Valavi",
+      "from_email_hash": "f1083253012d78a389cc16c816724b3ba89c476b1388bb230c04f07faeab4157",
+      "date": "2024-05-11T18:21:34+10:00",
+      "subject": "[R-sig-Geo] as.im in spatstat::ppm not working as before",
+      "subject_clean": "as.im in spatstat::ppm not working as before",
+      "in_reply_to": "<SV0P279MB0475C3977CE38395318EBC8AEEE52@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>",
+      "references": [
+        "<1909033753.55613.1715125761625.ref@mail.yahoo.com>",
+        "<1909033753.55613.1715125761625@mail.yahoo.com>",
+        "<d02c9618-2922-414b-8999-434a158967fb@uni-muenster.de>",
+        "<SV0P279MB0475C3977CE38395318EBC8AEEE52@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>"
+      ],
+      "body_plain": "This might also help:\n\nlibrary(spatstat)\nlibrary(terra)\n\n.raster_to_im <- function(x){\n        r <- as.data.frame(x, xy = TRUE)\n         im <- spatstat.geom::as.im(r) return(im)\n}\n\n # to generalise the spatstat.geom::as.im to SpatRaster and RasterLayer\nas.im.SpatRaster <- function(x){ .raster_to_im(x) } as.im.RasterLayer <-\nfunction(x){ .raster_to_im(x) }\n\n\nI haven?t used it in a while so there might be a direct support in the\nspatstat.geom now!\n\n\nRoozbeh Valavi,\nBiodiversity Modeller & Spatial Ecologist\nSenior Research Scientist | CSIRO Environment, VIC, Australia\n*Twitter*: @ValaviRoozbeh | ResearchGate\n<https://www.researchgate.net/profile/Roozbeh-Valavi> | Google Scholar\n<https://scholar.google.co.uk/citations?user=3m0jCHwAAAAJ&hl=en&oi=ao>\n\n\nOn Wed, 8 May 2024 at 7:41?PM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> as.im() was in maptools, which was retired last year. If you need to\n> recreate old work, install maptools from source from the CRAN package\n> archive\n> https://cran.r-project.org/src/contrib/Archive/maptools/.\n>\n> For non-archival work, update the workflow. See also\n> https://github.com/r-spatial/evolution/issues/8.\n>\n> Hope this clarifies,\n>\n> Roger\n>\n> ---\n> Roger Bivand\n> Emeritus Professor\n> Department of Economics\n> Norwegian School of Economics, Bergen, Norway\n>\n> ________________________________\n> Fra: R-sig-Geo <r-sig-geo-bounces at r-project.org> p? vegne av Edzer\n> Pebesma <edzer.pebesma at uni-muenster.de>\n> Sendt: onsdag, mai 8, 2024 9:28:54 a.m.\n> Til: r-sig-geo at r-project.org <r-sig-geo at r-project.org>\n> Emne: Re: [R-sig-Geo] as.im in spatstat::ppm not working as before\n>\n> r.grid.world.SGDF.F[[1]] is a numerical vector, not even a matrix, so\n> clearly as.im.default doesn't know what it should do with it.\n>\n> Maybe there was once a method as.im for r.grid.world.SGDF.F, which is of\n> class SpatialGridDataFrame, but no longer - software evolves.\n>\n> A way you could approach this is converting that object to a stars object:\n>\n>  > library(stars)\n> Loading required package: abind\n> Loading required package: sf\n> Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.3.1; sf_use_s2() is TRUE\n>  > as.im(st_as_stars(r.grid.world.SGDF.F))\n> Error: Only projected coordinates may be converted to spatstat class\n> objects\n>\n> and that points you to another issue you have: spatstat works with data\n> in Cartesian coordiantes (R2), not with geodetic coordinates (S2). So\n> that's a helpful error message.\n>\n>\n> On 08/05/2024 01:49, Alexandre Santos via R-sig-Geo wrote:\n> > Dear Members,\n> >\n> > I'll calculate some old codes for a paper review, and I'm astonished\n> that as.im() for fitting the Poisson model is not working as before. In\n> my example:\n> >\n> > library(raster)\n> > library(spatstat)\n> >\n> >\n> > # Elevation\n> > r.grid.world <- raster('\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fraw.githubusercontent.com%2FLeprechault%2Ftrash%2Fmain%2Fwc2.1_10m_elev.tif&data=05%7C02%7CRoger.Bivand%40nhh.no%7Cd2a2b64634a7462f860708dc6f3082d5%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638507501339842669%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=cyducyKF16yIdtfuykXUSifCR8clFtxDhiG1eY4waFU%3D&reserved=0\n> <\n> https://raw.githubusercontent.com/Leprechault/trash/main/wc2.1_10m_elev.tif\n> >')\n> > proj4string(r.grid.world) <- CRS(\"+proj=longlat +datum=WGS84 +no_defs\n> +ellps=WGS84 +towgs84=0,0,0\")\n> > r.grid.world.SGDF.F <- as(r.grid.world, \"SpatialGridDataFrame\")\n> >\n> >\n> > #Fitting Poisson model\n> > fit.c <- ppm(nztrees, ~ elev,\n> > covariates=list(elev=as.im(r.grid.world.SGDF.F[[1]])))\n> > #\n> > # Error in as.im.default(r.grid.world.SGDF.F[[1]]) :\n> > #   Can't convert X to a pixel image\n> >\n> > I tried as matrix and rotate, and the final real-valued pixel image\n> didn't work as a covariate in the model.\n> >\n> > Please, any help with it?\n> >\n> > Thanks in advance\n> >\n> > Alexandre\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> >\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7CRoger.Bivand%40nhh.no%7Cd2a2b64634a7462f860708dc6f3082d5%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638507501339851113%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=LeMCUv%2F8%2FJCZFGehLYaPgDEGRfsPeZZbkV5aCia8l60%3D&reserved=0\n> <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n>\n> --\n> Edzer Pebesma (he/him)\n> Universit?t M?nster, Institute for Geoinforma\n> <https://www.google.com/maps/search/versit%C3%A4t+M%C3%BCnster,+Institute+for+Geoinforma?entry=gmail&source=g>\n> tics\n> Heisenbergstrasse 2, 48149 M?nster, Germany\n> Phone: +49 251 8333081\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n>\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7CRoger.Bivand%40nhh.no%7Cd2a2b64634a7462f860708dc6f3082d5%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638507501339856786%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=6H%2F9HQ%2BV1nyf2AdWabq0eoG3b8zqCQEC3ZC%2BFoRYvUI%3D&reserved=0\n> <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "This might also help:\n\nlibrary(spatstat)\nlibrary(terra)\n\n.raster_to_im <- function(x){\n        r <- as.data.frame(x, xy = TRUE)\n         im <- spatstat.geom::as.im(r) return(im)\n}\n\n # to generalise th",
+      "thread_id": "thread-1694413f840a",
+      "thread_depth": 3,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-2fe87e07f13b",
+      "message_id": "<CAL_d4CX-5_6TjR4Mn9YEEusCCkNCX-2GxoOW8z_ieo3yXM1SzQ@mail.gmail.com>",
+      "from_name": "Aymard Loïc KWEKEU KWEKEU",
+      "from_email_hash": "ef798628486f9cb982560103379a575c6f564b9e449f0da0c37a0c502bd34156",
+      "date": "2024-05-11T13:47:30+02:00",
+      "subject": "[R-sig-Geo] Dimensions problem when extracting latitude and longitude from shapefiles in multipolygon format in lambert 93 format",
+      "subject_clean": "Dimensions problem when extracting latitude and longitude from shapefiles in multipolygon format in lambert 93 format",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I want to extract the latitude and longitude from the shapefile and by\ndoing this I get a table with more lines than my shapefile.\nBelow is the corresponding code:\nSincerely :\n> library(sf)> geo <-  sf::st_read(\"IRIS.shp\")\n\nReading layer `IRIS' from data source\n\n  `C:\\M2_MAS_True\\Stage_EHESP\\QGIS\\Shapefiles\\IRIS.shp' using driver `ESRI\nShapefile'\n\nSimple feature collection with 752 features and 127 fields\n\nGeometry type: MULTIPOLYGON\n\nDimension:     XY\n\nBounding box:  xmin: 796251.5 ymin: 6485414 xmax: 868032.2 ymax: 6579885\n\nProjected CRS: RGF93 v1 / Lambert-93\n\n> hos <- geo[!sf::st_is_empty(geo), ]\n\n> santrau <-cbind(hos, st_coordinates(st_centroid(hos$geometry)))\n\n> sontrau <- subset(santrau, select=c(1:40))\n\n> sentrau <- na.omit(sontrau)\n\nsentrau$geometry\n\nGeometry set for 728 features\n\nGeometry type: MULTIPOLYGON\n\nDimension:     XY\n\nBounding box:  xmin: 796251.5 ymin: 6485414 xmax: 868032.2 ymax: 6579885\n\nProjected CRS: RGF93 v1 / Lambert-93\n\nFirst 5 geometries:\n\nMULTIPOLYGON (((843189.6 6521551, 843200.6 6521...\n\nMULTIPOLYGON (((844086.2 6514697, 844097.4 6514...\n\nMULTIPOLYGON (((836376.1 6508104, 836377.4 6508...\n\nMULTIPOLYGON (((847197.7 6510818, 847203.6 6510...\n\nMULTIPOLYGON (((850244.7 6517918, 850248 651792...\n\n> sentrau_wgs84 <- st_transform(sentrau, \"+proj=longlat +datum=WGS84\")\n\n> coordinates <- st_coordinates(sentrau_wgs84)\n\n> nrow(sentrau)\n\n[1] 728\n\n> nrow(coordinates)\n\n[1] 239649\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I want to extract the latitude and longitude from the shapefile and by\ndoing this I get a table with more lines than my shapefile.\nBelow is the corresponding code:\nSincerely :\n> library(sf)> geo <-  s",
+      "thread_id": "thread-2fe87e07f13b",
+      "thread_depth": 0,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-3cf84ade81ec",
+      "message_id": "<FFF307A0-5CC7-4C2B-8801-788F77C30499@gmail.com>",
+      "from_name": "Zivan Karaman",
+      "from_email_hash": "f608a153dd427cba2b35b76e0770fde2c77ce66784745838abdf743368ce538c",
+      "date": "2024-05-11T15:00:14+02:00",
+      "subject": "[R-sig-Geo] Dimensions problem when extracting latitude and longitude from shapefiles in multipolygon format in lambert 93 format",
+      "subject_clean": "Dimensions problem when extracting latitude and longitude from shapefiles in multipolygon format in lambert 93 format",
+      "in_reply_to": "<CAL_d4CX-5_6TjR4Mn9YEEusCCkNCX-2GxoOW8z_ieo3yXM1SzQ@mail.gmail.com>",
+      "references": [
+        "<CAL_d4CX-5_6TjR4Mn9YEEusCCkNCX-2GxoOW8z_ieo3yXM1SzQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hi,\n\nWhat you probably want is \nnrow(st_coordinates(st_centroid(sentrau))) \nwhich is equal to now(sentrau)\n\nnrow(st_coordinates(sentrau))  is equal to sum(sapply(1:nrow(sentrau), FUN = function(i) nrow(st_coordinates(sentrau[i, ]))))\nas sentrau is MULTIPOLYGON\n\nHope this helps.\n\n\n> On 11 May 2024, at 13:47, Aymard Lo?c KWEKEU KWEKEU <kwekeuaymardloic at gmail.com> wrote:\n> \n>> hos <- geo[!sf::st_is_empty(geo), ]\n> \n>> santrau <-cbind(hos, st_coordinates(st_centroid(hos$geometry)))\n> \n>> sontrau <- subset(santrau, select=c(1:40))\n> \n>> sentrau <- na.omit(sontrau)\n> \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nWhat you probably want is \nnrow(st_coordinates(st_centroid(sentrau))) \nwhich is equal to now(sentrau)\n\nnrow(st_coordinates(sentrau))  is equal to sum(sapply(1:nrow(sentrau), FUN = function(i) nro",
+      "thread_id": "thread-2fe87e07f13b",
+      "thread_depth": 1,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-8cddc25b3d5d",
+      "message_id": "<075C6325-B4B4-4F3D-8FBA-361E654E9D2E@inpe.br>",
+      "from_name": "Gilberto Camara",
+      "from_email_hash": "972a12cfc37eb43b5856752edbf4ed93d1dc47cecfc6d1027c67a3218f421047",
+      "date": "2024-05-11T11:12:35-03:00",
+      "subject": "[R-sig-Geo] SITS version 1.5.0",
+      "subject_clean": "SITS version 1.5.0",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear R-SIG-GEO \n\nWe would like to inform you that version 1.5.0 of `sits` package in now on CRAN.\n\n`sits` is an end-to-end, TRL 9, operationally-tested package for big Earth observation data analytics using satellite image time series and machine learning. Noteworthy upgrades in version 1.5.0 include:\n\n(a) Support for Sentinel-1 and Sentinel-2 collections in Copernicus Data Space Ecosystem;\n(b) Support for Sentinel-1-GRD and Sentinel-1-RTC collections in Microsoft Planetary Computer;\n(c) Support for Digital Earth Africa products SENTINEL-1-RTC, LS5-SR, LS7-SR, LS9-SR, ALOS-PALSAR-MOSAIC, NDVI ANOMALY, DAILY CHIRPS, MONTHLY CHIRPS and DEM-30;\n(d) Improved performance on GPU-based classification of deep learning models;\n(e) Merging Sentinel-1 and Sentinel-2 data cubes;\n(f) Include DTW distance when building self-organized maps (SOM) for training data quality control;\n(g) New `sits_reduce()` function for multi-temporal statistics;\n(h) New functions `sits_sampling_design()` and `sits_stratified_sampling()` to implement best practices for classification assessment based on the best practices proposed by Olofsson et al. (2014).\n\nDocumentation is available as an on-line book, available at https://e-sensing.github.io/sitsbook/. \n\n`sits` relies on the strong community spirit of the R community and in particular the r-spatial team. We acknowledge our debt to Edzer Pebesma (`sf/stars`), Marius Appel (`gdalcubes`), Robert Hijmans (`terra`), Tim Appelhans (`leafem`), Jakub Nowosad (`supercells`), and Martijn Tennekes (`tmap`). We are grateful for the work of Dirk Eddelbuettel (`Rcpp/RcppArmadillo`) and Ron Wehrens (`kohonen`). We are much indebted to Hadley Wickham for the tidyverse, Daniel Falbel for the `torch` and `luz` packages, and the RStudio team for package `leaflet`.  The CRAN team (Uwe Ligges and prof Ripley) has been very supportive.  We also thank Roger Bivand for his benign influence.\n\nWithout the commitment of the r-spatial community, development of `sits` would have been impossible. It is amazing and impressive how the packages of the r-spatial community fit seamlessly like LEGO blocks. Arguably, this is due to amazing consistency and capabilities of the `sf` package. It has become a sound basis for most other r-spatial packages, including `sits`. Kudos to Edzer and all contributors! \n\nBest regards\nGilberto\n============================\nProf Dr Gilberto Camara\nSenior Researcher\nNational Institute for Space Research (INPE), Brazil\nhttps://gilbertocamara.org/\n=============================",
+      "body_snippet": "Dear R-SIG-GEO \n\nWe would like to inform you that version 1.5.0 of `sits` package in now on CRAN.\n\n`sits` is an end-to-end, TRL 9, operationally-tested package for big Earth observation data analytics",
+      "thread_id": "thread-8cddc25b3d5d",
+      "thread_depth": 0,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-c0f967e6f12f",
+      "message_id": "<c222101c-2da3-45d3-bb15-e7f0e8decbbe@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2024-05-11T18:03:18+02:00",
+      "subject": "[R-sig-Geo] as.im in spatstat::ppm not working as before",
+      "subject_clean": "as.im in spatstat::ppm not working as before",
+      "in_reply_to": "<CA+H-716wZ6Q1oWhmRpy=aK8MbEkgTucrFYcmZxeh4dCviuiAyA@mail.gmail.com>",
+      "references": [
+        "<1909033753.55613.1715125761625.ref@mail.yahoo.com>",
+        "<1909033753.55613.1715125761625@mail.yahoo.com>",
+        "<d02c9618-2922-414b-8999-434a158967fb@uni-muenster.de>",
+        "<SV0P279MB0475C3977CE38395318EBC8AEEE52@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>",
+        "<CA+H-716wZ6Q1oWhmRpy=aK8MbEkgTucrFYcmZxeh4dCviuiAyA@mail.gmail.com>"
+      ],
+      "body_plain": "On 11/05/2024 10:21, Roozbeh Valavi wrote:\n> This might also help:\n\nthe solution below will not raise the error if x has geographic \n(unprojected) coordinates, a case for which you should not use spatstat.\n\n> \n> library(spatstat)\n> library(terra)\n> \n> .raster_to_im <- function(x){\n>  ? ? ? ? r <- as.data.frame(x, xy = TRUE)\n>  ? ? ? ? ?im <- spatstat.geom::as.im <http://as.im>(r) return(im)\n> }\n> \n>  ?# to generalise the spatstat.geom::as.im <http://as.im> to SpatRaster \n> and RasterLayer\n> as.im.SpatRaster <- function(x){ .raster_to_im(x) } as.im.RasterLayer <- \n> function(x){ .raster_to_im(x) }\n> \n> \n> I haven?t used it in a while so there might be a direct support in the \n> spatstat.geom now!\n> \n> \n> Roozbeh Valavi,\n> Biodiversity Modeller & Spatial Ecologist\n> Senior Research Scientist | CSIRO Environment, VIC, Australia\n> *Twitter*:@ValaviRoozbeh | ResearchGate \n> <https://www.researchgate.net/profile/Roozbeh-Valavi> | Google Scholar \n> <https://scholar.google.co.uk/citations?user=3m0jCHwAAAAJ&hl=en&oi=ao>\n> \n> \n> On Wed, 8 May 2024 at 7:41?PM, Roger Bivand <Roger.Bivand at nhh.no \n> <mailto:Roger.Bivand at nhh.no>> wrote:\n> \n>     as.im <http://as.im>() was in maptools, which was retired last year.\n>     If you need to recreate old work, install maptools from source from\n>     the CRAN package archive\n>     https://cran.r-project.org/src/contrib/Archive/maptools/\n>     <https://cran.r-project.org/src/contrib/Archive/maptools/>.\n> \n>     For non-archival work, update the workflow. See also\n>     https://github.com/r-spatial/evolution/issues/8\n>     <https://github.com/r-spatial/evolution/issues/8>.\n> \n>     Hope this clarifies,\n> \n>     Roger\n> \n>     ---\n>     Roger Bivand\n>     Emeritus Professor\n>     Department of Economics\n>     Norwegian School of Economics, Bergen, Norway\n> \n>     ________________________________\n>     Fra: R-sig-Geo <r-sig-geo-bounces at r-project.org\n>     <mailto:r-sig-geo-bounces at r-project.org>> p? vegne av Edzer Pebesma\n>     <edzer.pebesma at uni-muenster.de <mailto:edzer.pebesma at uni-muenster.de>>\n>     Sendt: onsdag, mai 8, 2024 9:28:54 a.m.\n>     Til: r-sig-geo at r-project.org <mailto:r-sig-geo at r-project.org>\n>     <r-sig-geo at r-project.org <mailto:r-sig-geo at r-project.org>>\n>     Emne: Re: [R-sig-Geo] as.im <http://as.im> in spatstat::ppm not\n>     working as before\n> \n>     r.grid.world.SGDF.F[[1]] is a numerical vector, not even a matrix, so\n>     clearly as.im.default doesn't know what it should do with it.\n> \n>     Maybe there was once a method as.im <http://as.im> for\n>     r.grid.world.SGDF.F, which is of\n>     class SpatialGridDataFrame, but no longer - software evolves.\n> \n>     A way you could approach this is converting that object to a stars\n>     object:\n> \n>      ?> library(stars)\n>     Loading required package: abind\n>     Loading required package: sf\n>     Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.3.1; sf_use_s2() is TRUE\n>      ?> as.im <http://as.im>(st_as_stars(r.grid.world.SGDF.F))\n>     Error: Only projected coordinates may be converted to spatstat class\n>     objects\n> \n>     and that points you to another issue you have: spatstat works with data\n>     in Cartesian coordiantes (R2), not with geodetic coordinates (S2). So\n>     that's a helpful error message.\n> \n> \n>     On 08/05/2024 01:49, Alexandre Santos via R-sig-Geo wrote:\n>      > Dear Members,\n>      >\n>      > I'll calculate some old codes for a paper review, and I'm\n>     astonished that as.im <http://as.im>() for fitting the Poisson model\n>     is not working as before. In my example:\n>      >\n>      > library(raster)\n>      > library(spatstat)\n>      >\n>      >\n>      > # Elevation\n>      > r.grid.world <-\n>     raster('https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fraw.githubusercontent.com%2FLeprechault%2Ftrash%2Fmain%2Fwc2.1_10m_elev.tif&data=05%7C02%7CRoger.Bivand%40nhh.no%7Cd2a2b64634a7462f860708dc6f3082d5%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638507501339842669%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=cyducyKF16yIdtfuykXUSifCR8clFtxDhiG1eY4waFU%3D&reserved=0 <https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fraw.githubusercontent.com%2FLeprechault%2Ftrash%2Fmain%2Fwc2.1_10m_elev.tif&data=05%7C02%7CRoger.Bivand%40nhh.no%7Cd2a2b64634a7462f860708dc6f3082d5%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638507501339842669%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=cyducyKF16yIdtfuykXUSifCR8clFtxDhiG1eY4waFU%3D&reserved=0><https://raw.githubusercontent.com/Leprechault/trash/main/wc2.1_10m_elev.tif <https://raw.githubusercontent.com/Leprechault/trash/main/wc2.1_10m_elev.tif>>')\n>      > proj4string(r.grid.world) <- CRS(\"+proj=longlat +datum=WGS84\n>     +no_defs +ellps=WGS84 +towgs84=0,0,0\")\n>      > r.grid.world.SGDF.F <- as(r.grid.world, \"SpatialGridDataFrame\")\n>      >\n>      >\n>      > #Fitting Poisson model\n>      > fit.c <- ppm(nztrees, ~ elev,\n>      > covariates=list(elev=as.im <http://as.im>(r.grid.world.SGDF.F[[1]])))\n>      > #\n>      > # Error in as.im.default(r.grid.world.SGDF.F[[1]]) :\n>      > #? ?Can't convert X to a pixel image\n>      >\n>      > I tried as matrix and rotate, and the final real-valued pixel\n>     image didn't work as a covariate in the model.\n>      >\n>      > Please, any help with it?\n>      >\n>      > Thanks in advance\n>      >\n>      > Alexandre\n>      >\n>      > _______________________________________________\n>      > R-sig-Geo mailing list\n>      > R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>      >\n>     https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7CRoger.Bivand%40nhh.no%7Cd2a2b64634a7462f860708dc6f3082d5%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638507501339851113%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=LeMCUv%2F8%2FJCZFGehLYaPgDEGRfsPeZZbkV5aCia8l60%3D&reserved=0 <https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7CRoger.Bivand%40nhh.no%7Cd2a2b64634a7462f860708dc6f3082d5%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638507501339851113%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=LeMCUv%2F8%2FJCZFGehLYaPgDEGRfsPeZZbkV5aCia8l60%3D&reserved=0><https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>>\n> \n>     --\n>     Edzer Pebesma (he/him)\n>     Universit?t M?nster, Institute for Geoinforma\n>     <https://www.google.com/maps/search/versit%C3%A4t+M%C3%BCnster,+Institute+for+Geoinforma?entry=gmail&source=g>tics\n>     Heisenbergstrasse 2, 48149 M?nster, Germany\n>     Phone: +49 251 8333081\n> \n>     _______________________________________________\n>     R-sig-Geo mailing list\n>     R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>     https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7CRoger.Bivand%40nhh.no%7Cd2a2b64634a7462f860708dc6f3082d5%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638507501339856786%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=6H%2F9HQ%2BV1nyf2AdWabq0eoG3b8zqCQEC3ZC%2BFoRYvUI%3D&reserved=0 <https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C02%7CRoger.Bivand%40nhh.no%7Cd2a2b64634a7462f860708dc6f3082d5%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638507501339856786%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=6H%2F9HQ%2BV1nyf2AdWabq0eoG3b8zqCQEC3ZC%2BFoRYvUI%3D&reserved=0><https://stat.ethz.ch/mailman/listinfo/r-sig-geo <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>>\n> \n> \n>      ? ? ? ? [[alternative HTML version deleted]]\n> \n>     _______________________________________________\n>     R-sig-Geo mailing list\n>     R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>     https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>     <https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n> \n\n-- \nEdzer Pebesma (he/him)\nUniversit?t M?nster, Institute for Geoinformatics\nHeisenbergstrasse 2, 48149 M?nster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "On 11/05/2024 10:21, Roozbeh Valavi wrote:\n> This might also help:\n\nthe solution below will not raise the error if x has geographic \n(unprojected) coordinates, a case for which you should not use spat",
+      "thread_id": "thread-1694413f840a",
+      "thread_depth": 4,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-9e859ae36b7a",
+      "message_id": "<CABkCotRhgk12J7QF6P6WCLY521otMKDN8GY7aEAOsfr8THJSpw@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2024-05-11T10:44:23-06:00",
+      "subject": "[R-sig-Geo] Modelling land use/land cover under climate change scenarios",
+      "subject_clean": "Modelling land use/land cover under climate change scenarios",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list members,\n\nIs there a way in R or an R example code to model land use/land cover under\nclimate change scenario.\n\n\n\n*Manuel Sp?nola, Ph.D.*\nInstituto Internacional en Conservaci?n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.cr <mspinola at una.ac.cr>\nmspinola10 at gmail.com\nTel?fono: (506) 8706 - 4662\nSitio web institucional: ICOMVIS\n<http://www.icomvis.una.ac.cr/index.php/manuel>\nSitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>\nBlog sobre Ciencia de Datos: Blog de Ciencia de Datos\n<https://mspinola-ciencia-de-datos.netlify.app>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list members,\n\nIs there a way in R or an R example code to model land use/land cover under\nclimate change scenario.\n\n\n\n*Manuel Sp?nola, Ph.D.*\nInstituto Internacional en Conservaci?n y Manejo de ",
+      "thread_id": "thread-9e859ae36b7a",
+      "thread_depth": 0,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-a22b2e40c258",
+      "message_id": "<CAGg5H0YYxxf-pt0t5NW_rcMUn2Um3GUp8toKeTgXAfBO+L50Vg@mail.gmail.com>",
+      "from_name": "Nikolaos Tziokas",
+      "from_email_hash": "8312105e7618a0b91bd7038dde37c1862aea2c44337b9a99a2f8e8cdbaab259c",
+      "date": "2024-05-11T20:25:54+03:00",
+      "subject": "[R-sig-Geo] Find the optimal model using step wise linear regression",
+      "subject_clean": "Find the optimal model using step wise linear regression",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I have a sf object with 2 columns, named fclass and geometry. I am\ninterested in the fclass column. The fclass has several unique values. I\nconvert this sf object to spatraster, I resample it and I perform a linear\nregression where I use another spatraster, called ntl, as my response\n(lm(ntl ~ road)).\n\nMy goal is to find which unique values give the largest r-squared in the lm\nmodel using stepwise linear regression whith backward elimination. My\ninitial try was:\n\nlibrary(pacman)\npacman::p_load(terra, sf, dplyr)\n\nntl <- rast(\"path/ntl.tif\") # response\n\nv <- st_read(\"path/road17.shp\") # sf object\n\n# baseline r2\nvterra <- vect(v)\n\nref <- rast(\"path/pop.tif\") # get ext and pixel size\n\nr <- rast(v, res = res(ref), ext = ext(ref))\n\nx <- rasterizeGeom(vterra, r, \"length\", \"m\")\n\nx_res <- resample(x, ntl, \"average\")\n\ns <- c(ntl, x_res)\nnames(s) <- c(\"ntl\", \"road\")\n\nm <- lm(ntl ~ road, s, na.action = na.exclude)\nbaseline <- sqrt(summary(m)$adj.r.squared)\norig_baseline <- sqrt(summary(m)$adj.r.squared)\n\nclasses <- unique(v$fclass)\ninclasses <- unique(v$fclass)\n\ni <- 1\nwhile (i <= length(classes)) {\n  class <- classes[i]\n  print(paste0(\"current class \", class))\n  print(paste0(\"orig baseline: \", orig_baseline, \" - baseline: \", baseline))\n  print(classes)\n\n  v_filtered <- v[v$fclass != class, ]\n  vterra <- vect(v_filtered)\n  r <- rast(v, res = res(ref), ext = ext(ref))\n  x <- rasterizeGeom(vterra, r, \"length\", \"m\")\n\n  x_res <- resample(x, ntl, \"average\")\n\n  s <- c(ntl, x_res)\n  names(s) <- c(\"ntl\", \"road\")\n\n  m <- lm(ntl ~ road, s, na.action = na.exclude)\n  class_r2 <- sqrt(summary(m)$adj.r.squared)\n\n  if (class_r2 > baseline) {\n    classes <- classes[-i]\n    baseline <- class_r2\n  } else {\n    print(\"class_r2 is less than baseline\")\n    print(paste0(\"class_r2: \", class_r2, \" - baseline: \", baseline))\n    i <- i + 1\n  }\n}\nbut it's not efficient (it takes ~ 5 minutes).\n\nI have found the MASS package which has the lmStepAIC function but I am not\nsure how to select the unique values from the fclass column to use as\npredictiors.\n\nhead(v, 6)\nSimple feature collection with 6 features and 1 field\nGeometry type: MULTILINESTRING\nDimension:     XY\nBounding box:  xmin: 598675.9 ymin: 7111459 xmax: 609432.8 ymax: 7118729\nProjected CRS: WGS 84 / UTM zone 35S\n         fclass                       geometry\n1     secondary MULTILINESTRING ((598675.9 ...\n2     secondary MULTILINESTRING ((600641.7 ...\n3   residential MULTILINESTRING ((601734.8 ...\n4   residential MULTILINESTRING ((601163.9 ...\n5   residential MULTILINESTRING ((601104.2 ...\n6 motorway_link MULTILINESTRING ((609432.8 ...\n\nThe unique values in the fclass column:\n\nunique(v$fclass)\n [1] \"secondary\"      \"residential\"    \"motorway_link\"  \"service\"\n \"primary\"        \"unclassified\"   \"motorway\"\n [8] \"tertiary\"       \"trunk\"          \"primary_link\"   \"footway\"\n \"track\"          \"secondary_link\" \"unknown\"\n[15] \"living_street\"  \"pedestrian\"     \"path\"           \"bridleway\"\n \"steps\"          \"trunk_link\"     \"track_grade1\"\n[22] \"track_grade3\"   \"track_grade5\"   \"cycleway\"       \"track_grade4\"\n\"tertiary_lin\n\nThe dataset can be downloaded from my GoogleDrive\n<https://drive.google.com/drive/folders/1a0Khhej4koA0uhYTrQmqmMg02qfRWbjt?usp=drive_link>\n.\n\nThank you.\n\n-- \nTziokas Nikolaos\nCartographer\n\nTel:(+44)07561120302\nLinkedIn <http://linkedin.com/in/nikolaos-tziokas-896081130>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I have a sf object with 2 columns, named fclass and geometry. I am\ninterested in the fclass column. The fclass has several unique values. I\nconvert this sf object to spatraster, I resample it and I pe",
+      "thread_id": "thread-a22b2e40c258",
+      "thread_depth": 0,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-969e99b38d2f",
+      "message_id": "<CAKSASLCNE1rtZTQn7SZ780SLG8NxjbGqnXUCu-5sMm9_yXDU4g@mail.gmail.com>",
+      "from_name": "Marta Rufino",
+      "from_email_hash": "bfceb8c72375986ae2b75f435afdd9bbb065275e9e776fe7e1291b2952ceba4c",
+      "date": "2024-05-13T11:56:16+01:00",
+      "subject": "[R-sig-Geo] add spatraster layers by matching a dataframe column and make spatio-temporal rast",
+      "subject_clean": "add spatraster layers by matching a dataframe column and make spatio-temporal rast",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n\nI would like to add layers to a spatraster (terra), by matching (joining) a\ncolumn in a data frame with the values of the raster layer (A).\nThen, I would like to make it a spatio-temporal terra spatraster and/or a\nstars (B).\n\nAny help will be strongly appreciated,\nKind regards,\nM.\n________________________________________\n require(terra)\n\n# A)\n\n# runnable example\n# Make an example raster:\n  r = terra::rast(ncols=10, nrows=10)\n  values(r) <- 1:100\n  names(r)=\"ID\"\n  # add some missing values (to make it real)\n  r[c(2,43,60,94)]=NA\n  plot(r)\n\n  # Make an example data frame (note both have an ID col to match)\n  d <- data.frame(\n    ID=100:1,\n    k=c(\"aa\",\"bb\"),\n    e=rnorm(100,2),\n    year=sample(2001:2002, 100, replace = TRUE),\n    date= as.Date(rep(c(\"2010-01-01\", \"2012-02-01\",\n\"2010-03-01\",\"2010-04-01\"), l=100)))\n  head(d)\n\n# My tries:\n\n  # 1. This works, but only for one col and it is not so nice:\n  r$year2 <- d$year[match(as.vector(r$ID), d$ID)]\n  plot(r)\n\n  # 2. try it using app function: I could not make it work\n  kk1 <- function(i,j=d) {\n      j[match(as.vector(i$ID), j$ID),]\n    }\n  app(r, fun = kk1)\n\n  # 3. try it using classify function\n  # works with numeric (not characters) but it is not perfect\n  terra::classify(r, d) # error\n  # two numeric cols: works, but add the second col as the first raster\ncol. Not ok.\n  terra::classify(r, d[,c(1,3)])\n  # excluding the character col: gives an error\n  terra::classify(r, d[,-c(2)])\n\n  # 4. try it using merge function\n  terra::merge(r, d) %>% head() #not sure what he did and in which order :(\nbut clearly not match/join working properly\n\n  # 5. only (not elegant) way I managed:\n  rast(\n    left_join(\n      as_tibble(r, xy=TRUE), d, by=\"ID\"), type=\"xyz\", crs = \"EPSG:4326\")\n%>% plot()\n\n# B) Make terra r raster a spatiotemporal cube\n\n# 1.\n#\nhttps://stackoverflow.com/questions/74079441/group-raster-files-by-week-month\nterra::time(r, tstep=\"years\") <- d$year\n# gives an error...\n# Error: [time<-] length(value) != nlyr(x)\n\n# 2.\n#\nhttps://stackoverflow.com/questions/74934891/specifying-layers-when-using-rast-type-xyz-to-convert-data-frame-to-spatra\n# but I think this is not really a spatio-temporal rast...\nd2 <- left_join(as_tibble(r, xy=TRUE), d, by=c(\"ID\"))\nw <- reshape(d2, timevar=\"year\", idvar=c(\"x\", \"y\"), direction=\"wide\")\nx <- rast(w, type=\"xyz\")\n\n# by year\nd3 <- split(d2[,-7], d2$year)\nr2 <- lapply(d3, \\(i) rast(i, type=\"xyz\"))\n(r2 <- rast(r2))\ntime(r2) <- as.Date(names(r2))\nplot(r2)\n\n# plot with rasterVis\nrequire(rasterVis)\nlevelplot(r2)\n\n\n# 2. using stars (aternative)\n# sources:\nhttps://stackoverflow.com/questions/77368957/how-to-transform-a-sf-table-to-a-stars-cube-with-starsst-as-stars-function\n# (\nhttps://gis.stackexchange.com/questions/353741/generate-a-stars-object-from-tabular-spatial-temporal-data\n):\n\ns <- st_as_stars(as.data.frame(r, xy = TRUE, na.rm = TRUE), dims = c(\"x\",\n\"y\", \"year\"), crs = 4326)\ns %>% plot(axes=TRUE)\n# but the from and to of the year are wrong\n# How to change to spatrast again?\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nI would like to add layers to a spatraster (terra), by matching (joining) a\ncolumn in a data frame with the values of the raster layer (A).\nThen, I would like to make it a spatio-temporal terra s",
+      "thread_id": "thread-969e99b38d2f",
+      "thread_depth": 0,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-fcfb36562469",
+      "message_id": "<CAL3ufU+sOZygxdaqMks5oNnoveZ8sdhtR6MG6MBF=0+xmAFESw@mail.gmail.com>",
+      "from_name": "Josiah Parry",
+      "from_email_hash": "cb0d462f2d6a78e97bcd7aede4de6b2170d3c662db9c89c80e1b85568990f9dc",
+      "date": "2024-05-13T11:12:30-04:00",
+      "subject": "[R-sig-Geo] Maximum sparsity for spatial regression",
+      "subject_clean": "Maximum sparsity for spatial regression",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "As I'm reading through Modern Spatial Econometrics in Practice, we assume\nthe spatial weights matrix to be sparse. At one point they note that the\ncontiguity matrix  for the US counties is 0.18% non-zero. But what %\nnon-zero is too dense?\n\nI am wondering if there is any research or papers that document what a\nrecommended upper bound of sparsity should be for one of these models? Is\n10% non-zero too much or sufficient? I suspect the answer is, like most\nthings, \"it depends.\"\n\nBut, thinking of a situation where someone might use a distance band to\nspecify neighbors they might create a bandwidth that can encompass 50% or\nmore of points if using max(knn=1) to specify the distance. I suspect using\na kernel or IDW could reduce the weights close to zero making the impact\nminimal.\n\nNonetheless, I'm curious if others have thought about this or written about\nit!\n\nThanks,\n\nJosiah\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "As I'm reading through Modern Spatial Econometrics in Practice, we assume\nthe spatial weights matrix to be sparse. At one point they note that the\ncontiguity matrix  for the US counties is 0.18% non-z",
+      "thread_id": "thread-fcfb36562469",
+      "thread_depth": 0,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-633c1da2da72",
+      "message_id": "<SV0P279MB047598031CCECDE5F6CAF8C7EEE22@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2024-05-13T16:11:04Z",
+      "subject": "[R-sig-Geo] Maximum sparsity for spatial regression",
+      "subject_clean": "Maximum sparsity for spatial regression",
+      "in_reply_to": "<CAL3ufU+sOZygxdaqMks5oNnoveZ8sdhtR6MG6MBF=0+xmAFESw@mail.gmail.com>",
+      "references": [
+        "<CAL3ufU+sOZygxdaqMks5oNnoveZ8sdhtR6MG6MBF=0+xmAFESw@mail.gmail.com>"
+      ],
+      "body_plain": "Is Tony Smith's \"Estimation Bias in Spatial Models with Strongly Connected Weight Matrices\" at https://doi.org/10.1111/j.1538-4632.2009.00758.x helpful?\n\nRoger\n\n--\nRoger Bivand\nEmeritus Professor\nNorwegian School of Economics\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway\nRoger.Bivand at nhh.no\n\n________________________________________\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Josiah Parry <josiah.parry at gmail.com>\nSent: 13 May 2024 17:12\nTo: r-sig-Geo at r-project.org\nSubject: [R-sig-Geo] Maximum sparsity for spatial regression\n\nAs I'm reading through Modern Spatial Econometrics in Practice, we assume\nthe spatial weights matrix to be sparse. At one point they note that the\ncontiguity matrix  for the US counties is 0.18% non-zero. But what %\nnon-zero is too dense?\n\nI am wondering if there is any research or papers that document what a\nrecommended upper bound of sparsity should be for one of these models? Is\n10% non-zero too much or sufficient? I suspect the answer is, like most\nthings, \"it depends.\"\n\nBut, thinking of a situation where someone might use a distance band to\nspecify neighbors they might create a bandwidth that can encompass 50% or\nmore of points if using max(knn=1) to specify the distance. I suspect using\na kernel or IDW could reduce the weights close to zero making the impact\nminimal.\n\nNonetheless, I'm curious if others have thought about this or written about\nit!\n\nThanks,\n\nJosiah\n\n        [[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Is Tony Smith's \"Estimation Bias in Spatial Models with Strongly Connected Weight Matrices\" at https://doi.org/10.1111/j.1538-4632.2009.00758.x helpful?\n\nRoger\n\n--\nRoger Bivand\nEmeritus Professor\nNorw",
+      "thread_id": "thread-fcfb36562469",
+      "thread_depth": 1,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-d5cd60dc5840",
+      "message_id": "<CACEJfCrNxehVDxeJFT82Yfo7DaCeYR+jQs1jSdueuzKKogC29g@mail.gmail.com>",
+      "from_name": "Julien Rodriguez",
+      "from_email_hash": "706ae71bfb044697d2d90bec95c4c53053f69f20ad2a7a818eccf60d11b3c587",
+      "date": "2024-05-13T18:35:11+02:00",
+      "subject": "[R-sig-Geo]  add spatraster layers by matching a dataframe column and make spatio-temporal rast",
+      "subject_clean": "add spatraster layers by matching a dataframe column and make spatio-temporal rast",
+      "in_reply_to": "<CAKSASLCNE1rtZTQn7SZ780SLG8NxjbGqnXUCu-5sMm9_yXDU4g@mail.gmail.com>",
+      "references": [
+        "<CAKSASLCNE1rtZTQn7SZ780SLG8NxjbGqnXUCu-5sMm9_yXDU4g@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Marta,\n\n\nI hope I've understood properly what you're expecting.\n\nProvided your vector values are ordered properly, you can add it as a new\nlayer in an existing SpatRaster using \"$\" as for a data.frame.\nThe terra::merge method may be used for different SpatRasters or between\nSpatVector and data.frames but you could prepare new layers from the\noriginal raster values using base::merge with your \"ID\" column.\nRegarding the temporal aspect, it would mean, as I understood it, that you\nshould have two data.frames containing the features to be included instead\nof one (for years 2001 and 2002).\nSurely not the most elegant way to do it below with base R functions but it\nshould work.\nIf anyone has a more appropriate solution, I'd be greatly interested too!\n\n\n# runnable example\n# Make an example raster:\nrequire(terra)\nset.seed(240513)\n\nr <- terra::rast(ncols=10, nrows=10)\nvalues(r) <- 1:100\nnames(r)=\"ID\"\n# add some missing values (to make it real)\nr[c(2,43,60,94)]=NA\nplot(r)\n\n# Make an example data frame (note both have an ID col to match)\nd <- data.frame(\n  ID=100:1,\n  k=c(\"aa\",\"bb\"),\n  e=rnorm(100,2),\n  year=sample(2001:2002, 100, replace = TRUE),\n  date= as.Date(rep(c(\"2010-01-01\", \"2012-02-01\",\n                      \"2010-03-01\",\"2010-04-01\"), l=100)))\nhead(d)\n\n# the terra::time is used to describe different layers of the raster which\nis not appropriated in this case (one layer = one feature for one year)\n# Here the values to be included in the raster are associated to different\ndates so the data frame has to be splitted by year\n# A different year means actually a missing value for the pixel\n# the raster time index to be then defined as:\nras.time.index <- 2001:2002\n\ncol2sel <- colnames(d)[ !colnames(d) %in% c(\"ID\", \"year\")]\n\ntimed.d <- do.call(merge,\n              lapply(ras.time.index , function(y){\n                      new.d <- d\n                      new.d [!d$year %in% y, col2sel] <- NA\n                      colnames(new.d)[ colnames(new.d) %in% col2sel] <-\npaste(col2sel, y, sep = \"_\")\n                      new.d <- new.d[ order(new.d$ID), !colnames(new.d)\n%in% \"year\"]\n                      return(new.d)}))\n\nhead(timed.d)\n\n\n# Extract the values from the raster and make a unique index to identify\nthe pixel values order from original raster\nras.vals <- terra::values(r, dataframe = TRUE)\nras.val.0 <- cbind(ras.vals, index = 1:nrow(ras.val))\n\n# Merge with d (values with missing IDs will be lost from d) while keeping\nevery values from original raster\nras.val.1 <- merge(ras.val.0,  timed.d, by = \"ID\", all.x = TRUE)\nsummary(ras.val.1)\n\n# Reorder features values properly\nras.val.1 <- ras.val.1[ order(ras.val.1$index), ]\n\n# Add these new values to the initial raster iteratively\nfeatures <- colnames(timed.d)[ !colnames(timed.d) %in% colnames(ras.val.0)]\nfeatures\n\nfor(i in 1:length(features)){\n\n  new.values <- ras.val.1 [, features[i]]\n  if(inherits(new.values, \"Date\")){\n    new.values <- as.character(new.values)\n  }\n  r$new.val <- new.values\n  names(r)[ names(r) %in% \"new.val\"] <- features[i]\n\n}\n\nplot(r)\n\n# At last, define the temporal component of different layers\n# To do that, distinguishing the different features seems appropriated\n# Example for feature \"e\" layers\nras.e <-  r[[substr(names(r), 1,2) %in% \"e_\"]]\nterra::time(ras.e, tstep=\"years\") <- ras.time.index\n\nplot(ras.e)\n\nI hope this might be useful\n\n Best regards\n\nJulien Rodriguez\n\n\n\n\n\n\n\nLe lun. 13 mai 2024 ? 12:55, Marta Rufino <marta.m.rufino at gmail.com> a\n?crit :\n\n> Hi,\n>\n> I would like to add layers to a spatraster (terra), by matching (joining) a\n> column in a data frame with the values of the raster layer (A).\n> Then, I would like to make it a spatio-temporal terra spatraster and/or a\n> stars (B).\n>\n> Any help will be strongly appreciated,\n> Kind regards,\n> M.\n> ________________________________________\n>  require(terra)\n>\n> # A)\n>\n> # runnable example\n> # Make an example raster:\n>   r = terra::rast(ncols=10, nrows=10)\n>   values(r) <- 1:100\n>   names(r)=\"ID\"\n>   # add some missing values (to make it real)\n>   r[c(2,43,60,94)]=NA\n>   plot(r)\n>\n>   # Make an example data frame (note both have an ID col to match)\n>   d <- data.frame(\n>     ID=100:1,\n>     k=c(\"aa\",\"bb\"),\n>     e=rnorm(100,2),\n>     year=sample(2001:2002, 100, replace = TRUE),\n>     date= as.Date(rep(c(\"2010-01-01\", \"2012-02-01\",\n> \"2010-03-01\",\"2010-04-01\"), l=100)))\n>   head(d)\n>\n> # My tries:\n>\n>   # 1. This works, but only for one col and it is not so nice:\n>   r$year2 <- d$year[match(as.vector(r$ID), d$ID)]\n>   plot(r)\n>\n>   # 2. try it using app function: I could not make it work\n>   kk1 <- function(i,j=d) {\n>       j[match(as.vector(i$ID), j$ID),]\n>     }\n>   app(r, fun = kk1)\n>\n>   # 3. try it using classify function\n>   # works with numeric (not characters) but it is not perfect\n>   terra::classify(r, d) # error\n>   # two numeric cols: works, but add the second col as the first raster\n> col. Not ok.\n>   terra::classify(r, d[,c(1,3)])\n>   # excluding the character col: gives an error\n>   terra::classify(r, d[,-c(2)])\n>\n>   # 4. try it using merge function\n>   terra::merge(r, d) %>% head() #not sure what he did and in which order :(\n> but clearly not match/join working properly\n>\n>   # 5. only (not elegant) way I managed:\n>   rast(\n>     left_join(\n>       as_tibble(r, xy=TRUE), d, by=\"ID\"), type=\"xyz\", crs = \"EPSG:4326\")\n> %>% plot()\n>\n> # B) Make terra r raster a spatiotemporal cube\n>\n> # 1.\n> #\n>\n> https://stackoverflow.com/questions/74079441/group-raster-files-by-week-month\n> terra::time(r, tstep=\"years\") <- d$year\n> # gives an error...\n> # Error: [time<-] length(value) != nlyr(x)\n>\n> # 2.\n> #\n>\n> https://stackoverflow.com/questions/74934891/specifying-layers-when-using-rast-type-xyz-to-convert-data-frame-to-spatra\n> # but I think this is not really a spatio-temporal rast...\n> d2 <- left_join(as_tibble(r, xy=TRUE), d, by=c(\"ID\"))\n> w <- reshape(d2, timevar=\"year\", idvar=c(\"x\", \"y\"), direction=\"wide\")\n> x <- rast(w, type=\"xyz\")\n>\n> # by year\n> d3 <- split(d2[,-7], d2$year)\n> r2 <- lapply(d3, \\(i) rast(i, type=\"xyz\"))\n> (r2 <- rast(r2))\n> time(r2) <- as.Date(names(r2))\n> plot(r2)\n>\n> # plot with rasterVis\n> require(rasterVis)\n> levelplot(r2)\n>\n>\n> # 2. using stars (aternative)\n> # sources:\n>\n> https://stackoverflow.com/questions/77368957/how-to-transform-a-sf-table-to-a-stars-cube-with-starsst-as-stars-function\n> # (\n>\n> https://gis.stackexchange.com/questions/353741/generate-a-stars-object-from-tabular-spatial-temporal-data\n> ):\n>\n> s <- st_as_stars(as.data.frame(r, xy = TRUE, na.rm = TRUE), dims = c(\"x\",\n> \"y\", \"year\"), crs = 4326)\n> s %>% plot(axes=TRUE)\n> # but the from and to of the year are wrong\n> # How to change to spatrast again?\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Marta,\n\n\nI hope I've understood properly what you're expecting.\n\nProvided your vector values are ordered properly, you can add it as a new\nlayer in an existing SpatRaster using \"$\" as for a data.",
+      "thread_id": "thread-969e99b38d2f",
+      "thread_depth": 1,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-fa309ccdc3b4",
+      "message_id": "<CAL3ufULLEo+5-xQZYVBGYqCH+h=15U3vOW5h5onqxSBGqowJCw@mail.gmail.com>",
+      "from_name": "Josiah Parry",
+      "from_email_hash": "cb0d462f2d6a78e97bcd7aede4de6b2170d3c662db9c89c80e1b85568990f9dc",
+      "date": "2024-05-13T12:39:50-04:00",
+      "subject": "[R-sig-Geo] Maximum sparsity for spatial regression",
+      "subject_clean": "Maximum sparsity for spatial regression",
+      "in_reply_to": "<SV0P279MB047598031CCECDE5F6CAF8C7EEE22@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>",
+      "references": [
+        "<CAL3ufU+sOZygxdaqMks5oNnoveZ8sdhtR6MG6MBF=0+xmAFESw@mail.gmail.com>",
+        "<SV0P279MB047598031CCECDE5F6CAF8C7EEE22@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>"
+      ],
+      "body_plain": "Yes! This is perfect. Thank you so much.\n\nOn Mon, May 13, 2024 at 12:11 Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> Is Tony Smith's \"Estimation Bias in Spatial Models with Strongly Connected\n> Weight Matrices\" at https://doi.org/10.1111/j.1538-4632.2009.00758.x\n> helpful?\n>\n> Roger\n>\n> --\n> Roger Bivand\n> Emeritus Professor\n> Norwegian School of Economics\n> Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway\n> Roger.Bivand at nhh.no\n>\n> ________________________________________\n> From: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Josiah\n> Parry <josiah.parry at gmail.com>\n> Sent: 13 May 2024 17:12\n> To: r-sig-Geo at r-project.org\n> Subject: [R-sig-Geo] Maximum sparsity for spatial regression\n>\n> As I'm reading through Modern Spatial Econometrics in Practice, we assume\n> the spatial weights matrix to be sparse. At one point they note that the\n> contiguity matrix  for the US counties is 0.18% non-zero. But what %\n> non-zero is too dense?\n>\n> I am wondering if there is any research or papers that document what a\n> recommended upper bound of sparsity should be for one of these models? Is\n> 10% non-zero too much or sufficient? I suspect the answer is, like most\n> things, \"it depends.\"\n>\n> But, thinking of a situation where someone might use a distance band to\n> specify neighbors they might create a bandwidth that can encompass 50% or\n> more of points if using max(knn=1) to specify the distance. I suspect using\n> a kernel or IDW could reduce the weights close to zero making the impact\n> minimal.\n>\n> Nonetheless, I'm curious if others have thought about this or written about\n> it!\n>\n> Thanks,\n>\n> Josiah\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Yes! This is perfect. Thank you so much.\n\nOn Mon, May 13, 2024 at 12:11 Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> Is Tony Smith's \"Estimation Bias in Spatial Models with Strongly Connected\n> Wei",
+      "thread_id": "thread-fcfb36562469",
+      "thread_depth": 2,
+      "month": "2024-05"
+    },
+    {
+      "id": "msg-80dafa00cf14",
+      "message_id": "<CAKSASLBRsnz6oKcFTLjuzWxJu5mvtP-npP8UW_bQ4fZjqzT76g@mail.gmail.com>",
+      "from_name": "Marta Rufino",
+      "from_email_hash": "bfceb8c72375986ae2b75f435afdd9bbb065275e9e776fe7e1291b2952ceba4c",
+      "date": "2024-05-14T17:40:20+01:00",
+      "subject": "[R-sig-Geo]  add spatraster layers by matching a dataframe column and make spatio-temporal rast",
+      "subject_clean": "add spatraster layers by matching a dataframe column and make spatio-temporal rast",
+      "in_reply_to": "<CACEJfCrNxehVDxeJFT82Yfo7DaCeYR+jQs1jSdueuzKKogC29g@mail.gmail.com>",
+      "references": [
+        "<CAKSASLCNE1rtZTQn7SZ780SLG8NxjbGqnXUCu-5sMm9_yXDU4g@mail.gmail.com>",
+        "<CACEJfCrNxehVDxeJFT82Yfo7DaCeYR+jQs1jSdueuzKKogC29g@mail.gmail.com>"
+      ],
+      "body_plain": "Hi Julien,\n\nHope you are very well.\nThank you so much for the reply!\n\nI hope I've understood properly what you're expecting.\n>\nSorry :( I made the question several times to try to make it clear lol\n\nProvided your vector values are ordered properly, you can add it as a new\n> layer in an existing SpatRaster using \"$\" as for a data.frame.\n>\nThey have different orders in fact and they have missing values in the rast\nto make it more interesting lol\n\n\n> The terra::merge method may be used for different SpatRasters or between\n> SpatVector and data.frames but you could prepare new layers from the\n> original raster values using base::merge with your \"ID\" column.\n>\nYes, but it returns a data frame (point 4 of the example above) and I\nwanted to get a raster with additional layers as output (one for each data\nframe col).\n\n\n\n> Regarding the temporal aspect, it would mean, as I understood it, that you\n> should have two data.frames containing the features to be included instead\n> of one (for years 2001 and 2002).\n> Surely not the most elegant way to do it below with base R functions but\n> it should work.\n> If anyone has a more appropriate solution, I'd be greatly interested too!\n>\n\nSuper elaborated and detailed code Julien! Thank you so much and indeed, it\nworks well!\n\nCheers,\nM.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Julien,\n\nHope you are very well.\nThank you so much for the reply!\n\nI hope I've understood properly what you're expecting.\n>\nSorry :( I made the question several times to try to make it clear lol\n\nP",
+      "thread_id": "thread-969e99b38d2f",
+      "thread_depth": 2,
+      "month": "2024-05"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-1694413f840a",
+      "subject": "as.im in spatstat::ppm not working as before",
+      "message_count": 5,
+      "participants": [
+        "Alexandre Santos",
+        "Edzer Pebesma",
+        "Roger Bivand",
+        "Roozbeh Valavi"
+      ],
+      "started": "2024-05-07T23:49:21+00:00",
+      "last_reply": "2024-05-11T18:03:18+02:00",
+      "root_message_id": "msg-1694413f840a"
+    },
+    {
+      "id": "thread-9e859ae36b7a",
+      "subject": "Modelling land use/land cover under climate change scenarios",
+      "message_count": 1,
+      "participants": [
+        "Manuel Spínola"
+      ],
+      "started": "2024-05-11T10:44:23-06:00",
+      "last_reply": "2024-05-11T10:44:23-06:00",
+      "root_message_id": "msg-9e859ae36b7a"
+    },
+    {
+      "id": "thread-8cddc25b3d5d",
+      "subject": "SITS version 1.5.0",
+      "message_count": 1,
+      "participants": [
+        "Gilberto Camara"
+      ],
+      "started": "2024-05-11T11:12:35-03:00",
+      "last_reply": "2024-05-11T11:12:35-03:00",
+      "root_message_id": "msg-8cddc25b3d5d"
+    },
+    {
+      "id": "thread-2fe87e07f13b",
+      "subject": "Dimensions problem when extracting latitude and longitude from shapefiles in multipolygon format in lambert 93 format",
+      "message_count": 2,
+      "participants": [
+        "Aymard Loïc KWEKEU KWEKEU",
+        "Zivan Karaman"
+      ],
+      "started": "2024-05-11T13:47:30+02:00",
+      "last_reply": "2024-05-11T15:00:14+02:00",
+      "root_message_id": "msg-2fe87e07f13b"
+    },
+    {
+      "id": "thread-a22b2e40c258",
+      "subject": "Find the optimal model using step wise linear regression",
+      "message_count": 1,
+      "participants": [
+        "Nikolaos Tziokas"
+      ],
+      "started": "2024-05-11T20:25:54+03:00",
+      "last_reply": "2024-05-11T20:25:54+03:00",
+      "root_message_id": "msg-a22b2e40c258"
+    },
+    {
+      "id": "thread-fcfb36562469",
+      "subject": "Maximum sparsity for spatial regression",
+      "message_count": 3,
+      "participants": [
+        "Josiah Parry",
+        "Roger Bivand"
+      ],
+      "started": "2024-05-13T11:12:30-04:00",
+      "last_reply": "2024-05-13T12:39:50-04:00",
+      "root_message_id": "msg-fcfb36562469"
+    },
+    {
+      "id": "thread-969e99b38d2f",
+      "subject": "add spatraster layers by matching a dataframe column and make spatio-temporal rast",
+      "message_count": 3,
+      "participants": [
+        "Julien Rodriguez",
+        "Marta Rufino"
+      ],
+      "started": "2024-05-13T11:56:16+01:00",
+      "last_reply": "2024-05-14T17:40:20+01:00",
+      "root_message_id": "msg-969e99b38d2f"
+    }
+  ]
+}

@@ -1,0 +1,957 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2005-05",
+  "messages": [
+    {
+      "id": "msg-1eedcf092935",
+      "message_id": "<AEF7C40954294D42990B3F90C6C73A450101650F@figmail.fig.fk>",
+      "from_name": "Ruben Roa",
+      "from_email_hash": "54521b1a0eeaed1cb0e0e122be18a16d7f62db28732958fc417687d4d0cb5509",
+      "date": "2005-05-03T09:44:05-02:00",
+      "subject": "[R-sig-Geo] Problem with BCtransform?",
+      "subject_clean": "Problem with BCtransform?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi:\n\nIn geoR, when using BCtransform to back-transform the beta parameter into the \nspace of the original data, like in\n\n>mean(BCtransform(rnorm(5000,mean=likfitobject$beta,sd=sqrt(likfitobject$beta.var)),lambda=XXX,inverse=TRUE))\n\ni have noticed (in two applications) that the value of this mean is much smaller (2.3 and 3.4 times smaller) than\nthe mean of the kriged predictions, obtained with\n\n>mean(krig.object$predict)\n\neven though geoR performs the back-transformation before kriging.\n\nI would have thought that the two means (from back-transformed beta and from kriged predictions) would be\nfairly similar. Of the two means the one that is closer to the mean of the raw data is the mean of the kriged \npredictions so i wonder maybe there is some problem with the BCtransform function when called by the\nuser? Or maybe there is something fundamental that i don't understand about the beta parameter (and thus its\nback-transform)?\n\nThanks for clarifications.\n\nRuben",
+      "body_snippet": "Hi:\n\nIn geoR, when using BCtransform to back-transform the beta parameter into the \nspace of the original data, like in\n\n>mean(BCtransform(rnorm(5000,mean=likfitobject$beta,sd=sqrt(likfitobject$beta.v",
+      "thread_id": "thread-1eedcf092935",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-5ede8a7cb247",
+      "message_id": "<AEF7C40954294D42990B3F90C6C73A4501016510@figmail.fig.fk>",
+      "from_name": "Ruben Roa",
+      "from_email_hash": "54521b1a0eeaed1cb0e0e122be18a16d7f62db28732958fc417687d4d0cb5509",
+      "date": "2005-05-03T16:32:50-02:00",
+      "subject": "[R-sig-Geo] Problem with BCtransform?",
+      "subject_clean": "Problem with BCtransform?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "> -----Original Message-----\n> From: r-sig-geo-bounces at stat.math.ethz.ch\n> [mailto:r-sig-geo-bounces at stat.math.ethz.ch]On Behalf Of Ruben Roa\n> Sent: 03 May 2005 10:44\n> To: R-sig-Geo at stat.math.ethz.ch\n> Subject: [R-sig-Geo] Problem with BCtransform?\n> \n> \n> Hi:\n> \n> In geoR, when using BCtransform to back-transform the beta \n> parameter into the space of the original data, like in\n> \n> >mean(BCtransform(rnorm(5000,mean=likfitobject$beta,sd=sqrt(li\n> kfitobject$beta.var)),lambda=XXX,inverse=TRUE))\n> \n> i have noticed (in two applications) that the value of this \n> mean is much smaller (2.3 and 3.4 times smaller) than\n> the mean of the kriged predictions, obtained with\n> \n> >mean(krig.object$predict)\n> \n> even though geoR performs the back-transformation before kriging.\n> \n> I would have thought that the two means (from \n> back-transformed beta and from kriged predictions) would be\n> fairly similar. Of the two means the one that is closer to \n> the mean of the raw data is the mean of the kriged \n> predictions so i wonder maybe there is some problem with the \n> BCtransform function when called by the\n> user? Or maybe there is something fundamental that i don't \n> understand about the beta parameter (and thus its\n> back-transform)?\n> \n> Thanks for clarifications.\n\nBecause the kriging predictions are close to the actual values of\nthe raw data, and these kriged predictions have been computed by back-\ntransforming using the estimated lambda in the Box-Cox distribution,\ni must conclude that the problem of the difference between the back-\ntransform of beta and the mean of the kriged predictions lies in the\nvalue of beta itself. Why is beta substantially lower in my two \napplications in relation to the value that it should be if its back\ntransform were to be close to the mean of the raw data and to the mean\nof the kriged predictions?\nR.",
+      "body_snippet": "> -----Original Message-----\n> From: r-sig-geo-bounces at stat.math.ethz.ch\n> [mailto:r-sig-geo-bounces at stat.math.ethz.ch]On Behalf Of Ruben Roa\n> Sent: 03 May 2005 10:44\n> To: R-sig-Geo at stat.ma",
+      "thread_id": "thread-5ede8a7cb247",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-aadd9230858a",
+      "message_id": "<000801c554d3$b17a44a0$8bdc6f80@BURAN>",
+      "from_name": "Rick Reeves",
+      "from_email_hash": "f3850c4c211d4f08916326f9d58bf54aade0d0d3d9b8d3de5cfcdf8840696022",
+      "date": "2005-05-09T13:14:24-07:00",
+      "subject": "[R-sig-Geo] Recursive user-defined methods in R scripts - upper bound on nested calls?",
+      "subject_clean": "Recursive user-defined methods in R scripts - upper bound on nested calls?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Heres a question regarding R script development:\n\nFirst, the scenario - \nI'm working on a method to aggregate voronoi cells\ninto larger polygons based on a scoring criteria;\npart of the solution now uses a recursive R function\n(written in R script). The calling program fails \nunceremoniously (no messages, just 'into the ether')\nafter about 50 nested recursive calls. Looks like a \nstack overflow to me, but I am now checking my dataset\nfor anomolies that may cause the failure.\n\nI seem to recal recursive C routines crashing after\n50 or so nested calls on Unix workstations, so this\nmay be unavoidable\n\nThe question: Has anyone explored the limits of \nrecursive R function calls? I coded the recursive \nmethod to have a minimal run-time memory footprint. \n\nIs there a way to ask for more resources (stack space)\nin the R run-time environment? \n\nAny thoughts are welcome!\n\nRegards, \nRick Reeves\n\nScientific Programmer / Quantitative Analyst\nNational Center for Ecological Analysis and Synthesis\nUniversity of California, Santa Barbara\n805 892 2534\nreeves at nceas.ucsb.edu",
+      "body_snippet": "Heres a question regarding R script development:\n\nFirst, the scenario - \nI'm working on a method to aggregate voronoi cells\ninto larger polygons based on a scoring criteria;\npart of the solution now u",
+      "thread_id": "thread-aadd9230858a",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-8b8d1204d08d",
+      "message_id": "<427FD077.7050704@lancaster.ac.uk>",
+      "from_name": "Baz",
+      "from_email_hash": "0a612c58e84a470ea72c786929abc7840353b66d3dc7ac5e89e505330f3012a0",
+      "date": "2005-05-09T22:04:55+01:00",
+      "subject": "[R-sig-Geo] Recursive user-defined methods in R scripts - upper bound on nested calls?",
+      "subject_clean": "Recursive user-defined methods in R scripts - upper bound on nested calls?",
+      "in_reply_to": "<000801c554d3$b17a44a0$8bdc6f80@BURAN>",
+      "references": [
+        "<000801c554d3$b17a44a0$8bdc6f80@BURAN>"
+      ],
+      "body_plain": "Rick Reeves wrote:\n\n> \n> The question: Has anyone explored the limits of \n> recursive R function calls? I coded the recursive \n> method to have a minimal run-time memory footprint. \n\n  There's a limit on how deep expressions can go:\n\n  > recurse\n  function(n){if(n==1){return(0)}else{return(recurse(n-1))}}\n\n  > recurse(99)\n  [1] 0\n\n  but this usually gives an error when it goes too far:\n\n  > recurse(100)\n  Error in recurse(n - 1) : evaluation nested too deeply: infinite \nrecursion / options(expression=)?\n\n> Is there a way to ask for more resources (stack space)\n> in the R run-time environment? \n\n  > options(expressions=1000)\n  > recurse(100)\n  [1] 0\n\nMight not explain why your code dies silently, unless the error is being \ntrapped inside a 'try'...\n\nBaz",
+      "body_snippet": "Rick Reeves wrote:\n\n> \n> The question: Has anyone explored the limits of \n> recursive R function calls? I coded the recursive \n> method to have a minimal run-time memory footprint. \n\n  There's a limit",
+      "thread_id": "thread-aadd9230858a",
+      "thread_depth": 1,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-865d22702f03",
+      "message_id": "<AEF7C40954294D42990B3F90C6C73A450101652E@figmail.fig.fk>",
+      "from_name": "Ruben Roa",
+      "from_email_hash": "54521b1a0eeaed1cb0e0e122be18a16d7f62db28732958fc417687d4d0cb5509",
+      "date": "2005-05-11T13:43:37-02:00",
+      "subject": "[R-sig-Geo] Image funct doesn't plot final matrix (after RandomFields' GaussRF)",
+      "subject_clean": "Image funct doesn't plot final matrix (after RandomFields' GaussRF)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi people:\nI wrote the code below to create N.sim random fields with RandomFields' \nGaussRF, in which a proportion of rows and columns (given by prow and \npcol) are replaced by rows and columns of zeroes.\nMy problem is that with any simulation output when i use\nimage(x,y,mcola) instead of a plot with some random bands and columns of zeros \ni get a plot of the matrix as it comes out of GaussRF, full with positive realizations.\nWhen i check the files written on the disk though (called mcolasim3.1, etc)\nthey do have the bands and columns of zeros i intended them to have.\nWhy is not image using the latest matrix (after the two final for-loops) instead\nof the matrix coming untouched from GaussRF?\nThanks in advance,\nRuben\n\n###########\nfunction(N.sim,pcol,prow){\nx<-seq(1,180,1)\ny<-seq(1,540,1)\nparam<-c(6.63,2.24,1.82,4.36)\nnames(param)<-c(\"beta\",\"sigmasq\",\"tausq\",\"varphi\")\nfor(i in 1:N.sim){\n                       mcola<-GaussRF(x=x,y=y,param=param,grid=TRUE,model=\"gauss\")\n                       for(j in 1:540){\n                                          if(runif(1)<prow) mcola[,j]<-mcola[,j] else mcola[,j]<-mat.or.vec(180,1)\n                                          }\n                       for(k in 1:180){\n                                          if(runif(1)<pcol) mcola[k,]<-mcola[k,] else mcola[k,]<-t(mat.or.vec(540,1))\n                                          }\n                                          file.out<-paste(\"mcolasim3\",i,sep=\".\")\n                                          write(t(mcola),file.out,ncol=ncol(t(mcola)))\n                                          }\n                       }\n#############",
+      "body_snippet": "Hi people:\nI wrote the code below to create N.sim random fields with RandomFields' \nGaussRF, in which a proportion of rows and columns (given by prow and \npcol) are replaced by rows and columns of zer",
+      "thread_id": "thread-865d22702f03",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-c77e339b18b5",
+      "message_id": "<000501c55651$4b5b9500$8bdc6f80@BURAN>",
+      "from_name": "Rick Reeves",
+      "from_email_hash": "f3850c4c211d4f08916326f9d58bf54aade0d0d3d9b8d3de5cfcdf8840696022",
+      "date": "2005-05-11T10:46:00-07:00",
+      "subject": "[R-sig-Geo] maptools package rejects some polygon shapefiles?",
+      "subject_clean": "maptools package rejects some polygon shapefiles?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Greetings: \n\nUsing maptools in the Win XP environment, trying to\ndisplay an ESRI Shapefile (created with ArcMAP GIS ver 9)\noutline map of North America. read.shape throws error:\nError in read.shape: Not a valid shape type. \n\nread.sahpe does read (and plot displays) a point shapefile \ncreated on the same platform. \n\nAny hints on determining the problem with 'not valid' shapefiles\nin R? \n\nThanks, \nRick R\n\n\nScientific Programmer / Quantitative Analyst\nNational Center for Ecological Analysis and Synthesis\nUniversity of California, Santa Barbara\n805 892 2534\nreeves at nceas.ucsb.edu",
+      "body_snippet": "Greetings: \n\nUsing maptools in the Win XP environment, trying to\ndisplay an ESRI Shapefile (created with ArcMAP GIS ver 9)\noutline map of North America. read.shape throws error:\nError in read.shape: N",
+      "thread_id": "thread-c77e339b18b5",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-33da23515f8a",
+      "message_id": "<000701c55652$d6a5e330$8bdc6f80@BURAN>",
+      "from_name": "Rick Reeves",
+      "from_email_hash": "f3850c4c211d4f08916326f9d58bf54aade0d0d3d9b8d3de5cfcdf8840696022",
+      "date": "2005-05-11T10:57:03-07:00",
+      "subject": "[R-sig-Geo] maptools package rejects some polygon shapefiles?",
+      "subject_clean": "maptools package rejects some polygon shapefiles?",
+      "in_reply_to": "<000501c55651$4b5b9500$8bdc6f80@BURAN>",
+      "references": [],
+      "body_plain": "News flash: the read.shapefile() method in the shapefiles package reads\nthe file. \n\nbtw, this is a shapefile based on the VMAP0 / DCW dataset.\n\nRR\n\nScientific Programmer / Quantitative Analyst\nNational Center for Ecological Analysis and Synthesis\nUniversity of California, Santa Barbara\n805 892 2534\nreeves at nceas.ucsb.edu\n\n\n\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch\n[mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Rick Reeves\nSent: Wednesday, May 11, 2005 9:46 AM\nTo: r-sig-geo at stat.math.ethz.ch\nSubject: [R-sig-Geo] maptools package rejects some polygon shapefiles?\n\n\n\n\nGreetings: \n\nUsing maptools in the Win XP environment, trying to\ndisplay an ESRI Shapefile (created with ArcMAP GIS ver 9)\noutline map of North America. read.shape throws error:\nError in read.shape: Not a valid shape type. \n\nread.sahpe does read (and plot displays) a point shapefile \ncreated on the same platform. \n\nAny hints on determining the problem with 'not valid' shapefiles\nin R? \n\nThanks, \nRick R\n\n\nScientific Programmer / Quantitative Analyst\nNational Center for Ecological Analysis and Synthesis\nUniversity of California, Santa Barbara\n805 892 2534\nreeves at nceas.ucsb.edu\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "News flash: the read.shapefile() method in the shapefiles package reads\nthe file. \n\nbtw, this is a shapefile based on the VMAP0 / DCW dataset.\n\nRR\n\nScientific Programmer / Quantitative Analyst\nNationa",
+      "thread_id": "thread-c77e339b18b5",
+      "thread_depth": 1,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-8adf173beb29",
+      "message_id": "<Pine.LNX.4.44.0505112200360.10380-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-11T22:07:59+02:00",
+      "subject": "[R-sig-Geo] maptools package rejects some polygon shapefiles?",
+      "subject_clean": "maptools package rejects some polygon shapefiles?",
+      "in_reply_to": "<000701c55652$d6a5e330$8bdc6f80@BURAN>",
+      "references": [],
+      "body_plain": "On Wed, 11 May 2005, Rick Reeves wrote:\n\n> News flash: the read.shapefile() method in the shapefiles package reads\n> the file. \n\nIt would be useful to see what getinfo.shape(filen) says, and to have a \nsight of the file. The error message suggests that it is neither type 3 \n(PolyLine) nor type 5 (Polygon), so ArcGIS 9 must be using other codes \n(perhaps for PolyLineM, PolyLineeM, or their polygon equivalents). If you \ncould make the file available, it may be possible to try to handle files \nlike this (benefitting others, since you have a working solution).\n\nRoger\n\n> \n> btw, this is a shapefile based on the VMAP0 / DCW dataset.\n> \n> RR\n> \n> Scientific Programmer / Quantitative Analyst\n> National Center for Ecological Analysis and Synthesis\n> University of California, Santa Barbara\n> 805 892 2534\n> reeves at nceas.ucsb.edu\n> \n> \n> \n> -----Original Message-----\n> From: r-sig-geo-bounces at stat.math.ethz.ch\n> [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Rick Reeves\n> Sent: Wednesday, May 11, 2005 9:46 AM\n> To: r-sig-geo at stat.math.ethz.ch\n> Subject: [R-sig-Geo] maptools package rejects some polygon shapefiles?\n> \n> \n> \n> \n> Greetings: \n> \n> Using maptools in the Win XP environment, trying to\n> display an ESRI Shapefile (created with ArcMAP GIS ver 9)\n> outline map of North America. read.shape throws error:\n> Error in read.shape: Not a valid shape type. \n> \n> read.sahpe does read (and plot displays) a point shapefile \n> created on the same platform. \n> \n> Any hints on determining the problem with 'not valid' shapefiles\n> in R? \n> \n> Thanks, \n> Rick R\n> \n> \n> Scientific Programmer / Quantitative Analyst\n> National Center for Ecological Analysis and Synthesis\n> University of California, Santa Barbara\n> 805 892 2534\n> reeves at nceas.ucsb.edu\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Wed, 11 May 2005, Rick Reeves wrote:\n\n> News flash: the read.shapefile() method in the shapefiles package reads\n> the file. \n\nIt would be useful to see what getinfo.shape(filen) says, and to have a",
+      "thread_id": "thread-c77e339b18b5",
+      "thread_depth": 2,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-742163434dac",
+      "message_id": "<20050512105923.00baf6dc.stanimura-ngs@umin.ac.jp>",
+      "from_name": "Susumu Tanimura",
+      "from_email_hash": "c9cad7a77d7512d2d8e67aecb8780c9c60c996929e92e5d28812d5c1af088077",
+      "date": "2005-05-12T10:59:23+09:00",
+      "subject": "[R-sig-Geo] Error to load rgdal",
+      "subject_clean": "Error to load rgdal",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi, there\n\nFailure of loading rgdal 0.2-7 gives me the following message.\n\n> library(rgdal)\nLoading required package: abind\nLoading required package: pixmap\nError in dyn.load(x, as.logical(local), as.logical(now)) : \n        unable to load shared library '/usr/lib/R/library/rgdal/libs/rgdal.so':\n  /usr/lib/R/library/rgdal/libs/rgdal.so: undefined symbol: DGifCloseFile\nError in library(rgdal) : .First.lib failed for 'rgdal'\n\nThis trial was conducted on R 2.1.0 on VineLinux 3.1.\n$ rpm -q R gdal\nR-2.1.0-0vl1\ngdal-1.2.6-0vl1\n$ ls /usr/lib/R/library/rgdal/libs/rgdal.so\n/usr/lib/R/library/rgdal/libs/rgdal.so*\n\nIt is happy to give me some advice.",
+      "body_snippet": "Hi, there\n\nFailure of loading rgdal 0.2-7 gives me the following message.\n\n> library(rgdal)\nLoading required package: abind\nLoading required package: pixmap\nError in dyn.load(x, as.logical(local), as.",
+      "thread_id": "thread-742163434dac",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-0cf2035c4863",
+      "message_id": "<Pine.LNX.4.62.0505112123040.8168@illuminati.stderr.org>",
+      "from_name": "elijah wright",
+      "from_email_hash": "3ec681c84ce60aeb6a06d8ce3e75ce6ee8f8227317045dc71a424ccac0c66620",
+      "date": "2005-05-11T21:24:17-05:00",
+      "subject": "[R-sig-Geo] Error to load rgdal",
+      "subject_clean": "Error to load rgdal",
+      "in_reply_to": "<20050512105923.00baf6dc.stanimura-ngs@umin.ac.jp>",
+      "references": [
+        "<20050512105923.00baf6dc.stanimura-ngs@umin.ac.jp>"
+      ],
+      "body_plain": "> $ ls /usr/lib/R/library/rgdal/libs/rgdal.so\n> /usr/lib/R/library/rgdal/libs/rgdal.so*\n>\n> It is happy to give me some advice.\n\nwhat is the output of running\n\n`ldd /usr/lib/R/library/rgdal/libs/rgdal.so`  ?\n\n\nthat may provide some further hints.  based on the error, you are probably \nmissing a library dependency.\n\n--elijah",
+      "body_snippet": "> $ ls /usr/lib/R/library/rgdal/libs/rgdal.so\n> /usr/lib/R/library/rgdal/libs/rgdal.so*\n>\n> It is happy to give me some advice.\n\nwhat is the output of running\n\n`ldd /usr/lib/R/library/rgdal/libs/rgdal",
+      "thread_id": "thread-742163434dac",
+      "thread_depth": 1,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-494ba40430c8",
+      "message_id": "<20050512133517.1f5f1797.stanimura-ngs@umin.ac.jp>",
+      "from_name": "Susumu Tanimura",
+      "from_email_hash": "c9cad7a77d7512d2d8e67aecb8780c9c60c996929e92e5d28812d5c1af088077",
+      "date": "2005-05-12T13:35:17+09:00",
+      "subject": "[R-sig-Geo] Error to load rgdal",
+      "subject_clean": "Error to load rgdal",
+      "in_reply_to": "<Pine.LNX.4.62.0505112123040.8168@illuminati.stderr.org>",
+      "references": [
+        "<20050512105923.00baf6dc.stanimura-ngs@umin.ac.jp>",
+        "<Pine.LNX.4.62.0505112123040.8168@illuminati.stderr.org>"
+      ],
+      "body_plain": "Dear elijah\n\nThank you very much for your reply.\n\n$ ldd /usr/lib/R/library/rgdal/libs/rgdal.so\n        libR.so => not found\n        libstdc++.so.5 => /usr/lib/libstdc++.so.5 (0x40276000)\n        libm.so.6 => /lib/i686/libm.so.6 (0x4032e000)\n        libgcc_s.so.1 => /lib/libgcc_s.so.1 (0x40350000)\n        libc.so.6 => /lib/i686/libc.so.6 (0x40358000)\n        /lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x80000000)\n$ locate libR.so\n/usr/lib/R/lib/libR.so\n\nSo, I added /usr/lib/R/lib in /etc/ld.co.conf and did /sbin/ldconfig.\nThen the result of ldd was changed.\n\n$ ldd /usr/lib/R/library/rgdal/libs/rgdal.so\n        libR.so => /usr/lib/R/lib/libR.so (0x40276000)\n        libstdc++.so.5 => /usr/lib/libstdc++.so.5 (0x404f2000)\n        libm.so.6 => /lib/i686/libm.so.6 (0x405aa000)\n        libgcc_s.so.1 => /lib/libgcc_s.so.1 (0x405cc000)\n        libc.so.6 => /lib/i686/libc.so.6 (0x405d4000)\n        libg2c.so.0 => /usr/lib/libg2c.so.0 (0x4070f000)\n        libreadline.so.4 => /usr/lib/libreadline.so.4 (0x4072d000)\n        libncurses.so.5 => /usr/lib/libncurses.so.5 (0x40759000)\n        libdl.so.2 => /lib/libdl.so.2 (0x40799000)\n        /lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x80000000)\n        libgpm.so.1 => /usr/lib/libgpm.so.1 (0x4079c000)\n\nNevertheless, there is the same failure.\n\n> library(rgdal)\nLoading required package: abind\nLoading required package: pixmap\nError in dyn.load(x, as.logical(local), as.logical(now)) : \n        unable to load shared library '/usr/lib/R/library/rgdal/libs/rgdal.so':\n  /usr/lib/R/library/rgdal/libs/rgdal.so: undefined symbol: DGifCloseFile\nError in library(rgdal) : .First.lib failed for 'rgdal'\n\nCould you give me further advice?\n\n--\nSusumu Tanimura",
+      "body_snippet": "Dear elijah\n\nThank you very much for your reply.\n\n$ ldd /usr/lib/R/library/rgdal/libs/rgdal.so\n        libR.so => not found\n        libstdc++.so.5 => /usr/lib/libstdc++.so.5 (0x40276000)\n        libm.",
+      "thread_id": "thread-742163434dac",
+      "thread_depth": 2,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-77868befe52a",
+      "message_id": "<Pine.LNX.4.44.0505121034010.11044-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-12T10:39:15+02:00",
+      "subject": "[R-sig-Geo] Error to load rgdal",
+      "subject_clean": "Error to load rgdal",
+      "in_reply_to": "<20050512133517.1f5f1797.stanimura-ngs@umin.ac.jp>",
+      "references": [],
+      "body_plain": "On Thu, 12 May 2005, Susumu Tanimura wrote:\n\n> Dear elijah\n> \n> Thank you very much for your reply.\n> \n> $ ldd /usr/lib/R/library/rgdal/libs/rgdal.so\n>         libR.so => not found\n>         libstdc++.so.5 => /usr/lib/libstdc++.so.5 (0x40276000)\n>         libm.so.6 => /lib/i686/libm.so.6 (0x4032e000)\n>         libgcc_s.so.1 => /lib/libgcc_s.so.1 (0x40350000)\n>         libc.so.6 => /lib/i686/libc.so.6 (0x40358000)\n>         /lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x80000000)\n> $ locate libR.so\n> /usr/lib/R/lib/libR.so\n> \n> So, I added /usr/lib/R/lib in /etc/ld.co.conf and did /sbin/ldconfig.\n> Then the result of ldd was changed.\n> \n> $ ldd /usr/lib/R/library/rgdal/libs/rgdal.so\n>         libR.so => /usr/lib/R/lib/libR.so (0x40276000)\n>         libstdc++.so.5 => /usr/lib/libstdc++.so.5 (0x404f2000)\n>         libm.so.6 => /lib/i686/libm.so.6 (0x405aa000)\n>         libgcc_s.so.1 => /lib/libgcc_s.so.1 (0x405cc000)\n>         libc.so.6 => /lib/i686/libc.so.6 (0x405d4000)\n>         libg2c.so.0 => /usr/lib/libg2c.so.0 (0x4070f000)\n>         libreadline.so.4 => /usr/lib/libreadline.so.4 (0x4072d000)\n>         libncurses.so.5 => /usr/lib/libncurses.so.5 (0x40759000)\n>         libdl.so.2 => /lib/libdl.so.2 (0x40799000)\n>         /lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x80000000)\n>         libgpm.so.1 => /usr/lib/libgpm.so.1 (0x4079c000)\n> \n> Nevertheless, there is the same failure.\n> \n> > library(rgdal)\n> Loading required package: abind\n> Loading required package: pixmap\n> Error in dyn.load(x, as.logical(local), as.logical(now)) : \n>         unable to load shared library '/usr/lib/R/library/rgdal/libs/rgdal.so':\n>   /usr/lib/R/library/rgdal/libs/rgdal.so: undefined symbol: DGifCloseFile\n> Error in library(rgdal) : .First.lib failed for 'rgdal'\n> \n> Could you give me further advice?\n\nWhat does:\n\n$ gdalinfo --version\nGDAL 1.2.6.0, released 2005/03/13\n\nreport for you? I do not think you have installed GDAL properly, my ldd on \nrgdal.so lists libgdal.so and its (many) dependencies, these are missing \nfor you (the dependency on R is not at all necessary):\n\n$ ldd /home/rsb/topics/Ris210/lib/R/library/rgdal/libs/rgdal.\nso\n        libgdal.so.1 => /usr/local/lib/libgdal.so.1 (0x003f0000)\n        libstdc++.so.5 => /usr/lib/libstdc++.so.5 (0x00bcb000)\n        libm.so.6 => /lib/tls/libm.so.6 (0x00335000)\n        libgcc_s.so.1 => /lib/libgcc_s.so.1 (0x002e7000)\n        libc.so.6 => /lib/tls/libc.so.6 (0x00111000)\n        libodbc.so.1 => /usr/lib/libodbc.so.1 (0x00d86000)\n        libungif.so.4 => /usr/lib/libungif.so.4 (0x00249000)\n        libjpeg.so.62 => /usr/lib/libjpeg.so.62 (0x00935000)\n        libpng12.so.0 => /usr/lib/libpng12.so.0 (0x00251000)\n        libz.so.1 => /usr/lib/libz.so.1 (0x008ba000)\n        libdl.so.2 => /lib/libdl.so.2 (0x00bb0000)\n        libpq.so.3 => /usr/lib/libpq.so.3 (0x0095c000)\n        /lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x00312000)\n        libpthread.so.0 => /lib/tls/libpthread.so.0 (0x00274000)\n        libX11.so.6 => /usr/X11R6/lib/libX11.so.6 (0x0072e000)\n        libssl.so.4 => /lib/libssl.so.4 (0x00284000)\n        libcrypto.so.4 => /lib/libcrypto.so.4 (0x00971000)\n        libkrb5.so.3 => /usr/kerberos/lib/libkrb5.so.3 (0x00357000)\n        libcrypt.so.1 => /lib/libcrypt.so.1 (0x003b5000)\n        libresolv.so.2 => /lib/libresolv.so.2 (0x002b8000)\n        libnsl.so.1 => /lib/libnsl.so.1 (0x00c92000)\n        libgssapi_krb5.so.2 => /usr/kerberos/lib/libgssapi_krb5.so.2 (0x00d10000)\n        libcom_err.so.3 => /usr/kerberos/lib/libcom_err.so.3 (0x002ca000)\n        libk5crypto.so.3 => /usr/kerberos/lib/libk5crypto.so.3 (0x00cd4000)\n\nIt is almost never a good idea to install binary on Linux, almost always a \ngood idea to install GDAL from source, then install rgdal from source, \nwhich is simple:\n\n> install.packages(\"rgdal\")\n\nwhich then makes sure that all the bits and pieces are lined up correctly.\n\nPlease let the list know if this helps.\n\nRoger\n\n\n> \n> --\n> Susumu Tanimura\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Thu, 12 May 2005, Susumu Tanimura wrote:\n\n> Dear elijah\n> \n> Thank you very much for your reply.\n> \n> $ ldd /usr/lib/R/library/rgdal/libs/rgdal.so\n>         libR.so => not found\n>         libstdc++",
+      "thread_id": "thread-742163434dac",
+      "thread_depth": 3,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-7a7fed1655a7",
+      "message_id": "<Pine.LNX.4.44.0505121055521.11044-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-12T10:58:31+02:00",
+      "subject": "[R-sig-Geo] maptools package rejects some polygon shapefiles? ",
+      "subject_clean": "maptools package rejects some polygon shapefiles?",
+      "in_reply_to": "<000d01c55668$d9408940$8bdc6f80@BURAN>",
+      "references": [],
+      "body_plain": "On Wed, 11 May 2005, Rick Reeves wrote:\n\n> \n> Roger: \n> \n> Thanks for the quick response. Here is the file, \n> and I will follow your suggestions.....\n> The ArcCatalog metadata section claims that this\n> is a Simple Polygon file, Topology FALSE,\n> feature count 558, spatial index = TRUE, \n> Linear Referencing = TRUE, geographic coord system\n\n\nRick:\n\n(I'm replying to the list too to ask for comments)\n\nThe file is recognised by ogrinfo as:\n\n$ ogrinfo NorthAmericaBest.shp\nINFO: Open of `NorthAmericaBest.shp'\nusing driver `ESRI Shapefile' successful.\n1: NorthAmericaBest (3D Polygon)\n\nIt should not be too difficult to change read.shape to read 3D points as \n3D, and 3D lines and polygons as 2D. I guess that stripping the Z values \nis not a problem for anybody (excepting points I think)?\n\nThanks for your help - with a sample file to study, making this work will \nbe much easier. Does anyone have 3D lines and 3D points files?\n\nBest wishes,\n\nRoger\n\n\n> \n> Regards,\n> Rick R\n> \n> \n> Scientific Programmer / Quantitative Analyst\n> National Center for Ecological Analysis and Synthesis\n> University of California, Santa Barbara\n> 805 892 2534\n> reeves at nceas.ucsb.edu\n> \n> \n> \n> -----Original Message-----\n> From: Roger Bivand [mailto:Roger.Bivand at nhh.no] \n> Sent: Wednesday, May 11, 2005 12:08 PM\n> To: Rick Reeves\n> Cc: r-sig-geo at stat.math.ethz.ch\n> Subject: RE: [R-sig-Geo] maptools package rejects some polygon\n> shapefiles?\n> \n> \n> On Wed, 11 May 2005, Rick Reeves wrote:\n> \n> > News flash: the read.shapefile() method in the shapefiles package\n> reads\n> > the file. \n> \n> It would be useful to see what getinfo.shape(filen) says, and to have a \n> sight of the file. The error message suggests that it is neither type 3 \n> (PolyLine) nor type 5 (Polygon), so ArcGIS 9 must be using other codes \n> (perhaps for PolyLineM, PolyLineeM, or their polygon equivalents). If\n> you \n> could make the file available, it may be possible to try to handle files\n> \n> like this (benefitting others, since you have a working solution).\n> \n> Roger\n> \n> > \n> > btw, this is a shapefile based on the VMAP0 / DCW dataset.\n> > \n> > RR\n> > \n> > Scientific Programmer / Quantitative Analyst\n> > National Center for Ecological Analysis and Synthesis\n> > University of California, Santa Barbara\n> > 805 892 2534\n> > reeves at nceas.ucsb.edu\n> > \n> > \n> > \n> > -----Original Message-----\n> > From: r-sig-geo-bounces at stat.math.ethz.ch\n> > [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Rick Reeves\n> > Sent: Wednesday, May 11, 2005 9:46 AM\n> > To: r-sig-geo at stat.math.ethz.ch\n> > Subject: [R-sig-Geo] maptools package rejects some polygon shapefiles?\n> > \n> > \n> > \n> > \n> > Greetings: \n> > \n> > Using maptools in the Win XP environment, trying to\n> > display an ESRI Shapefile (created with ArcMAP GIS ver 9)\n> > outline map of North America. read.shape throws error:\n> > Error in read.shape: Not a valid shape type. \n> > \n> > read.sahpe does read (and plot displays) a point shapefile \n> > created on the same platform. \n> > \n> > Any hints on determining the problem with 'not valid' shapefiles\n> > in R? \n> > \n> > Thanks, \n> > Rick R\n> > \n> > \n> > Scientific Programmer / Quantitative Analyst\n> > National Center for Ecological Analysis and Synthesis\n> > University of California, Santa Barbara\n> > 805 892 2534\n> > reeves at nceas.ucsb.edu\n> > \n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > \n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > \n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Wed, 11 May 2005, Rick Reeves wrote:\n\n> \n> Roger: \n> \n> Thanks for the quick response. Here is the file, \n> and I will follow your suggestions.....\n> The ArcCatalog metadata section claims that thi",
+      "thread_id": "thread-7a7fed1655a7",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-fffcfcb4a434",
+      "message_id": "<1115908821.16605.6.camel@fosteri.keittlab.net>",
+      "from_name": "Tim Keitt",
+      "from_email_hash": "2d8d5b8050425938214c3a77d47a2be0916edb7058260fe8211414af4058ae13",
+      "date": "2005-05-12T09:40:21-05:00",
+      "subject": "[R-sig-Geo] Error to load rgdal",
+      "subject_clean": "Error to load rgdal",
+      "in_reply_to": "<Pine.LNX.4.44.0505121034010.11044-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0505121034010.11044-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "I've had good luck in the past with binary GDAL rpm's and rgdal on\nFedora. (I've since switched to Gentoo which compiles everything from\nsource, so this sort of thing almost never happens. Oh, and GDAL is in\nportage stable.)\n\nThe most likely culprit is changes to the underlying libraries. You may\nhave to try a few versions of GDAL, libgif, libtif, etc. It looks like\nthe missing symbol might belong to libgif. Is it installed? Also, can\nyou use gdalinfo on a gif or tif file? We probably do need to add some\nchecks on the GDAL version being compiled against. Its api has changed\non past occasions breaking rgdal.\n\nTHK\n\nOn Thu, 2005-05-12 at 10:39 +0200, Roger Bivand wrote:\n> On Thu, 12 May 2005, Susumu Tanimura wrote:\n> \n> > Dear elijah\n> > \n> > Thank you very much for your reply.\n> > \n> > $ ldd /usr/lib/R/library/rgdal/libs/rgdal.so\n> >         libR.so => not found\n> >         libstdc++.so.5 => /usr/lib/libstdc++.so.5 (0x40276000)\n> >         libm.so.6 => /lib/i686/libm.so.6 (0x4032e000)\n> >         libgcc_s.so.1 => /lib/libgcc_s.so.1 (0x40350000)\n> >         libc.so.6 => /lib/i686/libc.so.6 (0x40358000)\n> >         /lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x80000000)\n> > $ locate libR.so\n> > /usr/lib/R/lib/libR.so\n> > \n> > So, I added /usr/lib/R/lib in /etc/ld.co.conf and did /sbin/ldconfig.\n> > Then the result of ldd was changed.\n> > \n> > $ ldd /usr/lib/R/library/rgdal/libs/rgdal.so\n> >         libR.so => /usr/lib/R/lib/libR.so (0x40276000)\n> >         libstdc++.so.5 => /usr/lib/libstdc++.so.5 (0x404f2000)\n> >         libm.so.6 => /lib/i686/libm.so.6 (0x405aa000)\n> >         libgcc_s.so.1 => /lib/libgcc_s.so.1 (0x405cc000)\n> >         libc.so.6 => /lib/i686/libc.so.6 (0x405d4000)\n> >         libg2c.so.0 => /usr/lib/libg2c.so.0 (0x4070f000)\n> >         libreadline.so.4 => /usr/lib/libreadline.so.4 (0x4072d000)\n> >         libncurses.so.5 => /usr/lib/libncurses.so.5 (0x40759000)\n> >         libdl.so.2 => /lib/libdl.so.2 (0x40799000)\n> >         /lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x80000000)\n> >         libgpm.so.1 => /usr/lib/libgpm.so.1 (0x4079c000)\n> > \n> > Nevertheless, there is the same failure.\n> > \n> > > library(rgdal)\n> > Loading required package: abind\n> > Loading required package: pixmap\n> > Error in dyn.load(x, as.logical(local), as.logical(now)) : \n> >         unable to load shared library '/usr/lib/R/library/rgdal/libs/rgdal.so':\n> >   /usr/lib/R/library/rgdal/libs/rgdal.so: undefined symbol: DGifCloseFile\n> > Error in library(rgdal) : .First.lib failed for 'rgdal'\n> > \n> > Could you give me further advice?\n> \n> What does:\n> \n> $ gdalinfo --version\n> GDAL 1.2.6.0, released 2005/03/13\n> \n> report for you? I do not think you have installed GDAL properly, my ldd on \n> rgdal.so lists libgdal.so and its (many) dependencies, these are missing \n> for you (the dependency on R is not at all necessary):\n> \n> $ ldd /home/rsb/topics/Ris210/lib/R/library/rgdal/libs/rgdal.\n> so\n>         libgdal.so.1 => /usr/local/lib/libgdal.so.1 (0x003f0000)\n>         libstdc++.so.5 => /usr/lib/libstdc++.so.5 (0x00bcb000)\n>         libm.so.6 => /lib/tls/libm.so.6 (0x00335000)\n>         libgcc_s.so.1 => /lib/libgcc_s.so.1 (0x002e7000)\n>         libc.so.6 => /lib/tls/libc.so.6 (0x00111000)\n>         libodbc.so.1 => /usr/lib/libodbc.so.1 (0x00d86000)\n>         libungif.so.4 => /usr/lib/libungif.so.4 (0x00249000)\n>         libjpeg.so.62 => /usr/lib/libjpeg.so.62 (0x00935000)\n>         libpng12.so.0 => /usr/lib/libpng12.so.0 (0x00251000)\n>         libz.so.1 => /usr/lib/libz.so.1 (0x008ba000)\n>         libdl.so.2 => /lib/libdl.so.2 (0x00bb0000)\n>         libpq.so.3 => /usr/lib/libpq.so.3 (0x0095c000)\n>         /lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x00312000)\n>         libpthread.so.0 => /lib/tls/libpthread.so.0 (0x00274000)\n>         libX11.so.6 => /usr/X11R6/lib/libX11.so.6 (0x0072e000)\n>         libssl.so.4 => /lib/libssl.so.4 (0x00284000)\n>         libcrypto.so.4 => /lib/libcrypto.so.4 (0x00971000)\n>         libkrb5.so.3 => /usr/kerberos/lib/libkrb5.so.3 (0x00357000)\n>         libcrypt.so.1 => /lib/libcrypt.so.1 (0x003b5000)\n>         libresolv.so.2 => /lib/libresolv.so.2 (0x002b8000)\n>         libnsl.so.1 => /lib/libnsl.so.1 (0x00c92000)\n>         libgssapi_krb5.so.2 => /usr/kerberos/lib/libgssapi_krb5.so.2 (0x00d10000)\n>         libcom_err.so.3 => /usr/kerberos/lib/libcom_err.so.3 (0x002ca000)\n>         libk5crypto.so.3 => /usr/kerberos/lib/libk5crypto.so.3 (0x00cd4000)\n> \n> It is almost never a good idea to install binary on Linux, almost always a \n> good idea to install GDAL from source, then install rgdal from source, \n> which is simple:\n> \n> > install.packages(\"rgdal\")\n> \n> which then makes sure that all the bits and pieces are lined up correctly.\n> \n> Please let the list know if this helps.\n> \n> Roger\n> \n> \n> > \n> > --\n> > Susumu Tanimura\n> > \n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > \n> \n-- \nTim Keitt\nSection of Integrative Biology\nhttp://www.keittlab.org/",
+      "body_snippet": "I've had good luck in the past with binary GDAL rpm's and rgdal on\nFedora. (I've since switched to Gentoo which compiles everything from\nsource, so this sort of thing almost never happens. Oh, and GDA",
+      "thread_id": "thread-742163434dac",
+      "thread_depth": 4,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-fb7173b729bc",
+      "message_id": "<1115913332.8812.233992451@webmail.messagingengine.com>",
+      "from_name": "Nicholas Lewin-Koh",
+      "from_email_hash": "ce1a5dad09cdf256c2a72906ae1e563f0d7ec3457957c4a1a53c9b3862a71eac",
+      "date": "2005-05-12T10:55:32-05:00",
+      "subject": "Subject: RE: [R-sig-Geo] maptools package rejects some polygon shapefiles?",
+      "subject_clean": "Subject: RE: [R-sig-Geo] maptools package rejects some polygon shapefiles?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\nWouldn't it make more sense to handle 3d file as 3d?\nIn outher words store 3d poionts as 3d points. For dealing \nwith this in R, we could write methods that would display the \n3rd dimension as an attribute. I don't think it would be hard to change\nthe\nunderlying C code to reade shape 3d files. I think the challange would\nbe in the\nR data structure and methods.\n\nNicholas\n\nDate: Thu, 12 May 2005 10:58:31 +0200 (CEST)\nFrom: Roger Bivand <Roger.Bivand at nhh.no>\nSubject: RE: [R-sig-Geo] maptools package rejects some polygon\n        shapefiles?\nTo: Rick Reeves <reeves at nceas.ucsb.edu>\nCc: r-sig-geo at stat.math.ethz.ch\nMessage-ID: <Pine.LNX.4.44.0505121055521.11044-100000 at reclus.nhh.no>\nContent-Type: TEXT/PLAIN; charset=US-ASCII\n\nOn Wed, 11 May 2005, Rick Reeves wrote:\n\n>\n> Roger:\n>\n> Thanks for the quick response. Here is the file,\n> and I will follow your suggestions.....\n> The ArcCatalog metadata section claims that this\n> is a Simple Polygon file, Topology FALSE,\n> feature count 558, spatial index = TRUE,\n> Linear Referencing = TRUE, geographic coord system\n\n\nRick:\n\n(I'm replying to the list too to ask for comments)\n\nThe file is recognised by ogrinfo as:\n\n$ ogrinfo NorthAmericaBest.shp\nINFO: Open of `NorthAmericaBest.shp'\nusing driver `ESRI Shapefile' successful.\n1: NorthAmericaBest (3D Polygon)\n\nIt should not be too difficult to change read.shape to read 3D points as\n3D, and 3D lines and polygons as 2D. I guess that stripping the Z values\nis not a problem for anybody (excepting points I think)?\n\nThanks for your help - with a sample file to study, making this work\nwill\nbe much easier. Does anyone have 3D lines and 3D points files?\n\nBest wishes,\n\nRoger\n\n\n>\n> Regards,\n> Rick R\n>\n>\n> Scientific Programmer / Quantitative Analyst\n> National Center for Ecological Analysis and Synthesis\n> University of California, Santa Barbara\n> 805 892 2534\n> reeves at nceas.ucsb.edu\n>\n>\n>\n> -----Original Message-----\n> From: Roger Bivand [mailto:Roger.Bivand at nhh.no]\n> Sent: Wednesday, May 11, 2005 12:08 PM\n> To: Rick Reeves\n> Cc: r-sig-geo at stat.math.ethz.ch\n> Subject: RE: [R-sig-Geo] maptools package rejects some polygon\n> shapefiles?\n>\n>\n> On Wed, 11 May 2005, Rick Reeves wrote:\n>\n> > News flash: the read.shapefile() method in the shapefiles package\n> reads\n> > the file.\n>\n> It would be useful to see what getinfo.shape(filen) says, and to have a\n> sight of the file. The error message suggests that it is neither type 3\n> (PolyLine) nor type 5 (Polygon), so ArcGIS 9 must be using other codes\n> (perhaps for PolyLineM, PolyLineeM, or their polygon equivalents). If\n> you\n> could make the file available, it may be possible to try to handle files\n>\n> like this (benefitting others, since you have a working solution).\n>\n> Roger\n>\n> >\n> > btw, this is a shapefile based on the VMAP0 / DCW dataset.\n> >\n> > RR\n> >\n> > Scientific Programmer / Quantitative Analyst\n> > National Center for Ecological Analysis and Synthesis\n> > University of California, Santa Barbara\n> > 805 892 2534\n> > reeves at nceas.ucsb.edu\n> >\n> >\n> >\n> > -----Original Message-----\n> > From: r-sig-geo-bounces at stat.math.ethz.ch\n> > [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Rick Reeves\n> > Sent: Wednesday, May 11, 2005 9:46 AM\n> > To: r-sig-geo at stat.math.ethz.ch\n> > Subject: [R-sig-Geo] maptools package rejects some polygon shapefiles?\n> >\n> >\n> >\n> >\n> > Greetings:\n> >\n> > Using maptools in the Win XP environment, trying to\n> > display an ESRI Shapefile (created with ArcMAP GIS ver 9)\n> > outline map of North America. read.shape throws error:\n> > Error in read.shape: Not a valid shape type.\n> >\n> > read.sahpe does read (and plot displays) a point shapefile\n> > created on the same platform.\n> >\n> > Any hints on determining the problem with 'not valid' shapefiles\n> > in R?\n> >\n> > Thanks,\n> > Rick R\n> >\n> >\n> > Scientific Programmer / Quantitative Analyst\n> > National Center for Ecological Analysis and Synthesis\n> > University of California, Santa Barbara\n> > 805 892 2534\n> > reeves at nceas.ucsb.edu\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "Hi,\nWouldn't it make more sense to handle 3d file as 3d?\nIn outher words store 3d poionts as 3d points. For dealing \nwith this in R, we could write methods that would display the \n3rd dimension as an ",
+      "thread_id": "thread-fb7173b729bc",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-9b340ffaab73",
+      "message_id": "<Pine.LNX.4.44.0505121801060.11938-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-12T18:09:45+02:00",
+      "subject": "Subject: RE: [R-sig-Geo] maptools package rejects some polygon shapefiles?",
+      "subject_clean": "Subject: RE: [R-sig-Geo] maptools package rejects some polygon shapefiles?",
+      "in_reply_to": "<1115913332.8812.233992451@webmail.messagingengine.com>",
+      "references": [],
+      "body_plain": "On Thu, 12 May 2005, Nicholas Lewin-Koh wrote:\n\n> Hi,\n> Wouldn't it make more sense to handle 3d file as 3d?\n> In outher words store 3d poionts as 3d points. For dealing \n> with this in R, we could write methods that would display the \n> 3rd dimension as an attribute. I don't think it would be hard to change\n> the\n> underlying C code to reade shape 3d files. I think the challange would\n> be in the\n> R data structure and methods.\n\nFor points, 3D will be OK, one Z value per point, hence an attribute. But \nwith lines and polygons, is anyone likely to need all three dimensions? \nThe attributes are attached to each shape, which implies that a per vertex \nattribute would be a different kind of thing, wouldn't it? Which research \nsituations might need 3D for anything other than points? It can probably \nbe done, but the sp package lines and rings are 2D, and they would be the \ncontainers I would look at first (unless persuaded otherwise).\n\nRoger\n\n> \n> Nicholas\n> \n> Date: Thu, 12 May 2005 10:58:31 +0200 (CEST)\n> From: Roger Bivand <Roger.Bivand at nhh.no>\n> Subject: RE: [R-sig-Geo] maptools package rejects some polygon\n>         shapefiles?\n> To: Rick Reeves <reeves at nceas.ucsb.edu>\n> Cc: r-sig-geo at stat.math.ethz.ch\n> Message-ID: <Pine.LNX.4.44.0505121055521.11044-100000 at reclus.nhh.no>\n> Content-Type: TEXT/PLAIN; charset=US-ASCII\n> \n> On Wed, 11 May 2005, Rick Reeves wrote:\n> \n> >\n> > Roger:\n> >\n> > Thanks for the quick response. Here is the file,\n> > and I will follow your suggestions.....\n> > The ArcCatalog metadata section claims that this\n> > is a Simple Polygon file, Topology FALSE,\n> > feature count 558, spatial index = TRUE,\n> > Linear Referencing = TRUE, geographic coord system\n> \n> \n> Rick:\n> \n> (I'm replying to the list too to ask for comments)\n> \n> The file is recognised by ogrinfo as:\n> \n> $ ogrinfo NorthAmericaBest.shp\n> INFO: Open of `NorthAmericaBest.shp'\n> using driver `ESRI Shapefile' successful.\n> 1: NorthAmericaBest (3D Polygon)\n> \n> It should not be too difficult to change read.shape to read 3D points as\n> 3D, and 3D lines and polygons as 2D. I guess that stripping the Z values\n> is not a problem for anybody (excepting points I think)?\n> \n> Thanks for your help - with a sample file to study, making this work\n> will\n> be much easier. Does anyone have 3D lines and 3D points files?\n> \n> Best wishes,\n> \n> Roger\n> \n> \n> >\n> > Regards,\n> > Rick R\n> >\n> >\n> > Scientific Programmer / Quantitative Analyst\n> > National Center for Ecological Analysis and Synthesis\n> > University of California, Santa Barbara\n> > 805 892 2534\n> > reeves at nceas.ucsb.edu\n> >\n> >\n> >\n> > -----Original Message-----\n> > From: Roger Bivand [mailto:Roger.Bivand at nhh.no]\n> > Sent: Wednesday, May 11, 2005 12:08 PM\n> > To: Rick Reeves\n> > Cc: r-sig-geo at stat.math.ethz.ch\n> > Subject: RE: [R-sig-Geo] maptools package rejects some polygon\n> > shapefiles?\n> >\n> >\n> > On Wed, 11 May 2005, Rick Reeves wrote:\n> >\n> > > News flash: the read.shapefile() method in the shapefiles package\n> > reads\n> > > the file.\n> >\n> > It would be useful to see what getinfo.shape(filen) says, and to have a\n> > sight of the file. The error message suggests that it is neither type 3\n> > (PolyLine) nor type 5 (Polygon), so ArcGIS 9 must be using other codes\n> > (perhaps for PolyLineM, PolyLineeM, or their polygon equivalents). If\n> > you\n> > could make the file available, it may be possible to try to handle files\n> >\n> > like this (benefitting others, since you have a working solution).\n> >\n> > Roger\n> >\n> > >\n> > > btw, this is a shapefile based on the VMAP0 / DCW dataset.\n> > >\n> > > RR\n> > >\n> > > Scientific Programmer / Quantitative Analyst\n> > > National Center for Ecological Analysis and Synthesis\n> > > University of California, Santa Barbara\n> > > 805 892 2534\n> > > reeves at nceas.ucsb.edu\n> > >\n> > >\n> > >\n> > > -----Original Message-----\n> > > From: r-sig-geo-bounces at stat.math.ethz.ch\n> > > [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Rick Reeves\n> > > Sent: Wednesday, May 11, 2005 9:46 AM\n> > > To: r-sig-geo at stat.math.ethz.ch\n> > > Subject: [R-sig-Geo] maptools package rejects some polygon shapefiles?\n> > >\n> > >\n> > >\n> > >\n> > > Greetings:\n> > >\n> > > Using maptools in the Win XP environment, trying to\n> > > display an ESRI Shapefile (created with ArcMAP GIS ver 9)\n> > > outline map of North America. read.shape throws error:\n> > > Error in read.shape: Not a valid shape type.\n> > >\n> > > read.sahpe does read (and plot displays) a point shapefile\n> > > created on the same platform.\n> > >\n> > > Any hints on determining the problem with 'not valid' shapefiles\n> > > in R?\n> > >\n> > > Thanks,\n> > > Rick R\n> > >\n> > >\n> > > Scientific Programmer / Quantitative Analyst\n> > > National Center for Ecological Analysis and Synthesis\n> > > University of California, Santa Barbara\n> > > 805 892 2534\n> > > reeves at nceas.ucsb.edu\n> > >\n> > > _______________________________________________\n> > > R-sig-Geo mailing list\n> > > R-sig-Geo at stat.math.ethz.ch\n> > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > >\n> > > _______________________________________________\n> > > R-sig-Geo mailing list\n> > > R-sig-Geo at stat.math.ethz.ch\n> > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > >\n> >\n> >\n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Thu, 12 May 2005, Nicholas Lewin-Koh wrote:\n\n> Hi,\n> Wouldn't it make more sense to handle 3d file as 3d?\n> In outher words store 3d poionts as 3d points. For dealing \n> with this in R, we could wr",
+      "thread_id": "thread-fb7173b729bc",
+      "thread_depth": 1,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-49f4d5d55a50",
+      "message_id": "<1115915535.14455.233995071@webmail.messagingengine.com>",
+      "from_name": "Nicholas Lewin-Koh",
+      "from_email_hash": "ce1a5dad09cdf256c2a72906ae1e563f0d7ec3457957c4a1a53c9b3862a71eac",
+      "date": "2005-05-12T11:32:15-05:00",
+      "subject": "Subject: RE: [R-sig-Geo] maptools package rejects some polygon  shapefiles?",
+      "subject_clean": "Subject: RE: [R-sig-Geo] maptools package rejects some polygon  shapefiles?",
+      "in_reply_to": "<Pine.LNX.4.44.0505121801060.11938-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0505121801060.11938-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Hi,\nNo I actually meant to have a slot, or place for the 3rd dimension. and\nfor plotting methods treat it like an attribute. I was trying to think\nof situations where \n3d lines or polygons would be useful, admittedly I am a little stumpped,\nbut I am sure\nthere must be something other than pretty flythroughs :) Maybe a polygon\nview of a surface \nwhere thew polygon heights are interpolated from binned data to the\nvertices of the polygon?\n\nNicholas\n\nOn Thu, 12 May 2005 18:09:45 +0200 (CEST), \"Roger Bivand\"\n<Roger.Bivand at nhh.no> said:\n> On Thu, 12 May 2005, Nicholas Lewin-Koh wrote:\n> \n> > Hi,\n> > Wouldn't it make more sense to handle 3d file as 3d?\n> > In outher words store 3d poionts as 3d points. For dealing \n> > with this in R, we could write methods that would display the \n> > 3rd dimension as an attribute. I don't think it would be hard to change\n> > the\n> > underlying C code to reade shape 3d files. I think the challange would\n> > be in the\n> > R data structure and methods.\n> \n> For points, 3D will be OK, one Z value per point, hence an attribute. But \n> with lines and polygons, is anyone likely to need all three dimensions? \n> The attributes are attached to each shape, which implies that a per\n> vertex \n> attribute would be a different kind of thing, wouldn't it? Which research \n> situations might need 3D for anything other than points? It can probably \n> be done, but the sp package lines and rings are 2D, and they would be the \n> containers I would look at first (unless persuaded otherwise).\n> \n> Roger\n> \n> > \n> > Nicholas\n> > \n> > Date: Thu, 12 May 2005 10:58:31 +0200 (CEST)\n> > From: Roger Bivand <Roger.Bivand at nhh.no>\n> > Subject: RE: [R-sig-Geo] maptools package rejects some polygon\n> >         shapefiles?\n> > To: Rick Reeves <reeves at nceas.ucsb.edu>\n> > Cc: r-sig-geo at stat.math.ethz.ch\n> > Message-ID: <Pine.LNX.4.44.0505121055521.11044-100000 at reclus.nhh.no>\n> > Content-Type: TEXT/PLAIN; charset=US-ASCII\n> > \n> > On Wed, 11 May 2005, Rick Reeves wrote:\n> > \n> > >\n> > > Roger:\n> > >\n> > > Thanks for the quick response. Here is the file,\n> > > and I will follow your suggestions.....\n> > > The ArcCatalog metadata section claims that this\n> > > is a Simple Polygon file, Topology FALSE,\n> > > feature count 558, spatial index = TRUE,\n> > > Linear Referencing = TRUE, geographic coord system\n> > \n> > \n> > Rick:\n> > \n> > (I'm replying to the list too to ask for comments)\n> > \n> > The file is recognised by ogrinfo as:\n> > \n> > $ ogrinfo NorthAmericaBest.shp\n> > INFO: Open of `NorthAmericaBest.shp'\n> > using driver `ESRI Shapefile' successful.\n> > 1: NorthAmericaBest (3D Polygon)\n> > \n> > It should not be too difficult to change read.shape to read 3D points as\n> > 3D, and 3D lines and polygons as 2D. I guess that stripping the Z values\n> > is not a problem for anybody (excepting points I think)?\n> > \n> > Thanks for your help - with a sample file to study, making this work\n> > will\n> > be much easier. Does anyone have 3D lines and 3D points files?\n> > \n> > Best wishes,\n> > \n> > Roger\n> > \n> > \n> > >\n> > > Regards,\n> > > Rick R\n> > >\n> > >\n> > > Scientific Programmer / Quantitative Analyst\n> > > National Center for Ecological Analysis and Synthesis\n> > > University of California, Santa Barbara\n> > > 805 892 2534\n> > > reeves at nceas.ucsb.edu\n> > >\n> > >\n> > >\n> > > -----Original Message-----\n> > > From: Roger Bivand [mailto:Roger.Bivand at nhh.no]\n> > > Sent: Wednesday, May 11, 2005 12:08 PM\n> > > To: Rick Reeves\n> > > Cc: r-sig-geo at stat.math.ethz.ch\n> > > Subject: RE: [R-sig-Geo] maptools package rejects some polygon\n> > > shapefiles?\n> > >\n> > >\n> > > On Wed, 11 May 2005, Rick Reeves wrote:\n> > >\n> > > > News flash: the read.shapefile() method in the shapefiles package\n> > > reads\n> > > > the file.\n> > >\n> > > It would be useful to see what getinfo.shape(filen) says, and to have a\n> > > sight of the file. The error message suggests that it is neither type 3\n> > > (PolyLine) nor type 5 (Polygon), so ArcGIS 9 must be using other codes\n> > > (perhaps for PolyLineM, PolyLineeM, or their polygon equivalents). If\n> > > you\n> > > could make the file available, it may be possible to try to handle files\n> > >\n> > > like this (benefitting others, since you have a working solution).\n> > >\n> > > Roger\n> > >\n> > > >\n> > > > btw, this is a shapefile based on the VMAP0 / DCW dataset.\n> > > >\n> > > > RR\n> > > >\n> > > > Scientific Programmer / Quantitative Analyst\n> > > > National Center for Ecological Analysis and Synthesis\n> > > > University of California, Santa Barbara\n> > > > 805 892 2534\n> > > > reeves at nceas.ucsb.edu\n> > > >\n> > > >\n> > > >\n> > > > -----Original Message-----\n> > > > From: r-sig-geo-bounces at stat.math.ethz.ch\n> > > > [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Rick Reeves\n> > > > Sent: Wednesday, May 11, 2005 9:46 AM\n> > > > To: r-sig-geo at stat.math.ethz.ch\n> > > > Subject: [R-sig-Geo] maptools package rejects some polygon shapefiles?\n> > > >\n> > > >\n> > > >\n> > > >\n> > > > Greetings:\n> > > >\n> > > > Using maptools in the Win XP environment, trying to\n> > > > display an ESRI Shapefile (created with ArcMAP GIS ver 9)\n> > > > outline map of North America. read.shape throws error:\n> > > > Error in read.shape: Not a valid shape type.\n> > > >\n> > > > read.sahpe does read (and plot displays) a point shapefile\n> > > > created on the same platform.\n> > > >\n> > > > Any hints on determining the problem with 'not valid' shapefiles\n> > > > in R?\n> > > >\n> > > > Thanks,\n> > > > Rick R\n> > > >\n> > > >\n> > > > Scientific Programmer / Quantitative Analyst\n> > > > National Center for Ecological Analysis and Synthesis\n> > > > University of California, Santa Barbara\n> > > > 805 892 2534\n> > > > reeves at nceas.ucsb.edu\n> > > >\n> > > > _______________________________________________\n> > > > R-sig-Geo mailing list\n> > > > R-sig-Geo at stat.math.ethz.ch\n> > > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > > >\n> > > > _______________________________________________\n> > > > R-sig-Geo mailing list\n> > > > R-sig-Geo at stat.math.ethz.ch\n> > > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > > >\n> > >\n> > >\n> > \n> > \n> \n> -- \n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>",
+      "body_snippet": "Hi,\nNo I actually meant to have a slot, or place for the 3rd dimension. and\nfor plotting methods treat it like an attribute. I was trying to think\nof situations where \n3d lines or polygons would be us",
+      "thread_id": "thread-fb7173b729bc",
+      "thread_depth": 2,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-caf11048c99b",
+      "message_id": "<Pine.LNX.4.44.0505121931410.11938-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-12T19:44:40+02:00",
+      "subject": "Subject: RE: [R-sig-Geo] maptools package rejects some polygon shapefiles?",
+      "subject_clean": "Subject: RE: [R-sig-Geo] maptools package rejects some polygon shapefiles?",
+      "in_reply_to": "<1115915535.14455.233995071@webmail.messagingengine.com>",
+      "references": [],
+      "body_plain": "On Thu, 12 May 2005, Nicholas Lewin-Koh wrote:\n\n> Hi, No I actually meant to have a slot, or place for the 3rd dimension.\n> and for plotting methods treat it like an attribute. I was trying to\n> think of situations where 3d lines or polygons would be useful,\n> admittedly I am a little stumpped, but I am sure there must be something\n> other than pretty flythroughs :) Maybe a polygon view of a surface where\n> thew polygon heights are interpolated from binned data to the vertices\n> of the polygon?\n\nI can see why visualising points is worth the trouble, and by extension \nvoxels. Maybe even for polylines, such as showing the gradient of a \nstream by plotting z against the (x,y) distances. But plotting the varying \nz of a polygon boundary (this is a 2.5D object, I think, not CAD/CAM, \nnon-self-intersecting?)? \n\nMaybe go by steps and see how easy it is to return the line and polygon z\nvalues in the matrix of coordinates, and strip them by default? Something\nlike that? The z values in the original posting were spurious, ArcGIS just\noutput them, the data were decimal degree lat-long of a coastline.\n\nShall I put the maptools package code on sourceforge?\n\nRoger\n\n> \n> Nicholas\n> \n> On Thu, 12 May 2005 18:09:45 +0200 (CEST), \"Roger Bivand\"\n> <Roger.Bivand at nhh.no> said:\n> > On Thu, 12 May 2005, Nicholas Lewin-Koh wrote:\n> > \n> > > Hi,\n> > > Wouldn't it make more sense to handle 3d file as 3d?\n> > > In outher words store 3d poionts as 3d points. For dealing \n> > > with this in R, we could write methods that would display the \n> > > 3rd dimension as an attribute. I don't think it would be hard to change\n> > > the\n> > > underlying C code to reade shape 3d files. I think the challange would\n> > > be in the\n> > > R data structure and methods.\n> > \n> > For points, 3D will be OK, one Z value per point, hence an attribute. But \n> > with lines and polygons, is anyone likely to need all three dimensions? \n> > The attributes are attached to each shape, which implies that a per\n> > vertex \n> > attribute would be a different kind of thing, wouldn't it? Which research \n> > situations might need 3D for anything other than points? It can probably \n> > be done, but the sp package lines and rings are 2D, and they would be the \n> > containers I would look at first (unless persuaded otherwise).\n> > \n> > Roger\n> > \n> > > \n> > > Nicholas\n> > > \n> > > Date: Thu, 12 May 2005 10:58:31 +0200 (CEST)\n> > > From: Roger Bivand <Roger.Bivand at nhh.no>\n> > > Subject: RE: [R-sig-Geo] maptools package rejects some polygon\n> > >         shapefiles?\n> > > To: Rick Reeves <reeves at nceas.ucsb.edu>\n> > > Cc: r-sig-geo at stat.math.ethz.ch\n> > > Message-ID: <Pine.LNX.4.44.0505121055521.11044-100000 at reclus.nhh.no>\n> > > Content-Type: TEXT/PLAIN; charset=US-ASCII\n> > > \n> > > On Wed, 11 May 2005, Rick Reeves wrote:\n> > > \n> > > >\n> > > > Roger:\n> > > >\n> > > > Thanks for the quick response. Here is the file,\n> > > > and I will follow your suggestions.....\n> > > > The ArcCatalog metadata section claims that this\n> > > > is a Simple Polygon file, Topology FALSE,\n> > > > feature count 558, spatial index = TRUE,\n> > > > Linear Referencing = TRUE, geographic coord system\n> > > \n> > > \n> > > Rick:\n> > > \n> > > (I'm replying to the list too to ask for comments)\n> > > \n> > > The file is recognised by ogrinfo as:\n> > > \n> > > $ ogrinfo NorthAmericaBest.shp\n> > > INFO: Open of `NorthAmericaBest.shp'\n> > > using driver `ESRI Shapefile' successful.\n> > > 1: NorthAmericaBest (3D Polygon)\n> > > \n> > > It should not be too difficult to change read.shape to read 3D points as\n> > > 3D, and 3D lines and polygons as 2D. I guess that stripping the Z values\n> > > is not a problem for anybody (excepting points I think)?\n> > > \n> > > Thanks for your help - with a sample file to study, making this work\n> > > will\n> > > be much easier. Does anyone have 3D lines and 3D points files?\n> > > \n> > > Best wishes,\n> > > \n> > > Roger\n> > > \n> > > \n> > > >\n> > > > Regards,\n> > > > Rick R\n> > > >\n> > > >\n> > > > Scientific Programmer / Quantitative Analyst\n> > > > National Center for Ecological Analysis and Synthesis\n> > > > University of California, Santa Barbara\n> > > > 805 892 2534\n> > > > reeves at nceas.ucsb.edu\n> > > >\n> > > >\n> > > >\n> > > > -----Original Message-----\n> > > > From: Roger Bivand [mailto:Roger.Bivand at nhh.no]\n> > > > Sent: Wednesday, May 11, 2005 12:08 PM\n> > > > To: Rick Reeves\n> > > > Cc: r-sig-geo at stat.math.ethz.ch\n> > > > Subject: RE: [R-sig-Geo] maptools package rejects some polygon\n> > > > shapefiles?\n> > > >\n> > > >\n> > > > On Wed, 11 May 2005, Rick Reeves wrote:\n> > > >\n> > > > > News flash: the read.shapefile() method in the shapefiles package\n> > > > reads\n> > > > > the file.\n> > > >\n> > > > It would be useful to see what getinfo.shape(filen) says, and to have a\n> > > > sight of the file. The error message suggests that it is neither type 3\n> > > > (PolyLine) nor type 5 (Polygon), so ArcGIS 9 must be using other codes\n> > > > (perhaps for PolyLineM, PolyLineeM, or their polygon equivalents). If\n> > > > you\n> > > > could make the file available, it may be possible to try to handle files\n> > > >\n> > > > like this (benefitting others, since you have a working solution).\n> > > >\n> > > > Roger\n> > > >\n> > > > >\n> > > > > btw, this is a shapefile based on the VMAP0 / DCW dataset.\n> > > > >\n> > > > > RR\n> > > > >\n> > > > > Scientific Programmer / Quantitative Analyst\n> > > > > National Center for Ecological Analysis and Synthesis\n> > > > > University of California, Santa Barbara\n> > > > > 805 892 2534\n> > > > > reeves at nceas.ucsb.edu\n> > > > >\n> > > > >\n> > > > >\n> > > > > -----Original Message-----\n> > > > > From: r-sig-geo-bounces at stat.math.ethz.ch\n> > > > > [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Rick Reeves\n> > > > > Sent: Wednesday, May 11, 2005 9:46 AM\n> > > > > To: r-sig-geo at stat.math.ethz.ch\n> > > > > Subject: [R-sig-Geo] maptools package rejects some polygon shapefiles?\n> > > > >\n> > > > >\n> > > > >\n> > > > >\n> > > > > Greetings:\n> > > > >\n> > > > > Using maptools in the Win XP environment, trying to\n> > > > > display an ESRI Shapefile (created with ArcMAP GIS ver 9)\n> > > > > outline map of North America. read.shape throws error:\n> > > > > Error in read.shape: Not a valid shape type.\n> > > > >\n> > > > > read.sahpe does read (and plot displays) a point shapefile\n> > > > > created on the same platform.\n> > > > >\n> > > > > Any hints on determining the problem with 'not valid' shapefiles\n> > > > > in R?\n> > > > >\n> > > > > Thanks,\n> > > > > Rick R\n> > > > >\n> > > > >\n> > > > > Scientific Programmer / Quantitative Analyst\n> > > > > National Center for Ecological Analysis and Synthesis\n> > > > > University of California, Santa Barbara\n> > > > > 805 892 2534\n> > > > > reeves at nceas.ucsb.edu\n> > > > >\n> > > > > _______________________________________________\n> > > > > R-sig-Geo mailing list\n> > > > > R-sig-Geo at stat.math.ethz.ch\n> > > > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > > > >\n> > > > > _______________________________________________\n> > > > > R-sig-Geo mailing list\n> > > > > R-sig-Geo at stat.math.ethz.ch\n> > > > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > > > >\n> > > >\n> > > >\n> > > \n> > > \n> > \n> > -- \n> > Roger Bivand\n> > Economic Geography Section, Department of Economics, Norwegian School of\n> > Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> > Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> > e-mail: Roger.Bivand at nhh.no\n> > \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Thu, 12 May 2005, Nicholas Lewin-Koh wrote:\n\n> Hi, No I actually meant to have a slot, or place for the 3rd dimension.\n> and for plotting methods treat it like an attribute. I was trying to\n> think",
+      "thread_id": "thread-fb7173b729bc",
+      "thread_depth": 3,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-402baf55bbc6",
+      "message_id": "<20050513123941.2df70db2.stanimura-ngs@umin.ac.jp>",
+      "from_name": "Susumu Tanimura",
+      "from_email_hash": "c9cad7a77d7512d2d8e67aecb8780c9c60c996929e92e5d28812d5c1af088077",
+      "date": "2005-05-13T12:39:41+09:00",
+      "subject": "Solved (was Re: [R-sig-Geo] Error to load rgdal)",
+      "subject_clean": "Solved (was Re: [R-sig-Geo] Error to load rgdal)",
+      "in_reply_to": "<1115908821.16605.6.camel@fosteri.keittlab.net>",
+      "references": [
+        "<Pine.LNX.4.44.0505121034010.11044-100000@reclus.nhh.no>",
+        "<1115908821.16605.6.camel@fosteri.keittlab.net>"
+      ],
+      "body_plain": "Thank all.\n\nFinally rgdal works.  Please accept my apology that I did not mention\nabout an important point.\n\nThe cause of my failure is that rgdal can not find libgdal.so because\nof difference in the names.\n\nDear Roger, you are right. The fact is that the names of gdal library are\nlibgdal, libgdal.1, libgdal.1.7.0, but not libgdal.so, libgdal.so.1, or\nlibgdal.so.1.7.0.  Compiling from tar.gz put \"so\" into the library names,\nbut compiling through rpm 4.0.5 provides the library names without \"so\".  \n\nUnfortunately, even though I am not professional, I am a voluntary\nmaintainer of the gdal package for VineLinux.  So, I should find out\nthe solution of this problem.  I checked rpm packages of other\ndistributions such as SUSE, FC3, and Mandrke, and found that, even\nnothing special was given in spec files, the library names includes\n\"so\".\n\nAnyway, I did\n# cd /usr/lib\n# ln -s libgdal libgdal.so\nand then reinstall rgdal package.\nThis enables rgdal to be loaded into R.\n\nThank you.\n\n--\nSusumu Tanimura",
+      "body_snippet": "Thank all.\n\nFinally rgdal works.  Please accept my apology that I did not mention\nabout an important point.\n\nThe cause of my failure is that rgdal can not find libgdal.so because\nof difference in the ",
+      "thread_id": "thread-742163434dac",
+      "thread_depth": 5,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-13e45a9fb538",
+      "message_id": "<FC4627EC695CD71180280003477108C501BBBA94@exchange.epripeac.com>",
+      "from_name": "Short, Tom",
+      "from_email_hash": "13ac9336c7f649b31c35c383c7c9db3b9e4a0b687d6ad34af06f915b1a3e8712",
+      "date": "2005-05-13T11:26:06-04:00",
+      "subject": "[R-sig-Geo] Interactive web mapping with Rpad",
+      "subject_clean": "Interactive web mapping with Rpad",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050513/a57f5c8e/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050513/a57f5c8e/attachment.pl>",
+      "thread_id": "thread-13e45a9fb538",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-fa763fb9fa37",
+      "message_id": "<AEF7C40954294D42990B3F90C6C73A4501016539@figmail.fig.fk>",
+      "from_name": "Ruben Roa",
+      "from_email_hash": "54521b1a0eeaed1cb0e0e122be18a16d7f62db28732958fc417687d4d0cb5509",
+      "date": "2005-05-17T10:38:42-02:00",
+      "subject": "[R-sig-Geo] How to create polygons for kriging",
+      "subject_clean": "How to create polygons for kriging",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "> -----Original Message-----\n> From: r-sig-geo-bounces at stat.math.ethz.ch\n> [mailto:r-sig-geo-bounces at stat.math.ethz.ch]On Behalf Of \n> Chloe ARCHINARD\n> Sent: 17 May 2005 13:19\n> To: r-sig-geo at stat.math.ethz.ch\n> Subject: [R-sig-Geo] How to create polygons for kriging\n> \n> \n> Hello all,\n> \n> I used geoR package to compute kriging with krige.conv() , \n> and to draw map I used contour() like this :\n> \n> >contour(kc,locations, filled=TRUE, coords.data=geodata$coords,\n> \n> >+color=terrain.colors)\n> \n> And I want to limit the prediction inside data locations \n> (with borders()) which are not rectangular, so how can I \n> create a polygon which could contain my data? Or if someone \n> knows where I can find polygons data frame for the states of the US?\n\nJust create a text file with the vertices and repeat the first vertix\nat the end so that the polygon is closed. I see my maps with Surfer 8.0\nand then use digitize to create the polygons. Then i edit the *.bln\nfile to make it directly readable using read.table in geoR.\nAfter you have your polygon you would need the package splancs to do the \nkriging inside the polygon. geoR calls splancs.\nCheers\nRuben",
+      "body_snippet": "> -----Original Message-----\n> From: r-sig-geo-bounces at stat.math.ethz.ch\n> [mailto:r-sig-geo-bounces at stat.math.ethz.ch]On Behalf Of \n> Chloe ARCHINARD\n> Sent: 17 May 2005 13:19\n> To: r-sig-geo a",
+      "thread_id": "thread-fa763fb9fa37",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-d7d0efc62bae",
+      "message_id": "<EB09E5B9F0E2684F863B525E5C7E0F890B3839@ZZML.newcefe.newage.fr>",
+      "from_name": "Chloe ARCHINARD",
+      "from_email_hash": "f0a7beb033dbe8b18242cce93a4169e1b3a077fbe37083a941181fca2fb4ec2f",
+      "date": "2005-05-17T16:19:00+02:00",
+      "subject": "[R-sig-Geo] How to create polygons for kriging",
+      "subject_clean": "How to create polygons for kriging",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050517/20ca7872/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050517/20ca7872/attachment.pl>",
+      "thread_id": "thread-d7d0efc62bae",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-9a9bbdb498ca",
+      "message_id": "<FC4627EC695CD71180280003477108C501BBBAA6@exchange.epripeac.com>",
+      "from_name": "Short, Tom",
+      "from_email_hash": "13ac9336c7f649b31c35c383c7c9db3b9e4a0b687d6ad34af06f915b1a3e8712",
+      "date": "2005-05-17T16:05:00-04:00",
+      "subject": "[R-sig-Geo] SLDF to a segment data frame",
+      "subject_clean": "SLDF to a segment data frame",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050517/a8c1a0c3/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050517/a8c1a0c3/attachment.pl>",
+      "thread_id": "thread-9a9bbdb498ca",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-4efbd91370bf",
+      "message_id": "<Pine.LNX.4.44.0505172339510.26119-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-17T23:42:39+02:00",
+      "subject": "[R-sig-Geo] SLDF to a segment data frame",
+      "subject_clean": "SLDF to a segment data frame",
+      "in_reply_to": "<FC4627EC695CD71180280003477108C501BBBAA6@exchange.epripeac.com>",
+      "references": [],
+      "body_plain": "On Tue, 17 May 2005, Short, Tom wrote:\n\n> I'm impressed with R's plotting/mapping capabilities, especially with\n> the new sp package that simplifies plotting of different data\n> types. For a recent application with Rpad (www.rpad.org), the plotting\n> speed was a little slow for line data with 250,000 line segments. To\n> speed up plotting, I converted all of the line data to one big data\n> frame that holds all of the segment data. Then I just plot with\n> \"segments\". The resulting data frame contains columns x1, y1, x2, y2,\n> along with an indexing vector idx that points back to the appropriate\n> row in the attributes data frame for that line segment. \n\nWith regard to speeds, could you say what OS and R version you are using, \nbecause the different devices behave differently on different systems (in \nparticular the Windows segment drawing function seems to have been impared \nby a recent patch I think to XP). Otherwise, the work you are showing on \nRpad is quite remarkable, far beyond anything I'd anticipated! \n\nBest wishes,\n\nRoger\n\n> \n> I wrote two functions for the conversion. One converts from the sp\n> package SLDF object. The other converts from the maptools \"Map\"\n> representation. Both should produce the same output. The code is\n> enclosed if anyone has similar needs. Comments appreciated.\n> \n> The following code is granted to the public domain:\n> \n> SLDFtoSegment <- function(sldf) {\n>   # Convert line segments from the SLDF representation to vectors to \n>   # plot with segments().\n>   # It also includes an index term \"idx\" to use to index the dataframe \n>   # portion of the SLDF\n>   crd <- coordinates(sldf)\n>   lst <- sapply(crd,\n>             function(x) lapply(x, function(l) \n>               cbind(l[1:(NROW(l)-1),,drop=F], l[2:NROW(l),,drop=F])))\n>   seg <- data.frame(x1 = unlist(lapply(lst, function(x) x[, 1])),\n>                     y1 = unlist(lapply(lst, function(x) x[, 2])), \n>                     x2 = unlist(lapply(lst, function(x) x[, 3])), \n>                     y2 = unlist(lapply(lst, function(x) x[, 4])))\n>   segmentidx <- array(as.integer(0), NROW(seg))\n>   j <- 1\n>   for (i in seq(along=lst)) {\n>     n <- NROW(lst[[i]])\n>     segmentidx[j:(j+n-1)] <- rep(i, n)\n>     j <- j + n\n>   }\n>   seg$idx <- segmentidx\n>   seg\n> }\n> \n> ShapefiletoSegment <- function(map) {\n>   # Convert line segments from the maptools \"Map\" representation \n>   # (from a shapefile import) to vectors to plot with segments().\n>   # It also includes an index term \"idx\" to use to index the \n>   # dataframe portion.\n>   extractsegs <- function(l) cbind(l$verts[1:(NROW(l$verts)-1),,drop=F],\n>                                    l$verts[2:NROW(l$verts),,drop=F])\n>   lst <- lapply(map$Shapes, extractsegs)\n>   seg <- data.frame(x1 = unlist(lapply(lst, function(x) x[, 1])),\n>                     y1 = unlist(lapply(lst, function(x) x[, 2])), \n>                     x2 = unlist(lapply(lst, function(x) x[, 3])), \n>                     y2 = unlist(lapply(lst, function(x) x[, 4])))\n>   segmentidx <- array(as.integer(0), NROW(seg))\n>   j <- 1\n>   for (i in seq(along=lst)) {\n>     n <- NROW(lst[[i]])\n>     segmentidx[j:(j+n-1)] <- rep(i, n)\n>     j <- j + n\n>   }\n>   seg$idx <- segmentidx\n>   seg\n> }\n> \n> # Here's an example of using it.\n> # You don't need it at all for this example\n> # because the data set is so small.\n> library(sp)\n> data(lnsshp) \n> res <- shp2SLDF(lns)\n> plot(res) # plot SLDF data\n> \n> # faster plotting with segments:\n> seg <- SLDFtoSegment(res)\n> plot.new()\n> plot.window(xlim=range(seg$x1, seg$x2),\n>             ylim=range(seg$y1, seg$y2),\n>             asp=1)\n> segments(seg$x1,seg$y1,seg$x2,seg$y2)\n> \n> # to vary line color by some attribute, you could do:\n> res[[\"length.factor\"]] <- cut(res[[\"LENGTH\"]], \n>                               breaks=quantile(res[[\"LENGTH\"]]))\n> color = as.numeric(res[[\"length.factor\"]][seg$idx])\n> segments(seg$x1, seg$y1, seg$x2, seg$y2,\n>          col = color)\n> \n> - Tom\n> \n> Tom Short\n> EPRI Solutions, Inc.\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 17 May 2005, Short, Tom wrote:\n\n> I'm impressed with R's plotting/mapping capabilities, especially with\n> the new sp package that simplifies plotting of different data\n> types. For a recent ap",
+      "thread_id": "thread-9a9bbdb498ca",
+      "thread_depth": 1,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-3748fa7a2853",
+      "message_id": "<FC4627EC695CD71180280003477108C501BBBAAB@exchange.epripeac.com>",
+      "from_name": "Short, Tom",
+      "from_email_hash": "13ac9336c7f649b31c35c383c7c9db3b9e4a0b687d6ad34af06f915b1a3e8712",
+      "date": "2005-05-18T07:32:54-04:00",
+      "subject": "[R-sig-Geo] SLDF to a segment data frame",
+      "subject_clean": "SLDF to a segment data frame",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050518/17994c52/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050518/17994c52/attachment.pl>",
+      "thread_id": "thread-3748fa7a2853",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-05039d20f608",
+      "message_id": "<EB09E5B9F0E2684F863B525E5C7E0F8912239F@ZZML.newcefe.newage.fr>",
+      "from_name": "Chloe ARCHINARD",
+      "from_email_hash": "f0a7beb033dbe8b18242cce93a4169e1b3a077fbe37083a941181fca2fb4ec2f",
+      "date": "2005-05-19T18:23:43+02:00",
+      "subject": "[R-sig-Geo] kriging inside borders",
+      "subject_clean": "kriging inside borders",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050519/0fad6d65/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050519/0fad6d65/attachment.pl>",
+      "thread_id": "thread-05039d20f608",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-53bcc0c2ea10",
+      "message_id": "<Pine.LNX.4.44.0505191857001.27579-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-19T19:07:14+02:00",
+      "subject": "[R-sig-Geo] kriging inside borders",
+      "subject_clean": "kriging inside borders",
+      "in_reply_to": "<EB09E5B9F0E2684F863B525E5C7E0F8912239F@ZZML.newcefe.newage.fr>",
+      "references": [],
+      "body_plain": "On Thu, 19 May 2005, Chloe ARCHINARD wrote:\n\n> Hello, I'm using geoR package to compute kriging with the function\n> krige.conv() and I used maptools (read.shape () + Map2poly () )  and\n> splancs (borders) packages to include a object of class polylist for the\n> attribute borders.\n\n>  But I've got this message of error when 'borders' is in krige.conv () :  \n> krige.conv: there are no prediction locations inside the borders.  My\n> polylist is not good? The coordinates seam to be OK when I draw a map\n> with this polylist object. And if I use 'borders' in the contour\n> function : message error is :\n\n> Error in as.data.frame.default(borders) : can't coerce class \"polylist\"\n> into a data.frame\n\nFirstly, it does help if the exact commands are given, rather than your \nchoice of them. I think the main issue here is that a polylist object is a \nlist of matrices with attributes, not a matrix. If your polylist object \nis:\n\nx <- Map2poly(read.shape(\"my.shp\"))\n\nwhat is length(x)? If it is 1, you may be able to say x[[1]] to extract \nthe first matrix in the list, but even then it may not work. If you can \nshow us the commands you are giving, and the length of your polylist \nobject, it should be possible to find something that works. \n\n\n> If someone could help me, thanks a lot!\n\n> Chlo? Archinard\n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Thu, 19 May 2005, Chloe ARCHINARD wrote:\n\n> Hello, I'm using geoR package to compute kriging with the function\n> krige.conv() and I used maptools (read.shape () + Map2poly () )  and\n> splancs (bord",
+      "thread_id": "thread-05039d20f608",
+      "thread_depth": 1,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-f93fb03ea4c4",
+      "message_id": "<Pine.LNX.4.58L0.0505191516270.27396@est.ufpr.br>",
+      "from_name": "Paulo Justiniano Ribeiro Jr",
+      "from_email_hash": "2b858444caa126e4d481e2fc2bbba608bd14deecadbdf1fe319682ae8329d0bb",
+      "date": "2005-05-19T15:19:30-03:00",
+      "subject": "[R-sig-Geo] kriging inside borders",
+      "subject_clean": "kriging inside borders",
+      "in_reply_to": "<EB09E5B9F0E2684F863B525E5C7E0F8912239F@ZZML.newcefe.newage.fr>",
+      "references": [
+        "<EB09E5B9F0E2684F863B525E5C7E0F8912239F@ZZML.newcefe.newage.fr>"
+      ],
+      "body_plain": "Hi\n\nThere are a few exemples of kriging inside borders in the geoR tutorials\nsection available at:\nhttp://www.est.ufpr.br/geoR\n\nBasically you can use polygrid(), althouhg there are other mechanisms\navailable. polygrid() relies on a splancs function internaly\n\nPlease have a look and if the problem persists please contact me\npreferelably with some dumpoed workspace and scripts\n\nbest\nP.J.\n\n\n\nOn Thu, 19 May 2005, Chloe ARCHINARD wrote:\n\n> Hello,\n> I'm using geoR package to compute kriging with the function krige.conv() and I used maptools (read.shape () +  Map2poly () )\n> and splancs (borders) packages to include a object of class polylist for the attribute borders.\n>  But I've got this message of error when 'borders' is in krige.conv () :\n> krige.conv: there are no prediction locations inside the borders.\n> My polylist is not good? The coordinates seam to be OK when I draw a map with this polylist object.\n> And if I use 'borders' in the contour function : message error is :\n> Error in as.data.frame.default(borders) : can't coerce class \"polylist\" into a data.frame\n> If someone could help me, thanks a lot!\n> Chlo? Archinard\n>\n> --\n> passerelle antivirus du campus CNRS de Montpellier\n> --\n>\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\nPaulo Justiniano Ribeiro Jr\nLEG (Laborat?rio de Estat?stica e Geoinforma??o)\nDepartamento de Estat?stica\nUniversidade Federal do Paran?\nCaixa Postal 19.081\nCEP 81.531-990\nCuritiba, PR  -  Brasil\nTel: (+55) 41 3361 3573\nFax: (+55) 41 3361 3141\ne-mail: paulojus at est.ufpr.br\nhttp://www.est.ufpr.br/~paulojus",
+      "body_snippet": "Hi\n\nThere are a few exemples of kriging inside borders in the geoR tutorials\nsection available at:\nhttp://www.est.ufpr.br/geoR\n\nBasically you can use polygrid(), althouhg there are other mechanisms\nav",
+      "thread_id": "thread-05039d20f608",
+      "thread_depth": 1,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-935c553313eb",
+      "message_id": "<EB09E5B9F0E2684F863B525E5C7E0F891223A1@ZZML.newcefe.newage.fr>",
+      "from_name": "Chloe ARCHINARD",
+      "from_email_hash": "f0a7beb033dbe8b18242cce93a4169e1b3a077fbe37083a941181fca2fb4ec2f",
+      "date": "2005-05-20T10:01:34+02:00",
+      "subject": "[R-sig-Geo] kriging inside borders",
+      "subject_clean": "kriging inside borders",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "My exact commands are :\nlibrary(maptools)\nshapefile=read.shape('my.shp')\nx=Map2poly(shapefile)\n\nand the length is :\nlength(mappolys)\n[1] 615\n But i'm not sure that it's the good polylist object i need because it's a polygon grid in fact. \nThank you for your help\nChlo?\n-----Message d'origine-----\nDe?: Roger Bivand [mailto:Roger.Bivand at nhh.no] \nEnvoy??: jeudi 19 mai 2005 19:07\n??: Chloe ARCHINARD\nCc?: r-sig-geo at stat.math.ethz.ch\nObjet?: Re: [R-sig-Geo] kriging inside borders\n\nOn Thu, 19 May 2005, Chloe ARCHINARD wrote:\n\n\n> Hello, I'm using geoR package to compute kriging with the function\n\n> krige.conv() and I used maptools (read.shape () + Map2poly () )  and\n\n> splancs (borders) packages to include a object of class polylist for the\n\n> attribute borders.\n\n\n>  But I've got this message of error when 'borders' is in krige.conv () :  \n\n> krige.conv: there are no prediction locations inside the borders.  My\n\n> polylist is not good? The coordinates seam to be OK when I draw a map\n\n> with this polylist object. And if I use 'borders' in the contour\n\n> function : message error is :\n\n\n> Error in as.data.frame.default(borders) : can't coerce class \"polylist\"\n\n> into a data.frame\n\n\nFirstly, it does help if the exact commands are given, rather than your \n\nchoice of them. I think the main issue here is that a polylist object is a \n\nlist of matrices with attributes, not a matrix. If your polylist object \n\nis:\n\n\nx <- Map2poly(read.shape(\"my.shp\"))\n\n\nwhat is length(x)? If it is 1, you may be able to say x[[1]] to extract \n\nthe first matrix in the list, but even then it may not work. If you can \n\nshow us the commands you are giving, and the length of your polylist \n\nobject, it should be possible to find something that works. \n\n\n\n> If someone could help me, thanks a lot!\n\n\n> Chlo? Archinard\n\n> \n\n> \n\n\n-- \n\nRoger Bivand\n\nEconomic Geography Section, Department of Economics, Norwegian School of\n\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\n\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n\ne-mail: Roger.Bivand at nhh.no\n\n\n\n-- \npasserelle antivirus du campus CNRS de Montpellier\n--\n\n\n\n-- \npasserelle antivirus du campus CNRS de Montpellier\n--",
+      "body_snippet": "My exact commands are :\nlibrary(maptools)\nshapefile=read.shape('my.shp')\nx=Map2poly(shapefile)\n\nand the length is :\nlength(mappolys)\n[1] 615\n But i'm not sure that it's the good polylist object i need",
+      "thread_id": "thread-935c553313eb",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-f332c384f8fa",
+      "message_id": "<Pine.LNX.4.44.0505201710340.28362-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-20T17:51:32+02:00",
+      "subject": "[R-sig-Geo] kriging inside borders",
+      "subject_clean": "kriging inside borders",
+      "in_reply_to": "<EB09E5B9F0E2684F863B525E5C7E0F891223A1@ZZML.newcefe.newage.fr>",
+      "references": [],
+      "body_plain": "On Fri, 20 May 2005, Chloe ARCHINARD wrote:\n\n> My exact commands are :\n> library(maptools)\n> shapefile=read.shape('my.shp')\n> x=Map2poly(shapefile)\n> \n> and the length is :\n> length(mappolys)\n> [1] 615\n\nOK. So what I think you have is a grid of cells, possibly with cells \nmissing around the edges and maybe in the middle too. The splancs polygon \ncannot have holes, by the way. I think that what you could do is to choose \nthe locations= values you need within the polygon grid first, and not use \nborders=. I've tried to replicate your situation, and have made a \nshapefile with rectangular grid cells with uneven edges and a hole. Then I \ndid:\n\nlibrary(sp)\nlibrary(maptools)\nshapefile <- read.shape(\"<your file>.shp\")\nx <- as.SpatialRings.Shapes(shapefile$Shapes, IDs=1:length(shapefile$Shapes))\nxp <- SpatialPoints(cbind(runif(50, 0, 3), runif(50, 0, 3)))\n\n# here you do xp <- SpatialPoints(<your location points matrix>)\n\nres <- overlay(x, xp)\n\n# overlay() sets the value of res to the ID of the polygon the point falls \n# in, or to NA if the point does not fall in any polygon.\n\nplot(x, col=\"grey\")\npoints(xp[is.na(res)], col=\"red\")\npoints(xp[!is.na(res)], col=\"blue\")\n\nand you can choose the points for the prediction locations as:\n\n<my prediction locations> <- xp[!is.na(res)]\n\nPlease check on the plot to see if overlay divides up the points correctly \nfirst, just to be sure. If this works, it is will be a nice example of how \nthe coordination of spatial data functions in the \"sp\" package can make \nthings easier (if not, any reports on difficulties with \"sp\" are always \nwelcome).\n\nRoger\n\n>  But i'm not sure that it's the good polylist object i need because it's\n> a polygon grid in fact.\n\n> Thank you for your help\n> Chlo?\n> -----Message d'origine-----\n> De?: Roger Bivand [mailto:Roger.Bivand at nhh.no] \n> Envoy??: jeudi 19 mai 2005 19:07\n> ??: Chloe ARCHINARD\n> Cc?: r-sig-geo at stat.math.ethz.ch\n> Objet?: Re: [R-sig-Geo] kriging inside borders\n> \n> On Thu, 19 May 2005, Chloe ARCHINARD wrote:\n> \n> \n> > Hello, I'm using geoR package to compute kriging with the function\n> \n> > krige.conv() and I used maptools (read.shape () + Map2poly () )  and\n> \n> > splancs (borders) packages to include a object of class polylist for the\n> \n> > attribute borders.\n> \n> \n> >  But I've got this message of error when 'borders' is in krige.conv () :  \n> \n> > krige.conv: there are no prediction locations inside the borders.  My\n> \n> > polylist is not good? The coordinates seam to be OK when I draw a map\n> \n> > with this polylist object. And if I use 'borders' in the contour\n> \n> > function : message error is :\n> \n> \n> > Error in as.data.frame.default(borders) : can't coerce class \"polylist\"\n> \n> > into a data.frame\n> \n> \n> Firstly, it does help if the exact commands are given, rather than your \n> \n> choice of them. I think the main issue here is that a polylist object is a \n> \n> list of matrices with attributes, not a matrix. If your polylist object \n> \n> is:\n> \n> \n> x <- Map2poly(read.shape(\"my.shp\"))\n> \n> \n> what is length(x)? If it is 1, you may be able to say x[[1]] to extract \n> \n> the first matrix in the list, but even then it may not work. If you can \n> \n> show us the commands you are giving, and the length of your polylist \n> \n> object, it should be possible to find something that works. \n> \n> \n> \n> > If someone could help me, thanks a lot!\n> \n> \n> > Chlo? Archinard\n> \n> > \n> \n> > \n> \n> \n> -- \n> \n> Roger Bivand\n> \n> Economic Geography Section, Department of Economics, Norwegian School of\n> \n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> \n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> \n> e-mail: Roger.Bivand at nhh.no\n> \n> \n> \n> -- \n> passerelle antivirus du campus CNRS de Montpellier\n> --\n> \n> \n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Fri, 20 May 2005, Chloe ARCHINARD wrote:\n\n> My exact commands are :\n> library(maptools)\n> shapefile=read.shape('my.shp')\n> x=Map2poly(shapefile)\n> \n> and the length is :\n> length(mappolys)\n> [1] 61",
+      "thread_id": "thread-935c553313eb",
+      "thread_depth": 1,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-4e8df65237e9",
+      "message_id": "<Pine.LNX.4.44.0505211759230.29162-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-21T18:07:12+02:00",
+      "subject": "[R-sig-Geo] kriging inside borders",
+      "subject_clean": "kriging inside borders",
+      "in_reply_to": "<Pine.LNX.4.44.0505201710340.28362-100000@reclus.nhh.no>",
+      "references": [],
+      "body_plain": "On Fri, 20 May 2005, Roger Bivand wrote:\n\n> On Fri, 20 May 2005, Chloe ARCHINARD wrote:\n> \n> > My exact commands are :\n> > library(maptools)\n> > shapefile=read.shape('my.shp')\n> > x=Map2poly(shapefile)\n> > \n> > and the length is :\n> > length(mappolys)\n> > [1] 615\n> \n> OK. So what I think you have is a grid of cells, possibly with cells \n> missing around the edges and maybe in the middle too. The splancs polygon \n> cannot have holes, by the way. I think that what you could do is to choose \n> the locations= values you need within the polygon grid first, and not use \n> borders=. I've tried to replicate your situation, and have made a \n> shapefile with rectangular grid cells with uneven edges and a hole. Then I \n> did:\n> \n> library(sp)\n> library(maptools)\n> shapefile <- read.shape(\"<your file>.shp\")\n> x <- as.SpatialRings.Shapes(shapefile$Shapes, IDs=1:length(shapefile$Shapes))\n> xp <- SpatialPoints(cbind(runif(50, 0, 3), runif(50, 0, 3)))\n> \n> # here you do xp <- SpatialPoints(<your location points matrix>)\n> \n> res <- overlay(x, xp)\n> \n> # overlay() sets the value of res to the ID of the polygon the point falls \n> # in, or to NA if the point does not fall in any polygon.\n> \n> plot(x, col=\"grey\")\n> points(xp[is.na(res)], col=\"red\")\n> points(xp[!is.na(res)], col=\"blue\")\n> \n> and you can choose the points for the prediction locations as:\n> \n> <my prediction locations> <- xp[!is.na(res)]\n\nFurther to my own reply, the last line was not right:\n\n> xx <- xp[!is.na(res)]\n> class(xx)\n[1] \"SpatialPoints\"\nattr(,\"package\")\n[1] \"sp\"\n> class(coordinates(xx))\n[1] \"matrix\"\n\nso what you need is:\n\n<my prediction locations> <- coordinates(xp[!is.na(res)])\n\nwhich returns just the matrix of point coordinates without the other \ninformation.\n\nThis now works, using check.locations() called by krige.conv():\n\n> check.locations(xx)\n[1] \"no\"\n> check.locations(coordinates(xx))\n      coords.x1 coords.x2\n [1,] 2.8883985 1.5438226\n [2,] 2.1517145 1.4901741\n [3,] 0.8694240 1.9049170\n\n...\n\n\n> \n> Please check on the plot to see if overlay divides up the points correctly \n> first, just to be sure. If this works, it is will be a nice example of how \n> the coordination of spatial data functions in the \"sp\" package can make \n> things easier (if not, any reports on difficulties with \"sp\" are always \n> welcome).\n> \n> Roger\n> \n> >  But i'm not sure that it's the good polylist object i need because it's\n> > a polygon grid in fact.\n> \n> > Thank you for your help\n> > Chlo?\n> > -----Message d'origine-----\n> > De?: Roger Bivand [mailto:Roger.Bivand at nhh.no] \n> > Envoy??: jeudi 19 mai 2005 19:07\n> > ??: Chloe ARCHINARD\n> > Cc?: r-sig-geo at stat.math.ethz.ch\n> > Objet?: Re: [R-sig-Geo] kriging inside borders\n> > \n> > On Thu, 19 May 2005, Chloe ARCHINARD wrote:\n> > \n> > \n> > > Hello, I'm using geoR package to compute kriging with the function\n> > \n> > > krige.conv() and I used maptools (read.shape () + Map2poly () )  and\n> > \n> > > splancs (borders) packages to include a object of class polylist for the\n> > \n> > > attribute borders.\n> > \n> > \n> > >  But I've got this message of error when 'borders' is in krige.conv () :  \n> > \n> > > krige.conv: there are no prediction locations inside the borders.  My\n> > \n> > > polylist is not good? The coordinates seam to be OK when I draw a map\n> > \n> > > with this polylist object. And if I use 'borders' in the contour\n> > \n> > > function : message error is :\n> > \n> > \n> > > Error in as.data.frame.default(borders) : can't coerce class \"polylist\"\n> > \n> > > into a data.frame\n> > \n> > \n> > Firstly, it does help if the exact commands are given, rather than your \n> > \n> > choice of them. I think the main issue here is that a polylist object is a \n> > \n> > list of matrices with attributes, not a matrix. If your polylist object \n> > \n> > is:\n> > \n> > \n> > x <- Map2poly(read.shape(\"my.shp\"))\n> > \n> > \n> > what is length(x)? If it is 1, you may be able to say x[[1]] to extract \n> > \n> > the first matrix in the list, but even then it may not work. If you can \n> > \n> > show us the commands you are giving, and the length of your polylist \n> > \n> > object, it should be possible to find something that works. \n> > \n> > \n> > \n> > > If someone could help me, thanks a lot!\n> > \n> > \n> > > Chlo? Archinard\n> > \n> > > \n> > \n> > > \n> > \n> > \n> > -- \n> > \n> > Roger Bivand\n> > \n> > Economic Geography Section, Department of Economics, Norwegian School of\n> > \n> > Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> > \n> > Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> > \n> > e-mail: Roger.Bivand at nhh.no\n> > \n> > \n> > \n> > -- \n> > passerelle antivirus du campus CNRS de Montpellier\n> > --\n> > \n> > \n> > \n> > \n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Fri, 20 May 2005, Roger Bivand wrote:\n\n> On Fri, 20 May 2005, Chloe ARCHINARD wrote:\n> \n> > My exact commands are :\n> > library(maptools)\n> > shapefile=read.shape('my.shp')\n> > x=Map2poly(shapefile",
+      "thread_id": "thread-935c553313eb",
+      "thread_depth": 2,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-8afde445ebf4",
+      "message_id": "<Pine.LNX.4.44.0505231258540.9661-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-23T13:08:25+02:00",
+      "subject": "[R-sig-Geo] Re: [R] Maps, Eastern Europe",
+      "subject_clean": "Maps, Eastern Europe",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Ray Brownrigg wrote:\n\n> Unfortunately the world databases for the maps package are very old\n> (early 1990's) and have not been updated since, except for minor\n> typographical errors in country names.  Note that Czechoslovakia is\n> there (as is USSR!).  Also, it currently satisfies my needs, which is\n> why I don't have the resources to update it.\n\n> I suggest you start with the maptools package, but as I understand it,\n> you need to also find some appropriate shapefile data. [Other\n> respondents may improve upon this suggestion.]\n\nhttp://meta.wikimedia.org/wiki/Geographical_data \n\nprovides some links, including one to:\n\nhttp://www.esri.com/data/download/basemap/index.html\n\npermitting the downloading of various layers as shapefiles that can be\nread and handled by the maptools package. If you choose just country\nboundaries, you'll get a lat-long rectangle, including the countries you\nwant (and (parts of) countries you don't). You may need to subset your\nrequests, because the website restricts how much you can choose at one go.  \nPlease contact me off-list or move this to the R-sig-geo list for more\ninformation.\n\nRoger\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "Ray Brownrigg wrote:\n\n> Unfortunately the world databases for the maps package are very old\n> (early 1990's) and have not been updated since, except for minor\n> typographical errors in country names. ",
+      "thread_id": "thread-8afde445ebf4",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-0cd3cd27727b",
+      "message_id": "<Pine.LNX.4.44.0505231526240.4129-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-23T16:08:42+02:00",
+      "subject": "[R-sig-Geo] kriging inside borders",
+      "subject_clean": "kriging inside borders",
+      "in_reply_to": "<EB09E5B9F0E2684F863B525E5C7E0F891223AA@ZZML.newcefe.newage.fr>",
+      "references": [],
+      "body_plain": "On Mon, 23 May 2005, Chloe ARCHINARD wrote:\n\n> Here is in attached file the map plotted by \n> \n> > plot(x, col=\"grey\")\n> \n> > points(xp[is.na(res)], col=\"red\")\n> \n> > points(xp[!is.na(res)], col=\"blue\")\n> \n> It seems to be OK! When I use krige.conv to make kriging, in fact it\n> makes prediction only inside each polygon cell. I explain me, it make\n> one prediction per cell and the result of kriging is a mosaic of colors\n> and not a map with gradients. I can't use contour() and I use :\n\n> Plot(x,y,kc$predict) #x,y are coordinates for xx\n\n> (If it is not clear I can send you the maps.) but thank you for your\n> help, I will try something else.\n\nThe attachment is unfortunately in *.emf format, which can only be opened \non Windows. A PNG graphic would have been enough, I think.\n\nAs far as your data are concerned, I think another possibility is to \nrespect the fact that the rings were actually an incomplete grid. I guess \nthat the prediction locations are the centroids of the grid cells. These \nsuit the \"sp\" package class of SpatialPixels very well:\n\n> shapefile <- read.shape(\"xdf.shp\")\nShapefile Type: Polygon   # of Shapes: 4 \n> x <- as.SpatialRings.Shapes(shapefile$Shapes, IDs=1:length(shapefile$Shapes))\n> pts <- getSRSringsLabptSlots(x)\n> pts\n     [,1] [,2]\n[1,]  1.5  0.5\n[2,]  0.5  1.5\n[3,]  2.5  1.5\n[4,]  1.5  2.5\n\n> check.locations(pts)\n     [,1] [,2]\n[1,]  1.5  0.5\n[2,]  0.5  1.5\n[3,]  2.5  1.5\n[4,]  1.5  2.5\n\nMake your prediction:\n\n> kr.out <- krige.conv(..., locations=pts, ...)\n\nThen use the \"sp\" magic to attach the points (which are regularly spaced) \nto the predictions:\n\nres <- SpatialPixelsDataFrame(SpatialPoints(pts), list(z=kr.out$predict, \nz.se=krige.var))\n\nshould work. Try print(res) to confirm that it is a \nSpatialPixelsDataFrame. Then spplot(res, \"z\") will plot the predictions - \nthe help page for spplot shows how to set the breaks and colour palette. \nThis avoids the overlay step, and will work provided the points are spaced \nas a (rectangular) grid, even though many grid cells are missing.\n\nIf you want to share graphics, PNG - device png() - are much smaller. If \nyou can put them on a web server, that's even better.\n\nHope this helps,\n\nRoger\n\n\n\n> Chlo? \n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 23 May 2005, Chloe ARCHINARD wrote:\n\n> Here is in attached file the map plotted by \n> \n> > plot(x, col=\"grey\")\n> \n> > points(xp[is.na(res)], col=\"red\")\n> \n> > points(xp[!is.na(res)], col=\"blue",
+      "thread_id": "thread-0cd3cd27727b",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-eabcc55ec930",
+      "message_id": "<Pine.LNX.4.44.0505231616241.4129-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-23T16:21:50+02:00",
+      "subject": "TR: [R-sig-Geo] kriging inside borders",
+      "subject_clean": "TR: [R-sig-Geo] kriging inside borders",
+      "in_reply_to": "<EB09E5B9F0E2684F863B525E5C7E0F891223B0@ZZML.newcefe.newage.fr>",
+      "references": [],
+      "body_plain": "On Mon, 23 May 2005, Chloe ARCHINARD wrote:\n\n> \n> \n> Overlay function is an interesting function, it seems to work good!\n> It's very useful to create the prediction location for kriging : \n> predict <- coordinates(xp[!is.na(res)])\n> kc=krige.conv(geodata,loc=predict,\n> krige=krige.control(type.krige=\"ok\",cov.model=\"spherical\",\n> cov.pars=c(sill,range),nugget=value)) \n> there's no error message but I can't plot the kriging prediction. With :\n> image(kc)\n> Error in image.default(x = c(1275000, 1285000, 1295000, 1305000, 1315000,  : \n>         dimensions of z are not length(x)(+1) times length(y)(+1)\n> In addition: Warning message: \n\n> data length [2683] is not a sub-multiple or multiple of the number of\n> rows [33] in matrix\n> \n> I tried with another shapefile.shp, which is after shape.read() and\n> Map2poly() a polylist object of length [[1]], so I can use this for\n> borders() in krige.conv(). Kriging runs well but the result of contour()\n> present problems! See the map! I don't have enough time to think more\n> about that, but if I understand the problem I send you an answer. Thank\n> you for your help!\n> \n\nFirstly, your postings with attachments are being rejected by the mailing\nlist, so please try to post them on a website/homepage if you want the\nlist to see them.\n\nNeither standard contour() nor standard image() are going to work on data \nin a different format than they understand. That is why using the \nSpatialPixel format is so nice, a regular but incomplete grid is made into \na suitable format for plotting (there are other ways than spplot(), but \nthis function is particularly flexible). Unfortunately, everything takes \ntime!\n\nRoger\n\n> Chlo? \n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 23 May 2005, Chloe ARCHINARD wrote:\n\n> \n> \n> Overlay function is an interesting function, it seems to work good!\n> It's very useful to create the prediction location for kriging : \n> predict <",
+      "thread_id": "thread-eabcc55ec930",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-9b4718f20d9c",
+      "message_id": "<4505b2b105052314175a9d9076@mail.gmail.com>",
+      "from_name": "Matthew Sokol",
+      "from_email_hash": "f228cd3465a8f20220125e8cd851d8ccc5aa13e4ebad3015d6220b04377ab46c",
+      "date": "2005-05-23T14:17:19-07:00",
+      "subject": "[R-sig-Geo] Simulation question",
+      "subject_clean": "Simulation question",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050523/66d9eddb/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050523/66d9eddb/attachment.pl>",
+      "thread_id": "thread-9b4718f20d9c",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-8352ee18e42b",
+      "message_id": "<4505b2b1050523151619e4021a@mail.gmail.com>",
+      "from_name": "Matthew Sokol",
+      "from_email_hash": "f228cd3465a8f20220125e8cd851d8ccc5aa13e4ebad3015d6220b04377ab46c",
+      "date": "2005-05-23T15:16:19-07:00",
+      "subject": "[R-sig-Geo] Simulation question",
+      "subject_clean": "Simulation question",
+      "in_reply_to": "<Pine.LNX.4.58L0.0505231842090.27231@est.ufpr.br>",
+      "references": [
+        "<4505b2b105052314175a9d9076@mail.gmail.com>",
+        "<Pine.LNX.4.58L0.0505231842090.27231@est.ufpr.br>"
+      ],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050523/7c4151c4/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050523/7c4151c4/attachment.pl>",
+      "thread_id": "thread-8352ee18e42b",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-a8d612351957",
+      "message_id": "<Pine.LNX.4.44.0505242030570.5605-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-24T20:40:19+02:00",
+      "subject": "[R-sig-Geo] maptools package rejects some polygon shapefiles?",
+      "subject_clean": "maptools package rejects some polygon shapefiles?",
+      "in_reply_to": "<1115915535.14455.233995071@webmail.messagingengine.com>",
+      "references": [],
+      "body_plain": "Calling Arc users!\n\nCould somebody please make available some small example 3D points and arcs\nfor me to try out on read.shape() (or a link to a public repository of\ntype POINTZ, ARCZ, and POLYGONZ shapefiles). 3D polygons now work, thanks\nto an example file from Rick Reeves, but I have no way of creating 3D\npoints or lines to check the function in action, and I don't want to \nrelease an untried function (inviting seg.faults).\n\nThe idea is to support 3D points directly, but to drop the Z values for \nlines and polygon boundaries - the original example was anyway for the \ncoastline of North America in latlong, so the Z value wasn't so important. \nHaving discussed transect or track data at the Valencia \"sp\" meeting, we \nthink that a transect should be a SpatialPoints object (which can take 3D \npoints), not a line; this will need extra attention when plotting.\n\nRoger\n\nOn Thu, 12 May 2005, Nicholas Lewin-Koh wrote:\n\n> Hi,\n> No I actually meant to have a slot, or place for the 3rd dimension. and\n> for plotting methods treat it like an attribute. I was trying to think\n> of situations where \n> 3d lines or polygons would be useful, admittedly I am a little stumpped,\n> but I am sure\n> there must be something other than pretty flythroughs :) Maybe a polygon\n> view of a surface \n> where thew polygon heights are interpolated from binned data to the\n> vertices of the polygon?\n> \n> Nicholas\n> \n> On Thu, 12 May 2005 18:09:45 +0200 (CEST), \"Roger Bivand\"\n> <Roger.Bivand at nhh.no> said:\n> > On Thu, 12 May 2005, Nicholas Lewin-Koh wrote:\n> > \n> > > Hi,\n> > > Wouldn't it make more sense to handle 3d file as 3d?\n> > > In outher words store 3d poionts as 3d points. For dealing \n> > > with this in R, we could write methods that would display the \n> > > 3rd dimension as an attribute. I don't think it would be hard to change\n> > > the\n> > > underlying C code to reade shape 3d files. I think the challange would\n> > > be in the\n> > > R data structure and methods.\n> > \n> > For points, 3D will be OK, one Z value per point, hence an attribute. But \n> > with lines and polygons, is anyone likely to need all three dimensions? \n> > The attributes are attached to each shape, which implies that a per\n> > vertex \n> > attribute would be a different kind of thing, wouldn't it? Which research \n> > situations might need 3D for anything other than points? It can probably \n> > be done, but the sp package lines and rings are 2D, and they would be the \n> > containers I would look at first (unless persuaded otherwise).\n> > \n> > Roger\n> > \n> > > \n> > > Nicholas\n> > > \n> > > Date: Thu, 12 May 2005 10:58:31 +0200 (CEST)\n> > > From: Roger Bivand <Roger.Bivand at nhh.no>\n> > > Subject: RE: [R-sig-Geo] maptools package rejects some polygon\n> > >         shapefiles?\n> > > To: Rick Reeves <reeves at nceas.ucsb.edu>\n> > > Cc: r-sig-geo at stat.math.ethz.ch\n> > > Message-ID: <Pine.LNX.4.44.0505121055521.11044-100000 at reclus.nhh.no>\n> > > Content-Type: TEXT/PLAIN; charset=US-ASCII\n> > > \n> > > On Wed, 11 May 2005, Rick Reeves wrote:\n> > > \n> > > >\n> > > > Roger:\n> > > >\n> > > > Thanks for the quick response. Here is the file,\n> > > > and I will follow your suggestions.....\n> > > > The ArcCatalog metadata section claims that this\n> > > > is a Simple Polygon file, Topology FALSE,\n> > > > feature count 558, spatial index = TRUE,\n> > > > Linear Referencing = TRUE, geographic coord system\n> > > \n> > > \n> > > Rick:\n> > > \n> > > (I'm replying to the list too to ask for comments)\n> > > \n> > > The file is recognised by ogrinfo as:\n> > > \n> > > $ ogrinfo NorthAmericaBest.shp\n> > > INFO: Open of `NorthAmericaBest.shp'\n> > > using driver `ESRI Shapefile' successful.\n> > > 1: NorthAmericaBest (3D Polygon)\n> > > \n> > > It should not be too difficult to change read.shape to read 3D points as\n> > > 3D, and 3D lines and polygons as 2D. I guess that stripping the Z values\n> > > is not a problem for anybody (excepting points I think)?\n> > > \n> > > Thanks for your help - with a sample file to study, making this work\n> > > will\n> > > be much easier. Does anyone have 3D lines and 3D points files?\n> > > \n> > > Best wishes,\n> > > \n> > > Roger\n> > > \n> > > \n> > > >\n> > > > Regards,\n> > > > Rick R\n> > > >\n> > > >\n> > > > Scientific Programmer / Quantitative Analyst\n> > > > National Center for Ecological Analysis and Synthesis\n> > > > University of California, Santa Barbara\n> > > > 805 892 2534\n> > > > reeves at nceas.ucsb.edu\n> > > >\n> > > >\n> > > >\n> > > > -----Original Message-----\n> > > > From: Roger Bivand [mailto:Roger.Bivand at nhh.no]\n> > > > Sent: Wednesday, May 11, 2005 12:08 PM\n> > > > To: Rick Reeves\n> > > > Cc: r-sig-geo at stat.math.ethz.ch\n> > > > Subject: RE: [R-sig-Geo] maptools package rejects some polygon\n> > > > shapefiles?\n> > > >\n> > > >\n> > > > On Wed, 11 May 2005, Rick Reeves wrote:\n> > > >\n> > > > > News flash: the read.shapefile() method in the shapefiles package\n> > > > reads\n> > > > > the file.\n> > > >\n> > > > It would be useful to see what getinfo.shape(filen) says, and to have a\n> > > > sight of the file. The error message suggests that it is neither type 3\n> > > > (PolyLine) nor type 5 (Polygon), so ArcGIS 9 must be using other codes\n> > > > (perhaps for PolyLineM, PolyLineeM, or their polygon equivalents). If\n> > > > you\n> > > > could make the file available, it may be possible to try to handle files\n> > > >\n> > > > like this (benefitting others, since you have a working solution).\n> > > >\n> > > > Roger\n> > > >\n> > > > >\n> > > > > btw, this is a shapefile based on the VMAP0 / DCW dataset.\n> > > > >\n> > > > > RR\n> > > > >\n> > > > > Scientific Programmer / Quantitative Analyst\n> > > > > National Center for Ecological Analysis and Synthesis\n> > > > > University of California, Santa Barbara\n> > > > > 805 892 2534\n> > > > > reeves at nceas.ucsb.edu\n> > > > >\n> > > > >\n> > > > >\n> > > > > -----Original Message-----\n> > > > > From: r-sig-geo-bounces at stat.math.ethz.ch\n> > > > > [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Rick Reeves\n> > > > > Sent: Wednesday, May 11, 2005 9:46 AM\n> > > > > To: r-sig-geo at stat.math.ethz.ch\n> > > > > Subject: [R-sig-Geo] maptools package rejects some polygon shapefiles?\n> > > > >\n> > > > >\n> > > > >\n> > > > >\n> > > > > Greetings:\n> > > > >\n> > > > > Using maptools in the Win XP environment, trying to\n> > > > > display an ESRI Shapefile (created with ArcMAP GIS ver 9)\n> > > > > outline map of North America. read.shape throws error:\n> > > > > Error in read.shape: Not a valid shape type.\n> > > > >\n> > > > > read.sahpe does read (and plot displays) a point shapefile\n> > > > > created on the same platform.\n> > > > >\n> > > > > Any hints on determining the problem with 'not valid' shapefiles\n> > > > > in R?\n> > > > >\n> > > > > Thanks,\n> > > > > Rick R\n> > > > >\n> > > > >\n> > > > > Scientific Programmer / Quantitative Analyst\n> > > > > National Center for Ecological Analysis and Synthesis\n> > > > > University of California, Santa Barbara\n> > > > > 805 892 2534\n> > > > > reeves at nceas.ucsb.edu\n> > > > >\n> > > > > _______________________________________________\n> > > > > R-sig-Geo mailing list\n> > > > > R-sig-Geo at stat.math.ethz.ch\n> > > > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > > > >\n> > > > > _______________________________________________\n> > > > > R-sig-Geo mailing list\n> > > > > R-sig-Geo at stat.math.ethz.ch\n> > > > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > > > >\n> > > >\n> > > >\n> > > \n> > > \n> > \n> > -- \n> > Roger Bivand\n> > Economic Geography Section, Department of Economics, Norwegian School of\n> > Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> > Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> > e-mail: Roger.Bivand at nhh.no\n> > \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "Calling Arc users!\n\nCould somebody please make available some small example 3D points and arcs\nfor me to try out on read.shape() (or a link to a public repository of\ntype POINTZ, ARCZ, and POLYGONZ sh",
+      "thread_id": "thread-fb7173b729bc",
+      "thread_depth": 3,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-15477052b47e",
+      "message_id": "<AKEPLJBBNIODDMLOJBBHKEDMCDAA.pawliw@sympatico.ca>",
+      "from_name": "Ken Pawliw",
+      "from_email_hash": "bde7ba1dc9dfdf9e676adfb1ce10400ae3ee799cc9be548824c27102b4656fe4",
+      "date": "2005-05-27T13:19:48-04:00",
+      "subject": "[R-sig-Geo] problem running example(gwr) in package spgwr_0.2-7 (Windows binary)",
+      "subject_clean": "problem running example(gwr) in package spgwr_0.2-7 (Windows binary)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050527/50f58bfa/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050527/50f58bfa/attachment.pl>",
+      "thread_id": "thread-15477052b47e",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-4506b4ae10cc",
+      "message_id": "<Pine.LNX.4.44.0505271934040.4423-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-27T19:47:22+02:00",
+      "subject": "[R-sig-Geo] problem running example(gwr) in package spgwr_0.2-7 (Windows binary)",
+      "subject_clean": "problem running example(gwr) in package spgwr_0.2-7 (Windows binary)",
+      "in_reply_to": "<AKEPLJBBNIODDMLOJBBHKEDMCDAA.pawliw@sympatico.ca>",
+      "references": [],
+      "body_plain": "On Fri, 27 May 2005, Ken Pawliw wrote:\n\n> I am encountering errors when attempting to run the example(gwr) in the\n> spgwr package. The first 4 commands run correctly, however I receive an\n> error trying to execute the 5th command.\n> \n> gwr> data(columbus)\n> \n> gwr> col.lm <- lm(crime ~ income + housing, data = columbus)\n> \n> gwr> summary(col.lm)\n> \n> gwr> col.bw <- gwr.sel(crime ~ income + housing, data = columbus,\n>     coords = cbind(columbus$x, columbus$y))\n> \n> gwr> col.gauss <- gwr(crime ~ income + housing, data = columbus,\n>     coords = cbind(columbus$x, columbus$y), bandwidth = col.bw,\n>     hatmatrix = TRUE)\n> Error in gridded(fit.points) : No direct or inherited method for function\n> \"gridded\" for this call\n> \n> I'm running the following configuration on Windows XP.\n> Windows R 2.0.1\n> Windows Binary sp_0.7-0.zip\n> Windows Binary spgwr_0.2-7.zip\n\nThis information is just what is needed.\n\nAll of these are now superceded, and what is happening here is that the\n(older) spgwr \"view\" of the sp classes no longer fits reality. This is a\nbit of a problem if you need to keep R 2.0.1, rather than upgrading to R\n2.1.0. If you upgrade, you can install the current sp package from CRAN,\nand the Windows binary (spgwr_0.3-1) with the commands given on the\nR-spatial homepage:\n\nrSpatial <- \"http://r-spatial.sourceforge.net/R\"\ninstall.packages(\"spgwr\", repos=rSpatial)\n\nBut that is presupposing you are prepared to upgrade R itself. If not, \nthen that functionality is not available. Please let the list know how you \nget on, sp is developing nicely, but there is plenty of opportunity to \ncontribute ideas and reports.\n\nRoger\n\n> \n> Any guidance would be appreciated.\n> \n> Ken\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Fri, 27 May 2005, Ken Pawliw wrote:\n\n> I am encountering errors when attempting to run the example(gwr) in the\n> spgwr package. The first 4 commands run correctly, however I receive an\n> error tryi",
+      "thread_id": "thread-15477052b47e",
+      "thread_depth": 1,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-ab413dc2fcc7",
+      "message_id": "<20050531134731.GD3694@thuille.itc.it>",
+      "from_name": "Markus Neteler",
+      "from_email_hash": "6699469fcb2a74ef796d0e883e27624d3663973e457278083d48e5b55c1da876",
+      "date": "2005-05-31T15:47:31+02:00",
+      "subject": "[R-sig-Geo] R-stats - GRASS6",
+      "subject_clean": "R-stats - GRASS6",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list members,\n\nI am currently trying out the new GRASS 6/R-stats interface.\nI installed all software today (R-2.1.0, all interfaces, using\nGRASS 6.1-CVS).\n\nThere is a little problem which I don't understand:\n\n> library(spgrass6)\n> G <- gmeta6()\n> str(G)\nList of 28\n $ GISDBASE         : chr \"/ssi0/ssi/neteler/grassdata\"\n $ LOCATION_NAME    : chr \"spearfish60\"\n $ MAPSET           : chr \"neteler\"\n $ GRASS_DB_ENCODING: chr \"utf-8\"\n $ DEBUG            : chr \"0\"\n $ MONITOR          : chr \"x0\"\n $ GRASS_GUI        : chr \"text\"\n $ projection       : chr \"1 (UTM)\"\n[...]\n\n> system(\"r.info -t landcover.orig\")\ndatatype=CELL\n> landcover <- readCELL6sp(\"landcover.orig\", cat = TRUE)\nError in \"names<-.default\"(`*tmp*`, value = \"landcover.orig\") :\n        'names' attribute [1] must be the same length as the vector [0]\n\n# this works:\n> landcover <- readCELL6sp(\"geology\", cat = FALSE)\n>\n\n> lcov <- readCELL6sp(\"landcover.30m\",cat = TRUE)\nError in \"names<-.default\"(`*tmp*`, value = \"landcover.30m\") :\n        'names' attribute [1] must be the same length as the vector [0]\n\n\nI was inspired by\n http://r-spatial.sourceforge.net/xtra/xtra.RHnw.html\nand the upcoming article from Roger Bivand in the GRASS Newsletter Vol3.\n\nWas there a change recently which makes category transfer fail?\n\nBest regards\n\n Markus\n\n-- \nMarkus Neteler     <neteler itc it>       http://mpa.itc.it\nITC-irst -  Centro per la Ricerca Scientifica e Tecnologica\nMPBA - Predictive Models for Biol. & Environ. Data Analysis\nVia Sommarive, 18        -       38050 Povo (Trento), Italy",
+      "body_snippet": "Dear list members,\n\nI am currently trying out the new GRASS 6/R-stats interface.\nI installed all software today (R-2.1.0, all interfaces, using\nGRASS 6.1-CVS).\n\nThere is a little problem which I don't",
+      "thread_id": "thread-ab413dc2fcc7",
+      "thread_depth": 0,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-bdb0ce0d1b5a",
+      "message_id": "<Pine.LNX.4.44.0505311812010.17616-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-05-31T18:53:31+02:00",
+      "subject": "[R-sig-Geo] R-stats - GRASS6",
+      "subject_clean": "R-stats - GRASS6",
+      "in_reply_to": "<20050531134731.GD3694@thuille.itc.it>",
+      "references": [],
+      "body_plain": "On Tue, 31 May 2005, Markus Neteler wrote:\n\n> Dear list members,\n> \n> I am currently trying out the new GRASS 6/R-stats interface.\n> I installed all software today (R-2.1.0, all interfaces, using\n> GRASS 6.1-CVS).\n> \n> There is a little problem which I don't understand:\n> \n> > library(spgrass6)\n> > G <- gmeta6()\n> > str(G)\n> List of 28\n>  $ GISDBASE         : chr \"/ssi0/ssi/neteler/grassdata\"\n>  $ LOCATION_NAME    : chr \"spearfish60\"\n>  $ MAPSET           : chr \"neteler\"\n>  $ GRASS_DB_ENCODING: chr \"utf-8\"\n>  $ DEBUG            : chr \"0\"\n>  $ MONITOR          : chr \"x0\"\n>  $ GRASS_GUI        : chr \"text\"\n>  $ projection       : chr \"1 (UTM)\"\n> [...]\n> \n> > system(\"r.info -t landcover.orig\")\n> datatype=CELL\n> > landcover <- readCELL6sp(\"landcover.orig\", cat = TRUE)\n> Error in \"names<-.default\"(`*tmp*`, value = \"landcover.orig\") :\n>         'names' attribute [1] must be the same length as the vector [0]\n\nI can't replicate this, I'm afraid (R 2.1.0, Linux, sp 0.7-7, spgrass6\n0.1-4 (from CVS on sourceforge, GRASS 6.0.0 release). I don't think the sp \nor spgrass6 versions make a difference. \n\nCould you say debug(readCELL6sp) and re-run this please - that should show \nwhich line is failing. Once we know that, please check the arguments to \nthat function for sanity. I don't think it is important, but I'm running \nunder LANG=en_GB ; export LANG, not UTF8. My current guess is that the \nproblem is in:\n\nres <- read.asciigrid(tmpfl, colname = vname, proj4string = p4)\n\nwhere vname is the layer name. If you additionally do \ndebug(read.asciigrid), it may fail at: names(df) = colname - please see \nwhat is in colname, and if length(colname) is the same as length(df). One \npossibility is that there is something amiss in read.asciigrid().\n\nThe landcover.orig layer is strange because there are no category labels \nat all, so:\n\n> system(\"r.stats -l -q landcover.orig\")\n11 \n21 \n22 \n23 \n31 \n32 \n41 \n42 \n43 \n51 \n71 \n81 \n82 \n83 \n85 \n91 \n92 \n* no data\n\nso the factor gets built without labels:\n\n> str(landcover)\nFormal class 'SpatialGridDataFrame' [package \"sp\"] with 6 slots\n  ..@ data       :Formal class 'AttributeList' [package \"sp\"] with 1 slots\n  .. .. ..@ att:List of 1\n  .. .. .. ..$ landcover.orig: Factor w/ 17 levels \"\",\"\",\"\",\"\",\"\",..: NA 15 2 2 2 2 2 2 2 2 ...\n  ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3 slots\n  .. .. ..@ cellcentre.offset: num [1:2]  589995 4913715\n  .. .. ..@ cellsize         : num [1:2] 30 30\n  .. .. ..@ cells.dim        : int [1:2] 634 477\n  ..@ grid.index : int(0) \n  ..@ coords     : num [1:2, 1:2]  589995  608985 4913715 4927995\n  .. ..- attr(*, \"dimnames\")=List of 2\n  .. .. ..$ : NULL\n  .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n  ..@ bbox       : num [1:2, 1:2]  589995 4913715  608985 4927995\n  .. ..- attr(*, \"dimnames\")=List of 2\n  .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n  .. .. ..$ : chr [1:2] \"min\" \"max\"\n  ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n  .. .. ..@ projargs: chr \"+proj=utm +zone=13 +a=6378206.4 +rf=294.9786982 +no_defs +nadgrids=conus\"\n\nsuggesting that the function should check for unique labels of the \nmatching number.\n\nBest wishes,\n\nRoger\n\n> \n> # this works:\n> > landcover <- readCELL6sp(\"geology\", cat = FALSE)\n> >\n> \n> > lcov <- readCELL6sp(\"landcover.30m\",cat = TRUE)\n> Error in \"names<-.default\"(`*tmp*`, value = \"landcover.30m\") :\n>         'names' attribute [1] must be the same length as the vector [0]\n> \n> \n> I was inspired by\n>  http://r-spatial.sourceforge.net/xtra/xtra.RHnw.html\n> and the upcoming article from Roger Bivand in the GRASS Newsletter Vol3.\n> \n> Was there a change recently which makes category transfer fail?\n> \n> Best regards\n> \n>  Markus\n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 31 May 2005, Markus Neteler wrote:\n\n> Dear list members,\n> \n> I am currently trying out the new GRASS 6/R-stats interface.\n> I installed all software today (R-2.1.0, all interfaces, using\n> GR",
+      "thread_id": "thread-ab413dc2fcc7",
+      "thread_depth": 1,
+      "month": "2005-05"
+    },
+    {
+      "id": "msg-17271cfa9eb1",
+      "message_id": "<20050531171510.GC30343@thuille.itc.it>",
+      "from_name": "Markus Neteler",
+      "from_email_hash": "6699469fcb2a74ef796d0e883e27624d3663973e457278083d48e5b55c1da876",
+      "date": "2005-05-31T19:15:10+02:00",
+      "subject": "[R-sig-Geo] R-stats - GRASS6",
+      "subject_clean": "R-stats - GRASS6",
+      "in_reply_to": "<Pine.LNX.4.44.0505311812010.17616-100000@reclus.nhh.no>",
+      "references": [
+        "<20050531134731.GD3694@thuille.itc.it>",
+        "<Pine.LNX.4.44.0505311812010.17616-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Dear Roger,\n\nOn Tue, May 31, 2005 at 06:53:31PM +0200, Roger Bivand wrote:\n> On Tue, 31 May 2005, Markus Neteler wrote:\n> \n> > Dear list members,\n> > \n> > I am currently trying out the new GRASS 6/R-stats interface.\n> > I installed all software today (R-2.1.0, all interfaces, using\n> > GRASS 6.1-CVS).\n> > \n> > There is a little problem which I don't understand:\n> > \n> > > library(spgrass6)\n> > > G <- gmeta6()\n> > > str(G)\n> > List of 28\n> >  $ GISDBASE         : chr \"/ssi0/ssi/neteler/grassdata\"\n> >  $ LOCATION_NAME    : chr \"spearfish60\"\n> >  $ MAPSET           : chr \"neteler\"\n> >  $ GRASS_DB_ENCODING: chr \"utf-8\"\n> >  $ DEBUG            : chr \"0\"\n> >  $ MONITOR          : chr \"x0\"\n> >  $ GRASS_GUI        : chr \"text\"\n> >  $ projection       : chr \"1 (UTM)\"\n> > [...]\n> > \n> > > system(\"r.info -t landcover.orig\")\n> > datatype=CELL\n> > > landcover <- readCELL6sp(\"landcover.orig\", cat = TRUE)\n> > Error in \"names<-.default\"(`*tmp*`, value = \"landcover.orig\") :\n> >         'names' attribute [1] must be the same length as the vector [0]\n> \n> I can't replicate this, I'm afraid (R 2.1.0, Linux, sp 0.7-7, spgrass6\n> 0.1-4 (from CVS on sourceforge, GRASS 6.0.0 release). I don't think the sp \n> or spgrass6 versions make a difference. \n> \n> Could you say debug(readCELL6sp) and re-run this please - that should show \n> which line is failing. Once we know that, please check the arguments to \n> that function for sanity. I don't think it is important, but I'm running \n> under LANG=en_GB ; export LANG, not UTF8. My current guess is that the \n> problem is in:\n> \n> res <- read.asciigrid(tmpfl, colname = vname, proj4string = p4)\n> \n> where vname is the layer name. If you additionally do \n> debug(read.asciigrid), it may fail at: names(df) = colname - please see \n> what is in colname, and if length(colname) is the same as length(df). One \n> possibility is that there is something amiss in read.asciigrid().\n> \n> The landcover.orig layer is strange because there are no category labels \n> at all, so:\n\n[... took the wrong landuse map, but it doesn't change ...]\n\n> library(spgrass6)\nLoading required package: rgdal\nLoading required package: abind\nLoading required package: pixmap\nGeospatial Data Abstraction Library extensions to R successfully loaded\nLoading required package: sp\n> G <- gmeta6()\n\n> landcover <- readCELL6sp(\"landcover.30m\", cat = TRUE)\nError in \"names<-.default\"(`*tmp*`, value = \"landcover.30m\") :\n        'names' attribute [1] must be the same length as the vector [0]\n> debug(readCELL6sp)\n\n> system(\"r.stats -l -q landcover.30m | head -20\")\n11 Open Water\n21 Low Intensity Residential\n22 High Intensity Residential\n23 Commercial/Industrial/Transportation\n31 Bare Rock/Sand/Clay\n32 Quarries/Strip Mines/Gravel Pits\n41 Deciduous Forest\n42 Evergreen Forest\n43 Mixed Forest\n51 Shrubland\n71 Grasslands/Herbaceous\n81 Pasture/Hay\n82 Row Crops\n83 Small Grains\n85 Urban/Recreational Grasses\n91 Woody Wetlands\n92 Emergent Herbaceous Wetlands\n* no data\n\n> landcover <- readCELL6sp(\"landcover.30m\", cat = TRUE)\ndebugging in: readCELL6sp(\"landcover.30m\", cat = TRUE)\ndebug: {\n[...]\n}\nBrowse[1]>\ndebug: tmpfl <- tempfile()\nBrowse[1]>\ndebug: system(paste(\"r.out.arc input=\", vname, \" output=\", tmpfl, sep = \"\"))\nBrowse[1]>\ndebug: library(sp)\nBrowse[1]>\ndebug: p4 <- CRS(system(\"g.proj -j -f\", intern = TRUE))\nBrowse[1]>\ndebug: res <- read.asciigrid(tmpfl, colname = vname, proj4string = p4)\nBrowse[1]>\ndebug: if (cat) {\n    cats <- strsplit(system(paste(\"r.stats -l -q\", vname), intern = TRUE),\n        \" \")\n    catnos <- sapply(cats, function(x) x[1])\n    catlabs <- sapply(cats, function(x) paste(x[-1], collapse = \" \"))\n    if (any(!is.na(match(catnos, \"*\")))) {\n        isNA <- which(catnos == \"*\")\n        catnos <- catnos[-isNA]\n        catlabs <- catlabs[-isNA]\n    }\n    res at data[, 1] <- factor(res at data[, 1], levels = catnos, labels = catlabs)\n} else {\n    res at data[, 1] <- as.integer(res at data[, 1])\n}\nBrowse[1]>\ndebug: cats <- strsplit(system(paste(\"r.stats -l -q\", vname), intern = TRUE),\n    \" \")\nBrowse[1]>\ndebug: catnos <- sapply(cats, function(x) x[1])\nBrowse[1]>\ndebug: catlabs <- sapply(cats, function(x) paste(x[-1], collapse = \" \"))\nBrowse[1]>\ndebug: if (any(!is.na(match(catnos, \"*\")))) {\n    isNA <- which(catnos == \"*\")\n    catnos <- catnos[-isNA]\n    catlabs <- catlabs[-isNA]\n}\nBrowse[1]>\ndebug: isNA <- which(catnos == \"*\")\nBrowse[1]>\ndebug: catnos <- catnos[-isNA]\nBrowse[1]>\ndebug: catlabs <- catlabs[-isNA]\nBrowse[1]>\ndebug: res at data[, 1] <- factor(res at data[, 1], levels = catnos, labels = catlabs)\nBrowse[1]>\nError in \"names<-.default\"(`*tmp*`, value = \"landcover.30m\") :\n        'names' attribute [1] must be the same length as the vector [0]\n>  \n\n\n> debug(read.asciigrid)\n> undebug(readCELL6sp)\n\n> landcover <- readCELL6sp(\"landcover.30m\", cat = TRUE)\n[...]\nBrowse[1]>\ndebug: df = data.frame(map)\nBrowse[1]>\ndebug: names(df) = colname\nBrowse[1]> length(colname)\n[1] 1\nBrowse[1]> length(df)\n[1] 1\nBrowse[1]> colname\n[1] \"landcover.30m\"\nBrowse[1]> df\n[...all values...]\n\n> str(df)\n`data.frame':   302418 obs. of  1 variable:\n $ map: num  NA NA NA NA NA NA NA NA NA NA ...\nBrowse[1]>\ndebug: grid = GridTopology(c(xllcenter, yllcenter), rep(cellsize, 2),\n    c(ncols, nrows))\nBrowse[1]>\ndebug: SpatialGridDataFrame(grid, data = df, proj4string = proj4string)\nBrowse[1]>\nexiting from: read.asciigrid(tmpfl, colname = vname, proj4string = p4)\nError in \"names<-.default\"(`*tmp*`, value = \"landcover.30m\") :\n        'names' attribute [1] must be the same length as the vector [0]\n>    \n\nI don't know if this is already helpful.\n\nBest regards\n\n Markus",
+      "body_snippet": "Dear Roger,\n\nOn Tue, May 31, 2005 at 06:53:31PM +0200, Roger Bivand wrote:\n> On Tue, 31 May 2005, Markus Neteler wrote:\n> \n> > Dear list members,\n> > \n> > I am currently trying out the new GRASS 6/R-s",
+      "thread_id": "thread-ab413dc2fcc7",
+      "thread_depth": 2,
+      "month": "2005-05"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-1eedcf092935",
+      "subject": "Problem with BCtransform?",
+      "message_count": 1,
+      "participants": [
+        "Ruben Roa"
+      ],
+      "started": "2005-05-03T09:44:05-02:00",
+      "last_reply": "2005-05-03T09:44:05-02:00",
+      "root_message_id": "msg-1eedcf092935"
+    },
+    {
+      "id": "thread-5ede8a7cb247",
+      "subject": "Problem with BCtransform?",
+      "message_count": 1,
+      "participants": [
+        "Ruben Roa"
+      ],
+      "started": "2005-05-03T16:32:50-02:00",
+      "last_reply": "2005-05-03T16:32:50-02:00",
+      "root_message_id": "msg-5ede8a7cb247"
+    },
+    {
+      "id": "thread-aadd9230858a",
+      "subject": "Recursive user-defined methods in R scripts - upper bound on nested calls?",
+      "message_count": 2,
+      "participants": [
+        "Baz",
+        "Rick Reeves"
+      ],
+      "started": "2005-05-09T13:14:24-07:00",
+      "last_reply": "2005-05-09T22:04:55+01:00",
+      "root_message_id": "msg-aadd9230858a"
+    },
+    {
+      "id": "thread-c77e339b18b5",
+      "subject": "maptools package rejects some polygon shapefiles?",
+      "message_count": 3,
+      "participants": [
+        "Rick Reeves",
+        "Roger Bivand"
+      ],
+      "started": "2005-05-11T10:46:00-07:00",
+      "last_reply": "2005-05-11T22:07:59+02:00",
+      "root_message_id": "msg-c77e339b18b5"
+    },
+    {
+      "id": "thread-865d22702f03",
+      "subject": "Image funct doesn't plot final matrix (after RandomFields' GaussRF)",
+      "message_count": 1,
+      "participants": [
+        "Ruben Roa"
+      ],
+      "started": "2005-05-11T13:43:37-02:00",
+      "last_reply": "2005-05-11T13:43:37-02:00",
+      "root_message_id": "msg-865d22702f03"
+    },
+    {
+      "id": "thread-fb7173b729bc",
+      "subject": "Subject: RE: [R-sig-Geo] maptools package rejects some polygon shapefiles?",
+      "message_count": 5,
+      "participants": [
+        "Nicholas Lewin-Koh",
+        "Roger Bivand"
+      ],
+      "started": "2005-05-12T10:55:32-05:00",
+      "last_reply": "2005-05-24T20:40:19+02:00",
+      "root_message_id": "msg-fb7173b729bc"
+    },
+    {
+      "id": "thread-7a7fed1655a7",
+      "subject": "maptools package rejects some polygon shapefiles?",
+      "message_count": 1,
+      "participants": [
+        "Roger Bivand"
+      ],
+      "started": "2005-05-12T10:58:31+02:00",
+      "last_reply": "2005-05-12T10:58:31+02:00",
+      "root_message_id": "msg-7a7fed1655a7"
+    },
+    {
+      "id": "thread-742163434dac",
+      "subject": "Error to load rgdal",
+      "message_count": 6,
+      "participants": [
+        "Roger Bivand",
+        "Susumu Tanimura",
+        "Tim Keitt",
+        "elijah wright"
+      ],
+      "started": "2005-05-12T10:59:23+09:00",
+      "last_reply": "2005-05-13T12:39:41+09:00",
+      "root_message_id": "msg-742163434dac"
+    },
+    {
+      "id": "thread-13e45a9fb538",
+      "subject": "Interactive web mapping with Rpad",
+      "message_count": 1,
+      "participants": [
+        "Short, Tom"
+      ],
+      "started": "2005-05-13T11:26:06-04:00",
+      "last_reply": "2005-05-13T11:26:06-04:00",
+      "root_message_id": "msg-13e45a9fb538"
+    },
+    {
+      "id": "thread-fa763fb9fa37",
+      "subject": "How to create polygons for kriging",
+      "message_count": 1,
+      "participants": [
+        "Ruben Roa"
+      ],
+      "started": "2005-05-17T10:38:42-02:00",
+      "last_reply": "2005-05-17T10:38:42-02:00",
+      "root_message_id": "msg-fa763fb9fa37"
+    },
+    {
+      "id": "thread-9a9bbdb498ca",
+      "subject": "SLDF to a segment data frame",
+      "message_count": 2,
+      "participants": [
+        "Roger Bivand",
+        "Short, Tom"
+      ],
+      "started": "2005-05-17T16:05:00-04:00",
+      "last_reply": "2005-05-17T23:42:39+02:00",
+      "root_message_id": "msg-9a9bbdb498ca"
+    },
+    {
+      "id": "thread-d7d0efc62bae",
+      "subject": "How to create polygons for kriging",
+      "message_count": 1,
+      "participants": [
+        "Chloe ARCHINARD"
+      ],
+      "started": "2005-05-17T16:19:00+02:00",
+      "last_reply": "2005-05-17T16:19:00+02:00",
+      "root_message_id": "msg-d7d0efc62bae"
+    },
+    {
+      "id": "thread-3748fa7a2853",
+      "subject": "SLDF to a segment data frame",
+      "message_count": 1,
+      "participants": [
+        "Short, Tom"
+      ],
+      "started": "2005-05-18T07:32:54-04:00",
+      "last_reply": "2005-05-18T07:32:54-04:00",
+      "root_message_id": "msg-3748fa7a2853"
+    },
+    {
+      "id": "thread-05039d20f608",
+      "subject": "kriging inside borders",
+      "message_count": 3,
+      "participants": [
+        "Chloe ARCHINARD",
+        "Paulo Justiniano Ribeiro Jr",
+        "Roger Bivand"
+      ],
+      "started": "2005-05-19T18:23:43+02:00",
+      "last_reply": "2005-05-19T15:19:30-03:00",
+      "root_message_id": "msg-05039d20f608"
+    },
+    {
+      "id": "thread-935c553313eb",
+      "subject": "kriging inside borders",
+      "message_count": 3,
+      "participants": [
+        "Chloe ARCHINARD",
+        "Roger Bivand"
+      ],
+      "started": "2005-05-20T10:01:34+02:00",
+      "last_reply": "2005-05-21T18:07:12+02:00",
+      "root_message_id": "msg-935c553313eb"
+    },
+    {
+      "id": "thread-8afde445ebf4",
+      "subject": "Maps, Eastern Europe",
+      "message_count": 1,
+      "participants": [
+        "Roger Bivand"
+      ],
+      "started": "2005-05-23T13:08:25+02:00",
+      "last_reply": "2005-05-23T13:08:25+02:00",
+      "root_message_id": "msg-8afde445ebf4"
+    },
+    {
+      "id": "thread-9b4718f20d9c",
+      "subject": "Simulation question",
+      "message_count": 1,
+      "participants": [
+        "Matthew Sokol"
+      ],
+      "started": "2005-05-23T14:17:19-07:00",
+      "last_reply": "2005-05-23T14:17:19-07:00",
+      "root_message_id": "msg-9b4718f20d9c"
+    },
+    {
+      "id": "thread-8352ee18e42b",
+      "subject": "Simulation question",
+      "message_count": 1,
+      "participants": [
+        "Matthew Sokol"
+      ],
+      "started": "2005-05-23T15:16:19-07:00",
+      "last_reply": "2005-05-23T15:16:19-07:00",
+      "root_message_id": "msg-8352ee18e42b"
+    },
+    {
+      "id": "thread-0cd3cd27727b",
+      "subject": "kriging inside borders",
+      "message_count": 1,
+      "participants": [
+        "Roger Bivand"
+      ],
+      "started": "2005-05-23T16:08:42+02:00",
+      "last_reply": "2005-05-23T16:08:42+02:00",
+      "root_message_id": "msg-0cd3cd27727b"
+    },
+    {
+      "id": "thread-eabcc55ec930",
+      "subject": "TR: [R-sig-Geo] kriging inside borders",
+      "message_count": 1,
+      "participants": [
+        "Roger Bivand"
+      ],
+      "started": "2005-05-23T16:21:50+02:00",
+      "last_reply": "2005-05-23T16:21:50+02:00",
+      "root_message_id": "msg-eabcc55ec930"
+    },
+    {
+      "id": "thread-15477052b47e",
+      "subject": "problem running example(gwr) in package spgwr_0.2-7 (Windows binary)",
+      "message_count": 2,
+      "participants": [
+        "Ken Pawliw",
+        "Roger Bivand"
+      ],
+      "started": "2005-05-27T13:19:48-04:00",
+      "last_reply": "2005-05-27T19:47:22+02:00",
+      "root_message_id": "msg-15477052b47e"
+    },
+    {
+      "id": "thread-ab413dc2fcc7",
+      "subject": "R-stats - GRASS6",
+      "message_count": 3,
+      "participants": [
+        "Markus Neteler",
+        "Roger Bivand"
+      ],
+      "started": "2005-05-31T15:47:31+02:00",
+      "last_reply": "2005-05-31T19:15:10+02:00",
+      "root_message_id": "msg-ab413dc2fcc7"
+    }
+  ]
+}

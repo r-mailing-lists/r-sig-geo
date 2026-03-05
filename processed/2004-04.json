@@ -1,0 +1,425 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2004-04",
+  "messages": [
+    {
+      "id": "msg-b5023180c63b",
+      "message_id": "<Pine.LNX.4.44.0404021854030.28093-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-04-02T19:15:12+02:00",
+      "subject": "[R-sig-Geo] Re: [R] Winding Number",
+      "subject_clean": "Winding Number",
+      "in_reply_to": "<Pine.LNX.4.44.0404020833350.19413-100000@aeolus.ecy.wa.gov>",
+      "references": [],
+      "body_plain": "On Fri, 2 Apr 2004, Clint Bowman wrote:\n\n> I have shapefiles for the state climatic divisions for the United States\n> and read.shape brings them in wonderfully.  Now I wish to run through a\n> list of several thousand observation sites to find out in which division\n> each is located.  I figure that I can compute the winding number for each\n> site and be done.  However a search doesn't find any references and I\n> can't find a winding number function among the map/tools/stats.  I have\n> the code for an efficient C++ but was expecting that it would already be\n> implemented as an R function\n> \n> Since I haven't used the map/tools/stats collection before, I suspect I'm \n> overlooking the function and would be thankful for a pointer.\n> \n\nThis is work in progress - where all good ideas and contributions will be\nwelcome. If you look on http://sourceforge.net/projects/r-spatial/, you\nwill see an \"alpha\" package called \"sp\", which already has a\npoint-in-polygon facility, but which may not scale up to the kinds of data\nvolumes you have, but which invites a spatial query (match polygon?)\nfunction between a SpatialDataFrame with point coordinates and a\nSpatialDataPolygons object (sometime). This is only as source packages so \nfar, so Windows binaries are not yet available.\n\nI have used the splancs package inout() function before, trying the points\ncoordinate matrix on each polygon in turn; splancs is available as a\nWindows binary. This ought to be less \"rough at the edges\", and in time\nwill be. The immediate solution is to use splancs, but this will not work\nif the Shapes have multiple polygons. There is a more specialised list for\nthese kinds of questions in addition to r-help:\n\nhttps://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n\nand since yesterday (thanks to Jonathan Baron), its archives are also \nsearchable from:\n\nhttp://finzi.psych.upenn.edu/search.html\n\nThis question hasn't come up there, but maybe we could move further \ndiscussion there - posting only for subscribers?\n\n> TIA\n> \n> Clint\n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Fri, 2 Apr 2004, Clint Bowman wrote:\n\n> I have shapefiles for the state climatic divisions for the United States\n> and read.shape brings them in wonderfully.  Now I wish to run through a\n> list of ",
+      "thread_id": "thread-b5023180c63b",
+      "thread_depth": 0,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-d1b8a5c5d39e",
+      "message_id": "<Pine.LNX.4.44.0404021026320.19413-100000@aeolus.ecy.wa.gov>",
+      "from_name": "Clint Bowman",
+      "from_email_hash": "8ecc30b4b1e178a3034d82dba032c1f8f23f9c6296e30c059466b51ae6cbfa94",
+      "date": "2004-04-02T10:29:34-08:00",
+      "subject": "[R-sig-Geo] Re: [R] Winding Number",
+      "subject_clean": "Winding Number",
+      "in_reply_to": "<Pine.LNX.4.44.0404021854030.28093-100000@reclus.nhh.no>",
+      "references": [],
+      "body_plain": "Roger,\n\nThanks for your reference.  Since I can get the polygon coordinates (and \nhave the coordinates of my sites, I can cobble together a function that \nwill do the trick.\n\nAgain, thanks,\n\nClint\n\nOn Fri, 2 Apr 2004, Roger Bivand wrote:\n\n> On Fri, 2 Apr 2004, Clint Bowman wrote:\n> \n> > I have shapefiles for the state climatic divisions for the United States\n> > and read.shape brings them in wonderfully.  Now I wish to run through a\n> > list of several thousand observation sites to find out in which division\n> > each is located.  I figure that I can compute the winding number for each\n> > site and be done.  However a search doesn't find any references and I\n> > can't find a winding number function among the map/tools/stats.  I have\n> > the code for an efficient C++ but was expecting that it would already be\n> > implemented as an R function\n> > \n> > Since I haven't used the map/tools/stats collection before, I suspect I'm \n> > overlooking the function and would be thankful for a pointer.\n> > \n> \n> This is work in progress - where all good ideas and contributions will be\n> welcome. If you look on http://sourceforge.net/projects/r-spatial/, you\n> will see an \"alpha\" package called \"sp\", which already has a\n> point-in-polygon facility, but which may not scale up to the kinds of data\n> volumes you have, but which invites a spatial query (match polygon?)\n> function between a SpatialDataFrame with point coordinates and a\n> SpatialDataPolygons object (sometime). This is only as source packages so \n> far, so Windows binaries are not yet available.\n> \n> I have used the splancs package inout() function before, trying the points\n> coordinate matrix on each polygon in turn; splancs is available as a\n> Windows binary. This ought to be less \"rough at the edges\", and in time\n> will be. The immediate solution is to use splancs, but this will not work\n> if the Shapes have multiple polygons. There is a more specialised list for\n> these kinds of questions in addition to r-help:\n> \n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> \n> and since yesterday (thanks to Jonathan Baron), its archives are also \n> searchable from:\n> \n> http://finzi.psych.upenn.edu/search.html\n> \n> This question hasn't come up there, but maybe we could move further \n> discussion there - posting only for subscribers?\n> \n> > TIA\n> > \n> > Clint\n> > \n> > \n> \n> \n\n-- \nClint Bowman\t\t\tINTERNET:\tclint at ecy.wa.gov\nAir Quality Modeler\t\tINTERNET:\tclint at math.utah.edu\nDepartment of Ecology\t\tVOICE:\t\t(360) 407-6815\nPO Box 47600\t\t\tFAX:\t\t(360) 407-7534\nOlympia, WA 98504-7600",
+      "body_snippet": "Roger,\n\nThanks for your reference.  Since I can get the polygon coordinates (and \nhave the coordinates of my sites, I can cobble together a function that \nwill do the trick.\n\nAgain, thanks,\n\nClint\n\nOn",
+      "thread_id": "thread-b5023180c63b",
+      "thread_depth": 1,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-a20f3cd6a156",
+      "message_id": "<Pine.LNX.4.44.0404022035170.28093-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-04-02T20:36:38+02:00",
+      "subject": "[R-sig-Geo] Re: [R] Winding Number",
+      "subject_clean": "Winding Number",
+      "in_reply_to": "<Pine.LNX.4.44.0404021026320.19413-100000@aeolus.ecy.wa.gov>",
+      "references": [],
+      "body_plain": "Clint,\n\nCould you please report back to the r-sig-geo list on how you got this \ndone so that others can benefit?\n\nRoger\n\nOn Fri, 2 Apr 2004, Clint Bowman wrote:\n\n> Roger,\n> \n> Thanks for your reference.  Since I can get the polygon coordinates (and \n> have the coordinates of my sites, I can cobble together a function that \n> will do the trick.\n> \n> Again, thanks,\n> \n> Clint\n> \n> On Fri, 2 Apr 2004, Roger Bivand wrote:\n> \n> > On Fri, 2 Apr 2004, Clint Bowman wrote:\n> > \n> > > I have shapefiles for the state climatic divisions for the United States\n> > > and read.shape brings them in wonderfully.  Now I wish to run through a\n> > > list of several thousand observation sites to find out in which division\n> > > each is located.  I figure that I can compute the winding number for each\n> > > site and be done.  However a search doesn't find any references and I\n> > > can't find a winding number function among the map/tools/stats.  I have\n> > > the code for an efficient C++ but was expecting that it would already be\n> > > implemented as an R function\n> > > \n> > > Since I haven't used the map/tools/stats collection before, I suspect I'm \n> > > overlooking the function and would be thankful for a pointer.\n> > > \n> > \n> > This is work in progress - where all good ideas and contributions will be\n> > welcome. If you look on http://sourceforge.net/projects/r-spatial/, you\n> > will see an \"alpha\" package called \"sp\", which already has a\n> > point-in-polygon facility, but which may not scale up to the kinds of data\n> > volumes you have, but which invites a spatial query (match polygon?)\n> > function between a SpatialDataFrame with point coordinates and a\n> > SpatialDataPolygons object (sometime). This is only as source packages so \n> > far, so Windows binaries are not yet available.\n> > \n> > I have used the splancs package inout() function before, trying the points\n> > coordinate matrix on each polygon in turn; splancs is available as a\n> > Windows binary. This ought to be less \"rough at the edges\", and in time\n> > will be. The immediate solution is to use splancs, but this will not work\n> > if the Shapes have multiple polygons. There is a more specialised list for\n> > these kinds of questions in addition to r-help:\n> > \n> > https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> > \n> > and since yesterday (thanks to Jonathan Baron), its archives are also \n> > searchable from:\n> > \n> > http://finzi.psych.upenn.edu/search.html\n> > \n> > This question hasn't come up there, but maybe we could move further \n> > discussion there - posting only for subscribers?\n> > \n> > > TIA\n> > > \n> > > Clint\n> > > \n> > > \n> > \n> > \n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "Clint,\n\nCould you please report back to the r-sig-geo list on how you got this \ndone so that others can benefit?\n\nRoger\n\nOn Fri, 2 Apr 2004, Clint Bowman wrote:\n\n> Roger,\n> \n> Thanks for your referenc",
+      "thread_id": "thread-b5023180c63b",
+      "thread_depth": 2,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-f215fa5ccdc3",
+      "message_id": "<1080931009.5547.11.camel@workstation-0-0>",
+      "from_name": "Timothy H. Keitt",
+      "from_email_hash": "2d8d5b8050425938214c3a77d47a2be0916edb7058260fe8211414af4058ae13",
+      "date": "2004-04-02T12:36:50-06:00",
+      "subject": "[R-sig-Geo] Re: [R] Winding Number",
+      "subject_clean": "Winding Number",
+      "in_reply_to": "<Pine.LNX.4.44.0404021026320.19413-100000@aeolus.ecy.wa.gov>",
+      "references": [
+        "<Pine.LNX.4.44.0404021026320.19413-100000@aeolus.ecy.wa.gov>"
+      ],
+      "body_plain": "Members of this list may be interested in\nhttp://www.vividsolutions.com/jts/jtshome.htm. There is a C++ port asw\nwell by the postgis folks.\n\nTim\n\nOn Fri, 2004-04-02 at 12:29, Clint Bowman wrote:\n> Roger,\n> \n> Thanks for your reference.  Since I can get the polygon coordinates (and \n> have the coordinates of my sites, I can cobble together a function that \n> will do the trick.\n> \n> Again, thanks,\n> \n> Clint\n> \n> On Fri, 2 Apr 2004, Roger Bivand wrote:\n> \n> > On Fri, 2 Apr 2004, Clint Bowman wrote:\n> > \n> > > I have shapefiles for the state climatic divisions for the United States\n> > > and read.shape brings them in wonderfully.  Now I wish to run through a\n> > > list of several thousand observation sites to find out in which division\n> > > each is located.  I figure that I can compute the winding number for each\n> > > site and be done.  However a search doesn't find any references and I\n> > > can't find a winding number function among the map/tools/stats.  I have\n> > > the code for an efficient C++ but was expecting that it would already be\n> > > implemented as an R function\n> > > \n> > > Since I haven't used the map/tools/stats collection before, I suspect I'm \n> > > overlooking the function and would be thankful for a pointer.\n> > > \n> > \n> > This is work in progress - where all good ideas and contributions will be\n> > welcome. If you look on http://sourceforge.net/projects/r-spatial/, you\n> > will see an \"alpha\" package called \"sp\", which already has a\n> > point-in-polygon facility, but which may not scale up to the kinds of data\n> > volumes you have, but which invites a spatial query (match polygon?)\n> > function between a SpatialDataFrame with point coordinates and a\n> > SpatialDataPolygons object (sometime). This is only as source packages so \n> > far, so Windows binaries are not yet available.\n> > \n> > I have used the splancs package inout() function before, trying the points\n> > coordinate matrix on each polygon in turn; splancs is available as a\n> > Windows binary. This ought to be less \"rough at the edges\", and in time\n> > will be. The immediate solution is to use splancs, but this will not work\n> > if the Shapes have multiple polygons. There is a more specialised list for\n> > these kinds of questions in addition to r-help:\n> > \n> > https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> > \n> > and since yesterday (thanks to Jonathan Baron), its archives are also \n> > searchable from:\n> > \n> > http://finzi.psych.upenn.edu/search.html\n> > \n> > This question hasn't come up there, but maybe we could move further \n> > discussion there - posting only for subscribers?\n> > \n> > > TIA\n> > > \n> > > Clint\n> > > \n> > > \n> > \n> > \n-- \nTimothy H. Keitt\nSection of Integrative Biology\nUniversity of Texas at Austin\nhttp://www.keittlab.org/",
+      "body_snippet": "Members of this list may be interested in\nhttp://www.vividsolutions.com/jts/jtshome.htm. There is a C++ port asw\nwell by the postgis folks.\n\nTim\n\nOn Fri, 2004-04-02 at 12:29, Clint Bowman wrote:\n> Rog",
+      "thread_id": "thread-b5023180c63b",
+      "thread_depth": 2,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-dfd934605927",
+      "message_id": "<Pine.LNX.4.44.0404022042580.28093-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-04-02T20:56:50+02:00",
+      "subject": "[R-sig-Geo] Using SJava?",
+      "subject_clean": "Using SJava?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Is anyone on this list using SJava or any R/Java connection? Not only is\nthe JTS Topology Suite that Tim just mentioned interesting, but so is the\nupcoming GeoTools2 at http://www.geotools.org/. Both are likely to be used \nquite a lot, and thus probably well-maintained.\n\nAt the recent Association of American Geographers meeting, Frank Hardisty\nasked me about this, and while I was able to install SJava (from\nhttp://www.stats.ox.ac.uk/pub/RWin) on a Win XP laptop, we were not able\nto see how to get Java within R to see GeoTools in its classpath.  Both of\nthese Java resources are potentially useful, and R opinions two or three\nyears ago, that Java is slow, may need revision given increased machine\ncapacity. I feel we could benefit from mobilizing Java insight (but I feel\npersonally Java-challenged!).\n\nI believe that Duncan Temple-Lang was playing with/working on object \ndiscovery - this could be very relevant in terms of matching R-internal \nobject representations with those in existing software that we could - if \nSJava worked - link to. I also think that we could ask him for advice if \nwe discussed it first here. What do others think?\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "Is anyone on this list using SJava or any R/Java connection? Not only is\nthe JTS Topology Suite that Tim just mentioned interesting, but so is the\nupcoming GeoTools2 at http://www.geotools.org/. Both ",
+      "thread_id": "thread-dfd934605927",
+      "thread_depth": 0,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-ee14dc9ac74f",
+      "message_id": "<1080932432.5547.20.camel@workstation-0-0>",
+      "from_name": "Timothy H. Keitt",
+      "from_email_hash": "2d8d5b8050425938214c3a77d47a2be0916edb7058260fe8211414af4058ae13",
+      "date": "2004-04-02T13:00:32-06:00",
+      "subject": "[R-sig-Geo] Using SJava?",
+      "subject_clean": "Using SJava?",
+      "in_reply_to": "<Pine.LNX.4.44.0404022042580.28093-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0404022042580.28093-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Another way to go is to embed R in other applications. I stumbled on\nJUMP (http://www.vividsolutions.com/jump/) the other day. Looks like the\ndawn of quality open source GIS is around the corner.\n\nT.\n\nOn Fri, 2004-04-02 at 12:56, Roger Bivand wrote:\n> Is anyone on this list using SJava or any R/Java connection? Not only is\n> the JTS Topology Suite that Tim just mentioned interesting, but so is the\n> upcoming GeoTools2 at http://www.geotools.org/. Both are likely to be used \n> quite a lot, and thus probably well-maintained.\n> \n> At the recent Association of American Geographers meeting, Frank Hardisty\n> asked me about this, and while I was able to install SJava (from\n> http://www.stats.ox.ac.uk/pub/RWin) on a Win XP laptop, we were not able\n> to see how to get Java within R to see GeoTools in its classpath.  Both of\n> these Java resources are potentially useful, and R opinions two or three\n> years ago, that Java is slow, may need revision given increased machine\n> capacity. I feel we could benefit from mobilizing Java insight (but I feel\n> personally Java-challenged!).\n> \n> I believe that Duncan Temple-Lang was playing with/working on object \n> discovery - this could be very relevant in terms of matching R-internal \n> object representations with those in existing software that we could - if \n> SJava worked - link to. I also think that we could ask him for advice if \n> we discussed it first here. What do others think?\n-- \nTimothy H. Keitt\nSection of Integrative Biology\nUniversity of Texas at Austin\nhttp://www.keittlab.org/",
+      "body_snippet": "Another way to go is to embed R in other applications. I stumbled on\nJUMP (http://www.vividsolutions.com/jump/) the other day. Looks like the\ndawn of quality open source GIS is around the corner.\n\nT.\n",
+      "thread_id": "thread-dfd934605927",
+      "thread_depth": 1,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-898035306eb4",
+      "message_id": "<1080932962.5547.30.camel@workstation-0-0>",
+      "from_name": "Timothy H. Keitt",
+      "from_email_hash": "2d8d5b8050425938214c3a77d47a2be0916edb7058260fe8211414af4058ae13",
+      "date": "2004-04-02T13:09:22-06:00",
+      "subject": "[R-sig-Geo] Using SJava?",
+      "subject_clean": "Using SJava?",
+      "in_reply_to": "<Pine.LNX.4.44.0404022042580.28093-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0404022042580.28093-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "I'm just starting to look at java. The big win is people report 100%\nproductivity (lines per hour) increase over C++. Eclipse is a great tool\nfor learning java. I was using vector/list classes within minutes (you\ncan easily find object in the base libraries by browsing or with\nautocompletion). I agree, performance is less of an issue these days. In\nthe long run, if distributed vm's become available that implement\ntransparent thread migration, then java progs will get really easy to\nscale-up to large problems (modulo the normal caveats about the problem\ndomain). Someone should really port R onto the java vm. (Not optimal for\nR-like languages, but the ease of integrating with java, jpython, etc.\nmight make it worth while.)\n\nTim\n\nOn Fri, 2004-04-02 at 12:56, Roger Bivand wrote:\n> Is anyone on this list using SJava or any R/Java connection? Not only is\n> the JTS Topology Suite that Tim just mentioned interesting, but so is the\n> upcoming GeoTools2 at http://www.geotools.org/. Both are likely to be used \n> quite a lot, and thus probably well-maintained.\n> \n> At the recent Association of American Geographers meeting, Frank Hardisty\n> asked me about this, and while I was able to install SJava (from\n> http://www.stats.ox.ac.uk/pub/RWin) on a Win XP laptop, we were not able\n> to see how to get Java within R to see GeoTools in its classpath.  Both of\n> these Java resources are potentially useful, and R opinions two or three\n> years ago, that Java is slow, may need revision given increased machine\n> capacity. I feel we could benefit from mobilizing Java insight (but I feel\n> personally Java-challenged!).\n> \n> I believe that Duncan Temple-Lang was playing with/working on object \n> discovery - this could be very relevant in terms of matching R-internal \n> object representations with those in existing software that we could - if \n> SJava worked - link to. I also think that we could ask him for advice if \n> we discussed it first here. What do others think?\n-- \nTimothy H. Keitt\nSection of Integrative Biology\nUniversity of Texas at Austin\nhttp://www.keittlab.org/",
+      "body_snippet": "I'm just starting to look at java. The big win is people report 100%\nproductivity (lines per hour) increase over C++. Eclipse is a great tool\nfor learning java. I was using vector/list classes within ",
+      "thread_id": "thread-dfd934605927",
+      "thread_depth": 1,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-85ef7e17df20",
+      "message_id": "<76A000A82289D411952F001083F9DD06047FE575@exsalem4-bu.odot.state.or.us>",
+      "from_name": "Benjamin.STABLER at odot.state.or.us",
+      "from_email_hash": "f3988f2d9007a81e189aed2184879c9a32021dfaaabd6a61ba64fe510e934f68",
+      "date": "2004-04-05T10:42:04-07:00",
+      "subject": "[R-sig-Geo] RE: Using SJava? ",
+      "subject_clean": "Using SJava?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hopefully, I'm not too late on this one....when you initialize the JVM you\nneed to set the class path as follows:\n\n.JavaInit(config=javaConfig(classPath=\"StringDirectoryPathReference\"))\n\nor\n\n.JavaInit(config=javaConfig(classPath=c(\"String1\", \"String2\")))\n\nfor example:\n\n.JavaInit(config=javaConfig(classPath=\"C:\\javastuff\"))\n\nwhere javastuff contains my class files.  You need to specify the jar file\nname if you are trying to include class files within jars.  I have used it\nwith some classes that I wrote.  \n\nI too am excited about linking Java and R, as there is so much useful code\nin the Java community.\n\nBenjamin Stabler\nTransportation Planning Analysis Unit\nOregon Department of Transportation\n555 13th Street NE, Suite 2\nSalem, OR 97301  Ph: 503-986-4104\n\n\n>Message: 5\n>Date: Fri, 2 Apr 2004 20:56:50 +0200 (CEST)\n>From: Roger Bivand <Roger.Bivand at nhh.no>\n>Subject: [R-sig-Geo] Using SJava?\n>To: r-sig-geo at stat.math.ethz.ch\n>Cc: Frank Hardisty <HardistF at gwm.sc.edu>\n>Message-ID: <Pine.LNX.4.44.0404022042580.28093-100000 at reclus.nhh.no>\n>Content-Type: TEXT/PLAIN;\tcharset=US-ASCII\n>\n>Is anyone on this list using SJava or any R/Java connection? \n>Not only is\n>the JTS Topology Suite that Tim just mentioned interesting, \n>but so is the\n>upcoming GeoTools2 at http://www.geotools.org/. Both are \n>likely to be used \n>quite a lot, and thus probably well-maintained.\n>\n>At the recent Association of American Geographers meeting, \n>Frank Hardisty\n>asked me about this, and while I was able to install SJava (from\n>http://www.stats.ox.ac.uk/pub/RWin) on a Win XP laptop, we \n>were not able\n>to see how to get Java within R to see GeoTools in its \n>classpath.  Both of\n>these Java resources are potentially useful, and R opinions \n>two or three\n>years ago, that Java is slow, may need revision given increased machine\n>capacity. I feel we could benefit from mobilizing Java insight \n>(but I feel\n>personally Java-challenged!).\n>\n>I believe that Duncan Temple-Lang was playing with/working on object \n>discovery - this could be very relevant in terms of matching \n>R-internal \n>object representations with those in existing software that we \n>could - if \n>SJava worked - link to. I also think that we could ask him for \n>advice if \n>we discussed it first here. What do others think?\n>\n>-- \n>Roger Bivand\n>Economic Geography Section, Department of Economics, Norwegian \n>School of\n>Economics and Business Administration, Breiviksveien 40, N-5045 Bergen,\n>Norway. voice: +47 55 95 93 55; fax +47 55 95 93 93\n>e-mail: Roger.Bivand at nhh.no\n>\n>\n>",
+      "body_snippet": "Hopefully, I'm not too late on this one....when you initialize the JVM you\nneed to set the class path as follows:\n\n.JavaInit(config=javaConfig(classPath=\"StringDirectoryPathReference\"))\n\nor\n\n.JavaInit",
+      "thread_id": "thread-85ef7e17df20",
+      "thread_depth": 0,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-639a867b7633",
+      "message_id": "<Pine.LNX.4.44.0404052126380.8114-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-04-05T21:36:37+02:00",
+      "subject": "[R-sig-Geo] RE: Using SJava? ",
+      "subject_clean": "Using SJava?",
+      "in_reply_to": "<76A000A82289D411952F001083F9DD06047FE575@exsalem4-bu.odot.state.or.us>",
+      "references": [],
+      "body_plain": "On Mon, 5 Apr 2004 Benjamin.STABLER at odot.state.or.us wrote:\n\n> Hopefully, I'm not too late on this one....when you initialize the JVM you\n> need to set the class path as follows:\n> \n> .JavaInit(config=javaConfig(classPath=\"StringDirectoryPathReference\"))\n> \n> or\n> \n> .JavaInit(config=javaConfig(classPath=c(\"String1\", \"String2\")))\n> \n> for example:\n> \n> .JavaInit(config=javaConfig(classPath=\"C:\\javastuff\"))\n> \n> where javastuff contains my class files.  You need to specify the jar file\n> name if you are trying to include class files within jars.  I have used it\n> with some classes that I wrote.  \n\nYes, and Sys.putenv(\"CLASSPATH\"=\"String1\") can be used too, but what do \nyou put in .Java() to get into your own jars? Are there escaping issues in \nthe path to the jars? (backslash twice? forwardslash?) Could we put up \nsome jars and some instructions for use on a website? Frank Hardisty sent \nme an example off-list that works from the command line but which I can't \nfind from within R/SJava (Windows XP, the SJava examples that I've tried \nwork for me). \n\nThe idea would be to see if GeoTools2 can be reached from within R, \nbecause it could provide (another) way to import/export multiple GIS \nformats.\n\nRoger\n\n> \n> I too am excited about linking Java and R, as there is so much useful code\n> in the Java community.\n> \n> Benjamin Stabler\n> Transportation Planning Analysis Unit\n> Oregon Department of Transportation\n> 555 13th Street NE, Suite 2\n> Salem, OR 97301  Ph: 503-986-4104\n> \n> \n> >Message: 5\n> >Date: Fri, 2 Apr 2004 20:56:50 +0200 (CEST)\n> >From: Roger Bivand <Roger.Bivand at nhh.no>\n> >Subject: [R-sig-Geo] Using SJava?\n> >To: r-sig-geo at stat.math.ethz.ch\n> >Cc: Frank Hardisty <HardistF at gwm.sc.edu>\n> >Message-ID: <Pine.LNX.4.44.0404022042580.28093-100000 at reclus.nhh.no>\n> >Content-Type: TEXT/PLAIN;\tcharset=US-ASCII\n> >\n> >Is anyone on this list using SJava or any R/Java connection? \n> >Not only is\n> >the JTS Topology Suite that Tim just mentioned interesting, \n> >but so is the\n> >upcoming GeoTools2 at http://www.geotools.org/. Both are \n> >likely to be used \n> >quite a lot, and thus probably well-maintained.\n> >\n> >At the recent Association of American Geographers meeting, \n> >Frank Hardisty\n> >asked me about this, and while I was able to install SJava (from\n> >http://www.stats.ox.ac.uk/pub/RWin) on a Win XP laptop, we \n> >were not able\n> >to see how to get Java within R to see GeoTools in its \n> >classpath.  Both of\n> >these Java resources are potentially useful, and R opinions \n> >two or three\n> >years ago, that Java is slow, may need revision given increased machine\n> >capacity. I feel we could benefit from mobilizing Java insight \n> >(but I feel\n> >personally Java-challenged!).\n> >\n> >I believe that Duncan Temple-Lang was playing with/working on object \n> >discovery - this could be very relevant in terms of matching \n> >R-internal \n> >object representations with those in existing software that we \n> >could - if \n> >SJava worked - link to. I also think that we could ask him for \n> >advice if \n> >we discussed it first here. What do others think?\n> >\n> >-- \n> >Roger Bivand\n> >Economic Geography Section, Department of Economics, Norwegian \n> >School of\n> >Economics and Business Administration, Breiviksveien 40, N-5045 Bergen,\n> >Norway. voice: +47 55 95 93 55; fax +47 55 95 93 93\n> >e-mail: Roger.Bivand at nhh.no\n> >\n> >\n> >\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 5 Apr 2004 Benjamin.STABLER at odot.state.or.us wrote:\n\n> Hopefully, I'm not too late on this one....when you initialize the JVM you\n> need to set the class path as follows:\n> \n> .JavaInit(con",
+      "thread_id": "thread-85ef7e17df20",
+      "thread_depth": 1,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-2e0f92f54c11",
+      "message_id": "<76A000A82289D411952F001083F9DD06047FE57B@exsalem4-bu.odot.state.or.us>",
+      "from_name": "Benjamin.STABLER at odot.state.or.us",
+      "from_email_hash": "f3988f2d9007a81e189aed2184879c9a32021dfaaabd6a61ba64fe510e934f68",
+      "date": "2004-04-05T14:21:42-07:00",
+      "subject": "[R-sig-Geo] RE: Using SJava?",
+      "subject_clean": "Using SJava?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Frank and Roger,\n\nSorry about the path reference - I just added the example on the fly in the\nemail and forgot about the R escape character.  Attached is the simply class\nthat I used to test the link.  It just takes a string as an input and\nreturns my email signature with the string substituted for the name.\n\nThe R code to run it:\n\nlibrary(SJava)\n.JavaInit(config=javaConfig(classPath=\"F:/_ben/java\"))\n.Java(\"sig\",\"print\",\"Ben Stabler\")\n\n\nIn terms of the jar file, it seems to work for me.  Note that I moved the\njar file to a different directory so it did not find the class file by\nitself as well.\n\n> library(SJava)\nusing JAVA_HOME = C:\\j2sdk1.4.2\\jre \n> .JavaInit(config=javaConfig(classPath=\"F:/_ben/sig.jar\"))\n> .Java(\"sig\",\"print\",\"Ben Stabler\")\n[1] \"Ben Stabler\"                         \"Oregon Department of\nTransportation\"\n[3] \"Mill Creek Office Building\"          \"555 13th Street NE Suite 2\"\n\n[5] \"Salem, OR 97301-4178\"               \n> \n\nThe print method of the sig class is static so I'm not having any difficulty\nusing static methods and I did not need to create a constructor first.  You\nshouldn't need a constructor/object for a static method (that is the point\nof static methods).  Unfortunately my IS department blocked the zip file you\nsent.  Could you send me the code as text or maybe just copy into email?\nThanks.  \n\nBen\n\n\n>-----Original Message-----\n>From: Frank Hardisty [mailto:HardistF at gwm.sc.edu]\n>Sent: Monday, April 05, 2004 1:07 PM\n>To: Roger.Bivand at nhh.no\n>Cc: STABLER Benjamin\n>Subject: Re: [R-sig-Geo] RE: Using SJava?\n>\n>\n>Roger and Benjamin,\n>\n>Benjamin, your advice is good and the test class does work. Roger, one\n>difficulty is that we were calling a static method of the class, which\n>does NOT work for some reason. However, the class can be instantiated\n>and used from within R. Here's my session with my mistakes edited out:\n>\n>[Previously saved workspace restored]\n>\n>> library(SJava)\n>using JAVA_HOME = C:\\programs\\j2sdk_nb\\j2sdk1.4.2 \n>> .JavaInit(config=javaConfig(classPath=\"C:/temp/javatest/test.jar\"))\n>> testClass <- .JavaConstructor(\"TestJava\")\n>> .Java(testClass,\"getMessage\")\n>[1] \"Hi Roger!\"\n>> \n>\n>Benjamin, do you also find that static methods don't work in SJava?\n>It's hard to understand, because calls to static methods in the Java\n>runtime libraries work just fine, for example, \n>\n>> .Java(\"Math\",\"random\")\n>[1] 0.07714792\n>\n>regards,\n>-Frank\n>\n>>>> Roger Bivand <Roger.Bivand at nhh.no> 04/05/04 03:36PM >>>\n>On Mon, 5 Apr 2004 Benjamin.STABLER at odot.state.or.us wrote:\n>\n>> Hopefully, I'm not too late on this one....when you initialize the\n>JVM you\n>> need to set the class path as follows:\n>> \n>>\n>.JavaInit(config=javaConfig(classPath=\"StringDirectoryPathReference\"))\n>> \n>> or\n>> \n>> .JavaInit(config=javaConfig(classPath=c(\"String1\", \"String2\")))\n>> \n>> for example:\n>> \n>> .JavaInit(config=javaConfig(classPath=\"C:\\javastuff\"))\n>> \n>> where javastuff contains my class files.  You need to specify the jar\n>file\n>> name if you are trying to include class files within jars.  I have\n>used it\n>> with some classes that I wrote.  \n>\n>Yes, and Sys.putenv(\"CLASSPATH\"=\"String1\") can be used too, but what do\n>\n>you put in .Java() to get into your own jars? Are there escaping issues\n>in \n>the path to the jars? (backslash twice? forwardslash?) Could we put up\n>\n>some jars and some instructions for use on a website? Frank Hardisty\n>sent \n>me an example off-list that works from the command line but which I\n>can't \n>find from within R/SJava (Windows XP, the SJava examples that I've\n>tried \n>work for me). \n>\n>The idea would be to see if GeoTools2 can be reached from within R, \n>because it could provide (another) way to import/export multiple GIS \n>formats.\n>\n>Roger\n>\n>> \n>> I too am excited about linking Java and R, as there is so much useful\n>code\n>> in the Java community.\n>> \n>> Benjamin Stabler\n>> Transportation Planning Analysis Unit\n>> Oregon Department of Transportation\n>> 555 13th Street NE, Suite 2\n>> Salem, OR 97301  Ph: 503-986-4104\n>> \n>> \n>> >Message: 5\n>> >Date: Fri, 2 Apr 2004 20:56:50 +0200 (CEST)\n>> >From: Roger Bivand <Roger.Bivand at nhh.no>\n>> >Subject: [R-sig-Geo] Using SJava?\n>> >To: r-sig-geo at stat.math.ethz.ch \n>> >Cc: Frank Hardisty <HardistF at gwm.sc.edu>\n>> >Message-ID:\n><Pine.LNX.4.44.0404022042580.28093-100000 at reclus.nhh.no>\n>> >Content-Type: TEXT/PLAIN;\tcharset=US-ASCII\n>> >\n>> >Is anyone on this list using SJava or any R/Java connection? \n>> >Not only is\n>> >the JTS Topology Suite that Tim just mentioned interesting, \n>> >but so is the\n>> >upcoming GeoTools2 at http://www.geotools.org/. Both are \n>> >likely to be used \n>> >quite a lot, and thus probably well-maintained.\n>> >\n>> >At the recent Association of American Geographers meeting, \n>> >Frank Hardisty\n>> >asked me about this, and while I was able to install SJava (from\n>> >http://www.stats.ox.ac.uk/pub/RWin) on a Win XP laptop, we \n>> >were not able\n>> >to see how to get Java within R to see GeoTools in its \n>> >classpath.  Both of\n>> >these Java resources are potentially useful, and R opinions \n>> >two or three\n>> >years ago, that Java is slow, may need revision given increased\n>machine\n>> >capacity. I feel we could benefit from mobilizing Java insight \n>> >(but I feel\n>> >personally Java-challenged!).\n>> >\n>> >I believe that Duncan Temple-Lang was playing with/working on object\n>\n>> >discovery - this could be very relevant in terms of matching \n>> >R-internal \n>> >object representations with those in existing software that we \n>> >could - if \n>> >SJava worked - link to. I also think that we could ask him for \n>> >advice if \n>> >we discussed it first here. What do others think?\n>> >\n>> >-- \n>> >Roger Bivand\n>> >Economic Geography Section, Department of Economics, Norwegian \n>> >School of\n>> >Economics and Business Administration, Breiviksveien 40, N-5045\n>Bergen,\n>> >Norway. voice: +47 55 95 93 55; fax +47 55 95 93 93\n>> >e-mail: Roger.Bivand at nhh.no \n>> >\n>> >\n>> >\n>> \n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch \n>> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo \n>> \n>\n>-- \n>Roger Bivand\n>Economic Geography Section, Department of Economics, Norwegian School\n>of\n>Economics and Business Administration, Breiviksveien 40, N-5045\n>Bergen,\n>Norway. voice: +47 55 95 93 55; fax +47 55 95 93 93\n>e-mail: Roger.Bivand at nhh.no \n>\n>\n>\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: sig.class\nType: application/octet-stream\nSize: 476 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20040405/3931ed6a/attachment.class>\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: sig.java\nType: application/octet-stream\nSize: 342 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20040405/3931ed6a/attachment.obj>\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: sig.jar\nType: application/octet-stream\nSize: 809 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20040405/3931ed6a/attachment-0001.obj>",
+      "body_snippet": "Frank and Roger,\n\nSorry about the path reference - I just added the example on the fly in the\nemail and forgot about the R escape character.  Attached is the simply class\nthat I used to test the link.",
+      "thread_id": "thread-2e0f92f54c11",
+      "thread_depth": 0,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-a6e10399ff52",
+      "message_id": "<Pine.LNX.4.44.0404061341540.8695-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-04-06T14:01:10+02:00",
+      "subject": "[R-sig-Geo] RE: Using SJava?",
+      "subject_clean": "Using SJava?",
+      "in_reply_to": "<76A000A82289D411952F001083F9DD06047FE57B@exsalem4-bu.odot.state.or.us>",
+      "references": [],
+      "body_plain": "Again, very promising, the simple jars can be accessed - what is the next \nstep?\n\nSo far we have SJava (the Windows binary downloaded from \nhttp://www.stats.ox.ac.uk/pub/RWin) talking to itself, and to two simple \nJava examples. There are two issues, the classpath one, and whether or not \nto call .JavaConstructor() to create a copy on the R side of the class. Is \nthere a way of asking a jar to reveal the class names it contains - are \nthe class structures \"discoverable\". Could I ask \"sig\" for its length, for \nexample?\n\nI'm keeping this discussion on the list for now, because accessing \ngeotools (and other Java resources) is at least worth trying, and to do \nthat more hands and eyes are needed.\n\nRoger\n\n\nOn Mon, 5 Apr 2004 Benjamin.STABLER at odot.state.or.us wrote:\n\n> Frank and Roger,\n> \n> Sorry about the path reference - I just added the example on the fly in the\n> email and forgot about the R escape character.  Attached is the simply class\n> that I used to test the link.  It just takes a string as an input and\n> returns my email signature with the string substituted for the name.\n> \n> The R code to run it:\n> \n> library(SJava)\n> .JavaInit(config=javaConfig(classPath=\"F:/_ben/java\"))\n> .Java(\"sig\",\"print\",\"Ben Stabler\")\n> \n> \n> In terms of the jar file, it seems to work for me.  Note that I moved the\n> jar file to a different directory so it did not find the class file by\n> itself as well.\n> \n> > library(SJava)\n> using JAVA_HOME = C:\\j2sdk1.4.2\\jre \n> > .JavaInit(config=javaConfig(classPath=\"F:/_ben/sig.jar\"))\n> > .Java(\"sig\",\"print\",\"Ben Stabler\")\n> [1] \"Ben Stabler\"                         \"Oregon Department of\n> Transportation\"\n> [3] \"Mill Creek Office Building\"          \"555 13th Street NE Suite 2\"\n> \n> [5] \"Salem, OR 97301-4178\"               \n> > \n> \n> The print method of the sig class is static so I'm not having any difficulty\n> using static methods and I did not need to create a constructor first.  You\n> shouldn't need a constructor/object for a static method (that is the point\n> of static methods).  Unfortunately my IS department blocked the zip file you\n> sent.  Could you send me the code as text or maybe just copy into email?\n> Thanks.  \n> \n> Ben\n> \n> \n> >-----Original Message-----\n> >From: Frank Hardisty [mailto:HardistF at gwm.sc.edu]\n> >Sent: Monday, April 05, 2004 1:07 PM\n> >To: Roger.Bivand at nhh.no\n> >Cc: STABLER Benjamin\n> >Subject: Re: [R-sig-Geo] RE: Using SJava?\n> >\n> >\n> >Roger and Benjamin,\n> >\n> >Benjamin, your advice is good and the test class does work. Roger, one\n> >difficulty is that we were calling a static method of the class, which\n> >does NOT work for some reason. However, the class can be instantiated\n> >and used from within R. Here's my session with my mistakes edited out:\n> >\n> >[Previously saved workspace restored]\n> >\n> >> library(SJava)\n> >using JAVA_HOME = C:\\programs\\j2sdk_nb\\j2sdk1.4.2 \n> >> .JavaInit(config=javaConfig(classPath=\"C:/temp/javatest/test.jar\"))\n> >> testClass <- .JavaConstructor(\"TestJava\")\n> >> .Java(testClass,\"getMessage\")\n> >[1] \"Hi Roger!\"\n> >> \n> >\n> >Benjamin, do you also find that static methods don't work in SJava?\n> >It's hard to understand, because calls to static methods in the Java\n> >runtime libraries work just fine, for example, \n> >\n> >> .Java(\"Math\",\"random\")\n> >[1] 0.07714792\n> >\n> >regards,\n> >-Frank\n> >\n> >>>> Roger Bivand <Roger.Bivand at nhh.no> 04/05/04 03:36PM >>>\n> >On Mon, 5 Apr 2004 Benjamin.STABLER at odot.state.or.us wrote:\n> >\n> >> Hopefully, I'm not too late on this one....when you initialize the\n> >JVM you\n> >> need to set the class path as follows:\n> >> \n> >>\n> >.JavaInit(config=javaConfig(classPath=\"StringDirectoryPathReference\"))\n> >> \n> >> or\n> >> \n> >> .JavaInit(config=javaConfig(classPath=c(\"String1\", \"String2\")))\n> >> \n> >> for example:\n> >> \n> >> .JavaInit(config=javaConfig(classPath=\"C:\\javastuff\"))\n> >> \n> >> where javastuff contains my class files.  You need to specify the jar\n> >file\n> >> name if you are trying to include class files within jars.  I have\n> >used it\n> >> with some classes that I wrote.  \n> >\n> >Yes, and Sys.putenv(\"CLASSPATH\"=\"String1\") can be used too, but what do\n> >\n> >you put in .Java() to get into your own jars? Are there escaping issues\n> >in \n> >the path to the jars? (backslash twice? forwardslash?) Could we put up\n> >\n> >some jars and some instructions for use on a website? Frank Hardisty\n> >sent \n> >me an example off-list that works from the command line but which I\n> >can't \n> >find from within R/SJava (Windows XP, the SJava examples that I've\n> >tried \n> >work for me). \n> >\n> >The idea would be to see if GeoTools2 can be reached from within R, \n> >because it could provide (another) way to import/export multiple GIS \n> >formats.\n> >\n> >Roger\n> >\n> >> \n> >> I too am excited about linking Java and R, as there is so much useful\n> >code\n> >> in the Java community.\n> >> \n> >> Benjamin Stabler\n> >> Transportation Planning Analysis Unit\n> >> Oregon Department of Transportation\n> >> 555 13th Street NE, Suite 2\n> >> Salem, OR 97301  Ph: 503-986-4104\n> >> \n> >> \n> >> >Message: 5\n> >> >Date: Fri, 2 Apr 2004 20:56:50 +0200 (CEST)\n> >> >From: Roger Bivand <Roger.Bivand at nhh.no>\n> >> >Subject: [R-sig-Geo] Using SJava?\n> >> >To: r-sig-geo at stat.math.ethz.ch \n> >> >Cc: Frank Hardisty <HardistF at gwm.sc.edu>\n> >> >Message-ID:\n> ><Pine.LNX.4.44.0404022042580.28093-100000 at reclus.nhh.no>\n> >> >Content-Type: TEXT/PLAIN;\tcharset=US-ASCII\n> >> >\n> >> >Is anyone on this list using SJava or any R/Java connection? \n> >> >Not only is\n> >> >the JTS Topology Suite that Tim just mentioned interesting, \n> >> >but so is the\n> >> >upcoming GeoTools2 at http://www.geotools.org/. Both are \n> >> >likely to be used \n> >> >quite a lot, and thus probably well-maintained.\n> >> >\n> >> >At the recent Association of American Geographers meeting, \n> >> >Frank Hardisty\n> >> >asked me about this, and while I was able to install SJava (from\n> >> >http://www.stats.ox.ac.uk/pub/RWin) on a Win XP laptop, we \n> >> >were not able\n> >> >to see how to get Java within R to see GeoTools in its \n> >> >classpath.  Both of\n> >> >these Java resources are potentially useful, and R opinions \n> >> >two or three\n> >> >years ago, that Java is slow, may need revision given increased\n> >machine\n> >> >capacity. I feel we could benefit from mobilizing Java insight \n> >> >(but I feel\n> >> >personally Java-challenged!).\n> >> >\n> >> >I believe that Duncan Temple-Lang was playing with/working on object\n> >\n> >> >discovery - this could be very relevant in terms of matching \n> >> >R-internal \n> >> >object representations with those in existing software that we \n> >> >could - if \n> >> >SJava worked - link to. I also think that we could ask him for \n> >> >advice if \n> >> >we discussed it first here. What do others think?\n> >> >\n> >> >-- \n> >> >Roger Bivand\n> >> >Economic Geography Section, Department of Economics, Norwegian \n> >> >School of\n> >> >Economics and Business Administration, Breiviksveien 40, N-5045\n> >Bergen,\n> >> >Norway. voice: +47 55 95 93 55; fax +47 55 95 93 93\n> >> >e-mail: Roger.Bivand at nhh.no \n> >> >\n> >> >\n> >> >\n> >> \n> >> _______________________________________________\n> >> R-sig-Geo mailing list\n> >> R-sig-Geo at stat.math.ethz.ch \n> >> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo \n> >> \n> >\n> >-- \n> >Roger Bivand\n> >Economic Geography Section, Department of Economics, Norwegian School\n> >of\n> >Economics and Business Administration, Breiviksveien 40, N-5045\n> >Bergen,\n> >Norway. voice: +47 55 95 93 55; fax +47 55 95 93 93\n> >e-mail: Roger.Bivand at nhh.no \n> >\n> >\n> >\n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "Again, very promising, the simple jars can be accessed - what is the next \nstep?\n\nSo far we have SJava (the Windows binary downloaded from \nhttp://www.stats.ox.ac.uk/pub/RWin) talking to itself, and t",
+      "thread_id": "thread-2e0f92f54c11",
+      "thread_depth": 1,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-3afc4099c513",
+      "message_id": "<76A000A82289D411952F001083F9DD06047FE58B@exsalem4-bu.odot.state.or.us>",
+      "from_name": "Benjamin.STABLER at odot.state.or.us",
+      "from_email_hash": "f3988f2d9007a81e189aed2184879c9a32021dfaaabd6a61ba64fe510e934f68",
+      "date": "2004-04-08T12:00:11-07:00",
+      "subject": "[R-sig-Geo] RE: Using SJava?",
+      "subject_clean": "Using SJava?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Roger,\n\nTo read the contents of a JAR use the java.util.jar package.  In terms of\nthe first two issues - 1) you shouldn't need to create an object to call a\nstatic method and 2) referencing classes within jars should work.  Let me\nfirst say that I am no Java expert.  I will just share what I (think I) have\nfigured out over time.  In order for class references to work within jars\nand within nested packages you need to reference the class correctly.  I\nlike to think of packages as just fancy names for folders.  So if I add\n\"package tools;\" to the top of sig.java and then I compile it, I must\nreference that folder correctly.  First I have to create a folder in the\nfolder that I added to the class path and copy sig.class to that folder.  To\ncall the class in R, I must refer to the class within the tools package.\n\n.JavaInit(config=javaConfig(classPath=\"F:/_ben/java\"))\n\n> .Java(\"tools.sig\",\"print\",\"Ben Stabler\")\n[1] \"Ben Stabler\"                         \"Oregon Department of\nTransportation\"\n[3] \"Mill Creek Office Building\"          \"555 13th Street NE Suite 2\"\n\n[5] \"Salem, OR 97301-4178\"             \n\nWhen you put classes inside jars, the packages (folders) must be included.\nSo I put the sig.class file in the jar and refer to tools.sig in the method\ncall.  Note also that I created the jar file with the following command:\n\njar -cvf sig.jar tools\n\nThis added the tools folder to the jar.\n\n> library(SJava)\nusing JAVA_HOME = C:\\j2sdk1.4.2\\jre \n> .JavaInit(config=javaConfig(classPath=\"F:/_ben/sig.jar\"))\n> .Java(\"tools.sig\",\"print\",\"Ben Stabler\")\n[1] \"Ben Stabler\"                         \"Oregon Department of\nTransportation\"\n[3] \"Mill Creek Office Building\"          \"555 13th Street NE Suite 2\"\n\n[5] \"Salem, OR 97301-4178\"               \n> \n\nIf I add the tools folder to the jar by referring to the class via the\nfolder then it gets added:\n\njar -cvf sig.jar tools/sig.class\n\n> library(SJava)\nusing JAVA_HOME = C:\\j2sdk1.4.2\\jre \n> .JavaInit(config=javaConfig(classPath=\"F:/_ben/sig.jar\"))\n> .Java(\"tools.sig\",\"print\",\"Ben Stabler\")\n[1] \"Ben Stabler\"                         \"Oregon Department of\nTransportation\"\n[3] \"Mill Creek Office Building\"          \"555 13th Street NE Suite 2\"\n\n[5] \"Salem, OR 97301-4178\"               \n> \n\nBut if I just add the file (the current working directory is tools)\n\njar -cvf sig.jar sig.class\n\nthen I lost the folder reference and I can't get to the class within the jar\n\n> library(SJava)\nusing JAVA_HOME = C:\\j2sdk1.4.2\\jre \n> .JavaInit(config=javaConfig(classPath=\"F:/_ben/tools/sig.jar\"))\n> .Java(\"sig\",\"print\",\"Ben Stabler\")\nNULL\n> .Java(\"tools.sig\",\"print\",\"Ben Stabler\")\nNULL\n> \n\nSo hopefully that should help clear up some of the classpath and package\nreference issues.  There are probably better ways to work with the packages\nand classpath - I just don't know them.  These notes work and that is good\nenough for my purposes.  \n\nBenjamin Stabler\nTransportation Planning Analysis Unit\nOregon Department of Transportation\n555 13th Street NE, Suite 2\nSalem, OR 97301  Ph: 503-986-4104\n\n>-----Original Message-----\n>From: Roger Bivand [mailto:Roger.Bivand at nhh.no]\n>Sent: Tuesday, April 06, 2004 5:01 AM\n>To: STABLER Benjamin\n>Cc: r-sig-geo at stat.math.ethz.ch\n>Subject: Re: [R-sig-Geo] RE: Using SJava?\n>\n>\n>Again, very promising, the simple jars can be accessed - what \n>is the next \n>step?\n>\n>So far we have SJava (the Windows binary downloaded from \n>http://www.stats.ox.ac.uk/pub/RWin) talking to itself, and to \n>two simple \n>Java examples. There are two issues, the classpath one, and \n>whether or not \n>to call .JavaConstructor() to create a copy on the R side of \n>the class. Is \n>there a way of asking a jar to reveal the class names it \n>contains - are \n>the class structures \"discoverable\". Could I ask \"sig\" for its \n>length, for \n>example?\n>\n>I'm keeping this discussion on the list for now, because accessing \n>geotools (and other Java resources) is at least worth trying, \n>and to do \n>that more hands and eyes are needed.\n>\n>Roger\n>\n>\n>On Mon, 5 Apr 2004 Benjamin.STABLER at odot.state.or.us wrote:\n>\n>> Frank and Roger,\n>> \n>> Sorry about the path reference - I just added the example on \n>the fly in the\n>> email and forgot about the R escape character.  Attached is \n>the simply class\n>> that I used to test the link.  It just takes a string as an input and\n>> returns my email signature with the string substituted for the name.\n>> \n>> The R code to run it:\n>> \n>> library(SJava)\n>> .JavaInit(config=javaConfig(classPath=\"F:/_ben/java\"))\n>> .Java(\"sig\",\"print\",\"Ben Stabler\")\n>> \n>> \n>> In terms of the jar file, it seems to work for me.  Note \n>that I moved the\n>> jar file to a different directory so it did not find the \n>class file by\n>> itself as well.\n>> \n>> > library(SJava)\n>> using JAVA_HOME = C:\\j2sdk1.4.2\\jre \n>> > .JavaInit(config=javaConfig(classPath=\"F:/_ben/sig.jar\"))\n>> > .Java(\"sig\",\"print\",\"Ben Stabler\")\n>> [1] \"Ben Stabler\"                         \"Oregon Department of\n>> Transportation\"\n>> [3] \"Mill Creek Office Building\"          \"555 13th Street \n>NE Suite 2\"\n>> \n>> [5] \"Salem, OR 97301-4178\"               \n>> > \n>> \n>> The print method of the sig class is static so I'm not \n>having any difficulty\n>> using static methods and I did not need to create a \n>constructor first.  You\n>> shouldn't need a constructor/object for a static method \n>(that is the point\n>> of static methods).  Unfortunately my IS department blocked \n>the zip file you\n>> sent.  Could you send me the code as text or maybe just copy \n>into email?\n>> Thanks.  \n>> \n>> Ben\n>> \n>> \n>> >-----Original Message-----\n>> >From: Frank Hardisty [mailto:HardistF at gwm.sc.edu]\n>> >Sent: Monday, April 05, 2004 1:07 PM\n>> >To: Roger.Bivand at nhh.no\n>> >Cc: STABLER Benjamin\n>> >Subject: Re: [R-sig-Geo] RE: Using SJava?\n>> >\n>> >\n>> >Roger and Benjamin,\n>> >\n>> >Benjamin, your advice is good and the test class does work. \n>Roger, one\n>> >difficulty is that we were calling a static method of the \n>class, which\n>> >does NOT work for some reason. However, the class can be \n>instantiated\n>> >and used from within R. Here's my session with my mistakes \n>edited out:\n>> >\n>> >[Previously saved workspace restored]\n>> >\n>> >> library(SJava)\n>> >using JAVA_HOME = C:\\programs\\j2sdk_nb\\j2sdk1.4.2 \n>> >> \n>.JavaInit(config=javaConfig(classPath=\"C:/temp/javatest/test.jar\"))\n>> >> testClass <- .JavaConstructor(\"TestJava\")\n>> >> .Java(testClass,\"getMessage\")\n>> >[1] \"Hi Roger!\"\n>> >> \n>> >\n>> >Benjamin, do you also find that static methods don't work in SJava?\n>> >It's hard to understand, because calls to static methods in the Java\n>> >runtime libraries work just fine, for example, \n>> >\n>> >> .Java(\"Math\",\"random\")\n>> >[1] 0.07714792\n>> >\n>> >regards,\n>> >-Frank\n>> >\n>> >>>> Roger Bivand <Roger.Bivand at nhh.no> 04/05/04 03:36PM >>>\n>> >On Mon, 5 Apr 2004 Benjamin.STABLER at odot.state.or.us wrote:\n>> >\n>> >> Hopefully, I'm not too late on this one....when you initialize the\n>> >JVM you\n>> >> need to set the class path as follows:\n>> >> \n>> >>\n>> \n>>.JavaInit(config=javaConfig(classPath=\"StringDirectoryPathReference\"))\n>> >> \n>> >> or\n>> >> \n>> >> .JavaInit(config=javaConfig(classPath=c(\"String1\", \"String2\")))\n>> >> \n>> >> for example:\n>> >> \n>> >> .JavaInit(config=javaConfig(classPath=\"C:\\javastuff\"))\n>> >> \n>> >> where javastuff contains my class files.  You need to \n>specify the jar\n>> >file\n>> >> name if you are trying to include class files within jars.  I have\n>> >used it\n>> >> with some classes that I wrote.  \n>> >\n>> >Yes, and Sys.putenv(\"CLASSPATH\"=\"String1\") can be used too, \n>but what do\n>> >\n>> >you put in .Java() to get into your own jars? Are there \n>escaping issues\n>> >in \n>> >the path to the jars? (backslash twice? forwardslash?) \n>Could we put up\n>> >\n>> >some jars and some instructions for use on a website? Frank Hardisty\n>> >sent \n>> >me an example off-list that works from the command line but which I\n>> >can't \n>> >find from within R/SJava (Windows XP, the SJava examples that I've\n>> >tried \n>> >work for me). \n>> >\n>> >The idea would be to see if GeoTools2 can be reached from within R, \n>> >because it could provide (another) way to import/export \n>multiple GIS \n>> >formats.\n>> >\n>> >Roger\n>> >\n>> >> \n>> >> I too am excited about linking Java and R, as there is so \n>much useful\n>> >code\n>> >> in the Java community.\n>> >> \n>> >> Benjamin Stabler\n>> >> Transportation Planning Analysis Unit\n>> >> Oregon Department of Transportation\n>> >> 555 13th Street NE, Suite 2\n>> >> Salem, OR 97301  Ph: 503-986-4104\n>> >> \n>> >> \n>> >> >Message: 5\n>> >> >Date: Fri, 2 Apr 2004 20:56:50 +0200 (CEST)\n>> >> >From: Roger Bivand <Roger.Bivand at nhh.no>\n>> >> >Subject: [R-sig-Geo] Using SJava?\n>> >> >To: r-sig-geo at stat.math.ethz.ch \n>> >> >Cc: Frank Hardisty <HardistF at gwm.sc.edu>\n>> >> >Message-ID:\n>> ><Pine.LNX.4.44.0404022042580.28093-100000 at reclus.nhh.no>\n>> >> >Content-Type: TEXT/PLAIN;\tcharset=US-ASCII\n>> >> >\n>> >> >Is anyone on this list using SJava or any R/Java connection? \n>> >> >Not only is\n>> >> >the JTS Topology Suite that Tim just mentioned interesting, \n>> >> >but so is the\n>> >> >upcoming GeoTools2 at http://www.geotools.org/. Both are \n>> >> >likely to be used \n>> >> >quite a lot, and thus probably well-maintained.\n>> >> >\n>> >> >At the recent Association of American Geographers meeting, \n>> >> >Frank Hardisty\n>> >> >asked me about this, and while I was able to install SJava (from\n>> >> >http://www.stats.ox.ac.uk/pub/RWin) on a Win XP laptop, we \n>> >> >were not able\n>> >> >to see how to get Java within R to see GeoTools in its \n>> >> >classpath.  Both of\n>> >> >these Java resources are potentially useful, and R opinions \n>> >> >two or three\n>> >> >years ago, that Java is slow, may need revision given increased\n>> >machine\n>> >> >capacity. I feel we could benefit from mobilizing Java insight \n>> >> >(but I feel\n>> >> >personally Java-challenged!).\n>> >> >\n>> >> >I believe that Duncan Temple-Lang was playing \n>with/working on object\n>> >\n>> >> >discovery - this could be very relevant in terms of matching \n>> >> >R-internal \n>> >> >object representations with those in existing software that we \n>> >> >could - if \n>> >> >SJava worked - link to. I also think that we could ask him for \n>> >> >advice if \n>> >> >we discussed it first here. What do others think?\n>> >> >\n>> >> >-- \n>> >> >Roger Bivand\n>> >> >Economic Geography Section, Department of Economics, Norwegian \n>> >> >School of\n>> >> >Economics and Business Administration, Breiviksveien 40, N-5045\n>> >Bergen,\n>> >> >Norway. voice: +47 55 95 93 55; fax +47 55 95 93 93\n>> >> >e-mail: Roger.Bivand at nhh.no \n>> >> >\n>> >> >\n>> >> >\n>> >> \n>> >> _______________________________________________\n>> >> R-sig-Geo mailing list\n>> >> R-sig-Geo at stat.math.ethz.ch \n>> >> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo \n>> >> \n>> >\n>> >-- \n>> >Roger Bivand\n>> >Economic Geography Section, Department of Economics, \n>Norwegian School\n>> >of\n>> >Economics and Business Administration, Breiviksveien 40, N-5045\n>> >Bergen,\n>> >Norway. voice: +47 55 95 93 55; fax +47 55 95 93 93\n>> >e-mail: Roger.Bivand at nhh.no \n>> >\n>> >\n>> >\n>> \n>> \n>\n>-- \n>Roger Bivand\n>Economic Geography Section, Department of Economics, Norwegian \n>School of\n>Economics and Business Administration, Breiviksveien 40, N-5045 Bergen,\n>Norway. voice: +47 55 95 93 55; fax +47 55 95 93 93\n>e-mail: Roger.Bivand at nhh.no\n>\n>",
+      "body_snippet": "Roger,\n\nTo read the contents of a JAR use the java.util.jar package.  In terms of\nthe first two issues - 1) you shouldn't need to create an object to call a\nstatic method and 2) referencing classes wi",
+      "thread_id": "thread-3afc4099c513",
+      "thread_depth": 0,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-ba6071eb82f1",
+      "message_id": "<3B57814A-8FCE-11D8-8972-000A27D7D440@colorado.edu>",
+      "from_name": "Christof Bigler",
+      "from_email_hash": "a10126cb1b21d332ee44409f44c974bf1624f08c6d6471afee12ecefbcb03761",
+      "date": "2004-04-16T11:48:12-06:00",
+      "subject": "[R-sig-Geo] Chi-square test with spatial data",
+      "subject_clean": "Chi-square test with spatial data",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi\n\nI have grid based, spatial data, and for each grid cell I have several \nvariables (fire severity, elevation, vegetation etc.). I would like to \nknow if there is e.g. lower fire severity above 3000 m a.s.l. as \ncompared to below 3000 m.\nSince the data are highly correlated, I wondered if it's possible to \ntest the independence of two variables using chi-square tests. Is there \nany correction that could be used to correct the p values?\n\nThanks for your help!\nChristof",
+      "body_snippet": "Hi\n\nI have grid based, spatial data, and for each grid cell I have several \nvariables (fire severity, elevation, vegetation etc.). I would like to \nknow if there is e.g. lower fire severity above 3000",
+      "thread_id": "thread-ba6071eb82f1",
+      "thread_depth": 0,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-7fb5cf5a9b08",
+      "message_id": "<003a01c4253b$6e705410$528001db@webgis>",
+      "from_name": "Hisaji ONO",
+      "from_email_hash": "4857db17b7e848ab1379157d08a470dfc3f16a2fe4d02ed4b21725afd9ea2f9d",
+      "date": "2004-04-18T20:51:05+09:00",
+      "subject": "[R-sig-Geo] About \"as.CRSPts\" function of proj4R",
+      "subject_clean": "About \"as.CRSPts\" function of proj4R",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello.\n\n I've tried to execute \"example(as.CRSPts)\" of proj4R package.\n\n But I've got following error message.\n\na.CRSP> data(state)\n\na.CRSP> state.xy <- xyPts(state.center$x, state.center$y)\n\na.CRSP> state.xy.cot <- state.xy[state.xy at x >= -121]\n\na.CRSP> state.xy.cot.ll27 <- as.CRSPts(state.xy.cot, CRS =\nCRS(\"+proj=latlong +datum=NAD27\"))\nError in asMethod(object, Class, value) : couldn't find function\n\".InhSlotNames\"\n\n Could you give any suggestion?\n\n\n Regards.",
+      "body_snippet": "Hello.\n\n I've tried to execute \"example(as.CRSPts)\" of proj4R package.\n\n But I've got following error message.\n\na.CRSP> data(state)\n\na.CRSP> state.xy <- xyPts(state.center$x, state.center$y)\n\na.CRSP> ",
+      "thread_id": "thread-7fb5cf5a9b08",
+      "thread_depth": 0,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-463c2a816c2c",
+      "message_id": "<Pine.LNX.4.44.0404182127540.14248-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2004-04-18T21:31:22+02:00",
+      "subject": "[R-sig-Geo] About \"as.CRSPts\" function of proj4R",
+      "subject_clean": "About \"as.CRSPts\" function of proj4R",
+      "in_reply_to": "<003a01c4253b$6e705410$528001db@webgis>",
+      "references": [],
+      "body_plain": "On Sun, 18 Apr 2004, Hisaji ONO wrote:\n\n> Hello.\n> \n>  I've tried to execute \"example(as.CRSPts)\" of proj4R package.\n> \n>  But I've got following error message.\n> \n> a.CRSP> data(state)\n> \n> a.CRSP> state.xy <- xyPts(state.center$x, state.center$y)\n> \n> a.CRSP> state.xy.cot <- state.xy[state.xy at x >= -121]\n> \n> a.CRSP> state.xy.cot.ll27 <- as.CRSPts(state.xy.cot, CRS =\n> CRS(\"+proj=latlong +datum=NAD27\"))\n> Error in asMethod(object, Class, value) : couldn't find function\n> \".InhSlotNames\"\n> \n\nThe source package check OK for me on R 1.9.0 as released (fresh install). \nPlease try R CMD check proj4R in the directory above the untarred tar.gz \nfile, and also say which R version you are using. I suspect that you've \nupgraded R, that something in the methods package has changed, and your \npre-canned proj4R is now asking for a methods function that has gone away \n- is that possible?\n\nRoger\n\n\n\n>  Could you give any suggestion?\n> \n> \n>  Regards.\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Sun, 18 Apr 2004, Hisaji ONO wrote:\n\n> Hello.\n> \n>  I've tried to execute \"example(as.CRSPts)\" of proj4R package.\n> \n>  But I've got following error message.\n> \n> a.CRSP> data(state)\n> \n> a.CRSP> s",
+      "thread_id": "thread-7fb5cf5a9b08",
+      "thread_depth": 1,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-01a2683360a6",
+      "message_id": "<005b01c4267e$934bf520$528001db@webgis>",
+      "from_name": "Hisaji ONO",
+      "from_email_hash": "4857db17b7e848ab1379157d08a470dfc3f16a2fe4d02ed4b21725afd9ea2f9d",
+      "date": "2004-04-20T11:24:14+09:00",
+      "subject": "[R-sig-Geo] How to add legends and scalebars for Rmap or maptools",
+      "subject_clean": "How to add legends and scalebars for Rmap or maptools",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello.\n\n Rmap and maptools can produce nice thematic maps.\n\n But how to add legends and scalebars for these maps?\n\n I'll appreciate your help.\n\n Regards.",
+      "body_snippet": "Hello.\n\n Rmap and maptools can produce nice thematic maps.\n\n But how to add legends and scalebars for these maps?\n\n I'll appreciate your help.\n\n Regards.",
+      "thread_id": "thread-01a2683360a6",
+      "thread_depth": 0,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-b97704169d77",
+      "message_id": "<000801c42d3a$03d41400$21a2f080@Lepc204>",
+      "from_name": "Joao Pedro W. de Azevedo",
+      "from_email_hash": "f64306701169d57899ea48fbd1659865509f690c34d4dce0ee45e67fb2b2ad1a",
+      "date": "2004-04-28T17:01:06+01:00",
+      "subject": "[R-sig-Geo] panel data with spatial correlation",
+      "subject_clean": "panel data with spatial correlation",
+      "in_reply_to": "<16527.24351.506292.53271@gargle.gargle.HOWL>",
+      "references": [],
+      "body_plain": "Dear R users,\nI would like to estimate a random and fixed effect panel data with spatial\ncorrelation. \nI would honestly appreciate if anyone could point me toward any reference on\nhow I could estimate such models using R. All the best, Joao Pedro",
+      "body_snippet": "Dear R users,\nI would like to estimate a random and fixed effect panel data with spatial\ncorrelation. \nI would honestly appreciate if anyone could point me toward any reference on\nhow I could estimate",
+      "thread_id": "thread-b97704169d77",
+      "thread_depth": 0,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-f92e6caff5f0",
+      "message_id": "<Pine.OSF.3.96.1040428113319.32417B-100000@alpha1.csd.uwm.edu>",
+      "from_name": "Danlin Yu",
+      "from_email_hash": "4f915e68a518939af5a3635130e4f5d4fce8d20a4aa423f20c96efe2c1b26e13",
+      "date": "2004-04-28T11:41:25-05:00",
+      "subject": "[R-sig-Geo] panel data with spatial correlation",
+      "subject_clean": "panel data with spatial correlation",
+      "in_reply_to": "<000801c42d3a$03d41400$21a2f080@Lepc204>",
+      "references": [],
+      "body_plain": "Dear Joao Pedro W. De Azevedo:\n\n    The SPDEP package in R has the functions that would help. The\nfree-downloadable documentaion (in pdf format) contains very detailed\ninformation on how to use the package and has very useful references for\nfurther reading if you like.\n    Hope this helps.\n\nOn Wed, 28 Apr 2004, Joao Pedro W. de Azevedo wrote:\n\n> Dear R users,\n> I would like to estimate a random and fixed effect panel data with spatial\n> correlation. \n> I would honestly appreciate if anyone could point me toward any reference on\n> how I could estimate such models using R. All the best, Joao Pedro\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n    Sincerely,\n    Danlin Yu\n\n----------------------------------\nPh.D. Candidate\nDepartment of Geography\nUniversity of Wisconsin, Milwaukee\nTel: (414)229-5818\nFax: (414)229-3981\nEmail: danlinyu at uwm.edu",
+      "body_snippet": "Dear Joao Pedro W. De Azevedo:\n\n    The SPDEP package in R has the functions that would help. The\nfree-downloadable documentaion (in pdf format) contains very detailed\ninformation on how to use the pa",
+      "thread_id": "thread-b97704169d77",
+      "thread_depth": 1,
+      "month": "2004-04"
+    },
+    {
+      "id": "msg-a7b4082c9445",
+      "message_id": "<000001c42d47$e2d738a0$a200a8c0@Lepc204>",
+      "from_name": "Joao Pedro W. de Azevedo",
+      "from_email_hash": "f64306701169d57899ea48fbd1659865509f690c34d4dce0ee45e67fb2b2ad1a",
+      "date": "2004-04-28T18:40:24+01:00",
+      "subject": "[R-sig-Geo] panel data with spatial correlation",
+      "subject_clean": "panel data with spatial correlation",
+      "in_reply_to": "<Pine.OSF.3.96.1040428113319.32417B-100000@alpha1.csd.uwm.edu>",
+      "references": [],
+      "body_plain": "Dear Danlin,\nMany thanks for your suggestion, however my understand of spdep is that it\nonly estimates cross-section models.\nAny other help will be much appreciated.\nAll the best,\nJoao Pedro\n\n\n\n-----Original Message-----\nFrom: Danlin Yu [mailto:danlinyu at csd.uwm.edu] \nSent: Wednesday, April 28, 2004 5:41 PM\nTo: Joao Pedro W. de Azevedo\nCc: r-sig-geo at stat.math.ethz.ch\nSubject: Re: [R-sig-Geo] panel data with spatial correlation\n\n\nDear Joao Pedro W. De Azevedo:\n\n    The SPDEP package in R has the functions that would help. The\nfree-downloadable documentaion (in pdf format) contains very detailed\ninformation on how to use the package and has very useful references for\nfurther reading if you like.\n    Hope this helps.\n\nOn Wed, 28 Apr 2004, Joao Pedro W. de Azevedo wrote:\n\n> Dear R users,\n> I would like to estimate a random and fixed effect panel data with \n> spatial correlation. I would honestly appreciate if anyone could point \n> me toward any reference on how I could estimate such models using R. \n> All the best, Joao Pedro\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch \n> https://www.stat.math.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n    Sincerely,\n    Danlin Yu\n\n----------------------------------\nPh.D. Candidate\nDepartment of Geography\nUniversity of Wisconsin, Milwaukee\nTel: (414)229-5818\nFax: (414)229-3981\nEmail: danlinyu at uwm.edu",
+      "body_snippet": "Dear Danlin,\nMany thanks for your suggestion, however my understand of spdep is that it\nonly estimates cross-section models.\nAny other help will be much appreciated.\nAll the best,\nJoao Pedro\n\n\n\n-----O",
+      "thread_id": "thread-b97704169d77",
+      "thread_depth": 2,
+      "month": "2004-04"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-b5023180c63b",
+      "subject": "Winding Number",
+      "message_count": 4,
+      "participants": [
+        "Clint Bowman",
+        "Roger Bivand",
+        "Timothy H. Keitt"
+      ],
+      "started": "2004-04-02T19:15:12+02:00",
+      "last_reply": "2004-04-02T12:36:50-06:00",
+      "root_message_id": "msg-b5023180c63b"
+    },
+    {
+      "id": "thread-dfd934605927",
+      "subject": "Using SJava?",
+      "message_count": 3,
+      "participants": [
+        "Roger Bivand",
+        "Timothy H. Keitt"
+      ],
+      "started": "2004-04-02T20:56:50+02:00",
+      "last_reply": "2004-04-02T13:09:22-06:00",
+      "root_message_id": "msg-dfd934605927"
+    },
+    {
+      "id": "thread-85ef7e17df20",
+      "subject": "Using SJava?",
+      "message_count": 2,
+      "participants": [
+        "Benjamin.STABLER at odot.state.or.us",
+        "Roger Bivand"
+      ],
+      "started": "2004-04-05T10:42:04-07:00",
+      "last_reply": "2004-04-05T21:36:37+02:00",
+      "root_message_id": "msg-85ef7e17df20"
+    },
+    {
+      "id": "thread-2e0f92f54c11",
+      "subject": "Using SJava?",
+      "message_count": 2,
+      "participants": [
+        "Benjamin.STABLER at odot.state.or.us",
+        "Roger Bivand"
+      ],
+      "started": "2004-04-05T14:21:42-07:00",
+      "last_reply": "2004-04-06T14:01:10+02:00",
+      "root_message_id": "msg-2e0f92f54c11"
+    },
+    {
+      "id": "thread-3afc4099c513",
+      "subject": "Using SJava?",
+      "message_count": 1,
+      "participants": [
+        "Benjamin.STABLER at odot.state.or.us"
+      ],
+      "started": "2004-04-08T12:00:11-07:00",
+      "last_reply": "2004-04-08T12:00:11-07:00",
+      "root_message_id": "msg-3afc4099c513"
+    },
+    {
+      "id": "thread-ba6071eb82f1",
+      "subject": "Chi-square test with spatial data",
+      "message_count": 1,
+      "participants": [
+        "Christof Bigler"
+      ],
+      "started": "2004-04-16T11:48:12-06:00",
+      "last_reply": "2004-04-16T11:48:12-06:00",
+      "root_message_id": "msg-ba6071eb82f1"
+    },
+    {
+      "id": "thread-7fb5cf5a9b08",
+      "subject": "About \"as.CRSPts\" function of proj4R",
+      "message_count": 2,
+      "participants": [
+        "Hisaji ONO",
+        "Roger Bivand"
+      ],
+      "started": "2004-04-18T20:51:05+09:00",
+      "last_reply": "2004-04-18T21:31:22+02:00",
+      "root_message_id": "msg-7fb5cf5a9b08"
+    },
+    {
+      "id": "thread-01a2683360a6",
+      "subject": "How to add legends and scalebars for Rmap or maptools",
+      "message_count": 1,
+      "participants": [
+        "Hisaji ONO"
+      ],
+      "started": "2004-04-20T11:24:14+09:00",
+      "last_reply": "2004-04-20T11:24:14+09:00",
+      "root_message_id": "msg-01a2683360a6"
+    },
+    {
+      "id": "thread-b97704169d77",
+      "subject": "panel data with spatial correlation",
+      "message_count": 3,
+      "participants": [
+        "Danlin Yu",
+        "Joao Pedro W. de Azevedo"
+      ],
+      "started": "2004-04-28T17:01:06+01:00",
+      "last_reply": "2004-04-28T18:40:24+01:00",
+      "root_message_id": "msg-b97704169d77"
+    }
+  ]
+}

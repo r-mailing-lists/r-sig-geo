@@ -1,0 +1,1282 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2006-07",
+  "messages": [
+    {
+      "id": "msg-a2094da83396",
+      "message_id": "<OF7F7D1B74.BA90FE70-ONCA2571A0.001DFB7B-CA2571A0.002116B0@nre.vic.gov.au>",
+      "from_name": "karl.sommer at dpi.vic.gov.au",
+      "from_email_hash": "b8ce016091f51611a2802edccf816d53a6c5a59586fe055b8671a3575427815e",
+      "date": "2006-07-03T16:01:25+10:00",
+      "subject": "[R-sig-Geo] distance calculation; meuse.grid",
+      "subject_clean": "distance calculation; meuse.grid",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello\n\nI was wondering if there is a way in \"R\" or \"sp\" to calculate shortest\ndistance from a given object such as a river, similar to the data example\n\"meuse.grid\"  under the gstat package. I was wondering how the \"dist\"\nvariable in the \"meuse.grid\"  file was orignially calculated?  I would like\nto perform a similar calculation as shortest distance for each point in a\nfield (1m x 1m grid) from an irrigation channel for which I have generated\na shape file.  Or is such an operation better performed in a GIS\nenvironment?\n\nRegards\n\nKarl",
+      "body_snippet": "Hello\n\nI was wondering if there is a way in \"R\" or \"sp\" to calculate shortest\ndistance from a given object such as a river, similar to the data example\n\"meuse.grid\"  under the gstat package. I was won",
+      "thread_id": "thread-a2094da83396",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-6690d51f965f",
+      "message_id": "<Pine.LNX.4.44.0607031104100.27516-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-07-03T11:11:39+02:00",
+      "subject": "[R-sig-Geo] distance calculation; meuse.grid",
+      "subject_clean": "distance calculation; meuse.grid",
+      "in_reply_to": "<OF7F7D1B74.BA90FE70-ONCA2571A0.001DFB7B-CA2571A0.002116B0@nre.vic.gov.au>",
+      "references": [],
+      "body_plain": "On Mon, 3 Jul 2006 karl.sommer at dpi.vic.gov.au wrote:\n\n> \n> Hello\n> \n> I was wondering if there is a way in \"R\" or \"sp\" to calculate shortest\n> distance from a given object such as a river, similar to the data example\n> \"meuse.grid\"  under the gstat package. I was wondering how the \"dist\"\n> variable in the \"meuse.grid\"  file was orignially calculated?  I would like\n> to perform a similar calculation as shortest distance for each point in a\n> field (1m x 1m grid) from an irrigation channel for which I have generated\n> a shape file.  Or is such an operation better performed in a GIS\n> environment?\n\nYou can use spDistsN1() in sp to measure distances from many points to one \npoint, including Great Circle distances. This will not be good enough for \ndistances between other kinds of objects, so a GIS is the obvious choice \nfor that. My guess for the origins of the meuse.grid distances is \nPCRaster, a raster GIS. If your irrigation channel has a lot of detail, \nyou could use spDistsN1 in a loop between the grid of points and each \npoint representing the channel, but it would be very messy, a GIS is \ndesigned to do this.\n\nRoger\n\n> \n> Regards\n> \n> Karl\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 3 Jul 2006 karl.sommer at dpi.vic.gov.au wrote:\n\n> \n> Hello\n> \n> I was wondering if there is a way in \"R\" or \"sp\" to calculate shortest\n> distance from a given object such as a river, similar ",
+      "thread_id": "thread-a2094da83396",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-1408553f3b1f",
+      "message_id": "<17576.61872.719383.235669@maths.uwa.edu.au>",
+      "from_name": "Adrian Baddeley",
+      "from_email_hash": "0a0e76f6b108d4a1bad3941837d331be1eae194226d8adc0ceddc0672c5984c8",
+      "date": "2006-07-03T18:30:08+08:00",
+      "subject": "[R-sig-Geo]  distance calculation; meuse.grid",
+      "subject_clean": "distance calculation; meuse.grid",
+      "in_reply_to": "<mailman.11.1151920804.10328.r-sig-geo@stat.math.ethz.ch>",
+      "references": [
+        "<mailman.11.1151920804.10328.r-sig-geo@stat.math.ethz.ch>"
+      ],
+      "body_plain": "karl.sommer at dpi.vic.gov.au writes:\n\n> I was wondering if there is a way in \"R\" or \"sp\" to calculate shortest\n> distance from a given object such as a river, similar to the data example\n> \"meuse.grid\"  under the gstat package.\n\nIn package 'spatstat' there is a function distmap() \ndesigned for this purpose. \n\nThe object (the river) may be either\n\n\t  - a list of line segments (line segment pattern object, class \"psp\")\n\n\t  - a list of x,y coordinate points (point pattern object, class \"ppp\")\n\nor\n\t  - a binary pixel image (window object, class \"owin\", type \"mask\")\n\nThe return value is a pixel image; the brightness value of each pixel\ngives the shortest distance from that pixel to the target object. \n\nYou can display the pixel image, extract the values at chosen locations\nusing the subset operator \"[ ]\", or extract the entire pixel array\nusing \"as.matrix\".\n\nAdrian Baddeley",
+      "body_snippet": "karl.sommer at dpi.vic.gov.au writes:\n\n> I was wondering if there is a way in \"R\" or \"sp\" to calculate shortest\n> distance from a given object such as a river, similar to the data example\n> \"meuse.gri",
+      "thread_id": "thread-1408553f3b1f",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-c57f59d53cce",
+      "message_id": "<Pine.LNX.4.44.0607031534320.27568-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-07-03T15:40:54+02:00",
+      "subject": "[R-sig-Geo] distance calculation; meuse.grid",
+      "subject_clean": "distance calculation; meuse.grid",
+      "in_reply_to": "<17576.61872.719383.235669@maths.uwa.edu.au>",
+      "references": [],
+      "body_plain": "On Mon, 3 Jul 2006, Adrian Baddeley wrote:\n\n> \n> karl.sommer at dpi.vic.gov.au writes:\n> \n> > I was wondering if there is a way in \"R\" or \"sp\" to calculate shortest\n> > distance from a given object such as a river, similar to the data example\n> > \"meuse.grid\"  under the gstat package.\n> \n> In package 'spatstat' there is a function distmap() \n> designed for this purpose. \n\nExcellent! I'll add suitable functions to the sourceforge repository \nspspatstat package to interface sp classes to this solution, probably \nwithin a month. The as.mask() arguments can be derived from a SpatialGrid \nGridTopology slot, so this will help more people. Visiting \n\nhttp://www.spatstat.org/\n\nis always instructive!\n\n> \n> The object (the river) may be either\n> \n> \t  - a list of line segments (line segment pattern object, class \"psp\")\n> \n> \t  - a list of x,y coordinate points (point pattern object, class \"ppp\")\n> \n> or\n> \t  - a binary pixel image (window object, class \"owin\", type \"mask\")\n> \n> The return value is a pixel image; the brightness value of each pixel\n> gives the shortest distance from that pixel to the target object. \n> \n> You can display the pixel image, extract the values at chosen locations\n> using the subset operator \"[ ]\", or extract the entire pixel array\n> using \"as.matrix\".\n> \n> Adrian Baddeley\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 3 Jul 2006, Adrian Baddeley wrote:\n\n> \n> karl.sommer at dpi.vic.gov.au writes:\n> \n> > I was wondering if there is a way in \"R\" or \"sp\" to calculate shortest\n> > distance from a given object su",
+      "thread_id": "thread-1408553f3b1f",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-2a1a32571d00",
+      "message_id": "<44A93A6B.1080506@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2006-07-03T17:40:27+02:00",
+      "subject": "[R-sig-Geo] universal kriging in gstat",
+      "subject_clean": "universal kriging in gstat",
+      "in_reply_to": "<BAY20-F11D75B4EAAD85E246CD04C97D0@phx.gbl>",
+      "references": [
+        "<BAY20-F11D75B4EAAD85E246CD04C97D0@phx.gbl>"
+      ],
+      "body_plain": "Al? Santacruz wrote:\n> Dear list members,\n>\n> I am trying to perform universal kriging in gstat, and according to the help \n> of 'krige' function, the names of the coordinates of 'newdata' argument must \n> be the same as defined in 'locations'.\n>   \nI suspect it is time to update this documentation; If you're using sp\nobjects, the names of coordinates does not play a role anymore, as\nwe can retrieve them using the coordinates() method.\n\nDoes this help?\n--\nEdzer\n> I am creating an SpatialPixels object for the prediction locations, using \n> the next code:\n>\n>   \n>> pts<-spsample(myShapePoly, n=3000, \"regular\")\n>> gridded(pts) <- TRUE class(pts)\n>>     \n> [1] \"SpatialPixels\"\n> attr(,\"package\")\n> [1] \"sp\"\n>\n> And x1 and x2 are the names of the coordinates of the prediction locations \n> grid.\n>\n> So, to perform universal kriging, I have to change the names of the \n> coordinates of my observed data to x1 and x2, but I would like to know if I \n> can change the name of the coordinates of the prediction grid ('pts').\n>\n> I appreciate any comment. Sincerely,\n>\n> Al? M. Santacruz\n> M.Sc. Geomatics, Student\n> National University of Colombia\n> Bogot? D.C.\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_snippet": "Al? Santacruz wrote:\n> Dear list members,\n>\n> I am trying to perform universal kriging in gstat, and according to the help \n> of 'krige' function, the names of the coordinates of 'newdata' argument mu",
+      "thread_id": "thread-2a1a32571d00",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-315a085ea6df",
+      "message_id": "<BAY20-F1459BD628A19AC4BE1667CC9700@phx.gbl>",
+      "from_name": "Alí Santacruz",
+      "from_email_hash": "c4ca3f5e846492b0980aafb1dea996931eb16881ccf8f260096085ccabf97f6d",
+      "date": "2006-07-03T11:07:11-05:00",
+      "subject": "[R-sig-Geo] universal kriging in gstat",
+      "subject_clean": "universal kriging in gstat",
+      "in_reply_to": "<44A93A6B.1080506@geo.uu.nl>",
+      "references": [],
+      "body_plain": "Thanks Edzer,\n\nYes, I found that the answer was very simple: as you say, we can use the \ncoordinates() method.\n\nBest regards,\n\nAl? Santacruz\n\n\n\n>From: \"Edzer J. Pebesma\" <e.pebesma at geo.uu.nl>\n>To: Al? Santacruz <amsantac at hotmail.com>\n>CC: r-sig-geo at stat.math.ethz.ch\n>Subject: Re: [R-sig-Geo] universal kriging in gstat\n>Date: Mon, 03 Jul 2006 17:40:27 +0200\n>\n>Al? Santacruz wrote:\n>>Dear list members,\n>>\n>>I am trying to perform universal kriging in gstat, and according to the \n>>help of 'krige' function, the names of the coordinates of 'newdata' \n>>argument must be the same as defined in 'locations'.\n>>\n>I suspect it is time to update this documentation; If you're using sp\n>objects, the names of coordinates does not play a role anymore, as\n>we can retrieve them using the coordinates() method.\n>\n>Does this help?\n>--\n>Edzer\n>>I am creating an SpatialPixels object for the prediction locations, using \n>>the next code:\n>>\n>>\n>>>pts<-spsample(myShapePoly, n=3000, \"regular\")\n>>>gridded(pts) <- TRUE class(pts)\n>>>\n>>[1] \"SpatialPixels\"\n>>attr(,\"package\")\n>>[1] \"sp\"\n>>\n>>And x1 and x2 are the names of the coordinates of the prediction locations \n>>grid.\n>>\n>>So, to perform universal kriging, I have to change the names of the \n>>coordinates of my observed data to x1 and x2, but I would like to know if \n>>I can change the name of the coordinates of the prediction grid ('pts').\n>>\n>>I appreciate any comment. Sincerely,\n>>\n>>Al? M. Santacruz\n>>M.Sc. Geomatics, Student\n>>National University of Colombia\n>>Bogot? D.C.\n>>\n>>_______________________________________________\n>>R-sig-Geo mailing list\n>>R-sig-Geo at stat.math.ethz.ch\n>>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n_________________________________________________________________\nMSN Amor: busca tu ? naranja http://latam.msn.com/amor/",
+      "body_snippet": "Thanks Edzer,\n\nYes, I found that the answer was very simple: as you say, we can use the \ncoordinates() method.\n\nBest regards,\n\nAl? Santacruz\n\n\n\n>From: \"Edzer J. Pebesma\" <e.pebesma at geo.uu.nl>\n>To: ",
+      "thread_id": "thread-2a1a32571d00",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-084ca887f6ec",
+      "message_id": "<1228.193.2.67.50.1151971273.squirrel@webmail.fmf.uni-lj.si>",
+      "from_name": "Vladimir Batagelj",
+      "from_email_hash": "f60db010a8493fcd7dda5661b2abe4577b76698494604d781c114a443c7d6418",
+      "date": "2006-07-04T02:01:13+02:00",
+      "subject": "[R-sig-Geo] Line width in sp maps",
+      "subject_clean": "Line width in sp maps",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n\nI am trying to change the line width in (shape) maps\nproduced using sp package, but without success.\nAll my attempts with lwd parameter failed.\nI found a brute force solution to save the map in\nEPS and change the linewidth there - but I would\nexpect that there is a regular solution.\n\nbest regards,  Vladimir Batagelj\n\n-- \nVladimir Batagelj, University of Ljubljana, Department of Mathematics\n  Jadranska 19, PO Box 2964, 1111 Ljubljana, Slovenia\nhttp://vlado.fmf.uni-lj.si",
+      "body_snippet": "Hi,\n\nI am trying to change the line width in (shape) maps\nproduced using sp package, but without success.\nAll my attempts with lwd parameter failed.\nI found a brute force solution to save the map in\nE",
+      "thread_id": "thread-084ca887f6ec",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-3d71c579069e",
+      "message_id": "<OFD100C2A2.F3A90A9F-ONCA2571A1.0017DCA6-CA2571A1.001914D1@nre.vic.gov.au>",
+      "from_name": "karl.sommer at dpi.vic.gov.au",
+      "from_email_hash": "b8ce016091f51611a2802edccf816d53a6c5a59586fe055b8671a3575427815e",
+      "date": "2006-07-04T14:33:58+10:00",
+      "subject": "[R-sig-Geo] error message rgdal: dimensions do not match",
+      "subject_clean": "error message rgdal: dimensions do not match",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I am encountering a error message when attempting to do \"inverse distance\nkriging\" or variogram calculations. The error is always the same\n\nERROR: dimensions do not match: locations 1513600 and data 611452.\n\nWhat puzzles me is the fact that I am using the same code as I have\nsuccessfully\nused with 2 other images.\n\nI have tried to reduce the dimensions of the imported image in using\ngdal_translate from the command prompt. The same error was still present\nbut with different \"address-numbers\" relating to locations and data.\n\nI have tried to find some pointers re error messages under the GDAL\nmanual but without success.\n\nI am able to plot the imported image as well as the target grid and SPDF\nwithout error.\n\nfollowing is the code:\n\nlibrary(rgdal)\n# import image\n> t1 <- readGDAL(\"images/test1.bil\", half.cell=c(0.5, 0.5), silent = FALSE)\n\nimages/test1.bil has GDAL driver GTiff\nand has 860 rows and 880 columns\n\nClosing GDAL dataset handle 0100ACB8...  destroyed ... done.\nClosing GDAL dataset handle 00000000... done.\n\n# get shape file of field\n> image(t1)\n> poly <- locator()\n> poly <- do.call(\"cbind\", poly)\n> poly <- rbind(poly, poly[1,])\n> lines(poly)\n> field <- SpatialPolygons(list(Polygons(list(Polygon(poly)), ID=\"field\")))\n> grd <- GridTopology(c(599040, 6228570), c(.5,.5), c(880, 860))\n> SG <- SpatialGrid(grd)\n> x1 <- overlay(SG, field)\n> SGDF <- SpatialGridDataFrame(grd, data=AttributeList(list(field=x1)))\n> SPDF <- as(SGDF, \"SpatialPixelsDataFrame\")\n\n# do kriging\n> library(gstat)\n> t1.idw <- krige(ndvi~1, t1,  SPDF)\nError: dimensions do not match: locations 1513600 and data 611452\n\nRegards\n\nKarl\n_________________________________\nKarl J Sommer,\nDepartment of Primary Industries,\nCatchment & Agriculture Services,\nPO Box 905\nMildura, VIC, Australia 3502\n\nTel: +61 (0)3 5051 4390\nFax +61 (0)3 5051 4534\n\nEmail:     karl.sommer at dpi.vic.gov.au",
+      "body_snippet": "I am encountering a error message when attempting to do \"inverse distance\nkriging\" or variogram calculations. The error is always the same\n\nERROR: dimensions do not match: locations 1513600 and data 6",
+      "thread_id": "thread-3d71c579069e",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-86401757af23",
+      "message_id": "<2fc17e30607040103l27de228bh64e36a7561ab94b8@mail.gmail.com>",
+      "from_name": "zhijie zhang",
+      "from_email_hash": "89b010aa3476c696a33cf3af7a8ed0bc976e8775483a8bdfeff2588d8ce5b24d",
+      "date": "2006-07-04T16:03:42+08:00",
+      "subject": "[R-sig-Geo] how do we sample in spatial statistics?",
+      "subject_clean": "how do we sample in spatial statistics?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060704/4cfe1d89/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060704/4cfe1d89/attachment.pl>",
+      "thread_id": "thread-86401757af23",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-9a4290884ed9",
+      "message_id": "<44AA2490.4040007@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2006-07-04T10:19:28+02:00",
+      "subject": "[R-sig-Geo] how do we sample in spatial statistics?",
+      "subject_clean": "how do we sample in spatial statistics?",
+      "in_reply_to": "<2fc17e30607040103l27de228bh64e36a7561ab94b8@mail.gmail.com>",
+      "references": [
+        "<2fc17e30607040103l27de228bh64e36a7561ab94b8@mail.gmail.com>"
+      ],
+      "body_plain": "zhijie zhang wrote:\n> Dear friends,\n>   Sorry for sending an empty email because of mismanipulation.\n>   Do we also use sample() function to do the spatial sampling? I look for\n> the sample() and think it's one-dimensional sampling.\n> In spatial statistics, do we need two-dimentional sampling or some other\n> sampling techniques? Which functions could be used in spatial samping in R?\n> thanks very much!\n>\n>   \nspsample in package has a few simple spatial sampling techniques\n(basically those described in Ripley, 1981: random, regular,\nstratified, nonaligned systematic) on lines, polygons and\ngrids. More advanced sampling techniques are found in\npackage spatstat.\n\n--\nEdzer",
+      "body_snippet": "zhijie zhang wrote:\n> Dear friends,\n>   Sorry for sending an empty email because of mismanipulation.\n>   Do we also use sample() function to do the spatial sampling? I look for\n> the sample() and thin",
+      "thread_id": "thread-86401757af23",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-e402dc355876",
+      "message_id": "<44AA8B9A.7030200@sclc.ecosur.mx>",
+      "from_name": "Duncan Golicher",
+      "from_email_hash": "ee416973eb46e9b9a16114a6821e406a60d5f120cc1f63879cc2dffa52d4b87c",
+      "date": "2006-07-04T10:39:06-05:00",
+      "subject": "[R-sig-Geo] drawing order in spplot",
+      "subject_clean": "drawing order in spplot",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Many thanks to everyone involved in putting together the excelent sp \npackage. I have just used for teaching a brief intro to applied geostats \nwith gstat. Students found life much easier than a year ago when I had \nto try to explain a less structured approach to the data.\nA simple question arose after the class. According to the spplot \ndocumentation \"for grids and polygons sp.layout is drawn afterwards (so \nthe item will not be overdrawn by the grid and/or polygon)\".\nSo in this example we expected a DEM to be drawn first, then municipal \nboundaries.\n\n > class(municipios)\n[1] \"SpatialPolygonsDataFrame\"\n > class(chisgrid)\n[1] \"SpatialPixelsDataFrame\"\n\nmunicips <- list(\"sp.polygons\", municipios)\nspplot(chisgrid[\"dem\"],sp.layout=municips)\n\nThe municipal boundaries are drawn first then overdrawn by the DEM, \nwhich was not what we expected or wanted. I couldn't find how to avoid \nthis, apart from the simple solution of ..\n\nimage(chisgrid,col=terrain.colors(20))\nplot(municipios,add=T)\n\ninstead of spplot.The figures on  http://r-spatial.sourceforge.net all \nappear to have the grid drawn first. Is there a way to reverse this?\n\nDuncan\n\n-- \n\nDr Duncan Golicher\nEcologia y Sistematica Terrestre\nConservaci?n de la Biodiversidad\nEl Colegio de la Frontera Sur\nSan Cristobal de Las Casas, \nChiapas, Mexico\n\nEmail: dgoliche at sclc.ecosur.mx \n\nTel: 967 674 9000 ext 1310\nFax: 967 678 2322\nCelular: 044 9671041021\n\nUnited Kingdom Skypein; 020 7870 6251\nSkype name: duncangolicher \nDownload Skype from http://www.skype.com",
+      "body_snippet": "Many thanks to everyone involved in putting together the excelent sp \npackage. I have just used for teaching a brief intro to applied geostats \nwith gstat. Students found life much easier than a year ",
+      "thread_id": "thread-e402dc355876",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-bd32c6b0aa6d",
+      "message_id": "<Pine.LNX.4.44.0607041842360.28211-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-07-04T18:49:39+02:00",
+      "subject": "[R-sig-Geo] Line width in sp maps",
+      "subject_clean": "Line width in sp maps",
+      "in_reply_to": "<1228.193.2.67.50.1151971273.squirrel@webmail.fmf.uni-lj.si>",
+      "references": [],
+      "body_plain": "On Tue, 4 Jul 2006, Vladimir Batagelj wrote:\n\n> \n> Hi,\n> \n> I am trying to change the line width in (shape) maps\n> produced using sp package, but without success.\n> All my attempts with lwd parameter failed.\n> I found a brute force solution to save the map in\n> EPS and change the linewidth there - but I would\n> expect that there is a regular solution.\n\nPlease include at least an indication of which functions you are using. \nThe following for SpatialLines objects does work:\n\nlibrary(sp)\nSLDF <- contourLines2SLDF(contourLines(volcano))\nlength(slot(SLDF, \"lines\"))\nplot(SLDF, lwd=1:10)\n\nand this works for SpatialPolygons:\n\ngrd <- GridTopology(c(1,1), c(1,1), c(10,10))\npolys <- as.SpatialPolygons.GridTopology(grd)\nplot(polys, lwd=3)\n\nboth for base graphics. Are you using spplot()?\n\nRoger\n\n> \n> best regards,  Vladimir Batagelj\n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 4 Jul 2006, Vladimir Batagelj wrote:\n\n> \n> Hi,\n> \n> I am trying to change the line width in (shape) maps\n> produced using sp package, but without success.\n> All my attempts with lwd parameter ",
+      "thread_id": "thread-084ca887f6ec",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-43583ef56d63",
+      "message_id": "<Pine.LNX.4.44.0607041853100.28211-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-07-04T18:59:11+02:00",
+      "subject": "[R-sig-Geo] error message rgdal: dimensions do not match",
+      "subject_clean": "error message rgdal: dimensions do not match",
+      "in_reply_to": "<OFD100C2A2.F3A90A9F-ONCA2571A1.0017DCA6-CA2571A1.001914D1@nre.vic.gov.au>",
+      "references": [],
+      "body_plain": "On Tue, 4 Jul 2006 karl.sommer at dpi.vic.gov.au wrote:\n\n> \n> I am encountering a error message when attempting to do \"inverse distance\n> kriging\" or variogram calculations. The error is always the same\n> \n> ERROR: dimensions do not match: locations 1513600 and data 611452.\n\nIndeed strange, given that 880 by 860 is 756800 (though 756800*2 is the \nfirst number). What does summary(t1) say? Is the single column named band1 \nor ndvi? The class of t1 will be SpatialGridDataFrame, wouldn't \nSpatialPointsDataFrame be more digestible? Does doing it in two steps \n(gstat() then predict() of the gstat object) show anything? What did \ntraceback() say after krige()?\n\nRoger\n\n> \n> What puzzles me is the fact that I am using the same code as I have\n> successfully\n> used with 2 other images.\n> \n> I have tried to reduce the dimensions of the imported image in using\n> gdal_translate from the command prompt. The same error was still present\n> but with different \"address-numbers\" relating to locations and data.\n> \n> I have tried to find some pointers re error messages under the GDAL\n> manual but without success.\n> \n> I am able to plot the imported image as well as the target grid and SPDF\n> without error.\n> \n> following is the code:\n> \n> library(rgdal)\n> # import image\n> > t1 <- readGDAL(\"images/test1.bil\", half.cell=c(0.5, 0.5), silent = FALSE)\n> \n> images/test1.bil has GDAL driver GTiff\n> and has 860 rows and 880 columns\n> \n> Closing GDAL dataset handle 0100ACB8...  destroyed ... done.\n> Closing GDAL dataset handle 00000000... done.\n> \n> # get shape file of field\n> > image(t1)\n> > poly <- locator()\n> > poly <- do.call(\"cbind\", poly)\n> > poly <- rbind(poly, poly[1,])\n> > lines(poly)\n> > field <- SpatialPolygons(list(Polygons(list(Polygon(poly)), ID=\"field\")))\n> > grd <- GridTopology(c(599040, 6228570), c(.5,.5), c(880, 860))\n> > SG <- SpatialGrid(grd)\n> > x1 <- overlay(SG, field)\n> > SGDF <- SpatialGridDataFrame(grd, data=AttributeList(list(field=x1)))\n> > SPDF <- as(SGDF, \"SpatialPixelsDataFrame\")\n> \n> # do kriging\n> > library(gstat)\n> > t1.idw <- krige(ndvi~1, t1,  SPDF)\n> Error: dimensions do not match: locations 1513600 and data 611452\n> \n> Regards\n> \n> Karl\n> _________________________________\n> Karl J Sommer,\n> Department of Primary Industries,\n> Catchment & Agriculture Services,\n> PO Box 905\n> Mildura, VIC, Australia 3502\n> \n> Tel: +61 (0)3 5051 4390\n> Fax +61 (0)3 5051 4534\n> \n> Email:     karl.sommer at dpi.vic.gov.au\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 4 Jul 2006 karl.sommer at dpi.vic.gov.au wrote:\n\n> \n> I am encountering a error message when attempting to do \"inverse distance\n> kriging\" or variogram calculations. The error is always the sa",
+      "thread_id": "thread-3d71c579069e",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-6125f1464f52",
+      "message_id": "<OFACAC028D.F16A73C7-ONCA2571A1.0082783D-CA2571A2.00003B94@nre.vic.gov.au>",
+      "from_name": "karl.sommer at dpi.vic.gov.au",
+      "from_email_hash": "b8ce016091f51611a2802edccf816d53a6c5a59586fe055b8671a3575427815e",
+      "date": "2006-07-05T10:02:33+10:00",
+      "subject": "[R-sig-Geo] error message rgdal: dimensions do not match",
+      "subject_clean": "error message rgdal: dimensions do not match",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "As suggested by Roger Bivand and Edzer Pebesma I have included the\noutput of str(t1) and str(SPDF) below.\n\nThe error persited when I tried to do the kriging in two steps, using gstat\n() and project().\nKriging a different variable, eg. \"band1\", results in the same error.\nConverting t1 to a SpatialPointsDataFrame before kriging results in the\nsame error.\nI also eliminated all zero values before calculating ndvi but the error\npersited.\nThe traceback() info is included below.\n\n\nRegards\n\nKarl\n\n\nIndeed strange, given that 880 by 860 is 756800 (though 756800*2 is the\nfirst number). What does summary(t1) say? Is the single column named band1\nor ndvi? The class of t1 will be SpatialGridDataFrame, wouldn't\nSpatialPointsDataFrame be more digestible? Does doing it in two steps\n(gstat() then predict() of the gstat object) show anything? What did\ntraceback() say after krige()?\n\nRoger\n\nouput follows:\n\n> str(t1)\nLoading required package: sp\nFormal class 'SpatialGridDataFrame' [package \"sp\"] with 6 slots\n  ..@ data       :Formal class 'AttributeList' [package \"sp\"] with 1 slots\n  .. .. ..@ att:List of 5\n  .. .. .. ..$ band1: int [1:834470] 0 0 0 0 0 0 0 0 0 0 ...\n  .. .. .. ..$ band2: int [1:834470] 0 0 0 0 0 0 0 0 0 0 ...\n  .. .. .. ..$ band3: int [1:834470] 0 0 0 0 0 0 0 0 0 0 ...\n  .. .. .. ..$ band4: int [1:834470] 0 0 0 0 0 0 0 0 0 0 ...\n  .. .. .. ..$ ndvi : num [1:834470] NaN NaN NaN NaN NaN NaN NaN NaN NaN\nNaN ...\n  ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3 slots\n  .. .. ..@ cellcentre.offset: Named num [1:2]  599029 6228561\n  .. .. .. ..- attr(*, \"names\")= chr [1:2] \"x\" \"y\"\n  .. .. ..@ cellsize         : num [1:2] 0.5 0.5\n  .. .. ..@ cells.dim        : int [1:2] 917 910\n  ..@ grid.index : int(0)\n  ..@ coords     : num [1:2, 1:2]  599029  599487 6228561 6229016\n  .. ..- attr(*, \"dimnames\")=List of 2\n  .. .. ..$ : NULL\n  .. .. ..$ : chr [1:2] \"x\" \"y\"\n  ..@ bbox       : num [1:2, 1:2]  599029 6228561  599487 6229016\n  .. ..- attr(*, \"dimnames\")=List of 2\n  .. .. ..$ : chr [1:2] \"x\" \"y\"\n  .. .. ..$ : chr [1:2] \"min\" \"max\"\n  ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n  .. .. ..@ projargs: chr NA\n\n> str(SPDF)\nFormal class 'SpatialPixelsDataFrame' [package \"sp\"] with 7 slots\n  ..@ data       :Formal class 'AttributeList' [package \"sp\"] with 1 slots\n  .. .. ..@ att:List of 1\n  .. .. .. ..$ field: num [1:481262] 1 1 1 1 1 1 1 1 1 1 ...\n  ..@ coords.nrs : num(0)\n  ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3 slots\n  .. .. ..@ cellcentre.offset: Named num [1:2]  599059 6228577\n  .. .. .. ..- attr(*, \"names\")= chr [1:2] \"s1\" \"s2\"\n  .. .. ..@ cellsize         : Named num [1:2] 0.5 0.5\n  .. .. .. ..- attr(*, \"names\")= chr [1:2] \"s1\" \"s2\"\n  .. .. ..@ cells.dim        : Named int [1:2] 809 830\n  .. .. .. ..- attr(*, \"names\")= chr [1:2] \"s1\" \"s2\"\n  ..@ grid.index : int [1:481262] 421 422 423 424 425 426 427 428 429 430\n...\n  ..@ coords     : num [1:481262, 1:2] 599269 599269 599270 599270 599271\n...\n  .. ..- attr(*, \"dimnames\")=List of 2\n  .. .. ..$ : NULL\n  .. .. ..$ : chr [1:2] \"s1\" \"s2\"\n  ..@ bbox       : num [1:2, 1:2]  599058 6228577  599463 6228992\n  .. ..- attr(*, \"dimnames\")=List of 2\n  .. .. ..$ : chr [1:2] \"s1\" \"s2\"\n  .. .. ..$ : chr [1:2] \"min\" \"max\"\n  ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n  .. .. ..@ projargs: chr NA\n\n> summary(t1)\nObject of class SpatialGridDataFrame\nCoordinates:\n        min     max\nx  599028.5  599487\ny 6228561.0 6229016\nIs projected: NA\nproj4string : [NA]\nNumber of points: 2\nGrid attributes:\n  cellcentre.offset cellsize cells.dim\nx          599028.8      0.5       917\ny         6228561.3      0.5       910\nData attributes:\n     band1            band2            band3            band4\n Min.   :   0.0   Min.   :   0.0   Min.   :   0.0   Min.   :   0.0\n 1st Qu.: 299.0   1st Qu.: 480.0   1st Qu.: 261.0   1st Qu.: 491.0\n Median : 347.0   Median : 613.0   Median : 387.0   Median : 776.0\n Mean   : 302.5   Mean   : 540.4   Mean   : 467.4   Mean   : 633.3\n 3rd Qu.: 394.0   3rd Qu.: 715.0   3rd Qu.: 637.0   3rd Qu.: 913.0\n Max.   :2352.0   Max.   :3279.0   Max.   :2815.0   Max.   :1653.0\n\n      ndvi\n Min.   :-3.235e-01\n 1st Qu.: 9.552e-03\n Median : 2.467e-01\n Mean   : 1.992e-01\n 3rd Qu.: 4.209e-01\n Max.   : 7.185e-01\n NA's   : 2.046e+05\n\n# traceback after kriging provides the following messages\n> traceback()\n5: .Call(\"gstat_new_data\", as.double(raw$y), as.double(raw$locations),\n       as.double(raw$X), as.integer(raw$has.intercept), as.double(d$beta),\n       nmax, nmin, maxdist, as.integer(d$vfn), as.numeric(w), double(0),\n       as.integer(d$degree))\n4: predict.gstat(g, newdata = newdata, block = block, nsim = nsim,\n       indicators = indicators, na.action = na.action)\n3: .local(formula, locations, ...)\n2: krige(ndvi ~ 1, t1, SPDF)\n1: krige(ndvi ~ 1, t1, SPDF)\n\n# converting to a SpatialPointsDataFrame before kriging resulted in\nthe same error\n\nt1 <- as(t1, \"SpatialPointsDataFrame\")\n\n> t1.idw <- krige(ndvi~1, t1,  SPDF)\nError: dimensions do not match: locations 1668940 and data 629822\n\n# using two steps as suggested by Roger Bivand results in the same error\n\n> t1.idw <- gstat(id = \"ndvi\", formula = ndvi ~ 1,\n        data = t1, nmax = 7, set = list(idp = .5))\n\n> predict(t1.idw, SPDF)\nError: dimensions do not match: locations 1668940 and data 629822\n\n_________________________________\nKarl J Sommer,\nDepartment of Primary Industries,\nCatchment & Agriculture Services,\nPO Box 905\nMildura, VIC, Australia 3502\n\nTel: +61 (0)3 5051 4390\nFax +61 (0)3 5051 4534\n\nEmail:     karl.sommer at dpi.vic.gov.au",
+      "body_snippet": "As suggested by Roger Bivand and Edzer Pebesma I have included the\noutput of str(t1) and str(SPDF) below.\n\nThe error persited when I tried to do the kriging in two steps, using gstat\n() and project().",
+      "thread_id": "thread-6125f1464f52",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-2c6879d9fa10",
+      "message_id": "<17579.14479.894617.187218@maths.uwa.edu.au>",
+      "from_name": "Adrian Baddeley",
+      "from_email_hash": "0a0e76f6b108d4a1bad3941837d331be1eae194226d8adc0ceddc0672c5984c8",
+      "date": "2006-07-05T11:57:03+08:00",
+      "subject": "[R-sig-Geo] [R] how do we sample in spatial statistics?",
+      "subject_clean": "how do we sample in spatial statistics?",
+      "in_reply_to": "<mailman.9.1152007204.15936.r-sig-geo@stat.math.ethz.ch>",
+      "references": [
+        "<mailman.9.1152007204.15936.r-sig-geo@stat.math.ethz.ch>"
+      ],
+      "body_plain": "Zhijie Zhang writes:\n\n> Do we also use sample() function to do the spatial sampling?\n\n> In spatial statistics, do we need two-dimentional sampling or some other\n> sampling techniques? Which functions could be used in spatial samping in R?\n\n  It depends on what kind of data or population you are sampling.\n\n  (a) If your data or population are stored in a vector, a list or a data frame,\n  then you can sample some of the items in the list, simply by using\n  the R function sample() to select values of the list index.\n  For example \n\tmydata <- list(.............)\n\tindex <- sample(seq(mydata), 3, replace=FALSE) \n\tsam <- mydata[index]\n  will select three items at random from the list.\n\n  In package 'spatstat', a pattern of points or a pattern of line segments\n  can also be indexed by numerical values. For example\n\tdata(cells)\n\tindex <- sample(cells$n, 3, replace=TRUE)\n\tsam <- cells[index]\n  takes the `cells' dataset, a spatial point pattern, \n  and selects three of the points at random.\n\t\n  (b) If your data are spatially referenced (for example a map of\n  temperatures across the ocean), you may want to sample these data\n  at `spatially random' locations. In principle you can use any\n  random pattern of points to do this. \n\n  Package 'spatstat' contains a large number of functions for generating\n  random patterns of points. Type help(spatstat) for a list of them.\n  These functions can be used to sample spatially-referenced data in any package. \n\n  In spatstat, for example, if ocean temperatures are stored as a pixel image, you can \n  sample them using a point pattern:\n\ttemperature <- im(........)\n\tsamplepoints <- rstrat(temperature$window, 10, 10, 3)\n\tsam <- temperature[samplepoints]\n   creates an image called 'temperature', then generates a stratified random pattern\n   of points, and extracts the ocean temperatures at these points.\n\nAdrian Baddeley",
+      "body_snippet": "Zhijie Zhang writes:\n\n> Do we also use sample() function to do the spatial sampling?\n\n> In spatial statistics, do we need two-dimentional sampling or some other\n> sampling techniques? Which functions ",
+      "thread_id": "thread-2c6879d9fa10",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-489252d6e715",
+      "message_id": "<3206.193.77.179.147.1152073750.squirrel@webmail.fmf.uni-lj.si>",
+      "from_name": "Vladimir Batagelj",
+      "from_email_hash": "f60db010a8493fcd7dda5661b2abe4577b76698494604d781c114a443c7d6418",
+      "date": "2006-07-05T06:29:10+02:00",
+      "subject": "[R-sig-Geo] Line width in sp maps",
+      "subject_clean": "Line width in sp maps",
+      "in_reply_to": "<Pine.LNX.4.44.0607041842360.28211-100000@reclus.nhh.no>",
+      "references": [
+        "<1228.193.2.67.50.1151971273.squirrel@webmail.fmf.uni-lj.si>",
+        "<Pine.LNX.4.44.0607041842360.28211-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "<<<-------- Roger Bivand-------->>>\n\n> both for base graphics. Are you using spplot()?\n\nYes.\nI am trying to get a display of administrative units in the world\n\n> rc <- readShapePoly(\"admin98/admin98.shp\")\n> names(rc)\n [1] \"FIPS_ADMIN\" \"GMI_ADMIN\"  \"ADMIN_NAME\" \"FIPS_CNTRY\" \"GMI_CNTRY\" \n\"CNTRY_NAME\" \"REGION\"     \"CONTINENT\"\n [9] \"POP_ADMIN\"  \"SQKM_ADMIN\" \"SQMI_ADMIN\" \"TYPE_ENG\"   \"TYPE_LOC\"  \n\"COLOR_MAP\"\n> length(rc$ADMIN_NAME)\n[1] 2604\n> rc$f = factor(sample(1:10, 2604, replace = T), labels = letters[1:10])\n> spplot(rc, \"f\", col.regions=brewer.pal(10, \"Set3\"), scales=list(draw =\nTRUE))\n\nI get the complete picture but with thick lines.\nI tried in different ways to set the lwd parameter to spplot:\n\n> spplot(rc, \"f\", col.regions=brewer.pal(10, \"Set3\"), scales=list(draw =\nTRUE),lwd=0.01)\n\n> trellis.par.set(list(plot.line=list(lwd=0.01)))\n> spplot(rc, \"f\", col.regions=brewer.pal(10, \"Set3\"), scales=list(draw =\nTRUE))\n\n> spplot(rc, \"f\", col.regions=brewer.pal(10, \"Set3\"), scales=list(draw =\nTRUE),\n+ par.settings=list(plot.line=list(lwd=0.01)))\n\n> spplot(rc, \"f\", col.regions=brewer.pal(10, \"Set3\"), scales=list(draw =\nTRUE),\n+ par.settings=list(plot.polygon=list(lwd=0.01)))\n\nI couldn't obtain thin lines.\n\nVlado\n\n-- \nVladimir Batagelj, University of Ljubljana, Department of Mathematics\n  Jadranska 19, PO Box 2964, 1111 Ljubljana, Slovenia\nhttp://vlado.fmf.uni-lj.si",
+      "body_snippet": "<<<-------- Roger Bivand-------->>>\n\n> both for base graphics. Are you using spplot()?\n\nYes.\nI am trying to get a display of administrative units in the world\n\n> rc <- readShapePoly(\"admin98/admin98.s",
+      "thread_id": "thread-084ca887f6ec",
+      "thread_depth": 2,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-336a8057a33a",
+      "message_id": "<Pine.LNX.4.44.0607051201210.31976-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-07-05T12:19:20+02:00",
+      "subject": "[R-sig-Geo] Line width in sp maps",
+      "subject_clean": "Line width in sp maps",
+      "in_reply_to": "<3206.193.77.179.147.1152073750.squirrel@webmail.fmf.uni-lj.si>",
+      "references": [],
+      "body_plain": "On Wed, 5 Jul 2006, Vladimir Batagelj wrote:\n\n> \n> <<<-------- Roger Bivand-------->>>\n> \n> > both for base graphics. Are you using spplot()?\n> \n> Yes.\n\nThen this is an spplot/lattice graphics question, where I'm as out of my \ndepth as you are. It looks as though sp.polygon() takes arguments that are \npassed to grid.polygon(gpar()) and panel.lines(), so it is a matter of \ninding the right incantation. It looks to me as though the '...' in \nspplot.polygons doesn't make it all the way through. This would need \nfixing in code. The workaround is to use base graphics.\n\nRoger\n\n> I am trying to get a display of administrative units in the world\n> \n> > rc <- readShapePoly(\"admin98/admin98.shp\")\n> > names(rc)\n>  [1] \"FIPS_ADMIN\" \"GMI_ADMIN\"  \"ADMIN_NAME\" \"FIPS_CNTRY\" \"GMI_CNTRY\" \n> \"CNTRY_NAME\" \"REGION\"     \"CONTINENT\"\n>  [9] \"POP_ADMIN\"  \"SQKM_ADMIN\" \"SQMI_ADMIN\" \"TYPE_ENG\"   \"TYPE_LOC\"  \n> \"COLOR_MAP\"\n> > length(rc$ADMIN_NAME)\n> [1] 2604\n> > rc$f = factor(sample(1:10, 2604, replace = T), labels = letters[1:10])\n> > spplot(rc, \"f\", col.regions=brewer.pal(10, \"Set3\"), scales=list(draw =\n> TRUE))\n> \n> I get the complete picture but with thick lines.\n> I tried in different ways to set the lwd parameter to spplot:\n> \n> > spplot(rc, \"f\", col.regions=brewer.pal(10, \"Set3\"), scales=list(draw =\n> TRUE),lwd=0.01)\n> \n> > trellis.par.set(list(plot.line=list(lwd=0.01)))\n> > spplot(rc, \"f\", col.regions=brewer.pal(10, \"Set3\"), scales=list(draw =\n> TRUE))\n> \n> > spplot(rc, \"f\", col.regions=brewer.pal(10, \"Set3\"), scales=list(draw =\n> TRUE),\n> + par.settings=list(plot.line=list(lwd=0.01)))\n> \n> > spplot(rc, \"f\", col.regions=brewer.pal(10, \"Set3\"), scales=list(draw =\n> TRUE),\n> + par.settings=list(plot.polygon=list(lwd=0.01)))\n> \n> I couldn't obtain thin lines.\n> \n> Vlado\n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Wed, 5 Jul 2006, Vladimir Batagelj wrote:\n\n> \n> <<<-------- Roger Bivand-------->>>\n> \n> > both for base graphics. Are you using spplot()?\n> \n> Yes.\n\nThen this is an spplot/lattice graphics questio",
+      "thread_id": "thread-084ca887f6ec",
+      "thread_depth": 3,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-5a394bb8a0a0",
+      "message_id": "<OF928479E4.4D7232EB-ON882571A2.004F8FE4-882571A2.0050102A@epamail.epa.gov>",
+      "from_name": "Olsen.Tony at epamail.epa.gov",
+      "from_email_hash": "623d787e2274955c30c208a8dd0dfeed2de6c0a5d807677790726988a0489aaf",
+      "date": "2006-07-05T07:34:30-07:00",
+      "subject": "[R-sig-Geo] how do we sample in spatial statistics?",
+      "subject_clean": "how do we sample in spatial statistics?",
+      "in_reply_to": "<44AA2490.4040007@geo.uu.nl>",
+      "references": [],
+      "body_plain": "We have developed a spatial sampling library, spsurvey,  that we are\nabout to submit to cran.  It can sample points, lines, or polygons using\neither simple random sampling, unequal probability sampling,\nstratification.  Main focus is on spatially balanced sampling - new\napproach developed by Stevens and Olsen.  spsurvey currently uses ESRI\nshapefiles as main input but when it reads them in it creates an sp\nobject.  The resulting sample is also an sp object.  A prelliminary\nversion of the library can be found at http://www.epa.gov/nheerl/arm\nunder \"Software Downloads\".  It is called psurvey.design there.\nspsurvey should be on cran before end of July.\n\nTony Olsen\n\n\n\n\n                                                                        \n             \"Edzer J.                                                  \n             Pebesma\"                                                   \n             <e.pebesma at geo.u                                        To \n             u.nl>                    zhijie zhang <epistat at gmail.com>  \n             Sent by:                                                cc \n             r-sig-geo-bounce         r-sig-geo at stat.math.ethz.ch       \n             s at stat.math.ethz                                   Subject \n             .ch                      Re: [R-sig-Geo] how do we sample  \n                                      in spatial statistics?            \n                                                                        \n             07/04/2006 01:19                                           \n             AM                                                         \n                                                                        \n                                                                        \n                                                                        \n\n\n\n\nzhijie zhang wrote:\n> Dear friends,\n>   Sorry for sending an empty email because of mismanipulation.\n>   Do we also use sample() function to do the spatial sampling? I look\nfor\n> the sample() and think it's one-dimensional sampling.\n> In spatial statistics, do we need two-dimentional sampling or some\nother\n> sampling techniques? Which functions could be used in spatial samping\nin R?\n> thanks very much!\n>\n>\nspsample in package has a few simple spatial sampling techniques\n(basically those described in Ripley, 1981: random, regular,\nstratified, nonaligned systematic) on lines, polygons and\ngrids. More advanced sampling techniques are found in\npackage spatstat.\n\n--\nEdzer\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "We have developed a spatial sampling library, spsurvey,  that we are\nabout to submit to cran.  It can sample points, lines, or polygons using\neither simple random sampling, unequal probability samplin",
+      "thread_id": "thread-86401757af23",
+      "thread_depth": 2,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-0c3b75a23152",
+      "message_id": "<Pine.LNX.4.44.0607051809001.32309-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-07-05T18:11:03+02:00",
+      "subject": "[R-sig-Geo] how do we sample in spatial statistics?",
+      "subject_clean": "how do we sample in spatial statistics?",
+      "in_reply_to": "<OF928479E4.4D7232EB-ON882571A2.004F8FE4-882571A2.0050102A@epamail.epa.gov>",
+      "references": [],
+      "body_plain": "On Wed, 5 Jul 2006 Olsen.Tony at epamail.epa.gov wrote:\n\n> We have developed a spatial sampling library, spsurvey,  that we are\n> about to submit to cran.  It can sample points, lines, or polygons using\n> either simple random sampling, unequal probability sampling,\n> stratification.  Main focus is on spatially balanced sampling - new\n> approach developed by Stevens and Olsen.  spsurvey currently uses ESRI\n> shapefiles as main input but when it reads them in it creates an sp\n> object.  The resulting sample is also an sp object.  A prelliminary\n> version of the library can be found at http://www.epa.gov/nheerl/arm\n> under \"Software Downloads\".  It is called psurvey.design there.\n> spsurvey should be on cran before end of July.\n\nThanks for this information, it is very good news. May I copy this \ninformation to the Rgeo website, or would you prefer to wait until the \npackage reaches CRAN?\n\nRoger\n\n> \n> Tony Olsen\n> \n>                                                                         \n>              \"Edzer J.                                                  \n>              Pebesma\"                                                   \n>              <e.pebesma at geo.u                                        To \n>              u.nl>                    zhijie zhang <epistat at gmail.com>  \n>              Sent by:                                                cc \n>              r-sig-geo-bounce         r-sig-geo at stat.math.ethz.ch       \n>              s at stat.math.ethz                                   Subject \n>              .ch                      Re: [R-sig-Geo] how do we sample  \n>                                       in spatial statistics?            \n>                                                                         \n>              07/04/2006 01:19                                           \n>              AM                                                         \n>                                                                         \n>                                                                         \n>                                                                         \n> \n> \n> \n> \n> zhijie zhang wrote:\n> > Dear friends,\n> >   Sorry for sending an empty email because of mismanipulation.\n> >   Do we also use sample() function to do the spatial sampling? I look\n> for\n> > the sample() and think it's one-dimensional sampling.\n> > In spatial statistics, do we need two-dimentional sampling or some\n> other\n> > sampling techniques? Which functions could be used in spatial samping\n> in R?\n> > thanks very much!\n> >\n> >\n> spsample in package has a few simple spatial sampling techniques\n> (basically those described in Ripley, 1981: random, regular,\n> stratified, nonaligned systematic) on lines, polygons and\n> grids. More advanced sampling techniques are found in\n> package spatstat.\n> \n> --\n> Edzer\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Wed, 5 Jul 2006 Olsen.Tony at epamail.epa.gov wrote:\n\n> We have developed a spatial sampling library, spsurvey,  that we are\n> about to submit to cran.  It can sample points, lines, or polygons usi",
+      "thread_id": "thread-86401757af23",
+      "thread_depth": 3,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-e3a20559e14a",
+      "message_id": "<44AD31A5.9080801@sclc.ecosur.mx>",
+      "from_name": "Duncan Golicher",
+      "from_email_hash": "ee416973eb46e9b9a16114a6821e406a60d5f120cc1f63879cc2dffa52d4b87c",
+      "date": "2006-07-06T10:52:05-05:00",
+      "subject": "[R-sig-Geo] drawing order in spplot",
+      "subject_clean": "drawing order in spplot",
+      "in_reply_to": "<44ABB62B.5080505@geo.uu.nl>",
+      "references": [
+        "<44AA8B9A.7030200@sclc.ecosur.mx>",
+        "<44ABB62B.5080505@geo.uu.nl>"
+      ],
+      "body_plain": "Thanks for this Arien,\n\nJust can't get it to work though. I messed around a bit more yesterday \nbut couldn't find a way. No one else on the list replied. I have another \nreason to want to do something similar, so I was hoping there was a work \naround out there. Here is the data if you (or anyone else) can help.\n\nload(file=url(\"ftp://200.23.34.16/simulacion/SPATIAL/chisgrid.rob\"))\nload(file=url(\"ftp://200.23.34.16/simulacion/SPATIAL//municipios.rob\"))\n\n#municipios was originally imported from a shapefile. The \"dem\" is a \ncoarse 1 km x 1km grid imported from GRASS 5.7. Both use UTM NAD27, but \nthe projections are not #set. The data represents the state of Chiapas \nin Southern Mexico\n\nimage(chisgrid,\"dem\",col=terrain.colors(100))\nplot(municipios,add=T)\n\n#Gives what we wanted in base graphics\n\n#But\n \nspplot(municipios, \"AREA\", panel <- function(x,y,...){\n    sp.grid(chisgrid)\n    panel.polygonsplot(x,y,...)\n    })\n#Doesn't\n\n#and\n\nmunicips <- list(\"sp.polygons\", municipios)\nspplot(chisgrid[\"dem\"],sp.layout=municips)\n\n#Draws them in the wrong order.\n\n#As an aside, this is great fun with rgl and the students loved it. Can \nanyone improve the code?\n\nview3d<-function(grid=chisgrid,dem=1,drape=2,exag=3,pal=sp.theme()$regions$col){\n  fullgrid(grid)<-TRUE\n  y<-grid[[dem]]*exag\n  y[is.na(y)]<-0\n  dim(y)<-grid at grid@cells.dim\n\n  x <- grid at grid@cellsize[1]*(1:grid at grid@cells.dim[1])\n  z <-grid at grid@cellsize[2]*(1:grid at grid@cells.dim[2])\n\n  y2<-grid[[drape]]\n  y2[!is.na(y2)]<-as.numeric(cut( y2[!is.na(y2)],length(pal)))\n  y2[is.na(y2)]<-0\n\n  ylim <- range(y2)\n  ylen <- ylim[2] - ylim[1] + 1\n\n  pal<-c(\"black\",pal)\n  col <- pal[ y2-ylim[1]+1 ] # assign colors to heights for each point\n\n  rgl.clear()\n  rgl.surface(x, z, y, color=col)\n}\n\nview3d(drape=1,pal=terrain.colors(100))\n\nDuncan\n\n\n\nArien Lam wrote:\n\n> I stumbled there too.\n> A way is to customize the default panel function within spplot.\n>\n> Try:\n>\n> spplot(municipios, \"yourvariable\", panel <- function(x,y,...){\n>     sp.grid(chisgrid)\n>     panel.polygonsplot(x,y,...)\n>     })\n>\n> Regards, Arien\n>\n> Duncan Golicher schreef:\n>\n>> Many thanks to everyone involved in putting together the excelent sp \n>> package. I have just used for teaching a brief intro to applied \n>> geostats with gstat. Students found life much easier than a year ago \n>> when I had to try to explain a less structured approach to the data.\n>> A simple question arose after the class. According to the spplot \n>> documentation \"for grids and polygons sp.layout is drawn afterwards \n>> (so the item will not be overdrawn by the grid and/or polygon)\".\n>> So in this example we expected a DEM to be drawn first, then \n>> municipal boundaries.\n>>\n>>  > class(municipios)\n>> [1] \"SpatialPolygonsDataFrame\"\n>>  > class(chisgrid)\n>> [1] \"SpatialPixelsDataFrame\"\n>>\n>> municips <- list(\"sp.polygons\", municipios)\n>> spplot(chisgrid[\"dem\"],sp.layout=municips)\n>>\n>> The municipal boundaries are drawn first then overdrawn by the DEM, \n>> which was not what we expected or wanted. I couldn't find how to \n>> avoid this, apart from the simple solution of ..\n>>\n>> image(chisgrid,col=terrain.colors(20))\n>> plot(municipios,add=T)\n>>\n>> instead of spplot.The figures on  http://r-spatial.sourceforge.net \n>> all appear to have the grid drawn first. Is there a way to reverse this?\n>>\n>> Duncan\n>>\n>\n\n\n-- \nDr Duncan Golicher\nEcologia y Sistematica Terrestre\nConservaci?n de la Biodiversidad\nEl Colegio de la Frontera Sur\nSan Cristobal de Las Casas, \nChiapas, Mexico\n\nEmail: dgoliche at sclc.ecosur.mx \n\nTel: 967 674 9000 ext 1310\nFax: 967 678 2322\nCelular: 044 9671041021\n\nUnited Kingdom Skypein; 020 7870 6251\nSkype name: duncangolicher \nDownload Skype from http://www.skype.com",
+      "body_snippet": "Thanks for this Arien,\n\nJust can't get it to work though. I messed around a bit more yesterday \nbut couldn't find a way. No one else on the list replied. I have another \nreason to want to do something",
+      "thread_id": "thread-e3a20559e14a",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-46e5aa843ca6",
+      "message_id": "<39388.131.211.65.133.1152210792.squirrel@webmail.geo.uu.nl>",
+      "from_name": "Arien Lam",
+      "from_email_hash": "19086b05ff242de6f75c548a72eb5a1a980dceb9a9334f9bce4e51a9d45b0369",
+      "date": "2006-07-06T20:33:12+02:00",
+      "subject": "[R-sig-Geo] drawing order in spplot",
+      "subject_clean": "drawing order in spplot",
+      "in_reply_to": "<44AD31A5.9080801@sclc.ecosur.mx>",
+      "references": [
+        "<44AA8B9A.7030200@sclc.ecosur.mx>",
+        "<44ABB62B.5080505@geo.uu.nl>",
+        "<44AD31A5.9080801@sclc.ecosur.mx>"
+      ],
+      "body_plain": "Duncan,\n\nAfter a few tries I found:\n\nspplot(chisgrid, \"dem\", panel = function(x,y, ...){\n    panel.gridplot(x,y, ...)\n    sp.polygons(municipios, col=1,fill=0)\n    })\n\n, which is just the reverse nesting order from my previous shot at it.\nHTH, Arien\n\nTo be precise, this worked on:\n> sessionInfo()\nVersion 2.3.1 (2006-06-01)\ni486-pc-linux-gnu\n\nattached base packages:\n[1] \"methods\"   \"stats\"     \"graphics\"  \"grDevices\" \"utils\"     \"datasets\"\n[7] \"base\"\n\nother attached packages:\n lattice       sp\n\"0.13-8\" \"0.8-16\"\n\n\nThis approach is advocated for tweaking trellis plots.\n\nOn Thu, July 6, 2006 17:52, Duncan Golicher wrote:\n> Thanks for this Arien,\n>\n> Just can't get it to work though. I messed around a bit more yesterday\n> but couldn't find a way. No one else on the list replied. I have another\n> reason to want to do something similar, so I was hoping there was a work\n> around out there. Here is the data if you (or anyone else) can help.\n>\n> load(file=url(\"ftp://200.23.34.16/simulacion/SPATIAL/chisgrid.rob\"))\n> load(file=url(\"ftp://200.23.34.16/simulacion/SPATIAL//municipios.rob\"))\n>\n> #municipios was originally imported from a shapefile. The \"dem\" is a\n> coarse 1 km x 1km grid imported from GRASS 5.7. Both use UTM NAD27, but\n> the projections are not #set. The data represents the state of Chiapas\n> in Southern Mexico\n>\n> image(chisgrid,\"dem\",col=terrain.colors(100))\n> plot(municipios,add=T)\n>\n> #Gives what we wanted in base graphics\n>\n> #But\n>\n> spplot(municipios, \"AREA\", panel <- function(x,y,...){\n>     sp.grid(chisgrid)\n>     panel.polygonsplot(x,y,...)\n>     })\n> #Doesn't\n>\n> #and\n>\n> municips <- list(\"sp.polygons\", municipios)\n> spplot(chisgrid[\"dem\"],sp.layout=municips)\n>\n> #Draws them in the wrong order.\n>\n> #As an aside, this is great fun with rgl and the students loved it. Can\n> anyone improve the code?\n>\n> view3d<-function(grid=chisgrid,dem=1,drape=2,exag=3,pal=sp.theme()$regions$col){\n>   fullgrid(grid)<-TRUE\n>   y<-grid[[dem]]*exag\n>   y[is.na(y)]<-0\n>   dim(y)<-grid at grid@cells.dim\n>\n>   x <- grid at grid@cellsize[1]*(1:grid at grid@cells.dim[1])\n>   z <-grid at grid@cellsize[2]*(1:grid at grid@cells.dim[2])\n>\n>   y2<-grid[[drape]]\n>   y2[!is.na(y2)]<-as.numeric(cut( y2[!is.na(y2)],length(pal)))\n>   y2[is.na(y2)]<-0\n>\n>   ylim <- range(y2)\n>   ylen <- ylim[2] - ylim[1] + 1\n>\n>   pal<-c(\"black\",pal)\n>   col <- pal[ y2-ylim[1]+1 ] # assign colors to heights for each point\n>\n>   rgl.clear()\n>   rgl.surface(x, z, y, color=col)\n> }\n>\n> view3d(drape=1,pal=terrain.colors(100))\n>\n> Duncan\n>\n>\n>\n> Arien Lam wrote:\n>\n>> I stumbled there too.\n>> A way is to customize the default panel function within spplot.\n>>\n>> Try:\n>>\n>> spplot(municipios, \"yourvariable\", panel <- function(x,y,...){\n>>     sp.grid(chisgrid)\n>>     panel.polygonsplot(x,y,...)\n>>     })\n>>\n>> Regards, Arien\n>>\n>> Duncan Golicher schreef:\n>>\n>>> Many thanks to everyone involved in putting together the excelent sp\n>>> package. I have just used for teaching a brief intro to applied\n>>> geostats with gstat. Students found life much easier than a year ago\n>>> when I had to try to explain a less structured approach to the data.\n>>> A simple question arose after the class. According to the spplot\n>>> documentation \"for grids and polygons sp.layout is drawn afterwards\n>>> (so the item will not be overdrawn by the grid and/or polygon)\".\n>>> So in this example we expected a DEM to be drawn first, then\n>>> municipal boundaries.\n>>>\n>>>  > class(municipios)\n>>> [1] \"SpatialPolygonsDataFrame\"\n>>>  > class(chisgrid)\n>>> [1] \"SpatialPixelsDataFrame\"\n>>>\n>>> municips <- list(\"sp.polygons\", municipios)\n>>> spplot(chisgrid[\"dem\"],sp.layout=municips)\n>>>\n>>> The municipal boundaries are drawn first then overdrawn by the DEM,\n>>> which was not what we expected or wanted. I couldn't find how to\n>>> avoid this, apart from the simple solution of ..\n>>>\n>>> image(chisgrid,col=terrain.colors(20))\n>>> plot(municipios,add=T)\n>>>\n>>> instead of spplot.The figures on  http://r-spatial.sourceforge.net\n>>> all appear to have the grid drawn first. Is there a way to reverse\n>>> this?\n>>>\n>>> Duncan\n>>>\n>>\n>\n>\n> --\n> Dr Duncan Golicher\n> Ecologia y Sistematica Terrestre\n> Conservaci?n de la Biodiversidad\n> El Colegio de la Frontera Sur\n> San Cristobal de Las Casas,\n> Chiapas, Mexico\n>\n> Email: dgoliche at sclc.ecosur.mx\n>\n> Tel: 967 674 9000 ext 1310\n> Fax: 967 678 2322\n> Celular: 044 9671041021\n>\n> United Kingdom Skypein; 020 7870 6251\n> Skype name: duncangolicher\n> Download Skype from http://www.skype.com\n>\n>\n>\n\n\n-- \ndrs. H.A. (Arien) Lam (Ph.D. student)\nDepartment of Physical Geography\nFaculty of Geosciences\nUtrecht University, The Netherlands\n\nE-mail:     a.lam at geo.uu.nl\nWeb:        http://www.geo.uu.nl/staff/a.lam\n\nTelephone:  +31(0)30-253 2988 (direct), 2749 (secretary)\nFax:        +31(0)30-2531145\n\nVisiting address: Room Zon 121, Heidelberglaan 2, Utrecht\nPostal address: P.O.Box 80.115, 3508 TC Utrecht",
+      "body_snippet": "Duncan,\n\nAfter a few tries I found:\n\nspplot(chisgrid, \"dem\", panel = function(x,y, ...){\n    panel.gridplot(x,y, ...)\n    sp.polygons(municipios, col=1,fill=0)\n    })\n\n, which is just the reverse nest",
+      "thread_id": "thread-e3a20559e14a",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-389c647a4906",
+      "message_id": "<44AD7AB3.2040402@sclc.ecosur.mx>",
+      "from_name": "Duncan Golicher",
+      "from_email_hash": "ee416973eb46e9b9a16114a6821e406a60d5f120cc1f63879cc2dffa52d4b87c",
+      "date": "2006-07-06T16:03:47-05:00",
+      "subject": "[R-sig-Geo] drawing order in spplot and Line width in sp maps",
+      "subject_clean": "drawing order in spplot and Line width in sp maps",
+      "in_reply_to": "<39388.131.211.65.133.1152210792.squirrel@webmail.geo.uu.nl>",
+      "references": [
+        "<44AA8B9A.7030200@sclc.ecosur.mx>",
+        "<44ABB62B.5080505@geo.uu.nl>",
+        "<44AD31A5.9080801@sclc.ecosur.mx>",
+        "<39388.131.211.65.133.1152210792.squirrel@webmail.geo.uu.nl>"
+      ],
+      "body_plain": "Great. Thanks so much. It was obvious really.\nYou also seem to have come up with one solution to the line width \nquestion asked a couple of days ago,  as this works.\n\nspplot(chisgrid, \"dem\", panel = function(x,y, ...){\n    panel.gridplot(x,y,...)\n    sp.polygons(municipios, col=1,fill=0,lwd=3,lty=2)\n    })\n\n\nDuncan\n\nArien Lam wrote:\n\n>Duncan,\n>\n>After a few tries I found:\n>\n>spplot(chisgrid, \"dem\", panel = function(x,y, ...){\n>    panel.gridplot(x,y, ...)\n>    sp.polygons(municipios, col=1,fill=0)\n>    })\n>\n>, which is just the reverse nesting order from my previous shot at it.\n>HTH, Arien\n>\n>To be precise, this worked on:\n>  \n>\n>>sessionInfo()\n>>    \n>>\n>Version 2.3.1 (2006-06-01)\n>i486-pc-linux-gnu\n>\n>attached base packages:\n>[1] \"methods\"   \"stats\"     \"graphics\"  \"grDevices\" \"utils\"     \"datasets\"\n>[7] \"base\"\n>\n>other attached packages:\n> lattice       sp\n>\"0.13-8\" \"0.8-16\"\n>\n>\n>This approach is advocated for tweaking trellis plots.\n>\n>On Thu, July 6, 2006 17:52, Duncan Golicher wrote:\n>  \n>\n>>Thanks for this Arien,\n>>\n>>Just can't get it to work though. I messed around a bit more yesterday\n>>but couldn't find a way. No one else on the list replied. I have another\n>>reason to want to do something similar, so I was hoping there was a work\n>>around out there. Here is the data if you (or anyone else) can help.\n>>\n>>load(file=url(\"ftp://200.23.34.16/simulacion/SPATIAL/chisgrid.rob\"))\n>>load(file=url(\"ftp://200.23.34.16/simulacion/SPATIAL//municipios.rob\"))\n>>\n>>#municipios was originally imported from a shapefile. The \"dem\" is a\n>>coarse 1 km x 1km grid imported from GRASS 5.7. Both use UTM NAD27, but\n>>the projections are not #set. The data represents the state of Chiapas\n>>in Southern Mexico\n>>\n>>image(chisgrid,\"dem\",col=terrain.colors(100))\n>>plot(municipios,add=T)\n>>\n>>#Gives what we wanted in base graphics\n>>\n>>#But\n>>\n>>spplot(municipios, \"AREA\", panel <- function(x,y,...){\n>>    sp.grid(chisgrid)\n>>    panel.polygonsplot(x,y,...)\n>>    })\n>>#Doesn't\n>>\n>>#and\n>>\n>>municips <- list(\"sp.polygons\", municipios)\n>>spplot(chisgrid[\"dem\"],sp.layout=municips)\n>>\n>>#Draws them in the wrong order.\n>>\n>>#As an aside, this is great fun with rgl and the students loved it. Can\n>>anyone improve the code?\n>>\n>>view3d<-function(grid=chisgrid,dem=1,drape=2,exag=3,pal=sp.theme()$regions$col){\n>>  fullgrid(grid)<-TRUE\n>>  y<-grid[[dem]]*exag\n>>  y[is.na(y)]<-0\n>>  dim(y)<-grid at grid@cells.dim\n>>\n>>  x <- grid at grid@cellsize[1]*(1:grid at grid@cells.dim[1])\n>>  z <-grid at grid@cellsize[2]*(1:grid at grid@cells.dim[2])\n>>\n>>  y2<-grid[[drape]]\n>>  y2[!is.na(y2)]<-as.numeric(cut( y2[!is.na(y2)],length(pal)))\n>>  y2[is.na(y2)]<-0\n>>\n>>  ylim <- range(y2)\n>>  ylen <- ylim[2] - ylim[1] + 1\n>>\n>>  pal<-c(\"black\",pal)\n>>  col <- pal[ y2-ylim[1]+1 ] # assign colors to heights for each point\n>>\n>>  rgl.clear()\n>>  rgl.surface(x, z, y, color=col)\n>>}\n>>\n>>view3d(drape=1,pal=terrain.colors(100))\n>>\n>>Duncan\n>>\n>>\n>>\n>>Arien Lam wrote:\n>>\n>>    \n>>\n>>>I stumbled there too.\n>>>A way is to customize the default panel function within spplot.\n>>>\n>>>Try:\n>>>\n>>>spplot(municipios, \"yourvariable\", panel <- function(x,y,...){\n>>>    sp.grid(chisgrid)\n>>>    panel.polygonsplot(x,y,...)\n>>>    })\n>>>\n>>>Regards, Arien\n>>>\n>>>Duncan Golicher schreef:\n>>>\n>>>      \n>>>\n>>>>Many thanks to everyone involved in putting together the excelent sp\n>>>>package. I have just used for teaching a brief intro to applied\n>>>>geostats with gstat. Students found life much easier than a year ago\n>>>>when I had to try to explain a less structured approach to the data.\n>>>>A simple question arose after the class. According to the spplot\n>>>>documentation \"for grids and polygons sp.layout is drawn afterwards\n>>>>(so the item will not be overdrawn by the grid and/or polygon)\".\n>>>>So in this example we expected a DEM to be drawn first, then\n>>>>municipal boundaries.\n>>>>\n>>>> > class(municipios)\n>>>>[1] \"SpatialPolygonsDataFrame\"\n>>>> > class(chisgrid)\n>>>>[1] \"SpatialPixelsDataFrame\"\n>>>>\n>>>>municips <- list(\"sp.polygons\", municipios)\n>>>>spplot(chisgrid[\"dem\"],sp.layout=municips)\n>>>>\n>>>>The municipal boundaries are drawn first then overdrawn by the DEM,\n>>>>which was not what we expected or wanted. I couldn't find how to\n>>>>avoid this, apart from the simple solution of ..\n>>>>\n>>>>image(chisgrid,col=terrain.colors(20))\n>>>>plot(municipios,add=T)\n>>>>\n>>>>instead of spplot.The figures on  http://r-spatial.sourceforge.net\n>>>>all appear to have the grid drawn first. Is there a way to reverse\n>>>>this?\n>>>>\n>>>>Duncan\n>>>>\n>>>>        \n>>>>\n>>--\n>>Dr Duncan Golicher\n>>Ecologia y Sistematica Terrestre\n>>Conservaci?n de la Biodiversidad\n>>El Colegio de la Frontera Sur\n>>San Cristobal de Las Casas,\n>>Chiapas, Mexico\n>>\n>>Email: dgoliche at sclc.ecosur.mx\n>>\n>>Tel: 967 674 9000 ext 1310\n>>Fax: 967 678 2322\n>>Celular: 044 9671041021\n>>\n>>United Kingdom Skypein; 020 7870 6251\n>>Skype name: duncangolicher\n>>Download Skype from http://www.skype.com\n>>\n>>\n>>\n>>    \n>>\n>\n>\n>  \n>\n\n\n-- \nDr Duncan Golicher\nEcologia y Sistematica Terrestre\nConservaci?n de la Biodiversidad\nEl Colegio de la Frontera Sur\nSan Cristobal de Las Casas, \nChiapas, Mexico\n\nEmail: dgoliche at sclc.ecosur.mx \n\nTel: 967 674 9000 ext 1310\nFax: 967 678 2322\nCelular: 044 9671041021\n\nUnited Kingdom Skypein; 020 7870 6251\nSkype name: duncangolicher \nDownload Skype from http://www.skype.com",
+      "body_snippet": "Great. Thanks so much. It was obvious really.\nYou also seem to have come up with one solution to the line width \nquestion asked a couple of days ago,  as this works.\n\nspplot(chisgrid, \"dem\", panel = f",
+      "thread_id": "thread-e3a20559e14a",
+      "thread_depth": 2,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-28cbac503212",
+      "message_id": "<2fc17e30607070038y88f0686qb92823191efaa770@mail.gmail.com>",
+      "from_name": "zhijie zhang",
+      "from_email_hash": "89b010aa3476c696a33cf3af7a8ed0bc976e8775483a8bdfeff2588d8ce5b24d",
+      "date": "2006-07-07T15:38:16+08:00",
+      "subject": "[R-sig-Geo] [R] how do we sample in spatial statistics?",
+      "subject_clean": "how do we sample in spatial statistics?",
+      "in_reply_to": "<17580.29817.450605.537921@maths.uwa.edu.au>",
+      "references": [
+        "<mailman.9.1152007204.15936.r-sig-geo@stat.math.ethz.ch>",
+        "<17579.14479.894617.187218@maths.uwa.edu.au>",
+        "<2fc17e30607050710j3338e022j21b1962c56487c9d@mail.gmail.com>",
+        "<17580.29817.450605.537921@maths.uwa.edu.au>"
+      ],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060707/643b1514/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060707/643b1514/attachment.pl>",
+      "thread_id": "thread-28cbac503212",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-6fa7b0d8bd16",
+      "message_id": "<44AE699A.2090807@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2006-07-07T15:03:06+01:00",
+      "subject": "[R-sig-Geo] error message rgdal: dimensions do not match",
+      "subject_clean": "error message rgdal: dimensions do not match",
+      "in_reply_to": "<OFACAC028D.F16A73C7-ONCA2571A1.0082783D-CA2571A2.00003B94@nre.vic.gov.au>",
+      "references": [
+        "<OFACAC028D.F16A73C7-ONCA2571A1.0082783D-CA2571A2.00003B94@nre.vic.gov.au>"
+      ],
+      "body_plain": "Karl, I can see there are some NaNs in your image; this may be a source \nof problem but I cannot see whether they are also present in band1. \nOtherwise, could you provide me with this or another example that lets \nme reproduce the bug (assuming it is one)?\n--\nEdzer\n\nkarl.sommer at dpi.vic.gov.au wrote:\n\n>As suggested by Roger Bivand and Edzer Pebesma I have included the\n>output of str(t1) and str(SPDF) below.\n>\n>The error persited when I tried to do the kriging in two steps, using gstat\n>() and project().\n>Kriging a different variable, eg. \"band1\", results in the same error.\n>Converting t1 to a SpatialPointsDataFrame before kriging results in the\n>same error.\n>I also eliminated all zero values before calculating ndvi but the error\n>persited.\n>The traceback() info is included below.\n>\n>\n>Regards\n>\n>Karl\n>\n>\n>Indeed strange, given that 880 by 860 is 756800 (though 756800*2 is the\n>first number). What does summary(t1) say? Is the single column named band1\n>or ndvi? The class of t1 will be SpatialGridDataFrame, wouldn't\n>SpatialPointsDataFrame be more digestible? Does doing it in two steps\n>(gstat() then predict() of the gstat object) show anything? What did\n>traceback() say after krige()?\n>\n>Roger\n>\n>ouput follows:\n>\n>  \n>\n>>str(t1)\n>>    \n>>\n>Loading required package: sp\n>Formal class 'SpatialGridDataFrame' [package \"sp\"] with 6 slots\n>  ..@ data       :Formal class 'AttributeList' [package \"sp\"] with 1 slots\n>  .. .. ..@ att:List of 5\n>  .. .. .. ..$ band1: int [1:834470] 0 0 0 0 0 0 0 0 0 0 ...\n>  .. .. .. ..$ band2: int [1:834470] 0 0 0 0 0 0 0 0 0 0 ...\n>  .. .. .. ..$ band3: int [1:834470] 0 0 0 0 0 0 0 0 0 0 ...\n>  .. .. .. ..$ band4: int [1:834470] 0 0 0 0 0 0 0 0 0 0 ...\n>  .. .. .. ..$ ndvi : num [1:834470] NaN NaN NaN NaN NaN NaN NaN NaN NaN\n>NaN ...\n>  ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3 slots\n>  .. .. ..@ cellcentre.offset: Named num [1:2]  599029 6228561\n>  .. .. .. ..- attr(*, \"names\")= chr [1:2] \"x\" \"y\"\n>  .. .. ..@ cellsize         : num [1:2] 0.5 0.5\n>  .. .. ..@ cells.dim        : int [1:2] 917 910\n>  ..@ grid.index : int(0)\n>  ..@ coords     : num [1:2, 1:2]  599029  599487 6228561 6229016\n>  .. ..- attr(*, \"dimnames\")=List of 2\n>  .. .. ..$ : NULL\n>  .. .. ..$ : chr [1:2] \"x\" \"y\"\n>  ..@ bbox       : num [1:2, 1:2]  599029 6228561  599487 6229016\n>  .. ..- attr(*, \"dimnames\")=List of 2\n>  .. .. ..$ : chr [1:2] \"x\" \"y\"\n>  .. .. ..$ : chr [1:2] \"min\" \"max\"\n>  ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n>  .. .. ..@ projargs: chr NA\n>\n>  \n>\n>>str(SPDF)\n>>    \n>>\n>Formal class 'SpatialPixelsDataFrame' [package \"sp\"] with 7 slots\n>  ..@ data       :Formal class 'AttributeList' [package \"sp\"] with 1 slots\n>  .. .. ..@ att:List of 1\n>  .. .. .. ..$ field: num [1:481262] 1 1 1 1 1 1 1 1 1 1 ...\n>  ..@ coords.nrs : num(0)\n>  ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3 slots\n>  .. .. ..@ cellcentre.offset: Named num [1:2]  599059 6228577\n>  .. .. .. ..- attr(*, \"names\")= chr [1:2] \"s1\" \"s2\"\n>  .. .. ..@ cellsize         : Named num [1:2] 0.5 0.5\n>  .. .. .. ..- attr(*, \"names\")= chr [1:2] \"s1\" \"s2\"\n>  .. .. ..@ cells.dim        : Named int [1:2] 809 830\n>  .. .. .. ..- attr(*, \"names\")= chr [1:2] \"s1\" \"s2\"\n>  ..@ grid.index : int [1:481262] 421 422 423 424 425 426 427 428 429 430\n>...\n>  ..@ coords     : num [1:481262, 1:2] 599269 599269 599270 599270 599271\n>...\n>  .. ..- attr(*, \"dimnames\")=List of 2\n>  .. .. ..$ : NULL\n>  .. .. ..$ : chr [1:2] \"s1\" \"s2\"\n>  ..@ bbox       : num [1:2, 1:2]  599058 6228577  599463 6228992\n>  .. ..- attr(*, \"dimnames\")=List of 2\n>  .. .. ..$ : chr [1:2] \"s1\" \"s2\"\n>  .. .. ..$ : chr [1:2] \"min\" \"max\"\n>  ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n>  .. .. ..@ projargs: chr NA\n>\n>  \n>\n>>summary(t1)\n>>    \n>>\n>Object of class SpatialGridDataFrame\n>Coordinates:\n>        min     max\n>x  599028.5  599487\n>y 6228561.0 6229016\n>Is projected: NA\n>proj4string : [NA]\n>Number of points: 2\n>Grid attributes:\n>  cellcentre.offset cellsize cells.dim\n>x          599028.8      0.5       917\n>y         6228561.3      0.5       910\n>Data attributes:\n>     band1            band2            band3            band4\n> Min.   :   0.0   Min.   :   0.0   Min.   :   0.0   Min.   :   0.0\n> 1st Qu.: 299.0   1st Qu.: 480.0   1st Qu.: 261.0   1st Qu.: 491.0\n> Median : 347.0   Median : 613.0   Median : 387.0   Median : 776.0\n> Mean   : 302.5   Mean   : 540.4   Mean   : 467.4   Mean   : 633.3\n> 3rd Qu.: 394.0   3rd Qu.: 715.0   3rd Qu.: 637.0   3rd Qu.: 913.0\n> Max.   :2352.0   Max.   :3279.0   Max.   :2815.0   Max.   :1653.0\n>\n>      ndvi\n> Min.   :-3.235e-01\n> 1st Qu.: 9.552e-03\n> Median : 2.467e-01\n> Mean   : 1.992e-01\n> 3rd Qu.: 4.209e-01\n> Max.   : 7.185e-01\n> NA's   : 2.046e+05\n>\n># traceback after kriging provides the following messages\n>  \n>\n>>traceback()\n>>    \n>>\n>5: .Call(\"gstat_new_data\", as.double(raw$y), as.double(raw$locations),\n>       as.double(raw$X), as.integer(raw$has.intercept), as.double(d$beta),\n>       nmax, nmin, maxdist, as.integer(d$vfn), as.numeric(w), double(0),\n>       as.integer(d$degree))\n>4: predict.gstat(g, newdata = newdata, block = block, nsim = nsim,\n>       indicators = indicators, na.action = na.action)\n>3: .local(formula, locations, ...)\n>2: krige(ndvi ~ 1, t1, SPDF)\n>1: krige(ndvi ~ 1, t1, SPDF)\n>\n># converting to a SpatialPointsDataFrame before kriging resulted in\n>the same error\n>\n>t1 <- as(t1, \"SpatialPointsDataFrame\")\n>\n>  \n>\n>>t1.idw <- krige(ndvi~1, t1,  SPDF)\n>>    \n>>\n>Error: dimensions do not match: locations 1668940 and data 629822\n>\n># using two steps as suggested by Roger Bivand results in the same error\n>\n>  \n>\n>>t1.idw <- gstat(id = \"ndvi\", formula = ndvi ~ 1,\n>>    \n>>\n>        data = t1, nmax = 7, set = list(idp = .5))\n>\n>  \n>\n>>predict(t1.idw, SPDF)\n>>    \n>>\n>Error: dimensions do not match: locations 1668940 and data 629822\n>\n>_________________________________\n>Karl J Sommer,\n>Department of Primary Industries,\n>Catchment & Agriculture Services,\n>PO Box 905\n>Mildura, VIC, Australia 3502\n>\n>Tel: +61 (0)3 5051 4390\n>Fax +61 (0)3 5051 4534\n>\n>Email:     karl.sommer at dpi.vic.gov.au\n>__________________________________\n>\n>\n>  \n>",
+      "body_snippet": "Karl, I can see there are some NaNs in your image; this may be a source \nof problem but I cannot see whether they are also present in band1. \nOtherwise, could you provide me with this or another examp",
+      "thread_id": "thread-6125f1464f52",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-a82983970034",
+      "message_id": "<44AF11B0.9000605@sclc.ecosur.mx>",
+      "from_name": "Duncan Golicher",
+      "from_email_hash": "ee416973eb46e9b9a16114a6821e406a60d5f120cc1f63879cc2dffa52d4b87c",
+      "date": "2006-07-07T21:00:16-05:00",
+      "subject": "[R-sig-Geo] spgrass6 with cygwin",
+      "subject_clean": "spgrass6 with cygwin",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Can spgrass6 work with cygwin? I am trying to use grass 6 on a windows \nlaptop instead of my old grass5.7. but can't find how to get stuff into R.\nI admit to not exactly following what is meant by \"R is assumed to be \nrunning within GRASS\" \nI used to open grass, set the region then use, for example\n\nset.cygwinstring(\"c/cygwin\")\nGRASS.connect(TRUE,gisdbase=\"c:/cygwin/Duncan\",loc=\"altos\",mapset=\"SCLC\")\nG<-gmeta()\nd<-rast.get(G,c(\"dem\",\"slope\")\n\nbut I can't find the equivalent with spgrass6.\n\nThanks for any advice,\n\nDuncan\n-- \n\nDr Duncan Golicher\nEcologia y Sistematica Terrestre\nConservaci?n de la Biodiversidad\nEl Colegio de la Frontera Sur\nSan Cristobal de Las Casas, \nChiapas, Mexico\n\nEmail: dgoliche at sclc.ecosur.mx \n\nTel: 967 674 9000 ext 1310\nFax: 967 678 2322\nCelular: 044 9671041021\n\nUnited Kingdom Skypein; 020 7870 6251\nSkype name: duncangolicher \nDownload Skype from http://www.skype.com",
+      "body_snippet": "Can spgrass6 work with cygwin? I am trying to use grass 6 on a windows \nlaptop instead of my old grass5.7. but can't find how to get stuff into R.\nI admit to not exactly following what is meant by \"R ",
+      "thread_id": "thread-a82983970034",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-b4d9c37ffe48",
+      "message_id": "<BAY20-F5318C1A5D51CE1FD02560C9750@phx.gbl>",
+      "from_name": "Alí Santacruz",
+      "from_email_hash": "c4ca3f5e846492b0980aafb1dea996931eb16881ccf8f260096085ccabf97f6d",
+      "date": "2006-07-08T13:32:19-05:00",
+      "subject": "[R-sig-Geo] ossfim with Universal Kriging?",
+      "subject_clean": "ossfim with Universal Kriging?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list members:\n\nI am trying to make a cost/benefit analysis in a sampling network for \norganic matter soil content data. The best model fitted was exponential \n(universal kriging, first order trend).\n\nSo I need to know if it is possible to use ossfim function with universal \nkriging.\n\nI tried to modify the ossfim function but I get an error:\n\n>ossfim.UK<-function (spacings = 1:5, block.sizes = 1:5, model, nmax = 25,\n+     debug = 0)\n+ {\n+     n = floor(sqrt(nmax)) + 1\n+     x = 0:(n - 1) + 0.5\n+     x = sort(c(-x, x))\n+     ret = matrix(NA, length(spacings) * length(block.sizes),\n+         3)\n+     r = 1\n+     for (sp in spacings) {\n+         for (bl in block.sizes) {\n+             data.grid = data.frame(expand.grid(x * sp, x * sp),\n+                 z = rep(1, length(x)^2))\n+             names(data.grid) = c(\"x\", \"y\", \"z\")\n+             gridded(data.grid) = c(\"x\", \"y\")\n+             x0 = SpatialPoints(matrix(0, 1, 2))\n## Next I modify the formula in krige using the coordinates names of my data\n## to use universal kriging:\n+             kr = krige(z ~ e+n, data.grid, x0, block = c(bl, bl),\n+                 model = model, nmax = nmax, set = list(debug = debug))\n+             ret[r, ] = c(sp, bl, sqrt(kr[[\"var1.var\"]][1]))\n+             r = r + 1\n+         }\n+     }\n+     ret = data.frame(ret)\n+     names(ret) = c(\"spacing\", \"block.size\", \"kriging.se\")\n+     ret\n+ }\n>err.grid <- ossfim.UK(seq(10,60,10),block.sizes=0,m.f.exp.t1)\nError in model.frame(formula, rownames, variables, varnames, extras, \nextranames,  :\n        variable lengths differ (found for 'e')\n\nIs it possible what I want to do? Does it have sense?\n\nI appreciate any help or comment.\n\nSincerely,\n\nAl? M. Santacruz\nM.Sc. Geomatics, Student\nNational University of Colombia\nBogot? D.C.",
+      "body_snippet": "Dear list members:\n\nI am trying to make a cost/benefit analysis in a sampling network for \norganic matter soil content data. The best model fitted was exponential \n(universal kriging, first order tren",
+      "thread_id": "thread-b4d9c37ffe48",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-7318078c0fdd",
+      "message_id": "<44B00C05.7000903@geo.uu.nl>",
+      "from_name": "Edzer J Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2006-07-08T21:48:21+02:00",
+      "subject": "[R-sig-Geo] ossfim with Universal Kriging?",
+      "subject_clean": "ossfim with Universal Kriging?",
+      "in_reply_to": "<BAY20-F5318C1A5D51CE1FD02560C9750@phx.gbl>",
+      "references": [
+        "<BAY20-F5318C1A5D51CE1FD02560C9750@phx.gbl>"
+      ],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060708/dea2aaad/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060708/dea2aaad/attachment.pl>",
+      "thread_id": "thread-b4d9c37ffe48",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-3b57215fb58b",
+      "message_id": "<BAY20-F12BB85517B20BA6B0F3799C96A0@phx.gbl>",
+      "from_name": "Alí Santacruz",
+      "from_email_hash": "c4ca3f5e846492b0980aafb1dea996931eb16881ccf8f260096085ccabf97f6d",
+      "date": "2006-07-09T12:50:46-05:00",
+      "subject": "[R-sig-Geo] ossfim with Universal Kriging?",
+      "subject_clean": "ossfim with Universal Kriging?",
+      "in_reply_to": "<44B00C05.7000903@geo.uu.nl>",
+      "references": [],
+      "body_plain": "Dear Edzer,\n\nReplacing e+n with x+y does not work either:\n\n>err.grid <- ossfim.UK(seq(10,60,10),block.sizes=0,m.f.exp.t1)\nError in model.frame(formula, rownames, variables, varnames, extras, \nextranames,  :\n        variable lengths differ (found for 'y')\nIn addition: Warning message:\n'newdata' had 1 rows but variable(s) found have 104 rows\n\n\nAl?\n\n\n\n\n>From: Edzer J Pebesma <e.pebesma at geo.uu.nl>\n>To: Al? Santacruz <amsantac at hotmail.com>\n>CC: r-sig-geo at stat.math.ethz.ch\n>Subject: Re: [R-sig-Geo] ossfim with Universal Kriging?\n>Date: Sat, 08 Jul 2006 21:48:21 +0200\n>\n>Ali, if you replace e+n with x+y, does that work?\n>\n>I wasn't aware that ossfim was this restrictive; there's\n>clearly some room for generalisation here.\n>--\n>Edzer\n>\n>Al? Santacruz wrote:\n>\n>>Dear list members:\n>>\n>>I am trying to make a cost/benefit analysis in a sampling network for \n>>organic matter soil content data. The best model fitted was exponential \n>>(universal kriging, first order trend).\n>>\n>>So I need to know if it is possible to use ossfim function with universal \n>>kriging.\n>>\n>>I tried to modify the ossfim function but I get an error:\n>>\n>>\n>>\n>>>ossfim.UK<-function (spacings = 1:5, block.sizes = 1:5, model, nmax = 25,\n>>>\n>>>\n>>+     debug = 0)\n>>+ {\n>>+     n = floor(sqrt(nmax)) + 1\n>>+     x = 0:(n - 1) + 0.5\n>>+     x = sort(c(-x, x))\n>>+     ret = matrix(NA, length(spacings) * length(block.sizes),\n>>+         3)\n>>+     r = 1\n>>+     for (sp in spacings) {\n>>+         for (bl in block.sizes) {\n>>+             data.grid = data.frame(expand.grid(x * sp, x * sp),\n>>+                 z = rep(1, length(x)^2))\n>>+             names(data.grid) = c(\"x\", \"y\", \"z\")\n>>+             gridded(data.grid) = c(\"x\", \"y\")\n>>+             x0 = SpatialPoints(matrix(0, 1, 2))\n>>## Next I modify the formula in krige using the coordinates names of my \n>>data\n>>## to use universal kriging:\n>>+             kr = krige(z ~ e+n, data.grid, x0, block = c(bl, bl),\n>>+                 model = model, nmax = nmax, set = list(debug = debug))\n>>+             ret[r, ] = c(sp, bl, sqrt(kr[[\"var1.var\"]][1]))\n>>+             r = r + 1\n>>+         }\n>>+     }\n>>+     ret = data.frame(ret)\n>>+     names(ret) = c(\"spacing\", \"block.size\", \"kriging.se\")\n>>+     ret\n>>+ }\n>>\n>>\n>>>err.grid <- ossfim.UK(seq(10,60,10),block.sizes=0,m.f.exp.t1)\n>>>\n>>>\n>>Error in model.frame(formula, rownames, variables, varnames, extras, \n>>extranames,  :\n>>        variable lengths differ (found for 'e')\n>>\n>>Is it possible what I want to do? Does it have sense?\n>>\n>>I appreciate any help or comment.\n>>\n>>Sincerely,\n>>\n>>Al? M. Santacruz\n>>M.Sc. Geomatics, Student\n>>National University of Colombia\n>>Bogot? D.C.\n>>\n>>_______________________________________________\n>>R-sig-Geo mailing list\n>>R-sig-Geo at stat.math.ethz.ch\n>>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>",
+      "body_snippet": "Dear Edzer,\n\nReplacing e+n with x+y does not work either:\n\n>err.grid <- ossfim.UK(seq(10,60,10),block.sizes=0,m.f.exp.t1)\nError in model.frame(formula, rownames, variables, varnames, extras, \nextranam",
+      "thread_id": "thread-b4d9c37ffe48",
+      "thread_depth": 2,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-5e6696c2c716",
+      "message_id": "<44B17541.3090501@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2006-07-09T23:29:37+02:00",
+      "subject": "[R-sig-Geo] drawing order in spplot",
+      "subject_clean": "drawing order in spplot",
+      "in_reply_to": "<44AA8B9A.7030200@sclc.ecosur.mx>",
+      "references": [
+        "<44AA8B9A.7030200@sclc.ecosur.mx>"
+      ],
+      "body_plain": "Duncan Golicher wrote:\n\n>Many thanks to everyone involved in putting together the excelent sp \n>package. I have just used for teaching a brief intro to applied geostats \n>with gstat. Students found life much easier than a year ago when I had \n>to try to explain a less structured approach to the data.\n>A simple question arose after the class. According to the spplot \n>documentation \"for grids and polygons sp.layout is drawn afterwards (so \n>the item will not be overdrawn by the grid and/or polygon)\".\n>So in this example we expected a DEM to be drawn first, then municipal \n>boundaries.\n>\n> > class(municipios)\n>[1] \"SpatialPolygonsDataFrame\"\n> > class(chisgrid)\n>[1] \"SpatialPixelsDataFrame\"\n>\n>municips <- list(\"sp.polygons\", municipios)\n>spplot(chisgrid[\"dem\"],sp.layout=municips)\n>\n>The municipal boundaries are drawn first then overdrawn by the DEM, \n>which was not what we expected or wanted. I couldn't find how to avoid \n>this, apart from the simple solution of ..\n>\n>image(chisgrid,col=terrain.colors(20))\n>plot(municipios,add=T)\n>\n>instead of spplot.The figures on  http://r-spatial.sourceforge.net all \n>appear to have the grid drawn first. Is there a way to reverse this?\n>\n>Duncan\n>\n>  \n>\nthe sp.layout argument accepts a list item, first=TRUE or first=FALSE,\ntelling whether to\nfirst or to last plot this item; you could try to use that.\n\nI'll review whether the current setup is logical, or not.\n--\nEdzer",
+      "body_snippet": "Duncan Golicher wrote:\n\n>Many thanks to everyone involved in putting together the excelent sp \n>package. I have just used for teaching a brief intro to applied geostats \n>with gstat. Students found li",
+      "thread_id": "thread-e402dc355876",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-af2e4bbcccc7",
+      "message_id": "<44B20509.9050702@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2006-07-10T09:43:05+02:00",
+      "subject": "[R-sig-Geo] drawing order in spplot and Line width in sp maps",
+      "subject_clean": "drawing order in spplot and Line width in sp maps",
+      "in_reply_to": "<44AD7AB3.2040402@sclc.ecosur.mx>",
+      "references": [
+        "<44AA8B9A.7030200@sclc.ecosur.mx>",
+        "<44ABB62B.5080505@geo.uu.nl>",
+        "<44AD31A5.9080801@sclc.ecosur.mx>",
+        "<39388.131.211.65.133.1152210792.squirrel@webmail.geo.uu.nl>",
+        "<44AD7AB3.2040402@sclc.ecosur.mx>"
+      ],
+      "body_plain": "I uploaded sp 0.8-18 to CRAN, which should fix:\n- a bug that breaks sp 0.8-16 on r-devel\n- not passing lty and lwd to spplot methods for SpatialPolygonsDataFrame\nand SpatialLinesDataFrame objects.\n--\nEdzer\n\nDuncan Golicher wrote:\n> Great. Thanks so much. It was obvious really.\n> You also seem to have come up with one solution to the line width \n> question asked a couple of days ago,  as this works.\n>\n> spplot(chisgrid, \"dem\", panel = function(x,y, ...){\n>     panel.gridplot(x,y,...)\n>     sp.polygons(municipios, col=1,fill=0,lwd=3,lty=2)\n>     })\n>\n>\n> Duncan\n>   \n>",
+      "body_snippet": "I uploaded sp 0.8-18 to CRAN, which should fix:\n- a bug that breaks sp 0.8-16 on r-devel\n- not passing lty and lwd to spplot methods for SpatialPolygonsDataFrame\nand SpatialLinesDataFrame objects.\n--\n",
+      "thread_id": "thread-e3a20559e14a",
+      "thread_depth": 3,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-3c3473ee3380",
+      "message_id": "<44B20622.3070903@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2006-07-10T09:47:46+02:00",
+      "subject": "[R-sig-Geo] drawing order in spplot and Line width in sp maps",
+      "subject_clean": "drawing order in spplot and Line width in sp maps",
+      "in_reply_to": "<44AD7AB3.2040402@sclc.ecosur.mx>",
+      "references": [
+        "<44AA8B9A.7030200@sclc.ecosur.mx>",
+        "<44ABB62B.5080505@geo.uu.nl>",
+        "<44AD31A5.9080801@sclc.ecosur.mx>",
+        "<39388.131.211.65.133.1152210792.squirrel@webmail.geo.uu.nl>",
+        "<44AD7AB3.2040402@sclc.ecosur.mx>"
+      ],
+      "body_plain": "Duncan Golicher wrote:\n> Great. Thanks so much. It was obvious really.\n> You also seem to have come up with one solution to the line width \n> question asked a couple of days ago,  as this works.\n>\n> spplot(chisgrid, \"dem\", panel = function(x,y, ...){\n>     panel.gridplot(x,y,...)\n>     sp.polygons(municipios, col=1,fill=0,lwd=3,lty=2)\n>     })\n>\n>\n>   \nYes, or:\n\nspplot(chisgrid, \"dem\", sp.layout=list(\"sp.polygons\", municipios, col=1, \nfill=0, lwd=3, lty=2, first=F))\n\n> Duncan\n>\n> Arien Lam wrote:\n>\n>   \n>> Duncan,\n>>\n>> After a few tries I found:\n>>\n>> spplot(chisgrid, \"dem\", panel = function(x,y, ...){\n>>    panel.gridplot(x,y, ...)\n>>    sp.polygons(municipios, col=1,fill=0)\n>>    })\n>>\n>> , which is just the reverse nesting order from my previous shot at it.\n>> HTH, Arien\n>>\n>> To be precise, this worked on:\n>>  \n>>\n>>     \n>>> sessionInfo()\n>>>    \n>>>\n>>>       \n>> Version 2.3.1 (2006-06-01)\n>> i486-pc-linux-gnu\n>>\n>> attached base packages:\n>> [1] \"methods\"   \"stats\"     \"graphics\"  \"grDevices\" \"utils\"     \"datasets\"\n>> [7] \"base\"\n>>\n>> other attached packages:\n>> lattice       sp\n>> \"0.13-8\" \"0.8-16\"\n>>\n>>\n>> This approach is advocated for tweaking trellis plots.\n>>\n>> On Thu, July 6, 2006 17:52, Duncan Golicher wrote:\n>>  \n>>\n>>     \n>>> Thanks for this Arien,\n>>>\n>>> Just can't get it to work though. I messed around a bit more yesterday\n>>> but couldn't find a way. No one else on the list replied. I have another\n>>> reason to want to do something similar, so I was hoping there was a work\n>>> around out there. Here is the data if you (or anyone else) can help.\n>>>\n>>> load(file=url(\"ftp://200.23.34.16/simulacion/SPATIAL/chisgrid.rob\"))\n>>> load(file=url(\"ftp://200.23.34.16/simulacion/SPATIAL//municipios.rob\"))\n>>>\n>>> #municipios was originally imported from a shapefile. The \"dem\" is a\n>>> coarse 1 km x 1km grid imported from GRASS 5.7. Both use UTM NAD27, but\n>>> the projections are not #set. The data represents the state of Chiapas\n>>> in Southern Mexico\n>>>\n>>> image(chisgrid,\"dem\",col=terrain.colors(100))\n>>> plot(municipios,add=T)\n>>>\n>>> #Gives what we wanted in base graphics\n>>>\n>>> #But\n>>>\n>>> spplot(municipios, \"AREA\", panel <- function(x,y,...){\n>>>    sp.grid(chisgrid)\n>>>    panel.polygonsplot(x,y,...)\n>>>    })\n>>> #Doesn't\n>>>\n>>> #and\n>>>\n>>> municips <- list(\"sp.polygons\", municipios)\n>>> spplot(chisgrid[\"dem\"],sp.layout=municips)\n>>>\n>>> #Draws them in the wrong order.\n>>>\n>>> #As an aside, this is great fun with rgl and the students loved it. Can\n>>> anyone improve the code?\n>>>\n>>> view3d<-function(grid=chisgrid,dem=1,drape=2,exag=3,pal=sp.theme()$regions$col){\n>>>  fullgrid(grid)<-TRUE\n>>>  y<-grid[[dem]]*exag\n>>>  y[is.na(y)]<-0\n>>>  dim(y)<-grid at grid@cells.dim\n>>>\n>>>  x <- grid at grid@cellsize[1]*(1:grid at grid@cells.dim[1])\n>>>  z <-grid at grid@cellsize[2]*(1:grid at grid@cells.dim[2])\n>>>\n>>>  y2<-grid[[drape]]\n>>>  y2[!is.na(y2)]<-as.numeric(cut( y2[!is.na(y2)],length(pal)))\n>>>  y2[is.na(y2)]<-0\n>>>\n>>>  ylim <- range(y2)\n>>>  ylen <- ylim[2] - ylim[1] + 1\n>>>\n>>>  pal<-c(\"black\",pal)\n>>>  col <- pal[ y2-ylim[1]+1 ] # assign colors to heights for each point\n>>>\n>>>  rgl.clear()\n>>>  rgl.surface(x, z, y, color=col)\n>>> }\n>>>\n>>> view3d(drape=1,pal=terrain.colors(100))\n>>>\n>>> Duncan\n>>>\n>>>\n>>>\n>>> Arien Lam wrote:\n>>>\n>>>    \n>>>\n>>>       \n>>>> I stumbled there too.\n>>>> A way is to customize the default panel function within spplot.\n>>>>\n>>>> Try:\n>>>>\n>>>> spplot(municipios, \"yourvariable\", panel <- function(x,y,...){\n>>>>    sp.grid(chisgrid)\n>>>>    panel.polygonsplot(x,y,...)\n>>>>    })\n>>>>\n>>>> Regards, Arien\n>>>>\n>>>> Duncan Golicher schreef:\n>>>>\n>>>>      \n>>>>\n>>>>         \n>>>>> Many thanks to everyone involved in putting together the excelent sp\n>>>>> package. I have just used for teaching a brief intro to applied\n>>>>> geostats with gstat. Students found life much easier than a year ago\n>>>>> when I had to try to explain a less structured approach to the data.\n>>>>> A simple question arose after the class. According to the spplot\n>>>>> documentation \"for grids and polygons sp.layout is drawn afterwards\n>>>>> (so the item will not be overdrawn by the grid and/or polygon)\".\n>>>>> So in this example we expected a DEM to be drawn first, then\n>>>>> municipal boundaries.\n>>>>>\n>>>>>           \n>>>>>> class(municipios)\n>>>>>>             \n>>>>> [1] \"SpatialPolygonsDataFrame\"\n>>>>>           \n>>>>>> class(chisgrid)\n>>>>>>             \n>>>>> [1] \"SpatialPixelsDataFrame\"\n>>>>>\n>>>>> municips <- list(\"sp.polygons\", municipios)\n>>>>> spplot(chisgrid[\"dem\"],sp.layout=municips)\n>>>>>\n>>>>> The municipal boundaries are drawn first then overdrawn by the DEM,\n>>>>> which was not what we expected or wanted. I couldn't find how to\n>>>>> avoid this, apart from the simple solution of ..\n>>>>>\n>>>>> image(chisgrid,col=terrain.colors(20))\n>>>>> plot(municipios,add=T)\n>>>>>\n>>>>> instead of spplot.The figures on  http://r-spatial.sourceforge.net\n>>>>> all appear to have the grid drawn first. Is there a way to reverse\n>>>>> this?\n>>>>>\n>>>>> Duncan\n>>>>>\n>>>>>        \n>>>>>\n>>>>>           \n>>> --\n>>> Dr Duncan Golicher\n>>> Ecologia y Sistematica Terrestre\n>>> Conservaci?n de la Biodiversidad\n>>> El Colegio de la Frontera Sur\n>>> San Cristobal de Las Casas,\n>>> Chiapas, Mexico\n>>>\n>>> Email: dgoliche at sclc.ecosur.mx\n>>>\n>>> Tel: 967 674 9000 ext 1310\n>>> Fax: 967 678 2322\n>>> Celular: 044 9671041021\n>>>\n>>> United Kingdom Skypein; 020 7870 6251\n>>> Skype name: duncangolicher\n>>> Download Skype from http://www.skype.com\n>>>\n>>>\n>>>\n>>>    \n>>>\n>>>       \n>>  \n>>\n>>     \n>\n>\n>",
+      "body_snippet": "Duncan Golicher wrote:\n> Great. Thanks so much. It was obvious really.\n> You also seem to have come up with one solution to the line width \n> question asked a couple of days ago,  as this works.\n>\n> s",
+      "thread_id": "thread-e3a20559e14a",
+      "thread_depth": 3,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-7d24ca16a8f7",
+      "message_id": "<002d01c6a4f9$a64acdd0$a8185393@Sonia>",
+      "from_name": "Sonia Broner - UPC",
+      "from_email_hash": "09be3c104a186dbf675c6857dbf7310d7c096eaeaf827e166ceb96876008b172",
+      "date": "2006-07-11T16:52:36+02:00",
+      "subject": "[R-sig-Geo] map legend",
+      "subject_clean": "map legend",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060711/87e4d3ce/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060711/87e4d3ce/attachment.pl>",
+      "thread_id": "thread-7d24ca16a8f7",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-8f375a4a4ee7",
+      "message_id": "<44B612A9.9020407@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2006-07-13T10:30:17+01:00",
+      "subject": "[R-sig-Geo] map legend",
+      "subject_clean": "map legend",
+      "in_reply_to": "<002d01c6a4f9$a64acdd0$a8185393@Sonia>",
+      "references": [
+        "<002d01c6a4f9$a64acdd0$a8185393@Sonia>"
+      ],
+      "body_plain": "Sonia, it might help to send an example that we can reproduce without \naccess to your data, in order to see what's going on. If that doesn't \nhelp, you might to ask r-help, as the legend() command is not specific \nto geospatial data analysis, afaics.\n--\nEdzer\n\nSonia Broner - UPC wrote:\n\n>Hi list!\n>\n>I`ve tried to do a choropleth map in R but I`ve had problems with the legend.\n>I`d like only two digits in the legend but  don`t know how to do this.\n>Thanks\n>\n>Sonia\n>\n>\n>library(RColorBrewer)\n>\n>par(mfrow=c(1,1))\n>\n>nivel<-cut(CIU_T,5)\n>\n>par(pty=\"m\")\n>\n>nParts<-as.numeric(nivel)\n>\n>mypalette<-brewer.pal(7,\"YlOrRd\")\n>\n>fgs<-mypalette[nParts]\n>\n>plot(zrp_ov,fg=fgs,xlab=\"\",ylab=\"\",xaxt=\"n\",yaxt=\"n\",bty=\"n\",ol=\"grey\")\n>\n>brks<-attributes(nivel)$levels\n>\n>legend(\"topleft\",legend=brks,fill=mypalette,bty=\"n\",cex=.8,title=\"CIU_T\",inset=0)\n>\n>\n>\n>\n>\t[[alternative HTML version deleted]]\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>  \n>",
+      "body_snippet": "Sonia, it might help to send an example that we can reproduce without \naccess to your data, in order to see what's going on. If that doesn't \nhelp, you might to ask r-help, as the legend() command is ",
+      "thread_id": "thread-7d24ca16a8f7",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-dc140933d0cd",
+      "message_id": "<44B6E86A.1040805@sclc.ecosur.mx>",
+      "from_name": "Duncan Golicher",
+      "from_email_hash": "ee416973eb46e9b9a16114a6821e406a60d5f120cc1f63879cc2dffa52d4b87c",
+      "date": "2006-07-13T19:42:18-05:00",
+      "subject": "[R-sig-Geo] reading from Grass",
+      "subject_clean": "reading from Grass",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Can anyone help me to understand how to read data from grass6 running in \ncygwin using spgrass6? I asked on friday, but got no reply.\nI first thought I could always resort to my old way with GRASS, but (of \ncourse?) as soon as I change a region with grass6 I get\n\nGRASS.connect(TRUE,gisdbase=\"e:/\",loc=\"wgs84\",mapset=\"PERMANENT\")\nError in gmeta() : Bad or no region for current mapset\nError in GRASS.connect(TRUE, gisdbase = \"e:/\", loc = \"wgs84\", mapset = \n\"PERMANENT\") :\n        cannot retrieve window metadata from specificed location\n\nThanks for any advice.\n\nDuncan\n\n-- \nDr Duncan Golicher\nEcologia y Sistematica Terrestre\nConservaci?n de la Biodiversidad\nEl Colegio de la Frontera Sur\nSan Cristobal de Las Casas, \nChiapas, Mexico\n\nEmail: dgoliche at sclc.ecosur.mx \n\nTel: 967 674 9000 ext 1310\nFax: 967 678 2322\nCelular: 044 9671041021\n\nUnited Kingdom Skypein; 020 7870 6251\nSkype name: duncangolicher \nDownload Skype from http://www.skype.com",
+      "body_snippet": "Can anyone help me to understand how to read data from grass6 running in \ncygwin using spgrass6? I asked on friday, but got no reply.\nI first thought I could always resort to my old way with GRASS, bu",
+      "thread_id": "thread-dc140933d0cd",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-d35feec061c3",
+      "message_id": "<44B9456D.7000905@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2006-07-15T21:43:41+02:00",
+      "subject": "[R-sig-Geo] map legend",
+      "subject_clean": "map legend",
+      "in_reply_to": "<002d01c6a4f9$a64acdd0$a8185393@Sonia>",
+      "references": [
+        "<002d01c6a4f9$a64acdd0$a8185393@Sonia>"
+      ],
+      "body_plain": "Sonia, perhaps by\n\nnivel <- cut(CIU_T ,seq(min(CIU_T),max(CIU_T),length=6))\n\nhth,\n--\nEdzer\n\nSonia Broner - UPC wrote:\n> Hi list!\n>\n> I`ve tried to do a choropleth map in R but I`ve had problems with the legend.\n> I`d like only two digits in the legend but  don`t know how to do this.\n> Thanks\n>\n> Sonia\n>\n>\n> library(RColorBrewer)\n>\n> par(mfrow=c(1,1))\n>\n> nivel<-cut(CIU_T,5)\n>\n> par(pty=\"m\")\n>\n> nParts<-as.numeric(nivel)\n>\n> mypalette<-brewer.pal(7,\"YlOrRd\")\n>\n> fgs<-mypalette[nParts]\n>\n> plot(zrp_ov,fg=fgs,xlab=\"\",ylab=\"\",xaxt=\"n\",yaxt=\"n\",bty=\"n\",ol=\"grey\")\n>\n> brks<-attributes(nivel)$levels\n>\n> legend(\"topleft\",legend=brks,fill=mypalette,bty=\"n\",cex=.8,title=\"CIU_T\",inset=0)\n>\n>\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_snippet": "Sonia, perhaps by\n\nnivel <- cut(CIU_T ,seq(min(CIU_T),max(CIU_T),length=6))\n\nhth,\n--\nEdzer\n\nSonia Broner - UPC wrote:\n> Hi list!\n>\n> I`ve tried to do a choropleth map in R but I`ve had problems with t",
+      "thread_id": "thread-7d24ca16a8f7",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-af14011c0d86",
+      "message_id": "<BFB0EC0B-E445-46D1-ABF3-C323D9E21711@tiem.utk.edu>",
+      "from_name": "Michael Fuller",
+      "from_email_hash": "dcb05f09316b8e7b328df740f8be5dae251857273c91710cb8f90dc542828a5b",
+      "date": "2006-07-17T17:56:28-04:00",
+      "subject": "[R-sig-Geo] geo-newbie Q: overlay lat-long data onto projected map?",
+      "subject_clean": "geo-newbie Q: overlay lat-long data onto projected map?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060717/3cb58de6/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060717/3cb58de6/attachment.pl>",
+      "thread_id": "thread-af14011c0d86",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-e66495c13ccc",
+      "message_id": "<200607180218.k6I2IwZO016178@corinna.its.utas.edu.au>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "4d8db92248257cf58a15282ef4b057029dbd45ad2b2c007fbad56eff8864a080",
+      "date": "2006-07-18T04:18:58+02:00",
+      "subject": "[R-sig-Geo] problem assigning POSIX class to AttributeList column",
+      "subject_clean": "problem assigning POSIX class to AttributeList column",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060718/ca493fd7/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060718/ca493fd7/attachment.pl>",
+      "thread_id": "thread-e66495c13ccc",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-10da23e3e0d3",
+      "message_id": "<883D4509-CFB2-4A03-B7D0-6FB30BF5343A@tiem.utk.edu>",
+      "from_name": "Michael Fuller",
+      "from_email_hash": "dcb05f09316b8e7b328df740f8be5dae251857273c91710cb8f90dc542828a5b",
+      "date": "2006-07-18T09:43:23-04:00",
+      "subject": "[R-sig-Geo] geo-newbie Q: overlay lat-long data onto projected map?",
+      "subject_clean": "geo-newbie Q: overlay lat-long data onto projected map?",
+      "in_reply_to": "<4702645135092E4497088F71D9C8F51A0224E5A3@afhex01.dpi.wa.gov.au>",
+      "references": [
+        "<4702645135092E4497088F71D9C8F51A0224E5A3@afhex01.dpi.wa.gov.au>"
+      ],
+      "body_plain": "This is awesome help! Thank you very much Tom!\nI will give it a go.\nMike\n\nOn Jul 17, 2006, at 10:04 PM, Mulholland, Tom wrote:\n\n> Yes you are correct in your assumption that if you are not using  \n> the \"maps\" package you need to have your own boundary files. There  \n> is the \"National Atlas of the United States\" produced by the USGS  \n> which I recall has downloads of a variety of shapefiles. http://www- \n> atlas.usgs.gov/ is the mainpage but administrative boundaries are  \n> on http://www-atlas.usgs.gov/atlasftp.html? \n> openChapters=chpbound#chpbound in compressed files. I'm sure I have  \n> previously found them uncompressed, but it's not too hard to  \n> decompress tham as you only have to do it once.\n>\n>\n> So once you have the shapefiles you can read them using the  \n> maptools package with the readShapePoly set of commands.\n>\n> such as\n>\n> US <- readShapePoly(\"name of shape file\")\n> #make sure you have the correct transformation\n> # set the CRS for the shapefile you have downloaded.\n> # You need to check the metadata associated with your shapefile\n>\n> # I typically use sommething like\n> #    proj4string(x) <- CRS(\"+proj=longlat +datum=NAD83\")\n> # Then reproject it into the format you wnat to use\n> #    x <- transform(x,CRS(\"+proj=utm +zone=50\"))\n> #    }\n>\n> # Having done that\n>\n> plot(US,...)\n>\n> #Then you add your data to the map\n> plot(S, pch = 20, add = TRUE)\n>\n> Yes you can extract the coordinates from maps\n>\n>> test <- map(\"world\",\"UK\",xlim = c(-8.08932,3.4), ylim = c \n>> (49.11741,61.54963))\n>> str(test)\n> List of 4\n>  $ x    : num [1:296] -6.24 -6.30 -6.23 -6.38 -6.46 ...\n>  $ y    : num [1:296] 58.5 58.3 58.2 58.2 58.1 ...\n>  $ range: num [1:4] -8.09  1.73 49.25 60.84\n>  $ names: chr [1:25] \"UK:Scotland:Isle of Lewis\" \"UK:Guernsey\"  \n> \"UK:Great Britain\" \"UK:Scotland:Shetland Islands:Unst\" ...\n>  - attr(*, \"class\")= chr \"map\"\n>\n> but it looks like you would them have to process them into an sp  \n> format. However the world map is not particularly detailed. It's  \n> possible the US county data is of more precision.\n>\n> If you just use maps then you should be able to use \"points\" to  \n> plot your data\n>\n> map('usa')\n> points(S$x, S$y, pch = 20)\n>\n> Not having delved into the map package I don't know exactly how it  \n> handles projections but it looks like\n>\n> map('usa', projection = \"yourCRS\")\n>\n> would be sufficient.\n>\n> I hope this helps.\n>\n> Tom Mulholland\n> Senior Demographer\n> Applied Research and Modelling\n> State and Regional Policy\n> Department for Planning and Infrastructure\n> Perth, Western Australia\n> +61 (08) 9264 7936\n>\n>\n>>\n>> -----Original Message-----\n>> From: r-sig-geo-bounces at stat.math.ethz.ch\n>> [mailto:r-sig-geo-bounces at stat.math.ethz.ch]On Behalf Of\n>> Michael Fuller\n>> Sent: Tuesday, 18 July 2006 5:56 AM\n>> To: r-sig-geo at stat.math.ethz.ch\n>> Subject: [R-sig-Geo] geo-newbie Q: overlay lat-long data onto\n>> projected\n>> map?\n>>\n>>\n>> I've spent the last 5 days trying to figure out how to overlay the\n>> positions of geographic data on top of a map. I've scoured the man\n>> pages for the maps, mapproj, maptools, mapdata, and the huge sp\n>> package. I've experimented with countless permutations of commands.\n>> So far I've learned a lot about map projections, but I still have no\n>> ideas how to display my data the way I want! (sigh)\n>>\n>> The data are the latitude-longitude coordinates of 1,599\n>> survey sites\n>> located across the US. I want to plot these sites on a map of\n>> the US.\n>> Seems like a simple task. I've tried converting them to a\n>> SpatialPoints object and worked out how to project the sites using a\n>> given map projection (i.e. Bonne). But how do I correctly overlay\n>> (i.e. display) the data points onto a similarly projected map of the\n>> US? It might be possible to do it using overlay {sp} but for that it\n>> seems I would need the coordinates of the geopolitical boundary for\n>> the map of the US. Can these values be extracted somehow from the US\n>> map?\n>>\n>> Here's how I generated the SpatialPoints object:\n>>\n>> #x = longitude values in decimal degrees\n>> #y = latitude values in decimal degrees\n>> #create SpatialPoints object using CRS-class Bonne projection\n>> centered on longitude 100\n>> S <- SpatialPoints(cbind(x,y),CRS(\"+proj=bonne +lon_0=100\"))\n>>\n>> #this next part plots just the data points (cloud of points)\n>> plot(S,pch=20)\n>>\n>> How do I overlay the same points on top of a map of the US such that\n>> they are correctly positioned wrt coordinates?\n>>\n>> Also, the R-sig-geo info page does show an URL for a searchable\n>> archive of R-sig-geo. Does one exist?\n>>\n>> Many thanks for your time.\n>> Mike\n>> ______________________________\n>> Michael M Fuller, Ph.D.\n>> The Institute for Environmental Modeling\n>> University of Tennessee\n>> 1416 Circle Drive\n>> Knoxville, TN 37996-1610\n>>\n>>\n>>\n>>\n>> \t[[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>",
+      "body_snippet": "This is awesome help! Thank you very much Tom!\nI will give it a go.\nMike\n\nOn Jul 17, 2006, at 10:04 PM, Mulholland, Tom wrote:\n\n> Yes you are correct in your assumption that if you are not using  \n> t",
+      "thread_id": "thread-10da23e3e0d3",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-feb7f83ce6cc",
+      "message_id": "<44BCFCA8.3030001@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2006-07-18T16:22:17+01:00",
+      "subject": "[R-sig-Geo] geo-newbie Q: overlay lat-long data onto projected map?",
+      "subject_clean": "geo-newbie Q: overlay lat-long data onto projected map?",
+      "in_reply_to": "<883D4509-CFB2-4A03-B7D0-6FB30BF5343A@tiem.utk.edu>",
+      "references": [
+        "<4702645135092E4497088F71D9C8F51A0224E5A3@afhex01.dpi.wa.gov.au>",
+        "<883D4509-CFB2-4A03-B7D0-6FB30BF5343A@tiem.utk.edu>"
+      ],
+      "body_plain": "Michael, on http://r-spatial.sourceforge.net you'll find a package (and \ninstallation instructions) called spmaps, which converts an object from \nthe maps package (and data base) to an sp object. If needed at all...\n--\nEdzer\n\nMichael Fuller wrote:\n\n>This is awesome help! Thank you very much Tom!\n>I will give it a go.\n>Mike\n>\n>On Jul 17, 2006, at 10:04 PM, Mulholland, Tom wrote:\n>\n>  \n>\n>>Yes you are correct in your assumption that if you are not using  \n>>the \"maps\" package you need to have your own boundary files. There  \n>>is the \"National Atlas of the United States\" produced by the USGS  \n>>which I recall has downloads of a variety of shapefiles. http://www- \n>>atlas.usgs.gov/ is the mainpage but administrative boundaries are  \n>>on http://www-atlas.usgs.gov/atlasftp.html? \n>>openChapters=chpbound#chpbound in compressed files. I'm sure I have  \n>>previously found them uncompressed, but it's not too hard to  \n>>decompress tham as you only have to do it once.\n>>\n>>\n>>So once you have the shapefiles you can read them using the  \n>>maptools package with the readShapePoly set of commands.\n>>\n>>such as\n>>\n>>US <- readShapePoly(\"name of shape file\")\n>>#make sure you have the correct transformation\n>># set the CRS for the shapefile you have downloaded.\n>># You need to check the metadata associated with your shapefile\n>>\n>># I typically use sommething like\n>>#    proj4string(x) <- CRS(\"+proj=longlat +datum=NAD83\")\n>># Then reproject it into the format you wnat to use\n>>#    x <- transform(x,CRS(\"+proj=utm +zone=50\"))\n>>#    }\n>>\n>># Having done that\n>>\n>>plot(US,...)\n>>\n>>#Then you add your data to the map\n>>plot(S, pch = 20, add = TRUE)\n>>\n>>Yes you can extract the coordinates from maps\n>>\n>>    \n>>\n>>>test <- map(\"world\",\"UK\",xlim = c(-8.08932,3.4), ylim = c \n>>>(49.11741,61.54963))\n>>>str(test)\n>>>      \n>>>\n>>List of 4\n>> $ x    : num [1:296] -6.24 -6.30 -6.23 -6.38 -6.46 ...\n>> $ y    : num [1:296] 58.5 58.3 58.2 58.2 58.1 ...\n>> $ range: num [1:4] -8.09  1.73 49.25 60.84\n>> $ names: chr [1:25] \"UK:Scotland:Isle of Lewis\" \"UK:Guernsey\"  \n>>\"UK:Great Britain\" \"UK:Scotland:Shetland Islands:Unst\" ...\n>> - attr(*, \"class\")= chr \"map\"\n>>\n>>but it looks like you would them have to process them into an sp  \n>>format. However the world map is not particularly detailed. It's  \n>>possible the US county data is of more precision.\n>>\n>>If you just use maps then you should be able to use \"points\" to  \n>>plot your data\n>>\n>>map('usa')\n>>points(S$x, S$y, pch = 20)\n>>\n>>Not having delved into the map package I don't know exactly how it  \n>>handles projections but it looks like\n>>\n>>map('usa', projection = \"yourCRS\")\n>>\n>>would be sufficient.\n>>\n>>I hope this helps.\n>>\n>>Tom Mulholland\n>>Senior Demographer\n>>Applied Research and Modelling\n>>State and Regional Policy\n>>Department for Planning and Infrastructure\n>>Perth, Western Australia\n>>+61 (08) 9264 7936\n>>\n>>\n>>    \n>>\n>>>-----Original Message-----\n>>>From: r-sig-geo-bounces at stat.math.ethz.ch\n>>>[mailto:r-sig-geo-bounces at stat.math.ethz.ch]On Behalf Of\n>>>Michael Fuller\n>>>Sent: Tuesday, 18 July 2006 5:56 AM\n>>>To: r-sig-geo at stat.math.ethz.ch\n>>>Subject: [R-sig-Geo] geo-newbie Q: overlay lat-long data onto\n>>>projected\n>>>map?\n>>>\n>>>\n>>>I've spent the last 5 days trying to figure out how to overlay the\n>>>positions of geographic data on top of a map. I've scoured the man\n>>>pages for the maps, mapproj, maptools, mapdata, and the huge sp\n>>>package. I've experimented with countless permutations of commands.\n>>>So far I've learned a lot about map projections, but I still have no\n>>>ideas how to display my data the way I want! (sigh)\n>>>\n>>>The data are the latitude-longitude coordinates of 1,599\n>>>survey sites\n>>>located across the US. I want to plot these sites on a map of\n>>>the US.\n>>>Seems like a simple task. I've tried converting them to a\n>>>SpatialPoints object and worked out how to project the sites using a\n>>>given map projection (i.e. Bonne). But how do I correctly overlay\n>>>(i.e. display) the data points onto a similarly projected map of the\n>>>US? It might be possible to do it using overlay {sp} but for that it\n>>>seems I would need the coordinates of the geopolitical boundary for\n>>>the map of the US. Can these values be extracted somehow from the US\n>>>map?\n>>>\n>>>Here's how I generated the SpatialPoints object:\n>>>\n>>>#x = longitude values in decimal degrees\n>>>#y = latitude values in decimal degrees\n>>>#create SpatialPoints object using CRS-class Bonne projection\n>>>centered on longitude 100\n>>>S <- SpatialPoints(cbind(x,y),CRS(\"+proj=bonne +lon_0=100\"))\n>>>\n>>>#this next part plots just the data points (cloud of points)\n>>>plot(S,pch=20)\n>>>\n>>>How do I overlay the same points on top of a map of the US such that\n>>>they are correctly positioned wrt coordinates?\n>>>\n>>>Also, the R-sig-geo info page does show an URL for a searchable\n>>>archive of R-sig-geo. Does one exist?\n>>>\n>>>Many thanks for your time.\n>>>Mike\n>>>______________________________\n>>>Michael M Fuller, Ph.D.\n>>>The Institute for Environmental Modeling\n>>>University of Tennessee\n>>>1416 Circle Drive\n>>>Knoxville, TN 37996-1610\n>>>\n>>>\n>>>\n>>>\n>>>\t[[alternative HTML version deleted]]\n>>>\n>>>_______________________________________________\n>>>R-sig-Geo mailing list\n>>>R-sig-Geo at stat.math.ethz.ch\n>>>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>>      \n>>>\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>  \n>",
+      "body_snippet": "Michael, on http://r-spatial.sourceforge.net you'll find a package (and \ninstallation instructions) called spmaps, which converts an object from \nthe maps package (and data base) to an sp object. If n",
+      "thread_id": "thread-10da23e3e0d3",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-0af2bdd45c46",
+      "message_id": "<44BD0304.4080404@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2006-07-18T16:49:24+01:00",
+      "subject": "[R-sig-Geo] problem assigning POSIX class to AttributeList column",
+      "subject_clean": "problem assigning POSIX class to AttributeList column",
+      "in_reply_to": "<200607180218.k6I2IwZO016178@corinna.its.utas.edu.au>",
+      "references": [
+        "<200607180218.k6I2IwZO016178@corinna.its.utas.edu.au>"
+      ],
+      "body_plain": "Michael, this missing feature is definately a bug; AttributeList objects \nwere meant to resemble data.frame objects but without having a row.names \nattribute (like the data.frame in R 2.4.0 will be); POSIXct vectors are \nallowed in data.frame's.\n\nDid you actually solve it?\n\nBest regards,\n--\nEdzer\n\nMichael Sumner wrote:\n\n>Hello, I've been unable to use \"[[<-.AttributeList\" to assign POSIXct vectors.\n>\n>It seems to be because \n>is.vector(Sys.time()) \n>\n>is FALSE.  The test \"is.vector(value)\" is perhaps too strict ?? but I\n>don't see whether this is perhaps a problem with the datetimeClasses. \n>\n>Example follows. \n>\n>Cheers, Mike.\n>\n>\n>sessionInfo()\n>#Version 2.3.1 (2006-06-01) \n>#i386-pc-mingw32 \n>\n>#attached base packages:\n>#[1] \"methods\"   \"stats\"     \"graphics\"  \"grDevices\" \"utils\"     \"datasets\" \n>#[7] \"base\"     \n>\n>#other attached packages:\n>#      sp \n>#\"0.8-16\" \n>\n>al <- AttributeList(list(x = 1:10, y = gl(2, 5), t = Sys.time() + 1:10))\n>\n>\n>al[[\"t\"]] <- Sys.time() + 1:10  \n>#Error: is.vector(value) || is.factor(value) is not TRUE\n>\n>traceback()\n>#4: stop(paste(deparse(mc[[i + 1]]), \" is not \", if (length(r) > \n>#       1) \"all \", \"TRUE\", sep = \"\"), call. = FALSE)\n>#3: stopifnot(is.vector(value) || is.factor(value))\n>#2: \"[[<-.AttributeList\"(`*tmp*`, \"t\", value = c(1153188132.868, \n>#   1153188133.868, 1153188134.868, 1153188135.868, 1153188136.868, \n>#   1153188137.868, 1153188138.868, 1153188139.868, 1153188140.868, \n>#   1153188141.868))\n>#1: \"[[<-\"(`*tmp*`, \"t\", value = c(1153188132.868, 1153188133.868, \n>#   1153188134.868, 1153188135.868, 1153188136.868, 1153188137.868, \n>#   1153188138.868, 1153188139.868, 1153188140.868, 1153188141.868\n>#   ))\n>\n>\n>## the same problem occurs with\n>al[[3]] <- Sys.time() + 1:10\n>\n>## and with\n>\n>al[[\"t\"]] <- al[[\"t\"]]\n>\n>## assigning numeric to numeric OK\n>al[[\"x\"]] <- 2:11\n>\n>## but assigning POSIX to same is not\n>al[[\"x\"]] <- Sys.time() + 1:10\n>\n>\n># straight list version\n>\n>l <- list(x = 1:10, y = gl(2, 5), t = Sys.time() + 1:10)\n>\n>## works fine:\n>l[[\"t\"]] <- l[[\"t\"]]\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>  \n>",
+      "body_snippet": "Michael, this missing feature is definately a bug; AttributeList objects \nwere meant to resemble data.frame objects but without having a row.names \nattribute (like the data.frame in R 2.4.0 will be); ",
+      "thread_id": "thread-e66495c13ccc",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-73c8c599fb13",
+      "message_id": "<9E6EF395-46DC-424B-A196-19F678F7681A@tiem.utk.edu>",
+      "from_name": "Michael Fuller",
+      "from_email_hash": "dcb05f09316b8e7b328df740f8be5dae251857273c91710cb8f90dc542828a5b",
+      "date": "2006-07-18T11:55:31-04:00",
+      "subject": "[R-sig-Geo] geo-newbie Q: overlay lat-long data onto projected map?",
+      "subject_clean": "geo-newbie Q: overlay lat-long data onto projected map?",
+      "in_reply_to": "<44BCFCA8.3030001@geo.uu.nl>",
+      "references": [
+        "<4702645135092E4497088F71D9C8F51A0224E5A3@afhex01.dpi.wa.gov.au>",
+        "<883D4509-CFB2-4A03-B7D0-6FB30BF5343A@tiem.utk.edu>",
+        "<44BCFCA8.3030001@geo.uu.nl>"
+      ],
+      "body_plain": "Great! Thanks Edzer\nMike\n\nOn Jul 18, 2006, at 11:22 AM, Edzer J. Pebesma wrote:\n\n> Michael, on http://r-spatial.sourceforge.net you'll find a package  \n> (and installation instructions) called spmaps, which converts an  \n> object from the maps package (and data base) to an sp object. If  \n> needed at all...\n> --\n> Edzer\n>\n> Michael Fuller wrote:\n>\n>> This is awesome help! Thank you very much Tom!\n>> I will give it a go.\n>> Mike\n>>\n>> On Jul 17, 2006, at 10:04 PM, Mulholland, Tom wrote:\n>>\n>>\n>>> Yes you are correct in your assumption that if you are not using   \n>>> the \"maps\" package you need to have your own boundary files.  \n>>> There  is the \"National Atlas of the United States\" produced by  \n>>> the USGS  which I recall has downloads of a variety of  \n>>> shapefiles. http://www- atlas.usgs.gov/ is the mainpage but  \n>>> administrative boundaries are  on http://www-atlas.usgs.gov/ \n>>> atlasftp.html? openChapters=chpbound#chpbound in compressed  \n>>> files. I'm sure I have  previously found them uncompressed, but  \n>>> it's not too hard to  decompress tham as you only have to do it  \n>>> once.\n>>>\n>>>\n>>> So once you have the shapefiles you can read them using the   \n>>> maptools package with the readShapePoly set of commands.\n>>>\n>>> such as\n>>>\n>>> US <- readShapePoly(\"name of shape file\")\n>>> #make sure you have the correct transformation\n>>> # set the CRS for the shapefile you have downloaded.\n>>> # You need to check the metadata associated with your shapefile\n>>>\n>>> # I typically use sommething like\n>>> #    proj4string(x) <- CRS(\"+proj=longlat +datum=NAD83\")\n>>> # Then reproject it into the format you wnat to use\n>>> #    x <- transform(x,CRS(\"+proj=utm +zone=50\"))\n>>> #    }\n>>>\n>>> # Having done that\n>>>\n>>> plot(US,...)\n>>>\n>>> #Then you add your data to the map\n>>> plot(S, pch = 20, add = TRUE)\n>>>\n>>> Yes you can extract the coordinates from maps\n>>>\n>>>\n>>>> test <- map(\"world\",\"UK\",xlim = c(-8.08932,3.4), ylim = c  \n>>>> (49.11741,61.54963))\n>>>> str(test)\n>>>>\n>>> List of 4\n>>> $ x    : num [1:296] -6.24 -6.30 -6.23 -6.38 -6.46 ...\n>>> $ y    : num [1:296] 58.5 58.3 58.2 58.2 58.1 ...\n>>> $ range: num [1:4] -8.09  1.73 49.25 60.84\n>>> $ names: chr [1:25] \"UK:Scotland:Isle of Lewis\" \"UK:Guernsey\"   \n>>> \"UK:Great Britain\" \"UK:Scotland:Shetland Islands:Unst\" ...\n>>> - attr(*, \"class\")= chr \"map\"\n>>>\n>>> but it looks like you would them have to process them into an sp   \n>>> format. However the world map is not particularly detailed. It's   \n>>> possible the US county data is of more precision.\n>>>\n>>> If you just use maps then you should be able to use \"points\" to   \n>>> plot your data\n>>>\n>>> map('usa')\n>>> points(S$x, S$y, pch = 20)\n>>>\n>>> Not having delved into the map package I don't know exactly how  \n>>> it  handles projections but it looks like\n>>>\n>>> map('usa', projection = \"yourCRS\")\n>>>\n>>> would be sufficient.\n>>>\n>>> I hope this helps.\n>>>\n>>> Tom Mulholland\n>>> Senior Demographer\n>>> Applied Research and Modelling\n>>> State and Regional Policy\n>>> Department for Planning and Infrastructure\n>>> Perth, Western Australia\n>>> +61 (08) 9264 7936\n>>>\n>>>\n>>>\n>>>> -----Original Message-----\n>>>> From: r-sig-geo-bounces at stat.math.ethz.ch\n>>>> [mailto:r-sig-geo-bounces at stat.math.ethz.ch]On Behalf Of\n>>>> Michael Fuller\n>>>> Sent: Tuesday, 18 July 2006 5:56 AM\n>>>> To: r-sig-geo at stat.math.ethz.ch\n>>>> Subject: [R-sig-Geo] geo-newbie Q: overlay lat-long data onto\n>>>> projected\n>>>> map?\n>>>>\n>>>>\n>>>> I've spent the last 5 days trying to figure out how to overlay the\n>>>> positions of geographic data on top of a map. I've scoured the man\n>>>> pages for the maps, mapproj, maptools, mapdata, and the huge sp\n>>>> package. I've experimented with countless permutations of commands.\n>>>> So far I've learned a lot about map projections, but I still  \n>>>> have no\n>>>> ideas how to display my data the way I want! (sigh)\n>>>>\n>>>> The data are the latitude-longitude coordinates of 1,599\n>>>> survey sites\n>>>> located across the US. I want to plot these sites on a map of\n>>>> the US.\n>>>> Seems like a simple task. I've tried converting them to a\n>>>> SpatialPoints object and worked out how to project the sites  \n>>>> using a\n>>>> given map projection (i.e. Bonne). But how do I correctly overlay\n>>>> (i.e. display) the data points onto a similarly projected map of  \n>>>> the\n>>>> US? It might be possible to do it using overlay {sp} but for  \n>>>> that it\n>>>> seems I would need the coordinates of the geopolitical boundary for\n>>>> the map of the US. Can these values be extracted somehow from  \n>>>> the US\n>>>> map?\n>>>>\n>>>> Here's how I generated the SpatialPoints object:\n>>>>\n>>>> #x = longitude values in decimal degrees\n>>>> #y = latitude values in decimal degrees\n>>>> #create SpatialPoints object using CRS-class Bonne projection\n>>>> centered on longitude 100\n>>>> S <- SpatialPoints(cbind(x,y),CRS(\"+proj=bonne +lon_0=100\"))\n>>>>\n>>>> #this next part plots just the data points (cloud of points)\n>>>> plot(S,pch=20)\n>>>>\n>>>> How do I overlay the same points on top of a map of the US such  \n>>>> that\n>>>> they are correctly positioned wrt coordinates?\n>>>>\n>>>> Also, the R-sig-geo info page does show an URL for a searchable\n>>>> archive of R-sig-geo. Does one exist?\n>>>>\n>>>> Many thanks for your time.\n>>>> Mike\n>>>> ______________________________\n>>>> Michael M Fuller, Ph.D.\n>>>> The Institute for Environmental Modeling\n>>>> University of Tennessee\n>>>> 1416 Circle Drive\n>>>> Knoxville, TN 37996-1610\n>>>>\n>>>>\n>>>>\n>>>>\n>>>> \t[[alternative HTML version deleted]]\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at stat.math.ethz.ch\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>\n>>>>\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>",
+      "body_snippet": "Great! Thanks Edzer\nMike\n\nOn Jul 18, 2006, at 11:22 AM, Edzer J. Pebesma wrote:\n\n> Michael, on http://r-spatial.sourceforge.net you'll find a package  \n> (and installation instructions) called spmaps,",
+      "thread_id": "thread-10da23e3e0d3",
+      "thread_depth": 2,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-24a67a975fad",
+      "message_id": "<44BDB67C.5080606@utas.edu.au>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "4d8db92248257cf58a15282ef4b057029dbd45ad2b2c007fbad56eff8864a080",
+      "date": "2006-07-19T14:35:08+10:00",
+      "subject": "[R-sig-Geo] problem assigning POSIX class to AttributeList column",
+      "subject_clean": "problem assigning POSIX class to AttributeList column",
+      "in_reply_to": "<44BD0304.4080404@geo.uu.nl>",
+      "references": [
+        "<200607180218.k6I2IwZO016178@corinna.its.utas.edu.au>",
+        "<44BD0304.4080404@geo.uu.nl>"
+      ],
+      "body_plain": "Edzer J. Pebesma wrote:\n> Michael, this missing feature is definately a bug; AttributeList \n> objects were meant to resemble data.frame objects but without having a \n> row.names attribute (like the data.frame in R 2.4.0 will be); POSIXct \n> vectors are allowed in data.frame's.\n>\n> Did you actually solve it?\n>\nThanks Edzer, I can just work around it.  I look forward to the new \ndata.frame. ;)\n\nCheers, Mike.",
+      "body_snippet": "Edzer J. Pebesma wrote:\n> Michael, this missing feature is definately a bug; AttributeList \n> objects were meant to resemble data.frame objects but without having a \n> row.names attribute (like the da",
+      "thread_id": "thread-e66495c13ccc",
+      "thread_depth": 2,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-b0b7ce34b5e5",
+      "message_id": "<d1b8ff630607191424o6b804432he6833873dd6f6541@mail.gmail.com>",
+      "from_name": "Debarchana Ghosh",
+      "from_email_hash": "80fdc1177ebeb06d3e2d54fc13a439475ffb206e652a8be6db2dd7127316af02",
+      "date": "2006-07-19T16:24:17-05:00",
+      "subject": "[R-sig-Geo] Moran's I - nb class?",
+      "subject_clean": "Moran's I - nb class?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060719/84012a5a/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060719/84012a5a/attachment.pl>",
+      "thread_id": "thread-b0b7ce34b5e5",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-fe8fe2556dee",
+      "message_id": "<6.2.3.4.2.20060720142949.02d3bd60@pop.business.earthlink.net>",
+      "from_name": "Andreas M. Olligschlaeger",
+      "from_email_hash": "6f83f73f673cc1810963241c40464bd22b673cc5ae8c9875bc7487596d6ff1c8",
+      "date": "2006-07-20T14:32:28-04:00",
+      "subject": "[R-sig-Geo] Availability of R Script for WSAF(weighted spatial adaptive filter)",
+      "subject_clean": "Availability of R Script for WSAF(weighted spatial adaptive filter)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "No, I'm afraid it is not. The original system was written in Pascal.\n\nOlli\n\n____________________________\nAndreas M. Olligschlaeger, Ph.D.\nTruNorth Data Systems, Inc.\n(724) 775-8441",
+      "body_snippet": "No, I'm afraid it is not. The original system was written in Pascal.\n\nOlli\n\n____________________________\nAndreas M. Olligschlaeger, Ph.D.\nTruNorth Data Systems, Inc.\n(724) 775-8441",
+      "thread_id": "thread-fe8fe2556dee",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-cd4e2c9fbb40",
+      "message_id": "<DDE0E0BF-D4E9-40A7-B01A-619B14E8F839@tiem.utk.edu>",
+      "from_name": "Michael Fuller",
+      "from_email_hash": "dcb05f09316b8e7b328df740f8be5dae251857273c91710cb8f90dc542828a5b",
+      "date": "2006-07-21T13:50:47-04:00",
+      "subject": "[R-sig-Geo] Adding Contours to Map (revisited)",
+      "subject_clean": "Adding Contours to Map (revisited)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I'm trying to add filled contour lines of count data to a projected  \nmap but I'm having difficulty getting the contours to match up  \nproperly with the projection. A nearly identical problem was  \ndescribed in a previous post (Nov 2005) by Jeanne Thibeault and I've  \ntried the approach recommended by Roger Bivand, but I've been  \nunsuccessful so far.\n\nThe raw data are the longitude-latitude coordinates (x,y) of 307  \nsurvey locations spread across the US. Each coordinate pair is  \nassociated with a count value (z). I've generated a grid of  \ninterpolated data using interp() {akima}\n\n > dat.intrp <- interp(x,y,z)\n\nBut how can I display these as filled contours on a US map? Roger  \nsuggested the following for Jeanne's interpolated data set called  \n\"Sum.80.83.li\" (also created using interp()):\n\n<begin quote>\n    With a little work, you can use contourLines():\n\n    res <- contourLines(Sum.80.83.li)\n    contours_x <- unlist(sapply(res, function(x) c(x$x, NA)))\n    contours_y <- unlist(sapply(res, function(x) c(x$y, NA)))\n    contours <- list(x=contours_x, y=contours_y)\n\n    gets you contours you can give as an argument to mapproject(),  \nbut you'll\n    need to handle label positions and values yourself based on res -  \nlook at\n    str(res[[1]]) to get a view of what the raw contours look like.\n\n    plot(mapproject(contours, ...), type=\"l\")\n\n    does the plotting.\n<end quote>\n\nI'm not sure what this transformation yields (I'm still a relative  \nnewbie). It seems that 'contours_x' and 'contours_y' are vectors  \nwhose values are 'NA', generated using unlist() and using sapply() to  \nreplace the x and y values of 'res'  with 'NA'?\n\nFor example:\njunk <-c(1:5)\njunk2 <-unlist(sapply(junk, function(x) c(x$x,NA)))\njunk2\n[1] NA NA NA NA NA\n\nObviously I'm missing something here. How does this generate  \ncontours? (It doesn't work for me).\n\nThanks for your patience.\nMike",
+      "body_snippet": "I'm trying to add filled contour lines of count data to a projected  \nmap but I'm having difficulty getting the contours to match up  \nproperly with the projection. A nearly identical problem was  \nde",
+      "thread_id": "thread-cd4e2c9fbb40",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-65b0095cd436",
+      "message_id": "<44C47DF8.6000908@biomserv.univ-lyon1.fr>",
+      "from_name": "Stéphane Dray",
+      "from_email_hash": "9240add6e3cefbd0241c626dd9b3a173d2956a0ae92ad22952a09d3f5148665d",
+      "date": "2006-07-24T09:59:52+02:00",
+      "subject": "[R-sig-Geo] Moran's I - nb class?",
+      "subject_clean": "Moran's I - nb class?",
+      "in_reply_to": "<d1b8ff630607191424o6b804432he6833873dd6f6541@mail.gmail.com>",
+      "references": [
+        "<d1b8ff630607191424o6b804432he6833873dd6f6541@mail.gmail.com>"
+      ],
+      "body_plain": "You can fin dome information on the vignette of my own package spacemakeR.\nGo to http://biomserv.univ-lyon1.fr/~dray/, Softwares section, download \nor open the spacemakeR archive, and read the tutorial in the inst/doc \ndirectory.\n\nSincerely,\n\nDebarchana Ghosh wrote:\n\n>Hi,\n>\n>I'm trying to calculate global Moran's I for residuals from glm model. I\n>read the manual of spdep package and for the function 'moran'  it requires a\n>'listw' object created by the function nb2listw, which in turn requires the\n>object of class 'nb'. I can't understand how to create the object of class\n>nb and which function to use to create it.\n>\n>Any help will be appreciated.\n>\n>Thanks,\n>Debarchana.\n>\n>  \n>\n\n\n-- \nSt?phane DRAY (dray at biomserv.univ-lyon1.fr )\nLaboratoire BBE-CNRS-UMR-5558, Univ. C. Bernard - Lyon I\n43, Bd du 11 Novembre 1918, 69622 Villeurbanne Cedex, France\nTel: 33 4 72 43 27 57       Fax: 33 4 72 43 13 88\nhttp://biomserv.univ-lyon1.fr/~dray/",
+      "body_snippet": "You can fin dome information on the vignette of my own package spacemakeR.\nGo to http://biomserv.univ-lyon1.fr/~dray/, Softwares section, download \nor open the spacemakeR archive, and read the tutoria",
+      "thread_id": "thread-b0b7ce34b5e5",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-cc02897665f5",
+      "message_id": "<44C638A1.9020600@zevross.com>",
+      "from_name": "Zev Ross",
+      "from_email_hash": "fa72971679f8ed5254aaa02a383655b51c6628dc4024cc8a7e0ac4cd4c71b661",
+      "date": "2006-07-25T11:28:33-04:00",
+      "subject": "[R-sig-Geo] Creating metadata - xml?",
+      "subject_clean": "Creating metadata - xml?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi All,\n\nI'm wondering if anyone has pointers in generating and/or editing \nspatial metadata in R. Roger, Edzer and others have done such a great \njob of developing tools to create shapefiles without ArcGIS but I'd like \nto add a few notes about how the files were created without the extra \nstep of opening ArcCatalog.\n\nAll I, personally, would need at this point is a way to edit the \n\"abstract\" portion of a traditional metadata, though ultimately editing \nthe other fields (like the spatial reference info) would also be great.\n\nI spent some time trying to use the XML library to do this, but I \ncouldn't hack it and wasn't sure I was heading down the right path.\n\nThe code below does not work and reveals my ignorance, but perhaps it \ncan convince someone to give me some tips.\n\nZev\n\n\nd<-parseDTD(\"http://www.esri.com/metadata/esriprof80.dtd\", asText=FALSE,\n      isURL=TRUE)\n\ntree<-xmlOutputDOM(\"mytest\", dtd=d)\ntree$addTag(\"abstract\", \"myblah\")\ntree$closeTag()\nsaveXML(tree$value(), file=\"c:/junk/blah2.xml\")\n\n\n\n-- \nZev Ross\nZevRoss Spatial Analysis\n303 Fairmount Ave.\nIthaca, NY 14850\n(607) 277-0004 (phone)\n(866) 877-3690 (fax toll-free)\nzev at zevross.com\nwww.zevross.com",
+      "body_snippet": "Hi All,\n\nI'm wondering if anyone has pointers in generating and/or editing \nspatial metadata in R. Roger, Edzer and others have done such a great \njob of developing tools to create shapefiles without ",
+      "thread_id": "thread-cc02897665f5",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-4af23e17f9fd",
+      "message_id": "<20060727010755.34412.qmail@web10712.mail.bbt.yahoo.co.jp>",
+      "from_name": "Hisaji ONO",
+      "from_email_hash": "6f3e2af1cdb361f32fc0adb434b6f19fe44a20c5165d448fc519ea77f3494f20",
+      "date": "2006-07-27T10:07:55+09:00",
+      "subject": "[R-sig-Geo] availability of Least-Squares Collocation(LSC) technique for optimal interpolation of spatial data. on r",
+      "subject_clean": "availability of Least-Squares Collocation(LSC) technique for optimal interpolation of spatial data. on r",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi\n\n Recently among geostatistics Least-Squares\nCollocation(LSC) technique seems to be one of notable\nmethods.\n\n I've searched this method on R spatial packages, but no\nluck.\n\n\n Does anyone know free application/package support this\nmethod?\n\n\n Regards.",
+      "body_snippet": "Hi\n\n Recently among geostatistics Least-Squares\nCollocation(LSC) technique seems to be one of notable\nmethods.\n\n I've searched this method on R spatial packages, but no\nluck.\n\n\n Does anyone know free ",
+      "thread_id": "thread-4af23e17f9fd",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-d89fdea60f05",
+      "message_id": "<20060727014628.26701.qmail@web10714.mail.bbt.yahoo.co.jp>",
+      "from_name": "Hisaji ONO",
+      "from_email_hash": "4857db17b7e848ab1379157d08a470dfc3f16a2fe4d02ed4b21725afd9ea2f9d",
+      "date": "2006-07-27T10:46:28+09:00",
+      "subject": "[R-sig-Geo] Availability of R Script for WSAF(weighted spatial adaptive filter)",
+      "subject_clean": "Availability of R Script for WSAF(weighted spatial adaptive filter)",
+      "in_reply_to": "<6.2.3.4.2.20060720142949.02d3bd60@pop.business.earthlink.net>",
+      "references": [],
+      "body_plain": "Hello, Andreas \n\n Thank you for your important info.\n\n Sorry for late for my response. \n\n--- \"M. Olligschlaeger\" <Olli at trunorthsystems.com> wrote:\n\n> No, I'm afraid it is not. The original system was\n> written in Pascal.\n\n Could you tell me availability of this Pascal source?\n\n If I could get this, I've tried to port it to R script.\n\n\n Regards.",
+      "body_snippet": "Hello, Andreas \n\n Thank you for your important info.\n\n Sorry for late for my response. \n\n--- \"M. Olligschlaeger\" <Olli at trunorthsystems.com> wrote:\n\n> No, I'm afraid it is not. The original system w",
+      "thread_id": "thread-fe8fe2556dee",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-55731a8378ee",
+      "message_id": "<OFA5FF45E8.BC9D5E23-ONCA2571B8.0007CBF1-CA2571B8.000C8D3B@nre.vic.gov.au>",
+      "from_name": "karl.sommer at dpi.vic.gov.au",
+      "from_email_hash": "b8ce016091f51611a2802edccf816d53a6c5a59586fe055b8671a3575427815e",
+      "date": "2006-07-27T12:17:06+10:00",
+      "subject": "[R-sig-Geo]  gstat error: singular matrix in function LDLfactor()",
+      "subject_clean": "gstat error: singular matrix in function LDLfactor()",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "When performing ordinary kriging under gstat in R I received the following\nerror after the program had stopped.\n\n---R output\nvert.ok <- krige(vert~1, em38a, SPDF, model=vert.fit)\n[using ordinary kriging]\n\n\"chfactor.c\", line 130: singular matrix in function LDLfactor()\n\ngstat caught an error that occurred in the matrix library,\nthe reason for it was: singular matrix\n\nHINT: Read the manual at http://www.gstat.org/ ;\nlook for: Trouble shooting -> Error messages -> From meschach\n\n\"chfactor.c\", line 130: singular matrix in function LDLfactor()\nError in predict.gstat(g, newdata = newdata, block = block, nsim = nsim,  :\n      matrix library error: gstat: matrix library error: singular matrix\n---end R output\n\nafter consulting the gstat manual I found the following reference:\n\n\"These two error messages may occur (a) during simulation, when an\nobservation falls almost exactly at a simulation location (b) when two\nobservations occur at identical location occur and noaverage was defined in\nits data definition. Solution to (a): increase the value of zero, to (b):\nremove the noaverage. Read also the next section.\"\n\nMy input file was converted from lat/long to UTM using spTransform.  The\nsampling density is quite high and it is possible that after conversion\nfrom latlong to UTM because of rounding some measurements fall on identical\ncoordinates.  Is this a possible explanation for the error?\n\nThe GSTAT online manual suggests to remove \"noaverage\" or increase \"zero\"\nto overcome the problem. However, I have not figured out how to do this\nwhen running gstat under R.\n\nShould I use only a subset of the orignial data or are there other\nalternatives to overcome the problem?\n\nRegards\n\nKarl\n\n_________________________________\nKarl J Sommer,\nDepartment of Primary Industries,\nCatchment & Agriculture Services,\nPO Box 905\nMildura, VIC, Australia 3502\n\nTel: +61 (0)3 5051 4390\nFax +61 (0)3 5051 4534\n\nEmail:     karl.sommer at dpi.vic.gov.au",
+      "body_snippet": "When performing ordinary kriging under gstat in R I received the following\nerror after the program had stopped.\n\n---R output\nvert.ok <- krige(vert~1, em38a, SPDF, model=vert.fit)\n[using ordinary krigi",
+      "thread_id": "thread-55731a8378ee",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-7a41497a9494",
+      "message_id": "<44C8D702.7020307@sclc.ecosur.mx>",
+      "from_name": "Duncan Golicher",
+      "from_email_hash": "ee416973eb46e9b9a16114a6821e406a60d5f120cc1f63879cc2dffa52d4b87c",
+      "date": "2006-07-27T10:08:50-05:00",
+      "subject": "[R-sig-Geo] gstat error: singular matrix in function",
+      "subject_clean": "gstat error: singular matrix in function",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "A simple work around is to just add some random noise to the points with \njitter.\n\n?jitter\n\n\n-- \nDr Duncan Golicher\nEcologia y Sistematica Terrestre\nConservaci?n de la Biodiversidad\nEl Colegio de la Frontera Sur\nSan Cristobal de Las Casas, \nChiapas, Mexico\n\nEmail: dgoliche at sclc.ecosur.mx \n\nTel: 967 674 9000 ext 1310\nFax: 967 678 2322\nCelular: 044 9671041021\n\nUnited Kingdom Skypein; 020 7870 6251\nSkype name: duncangolicher \nDownload Skype from http://www.skype.com",
+      "body_snippet": "A simple work around is to just add some random noise to the points with \njitter.\n\n?jitter\n\n\n-- \nDr Duncan Golicher\nEcologia y Sistematica Terrestre\nConservaci?n de la Biodiversidad\nEl Colegio de la F",
+      "thread_id": "thread-7a41497a9494",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-87f11bec06ae",
+      "message_id": "<op.tddgv3ef6wy4pi@winpuffo>",
+      "from_name": "Jan Schwanbeck",
+      "from_email_hash": "8be430ce7357e54c3e2129c2b41e2b85b2a95145932ced0af9a0c00a23ed180d",
+      "date": "2006-07-28T01:58:41+02:00",
+      "subject": "[R-sig-Geo] contourline as border between cells containing numbers and those containing NA of ASCII grid",
+      "subject_clean": "contourline as border between cells containing numbers and those containing NA of ASCII grid",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi R spatial experts,\n\n From an ASCII grid I have made a couple of filled.contour - plots.\n\nAll cells outside the area of interest are set to NA. The cells inside\nthe area of investigation are numbers(real).\n\nIn my plots - both NA's and values smaller than 0.5 are \"transparent\".\n\nTo show the border of the area of investigation I would like to generate\na contourline or something similar in between cells containing numbers and  \nthose containing NA.\n\nIs there any possibile way to do that?\n\nIf not: -> How could I overlay a filled.contour-plot with a shape file  \n(the border of the area)?\n\nThanks a lot.\n\nJan Schwanbeck",
+      "body_snippet": "Hi R spatial experts,\n\n From an ASCII grid I have made a couple of filled.contour - plots.\n\nAll cells outside the area of interest are set to NA. The cells inside\nthe area of investigation are numbers",
+      "thread_id": "thread-87f11bec06ae",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-bf8defe0ff9a",
+      "message_id": "<Pine.LNX.4.44.0607281200260.15447-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-07-28T12:09:44+02:00",
+      "subject": "[R-sig-Geo] contourline as border between cells containing numbers and those containing NA of ASCII grid",
+      "subject_clean": "contourline as border between cells containing numbers and those containing NA of ASCII grid",
+      "in_reply_to": "<op.tddgv3ef6wy4pi@winpuffo>",
+      "references": [],
+      "body_plain": "On Fri, 28 Jul 2006, Jan Schwanbeck wrote:\n\n> Hi R spatial experts,\n> \n>  From an ASCII grid I have made a couple of filled.contour - plots.\n> \n> All cells outside the area of interest are set to NA. The cells inside\n> the area of investigation are numbers(real).\n> \n> In my plots - both NA's and values smaller than 0.5 are \"transparent\".\n> \n> To show the border of the area of investigation I would like to generate\n> a contourline or something similar in between cells containing numbers and  \n> those containing NA.\n> \n> Is there any possibile way to do that?\n> \n> If not: -> How could I overlay a filled.contour-plot with a shape file  \n> (the border of the area)?\n\nHave a look at the plot.axes= argument for how to insert extra graphics \ninto the plot:\n\nlibrary(maptools)\nxx <- readShapePoly(system.file(\"shapes/sids.shp\",\n  package = \"maptools\")[1], IDvar = \"FIPSNO\",\n  proj4string = CRS(\"+proj=longlat +ellps=clrk66\"))\nplot(xx)\nbbox(xx)\nx <- seq(-85,-75,1)\ny <- seq(33,37,1)\nxy <- expand.grid(x,y)\nlength(x)\nlength(y)\nz <- matrix(runif(55), nrow=11)\nfilled.contour(x, y, z, asp=1)\nfilled.contour(x, y, z, asp=1, plot.axes={axis(1); axis(2); plot(xx, \n  add=TRUE)})\n\ndoes seem to work.\n\nRoger\n\n> \n> Thanks a lot.\n> \n> Jan Schwanbeck\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Fri, 28 Jul 2006, Jan Schwanbeck wrote:\n\n> Hi R spatial experts,\n> \n>  From an ASCII grid I have made a couple of filled.contour - plots.\n> \n> All cells outside the area of interest are set to NA. ",
+      "thread_id": "thread-87f11bec06ae",
+      "thread_depth": 1,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-222d8741aafa",
+      "message_id": "<306770A257EE3840A78215253AF233C815AC61@CORREO.eeza.csic.es>",
+      "from_name": "Alberto Ruiz Moreno",
+      "from_email_hash": "94b45819db086cefd9dc72cd7ef0786ec35697f18f43278ee8a89278dff8d24c",
+      "date": "2006-07-31T12:17:34+02:00",
+      "subject": "[R-sig-Geo] randomForests for mapping vegetation with big data",
+      "subject_clean": "randomForests for mapping vegetation with big data",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060731/52baefdd/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060731/52baefdd/attachment.pl>",
+      "thread_id": "thread-222d8741aafa",
+      "thread_depth": 0,
+      "month": "2006-07"
+    },
+    {
+      "id": "msg-da58385c28d4",
+      "message_id": "<306770A257EE3840A78215253AF233C815AC64@CORREO.eeza.csic.es>",
+      "from_name": "Alberto Ruiz Moreno",
+      "from_email_hash": "94b45819db086cefd9dc72cd7ef0786ec35697f18f43278ee8a89278dff8d24c",
+      "date": "2006-07-31T12:37:17+02:00",
+      "subject": "[R-sig-Geo] randomForests for mapping vegetation with big data",
+      "subject_clean": "randomForests for mapping vegetation with big data",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n \nI?m trying to ran randomForests in R to do vegetation suitability maps.\n \nI?m working with 1000x1000 pixel maps and 30 environmental  variables.\n \nMy software is R v2.3.1 and RandomForests 4.5-16. \n1GB Ram memory and 3GB swap partition in a Linux or Windows machine\n(the problem is the same in both configurations).\n \nR abort with an memory limits error when I try to train randomForest with \nbig data frames, 300000 rows x 30 columns and 500 trees.\n \nI have lost one week tuning the use of memory in R (I read tens of messages on it) but\nI think that it is not a R misconfiguration but a big memory expense of randomforests library implementation.\n \nMy conclusion is: I need to divide...\n \nok, to solve this memory error, I ran randomForests several times, \nwith less rows in the training data, and use the combine() function to join the forests.\n \nThe cuestion is...\n \nIs this the right way to train randomForest with big data? \nThere are another way?\nHow do you make it?\n \n\nthanks...",
+      "body_snippet": "Hi,\n \nI?m trying to ran randomForests in R to do vegetation suitability maps.\n \nI?m working with 1000x1000 pixel maps and 30 environmental  variables.\n \nMy software is R v2.3.1 and RandomForests 4.5-1",
+      "thread_id": "thread-da58385c28d4",
+      "thread_depth": 0,
+      "month": "2006-07"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-a2094da83396",
+      "subject": "distance calculation; meuse.grid",
+      "message_count": 2,
+      "participants": [
+        "Roger Bivand",
+        "karl.sommer at dpi.vic.gov.au"
+      ],
+      "started": "2006-07-03T16:01:25+10:00",
+      "last_reply": "2006-07-03T11:11:39+02:00",
+      "root_message_id": "msg-a2094da83396"
+    },
+    {
+      "id": "thread-2a1a32571d00",
+      "subject": "universal kriging in gstat",
+      "message_count": 2,
+      "participants": [
+        "Alí Santacruz",
+        "Edzer J. Pebesma"
+      ],
+      "started": "2006-07-03T17:40:27+02:00",
+      "last_reply": "2006-07-03T11:07:11-05:00",
+      "root_message_id": "msg-2a1a32571d00"
+    },
+    {
+      "id": "thread-1408553f3b1f",
+      "subject": "distance calculation; meuse.grid",
+      "message_count": 2,
+      "participants": [
+        "Adrian Baddeley",
+        "Roger Bivand"
+      ],
+      "started": "2006-07-03T18:30:08+08:00",
+      "last_reply": "2006-07-03T15:40:54+02:00",
+      "root_message_id": "msg-1408553f3b1f"
+    },
+    {
+      "id": "thread-084ca887f6ec",
+      "subject": "Line width in sp maps",
+      "message_count": 4,
+      "participants": [
+        "Roger Bivand",
+        "Vladimir Batagelj"
+      ],
+      "started": "2006-07-04T02:01:13+02:00",
+      "last_reply": "2006-07-05T12:19:20+02:00",
+      "root_message_id": "msg-084ca887f6ec"
+    },
+    {
+      "id": "thread-e402dc355876",
+      "subject": "drawing order in spplot",
+      "message_count": 2,
+      "participants": [
+        "Duncan Golicher",
+        "Edzer J. Pebesma"
+      ],
+      "started": "2006-07-04T10:39:06-05:00",
+      "last_reply": "2006-07-09T23:29:37+02:00",
+      "root_message_id": "msg-e402dc355876"
+    },
+    {
+      "id": "thread-3d71c579069e",
+      "subject": "error message rgdal: dimensions do not match",
+      "message_count": 2,
+      "participants": [
+        "Roger Bivand",
+        "karl.sommer at dpi.vic.gov.au"
+      ],
+      "started": "2006-07-04T14:33:58+10:00",
+      "last_reply": "2006-07-04T18:59:11+02:00",
+      "root_message_id": "msg-3d71c579069e"
+    },
+    {
+      "id": "thread-86401757af23",
+      "subject": "how do we sample in spatial statistics?",
+      "message_count": 4,
+      "participants": [
+        "Edzer J. Pebesma",
+        "Olsen.Tony at epamail.epa.gov",
+        "Roger Bivand",
+        "zhijie zhang"
+      ],
+      "started": "2006-07-04T16:03:42+08:00",
+      "last_reply": "2006-07-05T18:11:03+02:00",
+      "root_message_id": "msg-86401757af23"
+    },
+    {
+      "id": "thread-6125f1464f52",
+      "subject": "error message rgdal: dimensions do not match",
+      "message_count": 2,
+      "participants": [
+        "Edzer J. Pebesma",
+        "karl.sommer at dpi.vic.gov.au"
+      ],
+      "started": "2006-07-05T10:02:33+10:00",
+      "last_reply": "2006-07-07T15:03:06+01:00",
+      "root_message_id": "msg-6125f1464f52"
+    },
+    {
+      "id": "thread-2c6879d9fa10",
+      "subject": "how do we sample in spatial statistics?",
+      "message_count": 1,
+      "participants": [
+        "Adrian Baddeley"
+      ],
+      "started": "2006-07-05T11:57:03+08:00",
+      "last_reply": "2006-07-05T11:57:03+08:00",
+      "root_message_id": "msg-2c6879d9fa10"
+    },
+    {
+      "id": "thread-e3a20559e14a",
+      "subject": "drawing order in spplot",
+      "message_count": 5,
+      "participants": [
+        "Arien Lam",
+        "Duncan Golicher",
+        "Edzer J. Pebesma"
+      ],
+      "started": "2006-07-06T10:52:05-05:00",
+      "last_reply": "2006-07-10T09:47:46+02:00",
+      "root_message_id": "msg-e3a20559e14a"
+    },
+    {
+      "id": "thread-28cbac503212",
+      "subject": "how do we sample in spatial statistics?",
+      "message_count": 1,
+      "participants": [
+        "zhijie zhang"
+      ],
+      "started": "2006-07-07T15:38:16+08:00",
+      "last_reply": "2006-07-07T15:38:16+08:00",
+      "root_message_id": "msg-28cbac503212"
+    },
+    {
+      "id": "thread-a82983970034",
+      "subject": "spgrass6 with cygwin",
+      "message_count": 1,
+      "participants": [
+        "Duncan Golicher"
+      ],
+      "started": "2006-07-07T21:00:16-05:00",
+      "last_reply": "2006-07-07T21:00:16-05:00",
+      "root_message_id": "msg-a82983970034"
+    },
+    {
+      "id": "thread-b4d9c37ffe48",
+      "subject": "ossfim with Universal Kriging?",
+      "message_count": 3,
+      "participants": [
+        "Alí Santacruz",
+        "Edzer J Pebesma"
+      ],
+      "started": "2006-07-08T13:32:19-05:00",
+      "last_reply": "2006-07-09T12:50:46-05:00",
+      "root_message_id": "msg-b4d9c37ffe48"
+    },
+    {
+      "id": "thread-7d24ca16a8f7",
+      "subject": "map legend",
+      "message_count": 3,
+      "participants": [
+        "Edzer J. Pebesma",
+        "Sonia Broner - UPC"
+      ],
+      "started": "2006-07-11T16:52:36+02:00",
+      "last_reply": "2006-07-15T21:43:41+02:00",
+      "root_message_id": "msg-7d24ca16a8f7"
+    },
+    {
+      "id": "thread-dc140933d0cd",
+      "subject": "reading from Grass",
+      "message_count": 1,
+      "participants": [
+        "Duncan Golicher"
+      ],
+      "started": "2006-07-13T19:42:18-05:00",
+      "last_reply": "2006-07-13T19:42:18-05:00",
+      "root_message_id": "msg-dc140933d0cd"
+    },
+    {
+      "id": "thread-af14011c0d86",
+      "subject": "geo-newbie Q: overlay lat-long data onto projected map?",
+      "message_count": 1,
+      "participants": [
+        "Michael Fuller"
+      ],
+      "started": "2006-07-17T17:56:28-04:00",
+      "last_reply": "2006-07-17T17:56:28-04:00",
+      "root_message_id": "msg-af14011c0d86"
+    },
+    {
+      "id": "thread-e66495c13ccc",
+      "subject": "problem assigning POSIX class to AttributeList column",
+      "message_count": 3,
+      "participants": [
+        "Edzer J. Pebesma",
+        "Michael Sumner"
+      ],
+      "started": "2006-07-18T04:18:58+02:00",
+      "last_reply": "2006-07-19T14:35:08+10:00",
+      "root_message_id": "msg-e66495c13ccc"
+    },
+    {
+      "id": "thread-10da23e3e0d3",
+      "subject": "geo-newbie Q: overlay lat-long data onto projected map?",
+      "message_count": 3,
+      "participants": [
+        "Edzer J. Pebesma",
+        "Michael Fuller"
+      ],
+      "started": "2006-07-18T09:43:23-04:00",
+      "last_reply": "2006-07-18T11:55:31-04:00",
+      "root_message_id": "msg-10da23e3e0d3"
+    },
+    {
+      "id": "thread-b0b7ce34b5e5",
+      "subject": "Moran's I - nb class?",
+      "message_count": 2,
+      "participants": [
+        "Debarchana Ghosh",
+        "Stéphane Dray"
+      ],
+      "started": "2006-07-19T16:24:17-05:00",
+      "last_reply": "2006-07-24T09:59:52+02:00",
+      "root_message_id": "msg-b0b7ce34b5e5"
+    },
+    {
+      "id": "thread-fe8fe2556dee",
+      "subject": "Availability of R Script for WSAF(weighted spatial adaptive filter)",
+      "message_count": 2,
+      "participants": [
+        "Andreas M. Olligschlaeger",
+        "Hisaji ONO"
+      ],
+      "started": "2006-07-20T14:32:28-04:00",
+      "last_reply": "2006-07-27T10:46:28+09:00",
+      "root_message_id": "msg-fe8fe2556dee"
+    },
+    {
+      "id": "thread-cd4e2c9fbb40",
+      "subject": "Adding Contours to Map (revisited)",
+      "message_count": 1,
+      "participants": [
+        "Michael Fuller"
+      ],
+      "started": "2006-07-21T13:50:47-04:00",
+      "last_reply": "2006-07-21T13:50:47-04:00",
+      "root_message_id": "msg-cd4e2c9fbb40"
+    },
+    {
+      "id": "thread-cc02897665f5",
+      "subject": "Creating metadata - xml?",
+      "message_count": 1,
+      "participants": [
+        "Zev Ross"
+      ],
+      "started": "2006-07-25T11:28:33-04:00",
+      "last_reply": "2006-07-25T11:28:33-04:00",
+      "root_message_id": "msg-cc02897665f5"
+    },
+    {
+      "id": "thread-4af23e17f9fd",
+      "subject": "availability of Least-Squares Collocation(LSC) technique for optimal interpolation of spatial data. on r",
+      "message_count": 1,
+      "participants": [
+        "Hisaji ONO"
+      ],
+      "started": "2006-07-27T10:07:55+09:00",
+      "last_reply": "2006-07-27T10:07:55+09:00",
+      "root_message_id": "msg-4af23e17f9fd"
+    },
+    {
+      "id": "thread-7a41497a9494",
+      "subject": "gstat error: singular matrix in function",
+      "message_count": 1,
+      "participants": [
+        "Duncan Golicher"
+      ],
+      "started": "2006-07-27T10:08:50-05:00",
+      "last_reply": "2006-07-27T10:08:50-05:00",
+      "root_message_id": "msg-7a41497a9494"
+    },
+    {
+      "id": "thread-55731a8378ee",
+      "subject": "gstat error: singular matrix in function LDLfactor()",
+      "message_count": 1,
+      "participants": [
+        "karl.sommer at dpi.vic.gov.au"
+      ],
+      "started": "2006-07-27T12:17:06+10:00",
+      "last_reply": "2006-07-27T12:17:06+10:00",
+      "root_message_id": "msg-55731a8378ee"
+    },
+    {
+      "id": "thread-87f11bec06ae",
+      "subject": "contourline as border between cells containing numbers and those containing NA of ASCII grid",
+      "message_count": 2,
+      "participants": [
+        "Jan Schwanbeck",
+        "Roger Bivand"
+      ],
+      "started": "2006-07-28T01:58:41+02:00",
+      "last_reply": "2006-07-28T12:09:44+02:00",
+      "root_message_id": "msg-87f11bec06ae"
+    },
+    {
+      "id": "thread-222d8741aafa",
+      "subject": "randomForests for mapping vegetation with big data",
+      "message_count": 1,
+      "participants": [
+        "Alberto Ruiz Moreno"
+      ],
+      "started": "2006-07-31T12:17:34+02:00",
+      "last_reply": "2006-07-31T12:17:34+02:00",
+      "root_message_id": "msg-222d8741aafa"
+    },
+    {
+      "id": "thread-da58385c28d4",
+      "subject": "randomForests for mapping vegetation with big data",
+      "message_count": 1,
+      "participants": [
+        "Alberto Ruiz Moreno"
+      ],
+      "started": "2006-07-31T12:37:17+02:00",
+      "last_reply": "2006-07-31T12:37:17+02:00",
+      "root_message_id": "msg-da58385c28d4"
+    }
+  ]
+}

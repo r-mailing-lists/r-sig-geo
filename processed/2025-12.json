@@ -1,0 +1,345 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2025-12",
+  "messages": [
+    {
+      "id": "msg-6fab704a0742",
+      "message_id": "<CAAcGz99TdJnqWXsa1cMgkBcad77ZVwa6VRevkrXqDuinzfoobw@mail.gmail.com>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "ec02820eba6228afb61925d60b233042e6d048081cc8b7f7e46a034ba5ad3d90",
+      "date": "2025-12-02T07:33:08+11:00",
+      "subject": "[R-sig-Geo] 2025 GDAL User Survey",
+      "subject_clean": "2025 GDAL User Survey",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "please take a few minutes for the GDAL 2025 user survey to help focus GDAL\nSponsorship Program activities. Last year survey results triggered the\nproject to embark on the GDAL CLI Modernization effort.\n\n\nhttps://docs.google.com/forms/d/e/1FAIpQLSdMRkUH6DIA4OJ7Qu1y_iRlrfP4XgZ2KB1qhd0VuMdi72xgDw/viewform\n\n\nCheers, Mike\n\n-- \nMichael Sumner\nOrdinary Member,  Streets People Love Hobart Association\nResearch Software Engineer\nAustralian Antarctic Division\nHobart, Australia\n0438489030\ne-mail: mdsumner at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "please take a few minutes for the GDAL 2025 user survey to help focus GDAL\nSponsorship Program activities. Last year survey results triggered the\nproject to embark on the GDAL CLI Modernization effort",
+      "thread_id": "thread-6fab704a0742",
+      "thread_depth": 0,
+      "month": "2025-12"
+    },
+    {
+      "id": "msg-4b44f109e640",
+      "message_id": "<CAL_d4CXwhAtUB-ENQyLhR-+nH0xqgGD2Gdf2wNN3LGnmfxzvtQ@mail.gmail.com>",
+      "from_name": "Aymard Loïc KWEKEU KWEKEU",
+      "from_email_hash": "ef798628486f9cb982560103379a575c6f564b9e449f0da0c37a0c502bd34156",
+      "date": "2025-12-16T16:34:37+01:00",
+      "subject": "[R-sig-Geo] Warnings and error during the creation of the neighborhood matrix by recoding old code using deprecated rgdal in CRAN with sf and sp",
+      "subject_clean": "Warnings and error during the creation of the neighborhood matrix by recoding old code using deprecated rgdal in CRAN with sf and sp",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "*Initial code with rgdal's readOGR function: *\n\ngeo <- readOGR(\"./Data/Carto/COMMUNE_CARTO.shp\")\n\ngeo2 <- subset(geo, geo at data$INSEE_COM %in% selected_com)\n\nDATA2BND <- sp2bnd(geo2, geo2 at data$INSEE_COM)\n\nplot(DATA2BND)\n\nlist_names <- as.data.frame(names(DATA2BND)) %>%\n  group_by(names(DATA2BND)) %>%\n  summarise(n = n())\n\nnb <- mgcv:::pol2nb(DATA2BND)$nb\n\nW.nb <- poly2nb(\n  geo2,\n  row.names = rownames(geo2 at data$INSEE_COM)\n)\n\nw <- nb2mat(W.nb, style = \"B\")\n\n\n*New code with sf and sp: *\n\ngeo_sf <- st_read(\"./Data/Carto/COMMUNE_CARTO.shp\", quiet = TRUE)\ngeo    <- as(geo_sf, \"Spatial\")\ngeo2 <- subset(geo, geo at data$INSEE_COM %in% selected_com)\n\nDATA2BND <- sp2bnd(geo2, geo2 at data$INSEE_COM)\n\nplot(DATA2BND)\n\nlist_names <- as.data.frame(names(DATA2BND)) %>%\n  group_by(names(DATA2BND)) %>%\n  summarise(n = n())\n\nnb <- mgcv:::pol2nb(DATA2BND)$nb\n\nW.nb <- poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM), queen=T)\nWarning messages:\n\n1: In poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM), queen = T):\n\nsome observations have no neighbors;\n\nif this seems unexpected, try increasing the snap argument.\n\n2: In poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM), queen = T):\n\nneighbor object has 7 sub-graphs;\n\nif this sub-graph count seems unexpected, try increasing the snap argument.\n\nw_SMD_2025 <- nb2mat(W.nb, style = \"B\")\n\nError in nb2listw(neighbors, glist = glist, style = style, zero.policy =\nzero.policy):\n\nEmpty neighbor sets found (zero.policy: FALSE)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "*Initial code with rgdal's readOGR function: *\n\ngeo <- readOGR(\"./Data/Carto/COMMUNE_CARTO.shp\")\n\ngeo2 <- subset(geo, geo at data$INSEE_COM %in% selected_com)\n\nDATA2BND <- sp2bnd(geo2, geo2 at data$IN",
+      "thread_id": "thread-4b44f109e640",
+      "thread_depth": 0,
+      "month": "2025-12"
+    },
+    {
+      "id": "msg-73a4b1667926",
+      "message_id": "<c146bb1b-744f-cfe3-a9ad-72b167baeda@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2025-12-17T10:06:32+01:00",
+      "subject": "[R-sig-Geo] Warnings and error during the creation of the neighborhood matrix by recoding old code using deprecated rgdal in CRAN with sf and sp",
+      "subject_clean": "Warnings and error during the creation of the neighborhood matrix by recoding old code using deprecated rgdal in CRAN with sf and sp",
+      "in_reply_to": "<CAL_d4CXwhAtUB-ENQyLhR-+nH0xqgGD2Gdf2wNN3LGnmfxzvtQ@mail.gmail.com>",
+      "references": [
+        "<CAL_d4CXwhAtUB-ENQyLhR-+nH0xqgGD2Gdf2wNN3LGnmfxzvtQ@mail.gmail.com>"
+      ],
+      "body_plain": "On Tue, 16 Dec 2025, Aymard Lo?c KWEKEU KWEKEU wrote:\n\nFirst, you do not show the versions of software being used, including the \nplatform, versions of rgdal, sp, sf, spdep, mgcv, R2BayesX, possibly \nothers. The versions of GDAL used in rgdal and sf may also matter, as GDAL \nalso changes over time (the precision of coordinates in the same ESRI \nShapefile may differ, artefacts in polygons bay be corrected differently).\n\nComments inline.\n\n>\n> *Initial code with rgdal's readOGR function: *\n>\n> geo <- readOGR(\"./Data/Carto/COMMUNE_CARTO.shp\")\n\nWithout an example file (all the files making up the ESRI shapefile, at \nleast *.shp, *.shx, *.dbf, preferably with *.prj), there is no way to \nestablish anything.\n\n>\n> geo2 <- subset(geo, geo at data$INSEE_COM %in% selected_com)\n>\n\nNever refer to S4 slots using @ in workflows - geo$INSEE_COM has been \nsufficient now for 20 years.\n\n> DATA2BND <- sp2bnd(geo2, geo2 at data$INSEE_COM)\n>\n> plot(DATA2BND)\n>\n> list_names <- as.data.frame(names(DATA2BND)) %>%\n>  group_by(names(DATA2BND)) %>%\n>  summarise(n = n())\n>\n\nsp2bnd is a function in R2BayesX and is strictly superfluous to this \nquestion.\n\n> nb <- mgcv:::pol2nb(DATA2BND)$nb\n>\n\nmgcv:::pol2nb is a function in mgcv and is strictly superfluous to this \nquestion.\n\n> W.nb <- poly2nb(\n>  geo2,\n>  row.names = rownames(geo2 at data$INSEE_COM)\n> )\n>\n> w <- nb2mat(W.nb, style = \"B\")\n\nThis is the core of the question - why no warnings or errors?\n\n>\n>\n> *New code with sf and sp: *\n>\n> geo_sf <- st_read(\"./Data/Carto/COMMUNE_CARTO.shp\", quiet = TRUE)\n\nCoercing to an sp-class is superfluous.\n\n> geo    <- as(geo_sf, \"Spatial\")\n> geo2 <- subset(geo, geo at data$INSEE_COM %in% selected_com)\n>\n> DATA2BND <- sp2bnd(geo2, geo2 at data$INSEE_COM)\n>\n> plot(DATA2BND)\n>\n> list_names <- as.data.frame(names(DATA2BND)) %>%\n>  group_by(names(DATA2BND)) %>%\n>  summarise(n = n())\n>\n> nb <- mgcv:::pol2nb(DATA2BND)$nb\n\nIt is possible that the coordinate values of the polygons in geo2 differ \nhere by a very small amount if the versions of GDAL used to install rgdal \nand sf differ, and also because sf's implementation for reading geometries \nis more modern and cleaner than that in rgdal (>20 years old).\n\n>\n> W.nb <- poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM), queen=T)\n> Warning messages:\n>\n> 1: In poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM), queen = T):\n>\n> some observations have no neighbors;\n>\n> if this seems unexpected, try increasing the snap argument.\n\nRecent changes in spdep warn about observations with no neighbours, and \nabout subgraphs. Please read the relevant vignette: \nhttps://cran.r-project.org/web/packages/spdep/vignettes/subgraphs.html\n\nNo-neighbour observations may be detected when apparently contiguous \npolygons are separated by >10mm (default value) if the input polygons are \nan sf object, otherwise sqrt(.Machine$double.eps), (so  the sp case is \nunchanged).\n\n>\n> 2: In poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM), queen = T):\n>\n> neighbor object has 7 sub-graphs;\n>\n> if this sub-graph count seems unexpected, try increasing the snap argument.\n>\n> w_SMD_2025 <- nb2mat(W.nb, style = \"B\")\n>\n> Error in nb2listw(neighbors, glist = glist, style = style, zero.policy =\n> zero.policy):\n>\n> Empty neighbor sets found (zero.policy: FALSE)\n\nIf you accept a neighbour object with subgraphs (probably no-neighbour \nobservations), set zero.policy=TRUE in nb2mat. This may however cause \nproblems later on.\n\nI suggest rather avoiding sp, subsetting geo_sf, and using that object in \npoly2nb. You also need to check whether the polygons are planar or \nspherical, as this affects the default value of snap.\n\nIf you need to share data, do not attach to posts on this list, but rather \nraise an issue on https://github.com/r-spatial/spdep/issues/, where the \ndata and code for a minimal reproducible example may be attached.\n\nHope this clarifies,\n\nRoger\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 16 Dec 2025, Aymard Lo?c KWEKEU KWEKEU wrote:\n\nFirst, you do not show the versions of software being used, including the \nplatform, versions of rgdal, sp, sf, spdep, mgcv, R2BayesX, possibly \n",
+      "thread_id": "thread-4b44f109e640",
+      "thread_depth": 1,
+      "month": "2025-12"
+    },
+    {
+      "id": "msg-e629a887faf6",
+      "message_id": "<CAL3ufUJyuW=tPAAi_gO-OmiY1onwR+hUSQMhZr1iwHbbq6upbw@mail.gmail.com>",
+      "from_name": "Josiah Parry",
+      "from_email_hash": "cb0d462f2d6a78e97bcd7aede4de6b2170d3c662db9c89c80e1b85568990f9dc",
+      "date": "2025-12-17T10:42:56-08:00",
+      "subject": "[R-sig-Geo] Warnings and error during the creation of the neighborhood matrix by recoding old code using deprecated rgdal in CRAN with sf and sp",
+      "subject_clean": "Warnings and error during the creation of the neighborhood matrix by recoding old code using deprecated rgdal in CRAN with sf and sp",
+      "in_reply_to": "<c146bb1b-744f-cfe3-a9ad-72b167baeda@reclus2.nhh.no>",
+      "references": [
+        "<CAL_d4CXwhAtUB-ENQyLhR-+nH0xqgGD2Gdf2wNN3LGnmfxzvtQ@mail.gmail.com>",
+        "<c146bb1b-744f-cfe3-a9ad-72b167baeda@reclus2.nhh.no>"
+      ],
+      "body_plain": "200% echo everything said by Dr. Bivand below.\n\nIn addition, I would focus on the error message:\n\nEmpty neighbor sets found (zero.policy: FALSE)\n\n\nThis is the thing you need to solve. Why are there locations without\nneighbors? A \"cheap way out\" which we offer in ArcGIS Pro is to provide a\nunion of the neighbor sets using KNN and contiguity. This ensures that each\nlocation has at minimum k number of neighbors. You can accomplish this like\nthe example below. *However*, I would consider the implications of using\ndistance metrics for polygons. See if what you're doing actually makes\nsense conceptually.\n\nlibrary(spdep)\n\ngeo <- system.file(\"shapes/columbus.gpkg\", package=\"spData\") |>\n  sf::st_read(quiet = TRUE) |>\n  sf::st_geometry()\n\nnb_contig <- poly2nb(geo)\n\n# helper from sfdep for st_centroid() -> knearneigh() -> knn2nb()\nnb_k1 <- sfdep::st_knn(geo)\n\nunion.nb(nb_contig, nb_k1)\n\nOn Wed, Dec 17, 2025 at 1:06?AM Roger Bivand via R-sig-Geo <\nr-sig-geo at r-project.org> wrote:\n\n> On Tue, 16 Dec 2025, Aymard Lo?c KWEKEU KWEKEU wrote:\n>\n> First, you do not show the versions of software being used, including the\n> platform, versions of rgdal, sp, sf, spdep, mgcv, R2BayesX, possibly\n> others. The versions of GDAL used in rgdal and sf may also matter, as GDAL\n> also changes over time (the precision of coordinates in the same ESRI\n> Shapefile may differ, artefacts in polygons bay be corrected differently).\n>\n> Comments inline.\n>\n> >\n> > *Initial code with rgdal's readOGR function: *\n> >\n> > geo <- readOGR(\"./Data/Carto/COMMUNE_CARTO.shp\")\n>\n> Without an example file (all the files making up the ESRI shapefile, at\n> least *.shp, *.shx, *.dbf, preferably with *.prj), there is no way to\n> establish anything.\n>\n> >\n> > geo2 <- subset(geo, geo at data$INSEE_COM %in% selected_com)\n> >\n>\n> Never refer to S4 slots using @ in workflows - geo$INSEE_COM has been\n> sufficient now for 20 years.\n>\n> > DATA2BND <- sp2bnd(geo2, geo2 at data$INSEE_COM)\n> >\n> > plot(DATA2BND)\n> >\n> > list_names <- as.data.frame(names(DATA2BND)) %>%\n> >  group_by(names(DATA2BND)) %>%\n> >  summarise(n = n())\n> >\n>\n> sp2bnd is a function in R2BayesX and is strictly superfluous to this\n> question.\n>\n> > nb <- mgcv:::pol2nb(DATA2BND)$nb\n> >\n>\n> mgcv:::pol2nb is a function in mgcv and is strictly superfluous to this\n> question.\n>\n> > W.nb <- poly2nb(\n> >  geo2,\n> >  row.names = rownames(geo2 at data$INSEE_COM)\n> > )\n> >\n> > w <- nb2mat(W.nb, style = \"B\")\n>\n> This is the core of the question - why no warnings or errors?\n>\n> >\n> >\n> > *New code with sf and sp: *\n> >\n> > geo_sf <- st_read(\"./Data/Carto/COMMUNE_CARTO.shp\", quiet = TRUE)\n>\n> Coercing to an sp-class is superfluous.\n>\n> > geo    <- as(geo_sf, \"Spatial\")\n> > geo2 <- subset(geo, geo at data$INSEE_COM %in% selected_com)\n> >\n> > DATA2BND <- sp2bnd(geo2, geo2 at data$INSEE_COM)\n> >\n> > plot(DATA2BND)\n> >\n> > list_names <- as.data.frame(names(DATA2BND)) %>%\n> >  group_by(names(DATA2BND)) %>%\n> >  summarise(n = n())\n> >\n> > nb <- mgcv:::pol2nb(DATA2BND)$nb\n>\n> It is possible that the coordinate values of the polygons in geo2 differ\n> here by a very small amount if the versions of GDAL used to install rgdal\n> and sf differ, and also because sf's implementation for reading geometries\n> is more modern and cleaner than that in rgdal (>20 years old).\n>\n> >\n> > W.nb <- poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM),\n> queen=T)\n> > Warning messages:\n> >\n> > 1: In poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM), queen =\n> T):\n> >\n> > some observations have no neighbors;\n> >\n> > if this seems unexpected, try increasing the snap argument.\n>\n> Recent changes in spdep warn about observations with no neighbours, and\n> about subgraphs. Please read the relevant vignette:\n> https://cran.r-project.org/web/packages/spdep/vignettes/subgraphs.html\n>\n> No-neighbour observations may be detected when apparently contiguous\n> polygons are separated by >10mm (default value) if the input polygons are\n> an sf object, otherwise sqrt(.Machine$double.eps), (so  the sp case is\n> unchanged).\n>\n> >\n> > 2: In poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM), queen =\n> T):\n> >\n> > neighbor object has 7 sub-graphs;\n> >\n> > if this sub-graph count seems unexpected, try increasing the snap\n> argument.\n> >\n> > w_SMD_2025 <- nb2mat(W.nb, style = \"B\")\n> >\n> > Error in nb2listw(neighbors, glist = glist, style = style, zero.policy =\n> > zero.policy):\n> >\n> > Empty neighbor sets found (zero.policy: FALSE)\n>\n> If you accept a neighbour object with subgraphs (probably no-neighbour\n> observations), set zero.policy=TRUE in nb2mat. This may however cause\n> problems later on.\n>\n> I suggest rather avoiding sp, subsetting geo_sf, and using that object in\n> poly2nb. You also need to check whether the polygons are planar or\n> spherical, as this affects the default value of snap.\n>\n> If you need to share data, do not attach to posts on this list, but rather\n> raise an issue on https://github.com/r-spatial/spdep/issues/, where the\n> data and code for a minimal reproducible example may be attached.\n>\n> Hope this clarifies,\n>\n> Roger\n>\n> --\n> Roger Bivand\n> Emeritus Professor\n> Department of Economics, Norwegian School of Economics,\n> Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\n> e-mail: Roger.Bivand at nhh.no\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "200% echo everything said by Dr. Bivand below.\n\nIn addition, I would focus on the error message:\n\nEmpty neighbor sets found (zero.policy: FALSE)\n\n\nThis is the thing you need to solve. Why are there lo",
+      "thread_id": "thread-4b44f109e640",
+      "thread_depth": 2,
+      "month": "2025-12"
+    },
+    {
+      "id": "msg-d30cf93034de",
+      "message_id": "<628cb89e-21c7-4244-bc4e-13dae0e8446a@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2025-12-18T08:55:01+01:00",
+      "subject": "[R-sig-Geo] Warnings and error during the creation of the neighborhood matrix by recoding old code using deprecated rgdal in CRAN with sf and sp",
+      "subject_clean": "Warnings and error during the creation of the neighborhood matrix by recoding old code using deprecated rgdal in CRAN with sf and sp",
+      "in_reply_to": "<CAL3ufUJyuW=tPAAi_gO-OmiY1onwR+hUSQMhZr1iwHbbq6upbw@mail.gmail.com>",
+      "references": [
+        "<CAL_d4CXwhAtUB-ENQyLhR-+nH0xqgGD2Gdf2wNN3LGnmfxzvtQ@mail.gmail.com>",
+        "<c146bb1b-744f-cfe3-a9ad-72b167baeda@reclus2.nhh.no>",
+        "<CAL3ufUJyuW=tPAAi_gO-OmiY1onwR+hUSQMhZr1iwHbbq6upbw@mail.gmail.com>"
+      ],
+      "body_plain": "I think the CRAN package sfislands tries to help solve the issue of \nunconnected graphs:\n\nhttps://cran.r-project.org/web/packages/sfislands/index.html\n\nOn 17/12/2025 19:42, Josiah Parry wrote:\n> 200% echo everything said by Dr. Bivand below.\n> \n> In addition, I would focus on the error message:\n> \n> Empty neighbor sets found (zero.policy: FALSE)\n> \n> \n> This is the thing you need to solve. Why are there locations without\n> neighbors? A \"cheap way out\" which we offer in ArcGIS Pro is to provide a\n> union of the neighbor sets using KNN and contiguity. This ensures that each\n> location has at minimum k number of neighbors. You can accomplish this like\n> the example below. *However*, I would consider the implications of using\n> distance metrics for polygons. See if what you're doing actually makes\n> sense conceptually.\n> \n> library(spdep)\n> \n> geo <- system.file(\"shapes/columbus.gpkg\", package=\"spData\") |>\n>    sf::st_read(quiet = TRUE) |>\n>    sf::st_geometry()\n> \n> nb_contig <- poly2nb(geo)\n> \n> # helper from sfdep for st_centroid() -> knearneigh() -> knn2nb()\n> nb_k1 <- sfdep::st_knn(geo)\n> \n> union.nb(nb_contig, nb_k1)\n> \n> On Wed, Dec 17, 2025 at 1:06?AM Roger Bivand via R-sig-Geo <\n> r-sig-geo at r-project.org> wrote:\n> \n>> On Tue, 16 Dec 2025, Aymard Lo?c KWEKEU KWEKEU wrote:\n>>\n>> First, you do not show the versions of software being used, including the\n>> platform, versions of rgdal, sp, sf, spdep, mgcv, R2BayesX, possibly\n>> others. The versions of GDAL used in rgdal and sf may also matter, as GDAL\n>> also changes over time (the precision of coordinates in the same ESRI\n>> Shapefile may differ, artefacts in polygons bay be corrected differently).\n>>\n>> Comments inline.\n>>\n>>>\n>>> *Initial code with rgdal's readOGR function: *\n>>>\n>>> geo <- readOGR(\"./Data/Carto/COMMUNE_CARTO.shp\")\n>>\n>> Without an example file (all the files making up the ESRI shapefile, at\n>> least *.shp, *.shx, *.dbf, preferably with *.prj), there is no way to\n>> establish anything.\n>>\n>>>\n>>> geo2 <- subset(geo, geo at data$INSEE_COM %in% selected_com)\n>>>\n>>\n>> Never refer to S4 slots using @ in workflows - geo$INSEE_COM has been\n>> sufficient now for 20 years.\n>>\n>>> DATA2BND <- sp2bnd(geo2, geo2 at data$INSEE_COM)\n>>>\n>>> plot(DATA2BND)\n>>>\n>>> list_names <- as.data.frame(names(DATA2BND)) %>%\n>>>   group_by(names(DATA2BND)) %>%\n>>>   summarise(n = n())\n>>>\n>>\n>> sp2bnd is a function in R2BayesX and is strictly superfluous to this\n>> question.\n>>\n>>> nb <- mgcv:::pol2nb(DATA2BND)$nb\n>>>\n>>\n>> mgcv:::pol2nb is a function in mgcv and is strictly superfluous to this\n>> question.\n>>\n>>> W.nb <- poly2nb(\n>>>   geo2,\n>>>   row.names = rownames(geo2 at data$INSEE_COM)\n>>> )\n>>>\n>>> w <- nb2mat(W.nb, style = \"B\")\n>>\n>> This is the core of the question - why no warnings or errors?\n>>\n>>>\n>>>\n>>> *New code with sf and sp: *\n>>>\n>>> geo_sf <- st_read(\"./Data/Carto/COMMUNE_CARTO.shp\", quiet = TRUE)\n>>\n>> Coercing to an sp-class is superfluous.\n>>\n>>> geo    <- as(geo_sf, \"Spatial\")\n>>> geo2 <- subset(geo, geo at data$INSEE_COM %in% selected_com)\n>>>\n>>> DATA2BND <- sp2bnd(geo2, geo2 at data$INSEE_COM)\n>>>\n>>> plot(DATA2BND)\n>>>\n>>> list_names <- as.data.frame(names(DATA2BND)) %>%\n>>>   group_by(names(DATA2BND)) %>%\n>>>   summarise(n = n())\n>>>\n>>> nb <- mgcv:::pol2nb(DATA2BND)$nb\n>>\n>> It is possible that the coordinate values of the polygons in geo2 differ\n>> here by a very small amount if the versions of GDAL used to install rgdal\n>> and sf differ, and also because sf's implementation for reading geometries\n>> is more modern and cleaner than that in rgdal (>20 years old).\n>>\n>>>\n>>> W.nb <- poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM),\n>> queen=T)\n>>> Warning messages:\n>>>\n>>> 1: In poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM), queen =\n>> T):\n>>>\n>>> some observations have no neighbors;\n>>>\n>>> if this seems unexpected, try increasing the snap argument.\n>>\n>> Recent changes in spdep warn about observations with no neighbours, and\n>> about subgraphs. Please read the relevant vignette:\n>> https://cran.r-project.org/web/packages/spdep/vignettes/subgraphs.html\n>>\n>> No-neighbour observations may be detected when apparently contiguous\n>> polygons are separated by >10mm (default value) if the input polygons are\n>> an sf object, otherwise sqrt(.Machine$double.eps), (so  the sp case is\n>> unchanged).\n>>\n>>>\n>>> 2: In poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM), queen =\n>> T):\n>>>\n>>> neighbor object has 7 sub-graphs;\n>>>\n>>> if this sub-graph count seems unexpected, try increasing the snap\n>> argument.\n>>>\n>>> w_SMD_2025 <- nb2mat(W.nb, style = \"B\")\n>>>\n>>> Error in nb2listw(neighbors, glist = glist, style = style, zero.policy =\n>>> zero.policy):\n>>>\n>>> Empty neighbor sets found (zero.policy: FALSE)\n>>\n>> If you accept a neighbour object with subgraphs (probably no-neighbour\n>> observations), set zero.policy=TRUE in nb2mat. This may however cause\n>> problems later on.\n>>\n>> I suggest rather avoiding sp, subsetting geo_sf, and using that object in\n>> poly2nb. You also need to check whether the polygons are planar or\n>> spherical, as this affects the default value of snap.\n>>\n>> If you need to share data, do not attach to posts on this list, but rather\n>> raise an issue on https://github.com/r-spatial/spdep/issues/, where the\n>> data and code for a minimal reproducible example may be attached.\n>>\n>> Hope this clarifies,\n>>\n>> Roger\n>>\n>> --\n>> Roger Bivand\n>> Emeritus Professor\n>> Department of Economics, Norwegian School of Economics,\n>> Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\n>> e-mail: Roger.Bivand at nhh.no\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma (he/him)\nUniversit?t M?nster, Institute for Geoinformatics\nHeisenbergstrasse 2, 48149 M?nster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "I think the CRAN package sfislands tries to help solve the issue of \nunconnected graphs:\n\nhttps://cran.r-project.org/web/packages/sfislands/index.html\n\nOn 17/12/2025 19:42, Josiah Parry wrote:\n> 200% ",
+      "thread_id": "thread-4b44f109e640",
+      "thread_depth": 3,
+      "month": "2025-12"
+    },
+    {
+      "id": "msg-eae02dbbac1c",
+      "message_id": "<e14b278a-1bfc-7b4b-a531-77cf62792776@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2025-12-18T09:52:46+01:00",
+      "subject": "[R-sig-Geo] Warnings and error during the creation of the neighborhood matrix by recoding old code using deprecated rgdal in CRAN with sf and sp",
+      "subject_clean": "Warnings and error during the creation of the neighborhood matrix by recoding old code using deprecated rgdal in CRAN with sf and sp",
+      "in_reply_to": "<628cb89e-21c7-4244-bc4e-13dae0e8446a@uni-muenster.de>",
+      "references": [
+        "<CAL_d4CXwhAtUB-ENQyLhR-+nH0xqgGD2Gdf2wNN3LGnmfxzvtQ@mail.gmail.com>",
+        "<c146bb1b-744f-cfe3-a9ad-72b167baeda@reclus2.nhh.no>",
+        "<CAL3ufUJyuW=tPAAi_gO-OmiY1onwR+hUSQMhZr1iwHbbq6upbw@mail.gmail.com>",
+        "<628cb89e-21c7-4244-bc4e-13dae0e8446a@uni-muenster.de>"
+      ],
+      "body_plain": "On Thu, 18 Dec 2025, Edzer Pebesma wrote:\n\n> I think the CRAN package sfislands tries to help solve the issue of \n> unconnected graphs:\n\nIt does - see also https://journal.r-project.org/articles/RJ-2025-015/, so \ndoes the spdep vignette using distances between polygon boundaries, but \nthe primary cause here may be the differences between rgdal/sp with an \nunknown version of GDAL (most likely much older) and sf also with an \nunknown version of GDAL (almost certainly later) in reading the \ncoordinates from the ESRI shapefile.\n\nWithout access to the shapefile, I don't think that we can conclude that \nthe resolution is not rather to use sf with a properly defined CRS (snap \ndefaults differ a little in spdep now for planar and spherical \ncoordinates), and examine the impact of slackening snap by a couple of \ncentimetres.\n\nRoger\n\n>\n> https://cran.r-project.org/web/packages/sfislands/index.html\n>\n> On 17/12/2025 19:42, Josiah Parry wrote:\n>>  200% echo everything said by Dr. Bivand below.\n>>\n>>  In addition, I would focus on the error message:\n>>\n>>  Empty neighbor sets found (zero.policy: FALSE)\n>>\n>>\n>>  This is the thing you need to solve. Why are there locations without\n>>  neighbors? A \"cheap way out\" which we offer in ArcGIS Pro is to provide a\n>>  union of the neighbor sets using KNN and contiguity. This ensures that\n>>  each\n>>  location has at minimum k number of neighbors. You can accomplish this\n>>  like\n>>  the example below. *However*, I would consider the implications of using\n>>  distance metrics for polygons. See if what you're doing actually makes\n>>  sense conceptually.\n>>\n>>  library(spdep)\n>>\n>>  geo <- system.file(\"shapes/columbus.gpkg\", package=\"spData\") |>\n>>    sf:: st_read(quiet = TRUE) |>\n>>    sf:: st_geometry()\n>>\n>>  nb_contig <- poly2nb(geo)\n>>\n>>  # helper from sfdep for st_centroid() -> knearneigh() -> knn2nb()\n>>  nb_k1 <- sfdep::st_knn(geo)\n>>\n>>  union.nb(nb_contig, nb_k1)\n>>\n>>  On Wed, Dec 17, 2025 at 1:06?AM Roger Bivand via R-sig-Geo <\n>>  r-sig-geo at r-project.org> wrote:\n>>\n>>>  On Tue, 16 Dec 2025, Aymard Lo?c KWEKEU KWEKEU wrote:\n>>>\n>>>  First, you do not show the versions of software being used, including the\n>>>  platform, versions of rgdal, sp, sf, spdep, mgcv, R2BayesX, possibly\n>>>  others. The versions of GDAL used in rgdal and sf may also matter, as\n>>>  GDAL\n>>>  also changes over time (the precision of coordinates in the same ESRI\n>>>  Shapefile may differ, artefacts in polygons bay be corrected\n>>>  differently).\n>>>\n>>>  Comments inline.\n>>> \n>>>>\n>>>>  *Initial code with rgdal's readOGR function: *\n>>>>\n>>>>  geo <- readOGR(\"./Data/Carto/COMMUNE_CARTO.shp\")\n>>>\n>>>  Without an example file (all the files making up the ESRI shapefile, at\n>>>  least *.shp, *.shx, *.dbf, preferably with *.prj), there is no way to\n>>>  establish anything.\n>>> \n>>>>\n>>>>  geo2 <- subset(geo, geo at data$INSEE_COM %in% selected_com)\n>>>> \n>>>\n>>>  Never refer to S4 slots using @ in workflows - geo$INSEE_COM has been\n>>>  sufficient now for 20 years.\n>>>\n>>>>  DATA2BND <- sp2bnd(geo2, geo2 at data$INSEE_COM)\n>>>>\n>>>>  plot(DATA2BND)\n>>>>\n>>>>  list_names <- as.data.frame(names(DATA2BND)) %>%\n>>>>    group_by(names(DATA2BND)) %>%\n>>>>    summarise(n = n())\n>>>> \n>>>\n>>>  sp2bnd is a function in R2BayesX and is strictly superfluous to this\n>>>  question.\n>>>\n>>>>  nb <- mgcv:::pol2nb(DATA2BND)$nb\n>>>> \n>>>\n>>>  mgcv:::pol2nb is a function in mgcv and is strictly superfluous to this\n>>>  question.\n>>>\n>>>>  W.nb <- poly2nb(\n>>>>    geo2,\n>>>>    row.names = rownames(geo2 at data$INSEE_COM)\n>>>> ) \n>>>>\n>>>>  w <- nb2mat(W.nb, style = \"B\")\n>>>\n>>>  This is the core of the question - why no warnings or errors?\n>>> \n>>>> \n>>>>\n>>>>  *New code with sf and sp: *\n>>>>\n>>>>  geo_sf <- st_read(\"./Data/Carto/COMMUNE_CARTO.shp\", quiet = TRUE)\n>>>\n>>>  Coercing to an sp-class is superfluous.\n>>>\n>>>>  geo    <- as(geo_sf, \"Spatial\")\n>>>>  geo2 <- subset(geo, geo at data$INSEE_COM %in% selected_com)\n>>>>\n>>>>  DATA2BND <- sp2bnd(geo2, geo2 at data$INSEE_COM)\n>>>>\n>>>>  plot(DATA2BND)\n>>>>\n>>>>  list_names <- as.data.frame(names(DATA2BND)) %>%\n>>>>    group_by(names(DATA2BND)) %>%\n>>>>    summarise(n = n())\n>>>>\n>>>>  nb <- mgcv:::pol2nb(DATA2BND)$nb\n>>>\n>>>  It is possible that the coordinate values of the polygons in geo2 differ\n>>>  here by a very small amount if the versions of GDAL used to install rgdal\n>>>  and sf differ, and also because sf's implementation for reading\n>>>  geometries\n>>>  is more modern and cleaner than that in rgdal (>20 years old).\n>>> \n>>>>\n>>>>  W.nb <- poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM),\n>>>  queen=T)\n>>>>  Warning messages:\n>>>>\n>>>>  1: In poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM), queen =\n>>>  T):\n>>>>\n>>>>  some observations have no neighbors;\n>>>>\n>>>>  if this seems unexpected, try increasing the snap argument.\n>>>\n>>>  Recent changes in spdep warn about observations with no neighbours, and\n>>>  about subgraphs. Please read the relevant vignette:\n>>>  https://cran.r-project.org/web/packages/spdep/vignettes/subgraphs.html\n>>>\n>>>  No-neighbour observations may be detected when apparently contiguous\n>>>  polygons are separated by >10mm (default value) if the input polygons are\n>>>  an sf object, otherwise sqrt(.Machine$double.eps), (so  the sp case is\n>>>  unchanged).\n>>> \n>>>>\n>>>>  2: In poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM), queen =\n>>>  T):\n>>>>\n>>>>  neighbor object has 7 sub-graphs;\n>>>>\n>>>>  if this sub-graph count seems unexpected, try increasing the snap\n>>>  argument.\n>>>>\n>>>>  w_SMD_2025 <- nb2mat(W.nb, style = \"B\")\n>>>>\n>>>>  Error in nb2listw(neighbors, glist = glist, style = style, zero.policy =\n>>>>  zero.policy):\n>>>>\n>>>>  Empty neighbor sets found (zero.policy: FALSE)\n>>>\n>>>  If you accept a neighbour object with subgraphs (probably no-neighbour\n>>>  observations), set zero.policy=TRUE in nb2mat. This may however cause\n>>>  problems later on.\n>>>\n>>>  I suggest rather avoiding sp, subsetting geo_sf, and using that object in\n>>>  poly2nb. You also need to check whether the polygons are planar or\n>>>  spherical, as this affects the default value of snap.\n>>>\n>>>  If you need to share data, do not attach to posts on this list, but\n>>>  rather\n>>>  raise an issue on\n>>>  https://github.com/r-spatial/spdep/issues/,\n>>>  where the\n>>>  data and code for a minimal reproducible example may be attached.\n>>>\n>>>  Hope this clarifies,\n>>>\n>>>  Roger\n>>>\n>>>  --\n>>>  Roger Bivand\n>>>  Emeritus Professor\n>>>  Department of Economics, Norwegian School of Economics,\n>>>  Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\n>>>  e-mail: Roger.Bivand at nhh.no\n>>>  _______________________________________________\n>>>  R-sig-Geo mailing list\n>>>  R-sig-Geo at r-project.org\n>>>  https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>\n>>   [[alternative HTML version deleted]]\n>>\n>>  _______________________________________________\n>>  R-sig-Geo mailing list\n>>  R-sig-Geo at r-project.org\n>>  https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Thu, 18 Dec 2025, Edzer Pebesma wrote:\n\n> I think the CRAN package sfislands tries to help solve the issue of \n> unconnected graphs:\n\nIt does - see also https://journal.r-project.org/articles/RJ-20",
+      "thread_id": "thread-4b44f109e640",
+      "thread_depth": 4,
+      "month": "2025-12"
+    },
+    {
+      "id": "msg-b8d536d3ad50",
+      "message_id": "<120203c8-ef2a-41c2-9522-4a4ddb5f8bd4@gmail.com>",
+      "from_name": "Paulo Flores Ribeiro",
+      "from_email_hash": "742fe164c2e649c10dc7071d3703d891da5084b7e771d67af616c314288ba5f3",
+      "date": "2025-12-18T11:09:59Z",
+      "subject": "[R-sig-Geo] Question: Registering and Sharing an Open-Access Analytical Tool",
+      "subject_clean": "Question: Registering and Sharing an Open-Access Analytical Tool",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi everyone,\n\nI hope this question fits within the scope of this group.\nImagine you?ve just finished building an analytical tool with potential \nscientific impact. The tool runs from an open-access web page and was \ndeveloped in R, using several spatial data analysis packages, including \nshiny for the online interface.\nHow would you go about registering authorship of this tool so that it \ncan be publicly shared and used by others, while ensuring proper credit? \nSome colleagues mentioned assigning a DOI via Zenodo or Figshare, but \nI?m not familiar with how that works. Would doing this later complicate \npublishing a methodological paper about the tool, since it would already \nhave been ?published? or registered beforehand?\nThanks for any advice!\n\nPaulo Flores Ribeiro\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi everyone,\n\nI hope this question fits within the scope of this group.\nImagine you?ve just finished building an analytical tool with potential \nscientific impact. The tool runs from an open-access we",
+      "thread_id": "thread-b8d536d3ad50",
+      "thread_depth": 0,
+      "month": "2025-12"
+    },
+    {
+      "id": "msg-508c501c98b3",
+      "message_id": "<CADH2hD=eeCj-NiiOy7rS4dgGcrkpRB1Fgb5mf1TfotOvC4OA_A@mail.gmail.com>",
+      "from_name": "William Gearty",
+      "from_email_hash": "c9dc00121946a9fd096f50495fc0841d63232f01a14eefe509a453a9e7587e6c",
+      "date": "2025-12-18T11:54:14-05:00",
+      "subject": "[R-sig-Geo] Question: Registering and Sharing an Open-Access Analytical Tool",
+      "subject_clean": "Question: Registering and Sharing an Open-Access Analytical Tool",
+      "in_reply_to": "<120203c8-ef2a-41c2-9522-4a4ddb5f8bd4@gmail.com>",
+      "references": [
+        "<120203c8-ef2a-41c2-9522-4a4ddb5f8bd4@gmail.com>"
+      ],
+      "body_plain": "Provided your project is on GitHub, it's quite easy to integrate with\nZenodo and generate a DOI for each formal GitHub release:\nhttps://docs.github.com/en/repositories/archiving-a-github-repository/referencing-and-citing-content#issuing-a-persistent-identifier-for-your-repository-with-zenodo.\nIf your project isn't on GitHub, you could upload it yourself to\nZenodo to achieve the same result. This shouldn't have any\ncomplications with future methodological papers about the tool. It\nwould be like publishing a preprint and then submitting a manuscript\nto a journal. In fact, if you have a DOI for the code (Zenodo) and a\nDOI for the publication (from a journal, e.g., JOSS), users would then\nhave the flexibility to cite one or both depending on how they\ninteracted with the project.\n\n________________________________\n\nWilliam Gearty\nPostdoctoral Researcher\nOpen Source Program Office\n\nSyracuse University\n\n\n________________________________\n\nWilliam Gearty\nPostdoctoral Researcher\nOpen Source Program Office\n\nSyracuse University\n\n\n\nOn Thu, Dec 18, 2025 at 6:10?AM Paulo Flores Ribeiro\n<paulo.flores.mail at gmail.com> wrote:\n>\n> Hi everyone,\n>\n> I hope this question fits within the scope of this group.\n> Imagine you?ve just finished building an analytical tool with potential\n> scientific impact. The tool runs from an open-access web page and was\n> developed in R, using several spatial data analysis packages, including\n> shiny for the online interface.\n> How would you go about registering authorship of this tool so that it\n> can be publicly shared and used by others, while ensuring proper credit?\n> Some colleagues mentioned assigning a DOI via Zenodo or Figshare, but\n> I?m not familiar with how that works. Would doing this later complicate\n> publishing a methodological paper about the tool, since it would already\n> have been ?published? or registered beforehand?\n> Thanks for any advice!\n>\n> Paulo Flores Ribeiro\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Provided your project is on GitHub, it's quite easy to integrate with\nZenodo and generate a DOI for each formal GitHub release:\nhttps://docs.github.com/en/repositories/archiving-a-github-repository/re",
+      "thread_id": "thread-b8d536d3ad50",
+      "thread_depth": 1,
+      "month": "2025-12"
+    },
+    {
+      "id": "msg-adee7f73db1a",
+      "message_id": "<CAL_d4CW5_Mgk_16FWppAcP8UExt6TDesPxY1+4aigL6mj0gtNQ@mail.gmail.com>",
+      "from_name": "Aymard Loïc KWEKEU KWEKEU",
+      "from_email_hash": "ef798628486f9cb982560103379a575c6f564b9e449f0da0c37a0c502bd34156",
+      "date": "2025-12-19T07:15:10+01:00",
+      "subject": "[R-sig-Geo] Warnings and error during the creation of the neighborhood matrix by recoding old code using deprecated rgdal in CRAN with sf and sp",
+      "subject_clean": "Warnings and error during the creation of the neighborhood matrix by recoding old code using deprecated rgdal in CRAN with sf and sp",
+      "in_reply_to": "<e14b278a-1bfc-7b4b-a531-77cf62792776@reclus2.nhh.no>",
+      "references": [
+        "<CAL_d4CXwhAtUB-ENQyLhR-+nH0xqgGD2Gdf2wNN3LGnmfxzvtQ@mail.gmail.com>",
+        "<c146bb1b-744f-cfe3-a9ad-72b167baeda@reclus2.nhh.no>",
+        "<CAL3ufUJyuW=tPAAi_gO-OmiY1onwR+hUSQMhZr1iwHbbq6upbw@mail.gmail.com>",
+        "<628cb89e-21c7-4244-bc4e-13dae0e8446a@uni-muenster.de>",
+        "<e14b278a-1bfc-7b4b-a531-77cf62792776@reclus2.nhh.no>"
+      ],
+      "body_plain": "Hello everyone, sorry for my late reply, my supervisor and I have\ndetermined that this was just an isolated observation and we have decided\nto delete it.\n\nLe jeu. 18 d?c. 2025, 09:52, Roger Bivand <Roger.Bivand at nhh.no> a ?crit :\n\n> On Thu, 18 Dec 2025, Edzer Pebesma wrote:\n>\n> > I think the CRAN package sfislands tries to help solve the issue of\n> > unconnected graphs:\n>\n> It does - see also https://journal.r-project.org/articles/RJ-2025-015/,\n> so\n> does the spdep vignette using distances between polygon boundaries, but\n> the primary cause here may be the differences between rgdal/sp with an\n> unknown version of GDAL (most likely much older) and sf also with an\n> unknown version of GDAL (almost certainly later) in reading the\n> coordinates from the ESRI shapefile.\n>\n> Without access to the shapefile, I don't think that we can conclude that\n> the resolution is not rather to use sf with a properly defined CRS (snap\n> defaults differ a little in spdep now for planar and spherical\n> coordinates), and examine the impact of slackening snap by a couple of\n> centimetres.\n>\n> Roger\n>\n> >\n> > https://cran.r-project.org/web/packages/sfislands/index.html\n> >\n> > On 17/12/2025 19:42, Josiah Parry wrote:\n> >>  200% echo everything said by Dr. Bivand below.\n> >>\n> >>  In addition, I would focus on the error message:\n> >>\n> >>  Empty neighbor sets found (zero.policy: FALSE)\n> >>\n> >>\n> >>  This is the thing you need to solve. Why are there locations without\n> >>  neighbors? A \"cheap way out\" which we offer in ArcGIS Pro is to\n> provide a\n> >>  union of the neighbor sets using KNN and contiguity. This ensures that\n> >>  each\n> >>  location has at minimum k number of neighbors. You can accomplish this\n> >>  like\n> >>  the example below. *However*, I would consider the implications of\n> using\n> >>  distance metrics for polygons. See if what you're doing actually makes\n> >>  sense conceptually.\n> >>\n> >>  library(spdep)\n> >>\n> >>  geo <- system.file(\"shapes/columbus.gpkg\", package=\"spData\") |>\n> >>    sf:: st_read(quiet = TRUE) |>\n> >>    sf:: st_geometry()\n> >>\n> >>  nb_contig <- poly2nb(geo)\n> >>\n> >>  # helper from sfdep for st_centroid() -> knearneigh() -> knn2nb()\n> >>  nb_k1 <- sfdep::st_knn(geo)\n> >>\n> >>  union.nb(nb_contig, nb_k1)\n> >>\n> >>  On Wed, Dec 17, 2025 at 1:06?AM Roger Bivand via R-sig-Geo <\n> >>  r-sig-geo at r-project.org> wrote:\n> >>\n> >>>  On Tue, 16 Dec 2025, Aymard Lo?c KWEKEU KWEKEU wrote:\n> >>>\n> >>>  First, you do not show the versions of software being used, including\n> the\n> >>>  platform, versions of rgdal, sp, sf, spdep, mgcv, R2BayesX, possibly\n> >>>  others. The versions of GDAL used in rgdal and sf may also matter, as\n> >>>  GDAL\n> >>>  also changes over time (the precision of coordinates in the same ESRI\n> >>>  Shapefile may differ, artefacts in polygons bay be corrected\n> >>>  differently).\n> >>>\n> >>>  Comments inline.\n> >>>\n> >>>>\n> >>>>  *Initial code with rgdal's readOGR function: *\n> >>>>\n> >>>>  geo <- readOGR(\"./Data/Carto/COMMUNE_CARTO.shp\")\n> >>>\n> >>>  Without an example file (all the files making up the ESRI shapefile,\n> at\n> >>>  least *.shp, *.shx, *.dbf, preferably with *.prj), there is no way to\n> >>>  establish anything.\n> >>>\n> >>>>\n> >>>>  geo2 <- subset(geo, geo at data$INSEE_COM %in% selected_com)\n> >>>>\n> >>>\n> >>>  Never refer to S4 slots using @ in workflows - geo$INSEE_COM has been\n> >>>  sufficient now for 20 years.\n> >>>\n> >>>>  DATA2BND <- sp2bnd(geo2, geo2 at data$INSEE_COM)\n> >>>>\n> >>>>  plot(DATA2BND)\n> >>>>\n> >>>>  list_names <- as.data.frame(names(DATA2BND)) %>%\n> >>>>    group_by(names(DATA2BND)) %>%\n> >>>>    summarise(n = n())\n> >>>>\n> >>>\n> >>>  sp2bnd is a function in R2BayesX and is strictly superfluous to this\n> >>>  question.\n> >>>\n> >>>>  nb <- mgcv:::pol2nb(DATA2BND)$nb\n> >>>>\n> >>>\n> >>>  mgcv:::pol2nb is a function in mgcv and is strictly superfluous to\n> this\n> >>>  question.\n> >>>\n> >>>>  W.nb <- poly2nb(\n> >>>>    geo2,\n> >>>>    row.names = rownames(geo2 at data$INSEE_COM)\n> >>>> )\n> >>>>\n> >>>>  w <- nb2mat(W.nb, style = \"B\")\n> >>>\n> >>>  This is the core of the question - why no warnings or errors?\n> >>>\n> >>>>\n> >>>>\n> >>>>  *New code with sf and sp: *\n> >>>>\n> >>>>  geo_sf <- st_read(\"./Data/Carto/COMMUNE_CARTO.shp\", quiet = TRUE)\n> >>>\n> >>>  Coercing to an sp-class is superfluous.\n> >>>\n> >>>>  geo    <- as(geo_sf, \"Spatial\")\n> >>>>  geo2 <- subset(geo, geo at data$INSEE_COM %in% selected_com)\n> >>>>\n> >>>>  DATA2BND <- sp2bnd(geo2, geo2 at data$INSEE_COM)\n> >>>>\n> >>>>  plot(DATA2BND)\n> >>>>\n> >>>>  list_names <- as.data.frame(names(DATA2BND)) %>%\n> >>>>    group_by(names(DATA2BND)) %>%\n> >>>>    summarise(n = n())\n> >>>>\n> >>>>  nb <- mgcv:::pol2nb(DATA2BND)$nb\n> >>>\n> >>>  It is possible that the coordinate values of the polygons in geo2\n> differ\n> >>>  here by a very small amount if the versions of GDAL used to install\n> rgdal\n> >>>  and sf differ, and also because sf's implementation for reading\n> >>>  geometries\n> >>>  is more modern and cleaner than that in rgdal (>20 years old).\n> >>>\n> >>>>\n> >>>>  W.nb <- poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM),\n> >>>  queen=T)\n> >>>>  Warning messages:\n> >>>>\n> >>>>  1: In poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM),\n> queen =\n> >>>  T):\n> >>>>\n> >>>>  some observations have no neighbors;\n> >>>>\n> >>>>  if this seems unexpected, try increasing the snap argument.\n> >>>\n> >>>  Recent changes in spdep warn about observations with no neighbours,\n> and\n> >>>  about subgraphs. Please read the relevant vignette:\n> >>>\n> https://cran.r-project.org/web/packages/spdep/vignettes/subgraphs.html\n> >>>\n> >>>  No-neighbour observations may be detected when apparently contiguous\n> >>>  polygons are separated by >10mm (default value) if the input polygons\n> are\n> >>>  an sf object, otherwise sqrt(.Machine$double.eps), (so  the sp case is\n> >>>  unchanged).\n> >>>\n> >>>>\n> >>>>  2: In poly2nb(geo2, row.names = rownames(geo2 at data$INSEE_COM),\n> queen =\n> >>>  T):\n> >>>>\n> >>>>  neighbor object has 7 sub-graphs;\n> >>>>\n> >>>>  if this sub-graph count seems unexpected, try increasing the snap\n> >>>  argument.\n> >>>>\n> >>>>  w_SMD_2025 <- nb2mat(W.nb, style = \"B\")\n> >>>>\n> >>>>  Error in nb2listw(neighbors, glist = glist, style = style,\n> zero.policy =\n> >>>>  zero.policy):\n> >>>>\n> >>>>  Empty neighbor sets found (zero.policy: FALSE)\n> >>>\n> >>>  If you accept a neighbour object with subgraphs (probably no-neighbour\n> >>>  observations), set zero.policy=TRUE in nb2mat. This may however cause\n> >>>  problems later on.\n> >>>\n> >>>  I suggest rather avoiding sp, subsetting geo_sf, and using that\n> object in\n> >>>  poly2nb. You also need to check whether the polygons are planar or\n> >>>  spherical, as this affects the default value of snap.\n> >>>\n> >>>  If you need to share data, do not attach to posts on this list, but\n> >>>  rather\n> >>>  raise an issue on\n> >>>  https://github.com/r-spatial/spdep/issues/,\n> >>>  where the\n> >>>  data and code for a minimal reproducible example may be attached.\n> >>>\n> >>>  Hope this clarifies,\n> >>>\n> >>>  Roger\n> >>>\n> >>>  --\n> >>>  Roger Bivand\n> >>>  Emeritus Professor\n> >>>  Department of Economics, Norwegian School of Economics,\n> >>>  Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\n> >>>  e-mail: Roger.Bivand at nhh.no\n> >>>  _______________________________________________\n> >>>  R-sig-Geo mailing list\n> >>>  R-sig-Geo at r-project.org\n> >>>  https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>>\n> >>\n> >>   [[alternative HTML version deleted]]\n> >>\n> >>  _______________________________________________\n> >>  R-sig-Geo mailing list\n> >>  R-sig-Geo at r-project.org\n> >>  https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> >\n>\n> --\n> Roger Bivand\n> Emeritus Professor\n> Department of Economics, Norwegian School of Economics,\n> Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\n> e-mail: Roger.Bivand at nhh.no\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello everyone, sorry for my late reply, my supervisor and I have\ndetermined that this was just an isolated observation and we have decided\nto delete it.\n\nLe jeu. 18 d?c. 2025, 09:52, Roger Bivand <Ro",
+      "thread_id": "thread-4b44f109e640",
+      "thread_depth": 5,
+      "month": "2025-12"
+    },
+    {
+      "id": "msg-3540ef7801a6",
+      "message_id": "<CAAcGz9--DRcZZ+pCUfreay2DGBnDvMTu6sTTM961ApSYACL4qA@mail.gmail.com>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "ec02820eba6228afb61925d60b233042e6d048081cc8b7f7e46a034ba5ad3d90",
+      "date": "2025-12-22T21:36:31+11:00",
+      "subject": "[R-sig-Geo] 2025 GDAL User Survey",
+      "subject_clean": "2025 GDAL User Survey",
+      "in_reply_to": "<CAAcGz99TdJnqWXsa1cMgkBcad77ZVwa6VRevkrXqDuinzfoobw@mail.gmail.com>",
+      "references": [
+        "<CAAcGz99TdJnqWXsa1cMgkBcad77ZVwa6VRevkrXqDuinzfoobw@mail.gmail.com>"
+      ],
+      "body_plain": "Hello, just  a friendly bump to anyone who maybe missed this earlier in the\nmonth.\n\nPlease take a few minutes for the GDAL 2025 user survey to help focus GDAL\nSponsorship Program activities. Last year survey results triggered the\nproject to embark on the GDAL CLI Modernization effort, your opinions and\nfeedback really make a difference.\n\nLinked to from this issue, and there's also a link to last year's results:\nhttps://github.com/OSGeo/gdal/issues/13496\n\nCheers, Mike\n\nOn Tue, Dec 2, 2025 at 7:33?AM Michael Sumner <mdsumner at gmail.com> wrote:\n\n> please take a few minutes for the GDAL 2025 user survey to help focus GDAL\n> Sponsorship Program activities. Last year survey results triggered the\n> project to embark on the GDAL CLI Modernization effort.\n>\n>\n> https://docs.google.com/forms/d/e/1FAIpQLSdMRkUH6DIA4OJ7Qu1y_iRlrfP4XgZ2KB1qhd0VuMdi72xgDw/viewform\n>\n>\n> Cheers, Mike\n>\n> --\n> Michael Sumner\n> Ordinary Member,  Streets People Love Hobart Association\n> Research Software Engineer\n> Australian Antarctic Division\n> Hobart, Australia\n> 0438489030\n> e-mail: mdsumner at gmail.com\n>\n\n\n-- \nMichael Sumner\nOrdinary Member,  Streets People Love Hobart Association\nResearch Software Engineer\nAustralian Antarctic Division\nHobart, Australia\n0438489030\ne-mail: mdsumner at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello, just  a friendly bump to anyone who maybe missed this earlier in the\nmonth.\n\nPlease take a few minutes for the GDAL 2025 user survey to help focus GDAL\nSponsorship Program activities. Last year",
+      "thread_id": "thread-6fab704a0742",
+      "thread_depth": 1,
+      "month": "2025-12"
+    },
+    {
+      "id": "msg-1f5abd1aadbd",
+      "message_id": "<1500438625.106449.1766404052205@mail.yahoo.com>",
+      "from_name": "Elie Nsimba Ngembo",
+      "from_email_hash": "bc4a3c4814feb6f1722be03d1ecc3ec9941788ceead57955376a1610a57ad1d3",
+      "date": "2025-12-22T11:47:32Z",
+      "subject": "[R-sig-Geo] Request to the mailing list",
+      "subject_clean": "Request to the mailing list",
+      "in_reply_to": null,
+      "references": [
+        "<1500438625.106449.1766404052205.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "I want to join mailing list.\nENN\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I want to join mailing list.\nENN\n\t[[alternative HTML version deleted]]",
+      "thread_id": "thread-1f5abd1aadbd",
+      "thread_depth": 0,
+      "month": "2025-12"
+    },
+    {
+      "id": "msg-550e734150fc",
+      "message_id": "<SV0P279MB0475192B7D8D52871132E244EEB4A@SV0P279MB0475.NORP279.PROD.OUTLOOK.COM>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2025-12-22T12:53:13Z",
+      "subject": "[R-sig-Geo] Request to the mailing list",
+      "subject_clean": "Request to the mailing list",
+      "in_reply_to": "<1500438625.106449.1766404052205@mail.yahoo.com>",
+      "references": [
+        "<1500438625.106449.1766404052205.ref@mail.yahoo.com>",
+        "<1500438625.106449.1766404052205@mail.yahoo.com>"
+      ],
+      "body_plain": "Welcome to this list. As you can see from https://stat.ethz.ch/pipermail/r-sig-geo/2025-December/029589.html, your message was sent to list participants.\n\nRoger\n\n---\nRoger Bivand\nEmeritus Professor\nDepartment of Economics\nNorwegian School of Economics, Bergen, Norway\n\n________________________________\nFra: R-sig-Geo <r-sig-geo-bounces at r-project.org> p? vegne av Elie Nsimba Ngembo via R-sig-Geo <r-sig-geo at r-project.org>\nSendt: mandag, desember 22, 2025 12:47:55 p.m.\nTil: r-sig-geo at r-project.org <r-sig-geo at r-project.org>\nEmne: [R-sig-Geo] Request to the mailing list\n\nI want to join mailing list.\nENN\n        [[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo<https://stat.ethz.ch/mailman/listinfo/r-sig-geo>\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Welcome to this list. As you can see from https://stat.ethz.ch/pipermail/r-sig-geo/2025-December/029589.html, your message was sent to list participants.\n\nRoger\n\n---\nRoger Bivand\nEmeritus Professor\nDe",
+      "thread_id": "thread-1f5abd1aadbd",
+      "thread_depth": 1,
+      "month": "2025-12"
+    },
+    {
+      "id": "msg-0c8fa30b0898",
+      "message_id": "<CABkCotTU4f5YJsc4h285rbRkQevtNZUfcq4fo=9fsuMYu06E9w@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2025-12-23T10:46:00-06:00",
+      "subject": "[R-sig-Geo] Integrated species distribution model",
+      "subject_clean": "Integrated species distribution model",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi all,\n\nApologies for cross-posting.\n\nI am looking for an R package that can jointly model\ndetection/non-detection (occupancy) data and presence-only data within an\nintegrated species distribution modelling framework.\nAre there any recommended packages or implementations for this type of\nanalysis?\n\nThank you!\n\nManuel\n\n-- \n*Manuel Sp?nola, Ph.D.*\nInstituto Internacional en Conservaci?n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.cr <mspinola at una.ac.cr>\nmspinola10 at gmail.com\nTel?fono: (506) 8706 - 4662\nSitio web institucional: ICOMVIS\n<http://www.icomvis.una.ac.cr/index.php/manuel>\nSitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>\nBlog sobre Ciencia de Datos: Blog de Ciencia de Datos\n<https://mspinola-ciencia-de-datos.netlify.app>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all,\n\nApologies for cross-posting.\n\nI am looking for an R package that can jointly model\ndetection/non-detection (occupancy) data and presence-only data within an\nintegrated species distribution mo",
+      "thread_id": "thread-0c8fa30b0898",
+      "thread_depth": 0,
+      "month": "2025-12"
+    },
+    {
+      "id": "msg-b05612b64f4f",
+      "message_id": "<20251224104750.699a5ac0@new-hp>",
+      "from_name": "Rolf Turner",
+      "from_email_hash": "6427224a321c7c1c59228836936ec40d360970e09540541f84768404589dd444",
+      "date": "2025-12-23T21:47:57Z",
+      "subject": "[R-sig-Geo] Integrated species distribution model",
+      "subject_clean": "Integrated species distribution model",
+      "in_reply_to": "<CABkCotTU4f5YJsc4h285rbRkQevtNZUfcq4fo=9fsuMYu06E9w@mail.gmail.com>",
+      "references": [
+        "<CABkCotTU4f5YJsc4h285rbRkQevtNZUfcq4fo=9fsuMYu06E9w@mail.gmail.com>"
+      ],
+      "body_plain": "On Tue, 23 Dec 2025 10:46:00 -0600\nManuel Sp?nola <mspinola10 at gmail.com> wrote:\n\n> Hi all,\n> \n> Apologies for cross-posting.\n> \n> I am looking for an R package that can jointly model\n> detection/non-detection (occupancy) data and presence-only data\n> within an integrated species distribution modelling framework.\n> Are there any recommended packages or implementations for this type of\n> analysis?\n> \n> Thank you!\n> \n> Manuel\n> \n\nPerhaps spatatat?\n\ncheers,\n\nRolf Turner\n\n\n-- \nHonorary Academic\nDepartment of Statistics\nUniversity of Auckland\nStats. Dep't. (secretaries) phone:\n         +64-9-373-7599 ext. 89622\nHome phone: +64-9-480-4619",
+      "body_snippet": "On Tue, 23 Dec 2025 10:46:00 -0600\nManuel Sp?nola <mspinola10 at gmail.com> wrote:\n\n> Hi all,\n> \n> Apologies for cross-posting.\n> \n> I am looking for an R package that can jointly model\n> detection/no",
+      "thread_id": "thread-0c8fa30b0898",
+      "thread_depth": 1,
+      "month": "2025-12"
+    },
+    {
+      "id": "msg-59e3218f364f",
+      "message_id": "<CA+H-714DgYzWYwM6DtCr3_wP3pSTF9SGXRVtvr8B2s8Dh6ugqA@mail.gmail.com>",
+      "from_name": "Roozbeh Valavi",
+      "from_email_hash": "f1083253012d78a389cc16c816724b3ba89c476b1388bb230c04f07faeab4157",
+      "date": "2025-12-24T09:54:29+11:00",
+      "subject": "[R-sig-Geo] Integrated species distribution model",
+      "subject_clean": "Integrated species distribution model",
+      "in_reply_to": "<20251224104750.699a5ac0@new-hp>",
+      "references": [
+        "<CABkCotTU4f5YJsc4h285rbRkQevtNZUfcq4fo=9fsuMYu06E9w@mail.gmail.com>",
+        "<20251224104750.699a5ac0@new-hp>"
+      ],
+      "body_plain": "Check out PointedSDMs and RISDM. I haven?t read their details yet to know\nexactly how they treat detection/non-detection data, but they seem relevant.\n\nCheers,\nRoozbeh\n\nOn Wed, 24 Dec 2025 at 09:27, Rolf Turner <rolfturner at posteo.net> wrote:\n\n>\n> On Tue, 23 Dec 2025 10:46:00 -0600\n> Manuel Sp?nola <mspinola10 at gmail.com> wrote:\n>\n> > Hi all,\n> >\n> > Apologies for cross-posting.\n> >\n> > I am looking for an R package that can jointly model\n> > detection/non-detection (occupancy) data and presence-only data\n> > within an integrated species distribution modelling framework.\n> > Are there any recommended packages or implementations for this type of\n> > analysis?\n> >\n> > Thank you!\n> >\n> > Manuel\n> >\n>\n> Perhaps spatatat?\n>\n> cheers,\n>\n> Rolf Turner\n>\n>\n> --\n> Honorary Academic\n> Department of Statistics\n> University of Auckland\n> Stats. Dep't. (secretaries) phone:\n>          +64-9-373-7599 ext. 89622\n> Home phone: +64-9-480-4619\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \nRoozbeh Valavi,\nBiodiversity Modeller & Spatial Ecologist\nSenior Research Scientist | CSIRO, Clayton VIC, Australia\n*Twitter*: @ValaviRoozbeh | ResearchGate\n<https://www.researchgate.net/profile/Roozbeh-Valavi> | Google Scholar\n<https://scholar.google.co.uk/citations?user=3m0jCHwAAAAJ&hl=en&oi=ao>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Check out PointedSDMs and RISDM. I haven?t read their details yet to know\nexactly how they treat detection/non-detection data, but they seem relevant.\n\nCheers,\nRoozbeh\n\nOn Wed, 24 Dec 2025 at 09:27, R",
+      "thread_id": "thread-0c8fa30b0898",
+      "thread_depth": 2,
+      "month": "2025-12"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-6fab704a0742",
+      "subject": "2025 GDAL User Survey",
+      "message_count": 2,
+      "participants": [
+        "Michael Sumner"
+      ],
+      "started": "2025-12-02T07:33:08+11:00",
+      "last_reply": "2025-12-22T21:36:31+11:00",
+      "root_message_id": "msg-6fab704a0742"
+    },
+    {
+      "id": "thread-4b44f109e640",
+      "subject": "Warnings and error during the creation of the neighborhood matrix by recoding old code using deprecated rgdal in CRAN with sf and sp",
+      "message_count": 6,
+      "participants": [
+        "Aymard Loïc KWEKEU KWEKEU",
+        "Edzer Pebesma",
+        "Josiah Parry",
+        "Roger Bivand"
+      ],
+      "started": "2025-12-16T16:34:37+01:00",
+      "last_reply": "2025-12-19T07:15:10+01:00",
+      "root_message_id": "msg-4b44f109e640"
+    },
+    {
+      "id": "thread-b8d536d3ad50",
+      "subject": "Question: Registering and Sharing an Open-Access Analytical Tool",
+      "message_count": 2,
+      "participants": [
+        "Paulo Flores Ribeiro",
+        "William Gearty"
+      ],
+      "started": "2025-12-18T11:09:59+00:00",
+      "last_reply": "2025-12-18T11:54:14-05:00",
+      "root_message_id": "msg-b8d536d3ad50"
+    },
+    {
+      "id": "thread-1f5abd1aadbd",
+      "subject": "Request to the mailing list",
+      "message_count": 2,
+      "participants": [
+        "Elie Nsimba Ngembo",
+        "Roger Bivand"
+      ],
+      "started": "2025-12-22T11:47:32+00:00",
+      "last_reply": "2025-12-22T12:53:13+00:00",
+      "root_message_id": "msg-1f5abd1aadbd"
+    },
+    {
+      "id": "thread-0c8fa30b0898",
+      "subject": "Integrated species distribution model",
+      "message_count": 3,
+      "participants": [
+        "Manuel Spínola",
+        "Rolf Turner",
+        "Roozbeh Valavi"
+      ],
+      "started": "2025-12-23T10:46:00-06:00",
+      "last_reply": "2025-12-24T09:54:29+11:00",
+      "root_message_id": "msg-0c8fa30b0898"
+    }
+  ]
+}

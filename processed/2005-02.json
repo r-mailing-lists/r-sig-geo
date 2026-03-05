@@ -1,0 +1,252 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2005-02",
+  "messages": [
+    {
+      "id": "msg-7405bff762d8",
+      "message_id": "<Pine.OSF.3.96.1050201115222.22616B-100000@alpha1.csd.uwm.edu>",
+      "from_name": "Danlin Yu",
+      "from_email_hash": "4f915e68a518939af5a3635130e4f5d4fce8d20a4aa423f20c96efe2c1b26e13",
+      "date": "2005-02-01T11:57:34-06:00",
+      "subject": "[R-sig-Geo] A potential problem when using SparseM package and spgwr package together",
+      "subject_clean": "A potential problem when using SparseM package and spgwr package together",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi- \n\nI just found out that if you loaded the SparseM and spgwr packages at the\nsame time in R (2.0.1), spgwr won't work. The reason is that since the\nfunction model.response() (which is intensively used in spgwr package) in\nSparseM package requires different object class (an object of either\n'matrix.csc.hb' or 'matrix.ssc.hb' class) than just a \"data.frame\".\n\nCurrently, the solution is to avoid loading the two packages together.\nHope this helps.\n\n    Sincerely,\n    Danlin Yu\n\n----------------------------------\nLecturer, Ph.D. Candidate\nDepartment of Geography\nUniversity of Wisconsin, Milwaukee\nTel: (414)229-3943\nFax: (414)229-3981\nEmail: danlinyu at uwm.edu",
+      "body_snippet": "Hi- \n\nI just found out that if you loaded the SparseM and spgwr packages at the\nsame time in R (2.0.1), spgwr won't work. The reason is that since the\nfunction model.response() (which is intensively u",
+      "thread_id": "thread-7405bff762d8",
+      "thread_depth": 0,
+      "month": "2005-02"
+    },
+    {
+      "id": "msg-b272b2871076",
+      "message_id": "<Pine.LNX.4.44.0502011911440.3529-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-02-01T19:14:13+01:00",
+      "subject": "[R-sig-Geo] A potential problem when using SparseM  packageandspgwr package together",
+      "subject_clean": "A potential problem when using SparseM  packageandspgwr package together",
+      "in_reply_to": "<Pine.OSF.3.96.1050201115222.22616B-100000@alpha1.csd.uwm.edu>",
+      "references": [],
+      "body_plain": "On Tue, 1 Feb 2005, Danlin Yu wrote:\n\n> Hi- \n> \n> I just found out that if you loaded the SparseM and spgwr packages at the\n> same time in R (2.0.1), spgwr won't work. The reason is that since the\n> function model.response() (which is intensively used in spgwr package) in\n> SparseM package requires different object class (an object of either\n> 'matrix.csc.hb' or 'matrix.ssc.hb' class) than just a \"data.frame\".\n> \n> Currently, the solution is to avoid loading the two packages together.\n> Hope this helps.\n> \n\nYes, this is correct. A longer-term fix will be to give spgwr a NAMESPACE, \na medium-term to edit the source package to replace model.response() with \nmodel.extract(, \"response\") - with the appropriate model frame arguments \nin place, and the short-term as you suggest.\n\nRoger\n\n>     Sincerely,\n>     Danlin Yu\n> \n> ----------------------------------\n> Lecturer, Ph.D. Candidate\n> Department of Geography\n> University of Wisconsin, Milwaukee\n> Tel: (414)229-3943\n> Fax: (414)229-3981\n> Email: danlinyu at uwm.edu\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 1 Feb 2005, Danlin Yu wrote:\n\n> Hi- \n> \n> I just found out that if you loaded the SparseM and spgwr packages at the\n> same time in R (2.0.1), spgwr won't work. The reason is that since the\n> f",
+      "thread_id": "thread-7405bff762d8",
+      "thread_depth": 1,
+      "month": "2005-02"
+    },
+    {
+      "id": "msg-6dffdbe5880f",
+      "message_id": "<4505b2b105020112115bc059a@mail.gmail.com>",
+      "from_name": "Matthew Sokol",
+      "from_email_hash": "f228cd3465a8f20220125e8cd851d8ccc5aa13e4ebad3015d6220b04377ab46c",
+      "date": "2005-02-01T12:11:48-08:00",
+      "subject": "[R-sig-Geo] Conditional Simulation question",
+      "subject_clean": "Conditional Simulation question",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\n\nMy name is Matthew Sokol and I am writing this list serve to ask some\nhelp. Currently I am a master's student at the University of Nevada\nand have come across a problem using R that I can not solve.\n\nHere is my problem:\nI am using the R package geoR, specifically the function grf to simulate data.\n\nBasically I have a data set that contains an Easting and Northing\ncoordinate system and a Z value. From this system I wish to perform\nOrdinary Kriging. So I run the following command lines in R:\n> dat<-read.table(\"examplepb.dat\",header=TRUE)\n> geodat<-as.geodata(dat)\n> plot(geodat)\n> vario<-variog(geodat)\n> lines.variomodel(cov.model=\"gaussian\",nugget=1800,cov.pars=c(1400,60),max.dist=150)\n\nNow since I know the Nugget, Sill, and Range for the variogram model,\nI wish to simulate more data that follows the same variogram model. So\nI run the following command line:\n\n> simdat<-grf(625,grid=\"reg\",nugget=1800,cov.pars=c(1400,60))\n\nNow, the problem with this command is that it produces data on grid\nthat is 1 x 1 (all the Northing and easting coordinates are now a\nnumber 0-1). But my easting and northing coordinates have the\nfollowing properties:\n\nEasting: Min 254.4\tMax: 492\nNorthing: Min 118\tMax 315\n\nWhich is not a 1 x 1 grid. \n\nI know my problem is in this statement: grid=\"reg\"\nI tried the following commands:\nLoci<-expand.grid(seq(250,500,l=250),seq(115,320,l=205))\nSo now I run:\n> simdat<-grf(625,grid=loci,nugget=1800,cov.pars=c(1400,60))\n\nWhich produces so much data that I can not R console will not display it.\n\nSo I run the following R commands:\ngeosim<-as.geodata(simdat)\n> variosim<-variog(geosim)\nvariog: computing omnidirectional variogram\nError in vector(\"double\", length) : cannot allocate vector of length 1444504375\n\nSo now I get an error. I think i may be producing to much data with my\nsimulation?\n\nI am lost. I've looked through the manuals but have not found much on\nconditional simulation. I was wondering if anyone knew of a problem\nlike this or where I can look to find more information.\n\nI am sorry if the question is trivial as I have been reading the posts\non this list serve and everyone here has a command of the language far\nsurpass mine. Thank you for your time.\n\n\n-Matthew Sokol",
+      "body_snippet": "Hello,\n\nMy name is Matthew Sokol and I am writing this list serve to ask some\nhelp. Currently I am a master's student at the University of Nevada\nand have come across a problem using R that I can not ",
+      "thread_id": "thread-6dffdbe5880f",
+      "thread_depth": 0,
+      "month": "2005-02"
+    },
+    {
+      "id": "msg-b44b7b11ba4f",
+      "message_id": "<Pine.LNX.4.58L0.0502011833350.32735@est.ufpr.br>",
+      "from_name": "Paulo Justiniano Ribeiro Jr",
+      "from_email_hash": "2b858444caa126e4d481e2fc2bbba608bd14deecadbdf1fe319682ae8329d0bb",
+      "date": "2005-02-01T18:36:44-02:00",
+      "subject": "[R-sig-Geo] Conditional Simulation question",
+      "subject_clean": "Conditional Simulation question",
+      "in_reply_to": "<4505b2b105020112115bc059a@mail.gmail.com>",
+      "references": [
+        "<4505b2b105020112115bc059a@mail.gmail.com>"
+      ],
+      "body_plain": "Matthew\n\n1. the \"grid\" argument can also taka a matrix with coordinates values.\nTerefore if you want N locations in coordinates which are not in the\n1x1 square just generate a Nx2 matrix witht the coordinates and pass it to\n\"grid\"\n\n2. grf produces \"uncoditional\" simulations.\nTo obtain conditional simulations you will need to use either\nkrige.conv (for \"tradidional\" kriging algorithms)  or\nkrige.bayes(for \"Bayesian\" kriging.)\n\nSee for instance help(krige.conv)\n\nhope this helps\n\nP.J.\n\n\nOn Tue, 1 Feb 2005, Matthew Sokol wrote:\n\n> Hello,\n>\n> My name is Matthew Sokol and I am writing this list serve to ask some\n> help. Currently I am a master's student at the University of Nevada\n> and have come across a problem using R that I can not solve.\n>\n> Here is my problem:\n> I am using the R package geoR, specifically the function grf to simulate data.\n>\n> Basically I have a data set that contains an Easting and Northing\n> coordinate system and a Z value. From this system I wish to perform\n> Ordinary Kriging. So I run the following command lines in R:\n> > dat<-read.table(\"examplepb.dat\",header=TRUE)\n> > geodat<-as.geodata(dat)\n> > plot(geodat)\n> > vario<-variog(geodat)\n> > lines.variomodel(cov.model=\"gaussian\",nugget=1800,cov.pars=c(1400,60),max.dist=150)\n>\n> Now since I know the Nugget, Sill, and Range for the variogram model,\n> I wish to simulate more data that follows the same variogram model. So\n> I run the following command line:\n>\n> > simdat<-grf(625,grid=\"reg\",nugget=1800,cov.pars=c(1400,60))\n>\n> Now, the problem with this command is that it produces data on grid\n> that is 1 x 1 (all the Northing and easting coordinates are now a\n> number 0-1). But my easting and northing coordinates have the\n> following properties:\n>\n> Easting: Min 254.4\tMax: 492\n> Northing: Min 118\tMax 315\n>\n> Which is not a 1 x 1 grid.\n>\n> I know my problem is in this statement: grid=\"reg\"\n> I tried the following commands:\n> Loci<-expand.grid(seq(250,500,l=250),seq(115,320,l=205))\n> So now I run:\n> > simdat<-grf(625,grid=loci,nugget=1800,cov.pars=c(1400,60))\n>\n> Which produces so much data that I can not R console will not display it.\n>\n> So I run the following R commands:\n> geosim<-as.geodata(simdat)\n> > variosim<-variog(geosim)\n> variog: computing omnidirectional variogram\n> Error in vector(\"double\", length) : cannot allocate vector of length 1444504375\n>\n> So now I get an error. I think i may be producing to much data with my\n> simulation?\n>\n> I am lost. I've looked through the manuals but have not found much on\n> conditional simulation. I was wondering if anyone knew of a problem\n> like this or where I can look to find more information.\n>\n> I am sorry if the question is trivial as I have been reading the posts\n> on this list serve and everyone here has a command of the language far\n> surpass mine. Thank you for your time.\n>\n>\n> -Matthew Sokol\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\nPaulo Justiniano Ribeiro Jr\nLEG (Laborat?rio de Estat?stica e Geoinforma??o)\nDepartamento de Estat?stica\nUniversidade Federal do Paran?\nCaixa Postal 19.081\nCEP 81.531-990\nCuritiba, PR  -  Brasil\nTel: (+55) 41 361 3573\nFax: (+55) 41 361 3141\ne-mail: paulojus at est.ufpr.br\nhttp://www.est.ufpr.br/~paulojus",
+      "body_snippet": "Matthew\n\n1. the \"grid\" argument can also taka a matrix with coordinates values.\nTerefore if you want N locations in coordinates which are not in the\n1x1 square just generate a Nx2 matrix witht the coo",
+      "thread_id": "thread-6dffdbe5880f",
+      "thread_depth": 1,
+      "month": "2005-02"
+    },
+    {
+      "id": "msg-5c028978c897",
+      "message_id": "<20050207193542.90312.qmail@web30605.mail.mud.yahoo.com>",
+      "from_name": "Sam R. Smith",
+      "from_email_hash": "e32add1296daec5ac99e994ce766d1d96f5595cc63acb1fcc8d8eb5779c54ed7",
+      "date": "2005-02-07T11:35:42-08:00",
+      "subject": "[R-sig-Geo] GWR in R",
+      "subject_clean": "GWR in R",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050207/c81cea3d/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050207/c81cea3d/attachment.pl>",
+      "thread_id": "thread-5c028978c897",
+      "thread_depth": 0,
+      "month": "2005-02"
+    },
+    {
+      "id": "msg-052f739c951c",
+      "message_id": "<Pine.LNX.4.44.0502080856500.20909-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-02-08T09:00:18+01:00",
+      "subject": "[R-sig-Geo] GWR in R",
+      "subject_clean": "GWR in R",
+      "in_reply_to": "<20050207193542.90312.qmail@web30605.mail.mud.yahoo.com>",
+      "references": [],
+      "body_plain": "On Mon, 7 Feb 2005, Sam R. Smith wrote:\n\n> \n> Hi there,\n> \n> I wonder whether there is any tutorial to teach how to use GWR in R,\n> also how to plot the related graphs?\n> \n\nPlease be more precise! Do you mean \"from the ground up\"? Or do you mean\nthat the help pages and examples in the alpha draft package on the\nr-spatial sourceforge site are incomplete? In this case, please state\nwhich version you are using. \n\n> Thanks a lot!\n> \n> Sam R. Smith\n> \n> \n> \t\t\n> ---------------------------------\n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 7 Feb 2005, Sam R. Smith wrote:\n\n> \n> Hi there,\n> \n> I wonder whether there is any tutorial to teach how to use GWR in R,\n> also how to plot the related graphs?\n> \n\nPlease be more precise! Do ",
+      "thread_id": "thread-5c028978c897",
+      "thread_depth": 1,
+      "month": "2005-02"
+    },
+    {
+      "id": "msg-0c6b777bb558",
+      "message_id": "<AEF7C40954294D42990B3F90C6C73A450101649B@figmail.fig.fk>",
+      "from_name": "Ruben Roa",
+      "from_email_hash": "54521b1a0eeaed1cb0e0e122be18a16d7f62db28732958fc417687d4d0cb5509",
+      "date": "2005-02-18T09:33:56-02:00",
+      "subject": "[R-sig-Geo] Back-transformation of Beta in geoR",
+      "subject_clean": "Back-transformation of Beta in geoR",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi:\n\nI am interested in back-transforming the mle of parameter Beta\nand its variance when the Lambda parameter of the Box-Cox \ntransformation has been estimated and its estimate is not 0 nor \n0.5.\nIs this back-transformation equivalent to simply averaging over\na fine grid inside the polygon containing the predictions of, say\nkrige.conv (given that geoR back-transform when kriging=\npredicting)?\nFor example\n>alpha<-sum(krig.object$pred)/N\n>salpha<-sum(sqrt(krig.object$krige.var))/N\nwhere krig.object has been obtained by using a likfit\nobject as argument in krige.control, and N is the number of nodes \nin the grid (a big number).\nThe questions are, \n1) is alpha aproximately equal to the back-\ntransformation of the mle of Beta?\n2) is salpha aproximately equal to the 'standard\nerror' of the back-transformation of the mle of Beta?\n\nRuben",
+      "body_snippet": "Hi:\n\nI am interested in back-transforming the mle of parameter Beta\nand its variance when the Lambda parameter of the Box-Cox \ntransformation has been estimated and its estimate is not 0 nor \n0.5.\nIs ",
+      "thread_id": "thread-0c6b777bb558",
+      "thread_depth": 0,
+      "month": "2005-02"
+    },
+    {
+      "id": "msg-0adebee9b571",
+      "message_id": "<4215E339.1000207@daimi.au.dk>",
+      "from_name": "Ole F. Christensen",
+      "from_email_hash": "4c273939a93f0b0e4cb687381634c09b0ca552a05cad845077b958cedc6a6dbd",
+      "date": "2005-02-18T13:44:41+01:00",
+      "subject": "[R-sig-Geo] Back-transformation of Beta in geoR",
+      "subject_clean": "Back-transformation of Beta in geoR",
+      "in_reply_to": "<AEF7C40954294D42990B3F90C6C73A450101649B@figmail.fig.fk>",
+      "references": [
+        "<AEF7C40954294D42990B3F90C6C73A450101649B@figmail.fig.fk>"
+      ],
+      "body_plain": "Dear Ruben\n\nYou don't want to do kriging here.\n\nI think the most simple solution is to this by simulation. Implicitly \nyou are saying that beta is one-dimensional.\nYou will find the mean and variance of the beta parameter from the \noutput from the likfit function.\n\nmean(BCtransform(rnorm(2000, mean=outfromlikfit$beta, \nsd=sqrt(outfromlikfit$beta.var)),lambda = 0.72, inverse = TRUE))\n\ngives what you want.\n\nOle\n\n\nRuben Roa wrote:\n\n>Hi:\n>\n>I am interested in back-transforming the mle of parameter Beta\n>and its variance when the Lambda parameter of the Box-Cox \n>transformation has been estimated and its estimate is not 0 nor \n>0.5.\n>Is this back-transformation equivalent to simply averaging over\n>a fine grid inside the polygon containing the predictions of, say\n>krige.conv (given that geoR back-transform when kriging=\n>predicting)?\n>For example\n>  \n>\n>>alpha<-sum(krig.object$pred)/N\n>>salpha<-sum(sqrt(krig.object$krige.var))/N\n>>    \n>>\n>where krig.object has been obtained by using a likfit\n>object as argument in krige.control, and N is the number of nodes \n>in the grid (a big number).\n>The questions are, \n>1) is alpha aproximately equal to the back-\n>transformation of the mle of Beta?\n>2) is salpha aproximately equal to the 'standard\n>error' of the back-transformation of the mle of Beta?\n>\n>Ruben\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>  \n>\n\n-- \nOle F. Christensen\nBiRC - Bioinformatics Research Center\nUniversity of Aarhus",
+      "body_snippet": "Dear Ruben\n\nYou don't want to do kriging here.\n\nI think the most simple solution is to this by simulation. Implicitly \nyou are saying that beta is one-dimensional.\nYou will find the mean and variance ",
+      "thread_id": "thread-0c6b777bb558",
+      "thread_depth": 1,
+      "month": "2005-02"
+    },
+    {
+      "id": "msg-c9de76efd72b",
+      "message_id": "<20050222165457.779e2aac.stanimura-ngs@umin.ac.jp>",
+      "from_name": "Susumu Tanimura",
+      "from_email_hash": "c9cad7a77d7512d2d8e67aecb8780c9c60c996929e92e5d28812d5c1af088077",
+      "date": "2005-02-22T16:54:57+09:00",
+      "subject": "[R-sig-Geo] missing changelog in maptools 0.4.11",
+      "subject_clean": "missing changelog in maptools 0.4.11",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear Roger Bivand\n\nSince I noticed a new version of maptools, I upgraded the maptools and then \nchecked the changelog.\n\n> maptools(changes=T)\nmaptools, version 0.4-11, 2005-01-17\n[snip]\n0.4-10 Function write.linelistShape() added to output a list of lines to a \n0.4-10 shapefile, as suggested by Patrick Giraudoux.\n\nSo, no changelog of version 0.4.11 was given.  It is nice if you show\nus the change.\n\n--\nSusumu Tanimura\nDept. of Socio-environmental Medicine\nInst. of Tropical Medicine, Nagasaki University",
+      "body_snippet": "Dear Roger Bivand\n\nSince I noticed a new version of maptools, I upgraded the maptools and then \nchecked the changelog.\n\n> maptools(changes=T)\nmaptools, version 0.4-11, 2005-01-17\n[snip]\n0.4-10 Functio",
+      "thread_id": "thread-c9de76efd72b",
+      "thread_depth": 0,
+      "month": "2005-02"
+    },
+    {
+      "id": "msg-3fe40ee05e74",
+      "message_id": "<Pine.LNX.4.44.0502221005100.3608-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-02-22T10:17:14+01:00",
+      "subject": "[R-sig-Geo] missing changelog in maptools 0.4.11",
+      "subject_clean": "missing changelog in maptools 0.4.11",
+      "in_reply_to": "<20050222165457.779e2aac.stanimura-ngs@umin.ac.jp>",
+      "references": [],
+      "body_plain": "On Tue, 22 Feb 2005, Susumu Tanimura wrote:\n\n> Dear Roger Bivand\n> \n> Since I noticed a new version of maptools, I upgraded the maptools and then \n> checked the changelog.\n> \n> > maptools(changes=T)\n> maptools, version 0.4-11, 2005-01-17\n> [snip]\n> 0.4-10 Function write.linelistShape() added to output a list of lines to a \n> 0.4-10 shapefile, as suggested by Patrick Giraudoux.\n> \n> So, no changelog of version 0.4.11 was given.  It is nice if you show\n> us the change.\n\nThanks for keeping me alert! The entry is: \"Adding checks for length()  \nbeing zero\", so no changes to functionality. The problem is that when\nlength(x) is 0, 1:0 produces indices for the loop for (i in 1:length(x)),\nbut should omit the loop if length(x) is 0. 0.4-12 will be coming soon,\nand will have the required information in the changes file.\n\nCan I ask whether I should continue to provide the current plot order \nheurisitic as an option - I am considering dropping the present scheme, \nwhich tries to guess the ring direction and plot order of polygons and \nsub-polygons form their inclusion inside each other. The reason for \ndropping it as default (for Map2poly(..., raw=FALSE)) is a user report of \nan otherwise valid shapefile generating a plot order which was corrupted \n(had one polygon of 1750 missing).\n\nThe new approach is to force all single polygons to be clockwise, and to \nplot them from largest to smallest. For multipolygons, the largest \nsub-polygon will be clockwise, and plotted first, and included \nsub-polygons will have their ring directions switched to anti-clockwise if \nincluded in another subpolygon of the multipolygon.\n\nThis scheme will also be used in the up-coming sp package, so please \nexpress your views now!\n\nBest wishes,\n\nRoger\n\n> \n> --\n> Susumu Tanimura\n> Dept. of Socio-environmental Medicine\n> Inst. of Tropical Medicine, Nagasaki University\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 22 Feb 2005, Susumu Tanimura wrote:\n\n> Dear Roger Bivand\n> \n> Since I noticed a new version of maptools, I upgraded the maptools and then \n> checked the changelog.\n> \n> > maptools(changes=T)\n>",
+      "thread_id": "thread-c9de76efd72b",
+      "thread_depth": 1,
+      "month": "2005-02"
+    },
+    {
+      "id": "msg-26115d1e8eef",
+      "message_id": "<20050222194338.397df870.stanimura-ngs@umin.ac.jp>",
+      "from_name": "Susumu Tanimura",
+      "from_email_hash": "c9cad7a77d7512d2d8e67aecb8780c9c60c996929e92e5d28812d5c1af088077",
+      "date": "2005-02-22T19:43:38+09:00",
+      "subject": "[R-sig-Geo] missing changelog in maptools 0.4.11",
+      "subject_clean": "missing changelog in maptools 0.4.11",
+      "in_reply_to": "<Pine.LNX.4.44.0502221005100.3608-100000@reclus.nhh.no>",
+      "references": [
+        "<20050222165457.779e2aac.stanimura-ngs@umin.ac.jp>",
+        "<Pine.LNX.4.44.0502221005100.3608-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Dear Roger Bivand\n\nThanks for your replay.\n\n> Thanks for keeping me alert! The entry is: \"Adding checks for length()  \n> being zero\", so no changes to functionality. The problem is that when\n> length(x) is 0, 1:0 produces indices for the loop for (i in\n> 1:length(x)), but should omit the loop if length(x) is 0. 0.4-12 will be\n> coming soon, and will have the required information in the changes file.\n\nO.K. Understood.\n\nAs for the new plotting approach, since my knowledge of data\nstructure in polygons and shapefile is too poor to understand it\n(there are so many unclear points), I cannot help you.  Hope other\nmembers in this list provide valuable suggestion.\n\n--\nSusumu Tanimura\nDept. of Socio-environmental Medicine\nInst. of Tropical Medicine, Nagasaki University",
+      "body_snippet": "Dear Roger Bivand\n\nThanks for your replay.\n\n> Thanks for keeping me alert! The entry is: \"Adding checks for length()  \n> being zero\", so no changes to functionality. The problem is that when\n> length(",
+      "thread_id": "thread-c9de76efd72b",
+      "thread_depth": 2,
+      "month": "2005-02"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-7405bff762d8",
+      "subject": "A potential problem when using SparseM package and spgwr package together",
+      "message_count": 2,
+      "participants": [
+        "Danlin Yu",
+        "Roger Bivand"
+      ],
+      "started": "2005-02-01T11:57:34-06:00",
+      "last_reply": "2005-02-01T19:14:13+01:00",
+      "root_message_id": "msg-7405bff762d8"
+    },
+    {
+      "id": "thread-6dffdbe5880f",
+      "subject": "Conditional Simulation question",
+      "message_count": 2,
+      "participants": [
+        "Matthew Sokol",
+        "Paulo Justiniano Ribeiro Jr"
+      ],
+      "started": "2005-02-01T12:11:48-08:00",
+      "last_reply": "2005-02-01T18:36:44-02:00",
+      "root_message_id": "msg-6dffdbe5880f"
+    },
+    {
+      "id": "thread-5c028978c897",
+      "subject": "GWR in R",
+      "message_count": 2,
+      "participants": [
+        "Roger Bivand",
+        "Sam R. Smith"
+      ],
+      "started": "2005-02-07T11:35:42-08:00",
+      "last_reply": "2005-02-08T09:00:18+01:00",
+      "root_message_id": "msg-5c028978c897"
+    },
+    {
+      "id": "thread-0c6b777bb558",
+      "subject": "Back-transformation of Beta in geoR",
+      "message_count": 2,
+      "participants": [
+        "Ole F. Christensen",
+        "Ruben Roa"
+      ],
+      "started": "2005-02-18T09:33:56-02:00",
+      "last_reply": "2005-02-18T13:44:41+01:00",
+      "root_message_id": "msg-0c6b777bb558"
+    },
+    {
+      "id": "thread-c9de76efd72b",
+      "subject": "missing changelog in maptools 0.4.11",
+      "message_count": 3,
+      "participants": [
+        "Roger Bivand",
+        "Susumu Tanimura"
+      ],
+      "started": "2005-02-22T16:54:57+09:00",
+      "last_reply": "2005-02-22T19:43:38+09:00",
+      "root_message_id": "msg-c9de76efd72b"
+    }
+  ]
+}

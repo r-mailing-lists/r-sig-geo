@@ -1,0 +1,646 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2022-04",
+  "messages": [
+    {
+      "id": "msg-7d9670eacf74",
+      "message_id": "<CAH5tCz1RJkn_EwtamRvGC2pAC323=JCC+OxyS+oGOjMefyzB_Q@mail.gmail.com>",
+      "from_name": "sownal chand",
+      "from_email_hash": "ffc77914e4223ee36804d8fb5d0dd2c15c57c7fae734d3bdc7772ae8a1735864",
+      "date": "2022-04-05T20:10:00+12:00",
+      "subject": "[R-sig-Geo] Contour plot",
+      "subject_clean": "Contour plot",
+      "in_reply_to": "<CAH5tCz28gDZycXe1WUUQwbkgZVjinKOB+uPru=CZVkLAHw8tpg@mail.gmail.com>",
+      "references": [
+        "<CAH5tCz28gDZycXe1WUUQwbkgZVjinKOB+uPru=CZVkLAHw8tpg@mail.gmail.com>"
+      ],
+      "body_plain": "Hello sir/madam,\n\nI have been writing codes using R and was trying to overlay contour lines\non the map using the data set provided in the attachment. The code which I\nam working on is attached below. The problem is the overlay of the contours\nis not showing in the final map. If someone can assist in correcting the\ncodes would be really appreciated .\n\n # Packages\n#if (!require(\"rspatial\")) remotes::install_github('rspatial/rspatial')\nlibrary(rspatial)\nlibrary(sp)\nlibrary(rgdal)\nlibrary(rgoes)\nlibrary(raster)\nlibrary(ggplot2)\n\n# Fiji geo data\n# download\n#Draft map of Fiji\nworld <- rnaturalearth::ne_countries(scale = \"Large\", returnclass = \"sf\")\n\n# map of Fiji Islands\nFiji <- ggplot(data=world) +\n  geom_sf() +\n  coord_sf(\n    crs = 3832, # https://epsg.io/3832\n    xlim = c(2984265.06, 3539584.72), # limits are taken from projected\nbounds\n    ylim = c(-2224162.41, -1811688.88)  # of EPSG:3832\n  )+ theme_bw()\n\n#Plot map of Fiji\nFiji\n\n#read csv data from excel file for contoure analysis\ndata.Fdf <- read.csv(\"C://Users/Sownal/Documents/data.csv\")\nView(data.Fdf)\nclass(data.Fdf)\n\n#remove NA values in the spatial Data Frame\ndata.dfclean <- na.omit(data.Fdf)\ndata.dfclean\n\ndata.dfclean$long <- as.numeric(data$Longitude)\ndata.dfclean$lat <- as.numeric(data$Latitude)\n\n# convert data to spatial data fame for spatial analysis and raster analysis\ndata.FSP <- SpatialPointsDataFrame(data= data.dfclean, coords =\ndata.dfclean$lat, data.dfclean$long)\ndata.FSP\n#select one years data and overlay contours on the Map of Fiji\n\nFiji <- ggplot(data=world) +\n  geom_sf() +\n  coord_sf(\n    crs = 3832, # https://epsg.io/3832\n    xlim = c(2984265.06, 3539584.72), # limits are taken from projected\nbounds\n    ylim = c(-2224162.41, -1811688.88)  # of EPSG:3832\n  )+ theme_bw() + filled.contour(data.dfclean$Year)\n\n\n# plot the map of Fiji with the contours lines\nFiji\n\n******************************************************************************************************\n\nThanking you in advance\nsownalc\n\n-------------- next part --------------\nAn HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20220405/31904f5b/attachment.html>\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: DataR.csv\nType: text/csv\nSize: 628 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20220405/31904f5b/attachment.csv>",
+      "body_snippet": "Hello sir/madam,\n\nI have been writing codes using R and was trying to overlay contour lines\non the map using the data set provided in the attachment. The code which I\nam working on is attached below. ",
+      "thread_id": "thread-7d9670eacf74",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-9ea4bf6e263c",
+      "message_id": "<1132483a-ff17-4c1f-a33d-9ab7b0a56119@gmail.com>",
+      "from_name": "Micha Silver",
+      "from_email_hash": "86a446f0e02a9a64c82549e8099ffb13525e0c2e5405536a3c4150e1bbd36549",
+      "date": "2022-04-05T15:39:39+03:00",
+      "subject": "[R-sig-Geo] Contour plot",
+      "subject_clean": "Contour plot",
+      "in_reply_to": "<CAH5tCz1RJkn_EwtamRvGC2pAC323=JCC+OxyS+oGOjMefyzB_Q@mail.gmail.com>",
+      "references": [
+        "<CAH5tCz28gDZycXe1WUUQwbkgZVjinKOB+uPru=CZVkLAHw8tpg@mail.gmail.com>",
+        "<CAH5tCz1RJkn_EwtamRvGC2pAC323=JCC+OxyS+oGOjMefyzB_Q@mail.gmail.com>"
+      ],
+      "body_plain": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20220405/c6c465ca/attachment.html>",
+      "body_snippet": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20220405/c6c465ca/attachment.html>",
+      "thread_id": "thread-7d9670eacf74",
+      "thread_depth": 1,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-ff43aba61cb5",
+      "message_id": "<CAH5tCz02ij4V6i-8eNn1t1=F0hH6gvAhRCnr6hJP+p3jnnn39Q@mail.gmail.com>",
+      "from_name": "sownal chand",
+      "from_email_hash": "ffc77914e4223ee36804d8fb5d0dd2c15c57c7fae734d3bdc7772ae8a1735864",
+      "date": "2022-04-06T03:45:00+12:00",
+      "subject": "[R-sig-Geo] Contour plot",
+      "subject_clean": "Contour plot",
+      "in_reply_to": "<1132483a-ff17-4c1f-a33d-9ab7b0a56119@gmail.com>",
+      "references": [
+        "<CAH5tCz28gDZycXe1WUUQwbkgZVjinKOB+uPru=CZVkLAHw8tpg@mail.gmail.com>",
+        "<CAH5tCz1RJkn_EwtamRvGC2pAC323=JCC+OxyS+oGOjMefyzB_Q@mail.gmail.com>",
+        "<1132483a-ff17-4c1f-a33d-9ab7b0a56119@gmail.com>"
+      ],
+      "body_plain": "Thanks Micha,\n\nI would also try out your suggestion on interpolation of data.\nKind regards\nSownal\n\nOn Wed, Apr 6, 2022, 00:39 Micha Silver <tsvibar at gmail.com> wrote:\n\n> Hi:\n>\n> I would point to two issues with your code. First, we should be switching\n> totally to sf. You have some spatial vectors as sf classes and some as sp.\n> This should be avoided today.\n>\n>\n> Here's my version for plotting\n>\n>\n> library(ggplot2)\n> library(sf)\n> library(rnaturalearth)\n>\n> #Draft map of Fiji\n> world <- ne_countries(returnclass = \"sf\")\n>\n> Fiji <- ne_countries(country=\"Fiji\", returnclass=\"sf\")\n> data.Fdf <- read.csv(\"DataR.csv\")\n> # Get rid of that last summary row with no coordinates!\n> data.Fdf <- data.Fdf[complete.cases(data.Fdf),]\n> data.sf <- st_as_sf(data.Fdf, coords=c(\"long\", \"lat\"), crs=\"EPSG:4326\")\n>\n> # map of Fiji Islands\n> Fiji.plot <- ggplot() +\n>   geom_sf(data=world) +\n>   geom_sf(data=Fiji) +\n>   geom_sf(data=data.sf, aes(color=Year.1965)) +\n>   coord_sf(crs = 3832, # https://epsg.io/3832\n>     xlim = c(2984265.06, 3539584.72), # limits are taken from projected\n> bounds\n>     ylim = c(-2224162.41, -1811688.88)  # of EPSG:3832\n>   ) +\n>   theme_bw()\n>\n> #Plot map of Fiji\n> Fiji.plot\n>\n>\n> But more to your question: filled.contour() is not a ggplot2 function, so\n> you cannot include it in a string of ggplot elements. filled.contour()\n> takes three main variables: a sequence of 'x' and 'y' values for the grid\n> on which to plot the contours, and a matrix 'z' of values from which\n> contours are derived. You are working with a (very) small set of *point*\n> data. No matrix of values.... Typically the 'z' matrix would be created by\n> interpolating between the points to get a continuous raster, then use that\n> for the 'z' parameter to filled.contour().\n>\n>\n> Given that you are covering an area of several 100 km, with only 13 data\n> points (and some are almost exactly overlapping), and much of the area is\n> ocean, with no measurements and probably totally different precipitation\n> behavior, I don't see any clear way to get a reliable precipitation\n> distribution, so no isohyetal contour lines.\n> Sorry :-(\n>\n>\n> To continue with this, I would first deal with only the main island of\n> Fiji, then do a kriging interpolation of annual rainfall, year by year, and\n> from those interpolated rasters, you can derive contours. You would use the\n> `contour` function from `terra` package for this.\n>\n>\n>\n>\n>\n>\n> On 05/04/2022 11:10, sownal chand wrote:\n>\n>\n>\n>\n> Hello sir/madam,\n>\n> I have been writing codes using R and was trying to overlay contour lines\n> on the map using the data set provided in the attachment. The code which I\n> am working on is attached below. The problem is the overlay of the contours\n> is not showing in the final map. If someone can assist in correcting the\n> codes would be really appreciated .\n>\n>  # Packages\n> #if (!require(\"rspatial\")) remotes::install_github('rspatial/rspatial')\n> library(rspatial)\n> library(sp)\n> library(rgdal)\n> library(rgoes)\n> library(raster)\n> library(ggplot2)\n>\n> # Fiji geo data\n> # download\n> #Draft map of Fiji\n> world <- rnaturalearth::ne_countries(scale = \"Large\", returnclass = \"sf\")\n>\n> # map of Fiji Islands\n> Fiji <- ggplot(data=world) +\n>   geom_sf() +\n>   coord_sf(\n>     crs = 3832, # https://epsg.io/3832\n>     xlim = c(2984265.06, 3539584.72), # limits are taken from projected\n> bounds\n>     ylim = c(-2224162.41, -1811688.88)  # of EPSG:3832\n>   )+ theme_bw()\n>\n> #Plot map of Fiji\n> Fiji\n>\n> #read csv data from excel file for contoure analysis\n> data.Fdf <- read.csv(\"C://Users/Sownal/Documents/data.csv\")\n> View(data.Fdf)\n> class(data.Fdf)\n>\n> #remove NA values in the spatial Data Frame\n> data.dfclean <- na.omit(data.Fdf)\n> data.dfclean\n>\n> data.dfclean$long <- as.numeric(data$Longitude)\n> data.dfclean$lat <- as.numeric(data$Latitude)\n>\n> # convert data to spatial data fame for spatial analysis and raster\n> analysis\n> data.FSP <- SpatialPointsDataFrame(data= data.dfclean, coords =\n> data.dfclean$lat, data.dfclean$long)\n> data.FSP\n> #select one years data and overlay contours on the Map of Fiji\n>\n> Fiji <- ggplot(data=world) +\n>   geom_sf() +\n>   coord_sf(\n>     crs = 3832, # https://epsg.io/3832\n>     xlim = c(2984265.06, 3539584.72), # limits are taken from projected\n> bounds\n>     ylim = c(-2224162.41, -1811688.88)  # of EPSG:3832\n>   )+ theme_bw() + filled.contour(data.dfclean$Year)\n>\n>\n> # plot the map of Fiji with the contours lines\n> Fiji\n>\n>\n> ******************************************************************************************************\n>\n> Thanking you in advance\n> sownalc\n>\n> _______________________________________________\n> R-sig-Geo mailing listR-sig-Geo at r-project.orghttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> --\n> Micha Silver\n> Ben Gurion Univ.\n> Sde Boker, Remote Sensing Lab\n> cell: +972-523-665918\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks Micha,\n\nI would also try out your suggestion on interpolation of data.\nKind regards\nSownal\n\nOn Wed, Apr 6, 2022, 00:39 Micha Silver <tsvibar at gmail.com> wrote:\n\n> Hi:\n>\n> I would point to two",
+      "thread_id": "thread-7d9670eacf74",
+      "thread_depth": 2,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-9cb26bed0488",
+      "message_id": "<CABWyxu3mbu0Aa1=bTkbwquKzYM3iYN27vEAG_1+JnwLdx8zAjQ@mail.gmail.com>",
+      "from_name": "Clinton Nkolokosa",
+      "from_email_hash": "60a99f1a50b562486f9e8e9c4af9d60114b814cbaa0711b96bea7f0e5a694e85",
+      "date": "2022-04-06T11:08:27+01:00",
+      "subject": "[R-sig-Geo] F,a,",
+      "subject_clean": "F,a,",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "[[alternative HTML version deleted]]",
+      "body_snippet": "[[alternative HTML version deleted]]",
+      "thread_id": "thread-9cb26bed0488",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-44b9b279134b",
+      "message_id": "<425e6da0-2c4a-f425-cabf-81106033e8cb@blarg.net>",
+      "from_name": "Michael Marsh",
+      "from_email_hash": "63e169639b59d761eadb484a01dd5bacc6456e240aa834c644d2cd0ad0aa33d5",
+      "date": "2022-04-06T09:24:31-07:00",
+      "subject": "[R-sig-Geo] R-sig-Geo Digest, Vol 224, Issue 2",
+      "subject_clean": "R-sig-Geo Digest, Vol 224, Issue 2",
+      "in_reply_to": "<mailman.28922.5.1649239202.1054.r-sig-geo@r-project.org>",
+      "references": [
+        "<mailman.28922.5.1649239202.1054.r-sig-geo@r-project.org>"
+      ],
+      "body_plain": "Those dates sound suitable to me. There should be some chicks popping up!\n\nmike\n\nOn 4/6/2022 3:00 AM, r-sig-geo-request at r-project.org wrote:\n> Send R-sig-Geo mailing list submissions to\n> \tr-sig-geo at r-project.org\n>\n> To subscribe or unsubscribe via the World Wide Web, visit\n> \thttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> or, via email, send a message with subject or body 'help' to\n> \tr-sig-geo-request at r-project.org\n>\n> You can reach the person managing the list at\n> \tr-sig-geo-owner at r-project.org\n>\n> When replying, please edit your Subject line so it is more specific\n> than \"Re: Contents of R-sig-Geo digest...\"\n>\n>\n> Today's Topics:\n>\n>     1. Re: Contour plot (Micha Silver)\n>     2. Re: Contour plot (sownal chand)\n>\n> ----------------------------------------------------------------------\n>\n> Message: 1\n> Date: Tue, 5 Apr 2022 15:39:39 +0300\n> From: Micha Silver <tsvibar at gmail.com>\n> To: sownal chand <sownalchandfms at gmail.com>, r-sig-geo at r-project.org\n> Subject: Re: [R-sig-Geo] Contour plot\n> Message-ID: <1132483a-ff17-4c1f-a33d-9ab7b0a56119 at gmail.com>\n> Content-Type: text/plain; charset=\"us-ascii\"\n>\n> An HTML attachment was scrubbed...\n> URL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20220405/c6c465ca/attachment-0001.html>\n>\n>\n> ------------------------------\n>\n> Message: 2\n> Date: Wed, 6 Apr 2022 03:45:00 +1200\n> From: sownal chand <sownalchandfms at gmail.com>\n> To: Micha Silver <tsvibar at gmail.com>\n> Cc: r-sig-geo at r-project.org\n> Subject: Re: [R-sig-Geo] Contour plot\n> Message-ID:\n> \t<CAH5tCz02ij4V6i-8eNn1t1=F0hH6gvAhRCnr6hJP+p3jnnn39Q at mail.gmail.com>\n> Content-Type: text/plain; charset=\"utf-8\"\n>\n> Thanks Micha,\n>\n> I would also try out your suggestion on interpolation of data.\n> Kind regards\n> Sownal\n>\n> On Wed, Apr 6, 2022, 00:39 Micha Silver <tsvibar at gmail.com> wrote:\n>\n>> Hi:\n>>\n>> I would point to two issues with your code. First, we should be switching\n>> totally to sf. You have some spatial vectors as sf classes and some as sp.\n>> This should be avoided today.\n>>\n>>\n>> Here's my version for plotting\n>>\n>>\n>> library(ggplot2)\n>> library(sf)\n>> library(rnaturalearth)\n>>\n>> #Draft map of Fiji\n>> world <- ne_countries(returnclass = \"sf\")\n>>\n>> Fiji <- ne_countries(country=\"Fiji\", returnclass=\"sf\")\n>> data.Fdf <- read.csv(\"DataR.csv\")\n>> # Get rid of that last summary row with no coordinates!\n>> data.Fdf <- data.Fdf[complete.cases(data.Fdf),]\n>> data.sf <- st_as_sf(data.Fdf, coords=c(\"long\", \"lat\"), crs=\"EPSG:4326\")\n>>\n>> # map of Fiji Islands\n>> Fiji.plot <- ggplot() +\n>>    geom_sf(data=world) +\n>>    geom_sf(data=Fiji) +\n>>    geom_sf(data=data.sf, aes(color=Year.1965)) +\n>>    coord_sf(crs = 3832, # https://epsg.io/3832\n>>      xlim = c(2984265.06, 3539584.72), # limits are taken from projected\n>> bounds\n>>      ylim = c(-2224162.41, -1811688.88)  # of EPSG:3832\n>>    ) +\n>>    theme_bw()\n>>\n>> #Plot map of Fiji\n>> Fiji.plot\n>>\n>>\n>> But more to your question: filled.contour() is not a ggplot2 function, so\n>> you cannot include it in a string of ggplot elements. filled.contour()\n>> takes three main variables: a sequence of 'x' and 'y' values for the grid\n>> on which to plot the contours, and a matrix 'z' of values from which\n>> contours are derived. You are working with a (very) small set of *point*\n>> data. No matrix of values.... Typically the 'z' matrix would be created by\n>> interpolating between the points to get a continuous raster, then use that\n>> for the 'z' parameter to filled.contour().\n>>\n>>\n>> Given that you are covering an area of several 100 km, with only 13 data\n>> points (and some are almost exactly overlapping), and much of the area is\n>> ocean, with no measurements and probably totally different precipitation\n>> behavior, I don't see any clear way to get a reliable precipitation\n>> distribution, so no isohyetal contour lines.\n>> Sorry :-(\n>>\n>>\n>> To continue with this, I would first deal with only the main island of\n>> Fiji, then do a kriging interpolation of annual rainfall, year by year, and\n>> from those interpolated rasters, you can derive contours. You would use the\n>> `contour` function from `terra` package for this.\n>>\n>>\n>>\n>>\n>>\n>>\n>> On 05/04/2022 11:10, sownal chand wrote:\n>>\n>>\n>>\n>>\n>> Hello sir/madam,\n>>\n>> I have been writing codes using R and was trying to overlay contour lines\n>> on the map using the data set provided in the attachment. The code which I\n>> am working on is attached below. The problem is the overlay of the contours\n>> is not showing in the final map. If someone can assist in correcting the\n>> codes would be really appreciated .\n>>\n>>   # Packages\n>> #if (!require(\"rspatial\")) remotes::install_github('rspatial/rspatial')\n>> library(rspatial)\n>> library(sp)\n>> library(rgdal)\n>> library(rgoes)\n>> library(raster)\n>> library(ggplot2)\n>>\n>> # Fiji geo data\n>> # download\n>> #Draft map of Fiji\n>> world <- rnaturalearth::ne_countries(scale = \"Large\", returnclass = \"sf\")\n>>\n>> # map of Fiji Islands\n>> Fiji <- ggplot(data=world) +\n>>    geom_sf() +\n>>    coord_sf(\n>>      crs = 3832, # https://epsg.io/3832\n>>      xlim = c(2984265.06, 3539584.72), # limits are taken from projected\n>> bounds\n>>      ylim = c(-2224162.41, -1811688.88)  # of EPSG:3832\n>>    )+ theme_bw()\n>>\n>> #Plot map of Fiji\n>> Fiji\n>>\n>> #read csv data from excel file for contoure analysis\n>> data.Fdf <- read.csv(\"C://Users/Sownal/Documents/data.csv\")\n>> View(data.Fdf)\n>> class(data.Fdf)\n>>\n>> #remove NA values in the spatial Data Frame\n>> data.dfclean <- na.omit(data.Fdf)\n>> data.dfclean\n>>\n>> data.dfclean$long <- as.numeric(data$Longitude)\n>> data.dfclean$lat <- as.numeric(data$Latitude)\n>>\n>> # convert data to spatial data fame for spatial analysis and raster\n>> analysis\n>> data.FSP <- SpatialPointsDataFrame(data= data.dfclean, coords =\n>> data.dfclean$lat, data.dfclean$long)\n>> data.FSP\n>> #select one years data and overlay contours on the Map of Fiji\n>>\n>> Fiji <- ggplot(data=world) +\n>>    geom_sf() +\n>>    coord_sf(\n>>      crs = 3832, # https://epsg.io/3832\n>>      xlim = c(2984265.06, 3539584.72), # limits are taken from projected\n>> bounds\n>>      ylim = c(-2224162.41, -1811688.88)  # of EPSG:3832\n>>    )+ theme_bw() + filled.contour(data.dfclean$Year)\n>>\n>>\n>> # plot the map of Fiji with the contours lines\n>> Fiji\n>>\n>>\n>> ******************************************************************************************************\n>>\n>> Thanking you in advance\n>> sownalc\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing listR-sig-Geo at r-project.orghttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>> --\n>> Micha Silver\n>> Ben Gurion Univ.\n>> Sde Boker, Remote Sensing Lab\n>> cell: +972-523-665918\n>>\n>>\n> \t[[alternative HTML version deleted]]\n>\n>\n>\n>\n> ------------------------------\n>\n> Subject: Digest Footer\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> ------------------------------\n>\n> End of R-sig-Geo Digest, Vol 224, Issue 2\n> *****************************************\n>",
+      "body_snippet": "Those dates sound suitable to me. There should be some chicks popping up!\n\nmike\n\nOn 4/6/2022 3:00 AM, r-sig-geo-request at r-project.org wrote:\n> Send R-sig-Geo mailing list submissions to\n> \tr-sig-ge",
+      "thread_id": "thread-44b9b279134b",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-631956a54c2a",
+      "message_id": "<c5753856-8d0c-9e08-d3fe-5b252f237e31@gmail.com>",
+      "from_name": "Tomislav Hengl",
+      "from_email_hash": "1c592038322bbeaa3bb702d8d64ab9c83a31b70d7020477c6836f5af383d3072",
+      "date": "2022-04-08T12:51:42+02:00",
+      "subject": "[R-sig-Geo] Vacancies: Post-doctoral data scientist: Geocomputation for global environmental monitoring / 2x PhD candidates",
+      "subject_clean": "Vacancies: Post-doctoral data scientist: Geocomputation for global environmental monitoring / 2x PhD candidates",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "\"Post-doctoral data scientist: Geocomputation for global environmental \nmonitoring\"\nhttps://opengeohub.org/jobs/2022-post-doctoral-data-scientist-geocomputation-for-global-environmental-monitoring/\n\n\"Research assistant / PhD candidate: Geocomputation for econometric \nassessment of ecosystem services\"\nhttps://opengeohub.org/jobs/2022-research-assistant-phd-candidate-geocomputation-for-econometric-assessment-of-ecosystem-services/\n\n\"Research assistant / PhD candidate: Land Degradation & Land Potential \nmodelling\"\nhttps://opengeohub.org/jobs/2022-research-assistant-phd-candidate-land-degradation-land-potential-modelling/\n\nApplication deadline: 1st of May 2022.\nFor more info see also: https://opengeohub.org/category/jobs/\n\nProfessional requirements include: solid knowledge of Bash, Python \nand/or R + affinity to produce highly accessible value-added datasets.\n\n-- \nT. (Tom) Hengl\nTechnical director / Vice Chair\nThe OpenGeoHub Foundation\nVisiting address: Agro Business Park 10, 6708PW Wageningen, NL\nTel: +31 (0)317 427537\nUrl: https://opengeohub.org/about\nTwitter: https://twitter.com/opengeohub\nMedium: https://opengeohub.medium.com/\nhttps://www.youtube.com/c/OpenGeoHubFoundation\nskype:tom.hengl?chat\nPublications: http://scholar.google.com/citations?user=2oYU7S8AAAAJ",
+      "body_snippet": "\"Post-doctoral data scientist: Geocomputation for global environmental \nmonitoring\"\nhttps://opengeohub.org/jobs/2022-post-doctoral-data-scientist-geocomputation-for-global-environmental-monitoring/\n\n\"",
+      "thread_id": "thread-631956a54c2a",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-8a516668bdc9",
+      "message_id": "<bbd3bc38-0fe7-262d-d4d8-350edcca476e@gmail.com>",
+      "from_name": "Tomislav Hengl",
+      "from_email_hash": "1c592038322bbeaa3bb702d8d64ab9c83a31b70d7020477c6836f5af383d3072",
+      "date": "2022-04-13T10:51:14+02:00",
+      "subject": "[R-sig-Geo] MOOD Summer School \"Analytical epidemiology, machine learning and disease mapping\" 20-22 June 2022, Montpellier, France",
+      "subject_clean": "MOOD Summer School \"Analytical epidemiology, machine learning and disease mapping\" 20-22 June 2022, Montpellier, France",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "MOOD Summer School 2022, a 3-day Summer School for PhD / post-doctoral \nresearchers will take place at the Agropolis building, in Montpellier \n(France) on Monday 20th, Tuesday 21st and Wednesday 22nd June 2022.\n\nhttps://mood-h2020.eu/event/mood-summer-school-2022/\n\nProgram & Topics:\nThe Summer School will host a series of international keynote speakers, \nincluding Dr Sangeeta Bhatia \n(https://www.imperial.ac.uk/people/s.bhatia), the Imperial College \nLondon (UK), amongst others.\nDay 3 will host a use-case hackathon dedicated to Antimicrobial \nresistance data in which summer school participants will be able to \napply newly-acquired knowledge to solve real-world issues.\n\nRegistrations:\nPlease register via the link above by May 1st 2022.\nPlease note that this event is sponsored by the Horizon-2020 MOOD \nproject hence **there will be no registration fees**.\nMaximum 35 spots. Waiting list will be open after maximum capacity has \nbeen reached.\n\nTarget communities:\nYoung researchers (PhD, postdoctoral researchers) interested in \nanalytical epidemiology, machine learning and disease mapping, disease \nmodelling, disease ecology, spatial prediction, One health, R spatial \nepidemiology community.\n\nTechnology in use:\n- Zoom breakout rooms with Q&A, polls and similar;\n- Mattermost channels for internal questions, screen sharing and \nmarkdown/code snippets;\n- Computational notebooks on github.com and gitlab.com;\n- Lectures will be livestreamed on the Zoom platform and published on \nTIB.AV portal (https://av.tib.eu/series/1041/mood+science+webinars) and \non the MOOD website.\n\n---\nValentina Delconte\nCommunication and PR officer\nOpenGeoHub foundation\nAgro Business Park 10 (unit 1.05), 6708 PW Wageningen, NL\nvalentina.delconte at opengeohub.org\nhttps://opengeohub.org",
+      "body_snippet": "MOOD Summer School 2022, a 3-day Summer School for PhD / post-doctoral \nresearchers will take place at the Agropolis building, in Montpellier \n(France) on Monday 20th, Tuesday 21st and Wednesday 22nd ",
+      "thread_id": "thread-8a516668bdc9",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-4610bed2e715",
+      "message_id": "<CALrbzg0LpFwumj75XiE18UnxwL=hj88rk7hKeFX5O4BND8tiTw@mail.gmail.com>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "715c796f300568f44190a795995f5d8c66b19c1f8bc2156d2221fcda4991bb5a",
+      "date": "2022-04-13T12:41:13-04:00",
+      "subject": "[R-sig-Geo] Earthdata CMR access",
+      "subject_clean": "Earthdata CMR access",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\n\nI am interested in accessing physical oceanography data from PO.DAAC (\nhttps://earthdata.nasa.gov/eosdis/daacs/podaac) from within R using\nopendap.  NASA is moving its data offerings to the cloud, and it is\nadopting Common Metadata Repositories (\"CMR\",\nhttps://cmr.earthdata.nasa.gov/search/site/docs/search/api.html) for\nsearching.  CMR searching is in lieu of searching THREDDS catalogs.\n\nI'm finding the on-ramp to using CMR tricker than I had expected given the\nsales pitch behind CMR (or maybe the wheels have come off my car!)  I am\nwondering if anyone in this community has waded into using R-based CMR to\naccess cloud-based geospatial data, and, if so, might be willing to share\nsome insights or provide guidance?\n\nRegards,\nBen\n\n-- \nBen Tupper (he/him)\nBigelow Laboratory for Ocean Science\nEast Boothbay, Maine\nhttp://www.bigelow.org/\nhttps://eco.bigelow.org\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI am interested in accessing physical oceanography data from PO.DAAC (\nhttps://earthdata.nasa.gov/eosdis/daacs/podaac) from within R using\nopendap.  NASA is moving its data offerings to the cl",
+      "thread_id": "thread-4610bed2e715",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-c7afb79fadab",
+      "message_id": "<DM6PR17MB23968DF2EAE1A592E0C23C09C2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+      "from_name": "Joe Lee",
+      "from_email_hash": "edaad808702071820c5cbcb68b0cc2be9be71a0cc06ab45a9d74fc775e6852c0",
+      "date": "2022-04-13T17:02:57Z",
+      "subject": "[R-sig-Geo] Earthdata CMR access",
+      "subject_clean": "Earthdata CMR access",
+      "in_reply_to": "<CALrbzg0LpFwumj75XiE18UnxwL=hj88rk7hKeFX5O4BND8tiTw@mail.gmail.com>",
+      "references": [
+        "<CALrbzg0LpFwumj75XiE18UnxwL=hj88rk7hKeFX5O4BND8tiTw@mail.gmail.com>"
+      ],
+      "body_plain": "Hi,\n\nI'm also interested in the solution that you're seeking \nsince I've written a Python-equivalent CMR+OPeNDAP workflow a very long time ago [1].\n\nIt's both very tricky and difficult nowadays \nbecause NASA tries to constrain AWS egress cost via Earthdata Login authentication.\n\nDoes R provide a cURL-like library + a temporary token-based authentication?\n\n[1] https://earthdata.nasa.gov/collaborate/open-data-services-and-software/api/opendap/gesdisc-airs-opendap-cmr\n\n\n-----Original Message-----\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.org> On Behalf Of Ben Tupper\nSent: Wednesday, April 13, 2022 11:41 AM\nTo: r-sig-geo <r-sig-geo at r-project.org>\nSubject: [R-sig-Geo] Earthdata CMR access\n\nHello,\n\nI am interested in accessing physical oceanography data from PO.DAAC (\nhttps://earthdata.nasa.gov/eosdis/daacs/podaac) from within R using opendap.  NASA is moving its data offerings to the cloud, and it is adopting Common Metadata Repositories (\"CMR\",\nhttps://cmr.earthdata.nasa.gov/search/site/docs/search/api.html) for searching.  CMR searching is in lieu of searching THREDDS catalogs.\n\nI'm finding the on-ramp to using CMR tricker than I had expected given the sales pitch behind CMR (or maybe the wheels have come off my car!)  I am wondering if anyone in this community has waded into using R-based CMR to access cloud-based geospatial data, and, if so, might be willing to share some insights or provide guidance?\n\nRegards,\nBen\n\n--\nBen Tupper (he/him)\nBigelow Laboratory for Ocean Science\nEast Boothbay, Maine\nhttp://www.bigelow.org/\nhttps://eco.bigelow.org\n\n\t[[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hi,\n\nI'm also interested in the solution that you're seeking \nsince I've written a Python-equivalent CMR+OPeNDAP workflow a very long time ago [1].\n\nIt's both very tricky and difficult nowadays \nbecau",
+      "thread_id": "thread-4610bed2e715",
+      "thread_depth": 1,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-a153f67c8aa7",
+      "message_id": "<CALrbzg2cWCfXcKPck2fYPiu8Ks=94CsWNhZMAw2b8sGi6y1XPw@mail.gmail.com>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "715c796f300568f44190a795995f5d8c66b19c1f8bc2156d2221fcda4991bb5a",
+      "date": "2022-04-13T14:08:40-04:00",
+      "subject": "[R-sig-Geo] Earthdata CMR access",
+      "subject_clean": "Earthdata CMR access",
+      "in_reply_to": "<DM6PR17MB23968DF2EAE1A592E0C23C09C2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+      "references": [
+        "<CALrbzg0LpFwumj75XiE18UnxwL=hj88rk7hKeFX5O4BND8tiTw@mail.gmail.com>",
+        "<DM6PR17MB23968DF2EAE1A592E0C23C09C2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>"
+      ],
+      "body_plain": "Hi,\n\nI was planning to use the httr package or the newish httr2 package\nwhich should be able to handle the transactions.  Once a resource is\ntracked down via search, I plan to use the ncdf4 package to access.\n\nI can add headers to the http requests, so presumably that can include tokens.\n\nBut I am finding even the simple stuff like using the API to generate\na token, as shown here\nhttps://wiki.earthdata.nasa.gov/display/EL/How+to+Generate+a+User+Token\n,  to be challenging.  Thud!\n\nBen\n\nhttr: https://CRAN.R-project.org/package=httr\nhttr2: https://CRAN.R-project.org/package=httr2\nncdf4: https://CRAN.R-project.org/package=ncdf4\n\nOn Wed, Apr 13, 2022 at 1:03 PM Joe Lee <hyoklee at hdfgroup.org> wrote:\n>\n> Hi,\n>\n> I'm also interested in the solution that you're seeking\n> since I've written a Python-equivalent CMR+OPeNDAP workflow a very long time ago [1].\n>\n> It's both very tricky and difficult nowadays\n> because NASA tries to constrain AWS egress cost via Earthdata Login authentication.\n>\n> Does R provide a cURL-like library + a temporary token-based authentication?\n>\n> [1] https://earthdata.nasa.gov/collaborate/open-data-services-and-software/api/opendap/gesdisc-airs-opendap-cmr\n>\n>\n> -----Original Message-----\n> From: R-sig-Geo <r-sig-geo-bounces at r-project.org> On Behalf Of Ben Tupper\n> Sent: Wednesday, April 13, 2022 11:41 AM\n> To: r-sig-geo <r-sig-geo at r-project.org>\n> Subject: [R-sig-Geo] Earthdata CMR access\n>\n> Hello,\n>\n> I am interested in accessing physical oceanography data from PO.DAAC (\n> https://earthdata.nasa.gov/eosdis/daacs/podaac) from within R using opendap.  NASA is moving its data offerings to the cloud, and it is adopting Common Metadata Repositories (\"CMR\",\n> https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html) for searching.  CMR searching is in lieu of searching THREDDS catalogs.\n>\n> I'm finding the on-ramp to using CMR tricker than I had expected given the sales pitch behind CMR (or maybe the wheels have come off my car!)  I am wondering if anyone in this community has waded into using R-based CMR to access cloud-based geospatial data, and, if so, might be willing to share some insights or provide guidance?\n>\n> Regards,\n> Ben\n>\n> --\n> Ben Tupper (he/him)\n> Bigelow Laboratory for Ocean Science\n> East Boothbay, Maine\n> http://www.bigelow.org/\n> https://eco.bigelow.org\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n-- \nBen Tupper (he/him)\nBigelow Laboratory for Ocean Science\nEast Boothbay, Maine\nhttp://www.bigelow.org/\nhttps://eco.bigelow.org",
+      "body_snippet": "Hi,\n\nI was planning to use the httr package or the newish httr2 package\nwhich should be able to handle the transactions.  Once a resource is\ntracked down via search, I plan to use the ncdf4 package to",
+      "thread_id": "thread-4610bed2e715",
+      "thread_depth": 2,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-b7f15586cd57",
+      "message_id": "<DM6PR17MB2396FBD6B9292305E71520FEC2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+      "from_name": "Joe Lee",
+      "from_email_hash": "edaad808702071820c5cbcb68b0cc2be9be71a0cc06ab45a9d74fc775e6852c0",
+      "date": "2022-04-13T18:18:17Z",
+      "subject": "[R-sig-Geo] Earthdata CMR access",
+      "subject_clean": "Earthdata CMR access",
+      "in_reply_to": "<CALrbzg2cWCfXcKPck2fYPiu8Ks=94CsWNhZMAw2b8sGi6y1XPw@mail.gmail.com>",
+      "references": [
+        "<CALrbzg0LpFwumj75XiE18UnxwL=hj88rk7hKeFX5O4BND8tiTw@mail.gmail.com>",
+        "<DM6PR17MB23968DF2EAE1A592E0C23C09C2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+        "<CALrbzg2cWCfXcKPck2fYPiu8Ks=94CsWNhZMAw2b8sGi6y1XPw@mail.gmail.com>"
+      ],
+      "body_plain": "Yes, that's the hard part that I'm referring to.\n\nOnce you pass that step, you may also want to look at another example in MATLAB [1]\nto access PODAAC data on S3 using the temporary token.\n\nI'd really appreciate your effort if you can share a working R-code project \nthat can both search with CMR and then access NASA data on S3.\n\nRegards,\n\n[1] https://www.hdfeos.org/zoo/PODAAC/ATM_SURFACE_TEMP_HUM_WIND_PRES_day_mean_ECCO_V4r4_nc_c.m\n\n\n-----Original Message-----\nFrom: Ben Tupper <btupper at bigelow.org> \nSent: Wednesday, April 13, 2022 1:09 PM\nTo: Joe Lee <hyoklee at hdfgroup.org>\nCc: r-sig-geo at r-project.org\nSubject: Re: [R-sig-Geo] Earthdata CMR access\n\nHi,\n\nI was planning to use the httr package or the newish httr2 package which should be able to handle the transactions.  Once a resource is tracked down via search, I plan to use the ncdf4 package to access.\n\nI can add headers to the http requests, so presumably that can include tokens.\n\nBut I am finding even the simple stuff like using the API to generate a token, as shown here https://wiki.earthdata.nasa.gov/display/EL/How+to+Generate+a+User+Token\n,  to be challenging.  Thud!\n\nBen\n\nhttr: https://CRAN.R-project.org/package=httr\nhttr2: https://CRAN.R-project.org/package=httr2\nncdf4: https://CRAN.R-project.org/package=ncdf4\n\nOn Wed, Apr 13, 2022 at 1:03 PM Joe Lee <hyoklee at hdfgroup.org> wrote:\n>\n> Hi,\n>\n> I'm also interested in the solution that you're seeking since I've \n> written a Python-equivalent CMR+OPeNDAP workflow a very long time ago [1].\n>\n> It's both very tricky and difficult nowadays because NASA tries to \n> constrain AWS egress cost via Earthdata Login authentication.\n>\n> Does R provide a cURL-like library + a temporary token-based authentication?\n>\n> [1] \n> https://earthdata.nasa.gov/collaborate/open-data-services-and-software\n> /api/opendap/gesdisc-airs-opendap-cmr\n>\n>\n> -----Original Message-----\n> From: R-sig-Geo <r-sig-geo-bounces at r-project.org> On Behalf Of Ben \n> Tupper\n> Sent: Wednesday, April 13, 2022 11:41 AM\n> To: r-sig-geo <r-sig-geo at r-project.org>\n> Subject: [R-sig-Geo] Earthdata CMR access\n>\n> Hello,\n>\n> I am interested in accessing physical oceanography data from PO.DAAC (\n> https://earthdata.nasa.gov/eosdis/daacs/podaac) from within R using \n> opendap.  NASA is moving its data offerings to the cloud, and it is \n> adopting Common Metadata Repositories (\"CMR\",\n> https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html) for searching.  CMR searching is in lieu of searching THREDDS catalogs.\n>\n> I'm finding the on-ramp to using CMR tricker than I had expected given the sales pitch behind CMR (or maybe the wheels have come off my car!)  I am wondering if anyone in this community has waded into using R-based CMR to access cloud-based geospatial data, and, if so, might be willing to share some insights or provide guidance?\n>\n> Regards,\n> Ben\n>\n> --\n> Ben Tupper (he/him)\n> Bigelow Laboratory for Ocean Science\n> East Boothbay, Maine\n> http://www.bigelow.org/\n> https://eco.bigelow.org\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n--\nBen Tupper (he/him)\nBigelow Laboratory for Ocean Science\nEast Boothbay, Maine\nhttp://www.bigelow.org/\nhttps://eco.bigelow.org",
+      "body_snippet": "Yes, that's the hard part that I'm referring to.\n\nOnce you pass that step, you may also want to look at another example in MATLAB [1]\nto access PODAAC data on S3 using the temporary token.\n\nI'd really",
+      "thread_id": "thread-4610bed2e715",
+      "thread_depth": 3,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-84b30ee148ea",
+      "message_id": "<CALrbzg0CtYV=hSg2Z7ztF5waqweYtWA=Qu7hAJai8wvq0hCsMQ@mail.gmail.com>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "715c796f300568f44190a795995f5d8c66b19c1f8bc2156d2221fcda4991bb5a",
+      "date": "2022-04-13T21:59:16-04:00",
+      "subject": "[R-sig-Geo] Earthdata CMR access",
+      "subject_clean": "Earthdata CMR access",
+      "in_reply_to": "<DM6PR17MB2396FBD6B9292305E71520FEC2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+      "references": [
+        "<CALrbzg0LpFwumj75XiE18UnxwL=hj88rk7hKeFX5O4BND8tiTw@mail.gmail.com>",
+        "<DM6PR17MB23968DF2EAE1A592E0C23C09C2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+        "<CALrbzg2cWCfXcKPck2fYPiu8Ks=94CsWNhZMAw2b8sGi6y1XPw@mail.gmail.com>",
+        "<DM6PR17MB2396FBD6B9292305E71520FEC2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>"
+      ],
+      "body_plain": "What I have can search for S3 resources, but I happen to focus on OPeNDAP\ninstead.\n\nAs far as I can tell, the ncdf4 (and RNetCDF) packages don't provide\nutilities for establishing credentialed opendap connections.  That is\nhandled by sort of a third party or some kind of wrapper.   Without\ncredentials I can search, but without credentials I cannot open a\nconnection to the opendap resources the search yields.\n\nIf I am understanding the error message shown at the bottom of the README\n(see below), the server is receiving the request but for lack of\ncredentials is refusing access.  I'm stumped.\n\nhttps://github.com/BigelowLab/cmr\n\n\nOn Wed, Apr 13, 2022 at 2:18 PM Joe Lee <hyoklee at hdfgroup.org> wrote:\n>\n> Yes, that's the hard part that I'm referring to.\n>\n> Once you pass that step, you may also want to look at another example in\nMATLAB [1]\n> to access PODAAC data on S3 using the temporary token.\n>\n> I'd really appreciate your effort if you can share a working R-code\nproject\n> that can both search with CMR and then access NASA data on S3.\n>\n> Regards,\n>\n> [1]\nhttps://www.hdfeos.org/zoo/PODAAC/ATM_SURFACE_TEMP_HUM_WIND_PRES_day_mean_ECCO_V4r4_nc_c.m\n>\n>\n> -----Original Message-----\n> From: Ben Tupper <btupper at bigelow.org>\n> Sent: Wednesday, April 13, 2022 1:09 PM\n> To: Joe Lee <hyoklee at hdfgroup.org>\n> Cc: r-sig-geo at r-project.org\n> Subject: Re: [R-sig-Geo] Earthdata CMR access\n>\n> Hi,\n>\n> I was planning to use the httr package or the newish httr2 package which\nshould be able to handle the transactions.  Once a resource is tracked down\nvia search, I plan to use the ncdf4 package to access.\n>\n> I can add headers to the http requests, so presumably that can include\ntokens.\n>\n> But I am finding even the simple stuff like using the API to generate a\ntoken, as shown here\nhttps://wiki.earthdata.nasa.gov/display/EL/How+to+Generate+a+User+Token\n> ,  to be challenging.  Thud!\n>\n> Ben\n>\n> httr: https://CRAN.R-project.org/package=httr\n> httr2: https://CRAN.R-project.org/package=httr2\n> ncdf4: https://CRAN.R-project.org/package=ncdf4\n>\n> On Wed, Apr 13, 2022 at 1:03 PM Joe Lee <hyoklee at hdfgroup.org> wrote:\n> >\n> > Hi,\n> >\n> > I'm also interested in the solution that you're seeking since I've\n> > written a Python-equivalent CMR+OPeNDAP workflow a very long time ago\n[1].\n> >\n> > It's both very tricky and difficult nowadays because NASA tries to\n> > constrain AWS egress cost via Earthdata Login authentication.\n> >\n> > Does R provide a cURL-like library + a temporary token-based\nauthentication?\n> >\n> > [1]\n> > https://earthdata.nasa.gov/collaborate/open-data-services-and-software\n> > /api/opendap/gesdisc-airs-opendap-cmr\n> >\n> >\n> > -----Original Message-----\n> > From: R-sig-Geo <r-sig-geo-bounces at r-project.org> On Behalf Of Ben\n> > Tupper\n> > Sent: Wednesday, April 13, 2022 11:41 AM\n> > To: r-sig-geo <r-sig-geo at r-project.org>\n> > Subject: [R-sig-Geo] Earthdata CMR access\n> >\n> > Hello,\n> >\n> > I am interested in accessing physical oceanography data from PO.DAAC (\n> > https://earthdata.nasa.gov/eosdis/daacs/podaac) from within R using\n> > opendap.  NASA is moving its data offerings to the cloud, and it is\n> > adopting Common Metadata Repositories (\"CMR\",\n> > https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html) for\nsearching.  CMR searching is in lieu of searching THREDDS catalogs.\n> >\n> > I'm finding the on-ramp to using CMR tricker than I had expected given\nthe sales pitch behind CMR (or maybe the wheels have come off my car!)  I\nam wondering if anyone in this community has waded into using R-based CMR\nto access cloud-based geospatial data, and, if so, might be willing to\nshare some insights or provide guidance?\n> >\n> > Regards,\n> > Ben\n> >\n> > --\n> > Ben Tupper (he/him)\n> > Bigelow Laboratory for Ocean Science\n> > East Boothbay, Maine\n> > http://www.bigelow.org/\n> > https://eco.bigelow.org\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n> --\n> Ben Tupper (he/him)\n> Bigelow Laboratory for Ocean Science\n> East Boothbay, Maine\n> http://www.bigelow.org/\n> https://eco.bigelow.org\n\n\n\n-- \nBen Tupper (he/him)\nBigelow Laboratory for Ocean Science\nEast Boothbay, Maine\nhttp://www.bigelow.org/\nhttps://eco.bigelow.org\n-- \nBen Tupper Bigelow Laboratory for Ocean Sciences https://www.bigelow.org/\nTick forecast https://eco.bigelow.org/\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "What I have can search for S3 resources, but I happen to focus on OPeNDAP\ninstead.\n\nAs far as I can tell, the ncdf4 (and RNetCDF) packages don't provide\nutilities for establishing credentialed opendap",
+      "thread_id": "thread-4610bed2e715",
+      "thread_depth": 4,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-86dbb0e21de7",
+      "message_id": "<SN6PR17MB2399B4B34C8E8DF5E5728DF6C2EF9@SN6PR17MB2399.namprd17.prod.outlook.com>",
+      "from_name": "Joe Lee",
+      "from_email_hash": "edaad808702071820c5cbcb68b0cc2be9be71a0cc06ab45a9d74fc775e6852c0",
+      "date": "2022-04-14T02:25:11Z",
+      "subject": "[R-sig-Geo] Earthdata CMR access",
+      "subject_clean": "Earthdata CMR access",
+      "in_reply_to": "<CALrbzg0CtYV=hSg2Z7ztF5waqweYtWA=Qu7hAJai8wvq0hCsMQ@mail.gmail.com>",
+      "references": [
+        "<CALrbzg0LpFwumj75XiE18UnxwL=hj88rk7hKeFX5O4BND8tiTw@mail.gmail.com>",
+        "<DM6PR17MB23968DF2EAE1A592E0C23C09C2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+        "<CALrbzg2cWCfXcKPck2fYPiu8Ks=94CsWNhZMAw2b8sGi6y1XPw@mail.gmail.com>",
+        "<DM6PR17MB2396FBD6B9292305E71520FEC2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+        "<CALrbzg0CtYV=hSg2Z7ztF5waqweYtWA=Qu7hAJai8wvq0hCsMQ@mail.gmail.com>"
+      ],
+      "body_plain": "Wow, what a great start!\n\nUnlike GES DISC OPeNDAP server,\nI think the PODAAC OPeNDAP server that you?d like to access\ndoesn?t require Earthdata Login credentials.\nThat eliminates a lot of complications.\n\nMy suspicion is that your R ncdf4 package is not built with OPeNDAP support.\nCan you check if your R ndf4 package work with our demo OPeNDAP server [1]?\nIf not, you may want to install ncdf4 with your own netCDF-4 library that enabled OPeNDAP support.\n\nOnce [1] works with your R ncdf4,\nI think my posting [2] can help you to redirect URLs properly\nfor NASA credential-enabled OPeNDAP servers.\n\nGood luck and thanks for sharing your code on GitHub!\n\n\n[1] https://eosdap.hdfgroup.org:8080/opendap/data/hdf5/grid_1_2d.h5.dmr.html\n[2] https://hdfeos.org/forums/showthread.php?t=821#4\n\n\nFrom: Ben Tupper <btupper at bigelow.org>\nSent: Wednesday, April 13, 2022 8:59 PM\nTo: Joe Lee <hyoklee at hdfgroup.org>\nCc: r-sig-geo at r-project.org\nSubject: Re: [R-sig-Geo] Earthdata CMR access\n\nWhat I have can search for S3 resources, but I happen to focus on OPeNDAP instead.\n\nAs far as I can tell, the ncdf4 (and RNetCDF) packages don't provide utilities for establishing credentialed opendap connections.  That is handled by sort of a third party or some kind of wrapper.   Without credentials I can search, but without credentials I cannot open a connection to the opendap resources the search yields.\n\nIf I am understanding the error message shown at the bottom of the README (see below), the server is receiving the request but for lack of credentials is refusing access.  I'm stumped.\n\nhttps://github.com/BigelowLab/cmr\n\n\nOn Wed, Apr 13, 2022 at 2:18 PM Joe Lee <hyoklee at hdfgroup.org<mailto:hyoklee at hdfgroup.org>> wrote:\n>\n> Yes, that's the hard part that I'm referring to.\n>\n> Once you pass that step, you may also want to look at another example in MATLAB [1]\n> to access PODAAC data on S3 using the temporary token.\n>\n> I'd really appreciate your effort if you can share a working R-code project\n> that can both search with CMR and then access NASA data on S3.\n>\n> Regards,\n>\n> [1] https://www.hdfeos.org/zoo/PODAAC/ATM_SURFACE_TEMP_HUM_WIND_PRES_day_mean_ECCO_V4r4_nc_c.m\n>\n>\n> -----Original Message-----\n> From: Ben Tupper <btupper at bigelow.org<mailto:btupper at bigelow.org>>\n> Sent: Wednesday, April 13, 2022 1:09 PM\n> To: Joe Lee <hyoklee at hdfgroup.org<mailto:hyoklee at hdfgroup.org>>\n> Cc: r-sig-geo at r-project.org<mailto:r-sig-geo at r-project.org>\n> Subject: Re: [R-sig-Geo] Earthdata CMR access\n>\n> Hi,\n>\n> I was planning to use the httr package or the newish httr2 package which should be able to handle the transactions.  Once a resource is tracked down via search, I plan to use the ncdf4 package to access.\n>\n> I can add headers to the http requests, so presumably that can include tokens.\n>\n> But I am finding even the simple stuff like using the API to generate a token, as shown here https://wiki.earthdata.nasa.gov/display/EL/How+to+Generate+a+User+Token\n> ,  to be challenging.  Thud!\n>\n> Ben\n>\n> httr: https://CRAN.R-project.org/package=httr\n> httr2: https://CRAN.R-project.org/package=httr2\n> ncdf4: https://CRAN.R-project.org/package=ncdf4\n>\n> On Wed, Apr 13, 2022 at 1:03 PM Joe Lee <hyoklee at hdfgroup.org<mailto:hyoklee at hdfgroup.org>> wrote:\n> >\n> > Hi,\n> >\n> > I'm also interested in the solution that you're seeking since I've\n> > written a Python-equivalent CMR+OPeNDAP workflow a very long time ago [1].\n> >\n> > It's both very tricky and difficult nowadays because NASA tries to\n> > constrain AWS egress cost via Earthdata Login authentication.\n> >\n> > Does R provide a cURL-like library + a temporary token-based authentication?\n> >\n> > [1]\n> > https://earthdata.nasa.gov/collaborate/open-data-services-and-software\n> > /api/opendap/gesdisc-airs-opendap-cmr\n> >\n> >\n> > -----Original Message-----\n> > From: R-sig-Geo <r-sig-geo-bounces at r-project.org<mailto:r-sig-geo-bounces at r-project.org>> On Behalf Of Ben\n> > Tupper\n> > Sent: Wednesday, April 13, 2022 11:41 AM\n> > To: r-sig-geo <r-sig-geo at r-project.org<mailto:r-sig-geo at r-project.org>>\n> > Subject: [R-sig-Geo] Earthdata CMR access\n> >\n> > Hello,\n> >\n> > I am interested in accessing physical oceanography data from PO.DAAC (\n> > https://earthdata.nasa.gov/eosdis/daacs/podaac) from within R using\n> > opendap.  NASA is moving its data offerings to the cloud, and it is\n> > adopting Common Metadata Repositories (\"CMR\",\n> > https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html) for searching.  CMR searching is in lieu of searching THREDDS catalogs.\n> >\n> > I'm finding the on-ramp to using CMR tricker than I had expected given the sales pitch behind CMR (or maybe the wheels have come off my car!)  I am wondering if anyone in this community has waded into using R-based CMR to access cloud-based geospatial data, and, if so, might be willing to share some insights or provide guidance?\n> >\n> > Regards,\n> > Ben\n> >\n> > --\n> > Ben Tupper (he/him)\n> > Bigelow Laboratory for Ocean Science\n> > East Boothbay, Maine\n> > http://www.bigelow.org/\n> > https://eco.bigelow.org\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org<mailto:R-sig-Geo at r-project.org>\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org<mailto:R-sig-Geo at r-project.org>\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n> --\n> Ben Tupper (he/him)\n> Bigelow Laboratory for Ocean Science\n> East Boothbay, Maine\n> http://www.bigelow.org/\n> https://eco.bigelow.org\n\n\n\n--\nBen Tupper (he/him)\nBigelow Laboratory for Ocean Science\nEast Boothbay, Maine\nhttp://www.bigelow.org/\nhttps://eco.bigelow.org\n--\nBen Tupper Bigelow Laboratory for Ocean Sciences https://www.bigelow.org/ Tick forecast https://eco.bigelow.org/\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Wow, what a great start!\n\nUnlike GES DISC OPeNDAP server,\nI think the PODAAC OPeNDAP server that you?d like to access\ndoesn?t require Earthdata Login credentials.\nThat eliminates a lot of complication",
+      "thread_id": "thread-4610bed2e715",
+      "thread_depth": 5,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-a5a2ebb210b4",
+      "message_id": "<CALrbzg06hTrQ7VCNqBcMykYgOMHYx66rjG7Rr2LyKW7VajFfUw@mail.gmail.com>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "715c796f300568f44190a795995f5d8c66b19c1f8bc2156d2221fcda4991bb5a",
+      "date": "2022-04-14T08:13:32-04:00",
+      "subject": "[R-sig-Geo] Earthdata CMR access",
+      "subject_clean": "Earthdata CMR access",
+      "in_reply_to": "<SN6PR17MB2399B4B34C8E8DF5E5728DF6C2EF9@SN6PR17MB2399.namprd17.prod.outlook.com>",
+      "references": [
+        "<CALrbzg0LpFwumj75XiE18UnxwL=hj88rk7hKeFX5O4BND8tiTw@mail.gmail.com>",
+        "<DM6PR17MB23968DF2EAE1A592E0C23C09C2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+        "<CALrbzg2cWCfXcKPck2fYPiu8Ks=94CsWNhZMAw2b8sGi6y1XPw@mail.gmail.com>",
+        "<DM6PR17MB2396FBD6B9292305E71520FEC2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+        "<CALrbzg0CtYV=hSg2Z7ztF5waqweYtWA=Qu7hAJai8wvq0hCsMQ@mail.gmail.com>",
+        "<SN6PR17MB2399B4B34C8E8DF5E5728DF6C2EF9@SN6PR17MB2399.namprd17.prod.outlook.com>"
+      ],
+      "body_plain": "Well, ncdf4 is a pretty good with OPeNDAP (which is one reason why we\nlove it!)  Below is an example using your handy testing resource.\n\nHmmm. In your example using pydap, you establish a (credentialed?)\nsession, and then open the OPeNDAP resource within that context?  I\ndon't think I have seen that before in R, at least not for OPeNDAP.\nI'll poke around and see if I can find something comparable.\n\n\n### Start\nlibrary(ncdf4)\n\nurl <- \"https://eosdap.hdfgroup.org:8080/opendap/data/hdf5/grid_1_2d.h5\"\nx <- nc_open(url)\nlibrary(ncdf4)\n\nurl <- \"https://eosdap.hdfgroup.org:8080/opendap/data/hdf5/grid_1_2d.h5\"\nx <- nc_open(url)\ntemp <- ncvar_get(x, varid = \"temperature\",\n                  start = c(2,1),\n                  count = c(2,3))\ntemp\n#      [,1] [,2] [,3]\n# [1,]   10   11   12\n# [2,]   10   11   12\n### End\n\n\nOn Wed, Apr 13, 2022 at 10:25 PM Joe Lee <hyoklee at hdfgroup.org> wrote:\n>\n> Wow, what a great start!\n>\n>\n>\n> Unlike GES DISC OPeNDAP server,\n>\n> I think the PODAAC OPeNDAP server that you?d like to access\n>\n> doesn?t require Earthdata Login credentials.\n>\n> That eliminates a lot of complications.\n>\n>\n>\n> My suspicion is that your R ncdf4 package is not built with OPeNDAP support.\n>\n> Can you check if your R ndf4 package work with our demo OPeNDAP server [1]?\n>\n> If not, you may want to install ncdf4 with your own netCDF-4 library that enabled OPeNDAP support.\n>\n>\n>\n> Once [1] works with your R ncdf4,\n>\n> I think my posting [2] can help you to redirect URLs properly\n>\n> for NASA credential-enabled OPeNDAP servers.\n>\n>\n>\n> Good luck and thanks for sharing your code on GitHub!\n>\n>\n>\n>\n>\n> [1] https://eosdap.hdfgroup.org:8080/opendap/data/hdf5/grid_1_2d.h5.dmr.html\n>\n> [2] https://hdfeos.org/forums/showthread.php?t=821#4\n>\n>\n>\n> From: Ben Tupper <btupper at bigelow.org>\n> Sent: Wednesday, April 13, 2022 8:59 PM\n> To: Joe Lee <hyoklee at hdfgroup.org>\n> Cc: r-sig-geo at r-project.org\n> Subject: Re: [R-sig-Geo] Earthdata CMR access\n>\n>\n>\n> What I have can search for S3 resources, but I happen to focus on OPeNDAP instead.\n>\n> As far as I can tell, the ncdf4 (and RNetCDF) packages don't provide utilities for establishing credentialed opendap connections.  That is handled by sort of a third party or some kind of wrapper.   Without credentials I can search, but without credentials I cannot open a connection to the opendap resources the search yields.\n>\n> If I am understanding the error message shown at the bottom of the README (see below), the server is receiving the request but for lack of credentials is refusing access.  I'm stumped.\n>\n> https://github.com/BigelowLab/cmr\n>\n>\n>\n> On Wed, Apr 13, 2022 at 2:18 PM Joe Lee <hyoklee at hdfgroup.org> wrote:\n> >\n> > Yes, that's the hard part that I'm referring to.\n> >\n> > Once you pass that step, you may also want to look at another example in MATLAB [1]\n> > to access PODAAC data on S3 using the temporary token.\n> >\n> > I'd really appreciate your effort if you can share a working R-code project\n> > that can both search with CMR and then access NASA data on S3.\n> >\n> > Regards,\n> >\n> > [1] https://www.hdfeos.org/zoo/PODAAC/ATM_SURFACE_TEMP_HUM_WIND_PRES_day_mean_ECCO_V4r4_nc_c.m\n> >\n> >\n> > -----Original Message-----\n> > From: Ben Tupper <btupper at bigelow.org>\n> > Sent: Wednesday, April 13, 2022 1:09 PM\n> > To: Joe Lee <hyoklee at hdfgroup.org>\n> > Cc: r-sig-geo at r-project.org\n> > Subject: Re: [R-sig-Geo] Earthdata CMR access\n> >\n> > Hi,\n> >\n> > I was planning to use the httr package or the newish httr2 package which should be able to handle the transactions.  Once a resource is tracked down via search, I plan to use the ncdf4 package to access.\n> >\n> > I can add headers to the http requests, so presumably that can include tokens.\n> >\n> > But I am finding even the simple stuff like using the API to generate a token, as shown here https://wiki.earthdata.nasa.gov/display/EL/How+to+Generate+a+User+Token\n> > ,  to be challenging.  Thud!\n> >\n> > Ben\n> >\n> > httr: https://CRAN.R-project.org/package=httr\n> > httr2: https://CRAN.R-project.org/package=httr2\n> > ncdf4: https://CRAN.R-project.org/package=ncdf4\n> >\n> > On Wed, Apr 13, 2022 at 1:03 PM Joe Lee <hyoklee at hdfgroup.org> wrote:\n> > >\n> > > Hi,\n> > >\n> > > I'm also interested in the solution that you're seeking since I've\n> > > written a Python-equivalent CMR+OPeNDAP workflow a very long time ago [1].\n> > >\n> > > It's both very tricky and difficult nowadays because NASA tries to\n> > > constrain AWS egress cost via Earthdata Login authentication.\n> > >\n> > > Does R provide a cURL-like library + a temporary token-based authentication?\n> > >\n> > > [1]\n> > > https://earthdata.nasa.gov/collaborate/open-data-services-and-software\n> > > /api/opendap/gesdisc-airs-opendap-cmr\n> > >\n> > >\n> > > -----Original Message-----\n> > > From: R-sig-Geo <r-sig-geo-bounces at r-project.org> On Behalf Of Ben\n> > > Tupper\n> > > Sent: Wednesday, April 13, 2022 11:41 AM\n> > > To: r-sig-geo <r-sig-geo at r-project.org>\n> > > Subject: [R-sig-Geo] Earthdata CMR access\n> > >\n> > > Hello,\n> > >\n> > > I am interested in accessing physical oceanography data from PO.DAAC (\n> > > https://earthdata.nasa.gov/eosdis/daacs/podaac) from within R using\n> > > opendap.  NASA is moving its data offerings to the cloud, and it is\n> > > adopting Common Metadata Repositories (\"CMR\",\n> > > https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html) for searching.  CMR searching is in lieu of searching THREDDS catalogs.\n> > >\n> > > I'm finding the on-ramp to using CMR tricker than I had expected given the sales pitch behind CMR (or maybe the wheels have come off my car!)  I am wondering if anyone in this community has waded into using R-based CMR to access cloud-based geospatial data, and, if so, might be willing to share some insights or provide guidance?\n> > >\n> > > Regards,\n> > > Ben\n> > >\n> > > --\n> > > Ben Tupper (he/him)\n> > > Bigelow Laboratory for Ocean Science\n> > > East Boothbay, Maine\n> > > http://www.bigelow.org/\n> > > https://eco.bigelow.org\n> > >\n> > >         [[alternative HTML version deleted]]\n> > >\n> > > _______________________________________________\n> > > R-sig-Geo mailing list\n> > > R-sig-Geo at r-project.org\n> > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > >\n> > > _______________________________________________\n> > > R-sig-Geo mailing list\n> > > R-sig-Geo at r-project.org\n> > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> >\n> >\n> > --\n> > Ben Tupper (he/him)\n> > Bigelow Laboratory for Ocean Science\n> > East Boothbay, Maine\n> > http://www.bigelow.org/\n> > https://eco.bigelow.org\n>\n>\n>\n> --\n> Ben Tupper (he/him)\n> Bigelow Laboratory for Ocean Science\n> East Boothbay, Maine\n> http://www.bigelow.org/\n> https://eco.bigelow.org\n>\n> --\n>\n> Ben Tupper Bigelow Laboratory for Ocean Sciences https://www.bigelow.org/ Tick forecast https://eco.bigelow.org/\n\n\n\n-- \nBen Tupper (he/him)\nBigelow Laboratory for Ocean Science\nEast Boothbay, Maine\nhttp://www.bigelow.org/\nhttps://eco.bigelow.org",
+      "body_snippet": "Well, ncdf4 is a pretty good with OPeNDAP (which is one reason why we\nlove it!)  Below is an example using your handy testing resource.\n\nHmmm. In your example using pydap, you establish a (credentiale",
+      "thread_id": "thread-4610bed2e715",
+      "thread_depth": 6,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-41e03d77fc2b",
+      "message_id": "<DM6PR17MB2396481D16543CB59B0F4999C2EF9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+      "from_name": "Joe Lee",
+      "from_email_hash": "edaad808702071820c5cbcb68b0cc2be9be71a0cc06ab45a9d74fc775e6852c0",
+      "date": "2022-04-14T13:04:55Z",
+      "subject": "[R-sig-Geo] Earthdata CMR access",
+      "subject_clean": "Earthdata CMR access",
+      "in_reply_to": "<CALrbzg06hTrQ7VCNqBcMykYgOMHYx66rjG7Rr2LyKW7VajFfUw@mail.gmail.com>",
+      "references": [
+        "<CALrbzg0LpFwumj75XiE18UnxwL=hj88rk7hKeFX5O4BND8tiTw@mail.gmail.com>",
+        "<DM6PR17MB23968DF2EAE1A592E0C23C09C2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+        "<CALrbzg2cWCfXcKPck2fYPiu8Ks=94CsWNhZMAw2b8sGi6y1XPw@mail.gmail.com>",
+        "<DM6PR17MB2396FBD6B9292305E71520FEC2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+        "<CALrbzg0CtYV=hSg2Z7ztF5waqweYtWA=Qu7hAJai8wvq0hCsMQ@mail.gmail.com>",
+        "<SN6PR17MB2399B4B34C8E8DF5E5728DF6C2EF9@SN6PR17MB2399.namprd17.prod.outlook.com>",
+        "<CALrbzg06hTrQ7VCNqBcMykYgOMHYx66rjG7Rr2LyKW7VajFfUw@mail.gmail.com>"
+      ],
+      "body_plain": "Yes, you need to set context with session.\nI could confirm that PO.DAAC OPeNDAP server requires session.\nThus, R ncdf4 package needs to do something extra like pydap example does.\n\n-----Original Message-----\nFrom: Ben Tupper <btupper at bigelow.org> \nSent: Thursday, April 14, 2022 7:14 AM\nTo: Joe Lee <hyoklee at hdfgroup.org>\nCc: r-sig-geo at r-project.org\nSubject: Re: [R-sig-Geo] Earthdata CMR access\n\nWell, ncdf4 is a pretty good with OPeNDAP (which is one reason why we love it!)  Below is an example using your handy testing resource.\n\nHmmm. In your example using pydap, you establish a (credentialed?) session, and then open the OPeNDAP resource within that context?  I don't think I have seen that before in R, at least not for OPeNDAP.\nI'll poke around and see if I can find something comparable.\n\n\n### Start\nlibrary(ncdf4)\n\nurl <- \"https://eosdap.hdfgroup.org:8080/opendap/data/hdf5/grid_1_2d.h5\"\nx <- nc_open(url)\nlibrary(ncdf4)\n\nurl <- \"https://eosdap.hdfgroup.org:8080/opendap/data/hdf5/grid_1_2d.h5\"\nx <- nc_open(url)\ntemp <- ncvar_get(x, varid = \"temperature\",\n                  start = c(2,1),\n                  count = c(2,3))\ntemp\n#      [,1] [,2] [,3]\n# [1,]   10   11   12\n# [2,]   10   11   12\n### End\n\n\nOn Wed, Apr 13, 2022 at 10:25 PM Joe Lee <hyoklee at hdfgroup.org> wrote:\n>\n> Wow, what a great start!\n>\n>\n>\n> Unlike GES DISC OPeNDAP server,\n>\n> I think the PODAAC OPeNDAP server that you?d like to access\n>\n> doesn?t require Earthdata Login credentials.\n>\n> That eliminates a lot of complications.\n>\n>\n>\n> My suspicion is that your R ncdf4 package is not built with OPeNDAP support.\n>\n> Can you check if your R ndf4 package work with our demo OPeNDAP server [1]?\n>\n> If not, you may want to install ncdf4 with your own netCDF-4 library that enabled OPeNDAP support.\n>\n>\n>\n> Once [1] works with your R ncdf4,\n>\n> I think my posting [2] can help you to redirect URLs properly\n>\n> for NASA credential-enabled OPeNDAP servers.\n>\n>\n>\n> Good luck and thanks for sharing your code on GitHub!\n>\n>\n>\n>\n>\n> [1] \n> https://eosdap.hdfgroup.org:8080/opendap/data/hdf5/grid_1_2d.h5.dmr.ht\n> ml\n>\n> [2] https://hdfeos.org/forums/showthread.php?t=821#4\n>\n>\n>\n> From: Ben Tupper <btupper at bigelow.org>\n> Sent: Wednesday, April 13, 2022 8:59 PM\n> To: Joe Lee <hyoklee at hdfgroup.org>\n> Cc: r-sig-geo at r-project.org\n> Subject: Re: [R-sig-Geo] Earthdata CMR access\n>\n>\n>\n> What I have can search for S3 resources, but I happen to focus on OPeNDAP instead.\n>\n> As far as I can tell, the ncdf4 (and RNetCDF) packages don't provide utilities for establishing credentialed opendap connections.  That is handled by sort of a third party or some kind of wrapper.   Without credentials I can search, but without credentials I cannot open a connection to the opendap resources the search yields.\n>\n> If I am understanding the error message shown at the bottom of the README (see below), the server is receiving the request but for lack of credentials is refusing access.  I'm stumped.\n>\n> https://github.com/BigelowLab/cmr\n>\n>\n>\n> On Wed, Apr 13, 2022 at 2:18 PM Joe Lee <hyoklee at hdfgroup.org> wrote:\n> >\n> > Yes, that's the hard part that I'm referring to.\n> >\n> > Once you pass that step, you may also want to look at another \n> > example in MATLAB [1] to access PODAAC data on S3 using the temporary token.\n> >\n> > I'd really appreciate your effort if you can share a working R-code \n> > project that can both search with CMR and then access NASA data on S3.\n> >\n> > Regards,\n> >\n> > [1] \n> > https://www.hdfeos.org/zoo/PODAAC/ATM_SURFACE_TEMP_HUM_WIND_PRES_day\n> > _mean_ECCO_V4r4_nc_c.m\n> >\n> >\n> > -----Original Message-----\n> > From: Ben Tupper <btupper at bigelow.org>\n> > Sent: Wednesday, April 13, 2022 1:09 PM\n> > To: Joe Lee <hyoklee at hdfgroup.org>\n> > Cc: r-sig-geo at r-project.org\n> > Subject: Re: [R-sig-Geo] Earthdata CMR access\n> >\n> > Hi,\n> >\n> > I was planning to use the httr package or the newish httr2 package which should be able to handle the transactions.  Once a resource is tracked down via search, I plan to use the ncdf4 package to access.\n> >\n> > I can add headers to the http requests, so presumably that can include tokens.\n> >\n> > But I am finding even the simple stuff like using the API to \n> > generate a token, as shown here \n> > https://wiki.earthdata.nasa.gov/display/EL/How+to+Generate+a+User+To\n> > ken\n> > ,  to be challenging.  Thud!\n> >\n> > Ben\n> >\n> > httr: https://CRAN.R-project.org/package=httr\n> > httr2: https://CRAN.R-project.org/package=httr2\n> > ncdf4: https://CRAN.R-project.org/package=ncdf4\n> >\n> > On Wed, Apr 13, 2022 at 1:03 PM Joe Lee <hyoklee at hdfgroup.org> wrote:\n> > >\n> > > Hi,\n> > >\n> > > I'm also interested in the solution that you're seeking since I've \n> > > written a Python-equivalent CMR+OPeNDAP workflow a very long time ago [1].\n> > >\n> > > It's both very tricky and difficult nowadays because NASA tries to \n> > > constrain AWS egress cost via Earthdata Login authentication.\n> > >\n> > > Does R provide a cURL-like library + a temporary token-based authentication?\n> > >\n> > > [1]\n> > > https://earthdata.nasa.gov/collaborate/open-data-services-and-soft\n> > > ware /api/opendap/gesdisc-airs-opendap-cmr\n> > >\n> > >\n> > > -----Original Message-----\n> > > From: R-sig-Geo <r-sig-geo-bounces at r-project.org> On Behalf Of Ben \n> > > Tupper\n> > > Sent: Wednesday, April 13, 2022 11:41 AM\n> > > To: r-sig-geo <r-sig-geo at r-project.org>\n> > > Subject: [R-sig-Geo] Earthdata CMR access\n> > >\n> > > Hello,\n> > >\n> > > I am interested in accessing physical oceanography data from \n> > > PO.DAAC (\n> > > https://earthdata.nasa.gov/eosdis/daacs/podaac) from within R \n> > > using opendap.  NASA is moving its data offerings to the cloud, \n> > > and it is adopting Common Metadata Repositories (\"CMR\",\n> > > https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html) for searching.  CMR searching is in lieu of searching THREDDS catalogs.\n> > >\n> > > I'm finding the on-ramp to using CMR tricker than I had expected given the sales pitch behind CMR (or maybe the wheels have come off my car!)  I am wondering if anyone in this community has waded into using R-based CMR to access cloud-based geospatial data, and, if so, might be willing to share some insights or provide guidance?\n> > >\n> > > Regards,\n> > > Ben\n> > >\n> > > --\n> > > Ben Tupper (he/him)\n> > > Bigelow Laboratory for Ocean Science East Boothbay, Maine \n> > > http://www.bigelow.org/ https://eco.bigelow.org\n> > >\n> > >         [[alternative HTML version deleted]]\n> > >\n> > > _______________________________________________\n> > > R-sig-Geo mailing list\n> > > R-sig-Geo at r-project.org\n> > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > >\n> > > _______________________________________________\n> > > R-sig-Geo mailing list\n> > > R-sig-Geo at r-project.org\n> > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> >\n> >\n> > --\n> > Ben Tupper (he/him)\n> > Bigelow Laboratory for Ocean Science East Boothbay, Maine \n> > http://www.bigelow.org/ https://eco.bigelow.org\n>\n>\n>\n> --\n> Ben Tupper (he/him)\n> Bigelow Laboratory for Ocean Science\n> East Boothbay, Maine\n> http://www.bigelow.org/\n> https://eco.bigelow.org\n>\n> --\n>\n> Ben Tupper Bigelow Laboratory for Ocean Sciences \n> https://www.bigelow.org/ Tick forecast https://eco.bigelow.org/\n\n\n\n--\nBen Tupper (he/him)\nBigelow Laboratory for Ocean Science\nEast Boothbay, Maine\nhttp://www.bigelow.org/\nhttps://eco.bigelow.org",
+      "body_snippet": "Yes, you need to set context with session.\nI could confirm that PO.DAAC OPeNDAP server requires session.\nThus, R ncdf4 package needs to do something extra like pydap example does.\n\n-----Original Messa",
+      "thread_id": "thread-4610bed2e715",
+      "thread_depth": 7,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-1cae40d939aa",
+      "message_id": "<CALrbzg3uNvKvKgZ+c+1mCbzigO2DmPrp+Fx+1VSzqn02nvo2CA@mail.gmail.com>",
+      "from_name": "Ben Tupper",
+      "from_email_hash": "715c796f300568f44190a795995f5d8c66b19c1f8bc2156d2221fcda4991bb5a",
+      "date": "2022-04-14T09:13:37-04:00",
+      "subject": "[R-sig-Geo] Earthdata CMR access",
+      "subject_clean": "Earthdata CMR access",
+      "in_reply_to": "<DM6PR17MB2396481D16543CB59B0F4999C2EF9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+      "references": [
+        "<CALrbzg0LpFwumj75XiE18UnxwL=hj88rk7hKeFX5O4BND8tiTw@mail.gmail.com>",
+        "<DM6PR17MB23968DF2EAE1A592E0C23C09C2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+        "<CALrbzg2cWCfXcKPck2fYPiu8Ks=94CsWNhZMAw2b8sGi6y1XPw@mail.gmail.com>",
+        "<DM6PR17MB2396FBD6B9292305E71520FEC2EC9@DM6PR17MB2396.namprd17.prod.outlook.com>",
+        "<CALrbzg0CtYV=hSg2Z7ztF5waqweYtWA=Qu7hAJai8wvq0hCsMQ@mail.gmail.com>",
+        "<SN6PR17MB2399B4B34C8E8DF5E5728DF6C2EF9@SN6PR17MB2399.namprd17.prod.outlook.com>",
+        "<CALrbzg06hTrQ7VCNqBcMykYgOMHYx66rjG7Rr2LyKW7VajFfUw@mail.gmail.com>",
+        "<DM6PR17MB2396481D16543CB59B0F4999C2EF9@DM6PR17MB2396.namprd17.prod.outlook.com>"
+      ],
+      "body_plain": "OK - this is very helpful, Joe.  I'll report back on what I learn.\n\nOn Thu, Apr 14, 2022 at 9:05 AM Joe Lee <hyoklee at hdfgroup.org> wrote:\n>\n> Yes, you need to set context with session.\n> I could confirm that PO.DAAC OPeNDAP server requires session.\n> Thus, R ncdf4 package needs to do something extra like pydap example does.\n>\n> -----Original Message-----\n> From: Ben Tupper <btupper at bigelow.org>\n> Sent: Thursday, April 14, 2022 7:14 AM\n> To: Joe Lee <hyoklee at hdfgroup.org>\n> Cc: r-sig-geo at r-project.org\n> Subject: Re: [R-sig-Geo] Earthdata CMR access\n>\n> Well, ncdf4 is a pretty good with OPeNDAP (which is one reason why we love it!)  Below is an example using your handy testing resource.\n>\n> Hmmm. In your example using pydap, you establish a (credentialed?) session, and then open the OPeNDAP resource within that context?  I don't think I have seen that before in R, at least not for OPeNDAP.\n> I'll poke around and see if I can find something comparable.\n>\n>\n> ### Start\n> library(ncdf4)\n>\n> url <- \"https://eosdap.hdfgroup.org:8080/opendap/data/hdf5/grid_1_2d.h5\"\n> x <- nc_open(url)\n> library(ncdf4)\n>\n> url <- \"https://eosdap.hdfgroup.org:8080/opendap/data/hdf5/grid_1_2d.h5\"\n> x <- nc_open(url)\n> temp <- ncvar_get(x, varid = \"temperature\",\n>                   start = c(2,1),\n>                   count = c(2,3))\n> temp\n> #      [,1] [,2] [,3]\n> # [1,]   10   11   12\n> # [2,]   10   11   12\n> ### End\n>\n>\n> On Wed, Apr 13, 2022 at 10:25 PM Joe Lee <hyoklee at hdfgroup.org> wrote:\n> >\n> > Wow, what a great start!\n> >\n> >\n> >\n> > Unlike GES DISC OPeNDAP server,\n> >\n> > I think the PODAAC OPeNDAP server that you?d like to access\n> >\n> > doesn?t require Earthdata Login credentials.\n> >\n> > That eliminates a lot of complications.\n> >\n> >\n> >\n> > My suspicion is that your R ncdf4 package is not built with OPeNDAP support.\n> >\n> > Can you check if your R ndf4 package work with our demo OPeNDAP server [1]?\n> >\n> > If not, you may want to install ncdf4 with your own netCDF-4 library that enabled OPeNDAP support.\n> >\n> >\n> >\n> > Once [1] works with your R ncdf4,\n> >\n> > I think my posting [2] can help you to redirect URLs properly\n> >\n> > for NASA credential-enabled OPeNDAP servers.\n> >\n> >\n> >\n> > Good luck and thanks for sharing your code on GitHub!\n> >\n> >\n> >\n> >\n> >\n> > [1]\n> > https://eosdap.hdfgroup.org:8080/opendap/data/hdf5/grid_1_2d.h5.dmr.ht\n> > ml\n> >\n> > [2] https://hdfeos.org/forums/showthread.php?t=821#4\n> >\n> >\n> >\n> > From: Ben Tupper <btupper at bigelow.org>\n> > Sent: Wednesday, April 13, 2022 8:59 PM\n> > To: Joe Lee <hyoklee at hdfgroup.org>\n> > Cc: r-sig-geo at r-project.org\n> > Subject: Re: [R-sig-Geo] Earthdata CMR access\n> >\n> >\n> >\n> > What I have can search for S3 resources, but I happen to focus on OPeNDAP instead.\n> >\n> > As far as I can tell, the ncdf4 (and RNetCDF) packages don't provide utilities for establishing credentialed opendap connections.  That is handled by sort of a third party or some kind of wrapper.   Without credentials I can search, but without credentials I cannot open a connection to the opendap resources the search yields.\n> >\n> > If I am understanding the error message shown at the bottom of the README (see below), the server is receiving the request but for lack of credentials is refusing access.  I'm stumped.\n> >\n> > https://github.com/BigelowLab/cmr\n> >\n> >\n> >\n> > On Wed, Apr 13, 2022 at 2:18 PM Joe Lee <hyoklee at hdfgroup.org> wrote:\n> > >\n> > > Yes, that's the hard part that I'm referring to.\n> > >\n> > > Once you pass that step, you may also want to look at another\n> > > example in MATLAB [1] to access PODAAC data on S3 using the temporary token.\n> > >\n> > > I'd really appreciate your effort if you can share a working R-code\n> > > project that can both search with CMR and then access NASA data on S3.\n> > >\n> > > Regards,\n> > >\n> > > [1]\n> > > https://www.hdfeos.org/zoo/PODAAC/ATM_SURFACE_TEMP_HUM_WIND_PRES_day\n> > > _mean_ECCO_V4r4_nc_c.m\n> > >\n> > >\n> > > -----Original Message-----\n> > > From: Ben Tupper <btupper at bigelow.org>\n> > > Sent: Wednesday, April 13, 2022 1:09 PM\n> > > To: Joe Lee <hyoklee at hdfgroup.org>\n> > > Cc: r-sig-geo at r-project.org\n> > > Subject: Re: [R-sig-Geo] Earthdata CMR access\n> > >\n> > > Hi,\n> > >\n> > > I was planning to use the httr package or the newish httr2 package which should be able to handle the transactions.  Once a resource is tracked down via search, I plan to use the ncdf4 package to access.\n> > >\n> > > I can add headers to the http requests, so presumably that can include tokens.\n> > >\n> > > But I am finding even the simple stuff like using the API to\n> > > generate a token, as shown here\n> > > https://wiki.earthdata.nasa.gov/display/EL/How+to+Generate+a+User+To\n> > > ken\n> > > ,  to be challenging.  Thud!\n> > >\n> > > Ben\n> > >\n> > > httr: https://CRAN.R-project.org/package=httr\n> > > httr2: https://CRAN.R-project.org/package=httr2\n> > > ncdf4: https://CRAN.R-project.org/package=ncdf4\n> > >\n> > > On Wed, Apr 13, 2022 at 1:03 PM Joe Lee <hyoklee at hdfgroup.org> wrote:\n> > > >\n> > > > Hi,\n> > > >\n> > > > I'm also interested in the solution that you're seeking since I've\n> > > > written a Python-equivalent CMR+OPeNDAP workflow a very long time ago [1].\n> > > >\n> > > > It's both very tricky and difficult nowadays because NASA tries to\n> > > > constrain AWS egress cost via Earthdata Login authentication.\n> > > >\n> > > > Does R provide a cURL-like library + a temporary token-based authentication?\n> > > >\n> > > > [1]\n> > > > https://earthdata.nasa.gov/collaborate/open-data-services-and-soft\n> > > > ware /api/opendap/gesdisc-airs-opendap-cmr\n> > > >\n> > > >\n> > > > -----Original Message-----\n> > > > From: R-sig-Geo <r-sig-geo-bounces at r-project.org> On Behalf Of Ben\n> > > > Tupper\n> > > > Sent: Wednesday, April 13, 2022 11:41 AM\n> > > > To: r-sig-geo <r-sig-geo at r-project.org>\n> > > > Subject: [R-sig-Geo] Earthdata CMR access\n> > > >\n> > > > Hello,\n> > > >\n> > > > I am interested in accessing physical oceanography data from\n> > > > PO.DAAC (\n> > > > https://earthdata.nasa.gov/eosdis/daacs/podaac) from within R\n> > > > using opendap.  NASA is moving its data offerings to the cloud,\n> > > > and it is adopting Common Metadata Repositories (\"CMR\",\n> > > > https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html) for searching.  CMR searching is in lieu of searching THREDDS catalogs.\n> > > >\n> > > > I'm finding the on-ramp to using CMR tricker than I had expected given the sales pitch behind CMR (or maybe the wheels have come off my car!)  I am wondering if anyone in this community has waded into using R-based CMR to access cloud-based geospatial data, and, if so, might be willing to share some insights or provide guidance?\n> > > >\n> > > > Regards,\n> > > > Ben\n> > > >\n> > > > --\n> > > > Ben Tupper (he/him)\n> > > > Bigelow Laboratory for Ocean Science East Boothbay, Maine\n> > > > http://www.bigelow.org/ https://eco.bigelow.org\n> > > >\n> > > >         [[alternative HTML version deleted]]\n> > > >\n> > > > _______________________________________________\n> > > > R-sig-Geo mailing list\n> > > > R-sig-Geo at r-project.org\n> > > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > > >\n> > > > _______________________________________________\n> > > > R-sig-Geo mailing list\n> > > > R-sig-Geo at r-project.org\n> > > > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> > >\n> > >\n> > >\n> > > --\n> > > Ben Tupper (he/him)\n> > > Bigelow Laboratory for Ocean Science East Boothbay, Maine\n> > > http://www.bigelow.org/ https://eco.bigelow.org\n> >\n> >\n> >\n> > --\n> > Ben Tupper (he/him)\n> > Bigelow Laboratory for Ocean Science\n> > East Boothbay, Maine\n> > http://www.bigelow.org/\n> > https://eco.bigelow.org\n> >\n> > --\n> >\n> > Ben Tupper Bigelow Laboratory for Ocean Sciences\n> > https://www.bigelow.org/ Tick forecast https://eco.bigelow.org/\n>\n>\n>\n> --\n> Ben Tupper (he/him)\n> Bigelow Laboratory for Ocean Science\n> East Boothbay, Maine\n> http://www.bigelow.org/\n> https://eco.bigelow.org\n\n\n\n-- \nBen Tupper (he/him)\nBigelow Laboratory for Ocean Science\nEast Boothbay, Maine\nhttp://www.bigelow.org/\nhttps://eco.bigelow.org",
+      "body_snippet": "OK - this is very helpful, Joe.  I'll report back on what I learn.\n\nOn Thu, Apr 14, 2022 at 9:05 AM Joe Lee <hyoklee at hdfgroup.org> wrote:\n>\n> Yes, you need to set context with session.\n> I could co",
+      "thread_id": "thread-4610bed2e715",
+      "thread_depth": 8,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-1910d8903d5a",
+      "message_id": "<CANVKczM0jEXUtihNmBbJfKK1OO6M2XJ--p8GOO+WedQqr1hNtA@mail.gmail.com>",
+      "from_name": "Barry Rowlingson",
+      "from_email_hash": "978d93eeccd73f54cd1080f2010d589bc57743b6aeffbe86b0c01e659efa8282",
+      "date": "2022-04-15T17:11:33+01:00",
+      "subject": "[R-sig-Geo] Inconsistent null geometry handling in sf and terra",
+      "subject_clean": "Inconsistent null geometry handling in sf and terra",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "The `sf` package returns the extent of a null geometry as \"NA\", wheras\nterra's `vect` returns an object with an extent of (-180,180, -90,+90).\n`sf` also prints a warning.\n\nThis came from a gis stack Q:\nhttps://gis.stackexchange.com/questions/428925/sfst-read-and-terravect-reading-in-different-extents-from-the-same-shape/428983?noredirect=1#comment699839_428983\nwhich has link to sample data and code.\n\nThere's a few questions remaining which might be worth discussing here\nbefore deciding if any package needs an issue/bugfix:\n\n1. what does the SF standard say about the extent of a Null geometric\nfeature?\n2. what does the SF standard say about the extent of a collection of\nfeatures, if one of them is Null? The `sf` package returns the extent of\nthe non-null features, but there's maybe an argument for saying \"if I don't\nknow the extent of feature 23, I don't know the extent of any data frame\nwith feature 23 in it\" (by analogy with NA+1+2+3 => NA)\n3. should warnings be printed when null geometries occur (terra::vect\ndoesn't do this, st_read does).\n\n\nBarry\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "The `sf` package returns the extent of a null geometry as \"NA\", wheras\nterra's `vect` returns an object with an extent of (-180,180, -90,+90).\n`sf` also prints a warning.\n\nThis came from a gis stack Q",
+      "thread_id": "thread-1910d8903d5a",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-4a2f846facf6",
+      "message_id": "<ae4edf22-bb59-9e44-36e5-feda882804ec@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2022-04-17T11:09:28+02:00",
+      "subject": "[R-sig-Geo] Inconsistent null geometry handling in sf and terra",
+      "subject_clean": "Inconsistent null geometry handling in sf and terra",
+      "in_reply_to": "<CANVKczM0jEXUtihNmBbJfKK1OO6M2XJ--p8GOO+WedQqr1hNtA@mail.gmail.com>",
+      "references": [
+        "<CANVKczM0jEXUtihNmBbJfKK1OO6M2XJ--p8GOO+WedQqr1hNtA@mail.gmail.com>"
+      ],
+      "body_plain": "On 15/04/2022 18:11, Barry Rowlingson wrote:\n> The `sf` package returns the extent of a null geometry as \"NA\", wheras\n> terra's `vect` returns an object with an extent of (-180,180, -90,+90).\n> `sf` also prints a warning.\n> \n> This came from a gis stack Q:\n> https://gis.stackexchange.com/questions/428925/sfst-read-and-terravect-reading-in-different-extents-from-the-same-shape/428983?noredirect=1#comment699839_428983\n> which has link to sample data and code.\n> \n> There's a few questions remaining which might be worth discussing here\n> before deciding if any package needs an issue/bugfix:\n> \n> 1. what does the SF standard say about the extent of a Null geometric\n> feature?\n\n\"simple feature access\" doesn't mention extent at all, neither as an \noperation, nor as a property.\n\n> 2. what does the SF standard say about the extent of a collection of\n> features, if one of them is Null? The `sf` package returns the extent of\n> the non-null features, but there's maybe an argument for saying \"if I don't\n> know the extent of feature 23, I don't know the extent of any data frame\n> with feature 23 in it\" (by analogy with NA+1+2+3 => NA)\n\nit doesn't say anything about properties of sets of geometries either. \nThe empty geometry however is intended (as far as I understand) as the \n\"no points for which\" geometry, resulting for instance from the \nintersection operation on two non-intersecting geometries. It then makes \nsense, IMO, to discard it for extends; if you would propagate it like an \nNA in arithmetic ops, it would have to mean something like \"a point that \ncan have any coordinates\" (exists, don't know where), which is not intended.\n\n> 3. should warnings be printed when null geometries occur (terra::vect\n> doesn't do this, st_read does).\n\nYou mean upon reading - I think sf prints it in the summary header, but \ndoes it warn?\n\n> \n> \n> Barry\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48151 Muenster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "On 15/04/2022 18:11, Barry Rowlingson wrote:\n> The `sf` package returns the extent of a null geometry as \"NA\", wheras\n> terra's `vect` returns an object with an extent of (-180,180, -90,+90).\n> `sf` a",
+      "thread_id": "thread-1910d8903d5a",
+      "thread_depth": 1,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-7bd4098a4ba5",
+      "message_id": "<CAKoiDH+1miaAQtL2-7WXv50c6Xf81JaF6a2tFDmMD54D5E=7Lw@mail.gmail.com>",
+      "from_name": "Giuseppe Amatulli",
+      "from_email_hash": "a3b558e08aa6c2768dc80229110721cce180703cfba6412f7aaba244fe49e280",
+      "date": "2022-04-17T18:40:17+02:00",
+      "subject": "[R-sig-Geo] mlr3spatial",
+      "subject_clean": "mlr3spatial",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\nI'm trying to apply a supervised regression following the example at\nhttps://mlr3spatial.mlr-org.com/articles/mlr3spatial.html\nIn my case the response variable is a presence-absence (0/1) raster file\nwith many NA values\n\ntask = as_task_regr\n<https://mlr3.mlr-org.com/reference/as_task_regr.html>(backend, target\n= \"presence-absence\")\n\nprint <https://rdrr.io/r/base/print.html>(task)#> <TaskRegr:backend>\n(122848 x 6)#> * Target: presence-absence#> * Properties: -#> *\nFeatures (5):#>   - dbl (5): band2, band3, band4, band5, band6\n\nAt this point I need to extract the row_ids where\npresence-absence != NA\nin order to fill the\n\nlearner$train(task, row_ids = row_ids)\n\nI have tried to search for an example but I could not find one.\nCan anyone help me?\nThanks\n-- \nGiuseppe Amatulli, Ph.D.\n\nResearch scientist at\nSchool of the Environment\nYale University\nNew Haven, CT, USA - 06511\nTwitter: @BigDataEcology\nTeaching: http://spatial-ecology.net\nWork:  https://environment.yale.edu/profile/giuseppe-amatulli/\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\nI'm trying to apply a supervised regression following the example at\nhttps://mlr3spatial.mlr-org.com/articles/mlr3spatial.html\nIn my case the response variable is a presence-absence (0/1) raster f",
+      "thread_id": "thread-7bd4098a4ba5",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-35f48bcb1c34",
+      "message_id": "<CABG0rftt79ba2KgCagr8xg616ceqq4u_EH=qFt5TQm5uvMviBA@mail.gmail.com>",
+      "from_name": "Jonathan Greenberg",
+      "from_email_hash": "b51c2005ca83bf0a116f3ac8fe7d4c209dd55e34da65cf9ab8bc4cbb005b1d20",
+      "date": "2022-04-21T08:30:46-07:00",
+      "subject": "[R-sig-Geo] gdalUtils future...",
+      "subject_clean": "gdalUtils future...",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi all -- I know some of you have used gdalUtils in the past and some\nr-sig-geo packages have dependencies on it.  At present, I do not plan to\ncontinue support for the package myself, but I would be thrilled if someone\nmight be interested in stepping up to take it over.  If anyone is\ninterested, please shoot me an email at this address and we can arrange a\ntime to speak.\n\nHere's the github repo:\n\nhttps://github.com/cran/gdalUtils\n\n--j\n\n-- \nJonathan A. Greenberg, PhD\nRandall Endowed Professor and Associate Professor of Remote Sensing\nGlobal Environmental Analysis and Remote Sensing (GEARS) Laboratory\nNatural Resources & Environmental Science\nUniversity of Nevada, Reno\n1664 N Virginia St MS 0186\nReno, NV 89557\nPhone: 415-763-5476\nWeb: https://gearslab.org/\nTwitter: @GearsLaboratory <https://twitter.com/GearsLaboratory>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all -- I know some of you have used gdalUtils in the past and some\nr-sig-geo packages have dependencies on it.  At present, I do not plan to\ncontinue support for the package myself, but I would be ",
+      "thread_id": "thread-35f48bcb1c34",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-d129e941e714",
+      "message_id": "<379e25bf-0b6f-7760-1db6-f94e84b3dd3d@gmail.com>",
+      "from_name": "Martin Hulenyi",
+      "from_email_hash": "18d41608b5b9db384ee3c679b8b8aebd5942c45e02976b59143837a6c259cd4d",
+      "date": "2022-04-27T12:11:58+02:00",
+      "subject": "[R-sig-Geo] 2SLS in spatial panel model",
+      "subject_clean": "2SLS in spatial panel model",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\nI would like to ask if there is a package that allows to implement 2SLS \nin spatial panel setting (we have an endogenous independent variable we \nwant to instrument). If not, do you know if it is possible to implement \nit in other software?\n\nBest,\n\nMartin",
+      "body_snippet": "Dear all,\n\nI would like to ask if there is a package that allows to implement 2SLS \nin spatial panel setting (we have an endogenous independent variable we \nwant to instrument). If not, do you know if",
+      "thread_id": "thread-d129e941e714",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-6d1f501a9c76",
+      "message_id": "<6474350-bc3b-e71f-c869-c7e142293e25@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2022-04-27T12:22:26+02:00",
+      "subject": "[R-sig-Geo] 2SLS in spatial panel model",
+      "subject_clean": "2SLS in spatial panel model",
+      "in_reply_to": "<379e25bf-0b6f-7760-1db6-f94e84b3dd3d@gmail.com>",
+      "references": [
+        "<379e25bf-0b6f-7760-1db6-f94e84b3dd3d@gmail.com>"
+      ],
+      "body_plain": "Do you mean:\n\nsplm::spgm(..., endog=, instruments=, lag=TRUE, spatial.error=FALSE)\n\nas in section 4.5 of https://doi.org/10.3390/math9111276 ?\n\nRoger\n\nOn Wed, 27 Apr 2022, Martin Hulenyi wrote:\n\n> Dear all,\n>\n> I would like to ask if there is a package that allows to implement 2SLS in \n> spatial panel setting (we have an endogenous independent variable we want to \n> instrument). If not, do you know if it is possible to implement it in other \n> software?\n>\n> Best,\n>\n> Martin\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=05%7C01%7CRoger.Bivand%40nhh.no%7C324563e1a9bf48c8cea908da28366dc6%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637866511629822477%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000%7C%7C%7C&amp;sdata=%2Fcdcyurmp5cIHoA3q99Sa0i2x1uA9jEtiE0KRZKQTKo%3D&amp;reserved=0\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "Do you mean:\n\nsplm::spgm(..., endog=, instruments=, lag=TRUE, spatial.error=FALSE)\n\nas in section 4.5 of https://doi.org/10.3390/math9111276 ?\n\nRoger\n\nOn Wed, 27 Apr 2022, Martin Hulenyi wrote:\n\n> Dea",
+      "thread_id": "thread-d129e941e714",
+      "thread_depth": 1,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-64823da9ef10",
+      "message_id": "<ee4ab66b-07df-d740-cc45-0b89b4729d5c@gmail.com>",
+      "from_name": "Martin Hulenyi",
+      "from_email_hash": "18d41608b5b9db384ee3c679b8b8aebd5942c45e02976b59143837a6c259cd4d",
+      "date": "2022-04-27T13:47:56+02:00",
+      "subject": "[R-sig-Geo] 2SLS in spatial panel model",
+      "subject_clean": "2SLS in spatial panel model",
+      "in_reply_to": "<6474350-bc3b-e71f-c869-c7e142293e25@reclus2.nhh.no>",
+      "references": [
+        "<379e25bf-0b6f-7760-1db6-f94e84b3dd3d@gmail.com>",
+        "<6474350-bc3b-e71f-c869-c7e142293e25@reclus2.nhh.no>"
+      ],
+      "body_plain": "Thanks!\n\nIs there also possibility to show the first stage results?\n\nBest,\n\nMartin\n\nOn 27. 4. 2022 12:22, Roger Bivand wrote:\n> Do you mean:\n>\n> splm::spgm(..., endog=, instruments=, lag=TRUE, spatial.error=FALSE)\n>\n> as in section 4.5 of https://doi.org/10.3390/math9111276 ?\n>\n> Roger\n>\n> On Wed, 27 Apr 2022, Martin Hulenyi wrote:\n>\n>> Dear all,\n>>\n>> I would like to ask if there is a package that allows to implement \n>> 2SLS in spatial panel setting (we have an endogenous independent \n>> variable we want to instrument). If not, do you know if it is \n>> possible to implement it in other software?\n>>\n>> Best,\n>>\n>> Martin\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=05%7C01%7CRoger.Bivand%40nhh.no%7C324563e1a9bf48c8cea908da28366dc6%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637866511629822477%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000%7C%7C%7C&amp;sdata=%2Fcdcyurmp5cIHoA3q99Sa0i2x1uA9jEtiE0KRZKQTKo%3D&amp;reserved=0 \n>>\n>>\n>",
+      "body_snippet": "Thanks!\n\nIs there also possibility to show the first stage results?\n\nBest,\n\nMartin\n\nOn 27. 4. 2022 12:22, Roger Bivand wrote:\n> Do you mean:\n>\n> splm::spgm(..., endog=, instruments=, lag=TRUE, spatial",
+      "thread_id": "thread-d129e941e714",
+      "thread_depth": 2,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-bdce9188f5e9",
+      "message_id": "<7712fda8-82aa-1386-59d3-8ad91f2659c@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2022-04-27T17:50:23+02:00",
+      "subject": "[R-sig-Geo] 2SLS in spatial panel model",
+      "subject_clean": "2SLS in spatial panel model",
+      "in_reply_to": "<ee4ab66b-07df-d740-cc45-0b89b4729d5c@gmail.com>",
+      "references": [
+        "<379e25bf-0b6f-7760-1db6-f94e84b3dd3d@gmail.com>",
+        "<6474350-bc3b-e71f-c869-c7e142293e25@reclus2.nhh.no>",
+        "<ee4ab66b-07df-d740-cc45-0b89b4729d5c@gmail.com>"
+      ],
+      "body_plain": "Yes, but you need to use debug(splm::spgm), then debug() functions as \nchosen in that wrapper from (probably) ivsplm. It may lead from there to \none of several other functions depending on choices made in your \narguments - like \"fixed\", or implied by those choices.\n\nEither assign a copy of the object you need to the global environment \nusing <<-, or use saveRDS() to save a copy of the object you need to file \nfor access later.\n\nYou'll need several attempts to see where to add debug() calls as you move \ntowards finding what you need.\n\nHope this helps,\n\nRoger\n\n\nOn Wed, 27 Apr 2022, Martin Hulenyi wrote:\n\n> Thanks!\n>\n> Is there also possibility to show the first stage results?\n>\n> Best,\n>\n> Martin\n>\n> On 27. 4. 2022 12:22, Roger Bivand wrote:\n>>  Do you mean:\n>>\n>>  splm::spgm(..., endog=, instruments=, lag=TRUE, spatial.error=FALSE)\n>>\n>>  as in section 4.5 of\n>>  https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdoi.org%2F10.3390%2Fmath9111276&amp;data=05%7C01%7CRoger.Bivand%40nhh.no%7C090d6f14635c4b0fe46208da2843c824%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637866568955957593%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&amp;sdata=5GqzsmTWUIwGm12R3DiegUlsK7Kk8dfpWZq5i0r5BiQ%3D&amp;reserved=0\n>>  ?\n>>\n>>  Roger\n>>\n>>  On Wed, 27 Apr 2022, Martin Hulenyi wrote:\n>>\n>>>  Dear all,\n>>>\n>>>  I would like to ask if there is a package that allows to implement 2SLS\n>>>  in spatial panel setting (we have an endogenous independent variable we\n>>>  want to instrument). If not, do you know if it is possible to implement\n>>>  it in other software?\n>>>\n>>>  Best,\n>>>\n>>>  Martin\n>>>\n>>>  _______________________________________________\n>>>  R-sig-Geo mailing list\n>>>  R-sig-Geo at r-project.org\n>>>  https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=05%7C01%7CRoger.Bivand%40nhh.no%7C090d6f14635c4b0fe46208da2843c824%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637866568955957593%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&amp;sdata=rjcKTVqfSw%2Bixr4Luph0bqoh6aTnCMgPvC2Q6lDPxRs%3D&amp;reserved=0 \n>>> \n>>> \n>> \n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "Yes, but you need to use debug(splm::spgm), then debug() functions as \nchosen in that wrapper from (probably) ivsplm. It may lead from there to \none of several other functions depending on choices mad",
+      "thread_id": "thread-d129e941e714",
+      "thread_depth": 3,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-e03377b00298",
+      "message_id": "<AM9PR01MB834739FDA48AA000494AD334E4FA9@AM9PR01MB8347.eurprd01.prod.exchangelabs.com>",
+      "from_name": "Heuvelink, Gerard",
+      "from_email_hash": "e28909e4070cd068e7eafe4df32f2ecab3727f27d6f41647dd17a97118b4bd5f",
+      "date": "2022-04-27T19:29:14Z",
+      "subject": "[R-sig-Geo] cokriging simulation",
+      "subject_clean": "cokriging simulation",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear List,\n\nWe wish to create simulations from a cokriging model. I used to be able to do that in the past, but now I am struggling to get the correlations preserved. I dimplified the problem to a simple case with cross-correlation 0.8 (see script below), but simulations show no correlation at all. What do I do wrong? Thank you for your help, Gerard\n\nlibrary(gstat)\nset.seed(12345)\n\nd <- data.frame(0,0,0,0)\nnames(d) <- c(\"x\",\"y\",\"lmCres\",\"lmNres\")\ncoordinates(d) = ~x+y\n\nnugC <- 1; nugN <- 1; nugCN <- 0.8\npsillC <- 5; psillN <- 5; psillCN <- 4\nrange <- 10\n\ng_l <- gstat(id=c(\"lmCres\"),formula=lmCres~1,data=d,beta=0,nmax=100,\n             model=vgm(psillC,\"Sph\",range=10,nugC))\ng_l <- gstat(g_l,id=\"lmNres\",formula=lmNres~1,data=d,beta=0,nmax=100,\n             model=vgm(psillN,\"Sph\",range=10,nugN))\ng_l <- gstat(g_l,id=c(\"lmCres\",\"lmNres\"),model=vgm(psillCN,\"Sph\",range=10,nugCN))\n\ndf <- data.frame(x=1,y=1)\ncoordinates(df) <- ~x+y\n\nnsim <- 250\nsim <- predict(g_l,df,nsim=nsim)\nsimdf <- as.data.frame(sim)\n\nplot(as.numeric(simdf[1,3:(nsim+2)]),as.numeric(simdf[1,(nsim+3):((2*nsim)+2)]))\ncor(as.numeric(simdf[1,3:(nsim+2)]),as.numeric(simdf[1,(nsim+3):((2*nsim)+2)]))\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear List,\n\nWe wish to create simulations from a cokriging model. I used to be able to do that in the past, but now I am struggling to get the correlations preserved. I dimplified the problem to a sim",
+      "thread_id": "thread-e03377b00298",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-a7c40af20de4",
+      "message_id": "<48c45571-e625-526a-5442-14db30348af7@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2022-04-29T17:35:48+02:00",
+      "subject": "[R-sig-Geo] cokriging simulation",
+      "subject_clean": "cokriging simulation",
+      "in_reply_to": "<AM9PR01MB834739FDA48AA000494AD334E4FA9@AM9PR01MB8347.eurprd01.prod.exchangelabs.com>",
+      "references": [
+        "<AM9PR01MB834739FDA48AA000494AD334E4FA9@AM9PR01MB8347.eurprd01.prod.exchangelabs.com>"
+      ],
+      "body_plain": "Thanks Gerard, that has now been fixed in\nhttps://github.com/r-spatial/gstat/issues/106\n\nThe problem was probably introduced in 2016 when I swapped out the \nshipped matrix library with R's native one. The two differed in how a \nCholeski decomposition was returned .\n\nOn 27/04/2022 21:29, Heuvelink, Gerard wrote:\n> Dear List,\n> \n> We wish to create simulations from a cokriging model. I used to be able to do that in the past, but now I am struggling to get the correlations preserved. I dimplified the problem to a simple case with cross-correlation 0.8 (see script below), but simulations show no correlation at all. What do I do wrong? Thank you for your help, Gerard\n> \n> library(gstat)\n> set.seed(12345)\n> \n> d <- data.frame(0,0,0,0)\n> names(d) <- c(\"x\",\"y\",\"lmCres\",\"lmNres\")\n> coordinates(d) = ~x+y\n> \n> nugC <- 1; nugN <- 1; nugCN <- 0.8\n> psillC <- 5; psillN <- 5; psillCN <- 4\n> range <- 10\n> \n> g_l <- gstat(id=c(\"lmCres\"),formula=lmCres~1,data=d,beta=0,nmax=100,\n>               model=vgm(psillC,\"Sph\",range=10,nugC))\n> g_l <- gstat(g_l,id=\"lmNres\",formula=lmNres~1,data=d,beta=0,nmax=100,\n>               model=vgm(psillN,\"Sph\",range=10,nugN))\n> g_l <- gstat(g_l,id=c(\"lmCres\",\"lmNres\"),model=vgm(psillCN,\"Sph\",range=10,nugCN))\n> \n> df <- data.frame(x=1,y=1)\n> coordinates(df) <- ~x+y\n> \n> nsim <- 250\n> sim <- predict(g_l,df,nsim=nsim)\n> simdf <- as.data.frame(sim)\n> \n> plot(as.numeric(simdf[1,3:(nsim+2)]),as.numeric(simdf[1,(nsim+3):((2*nsim)+2)]))\n> cor(as.numeric(simdf[1,3:(nsim+2)]),as.numeric(simdf[1,(nsim+3):((2*nsim)+2)]))\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48151 Muenster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "Thanks Gerard, that has now been fixed in\nhttps://github.com/r-spatial/gstat/issues/106\n\nThe problem was probably introduced in 2016 when I swapped out the \nshipped matrix library with R's native one.",
+      "thread_id": "thread-e03377b00298",
+      "thread_depth": 1,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-973c241a0f16",
+      "message_id": "<ce7eae76-98ab-df3a-574a-e25e7961c08d@gmail.com>",
+      "from_name": "Tomislav Hengl",
+      "from_email_hash": "1c592038322bbeaa3bb702d8d64ab9c83a31b70d7020477c6836f5af383d3072",
+      "date": "2022-04-29T19:51:51+02:00",
+      "subject": "[R-sig-Geo] Summer School 2022 “Open Source solutions for Earth system data (R, OSGeo, Python)” Friendly City Hotel Siegburg (close to Bonn) 28.08.–03.09.",
+      "subject_clean": "Summer School 2022 “Open Source solutions for Earth system data (R, OSGeo, Python)” Friendly City Hotel Siegburg (close to Bonn) 28.08.–03.09.",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Registrations for the Summer School 2022 \"Open Source solutions for \nEarth system data (R, OSGeo, Python)\" Friendly City Hotel Siegburg \n(close to Bonn) 28.08.?03.09. are now open!\n\nhttps://opengeohub.org/summer-school/siegburg-2022/\n\nLearn #rspatial, Python and Julia from the leading devs and applied \nresearchers. Organized jointly with 52?North GmbH. Watch interesting \nbenchmarkings comparing spatial and spatiotemporal analysis in R, OSGeo, \nPyton and Julia.\n\nThe Summer School will include:\n- Live presentations and demos by leading R and OSGeo developers;\n- 5 days of Earth System Analysis training sessions and R / OSGeo tutorials;\n- Including 1 day of R-Spatial workshops;\n- Including 1 focus day \"extreme events\";\n- Discussion panels and break-out rooms.\n\nLecturers / blocks (unsorted):\n\n- Martin Schultz (Forschungszentrum J?lich GmbH Institute for Advanced \nSimulation (IAS) J?lich Supercomputing Centre (JSC) [KISTE-Projekt]) \n\"Machine learning for weather, air quality and climate\";\n- Ribana Roscher (Remote Sensing Group Institute of Geodesy and \nGeoinformation (IGG), University of Bonn [KISTE-Projekt]) \"Explainable ML\";\n- Markus Konkol (Post-doctoral researcher, 52?North Spatial Information \nResearch GmbH) \"Open Reproducible Research (R tutorial)\";\n- Patrick Schratz (mlr-org core team at cynkra) \"Spatial modeling using \nmlr3 (R tutorial)\";\n- Christian Autermann (Research Software Engineer, 52?North Spatial \nInformation Research GmbH) \"GeoNode as Research Data Infrastructure\";\n- Markus Abel (Ambrosys GmbH [KISTE-Projekt]) \"Stochastic processes, \nanalysis, examples (Python tutorial)\";\n-  Jakub Nowosad (Assistant Professor, Adam Mickiewicz University) \n\"Geocomputation with R's guide to reproducible spatial data analysis (R \ntutorial)\";\n- Leandro Parente (Post-doctoral researcher, OpenGeoHub) \"Accessing and \nusing data cubes: spatial overlay, visualization and modeling (R and \nPython tutorial)\";\n- Krzystof Dyba (Adam Mickiewicz University) \"Cross-language \nbenchmarking: R, Python, Julia\";\n- Martijn Visser & Maarten Pronk (Deltares) \"JuliaGeo: a gentle \nintroduction\";\n- Edzer Pebesma (Professor IfGI, University of Muenster) \"R-spatial \nupdates: sf, sftime, stars (R tutorial)\";\n- Martin Fleischmann (Research Associate in the Geographic Data Science \nLab at the University of Liverpool) \"Geo-pandas\";\n-  Tim Appelhans (Director of Data Science - Meter Group) \"Visualization \ncloud-optimized (large) datasets in R (R tutorial)\";\n\nThis Summer School is a not-for-profit event and can be followed online. \nThe cost-recovery registration fees are (full price): 625 EUR. Reduced \nprice: 475 EUR for full-time students / ODA-recipient country.\n\nRegistration deadline: May 28th 2022.\n\n-- \nT. (Tom) Hengl\nTechnical director / Vice Chair\nThe OpenGeoHub Foundation\nVisiting address: Agro Business Park 10, 6708PW Wageningen, NL\nTel: +31 (0)317 427537\nUrl: https://opengeohub.org/about\nTwitter: https://twitter.com/opengeohub\nMedium: https://opengeohub.medium.com/\nhttps://www.youtube.com/c/OpenGeoHubFoundation\nskype:tom.hengl?chat\nPublications: http://scholar.google.com/citations?user=2oYU7S8AAAAJ",
+      "body_snippet": "Registrations for the Summer School 2022 \"Open Source solutions for \nEarth system data (R, OSGeo, Python)\" Friendly City Hotel Siegburg \n(close to Bonn) 28.08.?03.09. are now open!\n\nhttps://opengeohub",
+      "thread_id": "thread-973c241a0f16",
+      "thread_depth": 0,
+      "month": "2022-04"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-7d9670eacf74",
+      "subject": "Contour plot",
+      "message_count": 3,
+      "participants": [
+        "Micha Silver",
+        "sownal chand"
+      ],
+      "started": "2022-04-05T20:10:00+12:00",
+      "last_reply": "2022-04-06T03:45:00+12:00",
+      "root_message_id": "msg-7d9670eacf74"
+    },
+    {
+      "id": "thread-44b9b279134b",
+      "subject": "R-sig-Geo Digest, Vol 224, Issue 2",
+      "message_count": 1,
+      "participants": [
+        "Michael Marsh"
+      ],
+      "started": "2022-04-06T09:24:31-07:00",
+      "last_reply": "2022-04-06T09:24:31-07:00",
+      "root_message_id": "msg-44b9b279134b"
+    },
+    {
+      "id": "thread-9cb26bed0488",
+      "subject": "F,a,",
+      "message_count": 1,
+      "participants": [
+        "Clinton Nkolokosa"
+      ],
+      "started": "2022-04-06T11:08:27+01:00",
+      "last_reply": "2022-04-06T11:08:27+01:00",
+      "root_message_id": "msg-9cb26bed0488"
+    },
+    {
+      "id": "thread-631956a54c2a",
+      "subject": "Vacancies: Post-doctoral data scientist: Geocomputation for global environmental monitoring / 2x PhD candidates",
+      "message_count": 1,
+      "participants": [
+        "Tomislav Hengl"
+      ],
+      "started": "2022-04-08T12:51:42+02:00",
+      "last_reply": "2022-04-08T12:51:42+02:00",
+      "root_message_id": "msg-631956a54c2a"
+    },
+    {
+      "id": "thread-8a516668bdc9",
+      "subject": "MOOD Summer School \"Analytical epidemiology, machine learning and disease mapping\" 20-22 June 2022, Montpellier, France",
+      "message_count": 1,
+      "participants": [
+        "Tomislav Hengl"
+      ],
+      "started": "2022-04-13T10:51:14+02:00",
+      "last_reply": "2022-04-13T10:51:14+02:00",
+      "root_message_id": "msg-8a516668bdc9"
+    },
+    {
+      "id": "thread-4610bed2e715",
+      "subject": "Earthdata CMR access",
+      "message_count": 9,
+      "participants": [
+        "Ben Tupper",
+        "Joe Lee"
+      ],
+      "started": "2022-04-13T12:41:13-04:00",
+      "last_reply": "2022-04-14T09:13:37-04:00",
+      "root_message_id": "msg-4610bed2e715"
+    },
+    {
+      "id": "thread-1910d8903d5a",
+      "subject": "Inconsistent null geometry handling in sf and terra",
+      "message_count": 2,
+      "participants": [
+        "Barry Rowlingson",
+        "Edzer Pebesma"
+      ],
+      "started": "2022-04-15T17:11:33+01:00",
+      "last_reply": "2022-04-17T11:09:28+02:00",
+      "root_message_id": "msg-1910d8903d5a"
+    },
+    {
+      "id": "thread-7bd4098a4ba5",
+      "subject": "mlr3spatial",
+      "message_count": 1,
+      "participants": [
+        "Giuseppe Amatulli"
+      ],
+      "started": "2022-04-17T18:40:17+02:00",
+      "last_reply": "2022-04-17T18:40:17+02:00",
+      "root_message_id": "msg-7bd4098a4ba5"
+    },
+    {
+      "id": "thread-35f48bcb1c34",
+      "subject": "gdalUtils future...",
+      "message_count": 1,
+      "participants": [
+        "Jonathan Greenberg"
+      ],
+      "started": "2022-04-21T08:30:46-07:00",
+      "last_reply": "2022-04-21T08:30:46-07:00",
+      "root_message_id": "msg-35f48bcb1c34"
+    },
+    {
+      "id": "thread-d129e941e714",
+      "subject": "2SLS in spatial panel model",
+      "message_count": 4,
+      "participants": [
+        "Martin Hulenyi",
+        "Roger Bivand"
+      ],
+      "started": "2022-04-27T12:11:58+02:00",
+      "last_reply": "2022-04-27T17:50:23+02:00",
+      "root_message_id": "msg-d129e941e714"
+    },
+    {
+      "id": "thread-e03377b00298",
+      "subject": "cokriging simulation",
+      "message_count": 2,
+      "participants": [
+        "Edzer Pebesma",
+        "Heuvelink, Gerard"
+      ],
+      "started": "2022-04-27T19:29:14+00:00",
+      "last_reply": "2022-04-29T17:35:48+02:00",
+      "root_message_id": "msg-e03377b00298"
+    },
+    {
+      "id": "thread-973c241a0f16",
+      "subject": "Summer School 2022 “Open Source solutions for Earth system data (R, OSGeo, Python)” Friendly City Hotel Siegburg (close to Bonn) 28.08.–03.09.",
+      "message_count": 1,
+      "participants": [
+        "Tomislav Hengl"
+      ],
+      "started": "2022-04-29T19:51:51+02:00",
+      "last_reply": "2022-04-29T19:51:51+02:00",
+      "root_message_id": "msg-973c241a0f16"
+    }
+  ]
+}

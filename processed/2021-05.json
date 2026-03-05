@@ -1,0 +1,200 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2021-05",
+  "messages": [
+    {
+      "id": "msg-677ff19bef56",
+      "message_id": "<BN6PR22MB0132840D5038894CC10DE1A3A62C9@BN6PR22MB0132.namprd22.prod.outlook.com>",
+      "from_name": "Rodofili, Esteban Nicolas",
+      "from_email_hash": "1fce5dbf3fc26141bf33259d671962343ad9dc1026f1e48f302d862a02528d58",
+      "date": "2021-05-18T18:29:10Z",
+      "subject": "[R-sig-Geo] geolocating image with info of other image",
+      "subject_clean": "geolocating image with info of other image",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi! I am trying to use the geolocation information of a tiff image to geolocate another. Both images are frames from the same drone footage, with the drone still over the same position. The one geolocated is a tif and the one to geolocate is a png, and it is to be converted to a tif. However, when I open the new tif in Google Earth Engine, I got it where I want it, but its almost all white. I have also noticed that the stack created from the original .png has a fourth layer that should not be there, all of it at maximum spectral value of 255. Do you know hwat might be going on? I have also tried with the first image not as a png but as a tif without geolocation and the same happened. I have also tried with bricks instead of stacks. I tried first with rasters, but the result was even worse. All the image was white. Here is my code:\n\nlibrary(raster)\nlibrary(rgdal)\nlibrary(ggplot2)\nlibrary(dplyr)\n\n## Loading image of interest as raster\nR_test <-\n  stack(\"Pt6_clear.png\")\nR_test ## It does not have any CRS\nplot(R_test)\n\n\n## Loading image already geolocated from GIS\nframe2 <-\n  stack(\"Pt6_frame2.tif\")\nframe2 ##\nplot(frame2)\n# Give image of interest the lat/lon coords of the geolocated image as appear in its metadata in the console\nextent(R_test) <- c(-9073461, -9073269, 2974255, 2974366)\n# Copy the projection data of the geolocated image as appears in the console to the image of interest\nprojection(R_test) <- CRS(\"+proj=merc +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs\")\nplot(R_test)\n\n## Write new geolocated image into a file\nwriteRaster(R_test, \"R_test_geolocated.tif\", format = \"GTiff\")\n\n\nEsteban N. Rodofili\nPh.D. Student - Interdisciplinary Ecology Program, SNRE\nLic. in Biology - Mgtr. in Public Policy\nMarine Geomatics Lab\nUniversity of Florida\nUF Climate Action Plan - Transportation Working Group\n352-284-6828\nerodofili at ufl.edu\nhttps://www.thelecourslab.org/\n\nI stand in solidarity with Graduate Assistants United and demand the University of Florida:\n1.      Follow through with its agreement to pay certain fees on behalf of GAs as outlined in Article 10.6 of our Collective Bargaining Agreement.\n2.      Discontinue all business relationships with Aramark due to their use of prison labor, and directly consult with the Food Justice League, Gator NAACP, Dream Defenders, and allied groups on the upcoming food service vendor contract to ensure racial equity.\n3.      Immediately reverse its plan to demolish the Maguire and UVS Graduate Family Housing complexes.\n4.      Immediately revoke its new furlough policy.\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi! I am trying to use the geolocation information of a tiff image to geolocate another. Both images are frames from the same drone footage, with the drone still over the same position. The one geoloc",
+      "thread_id": "thread-677ff19bef56",
+      "thread_depth": 0,
+      "month": "2021-05"
+    },
+    {
+      "id": "msg-912b27391682",
+      "message_id": "<YQXPR0101MB1176B82961DCFD4C23129CD1C02B9@YQXPR0101MB1176.CANPRD01.PROD.OUTLOOK.COM>",
+      "from_name": "Jeffrey Boggs",
+      "from_email_hash": "f5d3edd3fb4560a508755198b60b8959aae8a99c1a71ddec36dbf390347b637e",
+      "date": "2021-05-19T21:33:01Z",
+      "subject": "[R-sig-Geo] Seeking help implementing nb2listwdist() to find inverse distance matrix.",
+      "subject_clean": "Seeking help implementing nb2listwdist() to find inverse distance matrix.",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\n\nI am attempting to write R code for the spdep package to reproduce the Moran's I for point data examples found in David Ebdon (1985) Statistics In Geography?, 2nd Edition on pages 161-162, Table 7.11\n\nI am unable to implement the nb2listdist() operation to make an inverse distance weighted matrix. Some of what follows is a solution posted by Dr. Bivand using a slightly different approach ( https://r.789695.n4.nabble.com/troubles-performing-Moran-I-test-td878799.html ). While I have a solution, I still want to also figure out how to use nb2listdistw, too. The relevant part of my code is:\n\n############################\nid <- c(\"A\",\"B\",\"C\",\"D\",\"E\")\nx <- c(2,1,3,4,5)\ny <- c(5,4,2,1,1)\nz <- c(8,5,10,42,20)\n\n## Create inverse distance matrix using boring math.\ndij.matrix <- as.matrix(dist(cbind(x, y)))\ninv.dij.matrix <- 1/dij.matrix\ndiag(inv.dij.matrix) <- 0\n\ninstall.packages(  \"spdep\",\n  \"sp\",   dependencies = TRUE  )\nlibrary(spdep)\nlibrary(sp)\n\n## create sparse matrix for spdep::Moran.test\nlw <- mat2listw(inv.dij.matrix)\nlwW2 <- nb2listw(lw$neighbours, glist=lw$weights, style=\"raw\")\n\n## calculate Moran's I assuming Normality.\nmoran.test(z, lwW2, randomisation = FALSE, alternative = \"two.sided\")\n\n# Everything works! It also mirrors Ebdon's result.\n\n## Create inverse distance matrix using spdep::nb2listwdist\narf <- mat2listw(dij.matrix)\narf2  <- nb2listwdist( arf$neighbours,  z, type = \"idw\",  style = \"raw\", longlat = NULL)\n\n## Calculate Moran's I again.\nmoran.test(z, arf, randomisation = FALSE, alternative = \"two.sided\")\n\n######################\n\nSadly, when I run arf2  <- nb2listwdist( arf$neighbours,  z, type = \"idw\",  style = \"raw\", longlat = NULL), I get this error message:\n\n Error in UseMethod(\"st_coordinates\") :\n  no applicable method for 'st_coordinates' applied to an object of class \"c('double', 'numeric')\"\n\nI have found nothing on Google, Stack Exchange, or R-Help to help. So far, manually digging through this newsgroup has turned nothing up. Any help is greatly appreciated.\n\nRegards,\nJeff Boggs\n\n\nJeff Boggs | Associate Professor\nDepartment of Geography & Tourism Studies\nNCO Research Associate & Associate Director | Centre for Canadian Studies\nBrock University\nSt. Catharines | Ontario | Canada\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI am attempting to write R code for the spdep package to reproduce the Moran's I for point data examples found in David Ebdon (1985) Statistics In Geography?, 2nd Edition on pages 161-162, Tab",
+      "thread_id": "thread-912b27391682",
+      "thread_depth": 0,
+      "month": "2021-05"
+    },
+    {
+      "id": "msg-fca186daaf5c",
+      "message_id": "<de780-c115-5e8c-423b-c2c8cd9eebd@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2021-05-20T11:09:24+02:00",
+      "subject": "[R-sig-Geo] Seeking help implementing nb2listwdist() to find inverse distance matrix.",
+      "subject_clean": "Seeking help implementing nb2listwdist() to find inverse distance matrix.",
+      "in_reply_to": "<YQXPR0101MB1176B82961DCFD4C23129CD1C02B9@YQXPR0101MB1176.CANPRD01.PROD.OUTLOOK.COM>",
+      "references": [
+        "<YQXPR0101MB1176B82961DCFD4C23129CD1C02B9@YQXPR0101MB1176.CANPRD01.PROD.OUTLOOK.COM>"
+      ],
+      "body_plain": "On Wed, 19 May 2021, Jeffrey Boggs wrote:\n\n> Hello,\n>\n> I am attempting to write R code for the spdep package to reproduce the Moran's I for point data examples found in David Ebdon (1985) Statistics In Geography?, 2nd Edition on pages 161-162, Table 7.11\n>\n> I am unable to implement the nb2listdist() operation to make an inverse distance weighted matrix. Some of what follows is a solution posted by Dr. Bivand using a slightly different approach ( https://r.789695.n4.nabble.com/troubles-performing-Moran-I-test-td878799.html ). While I have a solution, I still want to also figure out how to use nb2listdistw, too. The relevant part of my code is:\n>\n> ############################\n> id <- c(\"A\",\"B\",\"C\",\"D\",\"E\")\n> x <- c(2,1,3,4,5)\n> y <- c(5,4,2,1,1)\n> z <- c(8,5,10,42,20)\n>\n> ## Create inverse distance matrix using boring math.\n> dij.matrix <- as.matrix(dist(cbind(x, y)))\n> inv.dij.matrix <- 1/dij.matrix\n> diag(inv.dij.matrix) <- 0\n>\n> install.packages(  \"spdep\",\n>  \"sp\",   dependencies = TRUE  )\n> library(spdep)\n> library(sp)\n>\n> ## create sparse matrix for spdep::Moran.test\n> lw <- mat2listw(inv.dij.matrix)\n> lwW2 <- nb2listw(lw$neighbours, glist=lw$weights, style=\"raw\")\n\nThis cannot work as there is no style \"raw\". I guess you mean \"B\".\n\n>\n> ## calculate Moran's I assuming Normality.\n> moran.test(z, lwW2, randomisation = FALSE, alternative = \"two.sided\")\n\nWith\n\nlwW2 <- nb2listw(lw$neighbours, glist=lw$weights, style=\"B\")\n\n> moran.test(z, lwW2, randomisation = FALSE, alternative = \"two.sided\")\n\n \tMoran I test under normality\n\ndata:  z\nweights: lwW2\n\nMoran I statistic standard deviate = 0.91961, p-value = 0.3578\nalternative hypothesis: two.sided\nsample estimates:\nMoran I statistic       Expectation          Variance\n       -0.08248781       -0.25000000        0.03318058\n\n\n\n>\n> # Everything works! It also mirrors Ebdon's result.\n>\n> ## Create inverse distance matrix using spdep::nb2listwdist\n> arf <- mat2listw(dij.matrix)\n> arf2  <- nb2listwdist( arf$neighbours,  z, type = \"idw\",  style = \"raw\", longlat = NULL)\n>\n\nIf you name the arguments, you see that you are missing x (an 'sp' 'sf', \nor 'sfc' object) and passing the variable under analysis z, not the \npoints.\n\n> arf2  <- nb2listwdist( arf$neighbours,  x=SpatialPoints(cbind(x, y)), \ntype = \"idw\",  style = \"raw\")\n> moran.test(z, arf2, randomisation = FALSE, alternative = \"two.sided\")\n\n \tMoran I test under normality\n\ndata:  z\nweights: arf2\n\nMoran I statistic standard deviate = 0.91961, p-value = 0.3578\nalternative hypothesis: two.sided\nsample estimates:\nMoran I statistic       Expectation          Variance\n       -0.08248781       -0.25000000        0.03318058\n\nwhich looks the same to me.\n\nHope this helps,\n\nRoger\n\n\n\n> ## Calculate Moran's I again.\n> moran.test(z, arf, randomisation = FALSE, alternative = \"two.sided\")\n>\n> ######################\n>\n> Sadly, when I run arf2  <- nb2listwdist( arf$neighbours,  z, type = \"idw\",  style = \"raw\", longlat = NULL), I get this error message:\n>\n> Error in UseMethod(\"st_coordinates\") :\n>  no applicable method for 'st_coordinates' applied to an object of class \"c('double', 'numeric')\"\n>\n> I have found nothing on Google, Stack Exchange, or R-Help to help. So far, manually digging through this newsgroup has turned nothing up. Any help is greatly appreciated.\n>\n> Regards,\n> Jeff Boggs\n>\n>\n> Jeff Boggs | Associate Professor\n> Department of Geography & Tourism Studies\n> NCO Research Associate & Associate Director | Centre for Canadian Studies\n> Brock University\n> St. Catharines | Ontario | Canada\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 19 May 2021, Jeffrey Boggs wrote:\n\n> Hello,\n>\n> I am attempting to write R code for the spdep package to reproduce the Moran's I for point data examples found in David Ebdon (1985) Statistics ",
+      "thread_id": "thread-912b27391682",
+      "thread_depth": 1,
+      "month": "2021-05"
+    },
+    {
+      "id": "msg-a7a280f636c3",
+      "message_id": "<BN6PR22MB0132B15F22F66164832B83EFA6299@BN6PR22MB0132.namprd22.prod.outlook.com>",
+      "from_name": "Rodofili, Esteban Nicolas",
+      "from_email_hash": "1fce5dbf3fc26141bf33259d671962343ad9dc1026f1e48f302d862a02528d58",
+      "date": "2021-05-21T00:21:36Z",
+      "subject": "[R-sig-Geo] Geolocating and writing many tiffs at the same time",
+      "subject_clean": "Geolocating and writing many tiffs at the same time",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi! I have found a way to give a png the CRS and location of a geolocated tiff, and to convert the png to tiff. Now I have to apply it to different pngs in the same folder (all named Pt6_frame1, Pt6_frame2, etc) and write the individual new tiff files as Pt6_frame1_geolocated, Pt6_frame2_geolocated, etc. Does anyone have an idea of how to do so? I have tried the code in various posts, using for loops and functions, but I get various errors. Thanks.\n\n**## Loading image of interest as stack**\n\nR_test <-\n  stack(\"Pt6_clear.png\")\n\n**# Give image of interest the lat/lon coords of the geolocated image as appear in its metadata in the console**\n\nextent(R_test) <- c(-9073461, -9073269, 2974255, 2974366)\n\n**# Copy the projection data of the geolocated image as appears in the console to the image of interest**\n\nprojection(R_test) <- CRS(\"+proj=merc +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs\")\n\n**## Write new geolocated image into a file**\n\nwriteRaster(R_test, \"R_test_geolocated.tif\",\n            format=\"GTiff\",\n            overwrite=TRUE,\n            NAflag=-9999)\n\nEsteban N. Rodofili\nPh.D. Student - Interdisciplinary Ecology Program, SNRE\nLic. in Biology - Mgtr. in Public Policy\nMarine Geomatics Lab\nUniversity of Florida\nUF Climate Action Plan - Transportation Working Group\n352-284-6828\nerodofili at ufl.edu\nhttps://www.thelecourslab.org/\n\nI stand in solidarity with Graduate Assistants United and demand the University of Florida:\n1.      Follow through with its agreement to pay certain fees on behalf of GAs as outlined in Article 10.6 of our Collective Bargaining Agreement.\n2.      Discontinue all business relationships with Aramark due to their use of prison labor, and directly consult with the Food Justice League, Gator NAACP, Dream Defenders, and allied groups on the upcoming food service vendor contract to ensure racial equity.\n3.      Immediately reverse its plan to demolish the Maguire and UVS Graduate Family Housing complexes.\n4.      Immediately revoke its new furlough policy.\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi! I have found a way to give a png the CRS and location of a geolocated tiff, and to convert the png to tiff. Now I have to apply it to different pngs in the same folder (all named Pt6_frame1, Pt6_f",
+      "thread_id": "thread-a7a280f636c3",
+      "thread_depth": 0,
+      "month": "2021-05"
+    },
+    {
+      "id": "msg-079f55513347",
+      "message_id": "<BN6PR22MB01329B7558B2329C590375DDA6299@BN6PR22MB0132.namprd22.prod.outlook.com>",
+      "from_name": "Rodofili, Esteban Nicolas",
+      "from_email_hash": "1fce5dbf3fc26141bf33259d671962343ad9dc1026f1e48f302d862a02528d58",
+      "date": "2021-05-21T02:31:32Z",
+      "subject": "[R-sig-Geo] Geolocating and writing many tiffs at the same time",
+      "subject_clean": "Geolocating and writing many tiffs at the same time",
+      "in_reply_to": "<BN6PR22MB0132B15F22F66164832B83EFA6299@BN6PR22MB0132.namprd22.prod.outlook.com>",
+      "references": [
+        "<BN6PR22MB0132B15F22F66164832B83EFA6299@BN6PR22MB0132.namprd22.prod.outlook.com>"
+      ],
+      "body_plain": "Solved!\n\nlibrary(raster)\nlibrary(rgdal)\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(OpenImageR)\n\n\ngeolocate <- function(input) {\n## Loading image of interest as raster\nR_test <-\n  stack(input)\nR_test ## It does not have any CRS\nplot(R_test)\n\n# Give image of interest the lat/lon coords of the geolocated image as appear in its metadata in the console\nextent(R_test) <- c(-9073461, -9073269, 2974255, 2974366)\n# Copy the projection data of the geolocated image as appears in the console to the image of interest\nprojection(R_test) <- CRS(\"+proj=merc +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs\")\n\n## Write new geolocated image into a file\n\nwriteRaster(R_test,\n            filename=sub(\".png\", \"_geolocated.tif\", input),\n            format=\"GTiff\",\n            overwrite=TRUE,\n            NAflag=-9999)\n}\n\n\nfilenames <- list.files(path = \".\",  #The point means the working directory\n                        # Now follows a regular expression that matches:\n                        pattern = \".png\",\n                        full.names = TRUE)\nfor (f in filenames) {\n  geolocate(f)\n}\n\nEsteban N. Rodofili\nPh.D. Student - Interdisciplinary Ecology Program, SNRE\nLic. in Biology - Mgtr. in Public Policy\nMarine Geomatics Lab\nUniversity of Florida\nUF Climate Action Plan - Transportation Working Group\n352-284-6828\nerodofili at ufl.edu\nhttps://www.thelecourslab.org/\n\nI stand in solidarity with Graduate Assistants United and demand the University of Florida:\n1.      Follow through with its agreement to pay certain fees on behalf of GAs as outlined in Article 10.6 of our Collective Bargaining Agreement.\n2.      Discontinue all business relationships with Aramark due to their use of prison labor, and directly consult with the Food Justice League, Gator NAACP, Dream Defenders, and allied groups on the upcoming food service vendor contract to ensure racial equity.\n3.      Immediately reverse its plan to demolish the Maguire and UVS Graduate Family Housing complexes.\n4.      Immediately revoke its new furlough policy.\n\n\n________________________________\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Rodofili, Esteban Nicolas <erodofili at ufl.edu>\nSent: Thursday, May 20, 2021 8:21 PM\nTo: r-sig-geo at r-project.org <r-sig-geo at r-project.org>\nSubject: [R-sig-Geo] Geolocating and writing many tiffs at the same time\n\nHi! I have found a way to give a png the CRS and location of a geolocated tiff, and to convert the png to tiff. Now I have to apply it to different pngs in the same folder (all named Pt6_frame1, Pt6_frame2, etc) and write the individual new tiff files as Pt6_frame1_geolocated, Pt6_frame2_geolocated, etc. Does anyone have an idea of how to do so? I have tried the code in various posts, using for loops and functions, but I get various errors. Thanks.\n\n**## Loading image of interest as stack**\n\nR_test <-\n  stack(\"Pt6_clear.png\")\n\n**# Give image of interest the lat/lon coords of the geolocated image as appear in its metadata in the console**\n\nextent(R_test) <- c(-9073461, -9073269, 2974255, 2974366)\n\n**# Copy the projection data of the geolocated image as appears in the console to the image of interest**\n\nprojection(R_test) <- CRS(\"+proj=merc +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs\")\n\n**## Write new geolocated image into a file**\n\nwriteRaster(R_test, \"R_test_geolocated.tif\",\n            format=\"GTiff\",\n            overwrite=TRUE,\n            NAflag=-9999)\n\nEsteban N. Rodofili\nPh.D. Student - Interdisciplinary Ecology Program, SNRE\nLic. in Biology - Mgtr. in Public Policy\nMarine Geomatics Lab\nUniversity of Florida\nUF Climate Action Plan - Transportation Working Group\n352-284-6828\nerodofili at ufl.edu\nhttps://urldefense.proofpoint.com/v2/url?u=https-3A__www.thelecourslab.org_&d=DwICAg&c=sJ6xIWYx-zLMB3EPkvcnVg&r=JPNgOv5us8uAguSZncngjd5s5z0ipng9nnp7uq0axoI&m=1pC7ri4XHqeWYavskPdPUhTZ5aSx6YKOUXDpG4uGVpY&s=3ObX7Vn7iq8WknN9RhbTrlz4ESoiqbdgcGZtaaSDC3M&e=\n\nI stand in solidarity with Graduate Assistants United and demand the University of Florida:\n1.      Follow through with its agreement to pay certain fees on behalf of GAs as outlined in Article 10.6 of our Collective Bargaining Agreement.\n2.      Discontinue all business relationships with Aramark due to their use of prison labor, and directly consult with the Food Justice League, Gator NAACP, Dream Defenders, and allied groups on the upcoming food service vendor contract to ensure racial equity.\n3.      Immediately reverse its plan to demolish the Maguire and UVS Graduate Family Housing complexes.\n4.      Immediately revoke its new furlough policy.\n\n\n\n        [[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at r-project.org\nhttps://urldefense.proofpoint.com/v2/url?u=https-3A__stat.ethz.ch_mailman_listinfo_r-2Dsig-2Dgeo&d=DwICAg&c=sJ6xIWYx-zLMB3EPkvcnVg&r=JPNgOv5us8uAguSZncngjd5s5z0ipng9nnp7uq0axoI&m=1pC7ri4XHqeWYavskPdPUhTZ5aSx6YKOUXDpG4uGVpY&s=gCIeuZ55ZMWoqghaNxDNY_kBMOi_d1_IHxGxPBplOgg&e=\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Solved!\n\nlibrary(raster)\nlibrary(rgdal)\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(OpenImageR)\n\n\ngeolocate <- function(input) {\n## Loading image of interest as raster\nR_test <-\n  stack(input)\nR_test ## I",
+      "thread_id": "thread-a7a280f636c3",
+      "thread_depth": 1,
+      "month": "2021-05"
+    },
+    {
+      "id": "msg-d7e0fb4d0590",
+      "message_id": "<BN6PR22MB01323CBF636590D0026706D1A6299@BN6PR22MB0132.namprd22.prod.outlook.com>",
+      "from_name": "Rodofili, Esteban Nicolas",
+      "from_email_hash": "1fce5dbf3fc26141bf33259d671962343ad9dc1026f1e48f302d862a02528d58",
+      "date": "2021-05-21T02:32:20Z",
+      "subject": "[R-sig-Geo] extracting video frames",
+      "subject_clean": "extracting video frames",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Is it possible to extract pngs from frames of a video at a particular interval in R? Thanks!\n\nEsteban N. Rodofili\nPh.D. Student - Interdisciplinary Ecology Program, SNRE\nLic. in Biology - Mgtr. in Public Policy\nMarine Geomatics Lab\nUniversity of Florida\nUF Climate Action Plan - Transportation Working Group\n352-284-6828\nerodofili at ufl.edu\nhttps://www.thelecourslab.org/\n\nI stand in solidarity with Graduate Assistants United and demand the University of Florida:\n1.      Follow through with its agreement to pay certain fees on behalf of GAs as outlined in Article 10.6 of our Collective Bargaining Agreement.\n2.      Discontinue all business relationships with Aramark due to their use of prison labor, and directly consult with the Food Justice League, Gator NAACP, Dream Defenders, and allied groups on the upcoming food service vendor contract to ensure racial equity.\n3.      Immediately reverse its plan to demolish the Maguire and UVS Graduate Family Housing complexes.\n4.      Immediately revoke its new furlough policy.\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Is it possible to extract pngs from frames of a video at a particular interval in R? Thanks!\n\nEsteban N. Rodofili\nPh.D. Student - Interdisciplinary Ecology Program, SNRE\nLic. in Biology - Mgtr. in Pub",
+      "thread_id": "thread-d7e0fb4d0590",
+      "thread_depth": 0,
+      "month": "2021-05"
+    },
+    {
+      "id": "msg-7196a59decf0",
+      "message_id": "<CAKtE6yOjLHG6MvAj3N57vWjqbdX=ZwnQpABGzGVsCzavE0OPkw@mail.gmail.com>",
+      "from_name": "Zivan Karaman",
+      "from_email_hash": "f608a153dd427cba2b35b76e0770fde2c77ce66784745838abdf743368ce538c",
+      "date": "2021-05-21T08:48:29+02:00",
+      "subject": "[R-sig-Geo] extracting video frames",
+      "subject_clean": "extracting video frames",
+      "in_reply_to": "<BN6PR22MB01323CBF636590D0026706D1A6299@BN6PR22MB0132.namprd22.prod.outlook.com>",
+      "references": [
+        "<BN6PR22MB01323CBF636590D0026706D1A6299@BN6PR22MB0132.namprd22.prod.outlook.com>"
+      ],
+      "body_plain": "Perhaps you could try using the function 'av_video_images' from the\npackage 'av' (https://rdrr.io/cran/av/man/av_video_images.html).\nCheers,\nZivan\n\n\nLe ven. 21 mai 2021 ? 04:33, Rodofili, Esteban Nicolas\n<erodofili at ufl.edu> a ?crit :\n>\n> Is it possible to extract pngs from frames of a video at a particular interval in R? Thanks!\n>\n> Esteban N. Rodofili\n> Ph.D. Student - Interdisciplinary Ecology Program, SNRE\n> Lic. in Biology - Mgtr. in Public Policy\n> Marine Geomatics Lab\n> University of Florida\n> UF Climate Action Plan - Transportation Working Group\n> 352-284-6828\n> erodofili at ufl.edu\n> https://www.thelecourslab.org/\n>\n> I stand in solidarity with Graduate Assistants United and demand the University of Florida:\n> 1.      Follow through with its agreement to pay certain fees on behalf of GAs as outlined in Article 10.6 of our Collective Bargaining Agreement.\n> 2.      Discontinue all business relationships with Aramark due to their use of prison labor, and directly consult with the Food Justice League, Gator NAACP, Dream Defenders, and allied groups on the upcoming food service vendor contract to ensure racial equity.\n> 3.      Immediately reverse its plan to demolish the Maguire and UVS Graduate Family Housing complexes.\n> 4.      Immediately revoke its new furlough policy.\n>\n>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Perhaps you could try using the function 'av_video_images' from the\npackage 'av' (https://rdrr.io/cran/av/man/av_video_images.html).\nCheers,\nZivan\n\n\nLe ven. 21 mai 2021 ? 04:33, Rodofili, Esteban Nico",
+      "thread_id": "thread-d7e0fb4d0590",
+      "thread_depth": 1,
+      "month": "2021-05"
+    },
+    {
+      "id": "msg-0229430f8f0d",
+      "message_id": "<CAD+i1vWxgAzJC6euK0nTrBEeMxNDfADOtc6w3-YeyXJyMm5JvA@mail.gmail.com>",
+      "from_name": "Riaz Bibi",
+      "from_email_hash": "5a49e04125669a971f4ce84b5576ada127d8d2ddfd85bdfc3f37cb5d0777b470",
+      "date": "2021-05-26T13:51:52+09:00",
+      "subject": "[R-sig-Geo] Student request for help in Self Organizing Map (SOM)",
+      "subject_clean": "Student request for help in Self Organizing Map (SOM)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear\n\nI am Bibi, a PhD student of Environmental Science in South Korea.  I am\ncurrently writing my research paper and to deal with data I need to do Self\nOrganizing Map (SOM).\n\nI am using R version 4.1.0 (2021-05-18) with kohonen package version\n?3.0.10?.\n\nI was following this tutorial given\nhttp://rstudio-pubs-static.s3.amazonaws.com/437468_136a369149e24f24a4d0c152860ab4c3.html\n.\n\nBut I have a small issue . To check the efficiency of SOM model, I need to\nfind out topographic error, which I could not figure out.\n\nI will be really thankful if you please tell me how I can calculate\ntopographic error or any alternative term or which is used the topographic\nerror or what is topographic error as for example the quantization error is\n\"Mean distance to the closest unit in the map\".\n\nIs there anything like this for topographic error too?\n\nPlease accept my apology if I wrote or mentioned something inappropriate.\n\nLooking forward to hearing back.\n\nKind regards\n\nBibi\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear\n\nI am Bibi, a PhD student of Environmental Science in South Korea.  I am\ncurrently writing my research paper and to deal with data I need to do Self\nOrganizing Map (SOM).\n\nI am using R version 4.",
+      "thread_id": "thread-0229430f8f0d",
+      "thread_depth": 0,
+      "month": "2021-05"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-677ff19bef56",
+      "subject": "geolocating image with info of other image",
+      "message_count": 1,
+      "participants": [
+        "Rodofili, Esteban Nicolas"
+      ],
+      "started": "2021-05-18T18:29:10+00:00",
+      "last_reply": "2021-05-18T18:29:10+00:00",
+      "root_message_id": "msg-677ff19bef56"
+    },
+    {
+      "id": "thread-912b27391682",
+      "subject": "Seeking help implementing nb2listwdist() to find inverse distance matrix.",
+      "message_count": 2,
+      "participants": [
+        "Jeffrey Boggs",
+        "Roger Bivand"
+      ],
+      "started": "2021-05-19T21:33:01+00:00",
+      "last_reply": "2021-05-20T11:09:24+02:00",
+      "root_message_id": "msg-912b27391682"
+    },
+    {
+      "id": "thread-a7a280f636c3",
+      "subject": "Geolocating and writing many tiffs at the same time",
+      "message_count": 2,
+      "participants": [
+        "Rodofili, Esteban Nicolas"
+      ],
+      "started": "2021-05-21T00:21:36+00:00",
+      "last_reply": "2021-05-21T02:31:32+00:00",
+      "root_message_id": "msg-a7a280f636c3"
+    },
+    {
+      "id": "thread-d7e0fb4d0590",
+      "subject": "extracting video frames",
+      "message_count": 2,
+      "participants": [
+        "Rodofili, Esteban Nicolas",
+        "Zivan Karaman"
+      ],
+      "started": "2021-05-21T02:32:20+00:00",
+      "last_reply": "2021-05-21T08:48:29+02:00",
+      "root_message_id": "msg-d7e0fb4d0590"
+    },
+    {
+      "id": "thread-0229430f8f0d",
+      "subject": "Student request for help in Self Organizing Map (SOM)",
+      "message_count": 1,
+      "participants": [
+        "Riaz Bibi"
+      ],
+      "started": "2021-05-26T13:51:52+09:00",
+      "last_reply": "2021-05-26T13:51:52+09:00",
+      "root_message_id": "msg-0229430f8f0d"
+    }
+  ]
+}

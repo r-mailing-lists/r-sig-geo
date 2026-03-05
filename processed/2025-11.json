@@ -1,0 +1,101 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2025-11",
+  "messages": [
+    {
+      "id": "msg-21dda302dee2",
+      "message_id": "<CAKRQQ2Qd61qSPGtqR08WxNzHwU3Kffudf7SryRfb+-AhSOM4kA@mail.gmail.com>",
+      "from_name": "Jochen Albrecht",
+      "from_email_hash": "2198616cc6e77f19668fad14c9479538528a11d484fb6b80324201994be506c9",
+      "date": "2025-11-07T11:31:14-05:00",
+      "subject": "[R-sig-Geo] idw() fails to produce an 'error map' with canonical data set meuse",
+      "subject_clean": "idw() fails to produce an 'error map' with canonical data set meuse",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I am stumped by a failure of idw() to produce valid values for var1.var,\nthe weighted squared distance. Here is my rather basic script:\n\ndata(meuse)\ndata(meuse.grid)\n\n# 1. Convert Sampled Points (meuse) to SpatialPointsDataFrame (sp\nformat for gstat)\nmeuse_sp <- meuse\ncoordinates(meuse_sp) <- ~x+y\nproj4string(meuse_sp) <- CRS(\"+init=epsg:28992\")\n\n# 2. Convert Prediction Grid (meuse.grid) to SpatialPixelsDataFrame\n#    (sp format for gstat and prediction)\nmeuse_grid_sp <- meuse.grid\ncoordinates(meuse_grid_sp) <- ~x+y\ngridded(meuse_grid_sp) <- TRUE # Define it as a regular grid\nproj4string(meuse_grid_sp) <- CRS(\"+init=epsg:28992\")\n\n# We use the idw() function directly for IDW\nidw_zinc <- idw(log(zinc) ~ 1,           # Interpolate log(zinc) with\na constant mean (~1)\n                meuse_sp,                # Using the sampled data\n                newdata = meuse_grid_sp, # Predicting onto the grid\n                idp = 2.0)               # Inverse Distance Power = 2\n\nhead(idw_zinc at data)  var1.pred var1.var\n1  6.257014       NA\n2  6.399096       NA\n3  6.300862       NA\n4  6.213336       NA\n5  6.647233       NA\n6  6.482221       NA\n\nWhat am I missing here? How can prediction values be produced but the error\nvalues not?\n\n\nCheers,\n\n        Jochen\n\nDr. Jochen Albrecht, GISP (he/him/his)\n\nDepartment of Geography and Environmental Science\n<http://www.geo.hunter.cuny.edu/>\n\nHunter College CUNY\n\n695 Park Avenue\n\nNew York, NY 10065\n\nMember, Board of Directors, GIS Certification Institute\n<https://www.gisci.org/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am stumped by a failure of idw() to produce valid values for var1.var,\nthe weighted squared distance. Here is my rather basic script:\n\ndata(meuse)\ndata(meuse.grid)\n\n# 1. Convert Sampled Points (meus",
+      "thread_id": "thread-21dda302dee2",
+      "thread_depth": 0,
+      "month": "2025-11"
+    },
+    {
+      "id": "msg-a844a8e9e616",
+      "message_id": "<63500b7b-f085-4742-a554-5428b1988da3@unimib.it>",
+      "from_name": "Andrea Gilardi - Unimib",
+      "from_email_hash": "ec81c591006c38106490d5548a452b1027d187b0b8c26642997f3bd3a958e33e",
+      "date": "2025-11-07T18:00:00+01:00",
+      "subject": "[R-sig-Geo]  idw() fails to produce an 'error map' with canonical data set meuse",
+      "subject_clean": "idw() fails to produce an 'error map' with canonical data set meuse",
+      "in_reply_to": "<CAKRQQ2Qd61qSPGtqR08WxNzHwU3Kffudf7SryRfb+-AhSOM4kA@mail.gmail.com>",
+      "references": [
+        "<CAKRQQ2Qd61qSPGtqR08WxNzHwU3Kffudf7SryRfb+-AhSOM4kA@mail.gmail.com>"
+      ],
+      "body_plain": "Hi Jochen!\n\nAs far as I know, the idw estimator is just a weighted average of the \nobserved quantities (log(zinc) in your example), where the weights are \nthe square distances among the points. Such estimator does not provide \nan estimate of the prediction variance, therefore var1.var is always NA.\n\nSee also [1, Chapter 8] for more details\n\nHope that helps\n\nAndrea\n\n[1]?Bivand, R. S., Pebesma, E. J., & Gomez-Rubio, V. (2013). /Applied \nspatial data analysis with R/ (2nd ed.). Springer.\n\nOn 11/7/2025 5:31 PM, Jochen Albrecht wrote:\n> I am stumped by a failure of idw() to produce valid values for var1.var,\n> the weighted squared distance. Here is my rather basic script:\n>\n> data(meuse)\n> data(meuse.grid)\n>\n> # 1. Convert Sampled Points (meuse) to SpatialPointsDataFrame (sp\n> format for gstat)\n> meuse_sp <- meuse\n> coordinates(meuse_sp) <- ~x+y\n> proj4string(meuse_sp) <- CRS(\"+init=epsg:28992\")\n>\n> # 2. Convert Prediction Grid (meuse.grid) to SpatialPixelsDataFrame\n> #    (sp format for gstat and prediction)\n> meuse_grid_sp <- meuse.grid\n> coordinates(meuse_grid_sp) <- ~x+y\n> gridded(meuse_grid_sp) <- TRUE # Define it as a regular grid\n> proj4string(meuse_grid_sp) <- CRS(\"+init=epsg:28992\")\n>\n> # We use the idw() function directly for IDW\n> idw_zinc <- idw(log(zinc) ~ 1,           # Interpolate log(zinc) with\n> a constant mean (~1)\n>                  meuse_sp,                # Using the sampled data\n>                  newdata = meuse_grid_sp, # Predicting onto the grid\n>                  idp = 2.0)               # Inverse Distance Power = 2\n>\n> head(idw_zinc at data)  var1.pred var1.var\n> 1  6.257014       NA\n> 2  6.399096       NA\n> 3  6.300862       NA\n> 4  6.213336       NA\n> 5  6.647233       NA\n> 6  6.482221       NA\n>\n> What am I missing here? How can prediction values be produced but the error\n> values not?\n>\n>\n> Cheers,\n>\n>          Jochen\n>\n> Dr. Jochen Albrecht, GISP (he/him/his)\n>\n> Department of Geography and Environmental Science\n> <http://www.geo.hunter.cuny.edu/>\n>\n> Hunter College CUNY\n>\n> 695 Park Avenue\n>\n> New York, NY 10065\n>\n> Member, Board of Directors, GIS Certification Institute\n> <https://www.gisci.org/>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Jochen!\n\nAs far as I know, the idw estimator is just a weighted average of the \nobserved quantities (log(zinc) in your example), where the weights are \nthe square distances among the points. Such e",
+      "thread_id": "thread-21dda302dee2",
+      "thread_depth": 1,
+      "month": "2025-11"
+    },
+    {
+      "id": "msg-853270a34117",
+      "message_id": "<CAKRQQ2R3EQ7KO2v=Vj7-SMAbmdvG3S=wp7+TR_79Lf4GevWYbg@mail.gmail.com>",
+      "from_name": "Jochen Albrecht",
+      "from_email_hash": "2198616cc6e77f19668fad14c9479538528a11d484fb6b80324201994be506c9",
+      "date": "2025-11-07T12:54:11-05:00",
+      "subject": "[R-sig-Geo]  idw() fails to produce an 'error map' with canonical data set meuse",
+      "subject_clean": "idw() fails to produce an 'error map' with canonical data set meuse",
+      "in_reply_to": "<63500b7b-f085-4742-a554-5428b1988da3@unimib.it>",
+      "references": [
+        "<CAKRQQ2Qd61qSPGtqR08WxNzHwU3Kffudf7SryRfb+-AhSOM4kA@mail.gmail.com>",
+        "<63500b7b-f085-4742-a554-5428b1988da3@unimib.it>"
+      ],
+      "body_plain": "Thank you for the prompt response, Andrea. You pointed me in the right\ndirection. The crucial sentence in the Bivand et al. volume is \"*The output\nvariable is called var1.pred, and the var1.var values are NA because\ninverse distance does not provide prediction error variances.*\"\nI got confused by the fact that gstat tries to be consistent in its model\noutput across all interpolation methods. The var1.var column is a\nplaceholder to ensure the output object is standard for the whole package,\nbut it is empty because IDW is a non-statistical, exact interpolation\nalgorithm that doesn't account for prediction uncertainty.\nCheers,\n        Jochen\n\nDr. Jochen Albrecht, GISP (he/him/his)\n\nDepartment of Geography and Environmental Science\n<http://www.geo.hunter.cuny.edu/>\n\nHunter College CUNY\n\n695 Park Avenue\n\nNew York, NY 10065\n\n\n\n\n\n\nOn Fri, Nov 7, 2025 at 12:00?PM Andrea Gilardi - Unimib <\nandrea.gilardi at unimib.it> wrote:\n\n> Hi Jochen!\n>\n> As far as I know, the idw estimator is just a weighted average of the\n> observed quantities (log(zinc) in your example), where the weights are the\n> square distances among the points. Such estimator does not provide an\n> estimate of the prediction variance, therefore var1.var is always NA.\n>\n> See also [1, Chapter 8] for more details\n>\n> Hope that helps\n>\n> Andrea\n> [1] Bivand, R. S., Pebesma, E. J., & Gomez-Rubio, V. (2013). *Applied\n> spatial data analysis with R* (2nd ed.). Springer.\n>\n> On 11/7/2025 5:31 PM, Jochen Albrecht wrote:\n>\n> I am stumped by a failure of idw() to produce valid values for var1.var,\n> the weighted squared distance. Here is my rather basic script:\n>\n> data(meuse)\n> data(meuse.grid)\n>\n> # 1. Convert Sampled Points (meuse) to SpatialPointsDataFrame (sp\n> format for gstat)\n> meuse_sp <- meuse\n> coordinates(meuse_sp) <- ~x+y\n> proj4string(meuse_sp) <- CRS(\"+init=epsg:28992\")\n>\n> # 2. Convert Prediction Grid (meuse.grid) to SpatialPixelsDataFrame\n> #    (sp format for gstat and prediction)\n> meuse_grid_sp <- meuse.grid\n> coordinates(meuse_grid_sp) <- ~x+y\n> gridded(meuse_grid_sp) <- TRUE # Define it as a regular grid\n> proj4string(meuse_grid_sp) <- CRS(\"+init=epsg:28992\")\n>\n> # We use the idw() function directly for IDW\n> idw_zinc <- idw(log(zinc) ~ 1,           # Interpolate log(zinc) with\n> a constant mean (~1)\n>                 meuse_sp,                # Using the sampled data\n>                 newdata = meuse_grid_sp, # Predicting onto the grid\n>                 idp = 2.0)               # Inverse Distance Power = 2\n>\n> head(idw_zinc at data)  var1.pred var1.var\n> 1  6.257014       NA\n> 2  6.399096       NA\n> 3  6.300862       NA\n> 4  6.213336       NA\n> 5  6.647233       NA\n> 6  6.482221       NA\n>\n> What am I missing here? How can prediction values be produced but the error\n> values not?\n>\n>\n> Cheers,\n>\n>         Jochen\n>\n> Dr. Jochen Albrecht, GISP (he/him/his)\n>\n> Department of Geography and Environmental Science<http://www.geo.hunter.cuny.edu/> <http://www.geo.hunter.cuny.edu/>\n>\n> Hunter College CUNY\n>\n> 695 Park Avenue\n>\n> New York, NY 10065\n>\n> Member, Board of Directors, GIS Certification Institute<https://www.gisci.org/> <https://www.gisci.org/>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing listR-sig-Geo at r-project.orghttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you for the prompt response, Andrea. You pointed me in the right\ndirection. The crucial sentence in the Bivand et al. volume is \"*The output\nvariable is called var1.pred, and the var1.var values",
+      "thread_id": "thread-21dda302dee2",
+      "thread_depth": 2,
+      "month": "2025-11"
+    },
+    {
+      "id": "msg-ebf9c6726ff0",
+      "message_id": "<1763026595.660111273@webmail.jimdo.com>",
+      "from_name": "i@io m@iii@g oii phys@ii@-courses@org",
+      "from_email_hash": "ca8ae7fca04226cbf7116003b962efbd86b9ffdf6a68e1a8cee80f656f89cb9c",
+      "date": "2025-11-13T10:36:35+01:00",
+      "subject": "[R-sig-Geo] Spatial Statistics with R course",
+      "subject_clean": "Spatial Statistics with R course",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\nThis is the last chance to join our online course ?Spatial Statistics with R?, taking place 17?21 November.\n \nThe course will introduce spatial statistical methods and their practical implementation in R, including point pattern analysis, geostatistics, regression models, and machine learning approaches for spatial data.\n \nFor more information, please visit: [ https://www.physalia-courses.org/courses-workshops/spatial-statistics/ ]( https://www.physalia-courses.org/courses-workshops/spatial-statistics/ )\n \nBest regards,\nCarlo\n \n \n\n--------------------\n\nCarlo Pecoraro, Ph.D\n\n\nPhysalia-courses DIRECTOR\n\ninfo at physalia-courses.org\n\nmobile: +49 17645230846\n\n[ Bluesky ]( https://bsky.app/profile/physaliacourses.bsky.social ) [ Linkedin ]( https://www.linkedin.com/in/physalia-courses-a64418127/ )\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\nThis is the last chance to join our online course ?Spatial Statistics with R?, taking place 17?21 November.\n \nThe course will introduce spatial statistical methods and their practical implem",
+      "thread_id": "thread-ebf9c6726ff0",
+      "thread_depth": 0,
+      "month": "2025-11"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-21dda302dee2",
+      "subject": "idw() fails to produce an 'error map' with canonical data set meuse",
+      "message_count": 3,
+      "participants": [
+        "Andrea Gilardi - Unimib",
+        "Jochen Albrecht"
+      ],
+      "started": "2025-11-07T11:31:14-05:00",
+      "last_reply": "2025-11-07T12:54:11-05:00",
+      "root_message_id": "msg-21dda302dee2"
+    },
+    {
+      "id": "thread-ebf9c6726ff0",
+      "subject": "Spatial Statistics with R course",
+      "message_count": 1,
+      "participants": [
+        "i@io m@iii@g oii phys@ii@-courses@org"
+      ],
+      "started": "2025-11-13T10:36:35+01:00",
+      "last_reply": "2025-11-13T10:36:35+01:00",
+      "root_message_id": "msg-ebf9c6726ff0"
+    }
+  ]
+}

@@ -1,0 +1,1025 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2006-01",
+  "messages": [
+    {
+      "id": "msg-93882ac7f95e",
+      "message_id": "<43BD1BFF.2020705@gmail.com>",
+      "from_name": "Ronnie Babigumira",
+      "from_email_hash": "83f4f9f20dce13cf7befaec6048372e1ea2de1b8599aa1365d7c5e5f1d1260aa",
+      "date": "2006-01-05T14:15:43+01:00",
+      "subject": "[R-sig-Geo] Neighbours list",
+      "subject_clean": "Neighbours list",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi, I have a raster map in raster format and would like to make a neighbours list. Reading spdeps documentation I sense \nthat cell2nb is what I should use, however, my grid is not regular (my understanding of this that the grid would be a \nsquare or rectangle yet my grid is an abstract form of a region in a country). How does one go about creating a \nneighbours list in such a case?\n\nRonnie",
+      "body_snippet": "Hi, I have a raster map in raster format and would like to make a neighbours list. Reading spdeps documentation I sense \nthat cell2nb is what I should use, however, my grid is not regular (my understa",
+      "thread_id": "thread-93882ac7f95e",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-28660bcefc80",
+      "message_id": "<43BD27AB.3080003@gmail.com>",
+      "from_name": "Ronnie Babigumira",
+      "from_email_hash": "83f4f9f20dce13cf7befaec6048372e1ea2de1b8599aa1365d7c5e5f1d1260aa",
+      "date": "2006-01-05T15:05:31+01:00",
+      "subject": "[R-sig-Geo] Clarification on Neighbours list",
+      "subject_clean": "Clarification on Neighbours list",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Someone has pointed out that my question was not clear. With a clear danger of sounding really stupid, I will try to clarify\n\nSay I have a polygon, which I convert to raster format so each cell is n by n. For some reason I select a set of cells \nand have a neat rectangle such as below. To get a neighbor list for such a grid I could use cell2nb(3, 8) would be fine\n\n1 1 1 0 0 1 0 1\n0 1 1 0 1 1 1 0\n1 1 0 0 1 1 1 1\n\nHowever say my grid came from the full map and looked something like this\n   0 1 0 0 1\n0 1 1 0 1 1 1\n     0 0 1 1 1\n       0 0 1 0 1\n   1 1 0 1 1 1\n   1 0 0 1\n1 1 1 0 0\n0 1 1\n\nThe number of rows is clear, however, what is the number of columns (and anyway, what R function do you use to get the \ndimensions of a SpatialGridDataFrame object.\n\n\nRonnie",
+      "body_snippet": "Someone has pointed out that my question was not clear. With a clear danger of sounding really stupid, I will try to clarify\n\nSay I have a polygon, which I convert to raster format so each cell is n b",
+      "thread_id": "thread-28660bcefc80",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-2d1a7bb8d920",
+      "message_id": "<Pine.LNX.4.44.0601051516300.13218-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-01-05T16:33:32+01:00",
+      "subject": "[R-sig-Geo] Clarification on Neighbours list",
+      "subject_clean": "Clarification on Neighbours list",
+      "in_reply_to": "<43BD27AB.3080003@gmail.com>",
+      "references": [],
+      "body_plain": "On Thu, 5 Jan 2006, Ronnie Babigumira wrote:\n\n> Someone has pointed out that my question was not clear. With a clear danger of sounding really stupid, I will try to clarify\n> \n> Say I have a polygon, which I convert to raster format so each cell is n by n. For some reason I select a set of cells \n> and have a neat rectangle such as below. To get a neighbor list for such a grid I could use cell2nb(3, 8) would be fine\n> \n> 1 1 1 0 0 1 0 1\n> 0 1 1 0 1 1 1 0\n> 1 1 0 0 1 1 1 1\n> \n> However say my grid came from the full map and looked something like this\n>    0 1 0 0 1\n> 0 1 1 0 1 1 1\n>      0 0 1 1 1\n>        0 0 1 0 1\n>    1 1 0 1 1 1\n>    1 0 0 1\n> 1 1 1 0 0\n> 0 1 1\n> \n> The number of rows is clear, however, what is the number of columns (and anyway, what R function do you use to get the \n> dimensions of a SpatialGridDataFrame object.\n> \n\nAt an enjoyable workshop south of Leipzig in November, this came up. If \nyou have a SpatialGridDataFrame from a raster, with NA where there are no \nvalues:\n\nx <- read.asciigrid(system.file(\"external/test.ag\", package=\"sp\")[1])\nsummary(x)\nxx <- as(x, \"SpatialPixelsDataFrame\")\nsummary(xx)\nslot(xx, \"grid\")\n# find grid spacing, 40 distance units for rook neighbours\n# for queen, max distance about 57 should work\nd40_nb <- dnearneigh(coordinates(xx), 0, 40)\nd40_nb\n# convert to polygons\nxxsp <- as.SpatialPolygons.SpatialPixels(xx)\n# generate rook neighbours again - takes longer\nrook_nb <- poly2nb(xxsp, queen=FALSE)\nrook_nb\n# compare, alike apart from different IDs\ndiffnb(rook_nb, d40_nb)\n\nHope this helps,\n\nRoger\n\n> \n> Ronnie\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Thu, 5 Jan 2006, Ronnie Babigumira wrote:\n\n> Someone has pointed out that my question was not clear. With a clear danger of sounding really stupid, I will try to clarify\n> \n> Say I have a polygon, ",
+      "thread_id": "thread-28660bcefc80",
+      "thread_depth": 1,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-6c368ffae24a",
+      "message_id": "<43BDBD3F.8050607@nceas.ucsb.edu>",
+      "from_name": "Rick Reeves",
+      "from_email_hash": "f3850c4c211d4f08916326f9d58bf54aade0d0d3d9b8d3de5cfcdf8840696022",
+      "date": "2006-01-05T16:43:43-08:00",
+      "subject": "[R-sig-Geo] A question re: tripack / voronoi cell area units",
+      "subject_clean": "A question re: tripack / voronoi cell area units",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Greetings:\n\nI've checked the tripack documentation for an answer to this question:\nHow to determine the units for areas calculated for voronoi mosaic cells \n(by the cells method)\nin the tripack package?\n\nI assume that they are related to the units of the $x and $y coordinates \ninput to the voronoi.mosaic()\nmethod. For example, if the coordinates are expressed in decimal \ndegrees, then the cell side lengths\nare also expressed in decimal degrees and the cell areas would be in \nunits of decimal degrees ** 2.\n\nCan someone affirm or correct this assumption?\n\nThanks,\nRick R\n\n-- \nRick Reeves\t\nScientific ProgrammerAnalyst\nNational Center for Ecological Analysis and Synthesis (NCEAS)\nUniversity of California, Santa Barbara\nreeves at nceas.ucsb.edu\n805 892 2533",
+      "body_snippet": "Greetings:\n\nI've checked the tripack documentation for an answer to this question:\nHow to determine the units for areas calculated for voronoi mosaic cells \n(by the cells method)\nin the tripack packag",
+      "thread_id": "thread-6c368ffae24a",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-13886e54cbfd",
+      "message_id": "<20060106040938.8d0l4h5msgw00c0s@webmail-beta.iu.edu>",
+      "from_name": "tkobayas at iu.edu",
+      "from_email_hash": "57fbb14cf0f78a196569a0e98e3520c4e13e0b548c00211f57892e7e9ad5df19",
+      "date": "2006-01-06T04:09:38-05:00",
+      "subject": "[R-sig-Geo] finding significant local peaks by locfit package",
+      "subject_clean": "finding significant local peaks by locfit package",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "HI,\n\nI am still learning how a nonparametric regression works to find out\nstatistically significant local peaks on the fitted curve. My data comes from\nBaltimore census tracts. The tracts have the latitude and longitude values.\n\nlfknots showed that the fitted values, the local points, and the log likelihood\nstatistics. I assume the log likelihood statistics is very meaningful in this\nsense. but I am not sure if there is any criteria to pick statistically\nsignificant ones out of all sets of points evalueated by locfit.\n\nI apprecaite if someone could help me out.\n\nThank you very much.\n\nTaka\n\n\nIndiana University, Dept. Geography",
+      "body_snippet": "HI,\n\nI am still learning how a nonparametric regression works to find out\nstatistically significant local peaks on the fitted curve. My data comes from\nBaltimore census tracts. The tracts have the lat",
+      "thread_id": "thread-13886e54cbfd",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-33dc60de177e",
+      "message_id": "<43BE56EE.1050609@gmail.com>",
+      "from_name": "Ronnie Babigumira",
+      "from_email_hash": "83f4f9f20dce13cf7befaec6048372e1ea2de1b8599aa1365d7c5e5f1d1260aa",
+      "date": "2006-01-06T12:39:26+01:00",
+      "subject": "[R-sig-Geo] Clarification on Neighbours list",
+      "subject_clean": "Clarification on Neighbours list",
+      "in_reply_to": "<Pine.LNX.4.44.0601051516300.13218-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0601051516300.13218-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Roger (as well as others who contacted me off the list), many thanks for this it helped clarify things.\n\nRonnie\nRoger Bivand wrote:\n> On Thu, 5 Jan 2006, Ronnie Babigumira wrote:\n> \n>> Someone has pointed out that my question was not clear. With a clear danger of sounding really stupid, I will try to clarify\n>>\n>> Say I have a polygon, which I convert to raster format so each cell is n by n. For some reason I select a set of cells \n>> and have a neat rectangle such as below. To get a neighbor list for such a grid I could use cell2nb(3, 8) would be fine\n>>\n>> 1 1 1 0 0 1 0 1\n>> 0 1 1 0 1 1 1 0\n>> 1 1 0 0 1 1 1 1\n>>\n>> However say my grid came from the full map and looked something like this\n>>    0 1 0 0 1\n>> 0 1 1 0 1 1 1\n>>      0 0 1 1 1\n>>        0 0 1 0 1\n>>    1 1 0 1 1 1\n>>    1 0 0 1\n>> 1 1 1 0 0\n>> 0 1 1\n>>\n>> The number of rows is clear, however, what is the number of columns (and anyway, what R function do you use to get the \n>> dimensions of a SpatialGridDataFrame object.\n>>\n> \n> At an enjoyable workshop south of Leipzig in November, this came up. If \n> you have a SpatialGridDataFrame from a raster, with NA where there are no \n> values:\n> \n> x <- read.asciigrid(system.file(\"external/test.ag\", package=\"sp\")[1])\n> summary(x)\n> xx <- as(x, \"SpatialPixelsDataFrame\")\n> summary(xx)\n> slot(xx, \"grid\")\n> # find grid spacing, 40 distance units for rook neighbours\n> # for queen, max distance about 57 should work\n> d40_nb <- dnearneigh(coordinates(xx), 0, 40)\n> d40_nb\n> # convert to polygons\n> xxsp <- as.SpatialPolygons.SpatialPixels(xx)\n> # generate rook neighbours again - takes longer\n> rook_nb <- poly2nb(xxsp, queen=FALSE)\n> rook_nb\n> # compare, alike apart from different IDs\n> diffnb(rook_nb, d40_nb)\n> \n> Hope this helps,\n> \n> Roger\n> \n>> Ronnie\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>",
+      "body_snippet": "Roger (as well as others who contacted me off the list), many thanks for this it helped clarify things.\n\nRonnie\nRoger Bivand wrote:\n> On Thu, 5 Jan 2006, Ronnie Babigumira wrote:\n> \n>> Someone has poi",
+      "thread_id": "thread-28660bcefc80",
+      "thread_depth": 2,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-d82b575bd60c",
+      "message_id": "<43C1810E.2070205@gmail.com>",
+      "from_name": "Ronnie Babigumira",
+      "from_email_hash": "83f4f9f20dce13cf7befaec6048372e1ea2de1b8599aa1365d7c5e5f1d1260aa",
+      "date": "2006-01-08T22:15:58+01:00",
+      "subject": "[R-sig-Geo] Converting Grid to factor list",
+      "subject_clean": "Converting Grid to factor list",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi listers\nI would like to change a grid to a factor list so as to apply Join Count statistics however when I use\nmygrid.f <- factor(mygrid)\n\nI get an error message \" 'x' must be atomic\".\n\nLooking through the RHelp archives, I have chanced on emails with a similar problem but no direct answer to this. Is \nanyone farmiliar with this and how can I go about it\n\n\nMany thanks\n\nRonnie",
+      "body_snippet": "Hi listers\nI would like to change a grid to a factor list so as to apply Join Count statistics however when I use\nmygrid.f <- factor(mygrid)\n\nI get an error message \" 'x' must be atomic\".\n\nLooking thr",
+      "thread_id": "thread-d82b575bd60c",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-2ef8ac181d1f",
+      "message_id": "<43C1879C.6070903@gmail.com>",
+      "from_name": "Ronnie Babigumira",
+      "from_email_hash": "83f4f9f20dce13cf7befaec6048372e1ea2de1b8599aa1365d7c5e5f1d1260aa",
+      "date": "2006-01-08T22:43:56+01:00",
+      "subject": "[R-sig-Geo] Converting Grid to factor list",
+      "subject_clean": "Converting Grid to factor list",
+      "in_reply_to": "<43C1905A.20904@geo.uu.nl>",
+      "references": [
+        "<43C1810E.2070205@gmail.com>",
+        "<43C1905A.20904@geo.uu.nl>"
+      ],
+      "body_plain": "Edzer\nMany thanks. The grid was created in ArcView and exported as an ascii file. I then read it in R using the read.asciigrid \nfunction in map tools\n\nAny ideas?\n\nRonnie\n\nEdzer J. Pebesma wrote:\n> Ronnie, you didn't tell us how you created the grid. Is it on of the\n> grid classes in package sp? In that case you can address the\n> variable in it by it's name, say foo:\n> \n> mygrid.f <- factor(mygrid$foo)\n> \n> hth,\n> -- \n> Edzer\n> \n> Ronnie Babigumira wrote:\n> \n>> Hi listers\n>> I would like to change a grid to a factor list so as to apply Join \n>> Count statistics however when I use\n>> mygrid.f <- factor(mygrid)\n>>\n>> I get an error message \" 'x' must be atomic\".\n>>\n>> Looking through the RHelp archives, I have chanced on emails with a \n>> similar problem but no direct answer to this. Is anyone farmiliar with \n>> this and how can I go about it\n>>\n>>\n>> Many thanks\n>>\n>> Ronnie\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>  \n>>\n> \n>",
+      "body_snippet": "Edzer\nMany thanks. The grid was created in ArcView and exported as an ascii file. I then read it in R using the read.asciigrid \nfunction in map tools\n\nAny ideas?\n\nRonnie\n\nEdzer J. Pebesma wrote:\n> Ron",
+      "thread_id": "thread-d82b575bd60c",
+      "thread_depth": 2,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-40b0702b6b21",
+      "message_id": "<43C1905A.20904@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2006-01-08T22:21:14Z",
+      "subject": "[R-sig-Geo] Converting Grid to factor list",
+      "subject_clean": "Converting Grid to factor list",
+      "in_reply_to": "<43C1810E.2070205@gmail.com>",
+      "references": [
+        "<43C1810E.2070205@gmail.com>"
+      ],
+      "body_plain": "Ronnie, you didn't tell us how you created the grid. Is it on of the\ngrid classes in package sp? In that case you can address the\nvariable in it by it's name, say foo:\n\nmygrid.f <- factor(mygrid$foo)\n\nhth,\n--\nEdzer\n\nRonnie Babigumira wrote:\n\n>Hi listers\n>I would like to change a grid to a factor list so as to apply Join Count statistics however when I use\n>mygrid.f <- factor(mygrid)\n>\n>I get an error message \" 'x' must be atomic\".\n>\n>Looking through the RHelp archives, I have chanced on emails with a similar problem but no direct answer to this. Is \n>anyone farmiliar with this and how can I go about it\n>\n>\n>Many thanks\n>\n>Ronnie\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>  \n>",
+      "body_snippet": "Ronnie, you didn't tell us how you created the grid. Is it on of the\ngrid classes in package sp? In that case you can address the\nvariable in it by it's name, say foo:\n\nmygrid.f <- factor(mygrid$foo)\n",
+      "thread_id": "thread-d82b575bd60c",
+      "thread_depth": 1,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-c10fb9f2735b",
+      "message_id": "<43C21091.8020502@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2006-01-09T08:28:17+01:00",
+      "subject": "[R-sig-Geo] Converting Grid to factor list",
+      "subject_clean": "Converting Grid to factor list",
+      "in_reply_to": "<43C1879C.6070903@gmail.com>",
+      "references": [
+        "<43C1810E.2070205@gmail.com>",
+        "<43C1905A.20904@geo.uu.nl>",
+        "<43C1879C.6070903@gmail.com>"
+      ],
+      "body_plain": "Ronnie Babigumira wrote:\n\n>Edzer\n>Many thanks. The grid was created in ArcView and exported as an ascii file. I then read it in R using the read.asciigrid \n>function in map tools\n>\n>Any ideas?\n>  \n>\nYes; the function returns an object of class SpatialGridDataFrame:\n\n > example(read.asciigrid)\n\nrd.scg> x <- read.asciigrid(system.file(\"external/test.ag\",\n    package = \"sp\")[1])\n\nrd.scg> class(x)\n[1] \"SpatialGridDataFrame\"\nattr(,\"package\")\n[1] \"sp\"\n\nrd.scg> image(x)\n > names(x)\n[1] \"/home/edzer/S/library/sp/external/test.ag\"\n > names(x) = \"foo\"\n > f = factor(round(x$foo))\n > summary(f)\n    357     394     270     310     398     294     295     303     \n307     391\n     18      18      17      17      17      16      16      16      \n16      16\n [etc., etc.,...]\n    250     256     265     274     290     291     297     299 \n(Other)    NA's\n      9       9       9       9       9       9       9       9    \n1938    6097\n >\n\nThe renaming to foo was not necessary, but quotes would have\nbeen necessary around the name as it contained slashes. I rounded\nthe values because they were numeric.\n--\nEdzer\n\n>Ronnie\n>\n>Edzer J. Pebesma wrote:\n>  \n>\n>>Ronnie, you didn't tell us how you created the grid. Is it on of the\n>>grid classes in package sp? In that case you can address the\n>>variable in it by it's name, say foo:\n>>\n>>mygrid.f <- factor(mygrid$foo)\n>>\n>>hth,\n>>-- \n>>Edzer\n>>\n>>Ronnie Babigumira wrote:\n>>\n>>    \n>>\n>>>Hi listers\n>>>I would like to change a grid to a factor list so as to apply Join \n>>>Count statistics however when I use\n>>>mygrid.f <- factor(mygrid)\n>>>\n>>>I get an error message \" 'x' must be atomic\".\n>>>\n>>>Looking through the RHelp archives, I have chanced on emails with a \n>>>similar problem but no direct answer to this. Is anyone farmiliar with \n>>>this and how can I go about it\n>>>\n>>>\n>>>Many thanks\n>>>\n>>>Ronnie\n>>>\n>>>_______________________________________________\n>>>R-sig-Geo mailing list\n>>>R-sig-Geo at stat.math.ethz.ch\n>>>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>> \n>>>\n>>>      \n>>>\n>>    \n>>\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>  \n>",
+      "body_snippet": "Ronnie Babigumira wrote:\n\n>Edzer\n>Many thanks. The grid was created in ArcView and exported as an ascii file. I then read it in R using the read.asciigrid \n>function in map tools\n>\n>Any ideas?\n>  \n>\nY",
+      "thread_id": "thread-d82b575bd60c",
+      "thread_depth": 3,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-33ca821aecf5",
+      "message_id": "<43C21B25.5010906@gmail.com>",
+      "from_name": "Ronnie Babigumira",
+      "from_email_hash": "83f4f9f20dce13cf7befaec6048372e1ea2de1b8599aa1365d7c5e5f1d1260aa",
+      "date": "2006-01-09T09:13:25+01:00",
+      "subject": "[R-sig-Geo] Converting Grid to factor list",
+      "subject_clean": "Converting Grid to factor list",
+      "in_reply_to": "<43C21091.8020502@geo.uu.nl>",
+      "references": [
+        "<43C1810E.2070205@gmail.com>",
+        "<43C1905A.20904@geo.uu.nl>",
+        "<43C1879C.6070903@gmail.com>",
+        "<43C21091.8020502@geo.uu.nl>"
+      ],
+      "body_plain": "Edzer, Many thanks for this \"aha...I see\" moment. Most illuminating\n\nRonnie\n\nEdzer J. Pebesma wrote:\n> Ronnie Babigumira wrote:\n> \n>> Edzer\n>> Many thanks. The grid was created in ArcView and exported as an ascii \n>> file. I then read it in R using the read.asciigrid function in map tools\n>>\n>> Any ideas?\n>>  \n>>\n> Yes; the function returns an object of class SpatialGridDataFrame:\n> \n>  > example(read.asciigrid)\n> \n> rd.scg> x <- read.asciigrid(system.file(\"external/test.ag\",\n>    package = \"sp\")[1])\n> \n> rd.scg> class(x)\n> [1] \"SpatialGridDataFrame\"\n> attr(,\"package\")\n> [1] \"sp\"\n> \n> rd.scg> image(x)\n>  > names(x)\n> [1] \"/home/edzer/S/library/sp/external/test.ag\"\n>  > names(x) = \"foo\"\n>  > f = factor(round(x$foo))\n>  > summary(f)\n>    357     394     270     310     398     294     295     303     \n> 307     391\n>     18      18      17      17      17      16      16      16      \n> 16      16\n> [etc., etc.,...]\n>    250     256     265     274     290     291     297     299 \n> (Other)    NA's\n>      9       9       9       9       9       9       9       9    \n> 1938    6097\n>  >\n> \n> The renaming to foo was not necessary, but quotes would have\n> been necessary around the name as it contained slashes. I rounded\n> the values because they were numeric.\n> -- \n> Edzer\n> \n>> Ronnie\n>>\n>> Edzer J. Pebesma wrote:\n>>  \n>>\n>>> Ronnie, you didn't tell us how you created the grid. Is it on of the\n>>> grid classes in package sp? In that case you can address the\n>>> variable in it by it's name, say foo:\n>>>\n>>> mygrid.f <- factor(mygrid$foo)\n>>>\n>>> hth,\n>>> -- \n>>> Edzer\n>>>\n>>> Ronnie Babigumira wrote:\n>>>\n>>>   \n>>>> Hi listers\n>>>> I would like to change a grid to a factor list so as to apply Join \n>>>> Count statistics however when I use\n>>>> mygrid.f <- factor(mygrid)\n>>>>\n>>>> I get an error message \" 'x' must be atomic\".\n>>>>\n>>>> Looking through the RHelp archives, I have chanced on emails with a \n>>>> similar problem but no direct answer to this. Is anyone farmiliar \n>>>> with this and how can I go about it\n>>>>\n>>>>\n>>>> Many thanks\n>>>>\n>>>> Ronnie\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at stat.math.ethz.ch\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>\n>>>>\n>>>>     \n>>>   \n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>  \n>>\n> \n>",
+      "body_snippet": "Edzer, Many thanks for this \"aha...I see\" moment. Most illuminating\n\nRonnie\n\nEdzer J. Pebesma wrote:\n> Ronnie Babigumira wrote:\n> \n>> Edzer\n>> Many thanks. The grid was created in ArcView and exported",
+      "thread_id": "thread-d82b575bd60c",
+      "thread_depth": 4,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-394713ebca76",
+      "message_id": "<43C25D29.20604@gmail.com>",
+      "from_name": "Ronnie Babigumira",
+      "from_email_hash": "83f4f9f20dce13cf7befaec6048372e1ea2de1b8599aa1365d7c5e5f1d1260aa",
+      "date": "2006-01-09T13:55:05+01:00",
+      "subject": "[R-sig-Geo] join count with a grid that has NA's",
+      "subject_clean": "join count with a grid that has NA's",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi listers\nI am trying to apply join counts stats however my grid has some NA's and so I get an error\n\n > joincount.multi(mygrid.f, nb2listw(mynb, style=\"B\"))\nError in joincount.multi(mygrid.f, nb2listw(mynb, style=\"B\")) :\n         NA in factor\n\nMy feeling was that the NA's can be ignored but looking at ?joincount.multi I dont see any options for ignoring NA's. \nAny ideas on a work around this\n\nRonnie",
+      "body_snippet": "Hi listers\nI am trying to apply join counts stats however my grid has some NA's and so I get an error\n\n > joincount.multi(mygrid.f, nb2listw(mynb, style=\"B\"))\nError in joincount.multi(mygrid.f, nb2lis",
+      "thread_id": "thread-394713ebca76",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-865007a0a397",
+      "message_id": "<Pine.LNX.4.44.0601091404450.26898-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-01-09T14:10:52+01:00",
+      "subject": "[R-sig-Geo] join count with a grid that has NA's",
+      "subject_clean": "join count with a grid that has NA's",
+      "in_reply_to": "<43C25D29.20604@gmail.com>",
+      "references": [],
+      "body_plain": "On Mon, 9 Jan 2006, Ronnie Babigumira wrote:\n\n> Hi listers\n> I am trying to apply join counts stats however my grid has some NA's and so I get an error\n> \n>  > joincount.multi(mygrid.f, nb2listw(mynb, style=\"B\"))\n> Error in joincount.multi(mygrid.f, nb2listw(mynb, style=\"B\")) :\n>          NA in factor\n> \n> My feeling was that the NA's can be ignored but looking at\n> ?joincount.multi I dont see any options for ignoring NA's.  Any ideas on\n> a work around this\n\nTwo possibilities: subset the data and the neighbour list to remove the NA \ncells - use subset methods, or turn NA into a factor level - a different \ncategory - and include it in the analysis (so counting NA/NA and NA with \nreal level joins too). Neither very good, nor very bad, depends on your \nneeds.\n\nYou have to make the decision, there isn't an obviously right one,\nespecially not just omitting NA/other and NA/NA counts internally by\nignoring them, because then the join count sums will not agree with the\nneighbour graph geometry sums.\n\nRoger\n\n> \n> Ronnie\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 9 Jan 2006, Ronnie Babigumira wrote:\n\n> Hi listers\n> I am trying to apply join counts stats however my grid has some NA's and so I get an error\n> \n>  > joincount.multi(mygrid.f, nb2listw(mynb,",
+      "thread_id": "thread-394713ebca76",
+      "thread_depth": 1,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-ad87cbf36336",
+      "message_id": "<43C276EC.9050805@gmail.com>",
+      "from_name": "Ronnie Babigumira",
+      "from_email_hash": "83f4f9f20dce13cf7befaec6048372e1ea2de1b8599aa1365d7c5e5f1d1260aa",
+      "date": "2006-01-09T15:45:00+01:00",
+      "subject": "[R-sig-Geo] join count with a grid that has NA's",
+      "subject_clean": "join count with a grid that has NA's",
+      "in_reply_to": "<Pine.LNX.4.44.0601091404450.26898-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0601091404450.26898-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Thanks Roger\nStarted with the easier of the two which was to turn NA into a factor level.\n\nHowever, I feel drawn to the \"subsetting\" option. However, here is my dilemma (or more like my ignorance at this point)\n\n1. spdep has subset.listw and subset.nb to subset the spatial weights or the neighbors lists respectively (by the way \ndoes c(31, 34) in the example in the help file mean that columns 31 and 34 will be dropped?)\n\n2 However, I have (using RSiteSearch) tried to look for a function subsetting a spatialgriddataframe but have had no \nluck. Any pointers\n\nMore fundamentally, my intuition is that I need to start the subsetting process with mygrid and somehow retain a vector \nof the rows or columns dropped and pass this information on the the subset.listw or subset.nb so that the same cells are \ndropped in the neighbor list. Now that is as far as I can go (thinking...), any ideas on how to proceed?\n\nRonnie\n\nRoger Bivand wrote:\n> On Mon, 9 Jan 2006, Ronnie Babigumira wrote:\n> \n>> Hi listers\n>> I am trying to apply join counts stats however my grid has some NA's and so I get an error\n>>\n>>  > joincount.multi(mygrid.f, nb2listw(mynb, style=\"B\"))\n>> Error in joincount.multi(mygrid.f, nb2listw(mynb, style=\"B\")) :\n>>          NA in factor\n>>\n>> My feeling was that the NA's can be ignored but looking at\n>> ?joincount.multi I dont see any options for ignoring NA's.  Any ideas on\n>> a work around this\n> \n> Two possibilities: subset the data and the neighbour list to remove the NA \n> cells - use subset methods, or turn NA into a factor level - a different \n> category - and include it in the analysis (so counting NA/NA and NA with \n> real level joins too). Neither very good, nor very bad, depends on your \n> needs.\n> \n> You have to make the decision, there isn't an obviously right one,\n> especially not just omitting NA/other and NA/NA counts internally by\n> ignoring them, because then the join count sums will not agree with the\n> neighbour graph geometry sums.\n> \n> Roger\n> \n>> Ronnie\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>",
+      "body_snippet": "Thanks Roger\nStarted with the easier of the two which was to turn NA into a factor level.\n\nHowever, I feel drawn to the \"subsetting\" option. However, here is my dilemma (or more like my ignorance at t",
+      "thread_id": "thread-394713ebca76",
+      "thread_depth": 2,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-c431901ba4d4",
+      "message_id": "<43C2DCB8.1050401@gmail.com>",
+      "from_name": "Ronnie Babigumira",
+      "from_email_hash": "83f4f9f20dce13cf7befaec6048372e1ea2de1b8599aa1365d7c5e5f1d1260aa",
+      "date": "2006-01-09T22:59:20+01:00",
+      "subject": "[R-sig-Geo] subset grid and neighbour list",
+      "subject_clean": "subset grid and neighbour list",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear listers\nThis may be obvious however I have thrown in the towel after numerous futile attempts. Here is my problem. I have a grid \nwith 5 levels including NA. I would like to perform join count stats on it. Prof. Bivand advised me to either add NA as \na factor, or subset the grid and eliminate the NA's (I feel the later makes more sense)\n\nI think the steps I need to take are\n\n1. Drop the NA's in mygrid (and save the ids of the cells dropped)\n\n2. subset the neighbors list using information from step1\n\nIs there anyone familiar with this especially step 1\n\nRonnie",
+      "body_snippet": "Dear listers\nThis may be obvious however I have thrown in the towel after numerous futile attempts. Here is my problem. I have a grid \nwith 5 levels including NA. I would like to perform join count st",
+      "thread_id": "thread-c431901ba4d4",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-b68bdf99c0c9",
+      "message_id": "<Pine.LNX.4.44.0601100834260.28730-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-01-10T08:42:58+01:00",
+      "subject": "[R-sig-Geo] subset grid and neighbour list",
+      "subject_clean": "subset grid and neighbour list",
+      "in_reply_to": "<43C2DCB8.1050401@gmail.com>",
+      "references": [],
+      "body_plain": "On Mon, 9 Jan 2006, Ronnie Babigumira wrote:\n\n> Dear listers\n> This may be obvious however I have thrown in the towel after numerous futile attempts. Here is my problem. I have a grid \n> with 5 levels including NA. I would like to perform join count stats on it. Prof. Bivand advised me to either add NA as \n> a factor, or subset the grid and eliminate the NA's (I feel the later makes more sense)\n> \n> I think the steps I need to take are\n> \n> 1. Drop the NA's in mygrid (and save the ids of the cells dropped)\n> \n> 2. subset the neighbors list using information from step1\n> \n> Is there anyone familiar with this especially step 1\n\nlibrary(spdep)\nset.seed(20060110)\ninput <- data.frame(expand.grid(x=1:10, y=1:10), z=rpois(100, 3))\ncoordinates(input) <- c(\"x\", \"y\")\ntable(input$z)\nis.na(input$z) <- input$z < 1 | input$z > 5\ntable(input$z)\ninput$z <- as.factor(input$z)\nrook <- dnearneigh(coordinates(input), 0, 1)\nrook\nplot(rook, coordinates(input))\njoincount.multi(input$z, nb2listw(rook, \nstyle=\"B\"))\n# Error in joincount.multi(input$z, nb2listw(rook, style = \"B\")) : \n#        NA in factor\nkeep <- !is.na(input$z)\nrook_sub <- subset(rook, subset=keep)\ninput_sub <- subset(input, subset=keep)\nrook_sub\n# look out for no-neighbour cells - if present, use zero.policy=TRUE below\nplot(rook_sub, coordinates(input_sub))\njoincount.multi(input_sub$z, nb2listw(rook_sub, style=\"B\"))\n\nThis is for a full grid, but if you have SpatialPixels or SpatialPolygons \nthe order of operations will be the same, I think. You need to watch out \nfor no-neighbour cells after subsetting, and use zero.policy=TRUE in both \njoincount.multi() and nb2listw() if they have been introduced.\n\nRoger\n\n\n> \n> Ronnie\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 9 Jan 2006, Ronnie Babigumira wrote:\n\n> Dear listers\n> This may be obvious however I have thrown in the towel after numerous futile attempts. Here is my problem. I have a grid \n> with 5 levels",
+      "thread_id": "thread-c431901ba4d4",
+      "thread_depth": 1,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-22a9f092fa9f",
+      "message_id": "<145AFBAC9803654DBA4C713E3DAC19F9131640@COS-SVR-28.intra.sanborn.com>",
+      "from_name": "Miewald, Tom",
+      "from_email_hash": "f58f453d501da9b28a1677f313d67e4f00e88d6fd649a6b83a501f4c6f7b9085",
+      "date": "2006-01-10T22:33:32-07:00",
+      "subject": "[R-sig-Geo] randomForests for mapping vegetation",
+      "subject_clean": "randomForests for mapping vegetation",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello all,\n\nI am new to this list and wondering whether anyone has any experience (or ideas) for how to implement vegetation mapping using the randomForests package from R.  The model produced from randomForests would be used to map vegetation from Landsat (30 x 30 meter pixels) for relatively large areas (> 10 million hectares, so a lot of pixels).  There are ~15 explanatory data sets (imagery, dems,precip, etc).  My main question concerns how to use the output from randomForests to predict vegetation over such an area.  I have seen some literature out there using GRASS.  I would rather not go down that road because I already have enough software packages.  Is there any possibilities for using ArcGIS connectivity to enable the prediction of vegetation?  Any input would be appreciated.  Thanks!\nTom\n\nCONFIDENTIALITY AND DISCLAIMER: This message and any attachments hereto are intended only for the use of the addressee(s) and may be legally privileged and/or confidential. Any dissemination, distribution, printing, forwarding, or any method of copying of this message or any attachment hereto, and/or the taking of any action in reliance on the information herein or in any attachment hereto is strictly prohibited except by the original intended recipient. If you have received this communication in error, please immediately notify the sender, and permanently delete this message and any attachment hereto from your computer or storage system, and destroy any printout thereof. Although reasonable precautions have been taken to ensure no viruses are present in this message or any attachment hereto, The Sanborn Map Company, Inc. takes no responsibility and has no liability for any virus which may be transferred via this message or any attachment hereto.\n\n(svr28)",
+      "body_snippet": "Hello all,\n\nI am new to this list and wondering whether anyone has any experience (or ideas) for how to implement vegetation mapping using the randomForests package from R.  The model produced from ra",
+      "thread_id": "thread-22a9f092fa9f",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-983f339523f9",
+      "message_id": "<43C4DCF3.1070705@geog.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "a7fb0ca623e251a5aff6aa466eb7f50e3c643594fe03e3232d546a007043eef0",
+      "date": "2006-01-11T11:24:51+01:00",
+      "subject": "[R-sig-Geo] randomForests for mapping vegetation",
+      "subject_clean": "randomForests for mapping vegetation",
+      "in_reply_to": "<145AFBAC9803654DBA4C713E3DAC19F9131640@COS-SVR-28.intra.sanborn.com>",
+      "references": [
+        "<145AFBAC9803654DBA4C713E3DAC19F9131640@COS-SVR-28.intra.sanborn.com>"
+      ],
+      "body_plain": "Tom, a possibility is to stay in R and use rgdal.\nrgdal can open raster maps (and I'm sure landsat images) directly,\nand read in parts of them, i.e. it doesn't read the full\nmap at once. You'd have to loop over the full map, read\na part, predict with randomForest's predict method,\nwrite the predicted values out, and go to the next part.\n\nSupport for sp classes is under development, in a\npackages called spGDAL which is available in source\ncode on cvs from sourceforge:\n\nexport CVSROOT=:pserver:anonymous at cvs.sf.net:/cvsroot/r-spatial\ncvs co spGDAL\n\nspGDAL has support for writing a gdal map, but I'm in\ndoubt whether it does support writing segments of\na gdal map. It should; please keep us updated on your mileage.\n--\nEdzer\n\nMiewald, Tom wrote:\n\n>Hello all,\n>\n>I am new to this list and wondering whether anyone has any experience (or ideas) for how to implement vegetation mapping using the randomForests package from R.  The model produced from randomForests would be used to map vegetation from Landsat (30 x 30 meter pixels) for relatively large areas (> 10 million hectares, so a lot of pixels).  There are ~15 explanatory data sets (imagery, dems,precip, etc).  My main question concerns how to use the output from randomForests to predict vegetation over such an area.  I have seen some literature out there using GRASS.  I would rather not go down that road because I already have enough software packages.  Is there any possibilities for using ArcGIS connectivity to enable the prediction of vegetation?  Any input would be appreciated.  Thanks!\n>Tom\n>\n>CONFIDENTIALITY AND DISCLAIMER: This message and any attachments hereto are intended only for the use of the addressee(s) and may be legally privileged and/or confidential. Any dissemination, distribution, printing, forwarding, or any method of copying of this message or any attachment hereto, and/or the taking of any action in reliance on the information herein or in any attachment hereto is strictly prohibited except by the original intended recipient. If you have received this communication in error, please immediately notify the sender, and permanently delete this message and any attachment hereto from your computer or storage system, and destroy any printout thereof. Although reasonable precautions have been taken to ensure no viruses are present in this message or any attachment hereto, The Sanborn Map Company, Inc. takes no responsibility and has no liability for any virus which may be transferred via this message or any attachment hereto.\n>\n>(svr28)\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>  \n>",
+      "body_snippet": "Tom, a possibility is to stay in R and use rgdal.\nrgdal can open raster maps (and I'm sure landsat images) directly,\nand read in parts of them, i.e. it doesn't read the full\nmap at once. You'd have to",
+      "thread_id": "thread-22a9f092fa9f",
+      "thread_depth": 1,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-189685dc2733",
+      "message_id": "<Pine.LNX.4.44.0601111110230.30033-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-01-11T11:28:19+01:00",
+      "subject": "[R-sig-Geo] randomForests for mapping vegetation",
+      "subject_clean": "randomForests for mapping vegetation",
+      "in_reply_to": "<145AFBAC9803654DBA4C713E3DAC19F9131640@COS-SVR-28.intra.sanborn.com>",
+      "references": [],
+      "body_plain": "On Tue, 10 Jan 2006, Miewald, Tom wrote:\n\n> \n> Hello all,\n> \n> I am new to this list and wondering whether anyone has any experience\n> (or ideas) for how to implement vegetation mapping using the\n> randomForests package from R.  The model produced from randomForests\n> would be used to map vegetation from Landsat (30 x 30 meter pixels) for\n> relatively large areas (> 10 million hectares, so a lot of pixels).  \n> There are ~15 explanatory data sets (imagery, dems,precip, etc).  My\n> main question concerns how to use the output from randomForests to\n> predict vegetation over such an area.  I have seen some literature out\n> there using GRASS.  I would rather not go down that road because I\n> already have enough software packages.  Is there any possibilities for\n> using ArcGIS connectivity to enable the prediction of vegetation?  Any\n> input would be appreciated.  Thanks!\n\nHave a look at:\n\nhttp://www.ci.tuwien.ac.at/Conferences/DSC-2003/Drafts/FurlanelloEtAl.pdf\n\nwhich is fairly close to your description, although not such a large \nnumber of pixels, and does use R/GRASS integration.\n\nMy guess would be that you should tile the region for prediction into \nsubregions, and patch them together back in AcrGIS. You could do it by \nwriting out Arc ASCII grids using the write.asciigrid() function in \nthe maptools package. If this is going to be more heavyweight production, \nthen using the Rcom interface from VBA in ArcGIS might also be possible, \nif the whole process is going to have to be repeated many times. We are \nalso looking at writing geotiffs from rdgal, so you should be able to find \na suitable route from the subregional predictions within R back to rasters \nin ArcGIS. \n\nExamples using VBA are shown here:\n\nhttp://perso.univ-lr.fr/csaintje/Recherche/RArcgis/index.html\n\nand a nice interface using Python from ArcGIS then Rcom:\n\nhttp://www.nicholas.duke.edu/geospatial/software/\n\nMost of the hard work will be in getting things to work once, from there \nit'll get easier. Consider save()ing the RF model output, so that to make \npredictions, you only need to load() then predict() for newdata (grids of \nRHS variables) for the current subregion. This also parallelises nicely, \nso you could also pass off subregions and the fitted model to slaves to do \nthe predictions, but getting it working will take substantial time. By the \nway, OSX and Linux memory management will be better than Windows, so on \nWindows, go for smaller subregions.\n\nRoger\n\n\n> Tom\n> \n> CONFIDENTIALITY AND DISCLAIMER: This message and any attachments hereto\n> are intended only for the use of the addressee(s) and may be legally\n> privileged and/or confidential. Any dissemination, distribution,\n> printing, forwarding, or any method of copying of this message or any\n> attachment hereto, and/or the taking of any action in reliance on the\n> information herein or in any attachment hereto is strictly prohibited\n> except by the original intended recipient. If you have received this\n> communication in error, please immediately notify the sender, and\n> permanently delete this message and any attachment hereto from your\n> computer or storage system, and destroy any printout thereof. Although\n> reasonable precautions have been taken to ensure no viruses are present\n> in this message or any attachment hereto, The Sanborn Map Company, Inc.\n> takes no responsibility and has no liability for any virus which may be\n> transferred via this message or any attachment hereto.\n> \n> (svr28)\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 10 Jan 2006, Miewald, Tom wrote:\n\n> \n> Hello all,\n> \n> I am new to this list and wondering whether anyone has any experience\n> (or ideas) for how to implement vegetation mapping using the\n> ra",
+      "thread_id": "thread-22a9f092fa9f",
+      "thread_depth": 1,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-257ff66f6d28",
+      "message_id": "<s3c4bcf9.071@gwsmtp.DEC.STATE.NY.US>",
+      "from_name": "Tim Howard",
+      "from_email_hash": "c4a592cd1f334c64b028dc7ccf82fec65d9e56d526fe8ad6387e4dfb809d92fc",
+      "date": "2006-01-11T08:07:50-05:00",
+      "subject": "[R-sig-Geo] randomForests for mapping vegetation",
+      "subject_clean": "randomForests for mapping vegetation",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Tom,\n  We are using randomForests to generate predictive models (at 30 meters pixels, with a 22578 x 17160 grid) with about 36 environmental variables. I must admit we have not yet had the energy to do it completely within R or call R from ArcGIS.  \n   We do our data prep and attributing in ArcGIS, then dump it all out to ASCII. We bring the attributed presence and absence points into R and build our random forest. With the known RF model, we then open connections to the ASCII grids for all 36 environmental layers, read them in piece by piece (each one is about 2GB), run a RF prediction on those pieces, and then write the prediction out to an ASCII file. \n  We then import the prediction layer into ArcGIS.  Not pretty by any means, but it does work.\n\nSincerely,\nTim\n\n\n\n\n\n------------------------------\n\nMessage: 2\nDate: Wed, 11 Jan 2006 11:24:51 +0100\nFrom: \"Edzer J. Pebesma\" <e.pebesma at geog.uu.nl>\nSubject: Re: [R-sig-Geo] randomForests for mapping vegetation\nTo: \"Miewald, Tom\" <TMiewald at sanborn.com>\nCc: r-sig-geo at stat.math.ethz.ch \nMessage-ID: <43C4DCF3.1070705 at geog.uu.nl>\nContent-Type: text/plain; charset=ISO-8859-1; format=flowed\n\nTom, a possibility is to stay in R and use rgdal.\nrgdal can open raster maps (and I'm sure landsat images) directly,\nand read in parts of them, i.e. it doesn't read the full\nmap at once. You'd have to loop over the full map, read\na part, predict with randomForest's predict method,\nwrite the predicted values out, and go to the next part.\n\nSupport for sp classes is under development, in a\npackages called spGDAL which is available in source\ncode on cvs from sourceforge:\n\nexport CVSROOT=:pserver:anonymous at cvs.sf.net:/cvsroot/r-spatial \ncvs co spGDAL\n\nspGDAL has support for writing a gdal map, but I'm in\ndoubt whether it does support writing segments of\na gdal map. It should; please keep us updated on your mileage.\n--\nEdzer\n\nMiewald, Tom wrote:\n\n>Hello all,\n>\n>I am new to this list and wondering whether anyone has any experience (or ideas) for how to implement vegetation mapping using the randomForests package from R.  The model produced from randomForests would be used to map vegetation from Landsat (30 x 30 meter pixels) for relatively large areas (> 10 million hectares, so a lot of pixels).  There are ~15 explanatory data sets (imagery, dems,precip, etc).  My main question concerns how to use the output from randomForests to predict vegetation over such an area.  I have seen some literature out there using GRASS.  I would rather not go down that road because I already have enough software packages.  Is there any possibilities for using ArcGIS connectivity to enable the prediction of vegetation?  Any input would be appreciated.  Thanks!\n>Tom\n>\n>CONFIDENTIALITY AND DISCLAIMER: This message and any attachments hereto are intended only for the use of the addressee(s) and may be legally privileged and/or confidential. Any dissemination, distribution, printing, forwarding, or any method of copying of this message or any attachment hereto, and/or the taking of any action in reliance on the information herein or in any attachment hereto is strictly prohibited except by the original intended recipient. If you have received this communication in error, please immediately notify the sender, and permanently delete this message and any attachment hereto from your computer or storage system, and destroy any printout thereof. Although reasonable precautions have been taken to ensure no viruses are present in this message or any attachment hereto, The Sanborn Map Company, Inc. takes no responsibility and has no liability for any virus which may be transferred via this message or any attachment hereto.\n>\n>(svr28)\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch \n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo \n>  \n>\n\n\n\n------------------------------\n\nMessage: 3\nDate: Wed, 11 Jan 2006 11:28:19 +0100 (CET)\nFrom: Roger Bivand <Roger.Bivand at nhh.no>\nSubject: Re: [R-sig-Geo] randomForests for mapping vegetation\nTo: \"Miewald, Tom\" <TMiewald at sanborn.com>\nCc: r-sig-geo at stat.math.ethz.ch \nMessage-ID: <Pine.LNX.4.44.0601111110230.30033-100000 at reclus.nhh.no>\nContent-Type: TEXT/PLAIN; charset=US-ASCII\n\nOn Tue, 10 Jan 2006, Miewald, Tom wrote:\n\n> \n> Hello all,\n> \n> I am new to this list and wondering whether anyone has any experience\n> (or ideas) for how to implement vegetation mapping using the\n> randomForests package from R.  The model produced from randomForests\n> would be used to map vegetation from Landsat (30 x 30 meter pixels) for\n> relatively large areas (> 10 million hectares, so a lot of pixels).  \n> There are ~15 explanatory data sets (imagery, dems,precip, etc).  My\n> main question concerns how to use the output from randomForests to\n> predict vegetation over such an area.  I have seen some literature out\n> there using GRASS.  I would rather not go down that road because I\n> already have enough software packages.  Is there any possibilities for\n> using ArcGIS connectivity to enable the prediction of vegetation?  Any\n> input would be appreciated.  Thanks!\n\nHave a look at:\n\nhttp://www.ci.tuwien.ac.at/Conferences/DSC-2003/Drafts/FurlanelloEtAl.pdf \n\nwhich is fairly close to your description, although not such a large \nnumber of pixels, and does use R/GRASS integration.\n\nMy guess would be that you should tile the region for prediction into \nsubregions, and patch them together back in AcrGIS. You could do it by \nwriting out Arc ASCII grids using the write.asciigrid() function in \nthe maptools package. If this is going to be more heavyweight production, \nthen using the Rcom interface from VBA in ArcGIS might also be possible, \nif the whole process is going to have to be repeated many times. We are \nalso looking at writing geotiffs from rdgal, so you should be able to find \na suitable route from the subregional predictions within R back to rasters \nin ArcGIS. \n\nExamples using VBA are shown here:\n\nhttp://perso.univ-lr.fr/csaintje/Recherche/RArcgis/index.html \n\nand a nice interface using Python from ArcGIS then Rcom:\n\nhttp://www.nicholas.duke.edu/geospatial/software/ \n\nMost of the hard work will be in getting things to work once, from there \nit'll get easier. Consider save()ing the RF model output, so that to make \npredictions, you only need to load() then predict() for newdata (grids of \nRHS variables) for the current subregion. This also parallelises nicely, \nso you could also pass off subregions and the fitted model to slaves to do \nthe predictions, but getting it working will take substantial time. By the \nway, OSX and Linux memory management will be better than Windows, so on \nWindows, go for smaller subregions.\n\nRoger\n\n\n> Tom\n> \n> CONFIDENTIALITY AND DISCLAIMER: This message and any attachments hereto\n> are intended only for the use of the addressee(s) and may be legally\n> privileged and/or confidential. Any dissemination, distribution,\n> printing, forwarding, or any method of copying of this message or any\n> attachment hereto, and/or the taking of any action in reliance on the\n> information herein or in any attachment hereto is strictly prohibited\n> except by the original intended recipient. If you have received this\n> communication in error, please immediately notify the sender, and\n> permanently delete this message and any attachment hereto from your\n> computer or storage system, and destroy any printout thereof. Although\n> reasonable precautions have been taken to ensure no viruses are present\n> in this message or any attachment hereto, The Sanborn Map Company, Inc.\n> takes no responsibility and has no liability for any virus which may be\n> transferred via this message or any attachment hereto.\n> \n> (svr28)\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch \n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no \n\n\n\n------------------------------\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch \nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo \n\n\nEnd of R-sig-Geo Digest, Vol 29, Issue 5\n****************************************\n\nTimothy G. Howard, Ecologist and Program Scientist\nNew York Natural Heritage Program\n625 Broadway, 5th floor\nAlbany, NY 12233-4757\n\n(518) 402-8945\nfacsimile  (518) 402-8925",
+      "body_snippet": "Tom,\n  We are using randomForests to generate predictive models (at 30 meters pixels, with a 22578 x 17160 grid) with about 36 environmental variables. I must admit we have not yet had the energy to d",
+      "thread_id": "thread-257ff66f6d28",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-8fcc0e0f65bd",
+      "message_id": "<Pine.A32.3.96.1060116160542.224760A-100000@isis.wu-wien.ac.at>",
+      "from_name": "Martin Reismann",
+      "from_email_hash": "875bd8c7ccbeb38ac24d78b036a8ce3ff619fb1d45767db854fe70fb6b3f2063",
+      "date": "2006-01-16T16:11:27+01:00",
+      "subject": "[R-sig-Geo] Missing statistics with errorsarlm(method=\"SparseM\")",
+      "subject_clean": "Missing statistics with errorsarlm(method=\"SparseM\")",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "When using errorsarlm with method=\"SparseM\" I encountered that \n\"Asymptotic standard error\" and \"Wald statistic\" are missing in the\nsummary. Both are available with errorsarlm method=\"eigen\".\n\nAny suggestions?\n\nBest wishes,\nMartin Reismann\n\n---\nMartin Reismann\nInstitut fuer Wirtschaftsgeographie und Geoinformatik\nWirtschaftsuniversitaet Wien\nNordbergstrasse 15, 4. Stock, Kern A\nA-1090 Wien\n\nEMail: Martin.Reismann at wu-wien.ac.at\nTel +43-(0)-1-31336-5720\nFax +43-(0)-1-31336-703",
+      "body_snippet": "When using errorsarlm with method=\"SparseM\" I encountered that \n\"Asymptotic standard error\" and \"Wald statistic\" are missing in the\nsummary. Both are available with errorsarlm method=\"eigen\".\n\nAny sug",
+      "thread_id": "thread-8fcc0e0f65bd",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-b6fbf624f9d2",
+      "message_id": "<Pine.LNX.4.44.0601161903530.27353-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-01-16T19:08:30+01:00",
+      "subject": "[R-sig-Geo] Missing statistics with errorsarlm(method=\"SparseM\")",
+      "subject_clean": "Missing statistics with errorsarlm(method=\"SparseM\")",
+      "in_reply_to": "<Pine.A32.3.96.1060116160542.224760A-100000@isis.wu-wien.ac.at>",
+      "references": [],
+      "body_plain": "On Mon, 16 Jan 2006, Martin Reismann wrote:\n\n> When using errorsarlm with method=\"SparseM\" I encountered that \n> \"Asymptotic standard error\" and \"Wald statistic\" are missing in the\n> summary. Both are available with errorsarlm method=\"eigen\".\n\nThe \"SparseM\" method is used for large n, when operations on a full matrix\nwould tax your computer. Computing the information matrix means inverting\nan n by n matrix, so statistics relying on the information matrix are not\navailable with this method. If you must have them for large n, you need\nmore RAM and possibly a 64 bit box, but in practice if you have many n,\nthe likelihood ratio will tell you what you need to know anyway.\n\n> \n> Any suggestions?\n> \n> Best wishes,\n> Martin Reismann\n> \n> ---\n> Martin Reismann\n> Institut fuer Wirtschaftsgeographie und Geoinformatik\n> Wirtschaftsuniversitaet Wien\n> Nordbergstrasse 15, 4. Stock, Kern A\n> A-1090 Wien\n> \n> EMail: Martin.Reismann at wu-wien.ac.at\n> Tel +43-(0)-1-31336-5720\n> Fax +43-(0)-1-31336-703\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Mon, 16 Jan 2006, Martin Reismann wrote:\n\n> When using errorsarlm with method=\"SparseM\" I encountered that \n> \"Asymptotic standard error\" and \"Wald statistic\" are missing in the\n> summary. Both are",
+      "thread_id": "thread-8fcc0e0f65bd",
+      "thread_depth": 1,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-a6bee3c19b82",
+      "message_id": "<web-7417819@atmos.uiuc.edu>",
+      "from_name": "Anne Hertel",
+      "from_email_hash": "b9913f90f4b7d72938b3fb07afd68dccadce6a28f86123e3bcde8541a3018c71",
+      "date": "2006-01-19T11:25:10-06:00",
+      "subject": "[R-sig-Geo] Maps across the dateline",
+      "subject_clean": "Maps across the dateline",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\n\nI'm trying to plot some data for the Pacific Ocean and want to get a map onto my plot as well. I'm using the function 'map()' from library(maps). However, I cannot get it to plot anything across the dateline since it requires that longitudes between 180 and 360 degrees east to be written as negative degrees east of Greenwich (e.g. -180 to 0 degrees east). The longitudes I want to plot are 135 to 255 degrees east but the function map() wants that to be written 135 to 180 degrees east and -180 to -105 degrees east, so I would have to divide the grid up in two. But even if I do that I can't plot it together because -180 doesn't come after 180.\n\nDoes anyone have a way to plot something across the dateline? I only want a map of the Pacific, not the rest of the world.\n\nThanks,\nAnne Hertel\n\n\n------------------------------------------------------------\nAnne M. K. Hertel\nGrad. Student & Research Assistant\nDepartment of Atmospheric Sciences\nUniversity of Illinois at Urbana-Champaign\nAnnex II, room 204\nPhone: (217) 333 6296",
+      "body_snippet": "Hello,\n\nI'm trying to plot some data for the Pacific Ocean and want to get a map onto my plot as well. I'm using the function 'map()' from library(maps). However, I cannot get it to plot anything acro",
+      "thread_id": "thread-a6bee3c19b82",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-7e2bf31d4492",
+      "message_id": "<07E228A5BE53C24CAD490193A7381BBB20171A@LP-EXCHVS07.CO.IHC.COM>",
+      "from_name": "Gregory Snow",
+      "from_email_hash": "e432b243d0660ee238e83f8aa2714b750d4574c97597be8ee6eb021bf26ebc5c",
+      "date": "2006-01-19T10:49:51-07:00",
+      "subject": "[R-sig-Geo] Maps across the dateline",
+      "subject_clean": "Maps across the dateline",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "There is a function recenter.Map in the TeachingDemos package that works\nwith the maptools package (rather than the maps package).  This function\nis pretty basic and easy to break, but it may do what you want (or give\nyou a place to start on creating a better solution).\n\nHope this helps,\n\n-- \nGregory (Greg) L. Snow Ph.D.\nStatistical Data Center\nIntermountain Healthcare\ngreg.snow at intermountainmail.org\n(801) 408-8111\n \n \n\n> -----Original Message-----\n> From: r-sig-geo-bounces at stat.math.ethz.ch \n> [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Anne Hertel\n> Sent: Thursday, January 19, 2006 10:25 AM\n> To: r-sig-geo at stat.math.ethz.ch\n> Subject: [R-sig-Geo] Maps across the dateline\n> \n> Hello,\n> \n> I'm trying to plot some data for the Pacific Ocean and want \n> to get a map onto my plot as well. I'm using the function \n> 'map()' from library(maps). However, I cannot get it to plot \n> anything across the dateline since it requires that \n> longitudes between 180 and 360 degrees east to be written as \n> negative degrees east of Greenwich (e.g. -180 to 0 degrees \n> east). The longitudes I want to plot are 135 to 255 degrees \n> east but the function map() wants that to be written 135 to \n> 180 degrees east and -180 to -105 degrees east, so I would \n> have to divide the grid up in two. But even if I do that I \n> can't plot it together because -180 doesn't come after 180.\n> \n> Does anyone have a way to plot something across the dateline? \n> I only want a map of the Pacific, not the rest of the world.\n> \n> Thanks,\n> Anne Hertel\n> \n> \n> ------------------------------------------------------------\n> Anne M. K. Hertel\n> Grad. Student & Research Assistant\n> Department of Atmospheric Sciences\n> University of Illinois at Urbana-Champaign Annex II, room 204\n> Phone: (217) 333 6296\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_snippet": "There is a function recenter.Map in the TeachingDemos package that works\nwith the maptools package (rather than the maps package).  This function\nis pretty basic and easy to break, but it may do what ",
+      "thread_id": "thread-7e2bf31d4492",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-9de29877a7bd",
+      "message_id": "<OFA19003B5.3FAF2F78-ON882570FB.006E0414-882570FB.006E0418@epamail.epa.gov>",
+      "from_name": "White.Denis at epamail.epa.gov",
+      "from_email_hash": "16ee480d874c5ee3c0b0c97bcdbbca111811e4431c2a806cee0092c240eacedb",
+      "date": "2006-01-19T12:01:40-08:00",
+      "subject": "[R-sig-Geo] Maps across the dateline",
+      "subject_clean": "Maps across the dateline",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": ">I'm trying to plot some\n>data for the Pacific Ocean and want to get a map onto my plot as\n>well.\n>I'm using the function 'map()' from library(maps). However, I cannot\n>get it to plot anything across the dateline since it requires that\n>longitudes between 180 and 360 degrees east to be written as negative\n>degrees east of Greenwich (e.g. -180 to 0 degrees east). The\n>longitudes\n>I want to plot are 135 to 255 degrees east but the function map()\n>wants\n>that to be written 135 to 180 degrees east and -180 to -105 degrees\n>east, so I would have to divide the grid up in two. But even if I do\n>that I can't plot it together because -180 doesn't come after 180.\n>\n>Does anyone have a way to plot something across the dateline? I only\n>want a map of the Pacific, not the rest of the world.\n>\n>Thanks,\n>Anne Hertel\n\nIf you use an appropriate map projection centered at 180/-180, for\nexample, then you should be able to plot your data and islands or\nlatitude/longitude lines as desired.  See the following example for\nplotting some random points and the latitude and longitude graticule\nlines using one particular map projection.  This projection, the Lambert\nazimuthal, is an equal area projection but may not be the most\nappropriate for your needs.  There are web sites that can help to choose\na projection if you need it.\n\n# plot data across 180/-180\n\n# Lambert azimuthal equal area map projection\nlambaz <- function (lon, lat, clon=NULL, clat=NULL)\n  # Arguments are vectors of longitude and latitude,\n  # that is, geographic coordinates in decimal degrees.\n  # Projection center is (clon, clat), which, if null, is\n  # set to the midpoint of the input in lat-lon space.\n  # Line identifiers in lon[is.na (lat)] retained in x.\n  # Returns a two column matrix with column names \"x\" and \"y\",\n  # in units of kilometers.  This is Lambert's azimuthal\n  # equal area map projection using a spherical earth model.\n  # (ref JP Snyder, USGS Prof Paper 1395, p 182 ff).\n{\n    R <- 6371 # authalic radius of Clarke 1866 rounded to km\n    if (is.null (clon) || is.null (clat))\n    {\n        rlat <- range (lat, na.rm=TRUE)\n        rlon <- range (lon, na.rm=TRUE)\n        clat <- diff (rlat) / 2 + rlat[1]\n        clon <- diff (rlon) / 2 + rlon[1]\n    }\n    dlon <- (lon - clon) * pi / 180\n    cosdlon <- cos (dlon)\n    sinlat <- sin (lat * pi / 180)\n    coslat <- cos (lat * pi / 180)\n    sinclat <- sin (clat * pi / 180)\n    cosclat <- cos (clat * pi / 180)\n    kp <- 1 + sinclat*sinlat + cosclat*coslat*cosdlon\n    kp <- sqrt (2 / kp)\n    x <- R * kp * coslat * sin (dlon)\n    y <- R * kp * (cosclat*sinlat - sinclat*coslat*cosdlon)\n    x[is.na (lat)] <- lon[is.na (lat)]\n    xy <- cbind (x=x, y=y)\n    xy\n}\n\n# generate latitude and longitude graticules\ngraticule <- function (minlon=-180, maxlon=180,\n    minlat=-90, maxlat=90, ginc=10, dinc=2)\n{\n    dlon <- maxlon - minlon\n    dlat <- maxlat - minlat\n    nr <- (dlon / dinc + 1) * (dlat / ginc + 1) +\n        (dlat / dinc + 1) * (dlon / ginc + 1) +\n        dlon / ginc + dlat / ginc + 2\n    geo <- matrix (0, nrow=nr, ncol=2)\n    i <- n <- 0\n    for (lon in seq (minlon, maxlon, by=ginc))\n    {\n        i <- i + 1\n        n <- n + 1\n        geo[i, 1] <- n\n        geo[i, 2] <- NA\n        for (lat in seq (minlat, maxlat, by=dinc))\n        {\n            i <- i + 1\n            geo[i, 1] <- lon\n            geo[i, 2] <- lat\n        }\n    }\n    for (lat in seq (minlat, maxlat, by=ginc))\n    {\n        i <- i + 1\n        n <- n + 1\n        geo[i, 1] <- n\n        geo[i, 2] <- NA\n        for (lon in seq (minlon, maxlon, by=dinc))\n        {\n            i <- i + 1\n            geo[i, 1] <- lon\n            geo[i, 2] <- lat\n        }\n    }\n    geo\n}\n\n# a graticule for central pacific\neast.part <- graticule (minlon=-180, maxlon=-150,\n                        minlat=-30, maxlat=30)\nwest.part <- graticule (minlon= 150, maxlon= 180,\n                        minlat=-30, maxlat=30)\ngrat.geo <- rbind (east.part, west.part)\ngrat.lam <- lambaz (grat.geo[,1], grat.geo[,2], clon=180, clat=0)\n\n# generate random points in central pacific\neast.pts <- cbind (runif (100, min=-180, max=-150),\n                   runif (100, min=-30, max=30))\nwest.pts <- cbind (runif (100, min= 150, max= 180),\n                   runif (100, min=-30, max=30))\npts.geo <- rbind (east.pts, west.pts)\npts.lam <- lambaz (pts.geo[,1], pts.geo[,2], clon=180, clat=0)\n\n# plot in geographic coordinate space (lat, lon)\nplot.new ()\nplot.window (range (grat.geo[,1], na.rm=TRUE),\n             range (grat.geo[,2], na.rm=TRUE), asp=1)\nlines (grat.geo)\npoints (pts.geo, pch=20)\n\n# plot in Lambert space\nplot.new ()\nplot.window (range (grat.lam[,1], na.rm=TRUE),\n             range (grat.lam[,2], na.rm=TRUE), asp=1)\nlines (grat.lam)\npoints (pts.lam, pch=20)",
+      "body_snippet": ">I'm trying to plot some\n>data for the Pacific Ocean and want to get a map onto my plot as\n>well.\n>I'm using the function 'map()' from library(maps). However, I cannot\n>get it to plot anything across ",
+      "thread_id": "thread-9de29877a7bd",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-01f3f77647ef",
+      "message_id": "<4D8D52F7-00A7-4652-826F-E28535A14675@umn.edu>",
+      "from_name": "Kirk R. Wythers",
+      "from_email_hash": "2613cf98ee164e2881f5bcc28a3ac1e73571fb31802a6bfe2e37432735df7d02",
+      "date": "2006-01-19T14:43:53-06:00",
+      "subject": "[R-sig-Geo] file format error with R and GRASS61",
+      "subject_clean": "file format error with R and GRASS61",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I am trying to figure out an GDAL error message about grass file not  \nbeing a supported format. The message is:\n\n > gmeta6 <- gmeta6()\n > fname <- paste(gmeta6$GISDBASE, gmeta6$LOCATION_NAME,\n+ \"PERMANENT\", \"cellhd\", \"soils.ph\",\n+ sep=\"/\")\n > soilsph_GDAL <- read.GDAL(fname)\nError in .local(.Object, ...) :\n         GDAL Error 4: `~/grassdata/spearfish60/PERMANENT/cellhd/ \nsoils.ph' not recognised as a supported file format.\n\nThis is on grass61 and R 2.2.1 using the spearfish60 location\n\nThanks in advance for any ideas",
+      "body_snippet": "I am trying to figure out an GDAL error message about grass file not  \nbeing a supported format. The message is:\n\n > gmeta6 <- gmeta6()\n > fname <- paste(gmeta6$GISDBASE, gmeta6$LOCATION_NAME,\n+ \"PERM",
+      "thread_id": "thread-01f3f77647ef",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-a1a17ac3cbd8",
+      "message_id": "<Pine.LNX.4.44.0601192159260.32454-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-01-19T22:01:32+01:00",
+      "subject": "[R-sig-Geo] Maps across the dateline",
+      "subject_clean": "Maps across the dateline",
+      "in_reply_to": "<OFA19003B5.3FAF2F78-ON882570FB.006E0414-882570FB.006E0418@epamail.epa.gov>",
+      "references": [],
+      "body_plain": "On Thu, 19 Jan 2006 White.Denis at epamail.epa.gov wrote:\n\nWhile there are plenty of good answers to this question, the most direct \none - given that the maps package is maintained from New Zealand, is to \nuse the world2 database it provides:\n\n?world2\n\nwhich runs 0-360 (roughly), and should be good enough resolution for a \nwhole-Pacific map.\n\nRoger\n\n> \n> \n> >I'm trying to plot some\n> >data for the Pacific Ocean and want to get a map onto my plot as\n> >well.\n> >I'm using the function 'map()' from library(maps). However, I cannot\n> >get it to plot anything across the dateline since it requires that\n> >longitudes between 180 and 360 degrees east to be written as negative\n> >degrees east of Greenwich (e.g. -180 to 0 degrees east). The\n> >longitudes\n> >I want to plot are 135 to 255 degrees east but the function map()\n> >wants\n> >that to be written 135 to 180 degrees east and -180 to -105 degrees\n> >east, so I would have to divide the grid up in two. But even if I do\n> >that I can't plot it together because -180 doesn't come after 180.\n> >\n> >Does anyone have a way to plot something across the dateline? I only\n> >want a map of the Pacific, not the rest of the world.\n> >\n> >Thanks,\n> >Anne Hertel\n> \n> If you use an appropriate map projection centered at 180/-180, for\n> example, then you should be able to plot your data and islands or\n> latitude/longitude lines as desired.  See the following example for\n> plotting some random points and the latitude and longitude graticule\n> lines using one particular map projection.  This projection, the Lambert\n> azimuthal, is an equal area projection but may not be the most\n> appropriate for your needs.  There are web sites that can help to choose\n> a projection if you need it.\n> \n> # plot data across 180/-180\n> \n> # Lambert azimuthal equal area map projection\n> lambaz <- function (lon, lat, clon=NULL, clat=NULL)\n>   # Arguments are vectors of longitude and latitude,\n>   # that is, geographic coordinates in decimal degrees.\n>   # Projection center is (clon, clat), which, if null, is\n>   # set to the midpoint of the input in lat-lon space.\n>   # Line identifiers in lon[is.na (lat)] retained in x.\n>   # Returns a two column matrix with column names \"x\" and \"y\",\n>   # in units of kilometers.  This is Lambert's azimuthal\n>   # equal area map projection using a spherical earth model.\n>   # (ref JP Snyder, USGS Prof Paper 1395, p 182 ff).\n> {\n>     R <- 6371 # authalic radius of Clarke 1866 rounded to km\n>     if (is.null (clon) || is.null (clat))\n>     {\n>         rlat <- range (lat, na.rm=TRUE)\n>         rlon <- range (lon, na.rm=TRUE)\n>         clat <- diff (rlat) / 2 + rlat[1]\n>         clon <- diff (rlon) / 2 + rlon[1]\n>     }\n>     dlon <- (lon - clon) * pi / 180\n>     cosdlon <- cos (dlon)\n>     sinlat <- sin (lat * pi / 180)\n>     coslat <- cos (lat * pi / 180)\n>     sinclat <- sin (clat * pi / 180)\n>     cosclat <- cos (clat * pi / 180)\n>     kp <- 1 + sinclat*sinlat + cosclat*coslat*cosdlon\n>     kp <- sqrt (2 / kp)\n>     x <- R * kp * coslat * sin (dlon)\n>     y <- R * kp * (cosclat*sinlat - sinclat*coslat*cosdlon)\n>     x[is.na (lat)] <- lon[is.na (lat)]\n>     xy <- cbind (x=x, y=y)\n>     xy\n> }\n> \n> # generate latitude and longitude graticules\n> graticule <- function (minlon=-180, maxlon=180,\n>     minlat=-90, maxlat=90, ginc=10, dinc=2)\n> {\n>     dlon <- maxlon - minlon\n>     dlat <- maxlat - minlat\n>     nr <- (dlon / dinc + 1) * (dlat / ginc + 1) +\n>         (dlat / dinc + 1) * (dlon / ginc + 1) +\n>         dlon / ginc + dlat / ginc + 2\n>     geo <- matrix (0, nrow=nr, ncol=2)\n>     i <- n <- 0\n>     for (lon in seq (minlon, maxlon, by=ginc))\n>     {\n>         i <- i + 1\n>         n <- n + 1\n>         geo[i, 1] <- n\n>         geo[i, 2] <- NA\n>         for (lat in seq (minlat, maxlat, by=dinc))\n>         {\n>             i <- i + 1\n>             geo[i, 1] <- lon\n>             geo[i, 2] <- lat\n>         }\n>     }\n>     for (lat in seq (minlat, maxlat, by=ginc))\n>     {\n>         i <- i + 1\n>         n <- n + 1\n>         geo[i, 1] <- n\n>         geo[i, 2] <- NA\n>         for (lon in seq (minlon, maxlon, by=dinc))\n>         {\n>             i <- i + 1\n>             geo[i, 1] <- lon\n>             geo[i, 2] <- lat\n>         }\n>     }\n>     geo\n> }\n> \n> # a graticule for central pacific\n> east.part <- graticule (minlon=-180, maxlon=-150,\n>                         minlat=-30, maxlat=30)\n> west.part <- graticule (minlon= 150, maxlon= 180,\n>                         minlat=-30, maxlat=30)\n> grat.geo <- rbind (east.part, west.part)\n> grat.lam <- lambaz (grat.geo[,1], grat.geo[,2], clon=180, clat=0)\n> \n> # generate random points in central pacific\n> east.pts <- cbind (runif (100, min=-180, max=-150),\n>                    runif (100, min=-30, max=30))\n> west.pts <- cbind (runif (100, min= 150, max= 180),\n>                    runif (100, min=-30, max=30))\n> pts.geo <- rbind (east.pts, west.pts)\n> pts.lam <- lambaz (pts.geo[,1], pts.geo[,2], clon=180, clat=0)\n> \n> # plot in geographic coordinate space (lat, lon)\n> plot.new ()\n> plot.window (range (grat.geo[,1], na.rm=TRUE),\n>              range (grat.geo[,2], na.rm=TRUE), asp=1)\n> lines (grat.geo)\n> points (pts.geo, pch=20)\n> \n> # plot in Lambert space\n> plot.new ()\n> plot.window (range (grat.lam[,1], na.rm=TRUE),\n>              range (grat.lam[,2], na.rm=TRUE), asp=1)\n> lines (grat.lam)\n> points (pts.lam, pch=20)\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Thu, 19 Jan 2006 White.Denis at epamail.epa.gov wrote:\n\nWhile there are plenty of good answers to this question, the most direct \none - given that the maps package is maintained from New Zealand, i",
+      "thread_id": "thread-9de29877a7bd",
+      "thread_depth": 1,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-b59775468271",
+      "message_id": "<Pine.LNX.4.44.0601192202030.32454-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-01-19T22:06:49+01:00",
+      "subject": "[R-sig-Geo] file format error with R and GRASS61",
+      "subject_clean": "file format error with R and GRASS61",
+      "in_reply_to": "<4D8D52F7-00A7-4652-826F-E28535A14675@umn.edu>",
+      "references": [],
+      "body_plain": "On Thu, 19 Jan 2006, Kirk R. Wythers wrote:\n\n> I am trying to figure out an GDAL error message about grass file not  \n> being a supported format. The message is:\n> \n>  > gmeta6 <- gmeta6()\n>  > fname <- paste(gmeta6$GISDBASE, gmeta6$LOCATION_NAME,\n> + \"PERMANENT\", \"cellhd\", \"soils.ph\",\n> + sep=\"/\")\n>  > soilsph_GDAL <- read.GDAL(fname)\n> Error in .local(.Object, ...) :\n>          GDAL Error 4: `~/grassdata/spearfish60/PERMANENT/cellhd/ \n> soils.ph' not recognised as a supported file format.\n\nIf r.out.gdal works for you on that file, then we have a problem. However, \nI think that your GRASS GDAL plugin is not present, so GDAL doesn't know \nhow to read GRASS rasters natively. What does \n\n> getGDALDriverNames()\n\nsay within R after loading the rgdal package, or equivalently\n\n$ gdalinfo --formats\n\nfrom the shell prompt? If you see \"GRASS\" there, we have a problem, if \nnot, please make sure the GDAL GRASS plugin is installed and working (one \ndoes this *after* installing GRASS.\n\nRoger\n\n> \n> This is on grass61 and R 2.2.1 using the spearfish60 location\n> \n> Thanks in advance for any ideas\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Thu, 19 Jan 2006, Kirk R. Wythers wrote:\n\n> I am trying to figure out an GDAL error message about grass file not  \n> being a supported format. The message is:\n> \n>  > gmeta6 <- gmeta6()\n>  > fname ",
+      "thread_id": "thread-01f3f77647ef",
+      "thread_depth": 1,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-e7898188f23d",
+      "message_id": "<FF9D5077-27F7-4D04-BD05-B42DC3B4DC98@umn.edu>",
+      "from_name": "Kirk R. Wythers",
+      "from_email_hash": "2613cf98ee164e2881f5bcc28a3ac1e73571fb31802a6bfe2e37432735df7d02",
+      "date": "2006-01-19T15:22:03-06:00",
+      "subject": "[R-sig-Geo] file format error with R and GRASS61",
+      "subject_clean": "file format error with R and GRASS61",
+      "in_reply_to": "<Pine.LNX.4.44.0601192202030.32454-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0601192202030.32454-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "On Jan 19, 2006, at 3:06 PM, Roger Bivand wrote:\n\n> On Thu, 19 Jan 2006, Kirk R. Wythers wrote:\n>\n>> I am trying to figure out an GDAL error message about grass file not\n>> being a supported format. The message is:\n>>\n>>> gmeta6 <- gmeta6()\n>>> fname <- paste(gmeta6$GISDBASE, gmeta6$LOCATION_NAME,\n>> + \"PERMANENT\", \"cellhd\", \"soils.ph\",\n>> + sep=\"/\")\n>>> soilsph_GDAL <- read.GDAL(fname)\n>> Error in .local(.Object, ...) :\n>>          GDAL Error 4: `~/grassdata/spearfish60/PERMANENT/cellhd/\n>> soils.ph' not recognised as a supported file format.\n>\n> If r.out.gdal works for you on that file, then we have a problem.  \n> However,\n> I think that your GRASS GDAL plugin is not present, so GDAL doesn't  \n> know\n> how to read GRASS rasters natively. What does\n>\n>> getGDALDriverNames()\n\n > getGDALDriverNames()\n[1] \"VRT\"       \"GTiff\"     \"NITF\"      \"HFA\"       \"SAR_CEOS\"  \"CEOS\"\n[7] \"ELAS\"      \"AIG\"       \"AAIGrid\"   \"SDTS\"      \"OGDI\"      \"DTED\"\n[13] \"PNG\"       \"JPEG\"      \"MEM\"       \"JDEM\"      \"GIF\"       \"ESAT\"\n[19] \"BSB\"       \"XPM\"       \"BMP\"       \"AirSAR\"    \"RS2\"        \n\"PCIDSK\"\n[25] \"PCRaster\"  \"ILWIS\"     \"RIK\"       \"GMT\"       \"netCDF\"    \"HDF4\"\n[31] \"HDF4Image\" \"PNM\"       \"DOQ1\"      \"DOQ2\"      \"ENVI\"      \"EHdr\"\n[37] \"PAux\"      \"MFF\"       \"MFF2\"      \"FujiBAS\"   \"GSC\"       \"FAST\"\n[43] \"BT\"        \"LAN\"       \"CPG\"       \"IDA\"       \"NDF\"        \n\"JPEG2000\"\n[49] \"L1B\"       \"FIT\"       \"RMF\"       \"USGSDEM\"   \"GXF\"\n >\n\n\n>\n> say within R after loading the rgdal package, or equivalently\n>\n> $ gdalinfo --formats\n\nthe same\n\n>\n> from the shell prompt? If you see \"GRASS\" there, we have a problem, if\n> not, please make sure the GDAL GRASS plugin\n\nI thought I had this installed. You are talking about Frank's 1.3.1  \nversion gdal, right?\n\nI used the config options:\n\n./configure --mandir=/usr/local/share/man --without-python --with- \nthreads --with\n-static-proj4=/usr/local --with-libtiff=/usr/local --with-geotiff=/ \nusr/local --w\nith-jpeg=/usr/local --with-gif=/usr/local --with-png=/usr/local -- \nwith-jasper=/u\nsr/local --with-pg=/usr/local/pgsql/bin/pg_config --with-mysql=/usr/ \nlocal/mysql/\nbin/mysql_config --with-netcdf=/Volumes/disk1/home1/kwythers/src/ \nnetcdf-3.6.0-p1\n--with-hdf4=/Volumes/disk1/home1/kwythers/src/HDF4.2r1/hdf4-darwin - \nwith-ogdi=/\nusr/local --with-geos=/usr/local/bin/geos-config --with-grass=/usr/ \nlocal/grass-6\n.1.cvs\n\n\n\n> is installed and working (one\n> does this *after* installing GRASS.\n>\n> Roger\n>\n>>\n>> This is on grass61 and R 2.2.1 using the spearfish60 location\n>>\n>> Thanks in advance for any ideas\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n> -- \n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian  \n> School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>",
+      "body_snippet": "On Jan 19, 2006, at 3:06 PM, Roger Bivand wrote:\n\n> On Thu, 19 Jan 2006, Kirk R. Wythers wrote:\n>\n>> I am trying to figure out an GDAL error message about grass file not\n>> being a supported format. T",
+      "thread_id": "thread-01f3f77647ef",
+      "thread_depth": 2,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-e5b593cd3b04",
+      "message_id": "<6C0CEA71-B01C-48EA-BEDA-5CC1194EA946@umn.edu>",
+      "from_name": "Kirk R. Wythers",
+      "from_email_hash": "2613cf98ee164e2881f5bcc28a3ac1e73571fb31802a6bfe2e37432735df7d02",
+      "date": "2006-01-19T15:30:40-06:00",
+      "subject": "[R-sig-Geo] file format error with R and GRASS61",
+      "subject_clean": "file format error with R and GRASS61",
+      "in_reply_to": "<Pine.LNX.4.44.0601192202030.32454-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0601192202030.32454-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "On Jan 19, 2006, at 3:06 PM, Roger Bivand wrote:\n\n> On Thu, 19 Jan 2006, Kirk R. Wythers wrote:\n>\n>> I am trying to figure out an GDAL error message about grass file not\n>> being a supported format. The message is:\n>>\n>>> gmeta6 <- gmeta6()\n>>> fname <- paste(gmeta6$GISDBASE, gmeta6$LOCATION_NAME,\n>> + \"PERMANENT\", \"cellhd\", \"soils.ph\",\n>> + sep=\"/\")\n>>> soilsph_GDAL <- read.GDAL(fname)\n>> Error in .local(.Object, ...) :\n>>          GDAL Error 4: `~/grassdata/spearfish60/PERMANENT/cellhd/\n>> soils.ph' not recognised as a supported file format.\n>\n> If r.out.gdal works for you on that file, then we have a problem.  \n> However,\n> I think that your GRASS GDAL plugin is not present, so GDAL doesn't  \n> know\n> how to read GRASS rasters natively. What does\n>\n>> getGDALDriverNames()\n>\n> say within R after loading the rgdal package, or equivalently\n>\n> $ gdalinfo --formats\n>\n> from the shell prompt? If you see \"GRASS\" there, we have a problem, if\n> not, please make sure the GDAL GRASS plugin is installed and  \n> working (one\n> does this *after* installing GRASS.\n\nThat was it Roger. Thanks. I was sure that I had the plugin  \ninstalled, but after rebuilding gdal-withgrass and reinstalling,  \nread.GDAL ran just fine.\n\n\n>\n> Roger\n>\n>>\n>> This is on grass61 and R 2.2.1 using the spearfish60 location\n>>\n>> Thanks in advance for any ideas\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n> -- \n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian  \n> School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>",
+      "body_snippet": "On Jan 19, 2006, at 3:06 PM, Roger Bivand wrote:\n\n> On Thu, 19 Jan 2006, Kirk R. Wythers wrote:\n>\n>> I am trying to figure out an GDAL error message about grass file not\n>> being a supported format. T",
+      "thread_id": "thread-01f3f77647ef",
+      "thread_depth": 2,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-9db2ba5b8bb6",
+      "message_id": "<99D33528-8E78-41F5-8861-5FA336A2E0BA@carleton.ca>",
+      "from_name": "Scott Mitchell",
+      "from_email_hash": "edc896bb1a64ebf2db9ebc0116d599f2cbb3b2b8a076da4af9792a375c255d7d",
+      "date": "2006-01-20T13:13:30-05:00",
+      "subject": "[R-sig-Geo] file format error with R and GRASS61",
+      "subject_clean": "file format error with R and GRASS61",
+      "in_reply_to": "<6C0CEA71-B01C-48EA-BEDA-5CC1194EA946@umn.edu>",
+      "references": [
+        "<Pine.LNX.4.44.0601192202030.32454-100000@reclus.nhh.no>",
+        "<6C0CEA71-B01C-48EA-BEDA-5CC1194EA946@umn.edu>"
+      ],
+      "body_plain": "On 19-Jan-06, at 16:30, Kirk R. Wythers wrote:\n\n> On Jan 19, 2006, at 3:06 PM, Roger Bivand wrote:\n>\n>> On Thu, 19 Jan 2006, Kirk R. Wythers wrote:\n>>\n>>> I am trying to figure out an GDAL error message about grass file not\n>>> being a supported format. The message is:\n\n...\n\n>> If r.out.gdal works for you on that file, then we have a problem.\n>> However, I think that your GRASS GDAL plugin is not present, so  \n>> GDAL doesn't\n>> know how to read GRASS rasters natively. What does\n>>\n>>> getGDALDriverNames()\n>>\n>> say within R after loading the rgdal package, or equivalently\n>>\n>> $ gdalinfo --formats\n>>\n>> from the shell prompt? If you see \"GRASS\" there, we have a  \n>> problem, if\n>> not, please make sure the GDAL GRASS plugin is installed and\n>> working (one\n>> does this *after* installing GRASS.\n>\n> That was it Roger. Thanks. I was sure that I had the plugin\n> installed, but after rebuilding gdal-withgrass and reinstalling,\n> read.GDAL ran just fine.\n>\n\nGreat to hear that you got it working!\n\nThe procedure Roger was referring to for making everyone play  \ncorrectly is slightly different, however, assuming I'm interpreting  \nyour message correctly.  So to make sure it's archived in the mailing  \nlist, here's what I've gathered is now the way to go (same idea for  \ngetting GRASS support fully functional in QGIS, by the way):\n\n- build and install GDAL WITHOUT GRASS support\n- build and install GRASS\n- download the separate gdal-grass plugin that is available at the  \ngdal site\n(as of this writing, that's http://www.gdal.org/dl/gdal- \ngrass-1.3.1.1.tar.gz )\nand compile that, and the make install process in that directory will  \ninsert just\nthe GRASS driver into your existing GDAL tree\n\nThen GDAL called from 3rd applications, e.g. R or QGIS, should be  \nable to read GRASS rasters.\n\nI don't know/can't remember whether this essentially does the same  \nthing as what you did\n(i.e. I'm assuming you've recompiled the full GDAL after GRASS with  \nGRASS functionality turned on), or if there's a functional  \ndifference.  In any case, it's simpler, and is designed\nto avoid circular dependency problems.\n\nCheers,\nScott Mitchell\n\n----\nScott Mitchell, Assistant Professor, Carleton University\nDepartment of Geography & Environmental Studies, Loeb A209\nMailing:  Loeb B349, 1125 Colonel By Dr., Ottawa, ON K1S 5B6 Canada\n1-613-520-2600 x2695 Fax: 613-520-4301 Scott_Mitchell at carleton.ca",
+      "body_snippet": "On 19-Jan-06, at 16:30, Kirk R. Wythers wrote:\n\n> On Jan 19, 2006, at 3:06 PM, Roger Bivand wrote:\n>\n>> On Thu, 19 Jan 2006, Kirk R. Wythers wrote:\n>>\n>>> I am trying to figure out an GDAL error messa",
+      "thread_id": "thread-01f3f77647ef",
+      "thread_depth": 3,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-8bac6a27908f",
+      "message_id": "<0B00B644-9694-4251-BA4D-B70FDC1E006D@umn.edu>",
+      "from_name": "Kirk R. Wythers",
+      "from_email_hash": "2613cf98ee164e2881f5bcc28a3ac1e73571fb31802a6bfe2e37432735df7d02",
+      "date": "2006-01-20T12:41:25-06:00",
+      "subject": "[R-sig-Geo] file format error with R and GRASS61",
+      "subject_clean": "file format error with R and GRASS61",
+      "in_reply_to": "<99D33528-8E78-41F5-8861-5FA336A2E0BA@carleton.ca>",
+      "references": [
+        "<Pine.LNX.4.44.0601192202030.32454-100000@reclus.nhh.no>",
+        "<6C0CEA71-B01C-48EA-BEDA-5CC1194EA946@umn.edu>",
+        "<99D33528-8E78-41F5-8861-5FA336A2E0BA@carleton.ca>"
+      ],
+      "body_plain": "On Jan 20, 2006, at 12:13 PM, Scott Mitchell wrote:\n\n>\n> Great to hear that you got it working!\n\nThanks Scott. I appreciate your desire to get the solution  \ndocumented. Here are the details...\n\n>\n> The procedure Roger was referring to for making everyone play  \n> correctly is slightly different, however, assuming I'm interpreting  \n> your message correctly.  So to make sure it's archived in the  \n> mailing list, here's what I've gathered is now the way to go (same  \n> idea for getting GRASS support fully functional in QGIS, by the way):\n>\n> - build and install GDAL WITHOUT GRASS support\n\ngdal-1.3.1\n\n./configure\n\t--mandir=/usr/local/share/man\n\t--without-python\n\t--with-threads\n\t--with-static-proj4=/usr/local\n\t--with-libtiff=/usr/local\n\t--with-geotiff=/usr/local\n\t--with-jpeg=/usr/local\n\t--with-gif=/usr/local\n\t--with-png=/usr/local\n\t--with-jasper=/usr/local\n\t--with-pg=/usr/local/pgsql/bin/pg_config\n\t--with-mysql=/usr/local/mysql/bin/mysql_config\n\t--with-netcdf=/Volumes/disk1/home1/kwythers/src/netcdf-3.6.0-p1\n\t--with-hdf4=/Volumes/disk1/home1/kwythers/src/HDF4.2r1/hdf4-darwin\n\t--with-ogdi=/usr/local\n\t--with-geos=/usr/local/bin/geos-config\n\n\n> - build and install GRASS\n\ngrass-6.1.cvs\n\n./configure\\\n     --enable-64bit\\\n     --enable-sysv\\\n     --with-includes=/usr/X11R6/include\\\n     --with-libs=/usr/X11R6/lib\\\n     --with-freetype\\\n     --with-tcltk-includes=/usr/X11R6/include\\\n     --with-tcltk-libs=/usr/X11R6/lib\\\n     --with-gdal=/usr/local/bin/gdal-config\\\n     --with-proj\\\n     --with-x\\\n     --with-cxx\\\n     --with-glw\\\n     --with-motif\\\n     --without-odbc\\\n     --enable-shared\\\n     --with-postgres-includes=/usr/local/pgsql/include\\\n     --with-postgres-libs=/usr/local/pgsql/lib\\\n     --with-mysql\\\n     --with-mysql-includes=/usr/local/mysql/include\\\n     --with-mysql-libs=/usr/local/mysql/lib\\\n     --with-freetype-includes=/usr/local/include/freetype2\n\n\n> - download the separate gdal-grass plugin that is available at the  \n> gdal site\n> (as of this writing, that's http://www.gdal.org/dl/gdal- \n> grass-1.3.1.1.tar.gz )\n\nIn my case I just reconfigured and re-installed gdal-1.3.1 with:\n\n./configure\n\t--mandir=/usr/local/share/man\n\t--without-python\n\t--with-threads\n\t--with-static-proj4=/usr/local\n\t--with-libtiff=/usr/local\n\t--with-geotiff=/usr/local\n\t--with-jpeg=/usr/local\n\t--with-gif=/usr/local\n\t--with-png=/usr/local\n\t--with-jasper=/usr/local\n\t--with-pg=/usr/local/pgsql/bin/pg_config\n\t--with-mysql=/usr/local/mysql/bin/mysql_config\n\t--with-netcdf=/Volumes/disk1/home1/kwythers/src/netcdf-3.6.0-p1\n\t--with-hdf4=/Volumes/disk1/home1/kwythers/src/HDF4.2r1/hdf4-darwin\n\t--with-ogdi=/usr/local\n\t--with-geos=/usr/local/bin/geos-config\n\t--with-grass=/usr/local/grass-6.1.cvs\n\n\n> and compile that, and the make install process in that directory  \n> will insert just\n> the GRASS driver into your existing GDAL tree\n\nPerhaps this approach would be more efficient. I assume that http:// \nwww.gdal.org/dl/gdal-grass-1.3.1.1.tar.gz  does not rebuild and  \nreinstall whole gdal application?\n\n>\n> Then GDAL called from 3rd applications, e.g. R or QGIS, should be  \n> able to read GRASS rasters.\n>\n> I don't know/can't remember whether this essentially does the same  \n> thing as what you did\n> (i.e. I'm assuming you've recompiled the full GDAL after GRASS with  \n> GRASS functionality turned on), or if there's a functional  \n> difference.  In any case, it's simpler, and is designed\n> to avoid circular dependency problems.\n\nI agree your approach would be simpler. Although since have not had  \nany trouble getting qgis builds to read grass vectors or rasters, it  \nwould seem that both approaches work.\n\n\n>\n> Cheers,\n> Scott Mitchell\n>\n> ----\n> Scott Mitchell, Assistant Professor, Carleton University\n> Department of Geography & Environmental Studies, Loeb A209\n> Mailing:  Loeb B349, 1125 Colonel By Dr., Ottawa, ON K1S 5B6 Canada\n> 1-613-520-2600 x2695 Fax: 613-520-4301 Scott_Mitchell at carleton.ca\n>\n>",
+      "body_snippet": "On Jan 20, 2006, at 12:13 PM, Scott Mitchell wrote:\n\n>\n> Great to hear that you got it working!\n\nThanks Scott. I appreciate your desire to get the solution  \ndocumented. Here are the details...\n\n>\n> T",
+      "thread_id": "thread-01f3f77647ef",
+      "thread_depth": 4,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-4331d11161a2",
+      "message_id": "<Pine.LNX.4.44.0601202031170.1154-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-01-20T20:38:25+01:00",
+      "subject": "[R-sig-Geo] ANN: Europe and its Regions Conference",
+      "subject_clean": "ANN: Europe and its Regions Conference",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I've been asked to circulate a call for papers for a meeting in Berlin 30\nJune and 1 July on \"Europe and its Regions: The Usage of European\nRegionalized Social Science Data\" by Wenzel Matiaske:\n\n\"I'm writing you as maintainer of the R spatial projects. We - Gerd\nGroezinger, Katharina Spiess and myself are organising a conference\nentitled: \"Europe and its Regions: The Usage of European Regionalized\nSocial Science Data\" (6/30/06 and 7/1/06 DIW Berlin). The conference\nshould inform about data sets, applications and specialized methods for\nregionalized data.\n\nActually we are missing the last point: We have no contributions on\nmethods or software packages in the area to spatial data analysis.  I am\nwriting to ask if you would circulate our call for papers and this mail to\nR-sig-Geo to encourage proposals in methods or software packages;\nparticularly we are interested in an overview paper on R spatial projects\nand other software projects.\n\nIn ignorance of the deadline mentioned in our call for papers, proposals\n(max. 1 page) should be send in until the 31st of January.\"\n\nI thought it worth passing this on because there are probably a number of \nsocial science researchers using European regional data on the list, who \nmight feel like taking up the challenge of presenting how R and these \nkinds of data might work together. I've put the CFP on:\n\nhttp://spatial.nhh.no/misc/europe-regional.pdf\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "I've been asked to circulate a call for papers for a meeting in Berlin 30\nJune and 1 July on \"Europe and its Regions: The Usage of European\nRegionalized Social Science Data\" by Wenzel Matiaske:\n\n\"I'm ",
+      "thread_id": "thread-4331d11161a2",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-e8e07d49cf26",
+      "message_id": "<20060123124254.GC9264@bartok.itc.it>",
+      "from_name": "Markus Neteler",
+      "from_email_hash": "6699469fcb2a74ef796d0e883e27624d3663973e457278083d48e5b55c1da876",
+      "date": "2006-01-23T13:42:54+01:00",
+      "subject": "[R-sig-Geo] file format error with R and GRASS61",
+      "subject_clean": "file format error with R and GRASS61",
+      "in_reply_to": "<99D33528-8E78-41F5-8861-5FA336A2E0BA@carleton.ca>",
+      "references": [
+        "<Pine.LNX.4.44.0601192202030.32454-100000@reclus.nhh.no>",
+        "<6C0CEA71-B01C-48EA-BEDA-5CC1194EA946@umn.edu>",
+        "<99D33528-8E78-41F5-8861-5FA336A2E0BA@carleton.ca>"
+      ],
+      "body_plain": "On Fri, Jan 20, 2006 at 01:13:30PM -0500, Scott Mitchell wrote:\n...\n> So to make sure it's archived in the mailing  \n> list, here's what I've gathered is now the way to go (same idea for  \n> getting GRASS support fully functional in QGIS, by the way):\n> \n> - build and install GDAL WITHOUT GRASS support\n> - build and install GRASS\n> - download the separate gdal-grass plugin that is available at the  \n>  gdal site\n> (as of this writing, that's http://www.gdal.org/dl/gdal-grass-1.3.1.1.tar.gz )\n> and compile that, and the make install process in that directory will  \n> insert just the GRASS driver into your existing GDAL tree\n\nThis is documented in the GRASS Wiki:\n\nhttp://grass.gdf-hannover.de/twiki/bin/view/GRASS/WebHome\n->  How to compile/install GRASS and QGIS with GDAL/OGR Plugin\n    http://grass.gdf-hannover.de/twiki/bin/view/GRASS/GrassQgisGdalOgrPlugin\n\n\nBest\n Markus",
+      "body_snippet": "On Fri, Jan 20, 2006 at 01:13:30PM -0500, Scott Mitchell wrote:\n...\n> So to make sure it's archived in the mailing  \n> list, here's what I've gathered is now the way to go (same idea for  \n> getting G",
+      "thread_id": "thread-01f3f77647ef",
+      "thread_depth": 4,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-669beee73281",
+      "message_id": "<43D64E2A.9040002@sms.ed.ac.uk>",
+      "from_name": "Luke Spadavecchia",
+      "from_email_hash": "818a66096b8c0c5c81eed8ffe127637cf87cd22620a3e842b86a9e359e947e0d",
+      "date": "2006-01-24T15:56:26Z",
+      "subject": "[R-sig-Geo] External Drift Kriging",
+      "subject_clean": "External Drift Kriging",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello!\n\nI am currently studying my PhD at Edinburgh University, and I have \nrecently been moving to R as my main data analysis package. One of the \nmain reasons for this is the availability of GeoR, which will allow me \nto do everything I need to do in one environment. However, I am \ncurrently having a few problems getting up and running with the \nkrige.conv command. I am trying to krige annual average temperatures \nfrom 112 met stations located in the Eastern Cascade mountains of \nOregon. The data are highly non-stationary, due to the presence of a \nlinear lapse response between the temperature and the altitude (the \naltitudinal range here is considerable). I have quantified this response \nat a loss of 3.5 degrees centegrade per 1km rise. I have removed this \ntrend from the data, and produced a zero mean, gaussian distributed \nstationary process, and from this derived the spatial covarince structure.\n\nThe problem is that I only want to predict values from a small subset of \nthe area which the stations occupy; although some stations are outwith \nthe required borders, they are more or less within the range of the \ncovariance function. I have an elevation model for the prediction \nlocations, but due to computational limitations, cannot extend this to \ncover the full area: thus trend.l is only specified within the borders. \nAll of the stations have elevations attached, and so I am able to \nspecify trend.d. To summarise I have the following:\n\ngrid                     [a 1km grid which covers the entire domain of \ninterest, containing all the met stations]\nlc                        [a two dimensional matrix specifying the \nborders for prediction]\nNormals             [a geodata object with data on the annual station \ntemperature average]\npts                      [a geodata object with data on the station \nelevations]\ncressie_cu           [a variogram model (cressie weights, cubic model), \nderived from the residuals of the linear model average_temp~elevation]\nDEM                  [a geodata object with elevation data at 1km \nspacing for all prediction locations within lc]\n\nI am attempting the following:\n\npars <- krige.control(obj.m=cressie_cu,\n                               trend.d = trend.spatial(~data, pts),\n                               trend.l = trend.spatial(~data,DEM))\n\nkc <- krige.conv(Normals, loc = grid, borders = lc, krige = pars)\n\nOn trying to execute the commands, I get an output which has lots of \nlines and other artifacts running through it, which seems to bear no \nresemblance to the expected output at all. Could you please suggest what \nI am getting wrong?\n\nMany thanks\n\nLuke Spadavecchia",
+      "body_snippet": "Hello!\n\nI am currently studying my PhD at Edinburgh University, and I have \nrecently been moving to R as my main data analysis package. One of the \nmain reasons for this is the availability of GeoR, w",
+      "thread_id": "thread-669beee73281",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-23ffc7a2b04e",
+      "message_id": "<Pine.LNX.4.63.0601261148590.1735@est.ufpr.br>",
+      "from_name": "Paulo Justiniano Ribeiro Jr",
+      "from_email_hash": "2b858444caa126e4d481e2fc2bbba608bd14deecadbdf1fe319682ae8329d0bb",
+      "date": "2006-01-26T12:00:21-02:00",
+      "subject": "[R-sig-Geo] External Drift Kriging",
+      "subject_clean": "External Drift Kriging",
+      "in_reply_to": "<43D64E2A.9040002@sms.ed.ac.uk>",
+      "references": [
+        "<43D64E2A.9040002@sms.ed.ac.uk>"
+      ],
+      "body_plain": "Hi Luke\n\n> krige.conv command. I am trying to krige annual average temperatures\n> from 112 met stations located in the Eastern Cascade mountains of\n> Oregon. The data are highly non-stationary, due to the presence of a\n> linear lapse response between the temperature and the altitude (the\n> altitudinal range here is considerable). I have quantified this response\n> at a loss of 3.5 degrees centegrade per 1km rise. I have removed this\n> trend from the data, and produced a zero mean, gaussian distributed\n> stationary process, and from this derived the spatial covarince structure.\n>\n\nOK. This is one option indeed, to modelling covariance after getting \n\"residuals\" from some kind of model to take auto the effect of known \nsources of variation.\nAnd indeed the usual variogram will only make sense for stationary data.\n\nIn the max. lik. estimation you can do both together, getting estimates \nfor a (linear) model for the mean and for the covariance parameters.\n\nAn example call would be something along the lines\n\n> ml <- likfit(foo, trend=~altitude)\nprovided foo is a geodata object with covariate information on altitude\n\nLater for kriging you would need a call of the type:\n> krige.conv(foo, loc=gr, krige=krige.control(obj=ml, trend.d=~altitude, \ntrend.l = ~altitude.gr), borders=NULL)\n\nwhere gr is a matrix with coordinates of prediction points and\naltitude.gr is the value of the covariate at those prediction points,\n\n> The problem is that I only want to predict values from a small subset of\n> the area which the stations occupy; although some stations are outwith\n> the required borders, they are more or less within the range of the\n> covariance function. I have an elevation model for the prediction\n> locations, but due to computational limitations, cannot extend this to\n> cover the full area: thus trend.l is only specified within the borders.\n\nSo you can only krige within the borders, unless you extrapolate your \ncovariate information somehow.\nKriging with external trend (w/ covariates) requires values of the \ncoavriates at all prediction locations.\n\n\nHope this helps, and if the problempersists feel free to contact me \ndirectly\n\nbest\nP.J.\n\n\n\n> All of the stations have elevations attached, and so I am able to\n> specify trend.d. To summarise I have the following:\n>\n> grid                     [a 1km grid which covers the entire domain of\n> interest, containing all the met stations]\n> lc                        [a two dimensional matrix specifying the\n> borders for prediction]\n> Normals             [a geodata object with data on the annual station\n> temperature average]\n> pts                      [a geodata object with data on the station\n> elevations]\n> cressie_cu           [a variogram model (cressie weights, cubic model),\n> derived from the residuals of the linear model average_temp~elevation]\n> DEM                  [a geodata object with elevation data at 1km\n> spacing for all prediction locations within lc]\n>\n> I am attempting the following:\n>\n> pars <- krige.control(obj.m=cressie_cu,\n>                               trend.d = trend.spatial(~data, pts),\n>                               trend.l = trend.spatial(~data,DEM))\n>\n> kc <- krige.conv(Normals, loc = grid, borders = lc, krige = pars)\n>\n> On trying to execute the commands, I get an output which has lots of\n> lines and other artifacts running through it, which seems to bear no\n> resemblance to the expected output at all. Could you please suggest what\n> I am getting wrong?\n>\n> Many thanks\n>\n> Luke Spadavecchia\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\nPaulo Justiniano Ribeiro Jr\nLEG (Laborat?rio de Estat?stica e Geoinforma??o)\nDepartamento de Estat?stica\nUniversidade Federal do Paran?\nCaixa Postal 19.081\nCEP 81.531-990\nCuritiba, PR  -  Brasil\nTel: (+55) 41 3361 3573\nFax: (+55) 41 3361 3141\ne-mail: paulojus at est.ufpr.br\nhttp://www.est.ufpr.br/~paulojus",
+      "body_snippet": "Hi Luke\n\n> krige.conv command. I am trying to krige annual average temperatures\n> from 112 met stations located in the Eastern Cascade mountains of\n> Oregon. The data are highly non-stationary, due to",
+      "thread_id": "thread-669beee73281",
+      "thread_depth": 1,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-cda99faddfed",
+      "message_id": "<Pine.LNX.4.44.0601261644510.3836-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-01-26T16:50:02+01:00",
+      "subject": "[R-sig-Geo] useR! 2006 - Submission Deadline 2006-02-28",
+      "subject_clean": "useR! 2006 - Submission Deadline 2006-02-28",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Once again, spatial statistics is a chosen topic for the useR! conference. \nIt will be great to meet in Vienna, and very interesting to hear and see \nwhat contributors have been doing. Please consider taking part actively!\n\nHere are the current details:\n\n\"The submission deadline for `useR! 2006', the second R user conference to\nbe held in Vienna June 15-17 2006, is only four weeks ahead. Now is the\nperfect time to submit abstracts for user-contributed sessions!\n\nThe sessions will be a platform to bring together R users, contributers,\npackage maintainers and developers in the S spirit that `users are developers'.\nPeople from different fields will show us how they solve problems\nwith R in fascinating applications, including\n  - Applied Statistics & Biostatistics\n  - Bayesian Statistics\n  - Bioinformatics\n  - Econometrics & Finance\n  - Machine Learning\n  - Marketing\n  - Robust Statistics\n  - Spatial Statistics\n  - Statistics in the Social and Political Sciences\n  - Teaching\n  - Visualization & Graphics\n  - and many more.\n\nWe invite all R users to submit abstracts on topics presenting innovations or\nexciting applications of R. A web page offering more information on the `useR!'\nconference, abstract submission, registration and Vienna is available at\n\n  http://www.R-project.org/useR-2006/\n\nWe will accept submissions until February 28, 2006.\n\nLet the contributions roll in!\n\n\nThe organizing committee:\n\nTorsten Hothorn, Achim Zeileis, David Meyer, Bettina Gruen,\nKurt Hornik and Friedrich Leisch\"\n\n--\nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "Once again, spatial statistics is a chosen topic for the useR! conference. \nIt will be great to meet in Vienna, and very interesting to hear and see \nwhat contributors have been doing. Please consider",
+      "thread_id": "thread-cda99faddfed",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-d4db0522e996",
+      "message_id": "<20060126175036.96822.qmail@web10702.mail.bbt.yahoo.co.jp>",
+      "from_name": "Hisaji ONO",
+      "from_email_hash": "6f3e2af1cdb361f32fc0adb434b6f19fe44a20c5165d448fc519ea77f3494f20",
+      "date": "2006-01-27T02:50:36+09:00",
+      "subject": "[R-sig-Geo] New Spatial Analysis Book using R",
+      "subject_clean": "New Spatial Analysis Book using R",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello.\n\n Within a few months, spatial analysis book written in\nJapanese, which I co-wrote one chapter which explained\nsome spatial analysis methods using spatial analysis tool,\ndeveloped by me, based on R with some nice spatial\npackages.\n\n In North America or Europe, any Spatial Analysis Text\nBooks using R will be published? I've been very interested\nin them.\n\n Regards.",
+      "body_snippet": "Hello.\n\n Within a few months, spatial analysis book written in\nJapanese, which I co-wrote one chapter which explained\nsome spatial analysis methods using spatial analysis tool,\ndeveloped by me, based ",
+      "thread_id": "thread-d4db0522e996",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-fc5b2188fd95",
+      "message_id": "<9BD95BF3-7FB7-4E7D-AC7F-90690DCE96D1@unm.edu>",
+      "from_name": "Horacio Samaniego",
+      "from_email_hash": "5c8acaa52c9445b323caa14805ca3a97a6767e8177c5bb74cc830b9dde128f33",
+      "date": "2006-01-27T02:15:31+01:00",
+      "subject": "[R-sig-Geo] compiling spproj on osx",
+      "subject_clean": "compiling spproj on osx",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I got to the point where I would need the spproj package to reproject  \nsom sp dataframes. However, when I try to install the package from  \nhttp://r-spatial.sourceforge.net/R/src/contrib/spproj_0.3-4.tar.gz,   \nI get the following error.\nIs this an incompatibility with os x 10.4 or am I missing something  \nin my path?\n\n\n########## error output ##############\n\nsu-2.05b# R CMD INSTALL spproj_0.3-4.tar.gz\n* Installing *source* package 'spproj' ...\ncreating cache ./config.cache\nchecking for pj_init_plus in -lproj... yes\nchecking how to run the C preprocessor... cc -E\nchecking for proj_api.h... yes\nupdating cache ./config.cache\ncreating ./config.status\ncreating src/Makevars\n** libs\ngcc-3.3 -no-cpp-precomp -I/Library/Frameworks/R.framework/Resources/ \ninclude  -I/usr/local/include   -fno-common  -g -O2 -c projectit.c -o  \nprojectit.o\ngcc-3.3 -bundle -flat_namespace -undefined suppress -L/usr/local/lib - \no spproj.so projectit.o -lproj -lcc_dynamic -F/Library/Frameworks/ \nR.framework/.. -framework R\nld: can't locate file for: -lcc_dynamic\nmake: *** [spproj.so] Error 1\nERROR: compilation failed for package 'spproj'\n** Removing '/Library/Frameworks/R.framework/Versions/2.2/Resources/ \nlibrary/spproj'\n\n#################################\n\n\nAny hint is appreciated!\nthanks\n\nH",
+      "body_snippet": "I got to the point where I would need the spproj package to reproject  \nsom sp dataframes. However, when I try to install the package from  \nhttp://r-spatial.sourceforge.net/R/src/contrib/spproj_0.3-4",
+      "thread_id": "thread-fc5b2188fd95",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-8b700f4ea73b",
+      "message_id": "<Pine.LNX.4.44.0601270902080.4799-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-01-27T09:15:00+01:00",
+      "subject": "[R-sig-Geo] compiling spproj on osx",
+      "subject_clean": "compiling spproj on osx",
+      "in_reply_to": "<9BD95BF3-7FB7-4E7D-AC7F-90690DCE96D1@unm.edu>",
+      "references": [],
+      "body_plain": "On Fri, 27 Jan 2006, Horacio Samaniego wrote:\n\n> I got to the point where I would need the spproj package to reproject  \n> som sp dataframes. However, when I try to install the package from  \n> http://r-spatial.sourceforge.net/R/src/contrib/spproj_0.3-4.tar.gz,   \n> I get the following error.\n> Is this an incompatibility with os x 10.4 or am I missing something  \n> in my path?\n\nThe authors and maintainers have no access to OSX, so we can't help. Can \nyou build and install other source packages including compiled C code? Was \nyour R installed from binary or source? Which OSX is this? Have you looked \non the R-sig-Mac list archives https://stat.ethz.ch/pipermail/r-sig-mac/. \nI guess you have looked at the FAQ - \"2.1.3 libreadline 4.3 or higher\" \nmentions the -lcc_dynamic issue, but I don't know if this applies to you. \nThere is also a wiki at http://wiki.urbanek.info/index.cgi?HomePage\n\nWithout (intimate) knowledge of OSX (with many versions) and the build \ntrains (with even more versions), it isn't easy to help.\n\nRoger\n \n> \n> \n> ########## error output ##############\n> \n> su-2.05b# R CMD INSTALL spproj_0.3-4.tar.gz\n> * Installing *source* package 'spproj' ...\n> creating cache ./config.cache\n> checking for pj_init_plus in -lproj... yes\n> checking how to run the C preprocessor... cc -E\n> checking for proj_api.h... yes\n> updating cache ./config.cache\n> creating ./config.status\n> creating src/Makevars\n> ** libs\n> gcc-3.3 -no-cpp-precomp -I/Library/Frameworks/R.framework/Resources/ \n> include  -I/usr/local/include   -fno-common  -g -O2 -c projectit.c -o  \n> projectit.o\n> gcc-3.3 -bundle -flat_namespace -undefined suppress -L/usr/local/lib - \n> o spproj.so projectit.o -lproj -lcc_dynamic -F/Library/Frameworks/ \n> R.framework/.. -framework R\n> ld: can't locate file for: -lcc_dynamic\n> make: *** [spproj.so] Error 1\n> ERROR: compilation failed for package 'spproj'\n> ** Removing '/Library/Frameworks/R.framework/Versions/2.2/Resources/ \n> library/spproj'\n> \n> #################################\n> \n> \n> Any hint is appreciated!\n> thanks\n> \n> H\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Fri, 27 Jan 2006, Horacio Samaniego wrote:\n\n> I got to the point where I would need the spproj package to reproject  \n> som sp dataframes. However, when I try to install the package from  \n> http:/",
+      "thread_id": "thread-fc5b2188fd95",
+      "thread_depth": 1,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-08b520791f48",
+      "message_id": "<7CFA6577-3440-4D3C-ADEB-CB0D9107C621@gmail.com>",
+      "from_name": "Horacio Samaniego",
+      "from_email_hash": "5c8acaa52c9445b323caa14805ca3a97a6767e8177c5bb74cc830b9dde128f33",
+      "date": "2006-01-27T16:08:22+01:00",
+      "subject": "[R-sig-Geo] compiling spproj on osx",
+      "subject_clean": "compiling spproj on osx",
+      "in_reply_to": "<Pine.LNX.4.44.0601270902080.4799-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0601270902080.4799-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "With the kind insight of Roger, I have been able to identify and  \nsolve the problem. Here is a summary:\n\nIf you have upgraded your OSX system from Panther to Tiger you should  \nknow that the compilers have changed from gcc3.3 to gcc4.0 this  \ncreates some instabilities when it comes to compile R packages which  \nare well explained here: https://stat.ethz.ch/pipermail/r-sig-mac/ \n2005-July/002031.html\n\nin short you need to make sure that the system uses gcc-3.3 by  \nrunning `gcc_select 3.3' before you compile the package which in my  \ncase was spproj and spGDAL\n\nThis solved my installation issue, I hope it'll help.\n\nthanks,\n\nHoracio\n\n\nOn Jan 27, 2006, at 9:15 AM, Roger Bivand wrote:\n\nOn Fri, 27 Jan 2006, Horacio Samaniego wrote:\n\n> I got to the point where I would need the spproj package to reproject\n> som sp dataframes. However, when I try to install the package from\n> http://r-spatial.sourceforge.net/R/src/contrib/spproj_0.3-4.tar.gz,\n> I get the following error.\n> Is this an incompatibility with os x 10.4 or am I missing something\n> in my path?\n\nThe authors and maintainers have no access to OSX, so we can't help. Can\nyou build and install other source packages including compiled C  \ncode? Was\nyour R installed from binary or source? Which OSX is this? Have you  \nlooked\non the R-sig-Mac list archives https://stat.ethz.ch/pipermail/r-sig- \nmac/.\nI guess you have looked at the FAQ - \"2.1.3 libreadline 4.3 or higher\"\nmentions the -lcc_dynamic issue, but I don't know if this applies to  \nyou.\nThere is also a wiki at http://wiki.urbanek.info/index.cgi?HomePage\n\nWithout (intimate) knowledge of OSX (with many versions) and the build\ntrains (with even more versions), it isn't easy to help.\n\nRoger\n\n>\n>\n> ########## error output ##############\n>\n> su-2.05b# R CMD INSTALL spproj_0.3-4.tar.gz\n> * Installing *source* package 'spproj' ...\n> creating cache ./config.cache\n> checking for pj_init_plus in -lproj... yes\n> checking how to run the C preprocessor... cc -E\n> checking for proj_api.h... yes\n> updating cache ./config.cache\n> creating ./config.status\n> creating src/Makevars\n> ** libs\n> gcc-3.3 -no-cpp-precomp -I/Library/Frameworks/R.framework/Resources/\n> include  -I/usr/local/include   -fno-common  -g -O2 -c projectit.c -o\n> projectit.o\n> gcc-3.3 -bundle -flat_namespace -undefined suppress -L/usr/local/lib -\n> o spproj.so projectit.o -lproj -lcc_dynamic -F/Library/Frameworks/\n> R.framework/.. -framework R\n> ld: can't locate file for: -lcc_dynamic\n> make: *** [spproj.so] Error 1\n> ERROR: compilation failed for package 'spproj'\n> ** Removing '/Library/Frameworks/R.framework/Versions/2.2/Resources/\n> library/spproj'\n>\n> #################################\n>\n>\n> Any hint is appreciated!\n> thanks\n>\n> H\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "With the kind insight of Roger, I have been able to identify and  \nsolve the problem. Here is a summary:\n\nIf you have upgraded your OSX system from Panther to Tiger you should  \nknow that the compiler",
+      "thread_id": "thread-fc5b2188fd95",
+      "thread_depth": 2,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-50a06a6b5e29",
+      "message_id": "<Pine.LNX.4.44.0601271620200.3657-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2006-01-27T16:21:54+01:00",
+      "subject": "[R-sig-Geo] compiling spproj on osx",
+      "subject_clean": "compiling spproj on osx",
+      "in_reply_to": "<7CFA6577-3440-4D3C-ADEB-CB0D9107C621@gmail.com>",
+      "references": [],
+      "body_plain": "On Fri, 27 Jan 2006, Horacio Samaniego wrote:\n\n> With the kind insight of Roger, I have been able to identify and  \n> solve the problem. Here is a summary:\n> \n> If you have upgraded your OSX system from Panther to Tiger you should  \n> know that the compilers have changed from gcc3.3 to gcc4.0 this  \n> creates some instabilities when it comes to compile R packages which  \n> are well explained here: https://stat.ethz.ch/pipermail/r-sig-mac/ \n> 2005-July/002031.html\n> \n> in short you need to make sure that the system uses gcc-3.3 by  \n> running `gcc_select 3.3' before you compile the package which in my  \n> case was spproj and spGDAL\n> \n> This solved my installation issue, I hope it'll help.\n\nThank you for this clear report - because this list can also be searched \nby RSiteSearch() from within R, others will benefit from your solution!\n\nRoger\n\n> \n> thanks,\n> \n> Horacio\n> \n> \n> On Jan 27, 2006, at 9:15 AM, Roger Bivand wrote:\n> \n> On Fri, 27 Jan 2006, Horacio Samaniego wrote:\n> \n> > I got to the point where I would need the spproj package to reproject\n> > som sp dataframes. However, when I try to install the package from\n> > http://r-spatial.sourceforge.net/R/src/contrib/spproj_0.3-4.tar.gz,\n> > I get the following error.\n> > Is this an incompatibility with os x 10.4 or am I missing something\n> > in my path?\n> \n> The authors and maintainers have no access to OSX, so we can't help. Can\n> you build and install other source packages including compiled C  \n> code? Was\n> your R installed from binary or source? Which OSX is this? Have you  \n> looked\n> on the R-sig-Mac list archives https://stat.ethz.ch/pipermail/r-sig- \n> mac/.\n> I guess you have looked at the FAQ - \"2.1.3 libreadline 4.3 or higher\"\n> mentions the -lcc_dynamic issue, but I don't know if this applies to  \n> you.\n> There is also a wiki at http://wiki.urbanek.info/index.cgi?HomePage\n> \n> Without (intimate) knowledge of OSX (with many versions) and the build\n> trains (with even more versions), it isn't easy to help.\n> \n> Roger\n> \n> >\n> >\n> > ########## error output ##############\n> >\n> > su-2.05b# R CMD INSTALL spproj_0.3-4.tar.gz\n> > * Installing *source* package 'spproj' ...\n> > creating cache ./config.cache\n> > checking for pj_init_plus in -lproj... yes\n> > checking how to run the C preprocessor... cc -E\n> > checking for proj_api.h... yes\n> > updating cache ./config.cache\n> > creating ./config.status\n> > creating src/Makevars\n> > ** libs\n> > gcc-3.3 -no-cpp-precomp -I/Library/Frameworks/R.framework/Resources/\n> > include  -I/usr/local/include   -fno-common  -g -O2 -c projectit.c -o\n> > projectit.o\n> > gcc-3.3 -bundle -flat_namespace -undefined suppress -L/usr/local/lib -\n> > o spproj.so projectit.o -lproj -lcc_dynamic -F/Library/Frameworks/\n> > R.framework/.. -framework R\n> > ld: can't locate file for: -lcc_dynamic\n> > make: *** [spproj.so] Error 1\n> > ERROR: compilation failed for package 'spproj'\n> > ** Removing '/Library/Frameworks/R.framework/Versions/2.2/Resources/\n> > library/spproj'\n> >\n> > #################################\n> >\n> >\n> > Any hint is appreciated!\n> > thanks\n> >\n> > H\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Fri, 27 Jan 2006, Horacio Samaniego wrote:\n\n> With the kind insight of Roger, I have been able to identify and  \n> solve the problem. Here is a summary:\n> \n> If you have upgraded your OSX system fr",
+      "thread_id": "thread-fc5b2188fd95",
+      "thread_depth": 3,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-ad610c9ddc01",
+      "message_id": "<43DD1C3D.2000702@geo.uu.nl>",
+      "from_name": "Edzer J. Pebesma",
+      "from_email_hash": "dc9c0d99e64732fb3b0f9ed04046937206c628f39b3a0556850153cb8eb34ebc",
+      "date": "2006-01-29T20:49:17+01:00",
+      "subject": "[R-sig-Geo] krige does not accept SpatialPixels objects",
+      "subject_clean": "krige does not accept SpatialPixels objects",
+      "in_reply_to": "<43DCA1C5.8060208@univ-fcomte.fr>",
+      "references": [
+        "<43DCA1C5.8060208@univ-fcomte.fr>"
+      ],
+      "body_plain": "Patrick Giraudoux wrote:\n\n> Dear Edzer,\n>\n> I am revisiting/training with gstat using the tutorial (vignette) and \n> applying it to an example of Cs distribution in Franche-Comt?. Looks \n> like if a small bug was in krige().\n>\n> If you make a grid just with coordinates, eg:\n>\n> Csnewsp.grid<-expand.grid(x=seq(bbox(Csnewsp)[1,1],bbox(Csnewsp)[1,2],by=4500),y=seq(bbox(Csnewsp)[2,1],bbox(Csnewsp)[2,2],by=4500))\n> coordinates(Csnewsp.grid)<-~x+y\n> gridded(Csnewsp.grid)<-TRUE\n>\n> a call to\n>\n> cs2002.idw<-krige(CD2002~1,Csnewsp,Csnewsp.grid)\n>\n> gives:\n>\n> > cs2002.idw<-krige(CD2002~1,Csnewsp,Csnewsp.grid)\n> Error in as.data.frame.default(newdata) : cannot coerce class \n> \"SpatialPixels\" into a data.frame\n>\n> However, if you add a variable like that:\n>\n> Csnewsp.grid<-expand.grid(x=seq(bbox(Csnewsp)[1,1],bbox(Csnewsp)[1,2],by=4500),y=seq(bbox(Csnewsp)[2,1],bbox(Csnewsp)[2,2],by=4500))\n> Csnewsp.grid<-cbind(Csnewsp.grid,fact=1) # add a non sense variable\n> coordinates(Csnewsp.grid)<-~x+y\n> gridded(Csnewsp.grid)<-TRUE\n>\n> Everything looks OK:\n>\n> > cs2002.idw<-krige(CD2002~1,Csnewsp,Csnewsp.grid)\n> [inverse distance weighted interpolation]\n>\n> Suppose the trouble comes when a SpatialPixel object is given as a \n> grid when a SpatialPixelDataFrame is expected... This may happen when \n> the grid is just the coordinates and does not include other variables, \n> which may be often the case.\n>\n> Is it normal or is there a mistake on my side?\n>\n> All the best,\n>\n> Patrick\n>\nPatrick, this is not a mistake on your side; objects of class\nSpatialPixels (or SpatialGrid) were lacking an as.data.frame()\nmethod. They have one now; I added this to package sp (on which\ngstat now depends), it is in sp version 0.8-9 which should\nbe available from CRAN within a few days.\n\nThanks,\n--\nEdzer",
+      "body_snippet": "Patrick Giraudoux wrote:\n\n> Dear Edzer,\n>\n> I am revisiting/training with gstat using the tutorial (vignette) and \n> applying it to an example of Cs distribution in Franche-Comt?. Looks \n> like if a s",
+      "thread_id": "thread-ad610c9ddc01",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-ded0141330e1",
+      "message_id": "<s3df8e67.022@macaulay.ac.uk>",
+      "from_name": "Colin Beale",
+      "from_email_hash": "e78e52fca6286b00f78f9b33301f95a930b517598a9eafa2b780e038bd97ce30",
+      "date": "2006-01-31T16:20:36Z",
+      "subject": "[R-sig-Geo] Grid projections and spatial matrices",
+      "subject_clean": "Grid projections and spatial matrices",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n\nTwo questions really (elaborated below): (1) Has anyone created what is\nessentially a spherical (or at least hemispherical) matrix structure\nthat I can use normal R functions like apply() on? and (2) has anyone\ncoded the procedure described in the ref below to calculate effective\nsample sizes of correlations between two spatial matrices? As the first\nauthor is clearly an R user I had expected to find something, but quite\na lot of searching has so far drawn a blank.\n\nClifford, P., Richardson, S. & Hemon, D. (1989). Assessing the\nsignificance of the correlation between two spatial processes.\nBiometrics, 45, 123-134.\n\nAs the first question is the most involved, this is the background: I'm\nlooking at presence / absence data for a range of species. Up to now, I\nhave mainly worked with distributions easily mapable on a regular grid.\nI've developed a number of functions that use arrays as a way of\nrepresenting these data: y & x references in the first two dimensions,\nspecies ID in a third. Several of these functions compute turnover in\nspecies distirbution - they check neighbouring boxes within the grid for\npresence / absence of the same species and compute statistics based on\nthis. This is all very well when the basic projection is a simple 2d\nmatrix. Recently, however, I have started using larger scale datasets\nwhere appropriate projections need to be used - most of this data is\nprojected onto a 10x10km UTM based grid reference system (in practice,\nthe Military Grid Reference System). I need to adapt my functions to\nrecognise a dataset that has this projection - ie, that cells in\ndifferent sectors can be neighbours. I appreciate that this might\nrequire a complete rewriting of my functions and a new way of thinking\nabout these data, but the most obvious solution to me is simply to\ncreate a matrix or array type object that is sort-of \"zipped\" together\nalong the edges of the sector, to retain appropriate neighbour\nidentification. As an example of the sort of basic calculation involved,\nI include below a small function below that calcualtes one parameter of\ninterest - related to the number of species that a species if present in\nthe focal quadrat, an in its neighbouring ones that I currently use on\nmy flat 2d array type data - I've also included some toy distributions\nso you can see how it works. Any suggestions/pointers would be very\nwelcome (and I'm sure the original code could be more elegant too!).\n\nThanks very much,\n\nColin\n\n# toy dataset\nset.seed (1)\ndistMap <- array (sample (c (0, 0, 1), 120, rep = T), dim = c (6, 5,\n4))\n\n##example function - require package(magic) to run.\n\nlocalTurnover <- function (spmap = distMap) {  \n  mapx    <- dim (spmap)[2]                             # extracts map\ndimensions and start \n  mapy    <- dim (spmap)[1]                             # up\nparameters\n  nsp     <- dim (spmap)[3]\n  library (magic)                \n  temp <- apad(apad(spmap, c(1,1,0)), c(1,1,0), post = FALSE)  # pads\narray\n  temp[,c (1, dim(temp)[2]),] <- NA                            # makes\nadditional rows/cols = NA\n  temp[c (1, dim(temp)[1]),,] <- NA                            \n  spmap[!is.na(spmap)] <- 1                                    # makes\nall values in spmap = 1\n  turnoverMap <- spmap\n\n  locala <- rep (1, length = 8)\n  localb <- rep (1, length = 8)\n  localc <- rep (1, length = 8)\n \n  for (NSP in 1:nsp) {\n    for (iy in 1:mapy) {\n      for (ix in 1:mapx) {\n        if (!is.na (temp[iy+1,ix+1,NSP])) {\n          if (temp[iy+1,ix+1,NSP] == 0) turnoverMap[iy, ix, NSP] <- 0\nelse {\n            if (is.na (temp[iy    , ix    , NSP])) locala[1] <- NA else\n{\n              if (temp[iy+1,ix+1,NSP] == 1 & temp[iy    ,ix     , NSP]\n== 0) locala[1] <- 0\n            }\n            if (is.na (temp[iy + 1, ix    , NSP])) locala[2] <- NA else\n{\n              if (temp[iy+1,ix+1,NSP] == 1 & temp[iy + 1,ix     , NSP]\n== 0) locala[2] <- 0\n            }\n            if (is.na (temp[iy + 2, ix    , NSP])) locala[3] <- NA else\n{\n              if (temp[iy+1,ix+1,NSP] == 1 & temp[iy + 2,ix     , NSP]\n== 0) locala[3] <- 0\n            }\n            if (is.na (temp[iy    , ix + 1, NSP])) locala[4] <- NA else\n{\n              if (temp[iy+1,ix+1,NSP] == 1 & temp[iy    , ix + 1, NSP]\n== 0) locala[4] <- 0\n            }   \n            if (is.na (temp[iy    , ix + 2, NSP])) locala[5] <- NA else\n{\n              if (temp[iy+1,ix+1,NSP] == 1 & temp[iy    , ix + 2, NSP]\n== 0) locala[5] <- 0\n            }\n            if (is.na (temp[iy + 1, ix + 2, NSP])) locala[6] <- NA else\n{\n              if (temp[iy+1,ix+1,NSP] == 1 & temp[iy + 1, ix + 2, NSP]\n== 0) locala[6] <- 0\n            }\n            if (is.na (temp[iy + 2, ix + 1, NSP])) locala[7] <- NA else\n{\n              if (temp[iy+1,ix+1,NSP] == 1 & temp[iy + 2, ix + 1, NSP]\n== 0) locala[7] <- 0\n            }\n            if (is.na (temp[iy + 2, ix + 2, NSP])) locala[8] <- NA else\n{\n              if (temp[iy+1,ix+1,NSP] == 1 & temp[iy + 2, ix + 2, NSP]\n== 0) locala[8] <- 0\n            }\n            turnoverMap[iy,ix,NSP] <- mean (locala, na.rm = TRUE)\n            locala <- rep (1, length = 8)\n          }\n        }  \n      }\n    }\n  }\n  return (apply(turnoverMap, c(1,2), sum))\n}\n\nlocalTurnover()\n\nDr. Colin Beale\nSpatial Ecologist\nThe Macaulay Institute\nCraigiebuckler\nAberdeen\nAB15 8QH\nUK\n\nTel: 01224 498200 ext. 2363\nFax: 01224 311556\nEmail: c.beale at macaulay.ac.uk",
+      "body_snippet": "Hi,\n\nTwo questions really (elaborated below): (1) Has anyone created what is\nessentially a spherical (or at least hemispherical) matrix structure\nthat I can use normal R functions like apply() on? and",
+      "thread_id": "thread-ded0141330e1",
+      "thread_depth": 0,
+      "month": "2006-01"
+    },
+    {
+      "id": "msg-5b167ebfd5ad",
+      "message_id": "<OF39D6BD24.441EDC62-ON88257107.006EAE16-88257107.006EAE1E@epamail.epa.gov>",
+      "from_name": "White.Denis at epamail.epa.gov",
+      "from_email_hash": "16ee480d874c5ee3c0b0c97bcdbbca111811e4431c2a806cee0092c240eacedb",
+      "date": "2006-01-31T12:08:55-08:00",
+      "subject": "[R-sig-Geo] Grid projections and spatial matrices",
+      "subject_clean": "Grid projections and spatial matrices",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060131/1f7eb6c6/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060131/1f7eb6c6/attachment.pl>",
+      "thread_id": "thread-5b167ebfd5ad",
+      "thread_depth": 0,
+      "month": "2006-01"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-93882ac7f95e",
+      "subject": "Neighbours list",
+      "message_count": 1,
+      "participants": [
+        "Ronnie Babigumira"
+      ],
+      "started": "2006-01-05T14:15:43+01:00",
+      "last_reply": "2006-01-05T14:15:43+01:00",
+      "root_message_id": "msg-93882ac7f95e"
+    },
+    {
+      "id": "thread-28660bcefc80",
+      "subject": "Clarification on Neighbours list",
+      "message_count": 3,
+      "participants": [
+        "Roger Bivand",
+        "Ronnie Babigumira"
+      ],
+      "started": "2006-01-05T15:05:31+01:00",
+      "last_reply": "2006-01-06T12:39:26+01:00",
+      "root_message_id": "msg-28660bcefc80"
+    },
+    {
+      "id": "thread-6c368ffae24a",
+      "subject": "A question re: tripack / voronoi cell area units",
+      "message_count": 1,
+      "participants": [
+        "Rick Reeves"
+      ],
+      "started": "2006-01-05T16:43:43-08:00",
+      "last_reply": "2006-01-05T16:43:43-08:00",
+      "root_message_id": "msg-6c368ffae24a"
+    },
+    {
+      "id": "thread-13886e54cbfd",
+      "subject": "finding significant local peaks by locfit package",
+      "message_count": 1,
+      "participants": [
+        "tkobayas at iu.edu"
+      ],
+      "started": "2006-01-06T04:09:38-05:00",
+      "last_reply": "2006-01-06T04:09:38-05:00",
+      "root_message_id": "msg-13886e54cbfd"
+    },
+    {
+      "id": "thread-d82b575bd60c",
+      "subject": "Converting Grid to factor list",
+      "message_count": 5,
+      "participants": [
+        "Edzer J. Pebesma",
+        "Ronnie Babigumira"
+      ],
+      "started": "2006-01-08T22:15:58+01:00",
+      "last_reply": "2006-01-09T09:13:25+01:00",
+      "root_message_id": "msg-d82b575bd60c"
+    },
+    {
+      "id": "thread-394713ebca76",
+      "subject": "join count with a grid that has NA's",
+      "message_count": 3,
+      "participants": [
+        "Roger Bivand",
+        "Ronnie Babigumira"
+      ],
+      "started": "2006-01-09T13:55:05+01:00",
+      "last_reply": "2006-01-09T15:45:00+01:00",
+      "root_message_id": "msg-394713ebca76"
+    },
+    {
+      "id": "thread-c431901ba4d4",
+      "subject": "subset grid and neighbour list",
+      "message_count": 2,
+      "participants": [
+        "Roger Bivand",
+        "Ronnie Babigumira"
+      ],
+      "started": "2006-01-09T22:59:20+01:00",
+      "last_reply": "2006-01-10T08:42:58+01:00",
+      "root_message_id": "msg-c431901ba4d4"
+    },
+    {
+      "id": "thread-22a9f092fa9f",
+      "subject": "randomForests for mapping vegetation",
+      "message_count": 3,
+      "participants": [
+        "Edzer J. Pebesma",
+        "Miewald, Tom",
+        "Roger Bivand"
+      ],
+      "started": "2006-01-10T22:33:32-07:00",
+      "last_reply": "2006-01-11T11:28:19+01:00",
+      "root_message_id": "msg-22a9f092fa9f"
+    },
+    {
+      "id": "thread-257ff66f6d28",
+      "subject": "randomForests for mapping vegetation",
+      "message_count": 1,
+      "participants": [
+        "Tim Howard"
+      ],
+      "started": "2006-01-11T08:07:50-05:00",
+      "last_reply": "2006-01-11T08:07:50-05:00",
+      "root_message_id": "msg-257ff66f6d28"
+    },
+    {
+      "id": "thread-8fcc0e0f65bd",
+      "subject": "Missing statistics with errorsarlm(method=\"SparseM\")",
+      "message_count": 2,
+      "participants": [
+        "Martin Reismann",
+        "Roger Bivand"
+      ],
+      "started": "2006-01-16T16:11:27+01:00",
+      "last_reply": "2006-01-16T19:08:30+01:00",
+      "root_message_id": "msg-8fcc0e0f65bd"
+    },
+    {
+      "id": "thread-7e2bf31d4492",
+      "subject": "Maps across the dateline",
+      "message_count": 1,
+      "participants": [
+        "Gregory Snow"
+      ],
+      "started": "2006-01-19T10:49:51-07:00",
+      "last_reply": "2006-01-19T10:49:51-07:00",
+      "root_message_id": "msg-7e2bf31d4492"
+    },
+    {
+      "id": "thread-a6bee3c19b82",
+      "subject": "Maps across the dateline",
+      "message_count": 1,
+      "participants": [
+        "Anne Hertel"
+      ],
+      "started": "2006-01-19T11:25:10-06:00",
+      "last_reply": "2006-01-19T11:25:10-06:00",
+      "root_message_id": "msg-a6bee3c19b82"
+    },
+    {
+      "id": "thread-9de29877a7bd",
+      "subject": "Maps across the dateline",
+      "message_count": 2,
+      "participants": [
+        "Roger Bivand",
+        "White.Denis at epamail.epa.gov"
+      ],
+      "started": "2006-01-19T12:01:40-08:00",
+      "last_reply": "2006-01-19T22:01:32+01:00",
+      "root_message_id": "msg-9de29877a7bd"
+    },
+    {
+      "id": "thread-01f3f77647ef",
+      "subject": "file format error with R and GRASS61",
+      "message_count": 7,
+      "participants": [
+        "Kirk R. Wythers",
+        "Markus Neteler",
+        "Roger Bivand",
+        "Scott Mitchell"
+      ],
+      "started": "2006-01-19T14:43:53-06:00",
+      "last_reply": "2006-01-23T13:42:54+01:00",
+      "root_message_id": "msg-01f3f77647ef"
+    },
+    {
+      "id": "thread-4331d11161a2",
+      "subject": "ANN: Europe and its Regions Conference",
+      "message_count": 1,
+      "participants": [
+        "Roger Bivand"
+      ],
+      "started": "2006-01-20T20:38:25+01:00",
+      "last_reply": "2006-01-20T20:38:25+01:00",
+      "root_message_id": "msg-4331d11161a2"
+    },
+    {
+      "id": "thread-669beee73281",
+      "subject": "External Drift Kriging",
+      "message_count": 2,
+      "participants": [
+        "Luke Spadavecchia",
+        "Paulo Justiniano Ribeiro Jr"
+      ],
+      "started": "2006-01-24T15:56:26+00:00",
+      "last_reply": "2006-01-26T12:00:21-02:00",
+      "root_message_id": "msg-669beee73281"
+    },
+    {
+      "id": "thread-cda99faddfed",
+      "subject": "useR! 2006 - Submission Deadline 2006-02-28",
+      "message_count": 1,
+      "participants": [
+        "Roger Bivand"
+      ],
+      "started": "2006-01-26T16:50:02+01:00",
+      "last_reply": "2006-01-26T16:50:02+01:00",
+      "root_message_id": "msg-cda99faddfed"
+    },
+    {
+      "id": "thread-fc5b2188fd95",
+      "subject": "compiling spproj on osx",
+      "message_count": 4,
+      "participants": [
+        "Horacio Samaniego",
+        "Roger Bivand"
+      ],
+      "started": "2006-01-27T02:15:31+01:00",
+      "last_reply": "2006-01-27T16:21:54+01:00",
+      "root_message_id": "msg-fc5b2188fd95"
+    },
+    {
+      "id": "thread-d4db0522e996",
+      "subject": "New Spatial Analysis Book using R",
+      "message_count": 1,
+      "participants": [
+        "Hisaji ONO"
+      ],
+      "started": "2006-01-27T02:50:36+09:00",
+      "last_reply": "2006-01-27T02:50:36+09:00",
+      "root_message_id": "msg-d4db0522e996"
+    },
+    {
+      "id": "thread-ad610c9ddc01",
+      "subject": "krige does not accept SpatialPixels objects",
+      "message_count": 1,
+      "participants": [
+        "Edzer J. Pebesma"
+      ],
+      "started": "2006-01-29T20:49:17+01:00",
+      "last_reply": "2006-01-29T20:49:17+01:00",
+      "root_message_id": "msg-ad610c9ddc01"
+    },
+    {
+      "id": "thread-5b167ebfd5ad",
+      "subject": "Grid projections and spatial matrices",
+      "message_count": 1,
+      "participants": [
+        "White.Denis at epamail.epa.gov"
+      ],
+      "started": "2006-01-31T12:08:55-08:00",
+      "last_reply": "2006-01-31T12:08:55-08:00",
+      "root_message_id": "msg-5b167ebfd5ad"
+    },
+    {
+      "id": "thread-ded0141330e1",
+      "subject": "Grid projections and spatial matrices",
+      "message_count": 1,
+      "participants": [
+        "Colin Beale"
+      ],
+      "started": "2006-01-31T16:20:36+00:00",
+      "last_reply": "2006-01-31T16:20:36+00:00",
+      "root_message_id": "msg-ded0141330e1"
+    }
+  ]
+}

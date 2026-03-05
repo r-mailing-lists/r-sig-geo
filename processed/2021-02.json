@@ -1,0 +1,977 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2021-02",
+  "messages": [
+    {
+      "id": "msg-b6896f078d12",
+      "message_id": "<CAC4wKHmMEd+tg_aYO_UphOFzALYjCLn3d-b-Ld_J++epJCnQDg@mail.gmail.com>",
+      "from_name": "Tomislav Hengl",
+      "from_email_hash": "1c592038322bbeaa3bb702d8d64ab9c83a31b70d7020477c6836f5af383d3072",
+      "date": "2021-02-01T22:37:10+01:00",
+      "subject": "[R-sig-Geo] Global layers at resolutions 100 m, 250 m, 1 km available as Cloud-Optimized GeoTIFFs",
+      "subject_clean": "Global layers at resolutions 100 m, 250 m, 1 km available as Cloud-Optimized GeoTIFFs",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "The OpenLandMap.org layers are now also available as Cloud-Optimized\nGeoTIFFs (produced using https://gdal.org/drivers/raster/cog.html) via our\nWasabi.com service. We currently have about 10TB of data on Wasabi and plan\nto upload also a majority of analysis-ready MODIS, Proba-V, Landsat /\nSentinel products in 2021.\n\nA worked-out tutorial how to access the OpenLandMap.org\n<http://www.OpenLandMap.org> layers using COG is available here:\n\nhttps://gitlab.com/openlandmap/global-layers/-/blob/master/tutorial/OpenLandMap_COG_tutorial.md\n\nThe list of layers available and their details can be found here:\n\nhttps://api.openlandmap.org/query/populate\n\nWe especially recommend using the terra package (\nhttps://rspatial.org/terra/pkg/index.html) to overlay and crop images to\nmatch your study area, but in principle any GDAL compatible R package\nshould also work without problems. A worked-out tutorial on how to access\nEU layers in Python is also available here:\n\nhttps://gitlab.com/geoharmonizer_inea/eumap/-/blob/master/demo/python/05_cloud_optimized_geotiff.ipynb\n\n\nPlease do NOT use Wasabi.com to download whole images as your IP address\nmight be eventually blocked. If you wish to download whole world data,\nplease use instead:\n\nhttps://zenodo.org/search?page=1&size=20&q=openlandmap\n\nIf you are producing global datasets and need hosting / would like to\npublish your data via www.OpenLandMap.org, please read these instructions:\nhttps://opengeohub.org/submitting-global-layers-inclusion-landgis\n\nIf you experience any issues or discover a bug with www.OpenLandMap.org\nplease report via:\n\nhttps://gitlab.com/openlandmap\n\nT. Hengl\nhttps://opengeohub.org/about\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "The OpenLandMap.org layers are now also available as Cloud-Optimized\nGeoTIFFs (produced using https://gdal.org/drivers/raster/cog.html) via our\nWasabi.com service. We currently have about 10TB of data",
+      "thread_id": "thread-b6896f078d12",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-007c774360d0",
+      "message_id": "<DB6PR06MB314331550E061D467C8092C3C4B59@DB6PR06MB3143.eurprd06.prod.outlook.com>",
+      "from_name": "Julian Parnelle",
+      "from_email_hash": "84d5440dae4223bd3e045e4ccde86024a3a6471912046b386cf162b72d4e5163",
+      "date": "2021-02-03T00:20:07Z",
+      "subject": "[R-sig-Geo] Using sf package to calculate line midpoints from Spatial Line data (both LINESTRING and MULTILINESTRING)",
+      "subject_clean": "Using sf package to calculate line midpoints from Spatial Line data (both LINESTRING and MULTILINESTRING)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list,\n\nMy question is straightforward: how could one use the sf package to calculate the Longitude and Latitude of the line midpoints in spatial line data, in a way that works both for LINESTRING and MULTILINESTRING sf data.frames? (one per spatial line, in case the spatial line is composed of multiple line segments). After searching online for quite a bit, the only direct reference I found was this GIS Stack Exchange question from three years ago: https://gis.stackexchange.com/questions/277219/sf-equivalent-of-r-maptools-packages-spatiallinesmidpoints. However, the solution proposed there is only more or less reliable for LINESTRING data and I lack sufficient knowledge of sf objects and MULTILINESTRING representation to update that and make it more reliable.\n\nI was used to doing that with the SpatialLinesMidPoints command, but I am finding it quite difficult to accomplish the same with the sf package. I do know that this task could perhaps be achieved by interpolating across the lines up to 50% of its extension, using for example ST_Line_Interpolate_Point. However, I don't see to be able to achieve exactly the same with either st_line_sample or st_segmentize.\n\nAny suggestions would be very welcome.\n\nJulian\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list,\n\nMy question is straightforward: how could one use the sf package to calculate the Longitude and Latitude of the line midpoints in spatial line data, in a way that works both for LINESTRING",
+      "thread_id": "thread-007c774360d0",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-9518126752f9",
+      "message_id": "<111079460.675471.1612341290233@mail.yahoo.com>",
+      "from_name": "Oulhaci Yasmine",
+      "from_email_hash": "dbabebd766ed6df6187f35c5f90140bba4be1964f7851734b66155584f4b04d1",
+      "date": "2021-02-03T08:34:50Z",
+      "subject": "[R-sig-Geo] Consolidate data",
+      "subject_clean": "Consolidate data",
+      "in_reply_to": null,
+      "references": [
+        "<111079460.675471.1612341290233.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "Dear list,\nI want to build two scripts with python ArcGIS Pro, the first one will consolidate (Roll-up) data? just like aggregation of spatial data.The second one is the opposite of consolidating (drilling down into data),?For example, i have three hierarchy levels are country, state and district. These fields are geographic fields and I am able to plot them on three separate maps.?The requirement is to create a top-down analysis such that when the user clicks on the country, the top-down analysis should take the user to the states and show all the states. Then when the user clicks on a state, the drilldown should bring the user to see the districts and show all the sub-districts.\n\nAny suggestions would be very welcome.\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list,\nI want to build two scripts with python ArcGIS Pro, the first one will consolidate (Roll-up) data? just like aggregation of spatial data.The second one is the opposite of consolidating (dri",
+      "thread_id": "thread-9518126752f9",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-fc58ac5a0c13",
+      "message_id": "<7d1bd32e-2c1e-57e2-24cb-55cb1cf2c16d@gmail.com>",
+      "from_name": "Bede-Fazekas Ákos",
+      "from_email_hash": "f2e2e122dfd4dbb8b8973b23d149555486ccb4290cb5f11779739fdbbcf5b93d",
+      "date": "2021-02-03T10:10:36+01:00",
+      "subject": "[R-sig-Geo] Consolidate data",
+      "subject_clean": "Consolidate data",
+      "in_reply_to": "<111079460.675471.1612341290233@mail.yahoo.com>",
+      "references": [
+        "<111079460.675471.1612341290233.ref@mail.yahoo.com>",
+        "<111079460.675471.1612341290233@mail.yahoo.com>"
+      ],
+      "body_plain": "Hello Oulhaci,\n\nHow your question is related to R statistical software? This mailing \nlist is for R users/developers. If you do not want to solve the problem \nwith/from R (e.g. RPyGeo) but with Python integrated into ArcGIS, you \nshould ask your question in gis.stackexchange.com or in a Python- or \nArcGIS-specific mailing list.\n\nHave a nice week,\n?kos Bede-Fazekas\n\n2021.02.03. 9:34 keltez?ssel, Oulhaci Yasmine via R-sig-Geo ?rta:\n> Dear list,\n> I want to build two scripts with python ArcGIS Pro, the first one will consolidate (Roll-up) data? just like aggregation of spatial data.The second one is the opposite of consolidating (drilling down into data),?For example, i have three hierarchy levels are country, state and district. These fields are geographic fields and I am able to plot them on three separate maps.?The requirement is to create a top-down analysis such that when the user clicks on the country, the top-down analysis should take the user to the states and show all the states. Then when the user clicks on a state, the drilldown should bring the user to see the districts and show all the sub-districts.\n>\n> Any suggestions would be very welcome.\n>\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hello Oulhaci,\n\nHow your question is related to R statistical software? This mailing \nlist is for R users/developers. If you do not want to solve the problem \nwith/from R (e.g. RPyGeo) but with Python",
+      "thread_id": "thread-9518126752f9",
+      "thread_depth": 1,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-c9de471294c6",
+      "message_id": "<604651e-45ac-d288-7fe9-a5eec6a06785@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2021-02-03T10:21:24+01:00",
+      "subject": "[R-sig-Geo] Consolidate data",
+      "subject_clean": "Consolidate data",
+      "in_reply_to": "<7d1bd32e-2c1e-57e2-24cb-55cb1cf2c16d@gmail.com>",
+      "references": [
+        "<111079460.675471.1612341290233.ref@mail.yahoo.com>",
+        "<111079460.675471.1612341290233@mail.yahoo.com>",
+        "<7d1bd32e-2c1e-57e2-24cb-55cb1cf2c16d@gmail.com>"
+      ],
+      "body_plain": "On Wed, 3 Feb 2021, Bede-Fazekas ?kos wrote:\n\n> Hello Oulhaci,\n>\n> How your question is related to R statistical software? This mailing \n> list is for R users/developers. If you do not want to solve the problem \n> with/from R (e.g. RPyGeo) but with Python integrated into ArcGIS, you \n> should ask your question in gis.stackexchange.com or in a Python- or \n> ArcGIS-specific mailing list.\n\nWhile this is correct, perhaps Oulhaci thought that everone knows about \nthe R-ArcGIS bridge:\n\nhttps://www.esri.com/en-us/arcgis/products/r-arcgis-bridge/overview\nhttps://github.com/R-ArcGIS/r-bridge-install\n\nESRI is a member of the R Consortium, and has been trying to offer ways of \nwriting user-facing modules using R internally.\n\nAnyway, it would be useful to clarify whether R is involved or not.\n\nRoger\n\n>\n> Have a nice week,\n> ?kos Bede-Fazekas\n>\n> 2021.02.03. 9:34 keltez?ssel, Oulhaci Yasmine via R-sig-Geo ?rta:\n>>  Dear list,\n>>  I want to build two scripts with python ArcGIS Pro, the first one will\n>>  consolidate (Roll-up) data? just like aggregation of spatial data.The\n>>  second one is the opposite of consolidating (drilling down into data),?For\n>>  example, i have three hierarchy levels are country, state and district.\n>>  These fields are geographic fields and I am able to plot them on three\n>>  separate maps.?The requirement is to create a top-down analysis such that\n>>  when the user clicks on the country, the top-down analysis should take the\n>>  user to the states and show all the states. Then when the user clicks on a\n>>  state, the drilldown should bring the user to see the districts and show\n>>  all the sub-districts.\n>>\n>>  Any suggestions would be very welcome.\n>> \n>> \n>>\n>>   [[alternative HTML version deleted]]\n>>\n>>  _______________________________________________\n>>  R-sig-Geo mailing list\n>>  R-sig-Geo at r-project.org\n>>  https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 3 Feb 2021, Bede-Fazekas ?kos wrote:\n\n> Hello Oulhaci,\n>\n> How your question is related to R statistical software? This mailing \n> list is for R users/developers. If you do not want to solve t",
+      "thread_id": "thread-9518126752f9",
+      "thread_depth": 2,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-2312a130f145",
+      "message_id": "<20210203142908.Horde.pleEKeoXp1rHzKqAapFeQA1@webmail.df.eu>",
+      "from_name": "@bo m@iii@g oii eirick@de",
+      "from_email_hash": "63b89baa4044d437d66640636a41d46cd6639165f0131ccdb0ba2646449cbab6",
+      "date": "2021-02-03T14:29:08+01:00",
+      "subject": "[R-sig-Geo] Using sf package to calculate line midpoints from Spatial Line data (both LINESTRING and MULTILINESTRING)",
+      "subject_clean": "Using sf package to calculate line midpoints from Spatial Line data (both LINESTRING and MULTILINESTRING)",
+      "in_reply_to": "<DB6PR06MB314331550E061D467C8092C3C4B59@DB6PR06MB3143.eurprd06.prod.outlook.com>",
+      "references": [
+        "<DB6PR06MB314331550E061D467C8092C3C4B59@DB6PR06MB3143.eurprd06.prod.outlook.com>"
+      ],
+      "body_plain": "Dear Julian,\n\nTo get the midpoint of a line data just use st_centroid(). Here is a  \nbrief example:\n\nlibrary(sf)\n\n# example with two lines\nds <- data.frame(id = 1:2,\n              geom = c('LINESTRING(0 0, 2 2)', 'LINESTRING(3 2, 4 5)'))\nds <- st_as_sf(ds, wkt = \"geom\")\nst_centroid(ds)\n\n# example with a multi line string\nds <- data.frame(id = 1:1,\n              geom = c('MULTILINESTRING ((0 0, 2 2),(3 2, 4 5))'))\nds <- st_as_sf(ds, wkt = \"geom\")\nst_centroid(ds)\n\nHope that helps,\nTim\n\nZitat von Julian Parnelle <julianparnelle at outlook.com>:\n\n> Dear list,\n>\n> My question is straightforward: how could one use the sf package to  \n> calculate the Longitude and Latitude of the line midpoints in  \n> spatial line data, in a way that works both for LINESTRING and  \n> MULTILINESTRING sf data.frames? (one per spatial line, in case the  \n> spatial line is composed of multiple line segments). After searching  \n> online for quite a bit, the only direct reference I found was this  \n> GIS Stack Exchange question from three years ago:  \n> https://gis.stackexchange.com/questions/277219/sf-equivalent-of-r-maptools-packages-spatiallinesmidpoints. However, the solution proposed there is only more or less reliable for LINESTRING data and I lack sufficient knowledge of sf objects and MULTILINESTRING representation to update that and make it more  \n> reliable.\n>\n> I was used to doing that with the SpatialLinesMidPoints command, but  \n> I am finding it quite difficult to accomplish the same with the sf  \n> package. I do know that this task could perhaps be achieved by  \n> interpolating across the lines up to 50% of its extension, using for  \n> example ST_Line_Interpolate_Point. However, I don't see to be able  \n> to achieve exactly the same with either st_line_sample or  \n> st_segmentize.\n>\n> Any suggestions would be very welcome.\n>\n> Julian\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Dear Julian,\n\nTo get the midpoint of a line data just use st_centroid(). Here is a  \nbrief example:\n\nlibrary(sf)\n\n# example with two lines\nds <- data.frame(id = 1:2,\n              geom = c('LINESTRING",
+      "thread_id": "thread-007c774360d0",
+      "thread_depth": 1,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-3ca46f42a236",
+      "message_id": "<3142e191-1957-fe6a-5553-a09c99bb5bb3@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2021-02-03T16:19:31+01:00",
+      "subject": "[R-sig-Geo] Using sf package to calculate line midpoints from Spatial Line data (both LINESTRING and MULTILINESTRING)",
+      "subject_clean": "Using sf package to calculate line midpoints from Spatial Line data (both LINESTRING and MULTILINESTRING)",
+      "in_reply_to": "<20210203142908.Horde.pleEKeoXp1rHzKqAapFeQA1@webmail.df.eu>",
+      "references": [
+        "<DB6PR06MB314331550E061D467C8092C3C4B59@DB6PR06MB3143.eurprd06.prod.outlook.com>",
+        "<20210203142908.Horde.pleEKeoXp1rHzKqAapFeQA1@webmail.df.eu>"
+      ],
+      "body_plain": "On Wed, 3 Feb 2021, abo at elrick.de wrote:\n\n> Dear Julian,\n>\n> To get the midpoint of a line data just use st_centroid(). Here is a brief \n> example:\n\nNot quite, but checking why not and in which cases would be interesting - \nplease do run the code, the ouput is what is interesting:\n\nlibrary(maptools)\nxx <- readShapeLines(system.file(\"shapes/fylk-val.shp\",\n   package=\"maptools\")[1],\n   proj4string=CRS(\"+proj=utm +zone=33 +datum=WGS84\"))\nspdf <- SpatialLinesMidPoints(xx)\noo <- sf::st_centroid(sf::st_as_sf(xx))\nall.equal(sf::st_coordinates(oo), coordinates(spdf),\n   check.attributes=FALSE, scale=1)\ndf <- sf::st_coordinates(oo) - coordinates(spdf)\ndf[apply(df, 1, function(x) any(abs(x) > 1)),]\n\ngeos <- rgeos::gCentroid(xx, byid=TRUE)\nall.equal(sf::st_coordinates(oo), coordinates(geos),\n   check.attributes=FALSE, scale=1) # same as st_centroid()\n\nAnd:\n\nlr <- t(sapply(1:length(xx), function(i)\n   coordinates(rgeos::gInterpolate(xx[i,], d=0.5, normalized=TRUE))))\nall.equal(coordinates(spdf), lr, check.attributes=FALSE, scale=1)\n\nSo rgeos::gInterpolate() and SpatialLinesMidPoints() appear to be \ninterpolating along the line segments, that is using linear reference.\n\nres <- gDistance(geos, xx, byid=TRUE)\nsummary(c(res))\n\nres1 <- gDistance(spdf, xx, byid=TRUE)\nsummary(diag(res1))\n\nSo the linear reference measures give points on the lines, but centroids \ndo not necessarily do so. Neither of GEOSInterpolateNormalized_r() nor \nGEOSInterpolate_r() appear in code in sf/src, so maptools or rgeos are at \npresent the only alternatives; maybe one of the spatstat packages also \nprovides linear reference.\n\nHope this clarifies,\n\nRoger\n\n>\n> library(sf)\n>\n> # example with two lines\n> ds <- data.frame(id = 1:2,\n>            geom = c('LINESTRING(0 0, 2 2)', 'LINESTRING(3 2, 4 5)'))\n> ds <- st_as_sf(ds, wkt = \"geom\")\n> st_centroid(ds)\n>\n> # example with a multi line string\n> ds <- data.frame(id = 1:1,\n>            geom = c('MULTILINESTRING ((0 0, 2 2),(3 2, 4 5))'))\n> ds <- st_as_sf(ds, wkt = \"geom\")\n> st_centroid(ds)\n>\n> Hope that helps,\n> Tim\n>\n> Zitat von Julian Parnelle <julianparnelle at outlook.com>:\n>\n>> Dear list,\n>> \n>> My question is straightforward: how could one use the sf package to \n>> calculate the Longitude and Latitude of the line midpoints in spatial line \n>> data, in a way that works both for LINESTRING and MULTILINESTRING sf \n>> data.frames? (one per spatial line, in case the spatial line is composed of \n>> multiple line segments). After searching online for quite a bit, the only \n>> direct reference I found was this GIS Stack Exchange question from three \n>> years ago: \n>> https://gis.stackexchange.com/questions/277219/sf-equivalent-of-r-maptools-packages-spatiallinesmidpoints. \n>> However, the solution proposed there is only more or less reliable for \n>> LINESTRING data and I lack sufficient knowledge of sf objects and \n>> MULTILINESTRING representation to update that and make it more reliable.\n>> \n>> I was used to doing that with the SpatialLinesMidPoints command, but I am \n>> finding it quite difficult to accomplish the same with the sf package. I do \n>> know that this task could perhaps be achieved by interpolating across the \n>> lines up to 50% of its extension, using for example \n>> ST_Line_Interpolate_Point. However, I don't see to be able to achieve \n>> exactly the same with either st_line_sample or st_segmentize.\n>> \n>> Any suggestions would be very welcome.\n>> \n>> Julian\n>>\n>>  [[alternative HTML version deleted]]\n>> \n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 3 Feb 2021, abo at elrick.de wrote:\n\n> Dear Julian,\n>\n> To get the midpoint of a line data just use st_centroid(). Here is a brief \n> example:\n\nNot quite, but checking why not and in which cas",
+      "thread_id": "thread-007c774360d0",
+      "thread_depth": 2,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-05dced7fd2b3",
+      "message_id": "<CAKSASLDyVVWgDJ6VT1ZWUEBoh8KbXufa+bv1UePi0YUABOz9CQ@mail.gmail.com>",
+      "from_name": "Marta Rufino",
+      "from_email_hash": "bfceb8c72375986ae2b75f435afdd9bbb065275e9e776fe7e1291b2952ceba4c",
+      "date": "2021-02-03T16:10:17Z",
+      "subject": "[R-sig-Geo] merge ggplots into one with pipeline commands",
+      "subject_clean": "merge ggplots into one with pipeline commands",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n\nI want to make one only ggplot by merging/joining a base ggplot and a\nggplot resulting from a pipeline command (ddplyr).\n\nHere it is the reproducible example:\n\n# my base plot, for example:\n# https://rpubs.com/MRufino/Portugal\np1 <- ggplot() +\n    borders(\"world\",\n            fill=\"antiquewhite1\",\n            colour=\"antiquewhite4\")+\n  coord_fixed(ylim=c(36.6, 42.0), xlim=c(-10 ,-7))+\n  theme_minimal()+\n  theme(panel.background = element_rect(fill = 'powderblue'),\n        panel.grid.major = element_blank(),\n        panel.grid.minor = element_blank())+\n  xlab(\"Longitude\")+ ylab(\"Latitude\")\n p1\n\n# now, if I want to add this plot to another ggplot resulting from a\npipeline command, how can I do it?\ndat <- data.frame(lat=c(40.3,38.4,39),\n           lon = c(-10,-8,-9),\n           fac = c(1,2,1))\n\n# pipeline ggplot\ndat %>%\n  filter(fac==1) %>%\n  ggplot()+\n  geom_point(aes(x=lon, y=lat))\n\n# I want to obtain this, but just using the pipeline command (because in my\ncase both plots are complex and long and need to be repeated).\np1 +\n  geom_point(data=dat[dat$fac==1,],\n             aes(x=lon, y=lat))\n\n# ideally something like this (which does not work)\ndat %>%\n  filter(fac==1) %>%\n  ggplot()+\n  geom_point(aes(x=lon, y=lat))+\n  p1\n\n# OR like this...\ndat %>%\n  filter(fac==1) %>%\n  p1+\n  geom_point(aes(x=lon, y=lat))\n\nI am sure I am missing something and should be simple, but although I\nsearched I could not find any post about it.\n\nAny help will be much apretiated,\nThank you very much in advance,\n\nCheers,\nM.\n\n-- \nMarta M. Rufino (junior researcher)\n\n*_____________________________________**Portuguese Institute for the Sea\nand the Atmosphere (IPMA)*\nDivision of Modelling and Management of Fisheries Resources\nAv. Dr. Alfredo Magalh?es Ramalho, 6, 1495-165 Lisboa\n\n*Centre of Statistics and its Applications (CEAUL) *\n\nFaculty of Sciences, Univ. of Lisbon, Portugal\n\nhttp://rpubs.com/MRufino/\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nI want to make one only ggplot by merging/joining a base ggplot and a\nggplot resulting from a pipeline command (ddplyr).\n\nHere it is the reproducible example:\n\n# my base plot, for example:\n# http",
+      "thread_id": "thread-05dced7fd2b3",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-b71dcaa504a6",
+      "message_id": "<xgzwnvp9lnx.fsf@hafogvatn.is>",
+      "from_name": "Julian M. Burgos",
+      "from_email_hash": "950ea9cca6e3b3adb7ff6eeb7af8648e91468eccbd26cb5e549d117d523ea9e5",
+      "date": "2021-02-03T16:10:58Z",
+      "subject": "[R-sig-Geo] Spatial joins between sf and stars objects",
+      "subject_clean": "Spatial joins between sf and stars objects",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list,\n\nWhat would be the best way to do a spatial join between a sf object (of POINT geometry) and a star object, so the sf object gets the values of the corresponding pixels in the star object?  I have done using a combination of st_join and st_extract, but it feels a bit clunky.  Is there a better way?\n\nHere is what I have done:\n\n## --------------------------------------------------------------\n## Load a stars object\nst1 <- read_stars(system.file(\"tif/L7_ETMs.tif\", package = \"stars\")) %>%\n  slice(band, 1)\n\n## Create an sf object\n\nset.seed(100)\nbb <- st_bbox(st1)\n\nsf1 <- tibble(lon = runif(n = 10, min = bb[1], max = bb[3]),\n              lat = runif(n = 10, min = bb[2], max = bb[4]),\n              nums = 1:10) %>%\n  st_as_sf(coords = c(\"lon\", \"lat\"), crs = st_crs(st1))\n\n## Do the spatial join\n\nsf1 <- st_extract(st1, sf1) %>%\n    st_join(sf1)\n## --------------------------------------------------------------\n\nThanks,\n\nJulian\n\n--\nJulian Mariano Burgos, PhD\nHafranns?knastofnun, ranns?kna- og r??gjafarstofnun hafs og vatna/\nMarine and Freshwater Research Institute\nBotnsj?varsvi?s / Demersal Division\n  Fornub??ir 5, IS-220 Hafnarfj?r?ur, Iceland\nwww.hafogvatn.is\nS?mi/Telephone : +354-5752037\nNetfang/Email: julian.burgos at hafogvatn.is",
+      "body_snippet": "Dear list,\n\nWhat would be the best way to do a spatial join between a sf object (of POINT geometry) and a star object, so the sf object gets the values of the corresponding pixels in the star object? ",
+      "thread_id": "thread-b71dcaa504a6",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-53b233024b4c",
+      "message_id": "<559d5a61-ee88-9541-0cb6-885aac79a13f@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2021-02-03T18:28:03+01:00",
+      "subject": "[R-sig-Geo] Spatial joins between sf and stars objects",
+      "subject_clean": "Spatial joins between sf and stars objects",
+      "in_reply_to": "<xgzwnvp9lnx.fsf@hafogvatn.is>",
+      "references": [
+        "<xgzwnvp9lnx.fsf@hafogvatn.is>"
+      ],
+      "body_plain": "st_join does a spatial join, which comes at a cost; since st_extract \ndoesn't change the row order of the sf object, you could as well use\n\nst_extract(st1, sf1) %>% mutate(nums = sf1$nums)\n\nOn 03/02/2021 17:10, Julian M. Burgos wrote:\n> Dear list,\n> \n> What would be the best way to do a spatial join between a sf object (of POINT geometry) and a star object, so the sf object gets the values of the corresponding pixels in the star object?  I have done using a combination of st_join and st_extract, but it feels a bit clunky.  Is there a better way?\n> \n> Here is what I have done:\n> \n> ## --------------------------------------------------------------\n> ## Load a stars object\n> st1 <- read_stars(system.file(\"tif/L7_ETMs.tif\", package = \"stars\")) %>%\n>    slice(band, 1)\n> \n> ## Create an sf object\n> \n> set.seed(100)\n> bb <- st_bbox(st1)\n> \n> sf1 <- tibble(lon = runif(n = 10, min = bb[1], max = bb[3]),\n>                lat = runif(n = 10, min = bb[2], max = bb[4]),\n>                nums = 1:10) %>%\n>    st_as_sf(coords = c(\"lon\", \"lat\"), crs = st_crs(st1))\n> \n> ## Do the spatial join\n> \n> sf1 <- st_extract(st1, sf1) %>%\n>      st_join(sf1)\n> ## --------------------------------------------------------------\n> \n> Thanks,\n> \n> Julian\n> \n> --\n> Julian Mariano Burgos, PhD\n> Hafranns?knastofnun, ranns?kna- og r??gjafarstofnun hafs og vatna/\n> Marine and Freshwater Research Institute\n> Botnsj?varsvi?s / Demersal Division\n>    Fornub??ir 5, IS-220 Hafnarfj?r?ur, Iceland\n> www.hafogvatn.is\n> S?mi/Telephone : +354-5752037\n> Netfang/Email: julian.burgos at hafogvatn.is\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_snippet": "st_join does a spatial join, which comes at a cost; since st_extract \ndoesn't change the row order of the sf object, you could as well use\n\nst_extract(st1, sf1) %>% mutate(nums = sf1$nums)\n\nOn 03/02/2",
+      "thread_id": "thread-b71dcaa504a6",
+      "thread_depth": 1,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-185ab969e482",
+      "message_id": "<xgzim79km2s.fsf@hafogvatn.is>",
+      "from_name": "Julian M. Burgos",
+      "from_email_hash": "950ea9cca6e3b3adb7ff6eeb7af8648e91468eccbd26cb5e549d117d523ea9e5",
+      "date": "2021-02-03T19:06:35Z",
+      "subject": "[R-sig-Geo] Spatial joins between sf and stars objects",
+      "subject_clean": "Spatial joins between sf and stars objects",
+      "in_reply_to": "<559d5a61-ee88-9541-0cb6-885aac79a13f@uni-muenster.de>",
+      "references": [
+        "<xgzwnvp9lnx.fsf@hafogvatn.is>",
+        "<559d5a61-ee88-9541-0cb6-885aac79a13f@uni-muenster.de>"
+      ],
+      "body_plain": "Thanks Edzer, I should have checked if st_extract kept the order of the rows. In this case, a way to do it more generally is:\n\nsf1 <- bind_cols(st_drop_geometry(sf1),\n                 st_extract(st1, sf1))\n\n\n\nEdzer Pebesma writes:\n\n> st_join does a spatial join, which comes at a cost; since st_extract\n> doesn't change the row order of the sf object, you could as well use\n>\n> st_extract(st1, sf1) %>% mutate(nums = sf1$nums)\n>\n> On 03/02/2021 17:10, Julian M. Burgos wrote:\n>> Dear list,\n>>\n>> What would be the best way to do a spatial join between a sf object (of POINT geometry) and a star object, so the sf object gets the values of the corresponding pixels in the star object?  I have done using a combination of st_join and st_extract, but it feels a bit clunky.  Is there a better way?\n>>\n>> Here is what I have done:\n>>\n>> ## --------------------------------------------------------------\n>> ## Load a stars object\n>> st1 <- read_stars(system.file(\"tif/L7_ETMs.tif\", package = \"stars\")) %>%\n>>    slice(band, 1)\n>>\n>> ## Create an sf object\n>>\n>> set.seed(100)\n>> bb <- st_bbox(st1)\n>>\n>> sf1 <- tibble(lon = runif(n = 10, min = bb[1], max = bb[3]),\n>>                lat = runif(n = 10, min = bb[2], max = bb[4]),\n>>                nums = 1:10) %>%\n>>    st_as_sf(coords = c(\"lon\", \"lat\"), crs = st_crs(st1))\n>>\n>> ## Do the spatial join\n>>\n>> sf1 <- st_extract(st1, sf1) %>%\n>>      st_join(sf1)\n>> ## --------------------------------------------------------------\n>>\n>> Thanks,\n>>\n>> Julian\n>>\n>> --\n>> Julian Mariano Burgos, PhD\n>> Hafranns?knastofnun, ranns?kna- og r??gjafarstofnun hafs og vatna/\n>> Marine and Freshwater Research Institute\n>> Botnsj?varsvi?s / Demersal Division\n>>    Fornub??ir 5, IS-220 Hafnarfj?r?ur, Iceland\n>> http://www.hafogvatn.is/\n>> S?mi/Telephone : +354-5752037\n>> Netfang/Email: julian.burgos at hafogvatn.is\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=04%7C01%7C%7C38c8e24fcf1d4b6fa70308d8c86923d7%7C8e105b94435e4303a61063620dbe162b%7C0%7C0%7C637479701198004036%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=Z7hRM4MwCwNdegSavTXPJIAlRGJ1DqUNAsm%2Fp9lPgeE%3D&amp;reserved=0\n>>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=04%7C01%7C%7C38c8e24fcf1d4b6fa70308d8c86923d7%7C8e105b94435e4303a61063620dbe162b%7C0%7C0%7C637479701198004036%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=Z7hRM4MwCwNdegSavTXPJIAlRGJ1DqUNAsm%2Fp9lPgeE%3D&amp;reserved=0\n\n\n--\nJulian Mariano Burgos, PhD\nHafranns?knastofnun, ranns?kna- og r??gjafarstofnun hafs og vatna/\nMarine and Freshwater Research Institute\nBotnsj?varsvi?s / Demersal Division\n  Fornub??ir 5, IS-220 Hafnarfj?r?ur, Iceland\nwww.hafogvatn.is\nS?mi/Telephone : +354-5752037\nNetfang/Email: julian.burgos at hafogvatn.is",
+      "body_snippet": "Thanks Edzer, I should have checked if st_extract kept the order of the rows. In this case, a way to do it more generally is:\n\nsf1 <- bind_cols(st_drop_geometry(sf1),\n                 st_extract(st1, ",
+      "thread_id": "thread-b71dcaa504a6",
+      "thread_depth": 2,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-48043a5adff1",
+      "message_id": "<xgzeehxklph.fsf@hafogvatn.is>",
+      "from_name": "Julian M. Burgos",
+      "from_email_hash": "950ea9cca6e3b3adb7ff6eeb7af8648e91468eccbd26cb5e549d117d523ea9e5",
+      "date": "2021-02-03T19:14:34Z",
+      "subject": "[R-sig-Geo] Spatial joins between sf and stars objects",
+      "subject_clean": "Spatial joins between sf and stars objects",
+      "in_reply_to": "<xgzim79km2s.fsf@hafogvatn.is>",
+      "references": [
+        "<xgzwnvp9lnx.fsf@hafogvatn.is>",
+        "<559d5a61-ee88-9541-0cb6-885aac79a13f@uni-muenster.de>",
+        "<xgzim79km2s.fsf@hafogvatn.is>"
+      ],
+      "body_plain": "Although if I use bind_cols the result is not an sf object....\n\nJulian M. Burgos writes:\n\n> Thanks Edzer, I should have checked if st_extract kept the order of the rows. In this case, a way to do it more generally is:\n>\n> sf1 <- bind_cols(st_drop_geometry(sf1),\n>                  st_extract(st1, sf1))\n>\n>\n>\n> Edzer Pebesma writes:\n>\n>> st_join does a spatial join, which comes at a cost; since st_extract\n>> doesn't change the row order of the sf object, you could as well use\n>>\n>> st_extract(st1, sf1) %>% mutate(nums = sf1$nums)\n>>\n>> On 03/02/2021 17:10, Julian M. Burgos wrote:\n>>> Dear list,\n>>>\n>>> What would be the best way to do a spatial join between a sf object (of POINT geometry) and a star object, so the sf object gets the values of the corresponding pixels in the star object?  I have done using a combination of st_join and st_extract, but it feels a bit clunky.  Is there a better way?\n>>>\n>>> Here is what I have done:\n>>>\n>>> ## --------------------------------------------------------------\n>>> ## Load a stars object\n>>> st1 <- read_stars(system.file(\"tif/L7_ETMs.tif\", package = \"stars\")) %>%\n>>>    slice(band, 1)\n>>>\n>>> ## Create an sf object\n>>>\n>>> set.seed(100)\n>>> bb <- st_bbox(st1)\n>>>\n>>> sf1 <- tibble(lon = runif(n = 10, min = bb[1], max = bb[3]),\n>>>                lat = runif(n = 10, min = bb[2], max = bb[4]),\n>>>                nums = 1:10) %>%\n>>>    st_as_sf(coords = c(\"lon\", \"lat\"), crs = st_crs(st1))\n>>>\n>>> ## Do the spatial join\n>>>\n>>> sf1 <- st_extract(st1, sf1) %>%\n>>>      st_join(sf1)\n>>> ## --------------------------------------------------------------\n>>>\n>>> Thanks,\n>>>\n>>> Julian\n>>>\n>>> --\n>>> Julian Mariano Burgos, PhD\n>>> Hafranns?knastofnun, ranns?kna- og r??gjafarstofnun hafs og vatna/\n>>> Marine and Freshwater Research Institute\n>>> Botnsj?varsvi?s / Demersal Division\n>>>    Fornub??ir 5, IS-220 Hafnarfj?r?ur, Iceland\n>>> http://www.hafogvatn.is/\n>>> S?mi/Telephone : +354-5752037\n>>> Netfang/Email: julian.burgos at hafogvatn.is\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=04%7C01%7C%7C7b9230c283dd4883458a08d8c876e7d1%7C8e105b94435e4303a61063620dbe162b%7C0%7C0%7C637479760450605041%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=d%2FY%2FuSVIou5juUoKgSwCZc4EZ5OdEJRCg1YZHH%2FEYGc%3D&amp;reserved=0\n>>>\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=04%7C01%7C%7C7b9230c283dd4883458a08d8c876e7d1%7C8e105b94435e4303a61063620dbe162b%7C0%7C0%7C637479760450605041%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=d%2FY%2FuSVIou5juUoKgSwCZc4EZ5OdEJRCg1YZHH%2FEYGc%3D&amp;reserved=0\n\n\n--\nJulian Mariano Burgos, PhD\nHafranns?knastofnun, ranns?kna- og r??gjafarstofnun hafs og vatna/\nMarine and Freshwater Research Institute\nBotnsj?varsvi?s / Demersal Division\n  Fornub??ir 5, IS-220 Hafnarfj?r?ur, Iceland\nwww.hafogvatn.is\nS?mi/Telephone : +354-5752037\nNetfang/Email: julian.burgos at hafogvatn.is",
+      "body_snippet": "Although if I use bind_cols the result is not an sf object....\n\nJulian M. Burgos writes:\n\n> Thanks Edzer, I should have checked if st_extract kept the order of the rows. In this case, a way to do it m",
+      "thread_id": "thread-b71dcaa504a6",
+      "thread_depth": 3,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-a607555d0604",
+      "message_id": "<1639122107.2186113.1612384965901@mail.yahoo.com>",
+      "from_name": "@iex_rugu m@iii@g oii y@hoo@com",
+      "from_email_hash": "aa71c1baf7916f64a0d2bc86da16925c4b350e16d9259470c04a0853b3b857b5",
+      "date": "2021-02-03T20:42:45Z",
+      "subject": "[R-sig-Geo]  Help with spTimer or spTDyn to estimate the Bayesian Gaussian Process Model",
+      "subject_clean": "Help with spTimer or spTDyn to estimate the Bayesian Gaussian Process Model",
+      "in_reply_to": null,
+      "references": [
+        "<1639122107.2186113.1612384965901.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "I am getting the following error when running the below script for the Bayesian Gaussian Process (GP) Model\nusing spTimer or spTDyn\n#Error\n?Output: GP models?\nError in spGP.Gibbs(formula = formula, data = data, time.data = time.data,? :?\n? ?Error: Years, Months, and Days are misspecified,\n?i.e., total number of observations in the data set should be equal to N\n? : N = n * r * T?\n? ?where, N = total number of observations in the data,\n? ? ? ? ? n = total number of sites,\n? ? ? ? ? r = total number of years,\n? ? ? ? ? T = total number of days.?\n\n#######Script\nlibrary(spTimer)\nlibrary(spTDyn)\nlibrary(tidyverse)\nlibrary(ggmap)\n\n\nregister_google(key=\"your key\")\ngetOption(\"ggmap\")\n\n\n#Data to be analyzed is from plm package\n#It is a US States Production, which is a panel of 48 observations from 1970 to 1986\n#A data frame containing :\n#state: the state\n#year : the year\n#region : the region\n#pcap : public capital stock\n#hwy :? highway and streets\n#water : water and sewer facilities\n#util : other public buildings and structures\n#pc : private capital stock\n#gsp : gross state product\n#emp :labor input measured by the employment in non?agricultural payrolls\n#unemp : state unemployment rates?\n\n#Get data\ndata(\"Produc\", package = \"plm\")\nglimpse(Produc)\n\n\n#Estimate Geolocation of states to account for spill over effects\nstates_df <- data.frame(as.character(unique(Produc$state)))\nnames(states_df)<- c(\"state\")\n\n\nstate_geo_df <- mutate_geocode(states_df, state)? #from ggmap\n\n#Join the data\nProduct_geo <- full_join(state_geo_df, Produc)\nglimpse(Product_geo)\n\n\n#Create the time series variable\n#number of state\nns <- length(unique(Product_geo$state))\n\n\n#number of year\nny <- length(unique(Product_geo$year))\n\n####################################################\n# I want to do Spatio-Temporal Bayesian Modeling Using spTimer or spTDyn?\n#defines the time series in the Spatio-temporal framework\n\n\nts_STD <- def.time(t.series=ns, segments=ny)\n\n\n##################Estimate the model using spTDyn package\n#Note spT.Gibbs in spTimer gives the same error\n\n\nGibbsDyn(gsp ~ pcap + hwy + water + util + pc ,?\n? ? ? ?data=Product_geo, model=\"GP\",?\n? ? ? ? ?time.data=ts_STD,?\n? ? ? ? ?coords=~lon + lat,\n? ? ? ? ? nItr=5000, nBurn=1000, report=1, tol.dist=0.05,\n? ? ? ? ? ? distance.method=\"geodetic:km\", cov.fnc=\"exponential\",?\n? ? ? ? ? ? ?spatial.decay=decay(distribution=\"FIXED\"),truncation.para=list(at=0,lambda=2))\n\n\n#Also how to deal with unbalanced panel\n#Delete some of the rows\nProduct_geo$cond = with(Product_geo,? if_else(state==\"ALABAMA\" & year==1971, 0,\n? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?if_else(state==\"COLORADO\" & year==1971 | year==1973 , 0,\n? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?if_else(state==\"TEXAS\" & year==1971 | year==1973 | year==1985, 0, 1))))\n\n\n\n\nProduct_geo_unb <- Product_geo %>% filter(cond==1) %>% select(-cond)\nglimpse(Product_geo_unb)\n\n\n#How to use GibbsDyn or spT.Gibbs for such unbalanced panel data to estimate the Bayesian Gaussian Process (GP) Model?",
+      "body_snippet": "I am getting the following error when running the below script for the Bayesian Gaussian Process (GP) Model\nusing spTimer or spTDyn\n#Error\n?Output: GP models?\nError in spGP.Gibbs(formula = formula, da",
+      "thread_id": "thread-a607555d0604",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-0327f74acd55",
+      "message_id": "<1657102787.12184.1612399145755.JavaMail.administrator@n2.nabble.com>",
+      "from_name": "xi@ojichd m@iii@g oii outiook@com",
+      "from_email_hash": "d0dd807961da4bda3c6c428999b18cb09001f1853ba34e91e97c75f6805dd071",
+      "date": "2021-02-03T17:39:05-07:00",
+      "subject": "[R-sig-Geo] question for LMC",
+      "subject_clean": "question for LMC",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all lists,\n\nI am xiaoji. \n\nI am interested in your ?gstat? package in r for fitting Linear Model of Coregionalization (LMC). But I have some questions and I really need your kind help. Could you please give me a favor?\n\nhere is some of my data:\nSA2X_CENP    \tSA2Y_CENP\t        crash   YP_rate\n320428.917\t        5818141.198\t117\t0.1063\n321879.5695\t5817899.382\t22\t0.1092\n318771.7939\t5818451.477\t11\t0.1379\n320635.3233\t5820539.97\t        48\t0.1649\n318364.0546\t5820648.928\t1\t0.2003\n326033.2365\t5817370.864\t23\t0.1649\n323867.7281\t5817573.52\t        60\t0.1655\n324383.5969\t5819145.236\t22\t0.1632\n316263.0477\t5816879.653\t17\t0.184\n315660.7089\t5819792.038\t27\t0.1656\n317796.8316\t5816153.109\t27\t0.1578\n316917.6342\t5818154.401\t14\t0.1624\n321086.4921\t5814372.89\t        85\t0.0598\n318970.2645\t5812389.57\t        22\t0.0732\n322330.8284\t5812552.395\t46\t0.0608\n316193.3299\t5815654.364\t2\t0.1446\n317484.9642\t5814980.071\t30\t0.1473\n320657.3469\t5812907.924\t236\t0.0322\n319195.008\t          5814256.7\t86\t0.0969\n319621.6781\t5815829.549\t53\t0.0625\n322418.9406\t5810079.992\t30\t0.0778\n321120.9463\t5811505.149\t63\t0.0493\n317081.5135\t5813218.024\t10\t0\n320865.432\t        5809358.484\t79\t0.1423\n322840.6266\t5805484.066\t33\t0.1397\n318295.2402\t5810141.976\t18\t0.14\n316698.2992\t5810889.514\t5\t0.3333\n320230.4663\t5810705.071\t44\t0.115\n322323.3428\t5807529.089\t77\t0.0754\n323920.1083\t5807043.912\t40\t0.1312\n325877.0663\t5808231.436\t6\t0.1408\n323874.6983\t5808622.809\t57\t0.0862\n323631.454\t         5810052.96\t73\t0.0707\n325570.0793\t5809906.47         11\t0.1161\n\n\nHere is the code I run :\n\nlibrary(sp)\nlibrary(gstat)\nCD=read.csv(\"C:\\\\Users\\\\xiaoj\\\\Documents\\\\crash_standard_sd.csv\")\ncoordinates (CD) = ~SA2X_CENP+SA2Y_CENP\ng <- gstat(formula=crash~1, data = CD)\ng <- gstat(g,formula=YP_rate~1, data = CD)\na_range=40000\nb_range=59000\nv= variogram(crash~SA2X_CENP+SA2Y_CENP, CD)\nmodel<-vgm(NA,\"Gau\",a_range,NA,add.to = vgm(NA,\"Per\",b_range))\ntest<-fit.lmc(v, g, model)\ntest\n\n\nThe following is my questions.\n1.\tI have some explanation of the data: variable ?crash? is a count data and variable ?YP_rate? is continuous, how should I run the correct code to fit LMC? \n2.\tHow do I to determine the values of a_range and b_range?\n\n\nI am looking forward to your kindly reply.\n\nThanks for your time.\n\nXiaoji\n\n\n\n_____________________________________\nSent from http://r-sig-geo.2731867.n2.nabble.com",
+      "body_snippet": "Dear all lists,\n\nI am xiaoji. \n\nI am interested in your ?gstat? package in r for fitting Linear Model of Coregionalization (LMC). But I have some questions and I really need your kind help. Could you ",
+      "thread_id": "thread-0327f74acd55",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-7cbca0805542",
+      "message_id": "<fb4eb452-c7a8-7ff4-02d2-7c22fe3e2b89@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2021-02-04T11:42:14+01:00",
+      "subject": "[R-sig-Geo] Spatial joins between sf and stars objects",
+      "subject_clean": "Spatial joins between sf and stars objects",
+      "in_reply_to": "<xgzeehxklph.fsf@hafogvatn.is>",
+      "references": [
+        "<xgzwnvp9lnx.fsf@hafogvatn.is>",
+        "<559d5a61-ee88-9541-0cb6-885aac79a13f@uni-muenster.de>",
+        "<xgzim79km2s.fsf@hafogvatn.is>",
+        "<xgzeehxklph.fsf@hafogvatn.is>"
+      ],
+      "body_plain": "On 03/02/2021 20:14, Julian M. Burgos wrote:\n> Although if I use bind_cols the result is not an sf object....\n\nright, this is because bind_cols is not a generic (its first argument is \n... , which you can't dispatch on) so doesn't have an associated sf method.\n\ndplyr offers a mechanism to work around this by providing an sf method \nfor dplyr_reconstruct - something we could try, but then the dplyr \nauthors mention that this is experimental and considered a stop-gap \nmeasure, so that might work now but stop working any time.\n\nHowever,\n\nsf3 <- cbind(st_extract(st1, sf1), st_drop_geometry(sf1))\n\ndoes return an sf object (note the changed order of arguments)\n\n> \n> Julian M. Burgos writes:\n> \n>> Thanks Edzer, I should have checked if st_extract kept the order of the rows. In this case, a way to do it more generally is:\n>>\n>> sf1 <- bind_cols(st_drop_geometry(sf1),\n>>                   st_extract(st1, sf1))\n>>\n>>\n>>\n>> Edzer Pebesma writes:\n>>\n>>> st_join does a spatial join, which comes at a cost; since st_extract\n>>> doesn't change the row order of the sf object, you could as well use\n>>>\n>>> st_extract(st1, sf1) %>% mutate(nums = sf1$nums)\n>>>\n>>> On 03/02/2021 17:10, Julian M. Burgos wrote:\n>>>> Dear list,\n>>>>\n>>>> What would be the best way to do a spatial join between a sf object (of POINT geometry) and a star object, so the sf object gets the values of the corresponding pixels in the star object?  I have done using a combination of st_join and st_extract, but it feels a bit clunky.  Is there a better way?\n>>>>\n>>>> Here is what I have done:\n>>>>\n>>>> ## --------------------------------------------------------------\n>>>> ## Load a stars object\n>>>> st1 <- read_stars(system.file(\"tif/L7_ETMs.tif\", package = \"stars\")) %>%\n>>>>     slice(band, 1)\n>>>>\n>>>> ## Create an sf object\n>>>>\n>>>> set.seed(100)\n>>>> bb <- st_bbox(st1)\n>>>>\n>>>> sf1 <- tibble(lon = runif(n = 10, min = bb[1], max = bb[3]),\n>>>>                 lat = runif(n = 10, min = bb[2], max = bb[4]),\n>>>>                 nums = 1:10) %>%\n>>>>     st_as_sf(coords = c(\"lon\", \"lat\"), crs = st_crs(st1))\n>>>>\n>>>> ## Do the spatial join\n>>>>\n>>>> sf1 <- st_extract(st1, sf1) %>%\n>>>>       st_join(sf1)\n>>>> ## --------------------------------------------------------------\n>>>>\n>>>> Thanks,\n>>>>\n>>>> Julian\n>>>>\n>>>> --\n>>>> Julian Mariano Burgos, PhD\n>>>> Hafranns?knastofnun, ranns?kna- og r??gjafarstofnun hafs og vatna/\n>>>> Marine and Freshwater Research Institute\n>>>> Botnsj?varsvi?s / Demersal Division\n>>>>     Fornub??ir 5, IS-220 Hafnarfj?r?ur, Iceland\n>>>> http://www.hafogvatn.is/\n>>>> S?mi/Telephone : +354-5752037\n>>>> Netfang/Email: julian.burgos at hafogvatn.is\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org\n>>>> https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=04%7C01%7C%7C7b9230c283dd4883458a08d8c876e7d1%7C8e105b94435e4303a61063620dbe162b%7C0%7C0%7C637479760450605041%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=d%2FY%2FuSVIou5juUoKgSwCZc4EZ5OdEJRCg1YZHH%2FEYGc%3D&amp;reserved=0\n>>>>\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=04%7C01%7C%7C7b9230c283dd4883458a08d8c876e7d1%7C8e105b94435e4303a61063620dbe162b%7C0%7C0%7C637479760450605041%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=d%2FY%2FuSVIou5juUoKgSwCZc4EZ5OdEJRCg1YZHH%2FEYGc%3D&amp;reserved=0\n> \n> \n> --\n> Julian Mariano Burgos, PhD\n> Hafranns?knastofnun, ranns?kna- og r??gjafarstofnun hafs og vatna/\n> Marine and Freshwater Research Institute\n> Botnsj?varsvi?s / Demersal Division\n>    Fornub??ir 5, IS-220 Hafnarfj?r?ur, Iceland\n> www.hafogvatn.is\n> S?mi/Telephone : +354-5752037\n> Netfang/Email: julian.burgos at hafogvatn.is\n>",
+      "body_snippet": "On 03/02/2021 20:14, Julian M. Burgos wrote:\n> Although if I use bind_cols the result is not an sf object....\n\nright, this is because bind_cols is not a generic (its first argument is \n... , which you",
+      "thread_id": "thread-b71dcaa504a6",
+      "thread_depth": 4,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-576167b26ca5",
+      "message_id": "<CAPP0wyiw9oyxzTEFA0BjtJzZHiXFsB3wD8pR9d53ttHuPf-E4A@mail.gmail.com>",
+      "from_name": "Kent Johnson",
+      "from_email_hash": "e96463b3542eb342548c85dea292f00ae85e9c4e9ab295b4ab52033b6ae04dba",
+      "date": "2021-02-04T14:43:38-05:00",
+      "subject": "[R-sig-Geo] merge ggplots into one with pipeline commands",
+      "subject_clean": "merge ggplots into one with pipeline commands",
+      "in_reply_to": "<mailman.28556.5.1612436402.34705.r-sig-geo@r-project.org>",
+      "references": [
+        "<mailman.28556.5.1612436402.34705.r-sig-geo@r-project.org>"
+      ],
+      "body_plain": "On Thu, Feb 4, 2021 at 6:01 AM <r-sig-geo-request at r-project.org> wrote\n\n> Message: 3\n> Date: Wed, 3 Feb 2021 16:10:17 +0000\n> From: Marta Rufino <marta.m.rufino at gmail.com>\n> To: r-sig-geo <r-sig-geo at r-project.org>\n> Subject: [R-sig-Geo] merge ggplots into one with pipeline commands\n> Message-ID:\n>         <\n> CAKSASLDyVVWgDJ6VT1ZWUEBoh8KbXufa+bv1UePi0YUABOz9CQ at mail.gmail.com>\n> Content-Type: text/plain; charset=\"utf-8\"\n>\n> Hi,\n>\n> I want to make one only ggplot by merging/joining a base ggplot and a\n> ggplot resulting from a pipeline command (ddplyr).\n>\n> Here it is the reproducible example:\n>\n> # my base plot, for example:\n> # https://rpubs.com/MRufino/Portugal\n> p1 <- ggplot() +\n>     borders(\"world\",\n>             fill=\"antiquewhite1\",\n>             colour=\"antiquewhite4\")+\n>   coord_fixed(ylim=c(36.6, 42.0), xlim=c(-10 ,-7))+\n>   theme_minimal()+\n>   theme(panel.background = element_rect(fill = 'powderblue'),\n>         panel.grid.major = element_blank(),\n>         panel.grid.minor = element_blank())+\n>   xlab(\"Longitude\")+ ylab(\"Latitude\")\n>  p1\n>\n> # now, if I want to add this plot to another ggplot resulting from a\n> pipeline command, how can I do it?\n> dat <- data.frame(lat=c(40.3,38.4,39),\n>            lon = c(-10,-8,-9),\n>            fac = c(1,2,1))\n>\n> # pipeline ggplot\n> dat %>%\n>   filter(fac==1) %>%\n>   ggplot()+\n>   geom_point(aes(x=lon, y=lat))\n>\n\nThis will do it. Enclosing the pipe expression in { } lets you put the\npiped-in variable where you need it using '.'.\n\ndat %>%\n  filter(fac==1) %>%\n  { p1 +\n    geom_point(data=., aes(x=lon, y=lat))\n  }\n\nKent Johnson\nCambridge, MA\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "On Thu, Feb 4, 2021 at 6:01 AM <r-sig-geo-request at r-project.org> wrote\n\n> Message: 3\n> Date: Wed, 3 Feb 2021 16:10:17 +0000\n> From: Marta Rufino <marta.m.rufino at gmail.com>\n> To: r-sig-geo <r-sig",
+      "thread_id": "thread-576167b26ca5",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-55a6dc91f91e",
+      "message_id": "<CAKSASLDxur+7SRfBEHO4KN7NDYfHjGXfy4o+5sMW2eFV=zVvYA@mail.gmail.com>",
+      "from_name": "Marta Rufino",
+      "from_email_hash": "bfceb8c72375986ae2b75f435afdd9bbb065275e9e776fe7e1291b2952ceba4c",
+      "date": "2021-02-05T02:33:13Z",
+      "subject": "[R-sig-Geo] merge ggplots into one with pipeline commands",
+      "subject_clean": "merge ggplots into one with pipeline commands",
+      "in_reply_to": "<CAPP0wyiw9oyxzTEFA0BjtJzZHiXFsB3wD8pR9d53ttHuPf-E4A@mail.gmail.com>",
+      "references": [
+        "<mailman.28556.5.1612436402.34705.r-sig-geo@r-project.org>",
+        "<CAPP0wyiw9oyxzTEFA0BjtJzZHiXFsB3wD8pR9d53ttHuPf-E4A@mail.gmail.com>"
+      ],
+      "body_plain": "Hi.\n\nThank you so much!\nExcellent! It works wonderfully.\nIt will be very useful.\n\nShould I abuse of your knowledge, take advantage of this example and ask if\nyou or anyone knows how to limit the map range to the area of the datasets\n'dat', without saving xlim/ylim outside the plot?\n\ni.e. making p1 automatically limited to the geographic range of dat, inside\nthe ggplot code (and not plotting always the complete country)?\n\nlike this, but automatically within the ggplot code (I have to make many\nmaps, each with different areas):\n\n# this is what I would like to get:\nggplot(data = dat, aes(x=lon, y=lat)) +\n    borders(\"world\",fill=\"antiquewhite1\",colour=\"antiquewhite4\")+\n  coord_fixed(ylim=c(min(dat$lat), max(dat$lat)),xlim=c(min(dat$lon) ,\nmax(dat$lon)))+\ngeom_point()\n\n# however, with pipeline, I would need to set xlim and ylim outside the\nplot code\nggplot(data = dat, aes(x=lon, y=lat)) +\n    borders(\"world\",fill=\"antiquewhite1\",colour=\"antiquewhite4\")+\n  coord_fixed(ylim=c(min(.data[[lat]]), max(.data[[lat]])),xlim=c(min(.\ndata[[lon]]) , max(.data[[lon]])))+\ngeom_point()\n#\nhttps://stackoverflow.com/questions/4856849/looping-over-variables-in-ggplot\n\n# this does not work either (if I use dat it refers to all dat, not only\nwhen fac==1):\ndat %>%\n  filter(fac==1) %>%\n  { p1 +\n    geom_point(data=., aes(x=lon, y=lat))+\ncoord_fixed(ylim=c(min(data$y), max(data$y)),xlim=c(min(data$lon) , max(\ndata$lon)))+\ngeom_point()\n  }\n#\nhttps://stackoverflow.com/questions/44889239/unable-to-pass-the-ylim-argument-to-ggplot-in-a-function\n\nThank you very much once again!\nBest regards,\nM.\n\nKent Johnson <kent3737 at gmail.com> escreveu no dia quinta, 4/02/2021 ?(s)\n19:43:\n\n> On Thu, Feb 4, 2021 at 6:01 AM <r-sig-geo-request at r-project.org> wrote\n>\n>> Message: 3\n>> Date: Wed, 3 Feb 2021 16:10:17 +0000\n>> From: Marta Rufino <marta.m.rufino at gmail.com>\n>> To: r-sig-geo <r-sig-geo at r-project.org>\n>> Subject: [R-sig-Geo] merge ggplots into one with pipeline commands\n>> Message-ID:\n>>         <\n>> CAKSASLDyVVWgDJ6VT1ZWUEBoh8KbXufa+bv1UePi0YUABOz9CQ at mail.gmail.com>\n>> Content-Type: text/plain; charset=\"utf-8\"\n>>\n>> Hi,\n>>\n>> I want to make one only ggplot by merging/joining a base ggplot and a\n>> ggplot resulting from a pipeline command (ddplyr).\n>>\n>> Here it is the reproducible example:\n>>\n>> # my base plot, for example:\n>> # https://rpubs.com/MRufino/Portugal\n>> p1 <- ggplot() +\n>>     borders(\"world\",\n>>             fill=\"antiquewhite1\",\n>>             colour=\"antiquewhite4\")+\n>>   coord_fixed(ylim=c(36.6, 42.0), xlim=c(-10 ,-7))+\n>>   theme_minimal()+\n>>   theme(panel.background = element_rect(fill = 'powderblue'),\n>>         panel.grid.major = element_blank(),\n>>         panel.grid.minor = element_blank())+\n>>   xlab(\"Longitude\")+ ylab(\"Latitude\")\n>>  p1\n>>\n>> # now, if I want to add this plot to another ggplot resulting from a\n>> pipeline command, how can I do it?\n>> dat <- data.frame(lat=c(40.3,38.4,39),\n>>            lon = c(-10,-8,-9),\n>>            fac = c(1,2,1))\n>>\n>> # pipeline ggplot\n>> dat %>%\n>>   filter(fac==1) %>%\n>>   ggplot()+\n>>   geom_point(aes(x=lon, y=lat))\n>>\n>\n> This will do it. Enclosing the pipe expression in { } lets you put the\n> piped-in variable where you need it using '.'.\n>\n> dat %>%\n>   filter(fac==1) %>%\n>   { p1 +\n>     geom_point(data=., aes(x=lon, y=lat))\n>   }\n>\n> Kent Johnson\n> Cambridge, MA\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi.\n\nThank you so much!\nExcellent! It works wonderfully.\nIt will be very useful.\n\nShould I abuse of your knowledge, take advantage of this example and ask if\nyou or anyone knows how to limit the map r",
+      "thread_id": "thread-576167b26ca5",
+      "thread_depth": 1,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-25afe86d9870",
+      "message_id": "<a0c30d84d0cd9d0ff7a7d4fc534e5123@agriculture.gouv.fr>",
+      "from_name": "DELORME Michael - DRAAF-AUVERGNE-RHONE-ALPES/SRISET/PEVAD",
+      "from_email_hash": "9729b70aabbcf82cfe13839085ebba4f5c6adb8917b3fe949ac0fbd8e4576aca",
+      "date": "2021-02-05T08:05:17+01:00",
+      "subject": "[R-sig-Geo] merge ggplots into one with pipeline commands",
+      "subject_clean": "merge ggplots into one with pipeline commands",
+      "in_reply_to": "<CAKSASLDxur+7SRfBEHO4KN7NDYfHjGXfy4o+5sMW2eFV=zVvYA@mail.gmail.com>",
+      "references": [
+        "<mailman.28556.5.1612436402.34705.r-sig-geo@r-project.org>",
+        "<CAPP0wyiw9oyxzTEFA0BjtJzZHiXFsB3wD8pR9d53ttHuPf-E4A@mail.gmail.com>",
+        "<CAKSASLDxur+7SRfBEHO4KN7NDYfHjGXfy4o+5sMW2eFV=zVvYA@mail.gmail.com>"
+      ],
+      "body_plain": "Use \".\", not \".data\" and \"lat\" not \"y\" :\n\nlibrary(tidyverse)\n\np1 <- ggplot() +\n   borders(\"world\",\n           fill = \"antiquewhite1\",\n           colour = \"antiquewhite4\") +\n   coord_fixed(ylim = c(36.6, 42.0),\n               xlim = c(-10, -7)) +\n   theme_minimal() +\n   theme(panel.background = element_rect(fill = 'powderblue'),\n         panel.grid.major = element_blank(),\n         panel.grid.minor = element_blank()) +\n   xlab(\"Longitude\") +\n   ylab(\"Latitude\")\np1\n\ndat <- data.frame(lat = c(40.3,38.4,39),\n                   lon = c(-10,-8,-9),\n                   fac = c(1,2,1))\n\ndat %>%\n   filter(fac == 1) %>%\n   { p1 +\n       geom_point(data = ., aes(x = .$lon, y = .$lat)) +\n       coord_fixed(ylim = c(min(.$lat), max(.$lat)),\n                   xlim = c(min(.$lon), max(.$lon))) +\n       geom_point()\n   }\n\n\nLe 05/02/2021 03:33, > marta.m.rufino a ?crit?:\n> Hi.\n> \n> Thank you so much!\n> Excellent! It works wonderfully.\n> It will be very useful.\n> \n> Should I abuse of your knowledge, take advantage of this example and \n> ask if\n> you or anyone knows how to limit the map range to the area of the \n> datasets\n> 'dat', without saving xlim/ylim outside the plot?\n> \n> i.e. making p1 automatically limited to the geographic range of dat, \n> inside\n> the ggplot code (and not plotting always the complete country)?\n> \n> like this, but automatically within the ggplot code (I have to make \n> many\n> maps, each with different areas):\n> \n> # this is what I would like to get:\n> ggplot(data = dat, aes(x=lon, y=lat)) +\n>     borders(\"world\",fill=\"antiquewhite1\",colour=\"antiquewhite4\")+\n>   coord_fixed(ylim=c(min(dat$lat), max(dat$lat)),xlim=c(min(dat$lon) ,\n> max(dat$lon)))+\n> geom_point()\n> \n> # however, with pipeline, I would need to set xlim and ylim outside the\n> plot code\n> ggplot(data = dat, aes(x=lon, y=lat)) +\n>     borders(\"world\",fill=\"antiquewhite1\",colour=\"antiquewhite4\")+\n>   coord_fixed(ylim=c(min(.data[[lat]]), max(.data[[lat]])),xlim=c(min(.\n> data[[lon]]) , max(.data[[lon]])))+\n> geom_point()\n> #\n> https://stackoverflow.com/questions/4856849/looping-over-variables-in-ggplot\n> \n> # this does not work either (if I use dat it refers to all dat, not \n> only\n> when fac==1):\n> dat %>%\n>   filter(fac==1) %>%\n>   { p1 +\n>     geom_point(data=., aes(x=lon, y=lat))+\n> coord_fixed(ylim=c(min(data$y), max(data$y)),xlim=c(min(data$lon) , \n> max(\n> data$lon)))+\n> geom_point()\n>   }\n> #\n> https://stackoverflow.com/questions/44889239/unable-to-pass-the-ylim-argument-to-ggplot-in-a-function\n> \n> Thank you very much once again!\n> Best regards,\n> M.\n> \n> Kent Johnson <kent3737 at gmail.com> escreveu no dia quinta, 4/02/2021 \n> ?(s)\n> 19:43:\n> \n>> On Thu, Feb 4, 2021 at 6:01 AM <r-sig-geo-request at r-project.org> wrote\n>> \n>>> Message: 3\n>>> Date: Wed, 3 Feb 2021 16:10:17 +0000\n>>> From: Marta Rufino <marta.m.rufino at gmail.com>\n>>> To: r-sig-geo <r-sig-geo at r-project.org>\n>>> Subject: [R-sig-Geo] merge ggplots into one with pipeline commands\n>>> Message-ID:\n>>>         <\n>>> CAKSASLDyVVWgDJ6VT1ZWUEBoh8KbXufa+bv1UePi0YUABOz9CQ at mail.gmail.com>\n>>> Content-Type: text/plain; charset=\"utf-8\"\n>>> \n>>> Hi,\n>>> \n>>> I want to make one only ggplot by merging/joining a base ggplot and a\n>>> ggplot resulting from a pipeline command (ddplyr).\n>>> \n>>> Here it is the reproducible example:\n>>> \n>>> # my base plot, for example:\n>>> # https://rpubs.com/MRufino/Portugal\n>>> p1 <- ggplot() +\n>>>     borders(\"world\",\n>>>             fill=\"antiquewhite1\",\n>>>             colour=\"antiquewhite4\")+\n>>>   coord_fixed(ylim=c(36.6, 42.0), xlim=c(-10 ,-7))+\n>>>   theme_minimal()+\n>>>   theme(panel.background = element_rect(fill = 'powderblue'),\n>>>         panel.grid.major = element_blank(),\n>>>         panel.grid.minor = element_blank())+\n>>>   xlab(\"Longitude\")+ ylab(\"Latitude\")\n>>>  p1\n>>> \n>>> # now, if I want to add this plot to another ggplot resulting from a\n>>> pipeline command, how can I do it?\n>>> dat <- data.frame(lat=c(40.3,38.4,39),\n>>>            lon = c(-10,-8,-9),\n>>>            fac = c(1,2,1))\n>>> \n>>> # pipeline ggplot\n>>> dat %>%\n>>>   filter(fac==1) %>%\n>>>   ggplot()+\n>>>   geom_point(aes(x=lon, y=lat))\n>>> \n>> \n>> This will do it. Enclosing the pipe expression in { } lets you put the\n>> piped-in variable where you need it using '.'.\n>> \n>> dat %>%\n>>   filter(fac==1) %>%\n>>   { p1 +\n>>     geom_point(data=., aes(x=lon, y=lat))\n>>   }\n>> \n>> Kent Johnson\n>> Cambridge, MA\n>> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Use \".\", not \".data\" and \"lat\" not \"y\" :\n\nlibrary(tidyverse)\n\np1 <- ggplot() +\n   borders(\"world\",\n           fill = \"antiquewhite1\",\n           colour = \"antiquewhite4\") +\n   coord_fixed(ylim = c(36.",
+      "thread_id": "thread-576167b26ca5",
+      "thread_depth": 2,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-fcc6bc0b2f00",
+      "message_id": "<CAAgsrZh6AKdDUGD6zhqWrfbUGN38NXMYppOVeX7JsyaMyUOgzQ@mail.gmail.com>",
+      "from_name": "pierluigi de rosa",
+      "from_email_hash": "b1d5623b08de2356174c98a00c4485c75f14c8f065d8926d7dc59764049b5c90",
+      "date": "2021-02-07T11:43:06+01:00",
+      "subject": "[R-sig-Geo] rgdal and proj",
+      "subject_clean": "rgdal and proj",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\nI'm using R in my ubuntu machine.\nWhen I load the library rgdal i obtain:\nlibrary(rgdal)\nPath to PROJ.4 shared files: (autodetected)\nWARNING: no proj_defs.dat in PROJ.4 shared files\n Linking to sp version: 1.3-1\n\nBut when I try to read a geotif file R gives me an error.\nI saw several times this issue in the web but I was unable to solve my\nproblem.\nAnyone can help me please?\nThanks\n\nPierluigi\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nI'm using R in my ubuntu machine.\nWhen I load the library rgdal i obtain:\nlibrary(rgdal)\nPath to PROJ.4 shared files: (autodetected)\nWARNING: no proj_defs.dat in PROJ.4 shared files\n Linkin",
+      "thread_id": "thread-fcc6bc0b2f00",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-e6fbadae14bc",
+      "message_id": "<f6f1e0ed-301a-5a24-c348-1a9d3c246563@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2021-02-07T14:17:24+01:00",
+      "subject": "[R-sig-Geo] rgdal and proj",
+      "subject_clean": "rgdal and proj",
+      "in_reply_to": "<CAAgsrZh6AKdDUGD6zhqWrfbUGN38NXMYppOVeX7JsyaMyUOgzQ@mail.gmail.com>",
+      "references": [
+        "<CAAgsrZh6AKdDUGD6zhqWrfbUGN38NXMYppOVeX7JsyaMyUOgzQ@mail.gmail.com>"
+      ],
+      "body_plain": "On Sun, 7 Feb 2021, pierluigi de rosa wrote:\n\n> Dear all,\n>\n> I'm using R in my ubuntu machine.\n\nPlease, for sf/terra/rgdal etc. questions always report the versions of \nthe installed PROJ/GDAL/GEOS libraries (rgdal::rgdal_extSoftVersion()), \nand how you installed these external libraries. If you upgraded PROJ \nwithout re-installing rgdal (guess, for example), this may happen. From \nPROJ 6.0.0, this file is not used and not shipped with PROJ.\n\nSo I suggest uninstalling all of PROJ/GDAL/GEOS, reinstalling those, then \nremoving and installing R packages needing these external libraries.\n\nRoger\n\n> When I load the library rgdal i obtain:\n> library(rgdal)\n> Path to PROJ.4 shared files: (autodetected)\n> WARNING: no proj_defs.dat in PROJ.4 shared files\n> Linking to sp version: 1.3-1\n>\n> But when I try to read a geotif file R gives me an error.\n> I saw several times this issue in the web but I was unable to solve my\n> problem.\n> Anyone can help me please?\n> Thanks\n>\n> Pierluigi\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Sun, 7 Feb 2021, pierluigi de rosa wrote:\n\n> Dear all,\n>\n> I'm using R in my ubuntu machine.\n\nPlease, for sf/terra/rgdal etc. questions always report the versions of \nthe installed PROJ/GDAL/GEOS l",
+      "thread_id": "thread-fcc6bc0b2f00",
+      "thread_depth": 1,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-da7d6ee24a9c",
+      "message_id": "<CABkCotSpUBRG5svz9z6D4kN5yJr+Q76vfS0WRLARs6dLheHmvw@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2021-02-09T10:26:59-06:00",
+      "subject": "[R-sig-Geo] Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "subject_clean": "Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list members,\n\nI would like to know of any R package that can be used for modeling species\ndistribution with presence-only data using log-Gaussian Cox process.\n\nManuel\n\n-- \n*Manuel Sp?nola, Ph.D.*\nInstituto Internacional en Conservaci?n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.cr <mspinola at una.ac.cr>\nmspinola10 at gmail.com\nTel?fono: (506) 8706 - 4662\nPersonal website: Lobito de r?o <https://sites.google.com/site/lobitoderio/>\nInstitutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list members,\n\nI would like to know of any R package that can be used for modeling species\ndistribution with presence-only data using log-Gaussian Cox process.\n\nManuel\n\n-- \n*Manuel Sp?nola, Ph.D.",
+      "thread_id": "thread-da7d6ee24a9c",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-cbff4fde0b48",
+      "message_id": "<a7672c92-b28f-8eff-d27b-743c3b0de961@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2021-02-09T19:51:37+01:00",
+      "subject": "[R-sig-Geo]  Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "subject_clean": "Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "in_reply_to": "<CABkCotSpUBRG5svz9z6D4kN5yJr+Q76vfS0WRLARs6dLheHmvw@mail.gmail.com>",
+      "references": [
+        "<CABkCotSpUBRG5svz9z6D4kN5yJr+Q76vfS0WRLARs6dLheHmvw@mail.gmail.com>"
+      ],
+      "body_plain": "Have you tried package lgcp?\n\nOn 09/02/2021 17:26, Manuel Sp?nola wrote:\n> Dear list members,\n> \n> I would like to know of any R package that can be used for modeling species\n> distribution with presence-only data using log-Gaussian Cox process.\n> \n> Manuel\n>",
+      "body_snippet": "Have you tried package lgcp?\n\nOn 09/02/2021 17:26, Manuel Sp?nola wrote:\n> Dear list members,\n> \n> I would like to know of any R package that can be used for modeling species\n> distribution with prese",
+      "thread_id": "thread-da7d6ee24a9c",
+      "thread_depth": 1,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-d2725c2d29ec",
+      "message_id": "<CABkCotSBKrxhqkR4TjVhsuse-Gtg9820XUuRg2Neb0zSc9bzmw@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2021-02-09T13:09:08-06:00",
+      "subject": "[R-sig-Geo]  Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "subject_clean": "Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "in_reply_to": "<a7672c92-b28f-8eff-d27b-743c3b0de961@uni-muenster.de>",
+      "references": [
+        "<CABkCotSpUBRG5svz9z6D4kN5yJr+Q76vfS0WRLARs6dLheHmvw@mail.gmail.com>",
+        "<a7672c92-b28f-8eff-d27b-743c3b0de961@uni-muenster.de>"
+      ],
+      "body_plain": "Thank you very much Edzer.\n\nI tried to install lgcp, but I got an error message regarding BWidget.  I\nthink that Bwidget is an external software and I don't know how to install\nit in MacOS (Big Sur 11.2).\n\nManuel\n\nThis is the error that I get when trying to install lgcp in R 4.0.3:\n\nxcrun: error: invalid active developer path\n(/Library/Developer/CommandLineTools), missing xcrun at:\n/Library/Developer/CommandLineTools/usr/bin/xcrun\nWarning message:\nIn system2(\"/usr/bin/otool\", c(\"-L\", shQuote(DSO)), stdout = TRUE) :\n  running command ''/usr/bin/otool' -L\n'/Library/Frameworks/R.framework/Resources/library/tcltk/libs//tcltk.so''\nhad status 1\nError in structure(.External(.C_dotTcl, ...), class = \"tclObj\") :\n  [tcl] can't find package BWidget.\n\nError: unable to load R code in package ?rpanel?\nExecution halted\n\nEl mar, 9 feb 2021 a las 12:51, Edzer Pebesma (<\nedzer.pebesma at uni-muenster.de>) escribi?:\n\n> Have you tried package lgcp?\n>\n> On 09/02/2021 17:26, Manuel Sp?nola wrote:\n> > Dear list members,\n> >\n> > I would like to know of any R package that can be used for modeling\n> species\n> > distribution with presence-only data using log-Gaussian Cox process.\n> >\n> > Manuel\n> >\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \n*Manuel Sp?nola, Ph.D.*\nInstituto Internacional en Conservaci?n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.cr <mspinola at una.ac.cr>\nmspinola10 at gmail.com\nTel?fono: (506) 8706 - 4662\nPersonal website: Lobito de r?o <https://sites.google.com/site/lobitoderio/>\nInstitutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you very much Edzer.\n\nI tried to install lgcp, but I got an error message regarding BWidget.  I\nthink that Bwidget is an external software and I don't know how to install\nit in MacOS (Big Sur 11",
+      "thread_id": "thread-da7d6ee24a9c",
+      "thread_depth": 2,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-b9f81356e989",
+      "message_id": "<5bd590a6-b78e-1abd-ac49-a60c76f9100f@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2021-02-09T21:18:01+01:00",
+      "subject": "[R-sig-Geo]  Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "subject_clean": "Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "in_reply_to": "<CABkCotSBKrxhqkR4TjVhsuse-Gtg9820XUuRg2Neb0zSc9bzmw@mail.gmail.com>",
+      "references": [
+        "<CABkCotSpUBRG5svz9z6D4kN5yJr+Q76vfS0WRLARs6dLheHmvw@mail.gmail.com>",
+        "<a7672c92-b28f-8eff-d27b-743c3b0de961@uni-muenster.de>",
+        "<CABkCotSBKrxhqkR4TjVhsuse-Gtg9820XUuRg2Neb0zSc9bzmw@mail.gmail.com>"
+      ],
+      "body_plain": "A  way out of this may be to make a local copy of the lgcp sources, \nremove the rpanel dependency from DESCRIPTION, and install it from \nthere. You won't get the functions that need rpanel, but those might not \nbe essential.\n\nOn 09/02/2021 20:09, Manuel Sp?nola wrote:\n> Thank you very much Edzer.\n> \n> I tried to install lgcp, but I got an error message regarding BWidget.  \n> I think that Bwidget is an external software and I don't know how to \n> install it in MacOS (Big Sur 11.2).\n> \n> Manuel\n> \n> This is the error?that I get when trying to install lgcp in R 4.0.3:\n> \n> xcrun: error: invalid active developer path \n> (/Library/Developer/CommandLineTools), missing xcrun at: \n> /Library/Developer/CommandLineTools/usr/bin/xcrun\n> Warning message:\n> In system2(\"/usr/bin/otool\", c(\"-L\", shQuote(DSO)), stdout = TRUE) :\n>  ? running command ''/usr/bin/otool' -L \n> '/Library/Frameworks/R.framework/Resources/library/tcltk/libs//tcltk.so'' had \n> status 1\n> Error in structure(.External(.C_dotTcl, ...), class = \"tclObj\") :\n>  ? [tcl] can't find package BWidget.\n> \n> Error: unable to load R code in package ?rpanel?\n> Execution halted\n> \n> El mar, 9 feb 2021 a las 12:51, Edzer Pebesma \n> (<edzer.pebesma at uni-muenster.de <mailto:edzer.pebesma at uni-muenster.de>>) \n> escribi?:\n> \n>     Have you tried package lgcp?\n> \n>     On 09/02/2021 17:26, Manuel Sp?nola wrote:\n>      > Dear list members,\n>      >\n>      > I would like to know of any R package that can be used for\n>     modeling species\n>      > distribution with presence-only data using log-Gaussian Cox process.\n>      >\n>      > Manuel\n>      >\n> \n>     _______________________________________________\n>     R-sig-Geo mailing list\n>     R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>     https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n> \n> \n> -- \n> *Manuel Sp?nola, Ph.D.*\n> Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre\n> Universidad Nacional\n> Apartado 1350-3000\n> Heredia\n> COSTA RICA\n> mspinola at una.cr <mailto:mspinola at una.ac.cr>\n> mspinola10 at gmail.com <mailto:mspinola10 at gmail.com>\n> Tel?fono: (506) 8706 - 4662\n> Personal website: Lobito de r?o \n> <https://sites.google.com/site/lobitoderio/>\n> Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>",
+      "body_snippet": "A  way out of this may be to make a local copy of the lgcp sources, \nremove the rpanel dependency from DESCRIPTION, and install it from \nthere. You won't get the functions that need rpanel, but those ",
+      "thread_id": "thread-da7d6ee24a9c",
+      "thread_depth": 3,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-03a9726300a0",
+      "message_id": "<6023e1d2.1c69fb81.93a46.81ec@mx.google.com>",
+      "from_name": "Gafarou AGOUNDE",
+      "from_email_hash": "ada9eae38162074b85f3fba95141d74796554bcc82a541809da707be1d224668",
+      "date": "2021-02-10T14:38:26+01:00",
+      "subject": "[R-sig-Geo] Coordinates tolerance ERROR",
+      "subject_clean": "Coordinates tolerance ERROR",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\nI am facing this error when running this code bellow;\n\nsuggested tolerance minimum: 0.662921\nError in points2grid(points, tolerance, round) :\n  dimension 1: coordinate intervals are not constant\n\nWhat does this error mean and how to fix it?\nIn fact, the Locations.csv file contains just two columns respectively X and Y in decimal degrees (e.g. X=2.07656\tY=7.08511). \nThe error occurs when executing the last row.\n\nHere is the code:\nForMapping <- read.csv(\"Locations.csv\")\nstr(ForMapping)\nlength(PredictedAbundance) == length(ForMapping$X)\nForMapping$PredictedAbundance <- PredictedAbundance\ncoordinates(ForMapping) <- ~ X + Y\ngridded(ForMapping) <- TRUE\n\nYour help will be very appreciated..........!\n\nSent from Mail for Windows 10\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\nI am facing this error when running this code bellow;\n\nsuggested tolerance minimum: 0.662921\nError in points2grid(points, tolerance, round) :\n  dimension 1: coordinate intervals are not constant\n\n",
+      "thread_id": "thread-03a9726300a0",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-5da7c86658bd",
+      "message_id": "<a39892a9-a4b2-3229-d661-db7adc638db5@gmail.com>",
+      "from_name": "Bede-Fazekas Ákos",
+      "from_email_hash": "f2e2e122dfd4dbb8b8973b23d149555486ccb4290cb5f11779739fdbbcf5b93d",
+      "date": "2021-02-10T15:00:42+01:00",
+      "subject": "[R-sig-Geo] Coordinates tolerance ERROR",
+      "subject_clean": "Coordinates tolerance ERROR",
+      "in_reply_to": "<6023e1d2.1c69fb81.93a46.81ec@mx.google.com>",
+      "references": [
+        "<6023e1d2.1c69fb81.93a46.81ec@mx.google.com>"
+      ],
+      "body_plain": "Hello Gafarou,\n\n(as I answered your question previously in maxent at googlegroups.com...) \nthe error message means that the points stored in Locations.csv are not \nin a regular grid, i.e., the distances between them are not the same. \nAlthough you can increase the tolerance parameter to eliminate the error \nmessage, this error usually indicates a deeper problem with the data \nthat can not be solved (just hidden) by the increased tolerance. Maybe \nthe points form a regular grid in another projection, so before trying \nto cast your SpatialPointsDataFrame to SpatialGridDataFrame with \ngridded<-(), you should spTransform() it to the adequate CRS. Also you \nshould check whether the data.frame 'ForMapping' contains all the needed \nX-Y pairs. If the following gives you FALSE, it may indicate the problem:\nnrow(ForMapping) == length(unique(ForMapping$X)) * \nlength(unique(ForMapping$X))\nI would also give a chance to raster::rasterFromXYZ().\nPlease send us a reproducible example (e.g. the original Locations.csv) \nto let us reproduce the error and understand its reason.\n\nHTH,\n?kos Bede-Fazekas\n\n2021.02.10. 14:38 keltez?ssel, Gafarou AGOUNDE ?rta:\n> Hi,\n> I am facing this error when running this code bellow;\n>\n> suggested tolerance minimum: 0.662921\n> Error in points2grid(points, tolerance, round) :\n>    dimension 1: coordinate intervals are not constant\n>\n> What does this error mean and how to fix it?\n> In fact, the Locations.csv file contains just two columns respectively X and Y in decimal degrees (e.g. X=2.07656\tY=7.08511).\n> The error occurs when executing the last row.\n>\n> Here is the code:\n> ForMapping <- read.csv(\"Locations.csv\")\n> str(ForMapping)\n> length(PredictedAbundance) == length(ForMapping$X)\n> ForMapping$PredictedAbundance <- PredictedAbundance\n> coordinates(ForMapping) <- ~ X + Y\n> gridded(ForMapping) <- TRUE\n>\n> Your help will be very appreciated..........!\n>\n> Sent from Mail for Windows 10\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hello Gafarou,\n\n(as I answered your question previously in maxent at googlegroups.com...) \nthe error message means that the points stored in Locations.csv are not \nin a regular grid, i.e., the distanc",
+      "thread_id": "thread-03a9726300a0",
+      "thread_depth": 1,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-7ae00d9d5cbf",
+      "message_id": "<CANVKczMUCSG2789JhVg2Bw5s07DL_C2GW1iNtcHNQhTDsZ-_4g@mail.gmail.com>",
+      "from_name": "Barry Rowlingson",
+      "from_email_hash": "978d93eeccd73f54cd1080f2010d589bc57743b6aeffbe86b0c01e659efa8282",
+      "date": "2021-02-10T16:40:50Z",
+      "subject": "[R-sig-Geo]  Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "subject_clean": "Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "in_reply_to": "<5bd590a6-b78e-1abd-ac49-a60c76f9100f@uni-muenster.de>",
+      "references": [
+        "<CABkCotSpUBRG5svz9z6D4kN5yJr+Q76vfS0WRLARs6dLheHmvw@mail.gmail.com>",
+        "<a7672c92-b28f-8eff-d27b-743c3b0de961@uni-muenster.de>",
+        "<CABkCotSBKrxhqkR4TjVhsuse-Gtg9820XUuRg2Neb0zSc9bzmw@mail.gmail.com>",
+        "<5bd590a6-b78e-1abd-ac49-a60c76f9100f@uni-muenster.de>"
+      ],
+      "body_plain": "Before messing with lgcp I'd look at spatstat - lgcp is more intended for\nrelative risk calculations where you have \"cases\" and \"controls\", and also\nfor\nspace-time data.\n\nspatstat seems to have functions for fitting (and simulating) LGCPs to\npoint patterns so I think that might be what you are after...\n\nBarry\n\n\nOn Tue, Feb 9, 2021 at 8:18 PM Edzer Pebesma <edzer.pebesma at uni-muenster.de>\nwrote:\n\n> A  way out of this may be to make a local copy of the lgcp sources,\n> remove the rpanel dependency from DESCRIPTION, and install it from\n> there. You won't get the functions that need rpanel, but those might not\n> be essential.\n>\n> On 09/02/2021 20:09, Manuel Sp?nola wrote:\n> > Thank you very much Edzer.\n> >\n> > I tried to install lgcp, but I got an error message regarding BWidget.\n> > I think that Bwidget is an external software and I don't know how to\n> > install it in MacOS (Big Sur 11.2).\n> >\n> > Manuel\n> >\n> > This is the error that I get when trying to install lgcp in R 4.0.3:\n> >\n> > xcrun: error: invalid active developer path\n> > (/Library/Developer/CommandLineTools), missing xcrun at:\n> > /Library/Developer/CommandLineTools/usr/bin/xcrun\n> > Warning message:\n> > In system2(\"/usr/bin/otool\", c(\"-L\", shQuote(DSO)), stdout = TRUE) :\n> >    running command ''/usr/bin/otool' -L\n> >\n> '/Library/Frameworks/R.framework/Resources/library/tcltk/libs//tcltk.so''\n> had\n> > status 1\n> > Error in structure(.External(.C_dotTcl, ...), class = \"tclObj\") :\n> >    [tcl] can't find package BWidget.\n> >\n> > Error: unable to load R code in package ?rpanel?\n> > Execution halted\n> >\n> > El mar, 9 feb 2021 a las 12:51, Edzer Pebesma\n> > (<edzer.pebesma at uni-muenster.de <mailto:edzer.pebesma at uni-muenster.de>>)\n>\n> > escribi?:\n> >\n> >     Have you tried package lgcp?\n> >\n> >     On 09/02/2021 17:26, Manuel Sp?nola wrote:\n> >      > Dear list members,\n> >      >\n> >      > I would like to know of any R package that can be used for\n> >     modeling species\n> >      > distribution with presence-only data using log-Gaussian Cox\n> process.\n> >      >\n> >      > Manuel\n> >      >\n> >\n> >     _______________________________________________\n> >     R-sig-Geo mailing list\n> >     R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n> >     https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> >\n> >\n> > --\n> > *Manuel Sp?nola, Ph.D.*\n> > Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre\n> > Universidad Nacional\n> > Apartado 1350-3000\n> > Heredia\n> > COSTA RICA\n> > mspinola at una.cr <mailto:mspinola at una.ac.cr>\n> > mspinola10 at gmail.com <mailto:mspinola10 at gmail.com>\n> > Tel?fono: (506) 8706 - 4662\n> > Personal website: Lobito de r?o\n> > <https://sites.google.com/site/lobitoderio/>\n> > Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Before messing with lgcp I'd look at spatstat - lgcp is more intended for\nrelative risk calculations where you have \"cases\" and \"controls\", and also\nfor\nspace-time data.\n\nspatstat seems to have functi",
+      "thread_id": "thread-da7d6ee24a9c",
+      "thread_depth": 4,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-4bd87a459745",
+      "message_id": "<20210211091914.3d05e6f5@rolf-Latitude-E7470>",
+      "from_name": "Rolf Turner",
+      "from_email_hash": "85365426fbf4496cfac2415de7f8b411ee0133e9a8b2316f8939adcd30c2a157",
+      "date": "2021-02-11T09:19:14+13:00",
+      "subject": "[R-sig-Geo]  Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "subject_clean": "Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "in_reply_to": "<CANVKczMUCSG2789JhVg2Bw5s07DL_C2GW1iNtcHNQhTDsZ-_4g@mail.gmail.com>",
+      "references": [
+        "<CABkCotSpUBRG5svz9z6D4kN5yJr+Q76vfS0WRLARs6dLheHmvw@mail.gmail.com>",
+        "<a7672c92-b28f-8eff-d27b-743c3b0de961@uni-muenster.de>",
+        "<CABkCotSBKrxhqkR4TjVhsuse-Gtg9820XUuRg2Neb0zSc9bzmw@mail.gmail.com>",
+        "<5bd590a6-b78e-1abd-ac49-a60c76f9100f@uni-muenster.de>",
+        "<CANVKczMUCSG2789JhVg2Bw5s07DL_C2GW1iNtcHNQhTDsZ-_4g@mail.gmail.com>"
+      ],
+      "body_plain": "On Wed, 10 Feb 2021 16:40:50 +0000\nBarry Rowlingson <b.rowlingson at gmail.com> wrote:\n\n> Before messing with lgcp I'd look at spatstat - lgcp is more intended\n> for relative risk calculations where you have \"cases\" and \"controls\",\n> and also for\n> space-time data.\n> \n> spatstat seems to have functions for fitting (and simulating) LGCPs to\n> point patterns so I think that might be what you are after...\n\n\nSeems, Barry?  Nay, 'tis so! :-)\n\nThanks for pointing the OP at spatstat.\n\ncheers,\n\nRolf\n\n-- \nHonorary Research Fellow\nDepartment of Statistics\nUniversity of Auckland\nPhone: +64-9-373-7599 ext. 88276",
+      "body_snippet": "On Wed, 10 Feb 2021 16:40:50 +0000\nBarry Rowlingson <b.rowlingson at gmail.com> wrote:\n\n> Before messing with lgcp I'd look at spatstat - lgcp is more intended\n> for relative risk calculations where y",
+      "thread_id": "thread-da7d6ee24a9c",
+      "thread_depth": 5,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-5441b97305a0",
+      "message_id": "<MEAPR01MB2232FF41C7ACB0D6B2C7776FA48C9@MEAPR01MB2232.ausprd01.prod.outlook.com>",
+      "from_name": "Adrian Baddeley",
+      "from_email_hash": "85ec357ba14897ea1485b76adc52e1779ed73429f6a60f2f83ae052c1affd266",
+      "date": "2021-02-11T02:16:35Z",
+      "subject": "[R-sig-Geo] Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "subject_clean": "Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Manuel_Spinola <mspinola10 at gmail.com> writes:\n\n> I would like to know of any R package that can be used for modeling species\n> distribution with presence-only data using log-Gaussian Cox process.\n\nThe 'spatstat' package fits these models using the function 'kppm'\nExample:\n            fit <- kppm(X ~ terms, clusters=\"LGCP\")\nSee the help for function 'kppm'.\n\nIt is also extensively documented in Chapter 12 of the spatstat book (book.spatstat.org)\n\nAdrian Baddeley\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Manuel_Spinola <mspinola10 at gmail.com> writes:\n\n> I would like to know of any R package that can be used for modeling species\n> distribution with presence-only data using log-Gaussian Cox process.\n\n",
+      "thread_id": "thread-5441b97305a0",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-f78cc047b716",
+      "message_id": "<xgzwnved2gy.fsf@hafogvatn.is>",
+      "from_name": "Julian M. Burgos",
+      "from_email_hash": "950ea9cca6e3b3adb7ff6eeb7af8648e91468eccbd26cb5e549d117d523ea9e5",
+      "date": "2021-02-11T15:54:37Z",
+      "subject": "[R-sig-Geo] Spatial joins between sf and stars objects",
+      "subject_clean": "Spatial joins between sf and stars objects",
+      "in_reply_to": "<fb4eb452-c7a8-7ff4-02d2-7c22fe3e2b89@uni-muenster.de>",
+      "references": [
+        "<xgzwnvp9lnx.fsf@hafogvatn.is>",
+        "<559d5a61-ee88-9541-0cb6-885aac79a13f@uni-muenster.de>",
+        "<xgzim79km2s.fsf@hafogvatn.is>",
+        "<xgzeehxklph.fsf@hafogvatn.is>",
+        "<fb4eb452-c7a8-7ff4-02d2-7c22fe3e2b89@uni-muenster.de>"
+      ],
+      "body_plain": "I get it.  Thank you for the explanation.\n\nEdzer Pebesma writes:\n\n> On 03/02/2021 20:14, Julian M. Burgos wrote:\n>> Although if I use bind_cols the result is not an sf object....\n>\n> right, this is because bind_cols is not a generic (its first argument\n> is ... , which you can't dispatch on) so doesn't have an associated sf\n> method.\n>\n> dplyr offers a mechanism to work around this by providing an sf method\n> for dplyr_reconstruct - something we could try, but then the dplyr\n> authors mention that this is experimental and considered a stop-gap\n> measure, so that might work now but stop working any time.\n>\n> However,\n>\n> sf3 <- cbind(st_extract(st1, sf1), st_drop_geometry(sf1))\n>\n> does return an sf object (note the changed order of arguments)\n>\n>> Julian M. Burgos writes:\n>>\n>>> Thanks Edzer, I should have checked if st_extract kept the order of the rows. In this case, a way to do it more generally is:\n>>>\n>>> sf1 <- bind_cols(st_drop_geometry(sf1),\n>>>                   st_extract(st1, sf1))\n>>>\n>>>\n>>>\n>>> Edzer Pebesma writes:\n>>>\n>>>> st_join does a spatial join, which comes at a cost; since st_extract\n>>>> doesn't change the row order of the sf object, you could as well use\n>>>>\n>>>> st_extract(st1, sf1) %>% mutate(nums = sf1$nums)\n>>>>\n>>>> On 03/02/2021 17:10, Julian M. Burgos wrote:\n>>>>> Dear list,\n>>>>>\n>>>>> What would be the best way to do a spatial join between a sf object (of POINT geometry) and a star object, so the sf object gets the values of the corresponding pixels in the star object?  I have done using a combination of st_join and st_extract, but it feels a bit clunky.  Is there a better way?\n>>>>>\n>>>>> Here is what I have done:\n>>>>>\n>>>>> ## --------------------------------------------------------------\n>>>>> ## Load a stars object\n>>>>> st1 <- read_stars(system.file(\"tif/L7_ETMs.tif\", package = \"stars\")) %>%\n>>>>>     slice(band, 1)\n>>>>>\n>>>>> ## Create an sf object\n>>>>>\n>>>>> set.seed(100)\n>>>>> bb <- st_bbox(st1)\n>>>>>\n>>>>> sf1 <- tibble(lon = runif(n = 10, min = bb[1], max = bb[3]),\n>>>>>                 lat = runif(n = 10, min = bb[2], max = bb[4]),\n>>>>>                 nums = 1:10) %>%\n>>>>>     st_as_sf(coords = c(\"lon\", \"lat\"), crs = st_crs(st1))\n>>>>>\n>>>>> ## Do the spatial join\n>>>>>\n>>>>> sf1 <- st_extract(st1, sf1) %>%\n>>>>>       st_join(sf1)\n>>>>> ## --------------------------------------------------------------\n>>>>>\n>>>>> Thanks,\n>>>>>\n>>>>> Julian\n>>>>>\n>>>>> --\n>>>>> Julian Mariano Burgos, PhD\n>>>>> Hafranns?knastofnun, ranns?kna- og r??gjafarstofnun hafs og vatna/\n>>>>> Marine and Freshwater Research Institute\n>>>>> Botnsj?varsvi?s / Demersal Division\n>>>>>     Fornub??ir 5, IS-220 Hafnarfj?r?ur, Iceland\n>>>>> http://www.hafogvatn.is/\n>>>>> S?mi/Telephone : +354-5752037\n>>>>> Netfang/Email: julian.burgos at hafogvatn.is\n>>>>>\n>>>>> _______________________________________________\n>>>>> R-sig-Geo mailing list\n>>>>> R-sig-Geo at r-project.org\n>>>>> https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=04%7C01%7C%7C3c716a56362547fd736b08d8c8f98e1e%7C8e105b94435e4303a61063620dbe162b%7C0%7C0%7C637480321457517463%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=j7fW5XZ7xsRpbhbcCobcfFdy%2BvZpmnL7OVoA%2FnQoihg%3D&amp;reserved=0\n>>>>>\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org\n>>>> https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=04%7C01%7C%7C3c716a56362547fd736b08d8c8f98e1e%7C8e105b94435e4303a61063620dbe162b%7C0%7C0%7C637480321457517463%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=j7fW5XZ7xsRpbhbcCobcfFdy%2BvZpmnL7OVoA%2FnQoihg%3D&amp;reserved=0\n>>\n>> --\n>> Julian Mariano Burgos, PhD\n>> Hafranns?knastofnun, ranns?kna- og r??gjafarstofnun hafs og vatna/\n>> Marine and Freshwater Research Institute\n>> Botnsj?varsvi?s / Demersal Division\n>>    Fornub??ir 5, IS-220 Hafnarfj?r?ur, Iceland\n>> http://www.hafogvatn.is/\n>> S?mi/Telephone : +354-5752037\n>> Netfang/Email: julian.burgos at hafogvatn.is\n>>\n\n\n--\nJulian Mariano Burgos, PhD\nHafranns?knastofnun, ranns?kna- og r??gjafarstofnun hafs og vatna/\nMarine and Freshwater Research Institute\nBotnsj?varsvi?s / Demersal Division\n  Fornub??ir 5, IS-220 Hafnarfj?r?ur, Iceland\nwww.hafogvatn.is\nS?mi/Telephone : +354-5752037\nNetfang/Email: julian.burgos at hafogvatn.is",
+      "body_snippet": "I get it.  Thank you for the explanation.\n\nEdzer Pebesma writes:\n\n> On 03/02/2021 20:14, Julian M. Burgos wrote:\n>> Although if I use bind_cols the result is not an sf object....\n>\n> right, this is be",
+      "thread_id": "thread-b71dcaa504a6",
+      "thread_depth": 5,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-4e0dac8bb530",
+      "message_id": "<CABkCotTwH-Exgx5-hf26XRE80nEoJFjDHbz94GiFBi7jQVgaVw@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2021-02-11T10:24:09-06:00",
+      "subject": "[R-sig-Geo]  Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "subject_clean": "Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "in_reply_to": "<5bd590a6-b78e-1abd-ac49-a60c76f9100f@uni-muenster.de>",
+      "references": [
+        "<CABkCotSpUBRG5svz9z6D4kN5yJr+Q76vfS0WRLARs6dLheHmvw@mail.gmail.com>",
+        "<a7672c92-b28f-8eff-d27b-743c3b0de961@uni-muenster.de>",
+        "<CABkCotSBKrxhqkR4TjVhsuse-Gtg9820XUuRg2Neb0zSc9bzmw@mail.gmail.com>",
+        "<5bd590a6-b78e-1abd-ac49-a60c76f9100f@uni-muenster.de>"
+      ],
+      "body_plain": "Thank you very much Edzer.\n\nManuel\n\nEl mar, 9 feb 2021 a las 14:18, Edzer Pebesma (<\nedzer.pebesma at uni-muenster.de>) escribi?:\n\n> A  way out of this may be to make a local copy of the lgcp sources,\n> remove the rpanel dependency from DESCRIPTION, and install it from\n> there. You won't get the functions that need rpanel, but those might not\n> be essential.\n>\n> On 09/02/2021 20:09, Manuel Sp?nola wrote:\n> > Thank you very much Edzer.\n> >\n> > I tried to install lgcp, but I got an error message regarding BWidget.\n> > I think that Bwidget is an external software and I don't know how to\n> > install it in MacOS (Big Sur 11.2).\n> >\n> > Manuel\n> >\n> > This is the error that I get when trying to install lgcp in R 4.0.3:\n> >\n> > xcrun: error: invalid active developer path\n> > (/Library/Developer/CommandLineTools), missing xcrun at:\n> > /Library/Developer/CommandLineTools/usr/bin/xcrun\n> > Warning message:\n> > In system2(\"/usr/bin/otool\", c(\"-L\", shQuote(DSO)), stdout = TRUE) :\n> >    running command ''/usr/bin/otool' -L\n> >\n> '/Library/Frameworks/R.framework/Resources/library/tcltk/libs//tcltk.so''\n> had\n> > status 1\n> > Error in structure(.External(.C_dotTcl, ...), class = \"tclObj\") :\n> >    [tcl] can't find package BWidget.\n> >\n> > Error: unable to load R code in package ?rpanel?\n> > Execution halted\n> >\n> > El mar, 9 feb 2021 a las 12:51, Edzer Pebesma\n> > (<edzer.pebesma at uni-muenster.de <mailto:edzer.pebesma at uni-muenster.de>>)\n>\n> > escribi?:\n> >\n> >     Have you tried package lgcp?\n> >\n> >     On 09/02/2021 17:26, Manuel Sp?nola wrote:\n> >      > Dear list members,\n> >      >\n> >      > I would like to know of any R package that can be used for\n> >     modeling species\n> >      > distribution with presence-only data using log-Gaussian Cox\n> process.\n> >      >\n> >      > Manuel\n> >      >\n> >\n> >     _______________________________________________\n> >     R-sig-Geo mailing list\n> >     R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n> >     https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> >\n> >\n> > --\n> > *Manuel Sp?nola, Ph.D.*\n> > Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre\n> > Universidad Nacional\n> > Apartado 1350-3000\n> > Heredia\n> > COSTA RICA\n> > mspinola at una.cr <mailto:mspinola at una.ac.cr>\n> > mspinola10 at gmail.com <mailto:mspinola10 at gmail.com>\n> > Tel?fono: (506) 8706 - 4662\n> > Personal website: Lobito de r?o\n> > <https://sites.google.com/site/lobitoderio/>\n> > Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n>\n\n\n-- \n*Manuel Sp?nola, Ph.D.*\nInstituto Internacional en Conservaci?n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.cr <mspinola at una.ac.cr>\nmspinola10 at gmail.com\nTel?fono: (506) 8706 - 4662\nPersonal website: Lobito de r?o <https://sites.google.com/site/lobitoderio/>\nInstitutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you very much Edzer.\n\nManuel\n\nEl mar, 9 feb 2021 a las 14:18, Edzer Pebesma (<\nedzer.pebesma at uni-muenster.de>) escribi?:\n\n> A  way out of this may be to make a local copy of the lgcp sources,",
+      "thread_id": "thread-da7d6ee24a9c",
+      "thread_depth": 4,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-b102dc672baf",
+      "message_id": "<CABkCotSmt2skXjbTvbg=bqHHs2ryT6-hZpka7KM+=kpTwSx6NA@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2021-02-11T10:24:44-06:00",
+      "subject": "[R-sig-Geo]  Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "subject_clean": "Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "in_reply_to": "<CANVKczMUCSG2789JhVg2Bw5s07DL_C2GW1iNtcHNQhTDsZ-_4g@mail.gmail.com>",
+      "references": [
+        "<CABkCotSpUBRG5svz9z6D4kN5yJr+Q76vfS0WRLARs6dLheHmvw@mail.gmail.com>",
+        "<a7672c92-b28f-8eff-d27b-743c3b0de961@uni-muenster.de>",
+        "<CABkCotSBKrxhqkR4TjVhsuse-Gtg9820XUuRg2Neb0zSc9bzmw@mail.gmail.com>",
+        "<5bd590a6-b78e-1abd-ac49-a60c76f9100f@uni-muenster.de>",
+        "<CANVKczMUCSG2789JhVg2Bw5s07DL_C2GW1iNtcHNQhTDsZ-_4g@mail.gmail.com>"
+      ],
+      "body_plain": "Thank you very much Barry, I will take a look at that.\n\nEl mi?, 10 feb 2021 a las 10:41, Barry Rowlingson (<b.rowlingson at gmail.com>)\nescribi?:\n\n> Before messing with lgcp I'd look at spatstat - lgcp is more intended for\n> relative risk calculations where you have \"cases\" and \"controls\", and also\n> for\n> space-time data.\n>\n> spatstat seems to have functions for fitting (and simulating) LGCPs to\n> point patterns so I think that might be what you are after...\n>\n> Barry\n>\n>\n> On Tue, Feb 9, 2021 at 8:18 PM Edzer Pebesma <\n> edzer.pebesma at uni-muenster.de> wrote:\n>\n>> A  way out of this may be to make a local copy of the lgcp sources,\n>> remove the rpanel dependency from DESCRIPTION, and install it from\n>> there. You won't get the functions that need rpanel, but those might not\n>> be essential.\n>>\n>> On 09/02/2021 20:09, Manuel Sp?nola wrote:\n>> > Thank you very much Edzer.\n>> >\n>> > I tried to install lgcp, but I got an error message regarding BWidget.\n>> > I think that Bwidget is an external software and I don't know how to\n>> > install it in MacOS (Big Sur 11.2).\n>> >\n>> > Manuel\n>> >\n>> > This is the error that I get when trying to install lgcp in R 4.0.3:\n>> >\n>> > xcrun: error: invalid active developer path\n>> > (/Library/Developer/CommandLineTools), missing xcrun at:\n>> > /Library/Developer/CommandLineTools/usr/bin/xcrun\n>> > Warning message:\n>> > In system2(\"/usr/bin/otool\", c(\"-L\", shQuote(DSO)), stdout = TRUE) :\n>> >    running command ''/usr/bin/otool' -L\n>> >\n>> '/Library/Frameworks/R.framework/Resources/library/tcltk/libs//tcltk.so''\n>> had\n>> > status 1\n>> > Error in structure(.External(.C_dotTcl, ...), class = \"tclObj\") :\n>> >    [tcl] can't find package BWidget.\n>> >\n>> > Error: unable to load R code in package ?rpanel?\n>> > Execution halted\n>> >\n>> > El mar, 9 feb 2021 a las 12:51, Edzer Pebesma\n>> > (<edzer.pebesma at uni-muenster.de <mailto:edzer.pebesma at uni-muenster.de>>)\n>>\n>> > escribi?:\n>> >\n>> >     Have you tried package lgcp?\n>> >\n>> >     On 09/02/2021 17:26, Manuel Sp?nola wrote:\n>> >      > Dear list members,\n>> >      >\n>> >      > I would like to know of any R package that can be used for\n>> >     modeling species\n>> >      > distribution with presence-only data using log-Gaussian Cox\n>> process.\n>> >      >\n>> >      > Manuel\n>> >      >\n>> >\n>> >     _______________________________________________\n>> >     R-sig-Geo mailing list\n>> >     R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>> >     https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> >\n>> >\n>> >\n>> > --\n>> > *Manuel Sp?nola, Ph.D.*\n>> > Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre\n>> > Universidad Nacional\n>> > Apartado 1350-3000\n>> > Heredia\n>> > COSTA RICA\n>> > mspinola at una.cr <mailto:mspinola at una.ac.cr>\n>> > mspinola10 at gmail.com <mailto:mspinola10 at gmail.com>\n>> > Tel?fono: (506) 8706 - 4662\n>> > Personal website: Lobito de r?o\n>> > <https://sites.google.com/site/lobitoderio/>\n>> > Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n-- \n*Manuel Sp?nola, Ph.D.*\nInstituto Internacional en Conservaci?n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.cr <mspinola at una.ac.cr>\nmspinola10 at gmail.com\nTel?fono: (506) 8706 - 4662\nPersonal website: Lobito de r?o <https://sites.google.com/site/lobitoderio/>\nInstitutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you very much Barry, I will take a look at that.\n\nEl mi?, 10 feb 2021 a las 10:41, Barry Rowlingson (<b.rowlingson at gmail.com>)\nescribi?:\n\n> Before messing with lgcp I'd look at spatstat - lgc",
+      "thread_id": "thread-da7d6ee24a9c",
+      "thread_depth": 5,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-317404de6f48",
+      "message_id": "<CABkCotRtAUv-rnWPAEhiAhdsarKN2UShBPnoJUM_g1G_sBjaCQ@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2021-02-11T10:25:52-06:00",
+      "subject": "[R-sig-Geo]  Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "subject_clean": "Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "in_reply_to": "<MEAPR01MB2232FF41C7ACB0D6B2C7776FA48C9@MEAPR01MB2232.ausprd01.prod.outlook.com>",
+      "references": [
+        "<MEAPR01MB2232FF41C7ACB0D6B2C7776FA48C9@MEAPR01MB2232.ausprd01.prod.outlook.com>"
+      ],
+      "body_plain": "Thank you Adrian,\n\nI will take a look at that function.\n\nManuel\n\nEl mi?, 10 feb 2021 a las 20:16, Adrian Baddeley (<\nadrian.baddeley at curtin.edu.au>) escribi?:\n\n> Manuel_Spinola <mspinola10 at gmail.com> writes:\n>\n> > I would like to know of any R package that can be used for modeling\n> species\n> > distribution with presence-only data using log-Gaussian Cox process.\n>\n> The 'spatstat' package fits these models using the function 'kppm'\n> Example:\n>             fit <- kppm(X ~ terms, clusters=\"LGCP\")\n> See the help for function 'kppm'.\n>\n> It is also extensively documented in Chapter 12 of the spatstat book (\n> book.spatstat.org)\n>\n> Adrian Baddeley\n>\n\n\n-- \n*Manuel Sp?nola, Ph.D.*\nInstituto Internacional en Conservaci?n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.cr <mspinola at una.ac.cr>\nmspinola10 at gmail.com\nTel?fono: (506) 8706 - 4662\nPersonal website: Lobito de r?o <https://sites.google.com/site/lobitoderio/>\nInstitutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you Adrian,\n\nI will take a look at that function.\n\nManuel\n\nEl mi?, 10 feb 2021 a las 20:16, Adrian Baddeley (<\nadrian.baddeley at curtin.edu.au>) escribi?:\n\n> Manuel_Spinola <mspinola10 at gmail",
+      "thread_id": "thread-5441b97305a0",
+      "thread_depth": 1,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-deecc815804a",
+      "message_id": "<CAJuCY5x9ysDcYX3HDd+Q-oxuFDUMWfG2nOqvtuod+52ZdJca5A@mail.gmail.com>",
+      "from_name": "Thierry Onkelinx",
+      "from_email_hash": "1183e720326bc91ec429d1a20d015e292579537392780a0fcfc24d392942c637",
+      "date": "2021-02-12T15:10:08+01:00",
+      "subject": "[R-sig-Geo] Importing layers from Google My Maps",
+      "subject_clean": "Importing layers from Google My Maps",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\nCan I import the layers from a Google My Maps based on it's link? I know I\ncan go to the link, export the layers as KML and import that in R using\nrgdal. But that is tedious when you have a lot of links.\n\nAny suggestions?\n\nBest regards,\n\nir. Thierry Onkelinx\nStatisticus / Statistician\n\nVlaamse Overheid / Government of Flanders\nINSTITUUT VOOR NATUUR- EN BOSONDERZOEK / RESEARCH INSTITUTE FOR NATURE AND\nFOREST\nTeam Biometrie & Kwaliteitszorg / Team Biometrics & Quality Assurance\nthierry.onkelinx at inbo.be\nHavenlaan 88 bus 73, 1000 Brussel\nwww.inbo.be\n\n///////////////////////////////////////////////////////////////////////////////////////////\nTo call in the statistician after the experiment is done may be no more\nthan asking him to perform a post-mortem examination: he may be able to say\nwhat the experiment died of. ~ Sir Ronald Aylmer Fisher\nThe plural of anecdote is not data. ~ Roger Brinner\nThe combination of some data and an aching desire for an answer does not\nensure that a reasonable answer can be extracted from a given body of data.\n~ John Tukey\n///////////////////////////////////////////////////////////////////////////////////////////\n\n<https://www.inbo.be>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nCan I import the layers from a Google My Maps based on it's link? I know I\ncan go to the link, export the layers as KML and import that in R using\nrgdal. But that is tedious when you have a",
+      "thread_id": "thread-deecc815804a",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-71692cc2740b",
+      "message_id": "<4f894f263d8c4f8cc28c088a868ddd37b1f3e083.camel@wu.ac.at>",
+      "from_name": "Mathias Moser",
+      "from_email_hash": "5a542cfb8e722718fba6f8fefe67e7e2790b4e3c898b5f8d901d618d7609c2dd",
+      "date": "2021-02-12T17:39:02+01:00",
+      "subject": "[R-sig-Geo] Importing layers from Google My Maps",
+      "subject_clean": "Importing layers from Google My Maps",
+      "in_reply_to": "<CAJuCY5x9ysDcYX3HDd+Q-oxuFDUMWfG2nOqvtuod+52ZdJca5A@mail.gmail.com>",
+      "references": [
+        "<CAJuCY5x9ysDcYX3HDd+Q-oxuFDUMWfG2nOqvtuod+52ZdJca5A@mail.gmail.com>"
+      ],
+      "body_plain": "If your maps have their sharing links active you can just use download.file() by\nadapting the sharing link like this:\n\nhttps://www.google.com/maps/d/kml?mid=__MAPID__\n\nIf your maps are not public this will require authentication first (e.g.,\nthrough RCurl:\nhttps://developers.google.com/gdata/articles/using_cURL#authenticating ).\n\nHTH, //m\n\nOn Fri, 2021-02-12 at 15:10 +0100, Thierry Onkelinx via R-sig-Geo wrote:\n> Dear all,\n> \n> Can I import the layers from a Google My Maps based on it's link? I know I\n> can go to the link, export the layers as KML and import that in R using\n> rgdal. But that is tedious when you have a lot of links.\n> \n> Any suggestions?\n> \n> Best regards,\n> \n> ir. Thierry Onkelinx\n> Statisticus / Statistician\n> \n> Vlaamse Overheid / Government of Flanders\n> INSTITUUT VOOR NATUUR- EN BOSONDERZOEK / RESEARCH INSTITUTE FOR NATURE AND\n> FOREST\n> Team Biometrie & Kwaliteitszorg / Team Biometrics & Quality Assurance\n> thierry.onkelinx at inbo.be\n> Havenlaan 88 bus 73, 1000 Brussel\n> www.inbo.be\n> \n> ////////////////////////////////////////////////////////////////////////////////\n> ///////////\n> To call in the statistician after the experiment is done may be no more\n> than asking him to perform a post-mortem examination: he may be able to say\n> what the experiment died of. ~ Sir Ronald Aylmer Fisher\n> The plural of anecdote is not data. ~ Roger Brinner\n> The combination of some data and an aching desire for an answer does not\n> ensure that a reasonable answer can be extracted from a given body of data.\n> ~ John Tukey\n> ////////////////////////////////////////////////////////////////////////////////\n> ///////////\n> \n> <https://www.inbo.be>\n> \n> ????????[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "If your maps have their sharing links active you can just use download.file() by\nadapting the sharing link like this:\n\nhttps://www.google.com/maps/d/kml?mid=__MAPID__\n\nIf your maps are not public this",
+      "thread_id": "thread-deecc815804a",
+      "thread_depth": 1,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-530419b9f7ab",
+      "message_id": "<CAC4+n+zScD+yw55CpZ318HFwqeZxfEVaX2=-Loke23=MRtpVZg@mail.gmail.com>",
+      "from_name": "Enoch Gyamfi Ampadu",
+      "from_email_hash": "210f6e9db65ead0081eec2ef665d82a7f42e3541c0e01829e619ee28185ff87f",
+      "date": "2021-02-14T10:19:35+02:00",
+      "subject": "[R-sig-Geo] Solid and dashed line.",
+      "subject_clean": "Solid and dashed line.",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list,\n\nPlease I need some assistance. I have been asked to produce a 1:1 line\n(dashed) and a line of best fit (solid) in a scatter plot. I have tried\ngeom_abline() but it gives only the solid line. I also tried lty(\"dashed\")\nto get the dashed line but it not working. I would be glad if I could get\nsome assistance on how to do it.\n\nBest regards,\n\nEnoch.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list,\n\nPlease I need some assistance. I have been asked to produce a 1:1 line\n(dashed) and a line of best fit (solid) in a scatter plot. I have tried\ngeom_abline() but it gives only the solid lin",
+      "thread_id": "thread-530419b9f7ab",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-374da4ab3b13",
+      "message_id": "<CAC8=1epsWZ11xNVg5tL_hRqXp16HH2m6qHMn0Nb70WoTmT8N3g@mail.gmail.com>",
+      "from_name": "Ashim Kapoor",
+      "from_email_hash": "af688d83be8d881779bf2f626ff0e8b263c7f1c3148568e58b90347898762730",
+      "date": "2021-02-14T14:04:53+05:30",
+      "subject": "[R-sig-Geo] Solid and dashed line.",
+      "subject_clean": "Solid and dashed line.",
+      "in_reply_to": "<CAC4+n+zScD+yw55CpZ318HFwqeZxfEVaX2=-Loke23=MRtpVZg@mail.gmail.com>",
+      "references": [
+        "<CAC4+n+zScD+yw55CpZ318HFwqeZxfEVaX2=-Loke23=MRtpVZg@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Enoch,\n\nWould this suffice for you ?\n\nlibrary(ggplot2)\n\nggplot(mtcars, aes(x=wt, y=mpg)) +\n  geom_point( color=\"black\")+\n  geom_smooth(method=lm, se=FALSE,\n              color=\"darkred\")\n\nggplot(mtcars, aes(x=wt, y=mpg)) +\n  geom_point( color=\"black\")+\n  geom_smooth(method=lm, se=FALSE, linetype=\"dashed\",\n              color=\"darkred\")\n\nNote : I got these examples from :\nhttp://www.sthda.com/english/wiki/ggplot2-scatter-plots-quick-start-guide-r-software-and-data-visualization\n\nBest Regards,\nAshim\n\n\n\n\nOn Sun, Feb 14, 2021 at 1:50 PM Enoch Gyamfi Ampadu <egampadu at gmail.com>\nwrote:\n\n> Dear list,\n>\n> Please I need some assistance. I have been asked to produce a 1:1 line\n> (dashed) and a line of best fit (solid) in a scatter plot. I have tried\n> geom_abline() but it gives only the solid line. I also tried lty(\"dashed\")\n> to get the dashed line but it not working. I would be glad if I could get\n> some assistance on how to do it.\n>\n> Best regards,\n>\n> Enoch.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Enoch,\n\nWould this suffice for you ?\n\nlibrary(ggplot2)\n\nggplot(mtcars, aes(x=wt, y=mpg)) +\n  geom_point( color=\"black\")+\n  geom_smooth(method=lm, se=FALSE,\n              color=\"darkred\")\n\nggplot(",
+      "thread_id": "thread-530419b9f7ab",
+      "thread_depth": 1,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-f3d411bf9f9a",
+      "message_id": "<CAC4+n+xX8aDsYQiAwEFtCx+euoG0nn8bh+bgjq_W7OBaEMc+jQ@mail.gmail.com>",
+      "from_name": "Enoch Gyamfi Ampadu",
+      "from_email_hash": "210f6e9db65ead0081eec2ef665d82a7f42e3541c0e01829e619ee28185ff87f",
+      "date": "2021-02-14T11:10:59+02:00",
+      "subject": "[R-sig-Geo] Solid and dashed line.",
+      "subject_clean": "Solid and dashed line.",
+      "in_reply_to": "<CAC8=1epsWZ11xNVg5tL_hRqXp16HH2m6qHMn0Nb70WoTmT8N3g@mail.gmail.com>",
+      "references": [
+        "<CAC4+n+zScD+yw55CpZ318HFwqeZxfEVaX2=-Loke23=MRtpVZg@mail.gmail.com>",
+        "<CAC8=1epsWZ11xNVg5tL_hRqXp16HH2m6qHMn0Nb70WoTmT8N3g@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Ashim,\n\nThank you for the response. I will try it out and let you know how it goes.\n\nBest regards,\n\nEnoch.\n\nOn Sun, 14 Feb 2021, 10:35 Ashim Kapoor, <ashimkapoor at gmail.com> wrote:\n\n> Dear Enoch,\n>\n> Would this suffice for you ?\n>\n> library(ggplot2)\n>\n> ggplot(mtcars, aes(x=wt, y=mpg)) +\n>   geom_point( color=\"black\")+\n>   geom_smooth(method=lm, se=FALSE,\n>               color=\"darkred\")\n>\n> ggplot(mtcars, aes(x=wt, y=mpg)) +\n>   geom_point( color=\"black\")+\n>   geom_smooth(method=lm, se=FALSE, linetype=\"dashed\",\n>               color=\"darkred\")\n>\n> Note : I got these examples from :\n> http://www.sthda.com/english/wiki/ggplot2-scatter-plots-quick-start-guide-r-software-and-data-visualization\n>\n> Best Regards,\n> Ashim\n>\n>\n>\n>\n> On Sun, Feb 14, 2021 at 1:50 PM Enoch Gyamfi Ampadu <egampadu at gmail.com>\n> wrote:\n>\n>> Dear list,\n>>\n>> Please I need some assistance. I have been asked to produce a 1:1 line\n>> (dashed) and a line of best fit (solid) in a scatter plot. I have tried\n>> geom_abline() but it gives only the solid line. I also tried lty(\"dashed\")\n>> to get the dashed line but it not working. I would be glad if I could get\n>> some assistance on how to do it.\n>>\n>> Best regards,\n>>\n>> Enoch.\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Ashim,\n\nThank you for the response. I will try it out and let you know how it goes.\n\nBest regards,\n\nEnoch.\n\nOn Sun, 14 Feb 2021, 10:35 Ashim Kapoor, <ashimkapoor at gmail.com> wrote:\n\n> Dear Enoc",
+      "thread_id": "thread-530419b9f7ab",
+      "thread_depth": 2,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-b539b99507c7",
+      "message_id": "<CAC4+n+zxKD8WNTTbX+phPj024z21fm8NEB6cyc_N-OkisQ=KHg@mail.gmail.com>",
+      "from_name": "Enoch Gyamfi Ampadu",
+      "from_email_hash": "210f6e9db65ead0081eec2ef665d82a7f42e3541c0e01829e619ee28185ff87f",
+      "date": "2021-02-15T16:11:12+02:00",
+      "subject": "[R-sig-Geo] RF tuning",
+      "subject_clean": "RF tuning",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear list,\n\nThank you for yesterday.\n\nPlease I am trying to tune Random Forest models with tuneRF. But I keep\ngetting the same value of mtry for different models. I would like to ask if\nthis is normal. I would be happy to have your advice on it.\n\nBest regards,\n\nEnoch\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list,\n\nThank you for yesterday.\n\nPlease I am trying to tune Random Forest models with tuneRF. But I keep\ngetting the same value of mtry for different models. I would like to ask if\nthis is normal",
+      "thread_id": "thread-b539b99507c7",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-293b324266bf",
+      "message_id": "<CAD2jFn8=TBMGqi4+0-M=ugwwqOqzBMubXyGU6o-iX3J6Bxip-w@mail.gmail.com>",
+      "from_name": "Pedro Perez",
+      "from_email_hash": "e122ee86241f6191e4b177162138ed35e83f5da4ea667fa7134f5ee1df2138be",
+      "date": "2021-02-16T08:14:51-03:00",
+      "subject": "[R-sig-Geo] A global autocorrelation statistic for categorical data?",
+      "subject_clean": "A global autocorrelation statistic for categorical data?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello everybody!\n\nSorry for the dumb question, I have very limited experience with regards to\nspatial autocorrelation. I have a lot of spatial points for which I\nmeasured both continuous and categorical variables. I need to calculate\n*global* measures of spatial autocorrelation for both kinds of variables. I\nknow that this task is relatively easy for continuous ones, here an example\nusing the package elsa:\n\nrm(list = ls())\nlibrary(raster)\nlibrary(elsa)\n\ndta <- data.frame(Lon = (runif(60)*100),\n                              Lat = (runif(60)*100),\n                              Cat = sample(LETTERS[1:5], 60, replace = T),\n                              Cont = (runif(60)*100))\ncoordinates(dta) <- ~Lon + Lat\n# Moran's I global index:\nmoran(dta[,2], d1=0, d2=2000)\n[1] -0.01694915 # The value varies given that seed was not set\n# Geary's c global index:\ngeary(dta[,2], d1=0, d2=2000)\n[1] 1\n\nThat is, I need something like the moran or geary commands in the previous\nexample, but applicable to categorical covariates. I have been googleing\nfor a while, but I have not been able to find a solution. Any idea?\n\n\nThanks in advance!\n\n\nPerep\nResponderReenviar\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello everybody!\n\nSorry for the dumb question, I have very limited experience with regards to\nspatial autocorrelation. I have a lot of spatial points for which I\nmeasured both continuous and categoric",
+      "thread_id": "thread-293b324266bf",
+      "thread_depth": 0,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-a1b6e05d5408",
+      "message_id": "<e1eb9117-b6e-caae-7ad6-11bbbe9628c0@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2021-02-16T15:01:56+01:00",
+      "subject": "[R-sig-Geo] A global autocorrelation statistic for categorical data?",
+      "subject_clean": "A global autocorrelation statistic for categorical data?",
+      "in_reply_to": "<CAD2jFn8=TBMGqi4+0-M=ugwwqOqzBMubXyGU6o-iX3J6Bxip-w@mail.gmail.com>",
+      "references": [
+        "<CAD2jFn8=TBMGqi4+0-M=ugwwqOqzBMubXyGU6o-iX3J6Bxip-w@mail.gmail.com>"
+      ],
+      "body_plain": "On Tue, 16 Feb 2021, Pedro Perez wrote:\n\n> Hello everybody!\n>\n> Sorry for the dumb question, I have very limited experience with regards to\n> spatial autocorrelation. I have a lot of spatial points for which I\n> measured both continuous and categorical variables. I need to calculate\n> *global* measures of spatial autocorrelation for both kinds of variables. I\n> know that this task is relatively easy for continuous ones, here an example\n> using the package elsa:\n>\n> rm(list = ls())\n> library(raster)\n> library(elsa)\n>\n> dta <- data.frame(Lon = (runif(60)*100),\n>                              Lat = (runif(60)*100),\n>                              Cat = sample(LETTERS[1:5], 60, replace = T),\n>                              Cont = (runif(60)*100))\n> coordinates(dta) <- ~Lon + Lat\n> # Moran's I global index:\n> moran(dta[,2], d1=0, d2=2000)\n> [1] -0.01694915 # The value varies given that seed was not set\n> # Geary's c global index:\n> geary(dta[,2], d1=0, d2=2000)\n> [1] 1\n\nset.seed(1)\ndta <- data.frame(Lon = (runif(60)*100),\n                               Lat = (runif(60)*100),\n                               Cat = sample(LETTERS[1:5], 60,\n                                            replace = TRUE),\n                               Cont = (runif(60)*100))\ncoordinates(dta) <- ~Lon + Lat\nlibrary(spdep)\nnb <- dnearneigh(dta, 0, 50) # 2000 was far too big, all neighbours of all\nmoran.test(dta$Cont, nb2listw(nb, style=\"B\"))$estimate[1]\nelsa::moran(dta[,2], d1=0, d2=50)\ngeary.test(dta$Cont, nb2listw(nb, style=\"B\"))$estimate[1]\nelsa::geary(dta[,2], d1=0, d2=50)\njoincount.multi(factor(dta$Cat), nb2listw(nb, style=\"B\"))[\"Jtot\",]\n\nJtot summarises all the k-colour matches.\n\nHope this clarifies,\n\nRoger\n\n>\n> That is, I need something like the moran or geary commands in the previous\n> example, but applicable to categorical covariates. I have been googleing\n> for a while, but I have not been able to find a solution. Any idea?\n>\n>\n> Thanks in advance!\n>\n>\n> Perep\n> ResponderReenviar\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Tue, 16 Feb 2021, Pedro Perez wrote:\n\n> Hello everybody!\n>\n> Sorry for the dumb question, I have very limited experience with regards to\n> spatial autocorrelation. I have a lot of spatial points fo",
+      "thread_id": "thread-293b324266bf",
+      "thread_depth": 1,
+      "month": "2021-02"
+    },
+    {
+      "id": "msg-0cb35c704dcf",
+      "message_id": "<CAH-s5PNESkouh2_Rr5uwsrYX5scC623oZM7eFpJC=du2hQUh8w@mail.gmail.com>",
+      "from_name": "Roozbeh Valavi",
+      "from_email_hash": "dafed620d5f6d0b40204f1ea7eedf38a79c1a9ed97edfb6a261f47ee5ae05b03",
+      "date": "2021-02-17T10:23:10+11:00",
+      "subject": "[R-sig-Geo] R-sig-Geo Digest, Vol 210, Issue 12",
+      "subject_clean": "R-sig-Geo Digest, Vol 210, Issue 12",
+      "in_reply_to": "<mailman.28580.5.1613473201.25674.r-sig-geo@r-project.org>",
+      "references": [
+        "<mailman.28580.5.1613473201.25674.r-sig-geo@r-project.org>"
+      ],
+      "body_plain": "Dear Enoch,\n\nCould you please provide more information e.g., code example, package\nyou're using etc.\n\nCheers,\n\nRoozbeh Valavi* | *PhD Candidate\nThe Quantitative & Applied Ecology Group <http://qaeco.com/>\nSchool of BioSciences, The University of Melbourne, VIC 3010, Australia\n*Mobile*: +61 423 283 238 | *Twitter*: @ValaviRoozbeh | *Researchgate\n<https://www.researchgate.net/profile/Roozbeh_Valavi>*\n\n\nOn Tue, Feb 16, 2021 at 10:02 PM <r-sig-geo-request at r-project.org> wrote:\n\n> Send R-sig-Geo mailing list submissions to\n>         r-sig-geo at r-project.org\n>\n> To subscribe or unsubscribe via the World Wide Web, visit\n>         https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> or, via email, send a message with subject or body 'help' to\n>         r-sig-geo-request at r-project.org\n>\n> You can reach the person managing the list at\n>         r-sig-geo-owner at r-project.org\n>\n> When replying, please edit your Subject line so it is more specific\n> than \"Re: Contents of R-sig-Geo digest...\"\n>\n>\n> Today's Topics:\n>\n>    1. RF tuning (Enoch Gyamfi Ampadu)\n>\n> ----------------------------------------------------------------------\n>\n> Message: 1\n> Date: Mon, 15 Feb 2021 16:11:12 +0200\n> From: Enoch Gyamfi Ampadu <egampadu at gmail.com>\n> To: Help R-Sig_Geo <r-sig-geo at r-project.org>\n> Subject: [R-sig-Geo] RF tuning\n> Message-ID:\n>         <CAC4+n+zxKD8WNTTbX+phPj024z21fm8NEB6cyc_N-OkisQ=\n> KHg at mail.gmail.com>\n> Content-Type: text/plain; charset=\"utf-8\"\n>\n> Dear list,\n>\n> Thank you for yesterday.\n>\n> Please I am trying to tune Random Forest models with tuneRF. But I keep\n> getting the same value of mtry for different models. I would like to ask if\n> this is normal. I would be happy to have your advice on it.\n>\n> Best regards,\n>\n> Enoch\n>\n>         [[alternative HTML version deleted]]\n>\n>\n>\n>\n> ------------------------------\n>\n> Subject: Digest Footer\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> ------------------------------\n>\n> End of R-sig-Geo Digest, Vol 210, Issue 12\n> ******************************************\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Enoch,\n\nCould you please provide more information e.g., code example, package\nyou're using etc.\n\nCheers,\n\nRoozbeh Valavi* | *PhD Candidate\nThe Quantitative & Applied Ecology Group <http://qaeco.c",
+      "thread_id": "thread-0cb35c704dcf",
+      "thread_depth": 0,
+      "month": "2021-02"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-b6896f078d12",
+      "subject": "Global layers at resolutions 100 m, 250 m, 1 km available as Cloud-Optimized GeoTIFFs",
+      "message_count": 1,
+      "participants": [
+        "Tomislav Hengl"
+      ],
+      "started": "2021-02-01T22:37:10+01:00",
+      "last_reply": "2021-02-01T22:37:10+01:00",
+      "root_message_id": "msg-b6896f078d12"
+    },
+    {
+      "id": "thread-007c774360d0",
+      "subject": "Using sf package to calculate line midpoints from Spatial Line data (both LINESTRING and MULTILINESTRING)",
+      "message_count": 3,
+      "participants": [
+        "@bo m@iii@g oii eirick@de",
+        "Julian Parnelle",
+        "Roger Bivand"
+      ],
+      "started": "2021-02-03T00:20:07+00:00",
+      "last_reply": "2021-02-03T16:19:31+01:00",
+      "root_message_id": "msg-007c774360d0"
+    },
+    {
+      "id": "thread-9518126752f9",
+      "subject": "Consolidate data",
+      "message_count": 3,
+      "participants": [
+        "Bede-Fazekas Ákos",
+        "Oulhaci Yasmine",
+        "Roger Bivand"
+      ],
+      "started": "2021-02-03T08:34:50+00:00",
+      "last_reply": "2021-02-03T10:21:24+01:00",
+      "root_message_id": "msg-9518126752f9"
+    },
+    {
+      "id": "thread-05dced7fd2b3",
+      "subject": "merge ggplots into one with pipeline commands",
+      "message_count": 1,
+      "participants": [
+        "Marta Rufino"
+      ],
+      "started": "2021-02-03T16:10:17+00:00",
+      "last_reply": "2021-02-03T16:10:17+00:00",
+      "root_message_id": "msg-05dced7fd2b3"
+    },
+    {
+      "id": "thread-b71dcaa504a6",
+      "subject": "Spatial joins between sf and stars objects",
+      "message_count": 6,
+      "participants": [
+        "Edzer Pebesma",
+        "Julian M. Burgos"
+      ],
+      "started": "2021-02-03T16:10:58+00:00",
+      "last_reply": "2021-02-11T15:54:37+00:00",
+      "root_message_id": "msg-b71dcaa504a6"
+    },
+    {
+      "id": "thread-0327f74acd55",
+      "subject": "question for LMC",
+      "message_count": 1,
+      "participants": [
+        "xi@ojichd m@iii@g oii outiook@com"
+      ],
+      "started": "2021-02-03T17:39:05-07:00",
+      "last_reply": "2021-02-03T17:39:05-07:00",
+      "root_message_id": "msg-0327f74acd55"
+    },
+    {
+      "id": "thread-a607555d0604",
+      "subject": "Help with spTimer or spTDyn to estimate the Bayesian Gaussian Process Model",
+      "message_count": 1,
+      "participants": [
+        "@iex_rugu m@iii@g oii y@hoo@com"
+      ],
+      "started": "2021-02-03T20:42:45+00:00",
+      "last_reply": "2021-02-03T20:42:45+00:00",
+      "root_message_id": "msg-a607555d0604"
+    },
+    {
+      "id": "thread-576167b26ca5",
+      "subject": "merge ggplots into one with pipeline commands",
+      "message_count": 3,
+      "participants": [
+        "DELORME Michael - DRAAF-AUVERGNE-RHONE-ALPES/SRISET/PEVAD",
+        "Kent Johnson",
+        "Marta Rufino"
+      ],
+      "started": "2021-02-04T14:43:38-05:00",
+      "last_reply": "2021-02-05T08:05:17+01:00",
+      "root_message_id": "msg-576167b26ca5"
+    },
+    {
+      "id": "thread-fcc6bc0b2f00",
+      "subject": "rgdal and proj",
+      "message_count": 2,
+      "participants": [
+        "Roger Bivand",
+        "pierluigi de rosa"
+      ],
+      "started": "2021-02-07T11:43:06+01:00",
+      "last_reply": "2021-02-07T14:17:24+01:00",
+      "root_message_id": "msg-fcc6bc0b2f00"
+    },
+    {
+      "id": "thread-da7d6ee24a9c",
+      "subject": "Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "message_count": 8,
+      "participants": [
+        "Barry Rowlingson",
+        "Edzer Pebesma",
+        "Manuel Spínola",
+        "Rolf Turner"
+      ],
+      "started": "2021-02-09T10:26:59-06:00",
+      "last_reply": "2021-02-11T10:24:44-06:00",
+      "root_message_id": "msg-da7d6ee24a9c"
+    },
+    {
+      "id": "thread-03a9726300a0",
+      "subject": "Coordinates tolerance ERROR",
+      "message_count": 2,
+      "participants": [
+        "Bede-Fazekas Ákos",
+        "Gafarou AGOUNDE"
+      ],
+      "started": "2021-02-10T14:38:26+01:00",
+      "last_reply": "2021-02-10T15:00:42+01:00",
+      "root_message_id": "msg-03a9726300a0"
+    },
+    {
+      "id": "thread-5441b97305a0",
+      "subject": "Species distribution modeling with presence-only data using log-Gaussian Cox process",
+      "message_count": 2,
+      "participants": [
+        "Adrian Baddeley",
+        "Manuel Spínola"
+      ],
+      "started": "2021-02-11T02:16:35+00:00",
+      "last_reply": "2021-02-11T10:25:52-06:00",
+      "root_message_id": "msg-5441b97305a0"
+    },
+    {
+      "id": "thread-deecc815804a",
+      "subject": "Importing layers from Google My Maps",
+      "message_count": 2,
+      "participants": [
+        "Mathias Moser",
+        "Thierry Onkelinx"
+      ],
+      "started": "2021-02-12T15:10:08+01:00",
+      "last_reply": "2021-02-12T17:39:02+01:00",
+      "root_message_id": "msg-deecc815804a"
+    },
+    {
+      "id": "thread-530419b9f7ab",
+      "subject": "Solid and dashed line.",
+      "message_count": 3,
+      "participants": [
+        "Ashim Kapoor",
+        "Enoch Gyamfi Ampadu"
+      ],
+      "started": "2021-02-14T10:19:35+02:00",
+      "last_reply": "2021-02-14T11:10:59+02:00",
+      "root_message_id": "msg-530419b9f7ab"
+    },
+    {
+      "id": "thread-b539b99507c7",
+      "subject": "RF tuning",
+      "message_count": 1,
+      "participants": [
+        "Enoch Gyamfi Ampadu"
+      ],
+      "started": "2021-02-15T16:11:12+02:00",
+      "last_reply": "2021-02-15T16:11:12+02:00",
+      "root_message_id": "msg-b539b99507c7"
+    },
+    {
+      "id": "thread-293b324266bf",
+      "subject": "A global autocorrelation statistic for categorical data?",
+      "message_count": 2,
+      "participants": [
+        "Pedro Perez",
+        "Roger Bivand"
+      ],
+      "started": "2021-02-16T08:14:51-03:00",
+      "last_reply": "2021-02-16T15:01:56+01:00",
+      "root_message_id": "msg-293b324266bf"
+    },
+    {
+      "id": "thread-0cb35c704dcf",
+      "subject": "R-sig-Geo Digest, Vol 210, Issue 12",
+      "message_count": 1,
+      "participants": [
+        "Roozbeh Valavi"
+      ],
+      "started": "2021-02-17T10:23:10+11:00",
+      "last_reply": "2021-02-17T10:23:10+11:00",
+      "root_message_id": "msg-0cb35c704dcf"
+    }
+  ]
+}

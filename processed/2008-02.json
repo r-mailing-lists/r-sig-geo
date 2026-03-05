@@ -1,0 +1,36 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2008-02",
+  "messages": [
+    {
+      "id": "msg-9f707c38040f",
+      "message_id": "<8e01f5830802291621q49950373u9d65a83e7c813154@mail.gmail.com>",
+      "from_name": "Jose Funes",
+      "from_email_hash": "2b3a65c00002f81154571e3618da5079ad9251fb90f994bb56315745158290be",
+      "date": "2008-02-29T19:21:33-05:00",
+      "subject": "[R-sig-Geo] kriging -- grass -- asciigrid",
+      "subject_clean": "kriging -- grass -- asciigrid",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear members,\n\nI have tried to export a kriging map to arcgis as asciigrid or image.\nI have used the functions write.asciigrid and writeRast6sp(grass), in\nboth cases any success; In the former when exporting it, I got the\nfollowing message \" Asciigrid does not support grids with non-square\ncells\". I checked for the krige map topology characteristics using the\nfollowing code:\ngetGridTopology(lidekri)\n\nApparently cell size looks fine: see below\n\n                         s1       s2\ncellcentre.offset -363565.9 175563.0\ncellsize               90.0     90.0\ncells.dim             804.0   1236.0\n\nFor the writeRast6sp function from \"spgrass6\" library\n\nwriteRast6sp(lidekri,\"lidekri\",zcol=\"var1.pred\",NODATA=-9999),\n\nI got the following message error\n\n \"Error in system(paste(paste(\"g.tempfile\", .addexe(), sep = \"\"),\n\"pid=\",  :  g.tempfilepid=421 not found\"\n\nI will greatly appreciate any suggestions to get around this technical problem.\n\nSincerely,\n\nJose Funes\n\n\n\n\n\n\n\n\n\nOn Fri, Feb 29, 2008 at 6:00 AM,  <r-sig-geo-request at stat.math.ethz.ch> wrote:\n> Send R-sig-Geo mailing list submissions to\n>         r-sig-geo at stat.math.ethz.ch\n>\n>  To subscribe or unsubscribe via the World Wide Web, visit\n>         https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>  or, via email, send a message with subject or body 'help' to\n>         r-sig-geo-request at stat.math.ethz.ch\n>\n>  You can reach the person managing the list at\n>         r-sig-geo-owner at stat.math.ethz.ch\n>\n>  When replying, please edit your Subject line so it is more specific\n>  than \"Re: Contents of R-sig-Geo digest...\"\n>\n>\n>  Today's Topics:\n>\n>    1. estimates for paths of travel given two time series,      drawn\n>       from two corresponding spatial densities (Galkowski, Jan)\n>    2. makeGrid(PBSmapping) (Markus Loecher)\n>    3. Choice of Spatial weights (stefan lhachimi)\n>\n>\n>  ----------------------------------------------------------------------\n>\n>  Message: 1\n>  Date: Thu, 28 Feb 2008 13:58:49 -0500\n>  From: \"Galkowski, Jan\" <jgalkows at akamai.com>\n>  Subject: [R-sig-Geo] estimates for paths of travel given two time\n>         series, drawn from two corresponding spatial densities\n>  To: <r-sig-geo at stat.math.ethz.ch>\n>  Message-ID:\n>         <76EB4827B2104D40AE7E43AA5D8582EA011A9D32 at MAVS1.kendall.corp.akamai.com>\n>\n>  Content-Type: text/plain\n>\n>  This is less an R question and more a request to the community for\n>  literature references and the like.\n>\n>  I'm interested in the following inferential question.  What's the max\n>  likelihood estimate for a path of travel of a point across a plane\n>  having stable, smooth densities of two separate variables given two time\n>  series of their values at the point as it moves?   Suppose all that's\n>  available is the ratio of the variables?\n>\n>  This is motivated by problems of inferring movement of biological\n>  specimens between nesting and migratory regions, or the problem of\n>  recovery of travel given the technique described here:\n>\n>     http://www.pnas.org/cgi/content/abstract/105/8/2788\n>\n>  Despite that, are there R packages which might help this?  I ask because\n>  I often find real gems buried within many R packages, gems which aren't\n>  obviously related to their primary subject.\n>\n>  Thanks much.\n>\n>         [[alternative HTML version deleted]]\n>\n>\n>\n>  ------------------------------\n>\n>  Message: 2\n>  Date: Thu, 28 Feb 2008 15:00:28 -0500\n>  From: Markus Loecher <loecher at eden.rutgers.edu>\n>  Subject: [R-sig-Geo] makeGrid(PBSmapping)\n>  To: r-sig-geo at stat.math.ethz.ch\n>  Message-ID: <20080228195805.F18A632408E at annwn13.rutgers.edu>\n>  Content-Type: text/plain; charset=\"us-ascii\"; format=flowed\n>\n>  Dear geo experts,\n>  I am clearly misunderstanding the role of the projection argument in\n>  the wonderful utility makeGrid(PBSmapping).\n>  I had hoped that by setting projection =\"LL\" the resulting grid would\n>  be equidistant in \"real\" space, and hence curvilinear in lat/lon space.\n>  But the following code yields the identical, regular grid,\n>  irrespective of the projection argument:\n>\n>         mypolys <- makeGrid(x= seq(-123,-122,length=10), y = seq(33, 34,\n>  length=10), byrow = FALSE, addSID = TRUE, projection = \"LL\")\n>         plotMap(mypolys)\n>         mypolys <- makeGrid(x= seq(-123,-122,length=10), y = seq(33, 34,\n>  length=10), byrow = FALSE, addSID = TRUE, projection = 1)\n>         plotMap(mypolys)\n>\n>  Is there an easy way to create a rectangular grid in lat/lon space ?\n>  Should I first translate the points to UTM coordinates ?\n>\n>  Thanks!\n>\n>  Markus\n>\n>\n>\n>  ------------------------------\n>\n>  Message: 3\n>  Date: Fri, 29 Feb 2008 11:36:18 +0100\n>  From: \"stefan lhachimi\" <stefan.duke at gmail.com>\n>  Subject: [R-sig-Geo] Choice of Spatial weights\n>  To: r-sig-geo at stat.math.ethz.ch\n>  Message-ID:\n>         <a211af3b0802290236m53a12cd1h806a3106f508fb54 at mail.gmail.com>\n>  Content-Type: text/plain; charset=ISO-8859-1\n>\n>  Dear all,\n>\n>  as a matter of curiosity does anybody know literature which discusses\n>  what spatial weight to choose (e.g. k-nn, single or double\n>  contiguity)? Or has anybod a good rule of thumb?\n>  I found an article which proposes to try several specification and\n>  take either the one with the highest lambda  or the one with the best\n>  overall model fit (in a regression). But I think that is statistically\n>  speaking that is not very satisfactory, in particular if the\n>  application does not give any indication what weight to use.\n>\n>  Any hints?\n>  Best,\n>  Stefan\n>\n>\n>\n>  ------------------------------\n>\n>  _______________________________________________\n>  R-sig-Geo mailing list\n>  R-sig-Geo at stat.math.ethz.ch\n>  https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>  End of R-sig-Geo Digest, Vol 54, Issue 27\n>  *****************************************\n>",
+      "body_snippet": "Dear members,\n\nI have tried to export a kriging map to arcgis as asciigrid or image.\nI have used the functions write.asciigrid and writeRast6sp(grass), in\nboth cases any success; In the former when ex",
+      "thread_id": "thread-9f707c38040f",
+      "thread_depth": 0,
+      "month": "2008-02"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-9f707c38040f",
+      "subject": "kriging -- grass -- asciigrid",
+      "message_count": 1,
+      "participants": [
+        "Jose Funes"
+      ],
+      "started": "2008-02-29T19:21:33-05:00",
+      "last_reply": "2008-02-29T19:21:33-05:00",
+      "root_message_id": "msg-9f707c38040f"
+    }
+  ]
+}

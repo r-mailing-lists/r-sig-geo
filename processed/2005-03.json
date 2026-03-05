@@ -1,0 +1,779 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2005-03",
+  "messages": [
+    {
+      "id": "msg-bd3d78c4cdec",
+      "message_id": "<NEBBIPHDAMMOKDKPOFFIKEHADBAA.abunn@whrc.org>",
+      "from_name": "abunn",
+      "from_email_hash": "6f9417c871d55572bb1393f13ea28441cbe599554127261ade40301525fa27da",
+      "date": "2005-03-02T08:54:18-05:00",
+      "subject": "[R-sig-Geo] Making GIS and R play nicely - some tips?",
+      "subject_clean": "Making GIS and R play nicely - some tips?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi R Spatial People:\n\nI am an experienced R user and an experienced GIS user - however, that GIS\nis Arc. In the past when I've worked with spatial data in R, I've done so by\nexporting the GIS data (always grids) from Arc as ASCII files. Then I read\nthem into R and go through some gymnastics to dump the no data values\n(-9999) while I do my analysis (say a regression tree) and then write the\nASCII back out and suck it into Arc for display. This lose coupling seems\ninelegant.\n\nI'm starting on a new project where I have a time series of about 250 grids\nthat are roughly 1000 by 1000. There is a response variable and up to six or\nso predictors. So, it's enough data that I feel it's time to learn how to do\nit right. Question is, what's right?\n\nIs the state of the art approach to use GRASS a la Bivand and Neteler's\npaper (http://agec144.agecon.uiuc.edu/csiss/Rgeo/)? Is it better to dump the\ngrids to an imagine file (or bil) and read them with rgdal? I work mostly in\nWindows (b/c of ESRI - damn them!) but switch gears onto Linux when the task\nrequires it. I have never used GRASS. Show me the way!\n\nThanks in advance, Andy",
+      "body_snippet": "Hi R Spatial People:\n\nI am an experienced R user and an experienced GIS user - however, that GIS\nis Arc. In the past when I've worked with spatial data in R, I've done so by\nexporting the GIS data (al",
+      "thread_id": "thread-bd3d78c4cdec",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-5e4d928424e7",
+      "message_id": "<Pine.LNX.4.44.0503021554030.25208-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-03-02T16:12:11+01:00",
+      "subject": "[R-sig-Geo] Making GIS and R play nicely - some tips?",
+      "subject_clean": "Making GIS and R play nicely - some tips?",
+      "in_reply_to": "<NEBBIPHDAMMOKDKPOFFIKEHADBAA.abunn@whrc.org>",
+      "references": [],
+      "body_plain": "On Wed, 2 Mar 2005, abunn wrote:\n\n> Hi R Spatial People:\n> \n> I am an experienced R user and an experienced GIS user - however, that GIS\n> is Arc. In the past when I've worked with spatial data in R, I've done so by\n> exporting the GIS data (always grids) from Arc as ASCII files. Then I read\n> them into R and go through some gymnastics to dump the no data values\n> (-9999) while I do my analysis (say a regression tree) and then write the\n> ASCII back out and suck it into Arc for display. This lose coupling seems\n> inelegant.\n> \n> I'm starting on a new project where I have a time series of about 250 grids\n> that are roughly 1000 by 1000. There is a response variable and up to six or\n> so predictors. So, it's enough data that I feel it's time to learn how to do\n> it right. Question is, what's right?\n> \n> Is the state of the art approach to use GRASS a la Bivand and Neteler's\n> paper (http://agec144.agecon.uiuc.edu/csiss/Rgeo/)? Is it better to dump the\n> grids to an imagine file (or bil) and read them with rgdal? I work mostly in\n> Windows (b/c of ESRI - damn them!) but switch gears onto Linux when the task\n> requires it. I have never used GRASS. Show me the way!\n> \n\nWell, there are plenty of possibilities. The first question (abstracting \nfrom the size of the data) is whether to go the way suggested in:\n\nhttp://www.gisvet.org/Documents/GisVet04/RegularPapers/Tait.pdf\n\nwhich leaves Arc in front, using R just as the compute engine, and passing \ndata through StatConnector. I don't think that the code used has been \npublished, but a very simple VBA example is at:\n\nhttp://perso.univ-lr.fr/csaintje/Recherche/RArcgis/index.html\n\nThat permits the Arc user to avoid knowing about R if you need later to \npackage the procedure for others to use. My guess is that this hasn't been \nchecked on ArcGIS 9 (I'll try to check soon).\n\nAnother is as you suggest to use the rgdal package to move the data into \nR, and once we get rgdal better checked for writing, back out too. That \nputs R in front of the loose-coupled data.\n\nA third is to use GRASS 5.4 and the R GRASS interface package, which reads \nand writes GRASS raster layers; GRASS can read from many formats and to \nmany formats, and can run (as can the interface) under cygwin. This runs \nR on top of GRASS, which can be accessed through system(). The state \nof the art is certainly M. Neteler, H. Mitasova, 2004. Open Source GIS: A \nGRASS GIS Approach. Second Edition. 424 pages, Kluwer Academic Publishers, \nBoston, Dordrecht, ISBN 1-4020-8064-6 (Also published as eBook, ISBN \n1-4020-8065-4), chapter 13. You might also enjoy: \n\nhttp://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/FurlanelloEtAl.pdf\n\nshowing GRASS, R and PostgreSQL working together.\n\nBut isn't the real challenge going to be shoehorning 250 by 1000 by 1000 \nby 8 into R at once - or are the data layers needed just one after the \nother? If I could grasp the workflow better, the advice above could become \nmore focussed, I think.\n\nBest wishes,\n\nRoger\n\n> Thanks in advance, Andy\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Wed, 2 Mar 2005, abunn wrote:\n\n> Hi R Spatial People:\n> \n> I am an experienced R user and an experienced GIS user - however, that GIS\n> is Arc. In the past when I've worked with spatial data in R, ",
+      "thread_id": "thread-bd3d78c4cdec",
+      "thread_depth": 1,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-56f218f073fa",
+      "message_id": "<NEBBIPHDAMMOKDKPOFFIKEHEDBAA.abunn@whrc.org>",
+      "from_name": "abunn",
+      "from_email_hash": "6f9417c871d55572bb1393f13ea28441cbe599554127261ade40301525fa27da",
+      "date": "2005-03-02T11:26:16-05:00",
+      "subject": "[R-sig-Geo] Making GIS and R play nicely - some tips?",
+      "subject_clean": "Making GIS and R play nicely - some tips?",
+      "in_reply_to": "<Pine.LNX.4.44.0503021554030.25208-100000@reclus.nhh.no>",
+      "references": [],
+      "body_plain": "Great. Thanks Roger and other others that replied.\n\n> But isn't the real challenge going to be shoehorning 250 by 1000 by 1000\n> by 8 into R at once - or are the data layers needed just one after the\n> other? If I could grasp the workflow better, the advice above could become\n> more focussed, I think.\n\nI'm not positive on the workflow yet! That's one of the problems. I'm\nfinding it tough to wrap my head around the data since it is in both time\nand space.\n\nThe data are not as huge as I thought at first. Each layer has 567 rows and\n409 columns (231903 elements) but 137113 are no data. So, that makes the\nactual amount of data to crunch much more manageable at 94790 elements per\nlayer.\n\nThe goal is to predict satellite reflectance as a function of climate. The\nresponse data are monthly satellite reflectance over 19 years (So, that's\n228 images). The predictor data are interpolated climate data and there\nshould be a minimum of three predictors and I'd like to use two more if they\nare reliable. So, assuming three predictors the data would only run to 500mb\nor so.\n\nR > object.size(rep(runif(94790), times = 19*12*3)) / 2^20\n[1] 494.6622\n\nAnd if I can get all five then I'd be under a gig still.\n\nR > object.size(rep(runif(94790), times = 19*12*5)) / 2^20\n[1] 824.437\n\nThat's cumbersome but possible.\n\nI've managed to read in a test example using erdas img files using rgdal\n(thanks Tim Keitt):\n\nR > library(rgdal)\nR > junk <- list()\nR > try1 <- GDAL.open(\"test.img\")\nR > getDriverLongName(getDriver(try1))\n[1] \"Erdas Imagine Images (.img)\"\nR > junk[[1]] <- c(getRasterData(try1))\nR > GDAL.close(try1)\nClosing GDAL dataset handle 00CACBF0...  destroyed ... done.\nR > try2 <- GDAL.open(\"test2.img\")\nR > getDriverLongName(getDriver(try2))\n[1] \"Erdas Imagine Images (.img)\"\nR > junk[[2]] <- c(getRasterData(try2))\nR > GDAL.close(try2)\nClosing GDAL dataset handle 00C7F180...  destroyed ... done.\nR > str(junk)\nList of 2\n $ : int [1:231903] 0 0 0 0 0 0 0 0 0 0 ...\n $ : int [1:231903] 0 0 0 0 0 0 0 0 0 0 ...\n\n\nSo, to read all this in I can pipe a script to Arc to convert the grids to\nimages and loop through all the data. Does that sound like a reasonable\nplan?\n\nThanks for all the help, Andy",
+      "body_snippet": "Great. Thanks Roger and other others that replied.\n\n> But isn't the real challenge going to be shoehorning 250 by 1000 by 1000\n> by 8 into R at once - or are the data layers needed just one after the\n",
+      "thread_id": "thread-bd3d78c4cdec",
+      "thread_depth": 2,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-b6d4c3abbbf3",
+      "message_id": "<Pine.LNX.4.44.0503021751110.25208-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-03-02T18:16:55+01:00",
+      "subject": "[R-sig-Geo] Making GIS and R play nicely - some tips?",
+      "subject_clean": "Making GIS and R play nicely - some tips?",
+      "in_reply_to": "<NEBBIPHDAMMOKDKPOFFIKEHEDBAA.abunn@whrc.org>",
+      "references": [],
+      "body_plain": "On Wed, 2 Mar 2005, abunn wrote:\n\n> Great. Thanks Roger and other others that replied.\n> \n> > But isn't the real challenge going to be shoehorning 250 by 1000 by 1000\n> > by 8 into R at once - or are the data layers needed just one after the\n> > other? If I could grasp the workflow better, the advice above could become\n> > more focussed, I think.\n> \n> I'm not positive on the workflow yet! That's one of the problems. I'm\n> finding it tough to wrap my head around the data since it is in both time\n> and space.\n> \n> The data are not as huge as I thought at first. Each layer has 567 rows and\n> 409 columns (231903 elements) but 137113 are no data. So, that makes the\n> actual amount of data to crunch much more manageable at 94790 elements per\n> layer.\n> \n> The goal is to predict satellite reflectance as a function of climate. The\n> response data are monthly satellite reflectance over 19 years (So, that's\n> 228 images). The predictor data are interpolated climate data and there\n> should be a minimum of three predictors and I'd like to use two more if they\n> are reliable. So, assuming three predictors the data would only run to 500mb\n> or so.\n> \n> R > object.size(rep(runif(94790), times = 19*12*3)) / 2^20\n> [1] 494.6622\n> \n> And if I can get all five then I'd be under a gig still.\n> \n> R > object.size(rep(runif(94790), times = 19*12*5)) / 2^20\n> [1] 824.437\n> \n> That's cumbersome but possible.\n> \n> I've managed to read in a test example using erdas img files using rgdal\n> (thanks Tim Keitt):\n> \n> R > library(rgdal)\n> R > junk <- list()\n> R > try1 <- GDAL.open(\"test.img\")\n> R > getDriverLongName(getDriver(try1))\n> [1] \"Erdas Imagine Images (.img)\"\n> R > junk[[1]] <- c(getRasterData(try1))\n> R > GDAL.close(try1)\n> Closing GDAL dataset handle 00CACBF0...  destroyed ... done.\n> R > try2 <- GDAL.open(\"test2.img\")\n> R > getDriverLongName(getDriver(try2))\n> [1] \"Erdas Imagine Images (.img)\"\n> R > junk[[2]] <- c(getRasterData(try2))\n> R > GDAL.close(try2)\n> Closing GDAL dataset handle 00C7F180...  destroyed ... done.\n> R > str(junk)\n> List of 2\n>  $ : int [1:231903] 0 0 0 0 0 0 0 0 0 0 ...\n>  $ : int [1:231903] 0 0 0 0 0 0 0 0 0 0 ...\n> \n> \n> So, to read all this in I can pipe a script to Arc to convert the grids to\n> images and loop through all the data. Does that sound like a reasonable\n> plan?\n\nWhat are the volumes going back?\n\nAnother itch to scratch is how much more you will get in terms of\nprecision in the coefficient point estimates by actually forcing all this\ndata down lm() or whatever's throat? Would it be possible to reduce the\nload by using subsetting in rgdal, given that you had the *.img and model\nbased files lined up (or just use locations for which you have observed\nclimate data)?  Won't the interpolation errors in the predictors feed\nthrough? I think the Furlanello et al. paper may be very helpful (they use\nrandomForest on regression trees of climate/topography drivers).\n\nInteresting problem.\n\nRoger\n\n> \n> Thanks for all the help, Andy\n> \n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Wed, 2 Mar 2005, abunn wrote:\n\n> Great. Thanks Roger and other others that replied.\n> \n> > But isn't the real challenge going to be shoehorning 250 by 1000 by 1000\n> > by 8 into R at once - or are ",
+      "thread_id": "thread-bd3d78c4cdec",
+      "thread_depth": 3,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-a852d34fc19b",
+      "message_id": "<1109785657.8155.14.camel@localhost>",
+      "from_name": "Timothy H. Keitt",
+      "from_email_hash": "2d8d5b8050425938214c3a77d47a2be0916edb7058260fe8211414af4058ae13",
+      "date": "2005-03-02T11:47:37-06:00",
+      "subject": "[R-sig-Geo] Making GIS and R play nicely - some tips?",
+      "subject_clean": "Making GIS and R play nicely - some tips?",
+      "in_reply_to": "<NEBBIPHDAMMOKDKPOFFIKEHEDBAA.abunn@whrc.org>",
+      "references": [
+        "<NEBBIPHDAMMOKDKPOFFIKEHEDBAA.abunn@whrc.org>"
+      ],
+      "body_plain": "Hi Andy,\n\nI've had pretty good luck reading large images line-by-line in rgdal.\nIts kind of slow, but not a bad as one might imagine. ArcGIS went down\nin flames trying to do any sort of processing on these files (10K x\n10K). A better solution I think though will be to write space-time\npoints into a postgis database (given lots of disk space) and use\nqueries to subset the data as needed. I've found the database approach\nincreadibly useful for working with BBS + climate data (~1e7 records).\n\nCiao,\nTHK\n\nOn Wed, 2005-03-02 at 11:26 -0500, abunn wrote:\n> Great. Thanks Roger and other others that replied.\n> \n> > But isn't the real challenge going to be shoehorning 250 by 1000 by 1000\n> > by 8 into R at once - or are the data layers needed just one after the\n> > other? If I could grasp the workflow better, the advice above could become\n> > more focussed, I think.\n> \n> I'm not positive on the workflow yet! That's one of the problems. I'm\n> finding it tough to wrap my head around the data since it is in both time\n> and space.\n> \n> The data are not as huge as I thought at first. Each layer has 567 rows and\n> 409 columns (231903 elements) but 137113 are no data. So, that makes the\n> actual amount of data to crunch much more manageable at 94790 elements per\n> layer.\n> \n> The goal is to predict satellite reflectance as a function of climate. The\n> response data are monthly satellite reflectance over 19 years (So, that's\n> 228 images). The predictor data are interpolated climate data and there\n> should be a minimum of three predictors and I'd like to use two more if they\n> are reliable. So, assuming three predictors the data would only run to 500mb\n> or so.\n> \n> R > object.size(rep(runif(94790), times = 19*12*3)) / 2^20\n> [1] 494.6622\n> \n> And if I can get all five then I'd be under a gig still.\n> \n> R > object.size(rep(runif(94790), times = 19*12*5)) / 2^20\n> [1] 824.437\n> \n> That's cumbersome but possible.\n> \n> I've managed to read in a test example using erdas img files using rgdal\n> (thanks Tim Keitt):\n> \n> R > library(rgdal)\n> R > junk <- list()\n> R > try1 <- GDAL.open(\"test.img\")\n> R > getDriverLongName(getDriver(try1))\n> [1] \"Erdas Imagine Images (.img)\"\n> R > junk[[1]] <- c(getRasterData(try1))\n> R > GDAL.close(try1)\n> Closing GDAL dataset handle 00CACBF0...  destroyed ... done.\n> R > try2 <- GDAL.open(\"test2.img\")\n> R > getDriverLongName(getDriver(try2))\n> [1] \"Erdas Imagine Images (.img)\"\n> R > junk[[2]] <- c(getRasterData(try2))\n> R > GDAL.close(try2)\n> Closing GDAL dataset handle 00C7F180...  destroyed ... done.\n> R > str(junk)\n> List of 2\n>  $ : int [1:231903] 0 0 0 0 0 0 0 0 0 0 ...\n>  $ : int [1:231903] 0 0 0 0 0 0 0 0 0 0 ...\n> \n> \n> So, to read all this in I can pipe a script to Arc to convert the grids to\n> images and loop through all the data. Does that sound like a reasonable\n> plan?\n> \n> Thanks for all the help, Andy\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hi Andy,\n\nI've had pretty good luck reading large images line-by-line in rgdal.\nIts kind of slow, but not a bad as one might imagine. ArcGIS went down\nin flames trying to do any sort of processing on ",
+      "thread_id": "thread-bd3d78c4cdec",
+      "thread_depth": 3,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-ceeba4a563be",
+      "message_id": "<NEBBIPHDAMMOKDKPOFFIIEHLDBAA.abunn@whrc.org>",
+      "from_name": "abunn",
+      "from_email_hash": "6f9417c871d55572bb1393f13ea28441cbe599554127261ade40301525fa27da",
+      "date": "2005-03-02T16:17:24-05:00",
+      "subject": "[R-sig-Geo] Making GIS and R play nicely - some tips?",
+      "subject_clean": "Making GIS and R play nicely - some tips?",
+      "in_reply_to": "<1109785657.8155.14.camel@localhost>",
+      "references": [],
+      "body_plain": "Hey Tim:\n\nI'm writing the database as we speak which will take awhile but will then be\ndone. It is going faster than I thought it would. I figured out how to call\narc from the prompt and pass it an aml and variables from R:\n\n        aml2pass <- paste('arc \"&r make.an.image.aml', which.var, year,\n                           formatC(month, width = 2, flag = 0), '\"', sep = \"\n\")\n        system(aml2pass)\n\nThis means that I can write temporary files from arc, process them and clean\nup without having a lot of loose ends. So, with that and rgdal, everything\nis smooth. I'll leave GRASS for another day (I've been saying that for about\nseven years now).\n\nThanks, A",
+      "body_snippet": "Hey Tim:\n\nI'm writing the database as we speak which will take awhile but will then be\ndone. It is going faster than I thought it would. I figured out how to call\narc from the prompt and pass it an am",
+      "thread_id": "thread-bd3d78c4cdec",
+      "thread_depth": 4,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-dfe5913d6601",
+      "message_id": "<6.0.0.22.1.20050303091534.01da1d68@postoffice.utas.edu.au>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "4d8db92248257cf58a15282ef4b057029dbd45ad2b2c007fbad56eff8864a080",
+      "date": "2005-03-03T09:25:39+11:00",
+      "subject": "[R-sig-Geo] Making GIS and R play nicely - some tips?",
+      "subject_clean": "Making GIS and R play nicely - some tips?",
+      "in_reply_to": "<NEBBIPHDAMMOKDKPOFFIKEHADBAA.abunn@whrc.org>",
+      "references": [
+        "<NEBBIPHDAMMOKDKPOFFIKEHADBAA.abunn@whrc.org>"
+      ],
+      "body_plain": ">\n>Is the state of the art approach to use GRASS a la Bivand and Neteler's\n>paper (http://agec144.agecon.uiuc.edu/csiss/Rgeo/)? Is it better to dump the\n>grids to an imagine file (or bil) and read them with rgdal? I work mostly in\n>Windows (b/c of ESRI - damn them!) but switch gears onto Linux when the task\n>requires it. I have never used GRASS. Show me the way!\n\nHello\n\nDisclaimer - I've never used GRASS, and I haven't used ESRI much.\n\nYou might consider using Manifold GIS:  http://www.manifold.net/\n\nMuch more Windows (and user) friendly IMO, and has many options for input \nand output for most formats, as well as generic text and binary.    (Give \nit a few years and Manifold will have taken over much of the GIS market.)\n\nYou could output your grids to binary files (or ASCII), and with some \nmodification of my simple script write the projection metadata to XML - \nthen script-import these to Manifold.  This scripting could be done all \nwithin R if that was desirable using RDCOMClient\n\nI have some R routines that export with Manifold-friendly metadata in XML, \nvery rudimentary but might give you some ideas.\n\nPassing grid (matrix) data from R to Manifold:\nhttp://www.georeference.org/Forums/forums/thread-view.asp?tid=789&posts=9\n\nRunning R from Manifold:\nhttp://www.georeference.org/Forums/forums/thread-view.asp?tid=650&posts=8\n\nRunning Manifold from R:\nhttp://www.georeference.org/Forums/forums/thread-view.asp?tid=876&posts=9\n\nCheers, Mike.\n\n\n\n\n###############################################\n\nMichael Sumner - PhD. candidate\nMaths and Physics (ACE CRC & IASOS) and Zoology (AWRU)\nUniversity of Tasmania\nPrivate Bag 77, Hobart, Tas 7001, Australia\nPhone: (03) 6226 1752\n\nhttp://www.acecrc.org.au/",
+      "body_snippet": ">\n>Is the state of the art approach to use GRASS a la Bivand and Neteler's\n>paper (http://agec144.agecon.uiuc.edu/csiss/Rgeo/)? Is it better to dump the\n>grids to an imagine file (or bil) and read the",
+      "thread_id": "thread-bd3d78c4cdec",
+      "thread_depth": 1,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-bcd6ccc0babd",
+      "message_id": "<42287495.4060405@maths.lth.se>",
+      "from_name": "Anders Malmberg",
+      "from_email_hash": "a704947de87a58b505bdcecc6823a1c930622cb458295bb5a3341c7194031ba6",
+      "date": "2005-03-04T15:45:41+01:00",
+      "subject": "[R-sig-Geo] geoR",
+      "subject_clean": "geoR",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n\nA quick question on the likfit routine in the geoR package.\nIt is not possible to bound both tausq.rel and sigmasq. If both of them\nare unknown the optimization is carried out wrt tausq.rel\nand sigmasq is not considered in the optimization. Correct?\n\nbon weekend.\n\nbest regards,\nAnders Malmberg",
+      "body_snippet": "Hi,\n\nA quick question on the likfit routine in the geoR package.\nIt is not possible to bound both tausq.rel and sigmasq. If both of them\nare unknown the optimization is carried out wrt tausq.rel\nand s",
+      "thread_id": "thread-bcd6ccc0babd",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-dc29369f5229",
+      "message_id": "<4228A07D.2070109@daimi.au.dk>",
+      "from_name": "Ole F. Christensen",
+      "from_email_hash": "4c273939a93f0b0e4cb687381634c09b0ca552a05cad845077b958cedc6a6dbd",
+      "date": "2005-03-04T18:53:01+01:00",
+      "subject": "[R-sig-Geo] geoR",
+      "subject_clean": "geoR",
+      "in_reply_to": "<42287495.4060405@maths.lth.se>",
+      "references": [
+        "<42287495.4060405@maths.lth.se>"
+      ],
+      "body_plain": "Dear Anders\n\n* The maximum likelihood estimate of the partial sill parameter sigmasq \ncan be expressed explictly as function of the other covariance parameters.\nTherefore parameter estimate for sigmasq is NOT found by numerical \nmaximisation, and as consequence in likfit you cannot specify that that \nsigmasq should be within certain limits.\n\n* The parameter estimate for the relative nugget tausq.rel is found by \nnumerical maximisation. Therefore you can specify that this parameter \nshould be within certain limits.\n\nBest\n\nOle\n\nAnders Malmberg wrote:\n\n> Hi,\n>\n> A quick question on the likfit routine in the geoR package.\n> It is not possible to bound both tausq.rel and sigmasq. If both of them\n> are unknown the optimization is carried out wrt tausq.rel\n> and sigmasq is not considered in the optimization. Correct?\n>\n> bon weekend.\n>\n> best regards,\n> Anders Malmberg\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\n-- \nOle F. Christensen\nBiRC - Bioinformatics Research Center\nUniversity of Aarhus",
+      "body_snippet": "Dear Anders\n\n* The maximum likelihood estimate of the partial sill parameter sigmasq \ncan be expressed explictly as function of the other covariance parameters.\nTherefore parameter estimate for sigmas",
+      "thread_id": "thread-bcd6ccc0babd",
+      "thread_depth": 1,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-5efa0efbf2ea",
+      "message_id": "<AEF7C40954294D42990B3F90C6C73A45010164BA@figmail.fig.fk>",
+      "from_name": "Ruben Roa",
+      "from_email_hash": "54521b1a0eeaed1cb0e0e122be18a16d7f62db28732958fc417687d4d0cb5509",
+      "date": "2005-03-05T11:18:53-02:00",
+      "subject": "[R-sig-Geo] geoR",
+      "subject_clean": "geoR",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "-----Original Message-----\nFrom:\tr-sig-geo-bounces at stat.math.ethz.ch on behalf of Ole F. Christensen\nSent:\tFri 3/4/2005 3:53 PM\nTo:\tAnders Malmberg\nCc:\tR-sig-Geo at stat.math.ethz.ch\nSubject:\tRe: [R-sig-Geo] geoR\nDear Anders\n\n* The maximum likelihood estimate of the partial sill parameter sigmasq \ncan be expressed explictly as function of the other covariance parameters.\nTherefore parameter estimate for sigmasq is NOT found by numerical \nmaximisation, and as consequence in likfit you cannot specify that that \nsigmasq should be within certain limits.\n\n* The parameter estimate for the relative nugget tausq.rel is found by \nnumerical maximisation. Therefore you can specify that this parameter \nshould be within certain limits.\n\nBest\n\nOle\n\n----------------\nI understand that the range parameter phi is also a 'free parameter'. Am i correct?\n\nAnother quick question: i haven't been able to obtain the estimation variance of the phi parameter estimate as i do for the beta estimate with likfitobject$beta.var. What is the necessary command?\nCheers\n\nRuben\n\n[snip Anders Malmberg's original question]",
+      "body_snippet": "-----Original Message-----\nFrom:\tr-sig-geo-bounces at stat.math.ethz.ch on behalf of Ole F. Christensen\nSent:\tFri 3/4/2005 3:53 PM\nTo:\tAnders Malmberg\nCc:\tR-sig-Geo at stat.math.ethz.ch\nSubject:\tRe: [",
+      "thread_id": "thread-5efa0efbf2ea",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-900d0a468b6c",
+      "message_id": "<422BFEF8.6080508@daimi.au.dk>",
+      "from_name": "Ole F. Christensen",
+      "from_email_hash": "4c273939a93f0b0e4cb687381634c09b0ca552a05cad845077b958cedc6a6dbd",
+      "date": "2005-03-07T08:12:56+01:00",
+      "subject": "[R-sig-Geo] geoR",
+      "subject_clean": "geoR",
+      "in_reply_to": "<AEF7C40954294D42990B3F90C6C73A45010164BA@figmail.fig.fk>",
+      "references": [
+        "<AEF7C40954294D42990B3F90C6C73A45010164BA@figmail.fig.fk>"
+      ],
+      "body_plain": "Yes, the ``range parameter'' phi is a free parameter.\nCalculation of variance of the estimate for phi  is not implemented in \nfunction likfit.\nInstead you should use the proflik function to obtain the profile \nlikelihood for this parameter.\n\nOle\n\nRuben Roa wrote:\n\n>-----Original Message-----\n>From:\tr-sig-geo-bounces at stat.math.ethz.ch on behalf of Ole F. Christensen\n>Sent:\tFri 3/4/2005 3:53 PM\n>To:\tAnders Malmberg\n>Cc:\tR-sig-Geo at stat.math.ethz.ch\n>Subject:\tRe: [R-sig-Geo] geoR\n>Dear Anders\n>\n>* The maximum likelihood estimate of the partial sill parameter sigmasq \n>can be expressed explictly as function of the other covariance parameters.\n>Therefore parameter estimate for sigmasq is NOT found by numerical \n>maximisation, and as consequence in likfit you cannot specify that that \n>sigmasq should be within certain limits.\n>\n>* The parameter estimate for the relative nugget tausq.rel is found by \n>numerical maximisation. Therefore you can specify that this parameter \n>should be within certain limits.\n>\n>Best\n>\n>Ole\n>\n>----------------\n>I understand that the range parameter phi is also a 'free parameter'. Am i correct?\n>\n>Another quick question: i haven't been able to obtain the estimation variance of the phi parameter estimate as i do for the beta estimate with likfitobject$beta.var. What is the necessary command?\n>Cheers\n>\n>Ruben\n>\n>[snip Anders Malmberg's original question]\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>  \n>\n\n-- \nOle F. Christensen\nBiRC - Bioinformatics Research Center\nUniversity of Aarhus",
+      "body_snippet": "Yes, the ``range parameter'' phi is a free parameter.\nCalculation of variance of the estimate for phi  is not implemented in \nfunction likfit.\nInstead you should use the proflik function to obtain the",
+      "thread_id": "thread-5efa0efbf2ea",
+      "thread_depth": 1,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-7ae290e9c7e3",
+      "message_id": "<422C6E70.1010605@maths.lth.se>",
+      "from_name": "Anders Malmberg",
+      "from_email_hash": "a704947de87a58b505bdcecc6823a1c930622cb458295bb5a3341c7194031ba6",
+      "date": "2005-03-07T16:08:32+01:00",
+      "subject": "[R-sig-Geo] Limiting problems in geoR",
+      "subject_clean": "Limiting problems in geoR",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n\nThanks for the answer on my previous question. However, it leads me to new\nproblems.\n\nI am struggling to bound the relative tausq parameter to not be too high \nin my\nestimations. I do not want it to be above a certain limit that would \nviolate the\nmodel; it yields surfaces that are too ruff. First I want estimates from \nvariofit,\nbut this does not seem to work. Shouldn't this give a tausq^2/sigmasq^2 \nin (0,0.05)?\n\nlibrary(\"geoR\")\ndata(s100)\nvario100 <- variog(s100, max.dist=1)\nini.vals <- c(1,0.5)\nlimits <- pars.limits(phi=c(0,2),nugget.rel=c(0,0.05))\nols <- variofit(vario100, ini=ini.vals, fix.nug=FALSE,\n                limits=limits,wei=\"equal\")\nols$nugget/ols$cov.pars[1]\n\n\nThanks in advance,\n\nAnders Malmberg",
+      "body_snippet": "Hi,\n\nThanks for the answer on my previous question. However, it leads me to new\nproblems.\n\nI am struggling to bound the relative tausq parameter to not be too high \nin my\nestimations. I do not want it",
+      "thread_id": "thread-7ae290e9c7e3",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-ba8150454cba",
+      "message_id": "<s22ec97c.044@gwsmtp.DEC.STATE.NY.US>",
+      "from_name": "Tim Howard",
+      "from_email_hash": "c4a592cd1f334c64b028dc7ccf82fec65d9e56d526fe8ad6387e4dfb809d92fc",
+      "date": "2005-03-09T10:01:03-05:00",
+      "subject": "[R-sig-Geo] Sampling polygons for analysis in CART/randomForests",
+      "subject_clean": "Sampling polygons for analysis in CART/randomForests",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear R - Geo community:\n   This is perhaps a bit off topic (really a geostats question), but\nwe've been struggling with these questions for about 6 months now, and\nit just reared its head again when I posed a question on one of ESRI's\ndiscussion groups. I realized you would be much more experienced in this\nissue and might be interested in offering advice. And this might be\nsomething others are struggling with as well. \n   Background: We are creating predictive habitat distribution models\n(a good synthesis paper is Guisan and Zimmerman 2000. Ecological\nModelling 135:147-186); using known locations of species to create a\nmodel (and subsequent raster) that predicts the locations for additional\nsimilar habitats. Many different algorithms have been used for actually\ndoing the predictive modeling (e.g. logistic regression, Classification\nand regression trees [CART], ordination, maximum entropy), but in all\ncases the user needs a full coverage of all the environmental variables\nto be used and known locations for the element (species) being modeled.\nKnown locations must be attributed with values from all the\nenvironmental layers. We've been using two different different\nalgorithms, one parametric (MaxEnt - separate package) and one\nnon-parametric (the RandomForests implementation of CART). I'm using the\nR implementation of randomForest, but (embarrasingly) I'm currently\ndoing it by dumping the data to ascii and then reading the tables back\ninto R (by looping through them to keep the size manageable).  I saw the\nrecent post on this listserv\n(https://stat.ethz.ch/pipermail/r-sig-geo/2005-March/000338.html) that\nmentions Furlanello et al. (wow!) and someday we'll strive to integrate\nin a similar way. \n\nThis Furlanello paper is a good example of how we diverge and our\nresulting dilemma. Furlanello et al. (and most others, as far as I can\ntell, but please enlighten me if I'm wrong), begin with known POINT\nlocations. Point locations are easy to attribute with data from your\nenvironmental layers.   We have good-quality POLYGON data and we want to\nbe sure the environmental variability captured by the polygon is\nrepresented in the 'presence' environmental data we pass on for\nanalysis. How to best capture that full variability?  Note one of our\nalgorithms is parametric (MaxEnt) and one non-parametric\n(randomForest).. and I have no problem with deviating from traditional\nparametric sampling methodologies and leaving many formerly required\nparametric assumptions behind (or is that a big mistake?). We've thought\nlong and hard about random sampling, regular sampling, and grabbing all\nthe points. \n\nWe currently have about 36 environmental variables, we've resampled\nthem all to one size (30m). That meant bringing all the rasters derived\nfrom 10m DEM up to 30 meter and all the coarser rasters down to 30m. I'm\nbeing transparent about breaking the 'rules' here just so you know we\nare aware of the issues surrounding scale. Our rasters are pretty big\n(22578 rows x 17160 cols.... a single ascii is about 2GB).\n\nAgain, our goal is to, as fully as possible, represent the environment\nwithin each polygon. For random (or regular) sampling; if you do a\nconsistent number of samples for every polygon, small polygons are\noverweighted. If you sample on a per/area basis, larger polygons get\nmore 'weight'.  We settled on grabbing ALL the raster cells in each\npolygon and sticking a point in the center of each cell and attributing\nthese points.  This  obviously blew up with larger polygons (much to\nmany cells), and we realized we'd need to go back to subsampling.   I\nthought the best step would be to sample randomly without replacement so\nthat I'd get as full representation as possible (e.g. if a sample of 90\ncells/points are requested, return 90 different cells/points). One\nproblem that's been pointed out is that I'm treating rasters as discrete\ndata when most are really a representation of continuous data and\ninterpolating between cell centers is more appropriate. Unfortunately I\ndon't have an easy way of doing this, but I'm trying to look into it.\n\nMy questions: \n\nHas anyone ever used *all* the cells in a polygon representation when\nattributing data for later statistcal analyses?\n\nWould sampling without replacement be an appropriate approach for\nreturning as much within polygon variability as possible?  If so, how\nwould you do it?\n\nIf randomly sampling, has anyone sampled relatively more cells in\nsmaller polygons, and relatively fewer cells in larger polygons, so that\nyou reach an asymptote in number sampled per polygon?\n\nand related: If randomly sampling, do you tend to sample a static\nnumber of cells per polygon or a per-area number of cells. \n\n\nThank you for your time.\nTim Howard",
+      "body_snippet": "Dear R - Geo community:\n   This is perhaps a bit off topic (really a geostats question), but\nwe've been struggling with these questions for about 6 months now, and\nit just reared its head again when I",
+      "thread_id": "thread-ba8150454cba",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-df922fae22a5",
+      "message_id": "<s23692f7.091@gwsmtp.DEC.STATE.NY.US>",
+      "from_name": "Tim Howard",
+      "from_email_hash": "c4a592cd1f334c64b028dc7ccf82fec65d9e56d526fe8ad6387e4dfb809d92fc",
+      "date": "2005-03-15T07:46:46-05:00",
+      "subject": "[R-sig-Geo] Sampling polygons for analysis in CART/randomForests",
+      "subject_clean": "Sampling polygons for analysis in CART/randomForests",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "The lack of response indicates I was straying too far from the intent of\nthe list. I apologize for my momentary lack of judgement... it won't\nhappen again.\n\nSincerely,\nTim Howard\n\n****\nDear R - Geo community:\n   This is perhaps a bit off topic (really a geostats question), but\nwe've been struggling with these questions for about 6 months now, and\nit just reared its head again when I posed a question on one of ESRI's\ndiscussion groups. I realized you would be much more experienced in\nthis\nissue and might be interested in offering advice. And this might be\nsomething others are struggling with as well. \n   Background: We are creating predictive habitat distribution models\n(a good synthesis paper is Guisan and Zimmerman 2000. Ecological\nModelling 135:147-186); using known locations of species to create a\n\n<snip>",
+      "body_snippet": "The lack of response indicates I was straying too far from the intent of\nthe list. I apologize for my momentary lack of judgement... it won't\nhappen again.\n\nSincerely,\nTim Howard\n\n****\nDear R - Geo co",
+      "thread_id": "thread-df922fae22a5",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-1fbea8cd2841",
+      "message_id": "<5.2.1.1.1.20050322191005.03633388@mail.wsl.ch>",
+      "from_name": "Mario Gellrich",
+      "from_email_hash": "04f46510563440cde9e411d4014d3356977b7cb4b2700667cf8bcaffe6505e6d",
+      "date": "2005-03-22T19:17:50+01:00",
+      "subject": "[R-sig-Geo] exporting weiths matrix in .txt-file in spdep",
+      "subject_clean": "exporting weiths matrix in .txt-file in spdep",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n\nI have created a row-standardized spatial weigths matrix in spdep and \nwonder how it can be transformed to a simple .txt-file for export to other \nprograms or simply visualisation of the weights matrix in form of rows and \ncolumns. Does anybody have a clue how to write out a weights matrix in spdep?\n\nBest regards\n\nMario Gellrich\n--------------------------------------------------\nMario Gellrich\nSwiss Federal Research Institute WSL\nEconomics Section\nZ?rcherstrasse 111\nCH-8903 Birmensdorf\nTel:       ++41 (0)1 739 2520\nFax:       ++41 (0)1 739 22 15\ne-mail:    mario.gellrich at wsl.ch\nWeb: http://www.wsl.ch/phonebook/STAFF/2409.ehtml",
+      "body_snippet": "Hi,\n\nI have created a row-standardized spatial weigths matrix in spdep and \nwonder how it can be transformed to a simple .txt-file for export to other \nprograms or simply visualisation of the weights ",
+      "thread_id": "thread-1fbea8cd2841",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-6c15e7e6c787",
+      "message_id": "<Pine.LNX.4.44.0503222110030.24244-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-03-22T21:16:36+01:00",
+      "subject": "[R-sig-Geo] exporting weiths matrix in .txt-file in spdep",
+      "subject_clean": "exporting weiths matrix in .txt-file in spdep",
+      "in_reply_to": "<5.2.1.1.1.20050322191005.03633388@mail.wsl.ch>",
+      "references": [],
+      "body_plain": "On Tue, 22 Mar 2005, Mario Gellrich wrote:\n\n> Hi,\n> \n> I have created a row-standardized spatial weigths matrix in spdep and \n> wonder how it can be transformed to a simple .txt-file for export to other \n> programs or simply visualisation of the weights matrix in form of rows and \n> columns. Does anybody have a clue how to write out a weights matrix in spdep?\n\nFor example:\n\n> library(spdep)\n> data(columbus)\n> colnbMat <- nb2mat(col.gal.nb, style=\"B\")\n> str(colnbMat)\n num [1:49, 1:49] 0 1 1 0 0 0 0 0 0 0 ...\n - attr(*, \"dimnames\")=List of 2\n  ..$ : chr [1:49] \"1005\" \"1001\" \"1006\" \"1002\" ...\n  ..$ : NULL\n - attr(*, \"call\")= language nb2mat(neighbours = col.gal.nb, style = \"B\")\n> library(MASS)\n> mattmp <- tempfile()\n> write.matrix(colnbMat, file=mattmp)\n> system(paste(\"cat\", mattmp))\n0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n....\n\nFor visualisation, this is nice, and scales to largish n:\n\n> image(asMatrixCsrListw(nb2listw(col.gal.nb, style=\"B\")))\n\nRoger\n\n\n> \n> Best regards\n> \n> Mario Gellrich\n> --------------------------------------------------\n> Mario Gellrich\n> Swiss Federal Research Institute WSL\n> Economics Section\n> Z?rcherstrasse 111\n> CH-8903 Birmensdorf\n> Tel:       ++41 (0)1 739 2520\n> Fax:       ++41 (0)1 739 22 15\n> e-mail:    mario.gellrich at wsl.ch\n> Web: http://www.wsl.ch/phonebook/STAFF/2409.ehtml\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 22 Mar 2005, Mario Gellrich wrote:\n\n> Hi,\n> \n> I have created a row-standardized spatial weigths matrix in spdep and \n> wonder how it can be transformed to a simple .txt-file for export to oth",
+      "thread_id": "thread-1fbea8cd2841",
+      "thread_depth": 1,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-5702b30a9cdf",
+      "message_id": "<005201c52fe5$0cbf5850$4d8001db@webgis>",
+      "from_name": "Hisaji ONO",
+      "from_email_hash": "4857db17b7e848ab1379157d08a470dfc3f16a2fe4d02ed4b21725afd9ea2f9d",
+      "date": "2005-03-24T05:15:25+09:00",
+      "subject": "[R-sig-Geo] 2D kernel density estimation using Epanechnikov function on R",
+      "subject_clean": "2D kernel density estimation using Epanechnikov function on R",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello.\n\n Does anyone know whether any function for  2D kernel density estimation \nusing Epanechnikov function, which seemed to be used in ArcGIS's Spatial \nAnalyst, of R?\n\n\n Regards.",
+      "body_snippet": "Hello.\n\n Does anyone know whether any function for  2D kernel density estimation \nusing Epanechnikov function, which seemed to be used in ArcGIS's Spatial \nAnalyst, of R?\n\n\n Regards.",
+      "thread_id": "thread-5702b30a9cdf",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-db3677e047a0",
+      "message_id": "<1111610449.1111.13.camel@localhost>",
+      "from_name": "Tim Keitt",
+      "from_email_hash": "2d8d5b8050425938214c3a77d47a2be0916edb7058260fe8211414af4058ae13",
+      "date": "2005-03-23T14:40:49-06:00",
+      "subject": "[R-sig-Geo] 2D kernel density estimation using Epanechnikov function on R",
+      "subject_clean": "2D kernel density estimation using Epanechnikov function on R",
+      "in_reply_to": "<005201c52fe5$0cbf5850$4d8001db@webgis>",
+      "references": [
+        "<005201c52fe5$0cbf5850$4d8001db@webgis>"
+      ],
+      "body_plain": "If there is one, it would probably be in the 'fields' package.\n\nTHK\n\nOn Thu, 2005-03-24 at 05:15 +0900, Hisaji ONO wrote:\n> Hello.\n> \n>  Does anyone know whether any function for  2D kernel density estimation \n> using Epanechnikov function, which seemed to be used in ArcGIS's Spatial \n> Analyst, of R?\n> \n> \n>  Regards.\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "If there is one, it would probably be in the 'fields' package.\n\nTHK\n\nOn Thu, 2005-03-24 at 05:15 +0900, Hisaji ONO wrote:\n> Hello.\n> \n>  Does anyone know whether any function for  2D kernel density es",
+      "thread_id": "thread-5702b30a9cdf",
+      "thread_depth": 1,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-8c257860463d",
+      "message_id": "<424290B7.8000906@oomvanlieshout.net>",
+      "from_name": "Sander Oom",
+      "from_email_hash": "729af6fb2e066f5ad794be554a9ccb9799939b013f7817ef3a19031d2b0860d9",
+      "date": "2005-03-24T12:04:39+02:00",
+      "subject": "[R-sig-Geo] Using adehabitat and splancs to achieve point-in-polygon analysis on raster?",
+      "subject_clean": "Using adehabitat and splancs to achieve point-in-polygon analysis on raster?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear Clement and Roger,\n\nI send this email to you directly, because it concerns the link between \nAdehabitat and Splancs.\n\nI have two sources of polygons:\n- polygon shape files with areas of interest;\n- polygons calculated using the home range methods in Adehabitat.\nFor the moment, each polygon source will only contain a single polygon.\n\nI have one source of points: a grid representing NDVI values. I read the \ngrid using the import.asc function in Adehabitat.\n\nI would like to use both polygon sources to select the points in the \nNDVI raster which are inside the relevant polygons. Then I want to run \nseveral statistics (mean, standard deviation, etc) on the NDVI values of \nthese points.\n\nI intend to use the function inpip from Splancs, but it is not clear to \nme how I get the two polygon sources in the format used by Splancs.\n\nWould you be able to point me in the right direction?\n\nThanks in advance for your help,\n\nSander.\n\n\n-- \n--------------------------------------------\nDr. Sander P. Oom\nAnimal, Plant and Environmental Sciences,\nUniversity of the Witwatersrand\nPrivate Bag 3, Wits 2050, South Africa\nTel (work)      +27 (0)11 717 64 04\nTel (home)      +27 (0)18 297 44 51\nFax             +27 (0)18 299 24 64\nEmail   sander at oomvanlieshout.net\nWeb     www.oomvanlieshout.net/sander",
+      "body_snippet": "Dear Clement and Roger,\n\nI send this email to you directly, because it concerns the link between \nAdehabitat and Splancs.\n\nI have two sources of polygons:\n- polygon shape files with areas of interest;",
+      "thread_id": "thread-8c257860463d",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-1cb7246a0f26",
+      "message_id": "<424421B1.7030900@biomserv.univ-lyon1.fr>",
+      "from_name": "Clément Calenge",
+      "from_email_hash": "cad863fc3cc348c12d4485cc17b2c939d8f345c7b79293d7898ac714415857aa",
+      "date": "2005-03-25T15:35:29+01:00",
+      "subject": "[R-sig-Geo] Re: Using adehabitat and splancs to achieve point-in-polygon analysis on raster?",
+      "subject_clean": "Using adehabitat and splancs to achieve point-in-polygon analysis on raster?",
+      "in_reply_to": "<424290B7.8000906@oomvanlieshout.net>",
+      "references": [
+        "<424290B7.8000906@oomvanlieshout.net>"
+      ],
+      "body_plain": "Dear Sander,\n\nSorry for my late answer, I was in the field.\n\n> I send this email to you directly, because it concerns the link \n> between Adehabitat and Splancs.\n>\n> I have two sources of polygons:\n> - polygon shape files with areas of interest;\n> - polygons calculated using the home range methods in Adehabitat.\n> For the moment, each polygon source will only contain a single polygon.\n> I have one source of points: a grid representing NDVI values. I read \n> the grid using the import.asc function in Adehabitat.\n> I would like to use both polygon sources to select the points in the \n> NDVI raster which are inside the relevant polygons. Then I want to run \n> several statistics (mean, standard deviation, etc) on the NDVI values \n> of these points.\n\nThe solution depends on what you call \"polygon\". The function mcp.rast() \nis intended to \"rasterize\"\na polygon on a raster grid of class \"asc\" or \"kasc\". The polygon is here \nstored as a data frame with\ntwo columns (the X and Y coordinates of the polygon). The function \nhr.rast() can be used if you have\nan object of class \"area\", i.e. a data.frame with three columns (the X \nand Y coordinates of the polygon,\nand a third column defining the ID of the polygon).\n\nNow, it seems that  you work with more complex type of polygons, e.g. \nkernel estimations of home ranges\n(where each animal has an home range, and each home range can be made of \nseveral polygons). In such cases,\nthe \"Spatial join\" operation can be more complex. I detail below an \nexample of \"spatial join\" with a kernel\nestimation of wild boar home ranges. Note, that in this case, you do not \nhave to compute the contour of\nthe estimation. Just copy and paste the lines below on R:\n\n## loads and display the data\nlibrary(adehabitat)\ndata(puechabon)\n\n## keep only the elevation\nel<-getkasc(puechabon$kasc,1)\nimage(el)\n\n## estimate a kernel home-range\n kud<-kernelUD(puechabon$locs[,c(\"X\",\"Y\")], puechabon$locs$Name, grid=el)\n## kud contains a density\n## note that the grid containing the values of the elevation is used for \nthe estimation\n\nvud<-getvolumeUD(kud)\nimage(vud)\n## vud contains the limits of the home ranges estimated at different levels\n\ntoto<-lapply(vud, function(x) x$UD)\n## toto is the list of maps of Utilization Distribution\ntutu<-lapply(toto, function(x) {x[x<95]<-1; x[x>95]<-NA; return(x)})\n## tutu is a list of raster maps containing 1 if the pixel is inside\n## the 95% home range and NA otherwise\n\nfoo<-as.kasc(tutu)\nimage(foo)\n## foo is a kasc object\n\njj=lapply(foo, function(x) x*el)\nimage(jj)\n## jj contains the values of elevation inside the home range of the animals\n\nThe last method that is available for home-range estimation of animals \nhome ranges\nis the Nearest Neighbor Convex hull method of Getz and Wilmers (2004). \nThe function\nNNCH.rast() can be used to \"rasterize\" the home range estimation in the \nsame way, and then\nyou can multiply the resulting maps with your NDVI in the same way.\nHope this helps,\n\n\nCl?ment.\n\n-- \nCl?ment CALENGE\nLBBE - UMR CNRS 5558 - Universit? \nClaude Bernard Lyon 1 - FRANCE\ntel. (+33) 04.72.43.27.57\nfax. (+33) 04.72.43.13.88",
+      "body_snippet": "Dear Sander,\n\nSorry for my late answer, I was in the field.\n\n> I send this email to you directly, because it concerns the link \n> between Adehabitat and Splancs.\n>\n> I have two sources of polygons:\n> ",
+      "thread_id": "thread-8c257860463d",
+      "thread_depth": 1,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-7a142107197f",
+      "message_id": "<42443206.6050505@oomvanlieshout.net>",
+      "from_name": "Sander Oom",
+      "from_email_hash": "729af6fb2e066f5ad794be554a9ccb9799939b013f7817ef3a19031d2b0860d9",
+      "date": "2005-03-25T17:45:10+02:00",
+      "subject": "[R-sig-Geo] Re: Using adehabitat and splancs to achieve point-in-polygon analysis on raster?",
+      "subject_clean": "Using adehabitat and splancs to achieve point-in-polygon analysis on raster?",
+      "in_reply_to": "<424421B1.7030900@biomserv.univ-lyon1.fr>",
+      "references": [
+        "<424290B7.8000906@oomvanlieshout.net>",
+        "<424421B1.7030900@biomserv.univ-lyon1.fr>"
+      ],
+      "body_plain": "Hi Clement,\n\nHope you had a good time in the field! Is it spring in France?\n\nThanks for the very helpful reply! I will try it right now! I need to\npresent at a conference in early April and would like to get these\nresults before that!\n\nJust three quick questions before you go to enjoy the Easter weekend:\n\n- how do I get the values out of 'jj' (## jj contains the values of\nelevation inside the home range of the animals) to calculate mean,\nvariance, etc, across all the points in 'jj'? I assume 'jj' is of class\n'kasc'. In my case it might be 'asc' as I will have only a single home\nrange at the time (one animal).\n\n- can I get the points out of the 'kasc' object in a way that I can\nstill run spatial statistics on them? I would like to calculate the\nnugget and range for the NDVI values within the home range.\n\n- do you know how to convert a polygon shapefile into the same class as\nproduced by the command kernelUD? Alternatively I could import a raster\nversion of the polygon shape file, convert it to the correct format, and\nrepeat the spatial join method you are suggesting for the home ranges!\n\nThanks again,\n\nSander.\n\n\nCl?ment Calenge wrote:\n> Dear Sander,\n> \n> Sorry for my late answer, I was in the field.\n> \n>> I send this email to you directly, because it concerns the link \n>> between Adehabitat and Splancs.\n>>\n>> I have two sources of polygons:\n>> - polygon shape files with areas of interest;\n>> - polygons calculated using the home range methods in Adehabitat.\n>> For the moment, each polygon source will only contain a single polygon.\n>> I have one source of points: a grid representing NDVI values. I read \n>> the grid using the import.asc function in Adehabitat.\n>> I would like to use both polygon sources to select the points in the \n>> NDVI raster which are inside the relevant polygons. Then I want to run \n>> several statistics (mean, standard deviation, etc) on the NDVI values \n>> of these points.\n> \n> The solution depends on what you call \"polygon\". The function mcp.rast() \n> is intended to \"rasterize\"\n> a polygon on a raster grid of class \"asc\" or \"kasc\". The polygon is here \n> stored as a data frame with\n> two columns (the X and Y coordinates of the polygon). The function \n> hr.rast() can be used if you have\n> an object of class \"area\", i.e. a data.frame with three columns (the X \n> and Y coordinates of the polygon,\n> and a third column defining the ID of the polygon).\n> \n> Now, it seems that  you work with more complex type of polygons, e.g. \n> kernel estimations of home ranges\n> (where each animal has an home range, and each home range can be made of \n> several polygons). In such cases,\n> the \"Spatial join\" operation can be more complex. I detail below an \n> example of \"spatial join\" with a kernel\n> estimation of wild boar home ranges. Note, that in this case, you do not \n> have to compute the contour of\n> the estimation. Just copy and paste the lines below on R:\n> \n> ## loads and display the data\n> library(adehabitat)\n> data(puechabon)\n> \n> ## keep only the elevation\n> el<-getkasc(puechabon$kasc,1)\n> image(el)\n> \n> ## estimate a kernel home-range\n> kud<-kernelUD(puechabon$locs[,c(\"X\",\"Y\")], puechabon$locs$Name, grid=el)\n> ## kud contains a density\n> ## note that the grid containing the values of the elevation is used for \n> the estimation\n> \n> vud<-getvolumeUD(kud)\n> image(vud)\n> ## vud contains the limits of the home ranges estimated at different levels\n> \n> toto<-lapply(vud, function(x) x$UD)\n> ## toto is the list of maps of Utilization Distribution\n> tutu<-lapply(toto, function(x) {x[x<95]<-1; x[x>95]<-NA; return(x)})\n> ## tutu is a list of raster maps containing 1 if the pixel is inside\n> ## the 95% home range and NA otherwise\n> \n> foo<-as.kasc(tutu)\n> image(foo)\n> ## foo is a kasc object\n> \n> jj=lapply(foo, function(x) x*el)\n> image(jj)\n> ## jj contains the values of elevation inside the home range of the animals\n> \n> The last method that is available for home-range estimation of animals \n> home ranges\n> is the Nearest Neighbor Convex hull method of Getz and Wilmers (2004). \n> The function\n> NNCH.rast() can be used to \"rasterize\" the home range estimation in the \n> same way, and then\n> you can multiply the resulting maps with your NDVI in the same way.\n> Hope this helps,\n> \n> \n> Cl?ment.\n> \n\n-- \n--------------------------------------------\nDr. Sander P. Oom\nAnimal, Plant and Environmental Sciences,\nUniversity of the Witwatersrand\nPrivate Bag 3, Wits 2050, South Africa\nTel (work)      +27 (0)11 717 64 04\nTel (home)      +27 (0)18 297 44 51\nFax             +27 (0)18 299 24 64\nEmail   sander at oomvanlieshout.net\nWeb     www.oomvanlieshout.net/sander",
+      "body_snippet": "Hi Clement,\n\nHope you had a good time in the field! Is it spring in France?\n\nThanks for the very helpful reply! I will try it right now! I need to\npresent at a conference in early April and would like",
+      "thread_id": "thread-8c257860463d",
+      "thread_depth": 2,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-e5bb5c357106",
+      "message_id": "<42444675.7050408@biomserv.univ-lyon1.fr>",
+      "from_name": "Clément Calenge",
+      "from_email_hash": "cad863fc3cc348c12d4485cc17b2c939d8f345c7b79293d7898ac714415857aa",
+      "date": "2005-03-25T18:12:21+01:00",
+      "subject": "[R-sig-Geo] Re: Using adehabitat and splancs to achieve point-in-polygon analysis on raster?",
+      "subject_clean": "Using adehabitat and splancs to achieve point-in-polygon analysis on raster?",
+      "in_reply_to": "<42443206.6050505@oomvanlieshout.net>",
+      "references": [
+        "<424290B7.8000906@oomvanlieshout.net>",
+        "<424421B1.7030900@biomserv.univ-lyon1.fr>",
+        "<42443206.6050505@oomvanlieshout.net>"
+      ],
+      "body_plain": ">\n> Hope you had a good time in the field! Is it spring in France?\n\nYes, though a little cloudy. And it is certainly colder than in South \nAfrica!\n\n> Thanks for the very helpful reply! I will try it right now! I need to\n> present at a conference in early April and would like to get these\n> results before that!\n> Just three quick questions before you go to enjoy the Easter weekend:\n>\n> - how do I get the values out of 'jj' (## jj contains the values of\n> elevation inside the home range of the animals) to calculate mean,\n> variance, etc, across all the points in 'jj'? I assume 'jj' is of class\n> 'kasc'. In my case it might be 'asc' as I will have only a single home\n> range at the time (one animal).\n\nJust a small correction to my previous e-mail. If you creates jj with:\n\njj<-lapply(foo, function(x) x*el)\n\njj is not a map of class \"kasc\". To convert jj to the class \"kasc\", copy the\nattributes of the map \"foo\" to jj with getkascattr:\n\njj<-getkascattr(foo, jj)\nimage(jj)\n\nAnd now, jj is map of class \"kasc\", i.e. a data.frame with each column\ncorresponding to a map. All the pixels located inside the home ranges\nare coded by numeric values in the data frame, and pixels located outside\nthe home ranges are coded by NA. So you can get the pixels values with\nsomething like:\n\noo<-lapply(jj, function(x) x[!is.na(x)])\n\noo is a list with one component per animal. Each component corresponds to a\nvector of pixels inside the animals home range. It is quite easy after \nthat to get\nvalues such as average, mean, median, etc.:\n\nlapply(oo, summary)\nlapply(oo, mean)\nlapply(oo, sd)\netc.\n\n> - can I get the points out of the 'kasc' object in a way that I can\n> still run spatial statistics on them? I would like to calculate the\n> nugget and range for the NDVI values within the home range.\n\n\nI never performed such spatial statistics with home ranges but this\ncould certainly be done... IMHO, the best way to achieve is also to get\nthe coordinates of the kept pixels when computing the vector oo:\n\nxyc<-getXYcoords(jj)\n## xyc contains the coordinates of the pixels of the maps\n## it is a list with two components, the vectors of coordinates\n## of the pixels of the maps\n## compute the x values\nxc <- rep(xyc$x, times=length(xyc$y))\nyc <- rep(xyc$y, each=length(xyc$x))\nxyc<-data.frame(x=xc,y=yc)\n\nlixyc<-lapply(1:ncol(jj), function(x) xyc[!is.na(jj[,x]),])\n\n## So that each point in oo is associated to its coordinates\n## in lixyc\n## for example\nplot(lixyc[[1]], col=grey(oo[[1]]/300), pch=15, cex=4, asp=1)\nplot(lixyc[[2]], col=grey(oo[[2]]/300), pch=15, cex=4, asp=1)\nplot(lixyc[[3]], col=grey(oo[[3]]/300), pch=15, cex=4, asp=1)\n\nThen you have to compute a variogram. I never used functions\nallowing such analyses, but it seems that the package nlme has a function\nVariogram...\n\n> - do you know how to convert a polygon shapefile into the same class as\n> produced by the command kernelUD? Alternatively I could import a raster\n> version of the polygon shape file, convert it to the correct format, and\n> repeat the spatial join method you are suggesting for the home ranges!\n\nI'm sorry, I do not have any easy solution to this problem. The function \nkernelUD\nreturns a *raster* map of class \"asc\", a central class in adehabitat. I \ndon't know how\nto rasterize a shapefile in R (the library shapefiles or Maptools, which \ndeal with\nshapefiles do not allow such operations). Maybe the simpler way would be to\nrasterize the shapefile with a GIS...\nHope this helps,\n\n\nClem.\n\n>\n> Thanks again,\n>\n> Sander.\n>\n>\n> Cl?ment Calenge wrote:\n>\n>> Dear Sander,\n>>\n>> Sorry for my late answer, I was in the field.\n>>\n>>> I send this email to you directly, because it concerns the link \n>>> between Adehabitat and Splancs.\n>>>\n>>> I have two sources of polygons:\n>>> - polygon shape files with areas of interest;\n>>> - polygons calculated using the home range methods in Adehabitat.\n>>> For the moment, each polygon source will only contain a single polygon.\n>>> I have one source of points: a grid representing NDVI values. I read \n>>> the grid using the import.asc function in Adehabitat.\n>>> I would like to use both polygon sources to select the points in the \n>>> NDVI raster which are inside the relevant polygons. Then I want to \n>>> run several statistics (mean, standard deviation, etc) on the NDVI \n>>> values of these points.\n>>\n>>\n>> The solution depends on what you call \"polygon\". The function \n>> mcp.rast() is intended to \"rasterize\"\n>> a polygon on a raster grid of class \"asc\" or \"kasc\". The polygon is \n>> here stored as a data frame with\n>> two columns (the X and Y coordinates of the polygon). The function \n>> hr.rast() can be used if you have\n>> an object of class \"area\", i.e. a data.frame with three columns (the \n>> X and Y coordinates of the polygon,\n>> and a third column defining the ID of the polygon).\n>>\n>> Now, it seems that  you work with more complex type of polygons, e.g. \n>> kernel estimations of home ranges\n>> (where each animal has an home range, and each home range can be made \n>> of several polygons). In such cases,\n>> the \"Spatial join\" operation can be more complex. I detail below an \n>> example of \"spatial join\" with a kernel\n>> estimation of wild boar home ranges. Note, that in this case, you do \n>> not have to compute the contour of\n>> the estimation. Just copy and paste the lines below on R:\n>>\n>> ## loads and display the data\n>> library(adehabitat)\n>> data(puechabon)\n>>\n>> ## keep only the elevation\n>> el<-getkasc(puechabon$kasc,1)\n>> image(el)\n>>\n>> ## estimate a kernel home-range\n>> kud<-kernelUD(puechabon$locs[,c(\"X\",\"Y\")], puechabon$locs$Name, grid=el)\n>> ## kud contains a density\n>> ## note that the grid containing the values of the elevation is used \n>> for the estimation\n>>\n>> vud<-getvolumeUD(kud)\n>> image(vud)\n>> ## vud contains the limits of the home ranges estimated at different \n>> levels\n>>\n>> toto<-lapply(vud, function(x) x$UD)\n>> ## toto is the list of maps of Utilization Distribution\n>> tutu<-lapply(toto, function(x) {x[x<95]<-1; x[x>95]<-NA; return(x)})\n>> ## tutu is a list of raster maps containing 1 if the pixel is inside\n>> ## the 95% home range and NA otherwise\n>>\n>> foo<-as.kasc(tutu)\n>> image(foo)\n>> ## foo is a kasc object\n>>\n>> jj=lapply(foo, function(x) x*el)\n>> image(jj)\n>> ## jj contains the values of elevation inside the home range of the \n>> animals\n>>\n>> The last method that is available for home-range estimation of \n>> animals home ranges\n>> is the Nearest Neighbor Convex hull method of Getz and Wilmers \n>> (2004). The function\n>> NNCH.rast() can be used to \"rasterize\" the home range estimation in \n>> the same way, and then\n>> you can multiply the resulting maps with your NDVI in the same way.\n>> Hope this helps,\n>>\n>>\n>> Cl?ment.\n>>\n>\n\n\n-- \nCl?ment CALENGE\nLBBE - UMR CNRS 5558 - Universit? \nClaude Bernard Lyon 1 - FRANCE\ntel. (+33) 04.72.43.27.57\nfax. (+33) 04.72.43.13.88",
+      "body_snippet": ">\n> Hope you had a good time in the field! Is it spring in France?\n\nYes, though a little cloudy. And it is certainly colder than in South \nAfrica!\n\n> Thanks for the very helpful reply! I will try it r",
+      "thread_id": "thread-8c257860463d",
+      "thread_depth": 3,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-1d540ef5fd0a",
+      "message_id": "<Pine.LNX.4.44.0503252047520.26451-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-03-25T20:58:44+01:00",
+      "subject": "[R-sig-Geo] Re: Using adehabitat and splancs to achieve point-in-polygon analysis on raster?",
+      "subject_clean": "Using adehabitat and splancs to achieve point-in-polygon analysis on raster?",
+      "in_reply_to": "<42444675.7050408@biomserv.univ-lyon1.fr>",
+      "references": [],
+      "body_plain": "On Fri, 25 Mar 2005, Cl?ment Calenge wrote:\n\n> \n> >\n> > Hope you had a good time in the field! Is it spring in France?\n> \n> Yes, though a little cloudy. And it is certainly colder than in South \n> Africa!\n\nProbably about the same in Bergen, quite warm for the time of year, snow \nstill on the hills around town.\n\n> \n> > Thanks for the very helpful reply! I will try it right now! I need to\n> > present at a conference in early April and would like to get these\n> > results before that!\n> > Just three quick questions before you go to enjoy the Easter weekend:\n> >\n> > - how do I get the values out of 'jj' (## jj contains the values of\n> > elevation inside the home range of the animals) to calculate mean,\n> > variance, etc, across all the points in 'jj'? I assume 'jj' is of class\n> > 'kasc'. In my case it might be 'asc' as I will have only a single home\n> > range at the time (one animal).\n> \n> Just a small correction to my previous e-mail. If you creates jj with:\n> \n> jj<-lapply(foo, function(x) x*el)\n> \n> jj is not a map of class \"kasc\". To convert jj to the class \"kasc\", copy the\n> attributes of the map \"foo\" to jj with getkascattr:\n> \n> jj<-getkascattr(foo, jj)\n> image(jj)\n> \n> And now, jj is map of class \"kasc\", i.e. a data.frame with each column\n> corresponding to a map. All the pixels located inside the home ranges\n> are coded by numeric values in the data frame, and pixels located outside\n> the home ranges are coded by NA. So you can get the pixels values with\n> something like:\n> \n> oo<-lapply(jj, function(x) x[!is.na(x)])\n> \n> oo is a list with one component per animal. Each component corresponds to a\n> vector of pixels inside the animals home range. It is quite easy after \n> that to get\n> values such as average, mean, median, etc.:\n> \n> lapply(oo, summary)\n> lapply(oo, mean)\n> lapply(oo, sd)\n> etc.\n> \n> > - can I get the points out of the 'kasc' object in a way that I can\n> > still run spatial statistics on them? I would like to calculate the\n> > nugget and range for the NDVI values within the home range.\n> \n> \n> I never performed such spatial statistics with home ranges but this\n> could certainly be done... IMHO, the best way to achieve is also to get\n> the coordinates of the kept pixels when computing the vector oo:\n> \n> xyc<-getXYcoords(jj)\n> ## xyc contains the coordinates of the pixels of the maps\n> ## it is a list with two components, the vectors of coordinates\n> ## of the pixels of the maps\n> ## compute the x values\n> xc <- rep(xyc$x, times=length(xyc$y))\n> yc <- rep(xyc$y, each=length(xyc$x))\n> xyc<-data.frame(x=xc,y=yc)\n> \n> lixyc<-lapply(1:ncol(jj), function(x) xyc[!is.na(jj[,x]),])\n> \n> ## So that each point in oo is associated to its coordinates\n> ## in lixyc\n> ## for example\n> plot(lixyc[[1]], col=grey(oo[[1]]/300), pch=15, cex=4, asp=1)\n> plot(lixyc[[2]], col=grey(oo[[2]]/300), pch=15, cex=4, asp=1)\n> plot(lixyc[[3]], col=grey(oo[[3]]/300), pch=15, cex=4, asp=1)\n> \n> Then you have to compute a variogram. I never used functions\n> allowing such analyses, but it seems that the package nlme has a function\n> Variogram...\n> \n> > - do you know how to convert a polygon shapefile into the same class as\n> > produced by the command kernelUD? Alternatively I could import a raster\n> > version of the polygon shape file, convert it to the correct format, and\n> > repeat the spatial join method you are suggesting for the home ranges!\n> \n> I'm sorry, I do not have any easy solution to this problem. The function \n> kernelUD\n> returns a *raster* map of class \"asc\", a central class in adehabitat. I \n> don't know how\n> to rasterize a shapefile in R (the library shapefiles or Maptools, which \n> deal with\n> shapefiles do not allow such operations). Maybe the simpler way would be to\n> rasterize the shapefile with a GIS...\n\nThis is something we've been looking at for the sp package, how to make an \nobject that represents the raster cells falling into one or more rings. It \ncould be a grid with NA outside the vector MASK, or a cell object with \njust the (regularly spaced) points inside the MASK. We are not there yet, \nand point-in-polygon is as close as we've got yet (that is, generate the \nfull raster using expand.grid() and test each point in turn. This is \nneeded, but isn't finished yet. Writing good functions to suit adehabitat \npackage objects is going to be important, so the work flow you, Sander, \nhave described, is very useful. It would be nice to be able to say that \nthis is ready now, but it isn't yet ...\n\nAt least one of the things sp is trying to do is provide shared object \nstructures so that writing functions from/to different polygon \nrepresentations can be done from -> sp and sp -> to, so that various \npackages should be able to \"talk to\" each other with fewer barriers.\n\nBest wishes,\n\nRoger\n\n\n> Hope this helps,\n> \n> \n> Clem.\n> \n> >\n> > Thanks again,\n> >\n> > Sander.\n> >\n> >\n> > Cl?ment Calenge wrote:\n> >\n> >> Dear Sander,\n> >>\n> >> Sorry for my late answer, I was in the field.\n> >>\n> >>> I send this email to you directly, because it concerns the link \n> >>> between Adehabitat and Splancs.\n> >>>\n> >>> I have two sources of polygons:\n> >>> - polygon shape files with areas of interest;\n> >>> - polygons calculated using the home range methods in Adehabitat.\n> >>> For the moment, each polygon source will only contain a single polygon.\n> >>> I have one source of points: a grid representing NDVI values. I read \n> >>> the grid using the import.asc function in Adehabitat.\n> >>> I would like to use both polygon sources to select the points in the \n> >>> NDVI raster which are inside the relevant polygons. Then I want to \n> >>> run several statistics (mean, standard deviation, etc) on the NDVI \n> >>> values of these points.\n> >>\n> >>\n> >> The solution depends on what you call \"polygon\". The function \n> >> mcp.rast() is intended to \"rasterize\"\n> >> a polygon on a raster grid of class \"asc\" or \"kasc\". The polygon is \n> >> here stored as a data frame with\n> >> two columns (the X and Y coordinates of the polygon). The function \n> >> hr.rast() can be used if you have\n> >> an object of class \"area\", i.e. a data.frame with three columns (the \n> >> X and Y coordinates of the polygon,\n> >> and a third column defining the ID of the polygon).\n> >>\n> >> Now, it seems that  you work with more complex type of polygons, e.g. \n> >> kernel estimations of home ranges\n> >> (where each animal has an home range, and each home range can be made \n> >> of several polygons). In such cases,\n> >> the \"Spatial join\" operation can be more complex. I detail below an \n> >> example of \"spatial join\" with a kernel\n> >> estimation of wild boar home ranges. Note, that in this case, you do \n> >> not have to compute the contour of\n> >> the estimation. Just copy and paste the lines below on R:\n> >>\n> >> ## loads and display the data\n> >> library(adehabitat)\n> >> data(puechabon)\n> >>\n> >> ## keep only the elevation\n> >> el<-getkasc(puechabon$kasc,1)\n> >> image(el)\n> >>\n> >> ## estimate a kernel home-range\n> >> kud<-kernelUD(puechabon$locs[,c(\"X\",\"Y\")], puechabon$locs$Name, grid=el)\n> >> ## kud contains a density\n> >> ## note that the grid containing the values of the elevation is used \n> >> for the estimation\n> >>\n> >> vud<-getvolumeUD(kud)\n> >> image(vud)\n> >> ## vud contains the limits of the home ranges estimated at different \n> >> levels\n> >>\n> >> toto<-lapply(vud, function(x) x$UD)\n> >> ## toto is the list of maps of Utilization Distribution\n> >> tutu<-lapply(toto, function(x) {x[x<95]<-1; x[x>95]<-NA; return(x)})\n> >> ## tutu is a list of raster maps containing 1 if the pixel is inside\n> >> ## the 95% home range and NA otherwise\n> >>\n> >> foo<-as.kasc(tutu)\n> >> image(foo)\n> >> ## foo is a kasc object\n> >>\n> >> jj=lapply(foo, function(x) x*el)\n> >> image(jj)\n> >> ## jj contains the values of elevation inside the home range of the \n> >> animals\n> >>\n> >> The last method that is available for home-range estimation of \n> >> animals home ranges\n> >> is the Nearest Neighbor Convex hull method of Getz and Wilmers \n> >> (2004). The function\n> >> NNCH.rast() can be used to \"rasterize\" the home range estimation in \n> >> the same way, and then\n> >> you can multiply the resulting maps with your NDVI in the same way.\n> >> Hope this helps,\n> >>\n> >>\n> >> Cl?ment.\n> >>\n> >\n> \n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Breiviksveien 40, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 93 93\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Fri, 25 Mar 2005, Cl?ment Calenge wrote:\n\n> \n> >\n> > Hope you had a good time in the field! Is it spring in France?\n> \n> Yes, though a little cloudy. And it is certainly colder than in South \n> Afr",
+      "thread_id": "thread-8c257860463d",
+      "thread_depth": 4,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-17cbb204bc26",
+      "message_id": "<4245CCFB.9050700@oomvanlieshout.net>",
+      "from_name": "Sander Oom",
+      "from_email_hash": "729af6fb2e066f5ad794be554a9ccb9799939b013f7817ef3a19031d2b0860d9",
+      "date": "2005-03-26T22:58:35+02:00",
+      "subject": "[R-sig-Geo] A few more questions about Adehabitat!?",
+      "subject_clean": "A few more questions about Adehabitat!?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear Clement,\n\nI have made enormous progress, but I am still struggling with a couple \nof things, hence the following questions:\n\n- How can I determine the area of the polygons in an object of class\n'asc'? The 'ararea' function only works on objects of class 'area', and\nI can not convert 'asc' to 'area'. I would prefer a list of areas for \neach polygon, which I can than total to the whole home range area.\n\n- Would it be possible to create a function to extract the extent (x and\ny limits) of an 'asc' or 'kasc' object, such that I can use the result\nas an argument in the 'subsetmap' function to set xl and yl?\n\n- Mean('asc object') returns a single value, as I was expecting, but\nvar('asc object') returns a matrix and sd('asc object') returns a\nvector. I must be missing something! Also mean() gives NA if part of the \ngrid is NA. See example below!\n\n- Is it possible to do calculations with an 'asc' object? Such as \nmultiplying each cell with a value? I read a grid from file and would \nlike to change the cell values. I would also like to change certain cell \nvalues to NA,before doing the calculations as above. The same would be \npossible if I could get the map out of the 'asc' object and put it in a \nmatrix of data frame.\n\nThanks in advance,\n\nSander.\n\nSample code for reading in an ascii grid:\n\n > (file1 <-  paste(system.file(package = \"adehabitat\"),\n+                \"ascfiles/elevation.asc\", sep = \"/\"))\n[1] \"/usr/lib/R/library/adehabitat/ascfiles/elevation.asc\"\n > xl <- c(701000, 702000)\n > yl <- c(3160000, 3161000)\n >\n > el <- import.asc(file1)\n > image(el)\n > el\nRaster map of class \"asc\":\nCell size:  100\nNumber of rows:  121\nNumber of columns:  111\nType:  numeric\n > mean(el)\n[1] NA\n > elsub<-subsetmap(el, xlim = xl, ylim = yl)\n > image(elsub)\n > mean(elsub)\n[1] 265.281\n > rr <- lapply(el, function(x) x*1000)\n > mean(rr)\n[1] NA\nWarning message:\nargument is not numeric or logical: returning NA in: mean.default(rr)\n > var(elsub)\n             [,1]  [,2]      [,3]       [,4]       [,5]        [,6] \n  [,7]\n  [1,] 456.818182 397.1 345.58182 304.172727 298.054545 179.9727273 \n170.61818\n  [2,] 397.100000 348.6 304.80000 269.300000 262.400000 158.6000000 \n146.90000\n  [3,] 345.581818 304.8 270.01818 241.027273 235.945455 140.8272727 \n132.18182\n  [4,] 304.172727 269.3 241.02727 224.490909 219.818182 127.3909091 \n118.17273\n  [5,] 298.054545 262.4 235.94545 219.818182 217.963636 125.4181818 \n117.65455\n  [6,] 179.972727 158.6 140.82727 127.390909 125.418182  80.6909091 \n71.17273\n  [7,] 170.618182 146.9 132.18182 118.172727 117.654545  71.1727273 \n80.01818\n  [8,] 110.600000  93.6  84.10000  70.400000  69.400000  45.8000000 \n61.70000\n  [9,]  38.972727  26.8  23.52727   7.490909   7.318182  16.7909091 \n49.07273\n[10,]  -8.809091 -14.1 -10.89091 -26.536364 -26.027273  -0.6363636  38.39091\n[11,] -70.254545 -73.4 -66.44545 -81.718182 -79.963636 -30.0181818  18.94545\n        [,8]       [,9]       [,10]     [,11]\n  [1,] 110.6  38.972727  -8.8090909 -70.25455\n  [2,]  93.6  26.800000 -14.1000000 -73.40000\n  [3,]  84.1  23.527273 -10.8909091 -66.44545\n  [4,]  70.4   7.490909 -26.5363636 -81.71818\n  [5,]  69.4   7.318182 -26.0272727 -79.96364\n  [6,]  45.8  16.790909  -0.6363636 -30.01818\n  [7,]  61.7  49.072727  38.3909091  18.94545\n  [8,]  59.8  73.000000  75.7000000  74.10000\n  [9,]  73.0 136.290909 161.5636364 191.18182\n[10,]  75.7 161.563636 201.8545455 242.62727\n[11,]  74.1 191.181818 242.6272727 315.56364\n >\n-- \n--------------------------------------------\nDr. Sander P. Oom\nAnimal, Plant and Environmental Sciences,\nUniversity of the Witwatersrand\nPrivate Bag 3, Wits 2050, South Africa\nTel (work)      +27 (0)11 717 64 04\nTel (home)      +27 (0)18 297 44 51\nFax             +27 (0)18 299 24 64\nEmail   sander at oomvanlieshout.net\nWeb     www.oomvanlieshout.net/sander",
+      "body_snippet": "Dear Clement,\n\nI have made enormous progress, but I am still struggling with a couple \nof things, hence the following questions:\n\n- How can I determine the area of the polygons in an object of class\n'",
+      "thread_id": "thread-17cbb204bc26",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-08e07ad0f90f",
+      "message_id": "<4246B24C.7030102@biomserv.univ-lyon1.fr>",
+      "from_name": "Mathieu Basille",
+      "from_email_hash": "38a61726e6b9edea1c906aa882173180112d6f103c63dde2a4bee390d7f981e2",
+      "date": "2005-03-27T15:17:00+02:00",
+      "subject": "[R-sig-Geo] Some comments on calculations with 'asc' (and 'kasc') objects with Adehabitat",
+      "subject_clean": "Some comments on calculations with 'asc' (and 'kasc') objects with Adehabitat",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear Sander,\n\nCalculations with objects of class 'asc' and 'kasc' are quite simple, as \nsoon as you know that 'asc' ARE actually matrices and 'kasc' data \nframes. The difference is just that they have a few additional \nparameters ('xll', 'yll', 'cellsize' and 'type' - eventually 'levels' - \nfor both and 'nrow' and 'ncol' for kasc). Note that the first value of \nthe matrix (top-left corner) is actually the bottom-left corner of the \nmap (clockwise rotation of 90? between the map and the matrix). Note \nalso that each column of a 'kasc' represent one map (one variable). An \nillustration :\n\n   data(puechabon)\n   kasc <- puechabon$kasc\n   asc <- getkasc(kasc, \"Elevation\")\n   is.matrix(asc)\n   # [1] TRUE\n   is.data.frame(kasc)\n   # [1] TRUE\n\nThen, the calculations are exactly the same as for matrices or data \nframes. An exemple with a simple matrix :\n\n   m <- matrix(1:20, nr = 5)\n   mean(m)\n   # [1] 10.5\n   var(m)\n   #      [,1] [,2] [,3] [,4]\n   # [1,]  2.5  2.5  2.5  2.5\n   # [2,]  2.5  2.5  2.5  2.5\n   # [3,]  2.5  2.5  2.5  2.5\n   # [4,]  2.5  2.5  2.5  2.5\n\nThe 'var' function applied to a matrix gives the variance-covariance \nmatrix. To avoid that, just type :\n\n   var(as.vector(m))\n   # [1] 35\n\n   sd(m)\n   # [1] 1.581139 1.581139 1.581139 1.581139\n\nThe 'sd' function applied to a matrix returns a vector of the standard \ndeviation of the columns. To avoid that :\n\n   sd(as.vector(m))\n   # [1] 5.91608\n\n\nThe same with a simple data frame :\n\n   df <- cbind(a = 1:20, b = runif(20)*100, c = rnorm(20, 50, 10))\n   mean(df)\n   # [1] 38.64825\n\nThe 'mean' function gives the overall mean of the data frame. As for \nkasc we obviously need means for the columns, we can try :\n\n   colMeans(df)\n   #        a        b        c\n   # 10.50000 56.74289 48.70187\n\n   colSums(df)\n   #        a         b         c\n   # 210.0000 1134.8577  974.0374\n\nFor the variance or standard deviation, use the 'apply' function :\n\n   apply(df, 2, var)\n   #        a         b         c\n   # 35.00000 748.78361  68.40536\n\n   apply(df, 2, sd)\n   #        a         b         c\n   # 5.916080 27.363911  8.270753\n\n\nNow, the same, but applied to a 'real' asc object.\n\n   mean(asc)\n   # [1] NA\n   var(as.vector(asc))\n   # Error in var(as.vector(asc)) : missing observations in cov/cor\n   sd(as.vector(asc))\n   # Error in var(x, na.rm = na.rm) : missing observations in cov/cor\n\nFor all these functions, you get something wrong because of the NAs. Use \nthen the parameter na.rm = TRUE :\n\n   mean(asc, na.rm = TRUE)\n   # [1] 240.6568\n   var(as.vector(asc), na.rm = TRUE)\n   # [1] 7369.139\n   sd(as.vector(asc), na.rm = TRUE)\n   # [1] 85.84369\n\nAnd with a kasc object :\n\n   colSums(kasc)\n   # Error in colSums(x, n, prod(dn), na.rm) : `x' must be numeric\n\nYou get an error because the variable 'Aspect' is a factor. We don't \nneed to compute means and others statistics to this variable.\n\n   colSums(kasc[-2])\n   #  Elevation      Slope Herbaceous\n   #         NA         NA         NA\n\nAgain, the same problem with the NAs, solved with the na.rm parameter :\n\n   colSums(kasc[-2], na.rm = TRUE)\n   #   Elevation       Slope  Herbaceous\n   # 1053836.000   40881.457    1905.650\n\n   colMeans(kasc[-2], na.rm = TRUE)\n   #   Elevation       Slope  Herbaceous\n   # 240.6567710   9.3357975   0.4351792\n\n   apply(kasc[-2], 2, var, na.rm = TRUE)\n   #    Elevation        Slope   Herbaceous\n   # 7.369139e+03 6.208515e+01 5.703959e-02\n\n   apply(kasc[-2], 2, sd, na.rm = TRUE)\n   #  Elevation      Slope Herbaceous\n   # 85.8436875  7.8794130  0.2388296\n\n\nFinally, check the usefull functions 'summary' as applied to asc and kasc :\n\n   summary(as.vector(asc))\n   #    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's\n   #    65.0   176.0   256.0   240.7   290.0   479.0  9052.0\n\n   summary(kasc)\n   #    Elevation            Aspect         Slope            \nHerbaceous         #  Min.   :  65.0   NorthEast: 537   Min.   :   \n0.000   Min.   :   0.0000    #  1st Qu.: 176.0   SouthEast:1504   1st \nQu.:   3.124   1st Qu.:   0.2000    #  Median : 256.0   SouthWest:1262   \nMedian :   6.658   Median :   0.4222    #  Mean   : 240.7   \nNorthWest:1076   Mean   :   9.336   Mean   :   0.4352    #  3rd Qu.: \n290.0   NA's     :9052   3rd Qu.:  13.710   3rd Qu.:   0.7000    #  \nMax.   : 479.0                    Max.   :  40.631   Max.   :   0.7000 \n   #  NA's   :9052.0                    NA's   :9052.000   NA's   \n:9052.0000\n\nI'll let Cl?ment answer about your two first questions, that are far \nfrom my skills.\n\nHTH,\nMathieu",
+      "body_snippet": "Dear Sander,\n\nCalculations with objects of class 'asc' and 'kasc' are quite simple, as \nsoon as you know that 'asc' ARE actually matrices and 'kasc' data \nframes. The difference is just that they have",
+      "thread_id": "thread-08e07ad0f90f",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-0d6875ceb9b1",
+      "message_id": "<4246D1C8.2080507@biomserv.univ-lyon1.fr>",
+      "from_name": "Clément Calenge",
+      "from_email_hash": "cad863fc3cc348c12d4485cc17b2c939d8f345c7b79293d7898ac714415857aa",
+      "date": "2005-03-27T17:31:20+02:00",
+      "subject": "[R-sig-Geo] Re: A few more questions about Adehabitat!?",
+      "subject_clean": "A few more questions about Adehabitat!?",
+      "in_reply_to": "<4245CCFB.9050700@oomvanlieshout.net>",
+      "references": [
+        "<4245CCFB.9050700@oomvanlieshout.net>"
+      ],
+      "body_plain": "Dear Sander,\n\n\nSander Oom a ?crit :\n\n> - How can I determine the area of the polygons in an object of class\n> 'asc'? The 'ararea' function only works on objects of class 'area', and\n> I can not convert 'asc' to 'area'. I would prefer a list of areas for \n> each polygon, which I can than total to the whole home range area.\n\nLet's take an example, just copy and paste the following\ncode under R:\n\nlibrary(adehabitat)\ndata(puechabon)\nkud<-getvolumeUD(kernelUD(puechabon$locs[,c(\"X\",\"Y\")],\n                               h=250))[[1]]$UD\nkud[kud<95]<-1\nkud[kud>95]<-NA\nimage(kud)\n\nkud is an object of class \"asc\", containing 1's for pixels\ninside the home range (here, all animals are pooled) and\nNA otherwise. If you want to know the whole area of\nthe home range:\n\n > table(kud)\nkud\n  1\n672\n > attr(kud, \"cellsize\")\n[1] 95.75\n > table(kud)*(attr(kud, \"cellsize\")^2)/10000\nkud\n       1\n616.0938\n\n672 pixels have the value 1 in kud. Each pixel covers an\narea of 95.75 * 95.75 m?.\nThe total area is therefore of 616.09 ha.\nNow if you want to know the area covered by each\nconnected component, you can use the function labcon(),\nwhich gives a label to each connected component:\n\n > kudbis <- labcon(kud)\n > image(kudbis, clfac = c(\"red\",\"green\"))\n > table(kudbis)*(attr(kud, \"cellsize\")^2)/10000\nkudbis\n       1        2\n296.1284 319.9654\n\nThe red connected component covers 296.13 ha,\nand the green connected component, 319.97 ha.\n\n> - Would it be possible to create a function to extract the extent (x and\n> y limits) of an 'asc' or 'kasc' object, such that I can use the result\n> as an argument in the 'subsetmap' function to set xl and yl?\n\nSomething like that ?\n\nfoo<-function(x)\n{\ntoto<-getXYcoords(x)\nxx<-range(toto$x[apply(x, 1, function(y) !all(is.na(y)))])\nyy<-range(toto$y[apply(x, 2, function(y) !all(is.na(y)))])\nreturn(list(x=xx, y=yy))\n}\n\nUsing the above example:\n\nimage(kud)\ntoto<-foo(kud)\nkudter<-subsetmap(kud, toto$x, toto$y)\nimage(kudter)\n\n\nHope this helps,\n\nClem.\n\n>\n> - Mean('asc object') returns a single value, as I was expecting, but\n> var('asc object') returns a matrix and sd('asc object') returns a\n> vector. I must be missing something! Also mean() gives NA if part of \n> the grid is NA. See example below!\n>\n> - Is it possible to do calculations with an 'asc' object? Such as \n> multiplying each cell with a value? I read a grid from file and would \n> like to change the cell values. I would also like to change certain \n> cell values to NA,before doing the calculations as above. The same \n> would be possible if I could get the map out of the 'asc' object and \n> put it in a matrix of data frame.\n>\n> Thanks in advance,\n>\n> Sander.\n>\n> Sample code for reading in an ascii grid:\n>\n> > (file1 <-  paste(system.file(package = \"adehabitat\"),\n> +                \"ascfiles/elevation.asc\", sep = \"/\"))\n> [1] \"/usr/lib/R/library/adehabitat/ascfiles/elevation.asc\"\n> > xl <- c(701000, 702000)\n> > yl <- c(3160000, 3161000)\n> >\n> > el <- import.asc(file1)\n> > image(el)\n> > el\n> Raster map of class \"asc\":\n> Cell size:  100\n> Number of rows:  121\n> Number of columns:  111\n> Type:  numeric\n> > mean(el)\n> [1] NA\n> > elsub<-subsetmap(el, xlim = xl, ylim = yl)\n> > image(elsub)\n> > mean(elsub)\n> [1] 265.281\n> > rr <- lapply(el, function(x) x*1000)\n> > mean(rr)\n> [1] NA\n> Warning message:\n> argument is not numeric or logical: returning NA in: mean.default(rr)\n> > var(elsub)\n>             [,1]  [,2]      [,3]       [,4]       [,5]        [,6]  [,7]\n>  [1,] 456.818182 397.1 345.58182 304.172727 298.054545 179.9727273 \n> 170.61818\n>  [2,] 397.100000 348.6 304.80000 269.300000 262.400000 158.6000000 \n> 146.90000\n>  [3,] 345.581818 304.8 270.01818 241.027273 235.945455 140.8272727 \n> 132.18182\n>  [4,] 304.172727 269.3 241.02727 224.490909 219.818182 127.3909091 \n> 118.17273\n>  [5,] 298.054545 262.4 235.94545 219.818182 217.963636 125.4181818 \n> 117.65455\n>  [6,] 179.972727 158.6 140.82727 127.390909 125.418182  80.6909091 \n> 71.17273\n>  [7,] 170.618182 146.9 132.18182 118.172727 117.654545  71.1727273 \n> 80.01818\n>  [8,] 110.600000  93.6  84.10000  70.400000  69.400000  45.8000000 \n> 61.70000\n>  [9,]  38.972727  26.8  23.52727   7.490909   7.318182  16.7909091 \n> 49.07273\n> [10,]  -8.809091 -14.1 -10.89091 -26.536364 -26.027273  -0.6363636  \n> 38.39091\n> [11,] -70.254545 -73.4 -66.44545 -81.718182 -79.963636 -30.0181818  \n> 18.94545\n>        [,8]       [,9]       [,10]     [,11]\n>  [1,] 110.6  38.972727  -8.8090909 -70.25455\n>  [2,]  93.6  26.800000 -14.1000000 -73.40000\n>  [3,]  84.1  23.527273 -10.8909091 -66.44545\n>  [4,]  70.4   7.490909 -26.5363636 -81.71818\n>  [5,]  69.4   7.318182 -26.0272727 -79.96364\n>  [6,]  45.8  16.790909  -0.6363636 -30.01818\n>  [7,]  61.7  49.072727  38.3909091  18.94545\n>  [8,]  59.8  73.000000  75.7000000  74.10000\n>  [9,]  73.0 136.290909 161.5636364 191.18182\n> [10,]  75.7 161.563636 201.8545455 242.62727\n> [11,]  74.1 191.181818 242.6272727 315.56364\n> >\n\n\n\n-- \nCl?ment CALENGE\nLBBE - UMR CNRS 5558 - Universit? \nClaude Bernard Lyon 1 - FRANCE\ntel. (+33) 04.72.43.27.57\nfax. (+33) 04.72.43.13.88",
+      "body_snippet": "Dear Sander,\n\n\nSander Oom a ?crit :\n\n> - How can I determine the area of the polygons in an object of class\n> 'asc'? The 'ararea' function only works on objects of class 'area', and\n> I can not conver",
+      "thread_id": "thread-17cbb204bc26",
+      "thread_depth": 1,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-628e717d2e52",
+      "message_id": "<424817CA.4050102@qmul.ac.uk>",
+      "from_name": "Jakob Petersen",
+      "from_email_hash": "515ae1f6324c98337d9b4886a77076960016aba6a7f86d18d33b7acbfe7e5768",
+      "date": "2005-03-28T15:42:18+01:00",
+      "subject": "[R-sig-Geo] DCluster",
+      "subject_clean": "DCluster",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi r-sig-geo,\nI am looking at the spatial distribution of poor households in a region \ncomprising a gradient of urban-rural postcodes. The data are counts and \nthey fit a negative binomial distribution, rather than a poisson \ndistribution.\n\nI am applying DCluster (ver. 0.1-3, windows) and would be grateful for \nadvice on a few topics.\n\n1. GAM\n\nA) As I understand it the default setting is based on a poisson \ndistribution. This creates some not implausible clusters, but I wonder \nwhether I could set the opgam, so that it uses a negative binomial \ndistribution (for which I have the parameters for the ?disease? \nvariable; size and mu) or to use a bootstrap procedure instead. Some of \nthe internal functions, like opgam.iscluster.negbin, seem to support \nthis, but I am uncertain about how to incorporate them.\n\nB) To reduce the multiple testing problem (Waller & Gotway 2004, \n?Applied Spatial Statistics for Public Health Data?, Wiley, p.208) I \nwonder whether to set radius to <50% of step size, e.g. 100m radius in a \n300m grid, so that the smallest circles won't touch?\n\n2. Besag-Newell\n\nI am getting results with ?poisson? (almost everything becomes a cluster \n- possibly because the sites are clumped and not randomly distributed) \nand with ?permutation?, but wonders how the ?negbin? is used? Not like \nthis:\n\n>  bnresults<-opgam(pcpoor, thegrid=pcpoor[,c(\"x\",\"y\")], alpha=.05,\n\n+ iscluster=bn.iscluster, set.idxorder=TRUE, k=20, model=\"negbin\",\n\n+ R=100, mle=calculate.mle(pcpoor) )\n\n> > Error in rnbinom(n, size, prob) : invalid arguments\n\n3. Kulldorff & Nagarwalla\n\nAgain I struggle with the parameters. Not like this:\n\n>  #K&N's method over the centroids\n\n>  mle<-calculate.mle(pcpoor, model=\"negbin\")\n\n> > Error in while (((abs(m - m0) > tol * (m + m0)) || (abs(v - v0) > tol \n* :\n\nmissing value where TRUE/FALSE needed\n\n>  knresults<-opgam(data=pcpoor, thegrid=pcpoor[,c(\"x\",\"y\")], alpha=.05,\n\n+ iscluster=kn.iscluster, fractpop=.5, R=100, model=\"negbin\", mle=mle)\n\n> > Error in rnbinom(n, size, prob) : invalid arguments\n\n4. Turnbull. Is Turnbull analysis possible in DCluster yet?. Some \nreferences in the manual, but haven?t been able to locate it.\n\n5. General\n\nA) I am considering increasing the study area (p.t. working with 1262 \npostcode points) and wonder what the limits might be for a desktop pc. I \ngather that the distance matrices (created by tripack or spdep) could be \na limiting factor? Would it be an idea to run this step first and once \nthe table is created run the cluster detection algorithm?\n\nB) I wonder whether permutations always are superior to standard stats. \nDistributions, and if not, then why not?\n\n\nBest wishes, Jakob\n\nJakob Petersen\nGISc student (MSc)\nBirkbeck, University of London",
+      "body_snippet": "Hi r-sig-geo,\nI am looking at the spatial distribution of poor households in a region \ncomprising a gradient of urban-rural postcodes. The data are counts and \nthey fit a negative binomial distributio",
+      "thread_id": "thread-628e717d2e52",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-b35a2fc55ae0",
+      "message_id": "<EB09E5B9F0E2684F863B525E5C7E0F890B36DB@ZZML.newcefe.newage.fr>",
+      "from_name": "Chloe ARCHINARD",
+      "from_email_hash": "f0a7beb033dbe8b18242cce93a4169e1b3a077fbe37083a941181fca2fb4ec2f",
+      "date": "2005-03-29T17:13:52+02:00",
+      "subject": "[R-sig-Geo] Problem for plotting Moran's I estimates",
+      "subject_clean": "Problem for plotting Moran's I estimates",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050329/1d7eba7e/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050329/1d7eba7e/attachment.pl>",
+      "thread_id": "thread-b35a2fc55ae0",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-1d789b1a00a8",
+      "message_id": "<Pine.LNX.4.44.0503291925110.7846-100000@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "a0c87926e9477aa221755cc93bdef47227c3563fd707e66ae49044467663d168",
+      "date": "2005-03-29T19:37:20+02:00",
+      "subject": "[R-sig-Geo] Problem for plotting Moran's I estimates",
+      "subject_clean": "Problem for plotting Moran's I estimates",
+      "in_reply_to": "<EB09E5B9F0E2684F863B525E5C7E0F890B36DB@ZZML.newcefe.newage.fr>",
+      "references": [],
+      "body_plain": "On Tue, 29 Mar 2005, Chloe ARCHINARD wrote:\n\n> Hello all, I'm a new user of R and I have used the spdep package to\n> calculate Moran's I estimates. I used the dnearneigh() function and\n> moran.test() function and obtained what I wanted, but now I want to plot\n> my results with the p-values. I regrouped my results for the Moran's I\n> like\n> >m=c(m1$e,m2$e...)        #m1 contain the results of the moran.test for lag1\n> >p=c(m1$p.v,m2$p.v...)\n> The problem is that in mx$e there are three values (moran'I statistic,\n> expectation and variance) and when I plot my results I plot all the\n> three values for each lag. What should I do to choose only the statistic\n> for plotting and maybe the variance for each I statistic? (For the\n> p-value it's ok I have found how to differentiate the significant and\n> non significant values.) I hope someone understand my question and could\n> help me! Thanks a lot.\n\nIf you have the output object from moran.test()\n\ndata(oldcol)\nres <- moran.test(COL.OLD$CRIME, nb2listw(COL.nb))\nstr(res) # shows the structure of the object\nest <- res$estimate[1]\npv <- res$p.value\n\nI suggest you make a list of test result objects for your distance lags, \nand then use sapply(mylist, function(x) c(x$estimate[1], x$p.value)) to \nextract the values (you may need t() around the result to transpose the \noutput). I'll try to add an example like this to moran.test() - any \nsuggestions of a well-known suitable data set with known Moran's I values \nand distance bands?\n\nRoger\n\n> \n> Chlo? ARCHINARD\n> Centre d'Ecologie Fonctionnelle et Evolutive\n> (C.N.R.S.-U.M.R. 5175)\n> 1919, Route de Mende\n> 34293 Montpellier Cedex 5 France\n> chloe.archinard at cefe.cnrs.fr\n> \n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_snippet": "On Tue, 29 Mar 2005, Chloe ARCHINARD wrote:\n\n> Hello all, I'm a new user of R and I have used the spdep package to\n> calculate Moran's I estimates. I used the dnearneigh() function and\n> moran.test() ",
+      "thread_id": "thread-b35a2fc55ae0",
+      "thread_depth": 1,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-a718018b16fb",
+      "message_id": "<EB09E5B9F0E2684F863B525E5C7E0F890B36E1@ZZML.newcefe.newage.fr>",
+      "from_name": "Chloe ARCHINARD",
+      "from_email_hash": "f0a7beb033dbe8b18242cce93a4169e1b3a077fbe37083a941181fca2fb4ec2f",
+      "date": "2005-03-30T17:31:35+02:00",
+      "subject": "[R-sig-Geo] Problem for plotting Moran's I estimates",
+      "subject_clean": "Problem for plotting Moran's I estimates",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050330/675a4abf/attachment.pl>",
+      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050330/675a4abf/attachment.pl>",
+      "thread_id": "thread-a718018b16fb",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-91b3f2ab83c0",
+      "message_id": "<000001c53560$9484c970$8bdc6f80@BURAN>",
+      "from_name": "Rick Reeves",
+      "from_email_hash": "f3850c4c211d4f08916326f9d58bf54aade0d0d3d9b8d3de5cfcdf8840696022",
+      "date": "2005-03-30T11:42:17-08:00",
+      "subject": "[R-sig-Geo] Reading and projecting lat/long point coordinates using R?",
+      "subject_clean": "Reading and projecting lat/long point coordinates using R?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello: \n\nI've searched the literature, havent found an answer, so here goes? \n\nWe have a set of polygon features defined as a series of unprojected\nvertices represented by lat/long pairs, in an ASCII-format file.\n\nWe need to display (on a map-like plot) and then calculate the areas \nof the polygons, and would like to do this entirely within R if\npossible.\nIs there a map projection package for R? Or, has anyone solved this\nor a related problem using R? I could do this with the MATLAB mapping\ntoolbox, but prefer to use R if possible....\n\n\nThanks, \n\nRick Reeves\n\nScientific Programmer / Quantitative Analyst\nNational Center for Ecological Analysis and Synthesis\nUniversity of California, Santa Barbara\n805 892 2534\nreeves at nceas.ucsb.edu",
+      "body_snippet": "Hello: \n\nI've searched the literature, havent found an answer, so here goes? \n\nWe have a set of polygon features defined as a series of unprojected\nvertices represented by lat/long pairs, in an ASCII-",
+      "thread_id": "thread-91b3f2ab83c0",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-b661e630c2cb",
+      "message_id": "<7441127199virgil@uv.es>",
+      "from_name": "Virgilio.Gomez at uv.es",
+      "from_email_hash": "3b4123f5c3ff01b6d34830be0726ae099a8f42790bf2cac840611dbd735d6dd0",
+      "date": "2005-03-31T12:56:18+02:00",
+      "subject": "[R-sig-Geo] Re: DCluster",
+      "subject_clean": "DCluster",
+      "in_reply_to": "<200503291017.j2TAHggk006198@hypatia.math.ethz.ch>",
+      "references": [
+        "<200503291017.j2TAHggk006198@hypatia.math.ethz.ch>"
+      ],
+      "body_plain": "Hi all,\n\nI am out of my office until next week. For this readon, I will not be \nable to check the code in DCluster and answer your other question, \nJakob. Don't desperate!! :)\n\nThe only advice I can give yiou a the moment is to try to follow as \nmuch as possible the code in the examples, although I am quite sure \nthat you have already done it. I remember some problems like those \nthat you described but I think I fixed them (or maybe not) for the \ncurrent release.\n\nBest regards,\n\nVirgilio",
+      "body_snippet": "Hi all,\n\nI am out of my office until next week. For this readon, I will not be \nable to check the code in DCluster and answer your other question, \nJakob. Don't desperate!! :)\n\nThe only advice I can g",
+      "thread_id": "thread-b661e630c2cb",
+      "thread_depth": 0,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-5acf1c69ff59",
+      "message_id": "<424BDFCF.2030407@oomvanlieshout.net>",
+      "from_name": "Sander Oom",
+      "from_email_hash": "729af6fb2e066f5ad794be554a9ccb9799939b013f7817ef3a19031d2b0860d9",
+      "date": "2005-03-31T13:32:31+02:00",
+      "subject": "[R-sig-Geo] Reading and projecting lat/long point coordinates using\tR?",
+      "subject_clean": "Reading and projecting lat/long point coordinates using\tR?",
+      "in_reply_to": "<000001c53560$9484c970$8bdc6f80@BURAN>",
+      "references": [
+        "<000001c53560$9484c970$8bdc6f80@BURAN>"
+      ],
+      "body_plain": "Hi Rick,\n\nMap projections can be done with the package proj4R developed by Roger \nBivand (http://spatial.nhh.no/R/Devel/). Roger send me a development \nversion to use with R2.0.1.\n\nThis is the code I use to project to Albers equal area and UTM in South \nAfrica (the projection settings listed in the comments come from GRASS):\n\n   ## Project data with proj4R\n   datSable.XY <- cbind(datSable$Longitude, datSable$Latitude)\n   ## Albers Equal Area projection for SA\n   ## elipse or datum    WGS84\n   ## false eastings     0\n   ## false northing     0\n   ## central meridian   24\n   ## stand parr_1       -18\n   ## stand parr_2       -32\n   ## lat of origin      0\n   ## output of project is a matrix!\n   datSable.XYaea <- project(datSable.XY, \"+proj=aea +ellps=WGS84 \n+lon_0=24 +lat_0=0 +lat_1=18s +lat_2=32s +x_0=0 +y_0=0 \")\n   nrow(datSable.XYaea)\n   tmp <- data.frame(datSable.XYaea)\n   datSable <- data.frame(datSable, Xaea=tmp$X1, Yaea=tmp$X2)\n# name: UTM\n# datum: WGS84\n# towgs84: 0.000,0.000,0.000\n# proj: utm\n# ellps: wgs84\n# a: 6378137.0000000000\n# es: 0.0066943800\n# f: 298.2572235630\n# zone: 36\n# south: defined\n   datSable.XYutm <- project(datSable.XY, \"+proj=utm +ellps=WGS84 \n+zone=36S +south +units=m \")\n\nThis should work on polygon coordinates to!\n\nThe packages maps and maptools might provide a solution to the area of \nthe polygons.\n\nLet me know what you manage to do. I am trying similar things: see \nearlier posts on the r-geo list.\n\nCheers,\n\nSander.\n\nRick Reeves wrote:\n> \n> Hello: \n> \n> I've searched the literature, havent found an answer, so here goes? \n> \n> We have a set of polygon features defined as a series of unprojected\n> vertices represented by lat/long pairs, in an ASCII-format file.\n> \n> We need to display (on a map-like plot) and then calculate the areas \n> of the polygons, and would like to do this entirely within R if\n> possible.\n> Is there a map projection package for R? Or, has anyone solved this\n> or a related problem using R? I could do this with the MATLAB mapping\n> toolbox, but prefer to use R if possible....\n> \n> \n> Thanks, \n> \n> Rick Reeves\n> \n> Scientific Programmer / Quantitative Analyst\n> National Center for Ecological Analysis and Synthesis\n> University of California, Santa Barbara\n> 805 892 2534\n> reeves at nceas.ucsb.edu\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \n--------------------------------------------\nDr. Sander P. Oom\nAnimal, Plant and Environmental Sciences,\nUniversity of the Witwatersrand\nPrivate Bag 3, Wits 2050, South Africa\nTel (work)      +27 (0)11 717 64 04\nTel (home)      +27 (0)18 297 44 51\nFax             +27 (0)18 299 24 64\nEmail   sander at oomvanlieshout.net\nWeb     www.oomvanlieshout.net/sander",
+      "body_snippet": "Hi Rick,\n\nMap projections can be done with the package proj4R developed by Roger \nBivand (http://spatial.nhh.no/R/Devel/). Roger send me a development \nversion to use with R2.0.1.\n\nThis is the code I ",
+      "thread_id": "thread-91b3f2ab83c0",
+      "thread_depth": 1,
+      "month": "2005-03"
+    },
+    {
+      "id": "msg-92340bbbf881",
+      "message_id": "<0d30320f79bcabe52e4c482082ed4e9a@ucsd.edu>",
+      "from_name": "Anthony Westerling",
+      "from_email_hash": "aea0cd0e5861d5b8df3e80d01f637fdd9d009ec18d3a95aaa5701a5eb88e3bc0",
+      "date": "2005-03-31T06:54:47-08:00",
+      "subject": "[R-sig-Geo] Re: Reading and projecting lat/long point coordinates using\tR?",
+      "subject_clean": "Reading and projecting lat/long point coordinates using\tR?",
+      "in_reply_to": "<200503311012.j2VACU3j030597@hypatia.math.ethz.ch>",
+      "references": [
+        "<200503311012.j2VACU3j030597@hypatia.math.ethz.ch>"
+      ],
+      "body_plain": "If you want a base map to add your polygons to, you can use the Maps \npackage in R, or plot a map from a shapefile or arcinfo coverage using \nRmap or maptools libraries (for shapefile format) or RArcInfo (for e00 \nor avc formats) in R.  To add your polygons to the figure just use \npolygon().  If you need to reproject the coordinates in your polygons \nyou can use mapproject() in the mapproj library or project() in Rmap(). \n  I prefer project() (it can convert from a projection to geographic \ncoordinates (ie, lat/lon), while I think mapproject() just takes \ngeographic coordinates) but mapproject() has more documentation.  Both \nuse proj4 library (libproj), so you will need to install that.  To use \nshapefiles you need libshp.\n\nI think Rmap is still not distributed via CRAN.  You can find it at \nhttp://www.maths.lancs.ac.uk/Software/Rmap/\n\nI've linked the documentation for the proj4 library to Barry \nRowlingson's Rmap documentation, which can be useful when you are \nre-projecting coordinates.  If you want it,  the zipped html files are \n~9 MB.  The original sources are on the web of course.\n\nareapl() in the splancs library can calculate the area of a polygon.\n\nAnthony L. Westerling\nClimate Research Division\nScripps Institution of Oceanography\nUniversity of California, San Diego\n858 822 4057\nleroy at ucsd.edu\n\n> Date: Wed, 30 Mar 2005 11:42:17 -0800\n> From: \"Rick Reeves\" <reeves at nceas.ucsb.edu>\n> Subject: [R-sig-Geo] Reading and projecting lat/long point coordinates\n> \tusing\tR?\n> To: <r-sig-geo at stat.math.ethz.ch>\n> Message-ID: <000001c53560$9484c970$8bdc6f80 at BURAN>\n> Content-Type: text/plain;\tcharset=\"us-ascii\"\n>\n>\n>\n> Hello:\n>\n> I've searched the literature, havent found an answer, so here goes?\n>\n> We have a set of polygon features defined as a series of unprojected\n> vertices represented by lat/long pairs, in an ASCII-format file.\n>\n> We need to display (on a map-like plot) and then calculate the areas\n> of the polygons, and would like to do this entirely within R if\n> possible.\n> Is there a map projection package for R? Or, has anyone solved this\n> or a related problem using R? I could do this with the MATLAB mapping\n> toolbox, but prefer to use R if possible....\n>\n>\n> Thanks,\n>\n> Rick Reeves\n>\n> Scientific Programmer / Quantitative Analyst\n> National Center for Ecological Analysis and Synthesis\n> University of California, Santa Barbara\n> 805 892 2534\n> reeves at nceas.ucsb.edu\n>\n>\n>\n> ------------------------------\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> End of R-sig-Geo Digest, Vol 19, Issue 15\n> *****************************************\n>",
+      "body_snippet": "If you want a base map to add your polygons to, you can use the Maps \npackage in R, or plot a map from a shapefile or arcinfo coverage using \nRmap or maptools libraries (for shapefile format) or RArcI",
+      "thread_id": "thread-92340bbbf881",
+      "thread_depth": 0,
+      "month": "2005-03"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-bd3d78c4cdec",
+      "subject": "Making GIS and R play nicely - some tips?",
+      "message_count": 7,
+      "participants": [
+        "Michael Sumner",
+        "Roger Bivand",
+        "Timothy H. Keitt",
+        "abunn"
+      ],
+      "started": "2005-03-02T08:54:18-05:00",
+      "last_reply": "2005-03-03T09:25:39+11:00",
+      "root_message_id": "msg-bd3d78c4cdec"
+    },
+    {
+      "id": "thread-bcd6ccc0babd",
+      "subject": "geoR",
+      "message_count": 2,
+      "participants": [
+        "Anders Malmberg",
+        "Ole F. Christensen"
+      ],
+      "started": "2005-03-04T15:45:41+01:00",
+      "last_reply": "2005-03-04T18:53:01+01:00",
+      "root_message_id": "msg-bcd6ccc0babd"
+    },
+    {
+      "id": "thread-5efa0efbf2ea",
+      "subject": "geoR",
+      "message_count": 2,
+      "participants": [
+        "Ole F. Christensen",
+        "Ruben Roa"
+      ],
+      "started": "2005-03-05T11:18:53-02:00",
+      "last_reply": "2005-03-07T08:12:56+01:00",
+      "root_message_id": "msg-5efa0efbf2ea"
+    },
+    {
+      "id": "thread-7ae290e9c7e3",
+      "subject": "Limiting problems in geoR",
+      "message_count": 1,
+      "participants": [
+        "Anders Malmberg"
+      ],
+      "started": "2005-03-07T16:08:32+01:00",
+      "last_reply": "2005-03-07T16:08:32+01:00",
+      "root_message_id": "msg-7ae290e9c7e3"
+    },
+    {
+      "id": "thread-ba8150454cba",
+      "subject": "Sampling polygons for analysis in CART/randomForests",
+      "message_count": 1,
+      "participants": [
+        "Tim Howard"
+      ],
+      "started": "2005-03-09T10:01:03-05:00",
+      "last_reply": "2005-03-09T10:01:03-05:00",
+      "root_message_id": "msg-ba8150454cba"
+    },
+    {
+      "id": "thread-df922fae22a5",
+      "subject": "Sampling polygons for analysis in CART/randomForests",
+      "message_count": 1,
+      "participants": [
+        "Tim Howard"
+      ],
+      "started": "2005-03-15T07:46:46-05:00",
+      "last_reply": "2005-03-15T07:46:46-05:00",
+      "root_message_id": "msg-df922fae22a5"
+    },
+    {
+      "id": "thread-1fbea8cd2841",
+      "subject": "exporting weiths matrix in .txt-file in spdep",
+      "message_count": 2,
+      "participants": [
+        "Mario Gellrich",
+        "Roger Bivand"
+      ],
+      "started": "2005-03-22T19:17:50+01:00",
+      "last_reply": "2005-03-22T21:16:36+01:00",
+      "root_message_id": "msg-1fbea8cd2841"
+    },
+    {
+      "id": "thread-5702b30a9cdf",
+      "subject": "2D kernel density estimation using Epanechnikov function on R",
+      "message_count": 2,
+      "participants": [
+        "Hisaji ONO",
+        "Tim Keitt"
+      ],
+      "started": "2005-03-24T05:15:25+09:00",
+      "last_reply": "2005-03-23T14:40:49-06:00",
+      "root_message_id": "msg-5702b30a9cdf"
+    },
+    {
+      "id": "thread-8c257860463d",
+      "subject": "Using adehabitat and splancs to achieve point-in-polygon analysis on raster?",
+      "message_count": 5,
+      "participants": [
+        "Clément Calenge",
+        "Roger Bivand",
+        "Sander Oom"
+      ],
+      "started": "2005-03-24T12:04:39+02:00",
+      "last_reply": "2005-03-25T20:58:44+01:00",
+      "root_message_id": "msg-8c257860463d"
+    },
+    {
+      "id": "thread-17cbb204bc26",
+      "subject": "A few more questions about Adehabitat!?",
+      "message_count": 2,
+      "participants": [
+        "Clément Calenge",
+        "Sander Oom"
+      ],
+      "started": "2005-03-26T22:58:35+02:00",
+      "last_reply": "2005-03-27T17:31:20+02:00",
+      "root_message_id": "msg-17cbb204bc26"
+    },
+    {
+      "id": "thread-08e07ad0f90f",
+      "subject": "Some comments on calculations with 'asc' (and 'kasc') objects with Adehabitat",
+      "message_count": 1,
+      "participants": [
+        "Mathieu Basille"
+      ],
+      "started": "2005-03-27T15:17:00+02:00",
+      "last_reply": "2005-03-27T15:17:00+02:00",
+      "root_message_id": "msg-08e07ad0f90f"
+    },
+    {
+      "id": "thread-628e717d2e52",
+      "subject": "DCluster",
+      "message_count": 1,
+      "participants": [
+        "Jakob Petersen"
+      ],
+      "started": "2005-03-28T15:42:18+01:00",
+      "last_reply": "2005-03-28T15:42:18+01:00",
+      "root_message_id": "msg-628e717d2e52"
+    },
+    {
+      "id": "thread-b35a2fc55ae0",
+      "subject": "Problem for plotting Moran's I estimates",
+      "message_count": 2,
+      "participants": [
+        "Chloe ARCHINARD",
+        "Roger Bivand"
+      ],
+      "started": "2005-03-29T17:13:52+02:00",
+      "last_reply": "2005-03-29T19:37:20+02:00",
+      "root_message_id": "msg-b35a2fc55ae0"
+    },
+    {
+      "id": "thread-91b3f2ab83c0",
+      "subject": "Reading and projecting lat/long point coordinates using R?",
+      "message_count": 2,
+      "participants": [
+        "Rick Reeves",
+        "Sander Oom"
+      ],
+      "started": "2005-03-30T11:42:17-08:00",
+      "last_reply": "2005-03-31T13:32:31+02:00",
+      "root_message_id": "msg-91b3f2ab83c0"
+    },
+    {
+      "id": "thread-a718018b16fb",
+      "subject": "Problem for plotting Moran's I estimates",
+      "message_count": 1,
+      "participants": [
+        "Chloe ARCHINARD"
+      ],
+      "started": "2005-03-30T17:31:35+02:00",
+      "last_reply": "2005-03-30T17:31:35+02:00",
+      "root_message_id": "msg-a718018b16fb"
+    },
+    {
+      "id": "thread-92340bbbf881",
+      "subject": "Reading and projecting lat/long point coordinates using\tR?",
+      "message_count": 1,
+      "participants": [
+        "Anthony Westerling"
+      ],
+      "started": "2005-03-31T06:54:47-08:00",
+      "last_reply": "2005-03-31T06:54:47-08:00",
+      "root_message_id": "msg-92340bbbf881"
+    },
+    {
+      "id": "thread-b661e630c2cb",
+      "subject": "DCluster",
+      "message_count": 1,
+      "participants": [
+        "Virgilio.Gomez at uv.es"
+      ],
+      "started": "2005-03-31T12:56:18+02:00",
+      "last_reply": "2005-03-31T12:56:18+02:00",
+      "root_message_id": "msg-b661e630c2cb"
+    }
+  ]
+}

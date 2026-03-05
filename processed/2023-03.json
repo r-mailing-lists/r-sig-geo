@@ -1,0 +1,215 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2023-03",
+  "messages": [
+    {
+      "id": "msg-74622fede7e4",
+      "message_id": "<CAAcGz9_czK5bO8ruc_nqGHsLKEJRV-MbKsajwg6ppMTiXGNtnQ@mail.gmail.com>",
+      "from_name": "Michael Sumner",
+      "from_email_hash": "ec02820eba6228afb61925d60b233042e6d048081cc8b7f7e46a034ba5ad3d90",
+      "date": "2023-03-03T15:50:07+11:00",
+      "subject": "[R-sig-Geo] general GDAL engagement",
+      "subject_clean": "general GDAL engagement",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello,\n\nI just want to send a general note of encouragement to R folks to engage\nmore closely with the GDAL development project.\n\nGDAL is used heavily in terra and sf and vapour and gdalcubes. It provides\nread and write access to many many file and url and database formats,\namongst many other facilities.\n\nSometimes, there are features in R that can be made redundant because of\nchanges in GDAL, an example is this file mentioned in the related github\nissue:\n\nIf you've got useful information about files that could be used to improve\nGDAL, please share it on the gdal-dev mailing list, or as bug reports on\nthe GDAL issues on github. If you need assistance or aren't sure I'm very\nhappy to help too.\n\nHere's two examples.\n\n1)\n\nIn R, terra knows this file is longitude/latitude because it has internal\nheuristics (the data projection metadata is not set, but the data lives\nwith longitudes -180, 360 and latitudes -90, 90 (or near enough):\n\nterra::crs(terra::rast(\"NetCDF:oisst-avhrr-v02r01.20220218.nc:sst\"))\n[1] \"GEOGCRS[\\\"WGS 84 (CRS84)\\\",\\n    DATUM[\\\"World G\n\nIn sf and stars, it's not known because sf is more faithful to what GDAL\nprovides (this file is non compliant to whatever convention, it's a very\ncommon situation because some domains assume \"longlat\" is just obvious).\n\nsf::gdal_read(\"NetCDF:oisst-avhrr-v02r01.20220218.nc:sst\", read_data =\nF)$crs\nCoordinate Reference System: NA\n\nIn GDAL 3.7.0 when that rolls out across R, both sf and terra will get the\nsame valid crs information from GDAL if the\noption GDAL_NETCDF_ASSUME_LONGLAT=YES is set.\n\n\n2) GRIB is a wild and wonderful format, and when it uses map projections\nsometimes the metadata is completely screwed up  - for too long I worked\naround this in R, but a simple bug report on thegithub issues saves a whole\nof of pain and extra code on the R side:\n\nhttps://github.com/OSGeo/gdal/issues/7298\n\n\nThese examples represent one of many tiny details that users encounter in\nmany places. Please take the time to report these issues to GDAL, sometimes\neffort that goes into downstream packages on CRAN won't make it further up\nthe chain, which is a shame - because, it might be fixed in R, but if it\nwere fixed in GDAL it'll also be fixed in Python, QGIS, and many other\napplications.\n\nThere are many ways to contribute beyond simply sharing files and output of\ncourse, improving the documentation, fixing bugs - if you're interested in\nthis and want to discuss I'm also happy to help.\n\nThe file I used in the example above is posted in the related GDAL PR (pull\nrequest):\n\nhttps://github.com/OSGeo/gdal/issues/6195\n\nAll the best!\n\nMike\n\n\n-- \nMichael Sumner\nSoftware and Database Engineer\nAustralian Antarctic Division\nHobart, Australia\ne-mail: mdsumner at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI just want to send a general note of encouragement to R folks to engage\nmore closely with the GDAL development project.\n\nGDAL is used heavily in terra and sf and vapour and gdalcubes. It prov",
+      "thread_id": "thread-74622fede7e4",
+      "thread_depth": 0,
+      "month": "2023-03"
+    },
+    {
+      "id": "msg-0ba61188565f",
+      "message_id": "<795487804.20298.1678245611161@mail.yahoo.com>",
+      "from_name": "Denys Dukhovnov",
+      "from_email_hash": "3e28d5a0d9f21a83e595c2ba843bb1376ad1c3d2419c5f2dfeab34d066ec780f",
+      "date": "2023-03-08T03:20:11Z",
+      "subject": "[R-sig-Geo] Impacts for panel SDM and SDEM models in splm (revisited)",
+      "subject_clean": "Impacts for panel SDM and SDEM models in splm (revisited)",
+      "in_reply_to": null,
+      "references": [
+        "<795487804.20298.1678245611161.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "Dear community,\n\nAlmost 7 years ago there was a question on panel SDM model impacts, as run following the models in splm package.\n\nhttps://stat.ethz.ch/pipermail/r-sig-geo/2016-April/024326.html\n\nThe answer given by Roger Bivand then was that there is no built-in function for inference of SDM and SDEM impacts available and instead the impacts could be derived by following a stepwise process using dense weight matrices multiplying the inv(I - rho*W) matrix and the respective model coefficients, differently for Durbin and non-Durbin covariates.\n\nI would like to follow up with 2 more questions. As I did not find any, I am assuming there is still no built-in package function implementation for panel spatial Durbin and Durbin error impacts:\n1) Would this solution work the same way for panel SDEM specification (that is, for the Durbin, local spillover effect only)?\n2) How could one generate the p-values for the direct, indirect, and total impacts using this method, as given by spdep::impacts() output for SAR and SLX models? Would one need to run some form of simulations?\n\nThank you very much.\n\nBest,\nDenys Dukhovnov",
+      "body_snippet": "Dear community,\n\nAlmost 7 years ago there was a question on panel SDM model impacts, as run following the models in splm package.\n\nhttps://stat.ethz.ch/pipermail/r-sig-geo/2016-April/024326.html\n\nThe ",
+      "thread_id": "thread-0ba61188565f",
+      "thread_depth": 0,
+      "month": "2023-03"
+    },
+    {
+      "id": "msg-3383f2b391d6",
+      "message_id": "<CAGT1S2Z3uFP8kBSsnA58pG6aYGTLtD8veAFN-CR9SHxQ8tqP_Q@mail.gmail.com>",
+      "from_name": "Noah Charney",
+      "from_email_hash": "c2068bbfb2fe4143b2f82d2cf16a239a34a9b867eb7990b8b81dbcf34fd50954",
+      "date": "2023-03-08T06:16:40-05:00",
+      "subject": "[R-sig-Geo] rast() in terra doesn't show cell values",
+      "subject_clean": "rast() in terra doesn't show cell values",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\nCan someone tell me what I'm missing?  I can't get the rast() function in\nterra to return the actual cell values from an .img file, it just keeps\ngiving strange histogram values.  The plot() looks ok, except the legend\nhas those same useless values.  Similarly on the categorical NLCD Land\nCover layer it gives me data associated with each cell value (e.g. land\ncover type), which is fine to work with, but still not the actual cell\nvalues as I'd expect.  The old raster() function in raster package works\nfine (see below). Thanks for insights! -Noah\n\n>   #Download Tree Canopy Layer from NLCD\n>   #   https://www.mrlc.gov/data/nlcd-2016-usfs-tree-canopy-cover-conus\n>\n>   #terra package gives me nonsensical histogram values\n>   library(terra)\n>   canopy <- rast('D:/GIS/Land\nCover/nlcd_2016_treecanopy_2019_08_31/nlcd_2016_treecanopy_2019_08_31.img')\n>   canopy\nclass       : SpatRaster\ndimensions  : 104424, 161190, 1  (nrow, ncol, nlyr)\nresolution  : 30, 30  (x, y)\nextent      : -2493045, 2342655, 177285, 3310005  (xmin, xmax, ymin, ymax)\ncoord. ref. : Albers Conical Equal Area\nsource      : nlcd_2016_treecanopy_2019_08_31.img\ncolor table : 1\ncategories  : Histogram, Red, Green, Blue\nname        :  Histogram\nmin value   : 5737352684\nmax value   : 7854320129\n>   plot(canopy)\n>   canopy[50000,50000]\n  Histogram\n1  24314964\n>   extract(canopy,data.frame(x=1000000,y=1000000))\n  ID Histogram\n1  1  44832754\n>\n>   #raster package works fine\n>   library(raster)\n>   canopy <- raster('D:/GIS/Land\nCover/nlcd_2016_treecanopy_2019_08_31/nlcd_2016_treecanopy_2019_08_31.img')\n>   canopy\nclass      : RasterLayer\ndimensions : 104424, 161190, 16832104560  (nrow, ncol, ncell)\nresolution : 30, 30  (x, y)\nextent     : -2493045, 2342655, 177285, 3310005  (xmin, xmax, ymin, ymax)\ncrs        : +proj=aea +lat_0=23 +lon_0=-96 +lat_1=29.5 +lat_2=45.5 +x_0=0\n+y_0=0 +datum=NAD83 +units=m +no_defs\nsource     : nlcd_2016_treecanopy_2019_08_31.img\nnames      : Histogram\nvalues     : 0, 255  (min, max)\nattributes :\n        ID  Histogram Red Green Blue\n from:   0 5737352684 255   255  255\n  to : 255 7854320129 255   255  255\n>   canopy[50000,50000]\n24\n>   extract(canopy,data.frame(x=1000000,y=1000000))\n94\n>\n>   #Land Cover (categorical) layer gives associated categories (not\nvalues) in terra\n>   #     https://www.mrlc.gov/data/nlcd-2019-land-cover-conus\n>\n>   nlcd <- rast('D:/GIS/Land\nCover/nlcd_2019_land_cover_l48_20210604/nlcd_2019_land_cover_l48_20210604.img')\n>   nlcd\nclass       : SpatRaster\ndimensions  : 104424, 161190, 1  (nrow, ncol, nlyr)\nresolution  : 30, 30  (x, y)\nextent      : -2493045, 2342655, 177285, 3310005  (xmin, xmax, ymin, ymax)\ncoord. ref. : Albers Conical Equal Area\nsource      : nlcd_2019_land_cover_l48_20210604.img\ncolor table : 1\ncategories  : NLCD Land Cover Class, Histogram, Red, Green, Blue, Opacity\nname        :        NLCD Land Cover Class\nmin value   :                 Unclassified\nmax value   : Emergent Herbaceous Wetlands\n>   nlcd[50000,50000]\n  NLCD Land Cover Class\n1      Evergreen Forest\n>   extract(nlcd,data.frame(x=1000000,y=1000000))\n  ID NLCD Land Cover Class\n1  1      Evergreen Forest\n>\n\n\n~~~\nDr. Noah Charney (he/him)\nAssistant Professor of Conservation Biology\nDepartment of Wildlife, Fisheries, and Conservation Biology\nUniversity of Maine, Orono, ME\n230 Nutting Hall\n(207) 581-1284\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\nCan someone tell me what I'm missing?  I can't get the rast() function in\nterra to return the actual cell values from an .img file, it just keeps\ngiving strange histogram values.  The plot() looks",
+      "thread_id": "thread-3383f2b391d6",
+      "thread_depth": 0,
+      "month": "2023-03"
+    },
+    {
+      "id": "msg-537a5590d1d8",
+      "message_id": "<CAM_vju=tgixKtLUfNtVoD2wJBaYFByCMMZr0z-tAyAijG_VVDg@mail.gmail.com>",
+      "from_name": "Sarah Goslee",
+      "from_email_hash": "206a30c899e53993c1206379f8592cdb0ac0fb7c442c81d77309cd6f5499d14e",
+      "date": "2023-03-08T17:39:37-05:00",
+      "subject": "[R-sig-Geo] rast() in terra doesn't show cell values",
+      "subject_clean": "rast() in terra doesn't show cell values",
+      "in_reply_to": "<CAGT1S2Z3uFP8kBSsnA58pG6aYGTLtD8veAFN-CR9SHxQ8tqP_Q@mail.gmail.com>",
+      "references": [
+        "<CAGT1S2Z3uFP8kBSsnA58pG6aYGTLtD8veAFN-CR9SHxQ8tqP_Q@mail.gmail.com>"
+      ],
+      "body_plain": "Hi Noah,\n\nIt appears to be the same problem as this: [reading rasters in r using\nterra package](https://gis.stackexchange.com/questions/398061/reading-rasters-in-r-using-terra-package).\nAs in that question, adding 0 forces the conversion, but loses all the\ninformation about color table, etc.\n\ncanopy <- rast('nlcd_2016_treecanopy_2019_08_31.img', lyrs=1)\n\nc2 <- canopy + 0\n\n> c2\nclass       : SpatRaster\ndimensions  : 104424, 161190, 1  (nrow, ncol, nlyr)\nresolution  : 30, 30  (x, y)\nextent      : -2493045, 2342655, 177285, 3310005  (xmin, xmax, ymin, ymax)\ncoord. ref. : Albers Conical Equal Area\nsource      : spat_t0Rj6gEgi2CzsAZ_16778.tif\nname        : Histogram\nmin value   :         0\nmax value   :       255\n\nI didn't try the devel version of terra, though.\n\nSarah\n\nOn Wed, Mar 8, 2023 at 6:17?AM Noah Charney <noah.charney at maine.edu> wrote:\n>\n> Hi,\n> Can someone tell me what I'm missing?  I can't get the rast() function in\n> terra to return the actual cell values from an .img file, it just keeps\n> giving strange histogram values.  The plot() looks ok, except the legend\n> has those same useless values.  Similarly on the categorical NLCD Land\n> Cover layer it gives me data associated with each cell value (e.g. land\n> cover type), which is fine to work with, but still not the actual cell\n> values as I'd expect.  The old raster() function in raster package works\n> fine (see below). Thanks for insights! -Noah\n>\n> >   #Download Tree Canopy Layer from NLCD\n> >   #   https://www.mrlc.gov/data/nlcd-2016-usfs-tree-canopy-cover-conus\n> >\n> >   #terra package gives me nonsensical histogram values\n> >   library(terra)\n> >   canopy <- rast('D:/GIS/Land\n> Cover/nlcd_2016_treecanopy_2019_08_31/nlcd_2016_treecanopy_2019_08_31.img')\n> >   canopy\n> class       : SpatRaster\n> dimensions  : 104424, 161190, 1  (nrow, ncol, nlyr)\n> resolution  : 30, 30  (x, y)\n> extent      : -2493045, 2342655, 177285, 3310005  (xmin, xmax, ymin, ymax)\n> coord. ref. : Albers Conical Equal Area\n> source      : nlcd_2016_treecanopy_2019_08_31.img\n> color table : 1\n> categories  : Histogram, Red, Green, Blue\n> name        :  Histogram\n> min value   : 5737352684\n> max value   : 7854320129\n> >   plot(canopy)\n> >   canopy[50000,50000]\n>   Histogram\n> 1  24314964\n> >   extract(canopy,data.frame(x=1000000,y=1000000))\n>   ID Histogram\n> 1  1  44832754\n> >\n> >   #raster package works fine\n> >   library(raster)\n> >   canopy <- raster('D:/GIS/Land\n> Cover/nlcd_2016_treecanopy_2019_08_31/nlcd_2016_treecanopy_2019_08_31.img')\n> >   canopy\n> class      : RasterLayer\n> dimensions : 104424, 161190, 16832104560  (nrow, ncol, ncell)\n> resolution : 30, 30  (x, y)\n> extent     : -2493045, 2342655, 177285, 3310005  (xmin, xmax, ymin, ymax)\n> crs        : +proj=aea +lat_0=23 +lon_0=-96 +lat_1=29.5 +lat_2=45.5 +x_0=0\n> +y_0=0 +datum=NAD83 +units=m +no_defs\n> source     : nlcd_2016_treecanopy_2019_08_31.img\n> names      : Histogram\n> values     : 0, 255  (min, max)\n> attributes :\n>         ID  Histogram Red Green Blue\n>  from:   0 5737352684 255   255  255\n>   to : 255 7854320129 255   255  255\n> >   canopy[50000,50000]\n> 24\n> >   extract(canopy,data.frame(x=1000000,y=1000000))\n> 94\n> >\n> >   #Land Cover (categorical) layer gives associated categories (not\n> values) in terra\n> >   #     https://www.mrlc.gov/data/nlcd-2019-land-cover-conus\n> >\n> >   nlcd <- rast('D:/GIS/Land\n> Cover/nlcd_2019_land_cover_l48_20210604/nlcd_2019_land_cover_l48_20210604.img')\n> >   nlcd\n> class       : SpatRaster\n> dimensions  : 104424, 161190, 1  (nrow, ncol, nlyr)\n> resolution  : 30, 30  (x, y)\n> extent      : -2493045, 2342655, 177285, 3310005  (xmin, xmax, ymin, ymax)\n> coord. ref. : Albers Conical Equal Area\n> source      : nlcd_2019_land_cover_l48_20210604.img\n> color table : 1\n> categories  : NLCD Land Cover Class, Histogram, Red, Green, Blue, Opacity\n> name        :        NLCD Land Cover Class\n> min value   :                 Unclassified\n> max value   : Emergent Herbaceous Wetlands\n> >   nlcd[50000,50000]\n>   NLCD Land Cover Class\n> 1      Evergreen Forest\n> >   extract(nlcd,data.frame(x=1000000,y=1000000))\n>   ID NLCD Land Cover Class\n> 1  1      Evergreen Forest\n> >\n>\n>\n> ~~~\n> Dr. Noah Charney (he/him)\n> Assistant Professor of Conservation Biology\n> Department of Wildlife, Fisheries, and Conservation Biology\n> University of Maine, Orono, ME\n> 230 Nutting Hall\n> (207) 581-1284\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n-- \nSarah Goslee (she/her)\nhttp://www.numberwright.com",
+      "body_snippet": "Hi Noah,\n\nIt appears to be the same problem as this: [reading rasters in r using\nterra package](https://gis.stackexchange.com/questions/398061/reading-rasters-in-r-using-terra-package).\nAs in that que",
+      "thread_id": "thread-3383f2b391d6",
+      "thread_depth": 1,
+      "month": "2023-03"
+    },
+    {
+      "id": "msg-7bbf3a3db00d",
+      "message_id": "<CAGT1S2YMnK7boKu6-EsQP0fCNUVSPs4UZuvLbgKaWGar+Sec7g@mail.gmail.com>",
+      "from_name": "Noah Charney",
+      "from_email_hash": "c2068bbfb2fe4143b2f82d2cf16a239a34a9b867eb7990b8b81dbcf34fd50954",
+      "date": "2023-03-08T21:51:49-05:00",
+      "subject": "[R-sig-Geo] rast() in terra doesn't show cell values",
+      "subject_clean": "rast() in terra doesn't show cell values",
+      "in_reply_to": "<CAM_vju=tgixKtLUfNtVoD2wJBaYFByCMMZr0z-tAyAijG_VVDg@mail.gmail.com>",
+      "references": [
+        "<CAGT1S2Z3uFP8kBSsnA58pG6aYGTLtD8veAFN-CR9SHxQ8tqP_Q@mail.gmail.com>",
+        "<CAM_vju=tgixKtLUfNtVoD2wJBaYFByCMMZr0z-tAyAijG_VVDg@mail.gmail.com>"
+      ],
+      "body_plain": "Thanks!  That fixed it!\n-Noah\n\nOn Wed, Mar 8, 2023 at 5:40?PM Sarah Goslee <sarah.goslee at gmail.com> wrote:\n\n> Hi Noah,\n>\n> It appears to be the same problem as this: [reading rasters in r using\n> terra package](\n> https://gis.stackexchange.com/questions/398061/reading-rasters-in-r-using-terra-package\n> ).\n> As in that question, adding 0 forces the conversion, but loses all the\n> information about color table, etc.\n>\n> canopy <- rast('nlcd_2016_treecanopy_2019_08_31.img', lyrs=1)\n>\n> c2 <- canopy + 0\n>\n> > c2\n> class       : SpatRaster\n> dimensions  : 104424, 161190, 1  (nrow, ncol, nlyr)\n> resolution  : 30, 30  (x, y)\n> extent      : -2493045, 2342655, 177285, 3310005  (xmin, xmax, ymin, ymax)\n> coord. ref. : Albers Conical Equal Area\n> source      : spat_t0Rj6gEgi2CzsAZ_16778.tif\n> name        : Histogram\n> min value   :         0\n> max value   :       255\n>\n> I didn't try the devel version of terra, though.\n>\n> Sarah\n>\n> On Wed, Mar 8, 2023 at 6:17?AM Noah Charney <noah.charney at maine.edu>\n> wrote:\n> >\n> > Hi,\n> > Can someone tell me what I'm missing?  I can't get the rast() function in\n> > terra to return the actual cell values from an .img file, it just keeps\n> > giving strange histogram values.  The plot() looks ok, except the legend\n> > has those same useless values.  Similarly on the categorical NLCD Land\n> > Cover layer it gives me data associated with each cell value (e.g. land\n> > cover type), which is fine to work with, but still not the actual cell\n> > values as I'd expect.  The old raster() function in raster package works\n> > fine (see below). Thanks for insights! -Noah\n> >\n> > >   #Download Tree Canopy Layer from NLCD\n> > >   #   https://www.mrlc.gov/data/nlcd-2016-usfs-tree-canopy-cover-conus\n> > >\n> > >   #terra package gives me nonsensical histogram values\n> > >   library(terra)\n> > >   canopy <- rast('D:/GIS/Land\n> >\n> Cover/nlcd_2016_treecanopy_2019_08_31/nlcd_2016_treecanopy_2019_08_31.img')\n> > >   canopy\n> > class       : SpatRaster\n> > dimensions  : 104424, 161190, 1  (nrow, ncol, nlyr)\n> > resolution  : 30, 30  (x, y)\n> > extent      : -2493045, 2342655, 177285, 3310005  (xmin, xmax, ymin,\n> ymax)\n> > coord. ref. : Albers Conical Equal Area\n> > source      : nlcd_2016_treecanopy_2019_08_31.img\n> > color table : 1\n> > categories  : Histogram, Red, Green, Blue\n> > name        :  Histogram\n> > min value   : 5737352684\n> > max value   : 7854320129\n> > >   plot(canopy)\n> > >   canopy[50000,50000]\n> >   Histogram\n> > 1  24314964\n> > >   extract(canopy,data.frame(x=1000000,y=1000000))\n> >   ID Histogram\n> > 1  1  44832754\n> > >\n> > >   #raster package works fine\n> > >   library(raster)\n> > >   canopy <- raster('D:/GIS/Land\n> >\n> Cover/nlcd_2016_treecanopy_2019_08_31/nlcd_2016_treecanopy_2019_08_31.img')\n> > >   canopy\n> > class      : RasterLayer\n> > dimensions : 104424, 161190, 16832104560  (nrow, ncol, ncell)\n> > resolution : 30, 30  (x, y)\n> > extent     : -2493045, 2342655, 177285, 3310005  (xmin, xmax, ymin, ymax)\n> > crs        : +proj=aea +lat_0=23 +lon_0=-96 +lat_1=29.5 +lat_2=45.5\n> +x_0=0\n> > +y_0=0 +datum=NAD83 +units=m +no_defs\n> > source     : nlcd_2016_treecanopy_2019_08_31.img\n> > names      : Histogram\n> > values     : 0, 255  (min, max)\n> > attributes :\n> >         ID  Histogram Red Green Blue\n> >  from:   0 5737352684 255   255  255\n> >   to : 255 7854320129 255   255  255\n> > >   canopy[50000,50000]\n> > 24\n> > >   extract(canopy,data.frame(x=1000000,y=1000000))\n> > 94\n> > >\n> > >   #Land Cover (categorical) layer gives associated categories (not\n> > values) in terra\n> > >   #     https://www.mrlc.gov/data/nlcd-2019-land-cover-conus\n> > >\n> > >   nlcd <- rast('D:/GIS/Land\n> >\n> Cover/nlcd_2019_land_cover_l48_20210604/nlcd_2019_land_cover_l48_20210604.img')\n> > >   nlcd\n> > class       : SpatRaster\n> > dimensions  : 104424, 161190, 1  (nrow, ncol, nlyr)\n> > resolution  : 30, 30  (x, y)\n> > extent      : -2493045, 2342655, 177285, 3310005  (xmin, xmax, ymin,\n> ymax)\n> > coord. ref. : Albers Conical Equal Area\n> > source      : nlcd_2019_land_cover_l48_20210604.img\n> > color table : 1\n> > categories  : NLCD Land Cover Class, Histogram, Red, Green, Blue, Opacity\n> > name        :        NLCD Land Cover Class\n> > min value   :                 Unclassified\n> > max value   : Emergent Herbaceous Wetlands\n> > >   nlcd[50000,50000]\n> >   NLCD Land Cover Class\n> > 1      Evergreen Forest\n> > >   extract(nlcd,data.frame(x=1000000,y=1000000))\n> >   ID NLCD Land Cover Class\n> > 1  1      Evergreen Forest\n> > >\n> >\n> >\n> > ~~~\n> > Dr. Noah Charney (he/him)\n> > Assistant Professor of Conservation Biology\n> > Department of Wildlife, Fisheries, and Conservation Biology\n> > University of Maine, Orono, ME\n> > 230 Nutting Hall\n> > (207) 581-1284\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n> --\n> Sarah Goslee (she/her)\n> http://www.numberwright.com\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks!  That fixed it!\n-Noah\n\nOn Wed, Mar 8, 2023 at 5:40?PM Sarah Goslee <sarah.goslee at gmail.com> wrote:\n\n> Hi Noah,\n>\n> It appears to be the same problem as this: [reading rasters in r using\n> t",
+      "thread_id": "thread-3383f2b391d6",
+      "thread_depth": 2,
+      "month": "2023-03"
+    },
+    {
+      "id": "msg-4e76cf91a96a",
+      "message_id": "<92eeee6-daa9-988-f9c2-1f3a37a17d6f@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2023-03-09T20:33:45+01:00",
+      "subject": "[R-sig-Geo] Impacts for panel SDM and SDEM models in splm (revisited)",
+      "subject_clean": "Impacts for panel SDM and SDEM models in splm (revisited)",
+      "in_reply_to": "<795487804.20298.1678245611161@mail.yahoo.com>",
+      "references": [
+        "<795487804.20298.1678245611161.ref@mail.yahoo.com>",
+        "<795487804.20298.1678245611161@mail.yahoo.com>"
+      ],
+      "body_plain": "On Wed, 8 Mar 2023, Denys Dukhovnov via R-sig-Geo wrote:\n\n> Dear community,\n>\n> Almost 7 years ago there was a question on panel SDM model impacts, as \n> run following the models in splm package.\n>\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fpipermail%2Fr-sig-geo%2F2016-April%2F024326.html&data=05%7C01%7CRoger.Bivand%40nhh.no%7Cd936e7918f3c4e280e6a08db1f841da0%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638138424517495097%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=OE%2FLj3rYMXmz8Go11R1oHrslxVr6oC4WnOWUtjTdxNU%3D&reserved=0\n>\n> The answer given by Roger Bivand then was that there is no built-in \n> function for inference of SDM and SDEM impacts available and instead the \n> impacts could be derived by following a stepwise process using dense \n> weight matrices multiplying the inv(I - rho*W) matrix and the respective \n> model coefficients, differently for Durbin and non-Durbin covariates.\n\nBoth released splm (1.6-2) and the especially the development version, \nwhich may be installed with install.packages(\"splm\", \nrepos=\"http://R-Forge.R-project.org\"), have more support for estimating \nfor models including the spatially lagged response (SLM/SAR, SDM, etc.). \nThey do not, however, support impact measures for Durbin-type models (SLX, \nSDEM, etc.). It seems that impacts are hard to combine with the various \nestimation methods for spatial panel models.\n\n>\n> I would like to follow up with 2 more questions. As I did not find any, \n> I am assuming there is still no built-in package function implementation \n> for panel spatial Durbin and Durbin error impacts:\n\n> 1) Would this solution work the same way for panel SDEM specification\n>    (that is, for the Durbin, local spillover effect only)?\n\nNo, it would not work, because in the sense of Vega & Elhorst (2015) and \nLeSage (2014), SAR/SDM etc. are global impacts, requiring sampling from \nthe fitted model for inference, while SLX and SDEM are local impacts, with \nthe total impacts being a linear combination of the coefficients on the \nunlagged and lagged covariates.\n\n> 2) How could one generate the p-values for the direct, indirect, and\n>    total impacts using this method, as given by spdep::impacts() output\n>    for SAR and SLX models? Would one need to run some form of\n>    simulations?\n>\n\nIn the cross-sectional case, impacts methods are provided, but you can \nalso use multcomp::glht() because fitted model objects have coef() \nand vcov() methods, which glht() can use:\n\nlibrary(spdep)\ndata(columbus)\nlw <- nb2listw(col.gal.nb)\nlibrary(spatialreg)\nmod_SDEM <- errorsarlm(CRIME ~ INC + HOVAL, data=columbus, lw,\n  Durbin=TRUE)\nsummary(impacts(mod_SDEM))\nsummary(multcomp::glht(mod_SDEM, c(\"INC + lag.INC == 0\", \"HOVAL + \nlag.HOVAL == 0\")))\n\nThe difference in the p-values is because the spatialreg case (this will \nbe changed!), the alternative= is assumed to be \"greater\", not \"two-sided\" \nas in the multcomp case, and cannot (yet) be changed by the user.\n\nIf splm provided coef() and modified vcov() methods (modified to name the \ncolumns and rows of the returned objects), then progress would be \npossible, but I'm unsure whether a spatial Durbin error model can be \nfitted without adding thw WX columns manually.\n\nHope this clarifies,\n\nRoger\n\n\n> Thank you very much.\n>\n> Best,\n> Denys Dukhovnov\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&data=05%7C01%7CRoger.Bivand%40nhh.no%7Cd936e7918f3c4e280e6a08db1f841da0%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C638138424517495097%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=Ch4g7dSq4kxIOg6wYgZywtPxk6XBMXyK0BFp2HQPTjQ%3D&reserved=0\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 8 Mar 2023, Denys Dukhovnov via R-sig-Geo wrote:\n\n> Dear community,\n>\n> Almost 7 years ago there was a question on panel SDM model impacts, as \n> run following the models in splm package.\n>\n> ",
+      "thread_id": "thread-0ba61188565f",
+      "thread_depth": 1,
+      "month": "2023-03"
+    },
+    {
+      "id": "msg-5eda90c31964",
+      "message_id": "<3b185317955a4444afb87068dd96ec9e@uni-bayreuth.de>",
+      "from_name": "Khan, Saeed Akhtar",
+      "from_email_hash": "ae998ce8b17ce26931b25cda147c45a114fa75ff4cba0be357c4e241570162fc",
+      "date": "2023-03-27T16:50:37Z",
+      "subject": "[R-sig-Geo] Guidance/ resources needed for geospatial analysis of floods",
+      "subject_clean": "Guidance/ resources needed for geospatial analysis of floods",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear colleagues,\n\nI want to perform a basic geospatial analysis of flood events (magnitude, extent, etc.) on the rasters data. Can you please suggest some good resources on geospatial analysis and how to do it in R?\n\nBest wishes,\nSaeed\n\n********************************************************\nSaeed A. Khan\nPhD Candidate\nInstitute of Geography, Universit?t Bayreuth\nUniversit?tsstra?e 30, 95447 Bayreuth, Germany\nTel.: +49 921 55-2054  E-Mail: Saeed.Khan at uni-bayreuth.de<mailto:Saeed.Khan at uni-bayreuth.de>\n\nPersonal website<https://sites.google.com/view/saeed-a-khan> | GoogleScholar<https://scholar.google.com/citations?user=0X-QRJgAAAAJ&hl=en> | ResearchGate<https://www.researchgate.net/profile/Saeed-Khan-22> | Twitter<https://twitter.com/sa_khan_>\nRecent research article: https://doi.org/10.1007/s11629-021-7297-y<https://www.google.com/url?q=https%3A%2F%2Fdoi.org%2F10.1007%2Fs11629-021-7297-y&sa=D&sntz=1&usg=AOvVaw3vHaQiucgNky4QDUf0eo2b>\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear colleagues,\n\nI want to perform a basic geospatial analysis of flood events (magnitude, extent, etc.) on the rasters data. Can you please suggest some good resources on geospatial analysis and how",
+      "thread_id": "thread-5eda90c31964",
+      "thread_depth": 0,
+      "month": "2023-03"
+    },
+    {
+      "id": "msg-392cd0e22cc1",
+      "message_id": "<348249F8-7E51-4FC6-81B6-11F1BC77424D@inpe.br>",
+      "from_name": "GilbertoCamara",
+      "from_email_hash": "6f36678742286512daca61c61146bf7b46200acda50a1a27383d1c3ef47f7624",
+      "date": "2023-03-27T14:59:59-03:00",
+      "subject": "[R-sig-Geo]  Guidance/ resources needed for geospatial analysis of floods",
+      "subject_clean": "Guidance/ resources needed for geospatial analysis of floods",
+      "in_reply_to": "<3b185317955a4444afb87068dd96ec9e@uni-bayreuth.de>",
+      "references": [
+        "<3b185317955a4444afb87068dd96ec9e@uni-bayreuth.de>"
+      ],
+      "body_plain": "Dear Saeed \n\nPlease take a look at the CRAN Task View on Spatial Data Analysis:\nhttps://cran.r-project.org/web/views/Spatial.html\n\nBest\nGilberto\n============================\nProf Dr Gilberto Camara\nSenior Researcher\nNational Institute for Space Research (INPE), Brazil\nhttps://gilbertocamara.org/\n=============================\n\n\n\n\n> On 27 Mar 2023, at 13:50, Khan, Saeed Akhtar <saeed.khan at uni-bayreuth.de> wrote:\n> \n> Dear colleagues,\n> \n> I want to perform a basic geospatial analysis of flood events (magnitude, extent, etc.) on the rasters data. Can you please suggest some good resources on geospatial analysis and how to do it in R?\n> \n> Best wishes,\n> Saeed\n> \n> ********************************************************\n> Saeed A. Khan\n> PhD Candidate\n> Institute of Geography, Universit?t Bayreuth\n> Universit?tsstra?e 30, 95447 Bayreuth, Germany\n> Tel.: +49 921 55-2054  E-Mail: Saeed.Khan at uni-bayreuth.de<mailto:Saeed.Khan at uni-bayreuth.de>\n> \n> Personal website<https://sites.google.com/view/saeed-a-khan> | GoogleScholar<https://scholar.google.com/citations?user=0X-QRJgAAAAJ&hl=en> | ResearchGate<https://www.researchgate.net/profile/Saeed-Khan-22> | Twitter<https://twitter.com/sa_khan_>\n> Recent research article: https://doi.org/10.1007/s11629-021-7297-y<https://www.google.com/url?q=https%3A%2F%2Fdoi.org%2F10.1007%2Fs11629-021-7297-y&sa=D&sntz=1&usg=AOvVaw3vHaQiucgNky4QDUf0eo2b>\n> \n> \n> [[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Dear Saeed \n\nPlease take a look at the CRAN Task View on Spatial Data Analysis:\nhttps://cran.r-project.org/web/views/Spatial.html\n\nBest\nGilberto\n============================\nProf Dr Gilberto Camara\nSe",
+      "thread_id": "thread-5eda90c31964",
+      "thread_depth": 1,
+      "month": "2023-03"
+    },
+    {
+      "id": "msg-9a6f861f257d",
+      "message_id": "<967dfe21a13e419db87671366b5aa1b5@uni-bayreuth.de>",
+      "from_name": "Khan, Saeed Akhtar",
+      "from_email_hash": "ae998ce8b17ce26931b25cda147c45a114fa75ff4cba0be357c4e241570162fc",
+      "date": "2023-03-28T08:16:36Z",
+      "subject": "[R-sig-Geo]  Guidance/ resources needed for geospatial analysis of floods",
+      "subject_clean": "Guidance/ resources needed for geospatial analysis of floods",
+      "in_reply_to": "<348249F8-7E51-4FC6-81B6-11F1BC77424D@inpe.br>",
+      "references": [
+        "<3b185317955a4444afb87068dd96ec9e@uni-bayreuth.de>",
+        "<348249F8-7E51-4FC6-81B6-11F1BC77424D@inpe.br>"
+      ],
+      "body_plain": "Dear Gilberto, \n\nThank you for mentioning CRAN Task View on Spatial Analysis. I will go through it. \n\nBest wishes,\nSaeed\n\n-----Original Message-----\nFrom: GilbertoCamara [mailto:gilberto.camara.inpe at gmail.com] \nSent: 27 March 2023 20:00\nTo: Khan, Saeed Akhtar <saeed.khan at uni-bayreuth.de>\nCc: r-sig-geo at r-project.org\nSubject: Re: [R-sig-Geo] Guidance/ resources needed for geospatial analysis of floods\n\nDear Saeed \n\nPlease take a look at the CRAN Task View on Spatial Data Analysis:\nhttps://cran.r-project.org/web/views/Spatial.html\n\nBest\nGilberto\n============================\nProf Dr Gilberto Camara\nSenior Researcher\nNational Institute for Space Research (INPE), Brazil https://gilbertocamara.org/ =============================\n\n\n\n\n> On 27 Mar 2023, at 13:50, Khan, Saeed Akhtar <saeed.khan at uni-bayreuth.de> wrote:\n> \n> Dear colleagues,\n> \n> I want to perform a basic geospatial analysis of flood events (magnitude, extent, etc.) on the rasters data. Can you please suggest some good resources on geospatial analysis and how to do it in R?\n> \n> Best wishes,\n> Saeed\n> \n> ********************************************************\n> Saeed A. Khan\n> PhD Candidate\n> Institute of Geography, Universit t Bayreuth Universit tsstra e 30, \n> 95447 Bayreuth, Germany\n> Tel.: +49 921 55-2054  E-Mail: \n> Saeed.Khan at uni-bayreuth.de<mailto:Saeed.Khan at uni-bayreuth.de>\n> \n> Personal website<https://sites.google.com/view/saeed-a-khan> | \n> GoogleScholar<https://scholar.google.com/citations?user=0X-QRJgAAAAJ&h\n> l=en> | \n> ResearchGate<https://www.researchgate.net/profile/Saeed-Khan-22> | \n> Twitter<https://twitter.com/sa_khan_>\n> Recent research article: \n> https://doi.org/10.1007/s11629-021-7297-y<https://www.google.com/url?q\n> =https%3A%2F%2Fdoi.org%2F10.1007%2Fs11629-021-7297-y&sa=D&sntz=1&usg=A\n> OvVaw3vHaQiucgNky4QDUf0eo2b>\n> \n> \n> [[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Dear Gilberto, \n\nThank you for mentioning CRAN Task View on Spatial Analysis. I will go through it. \n\nBest wishes,\nSaeed\n\n-----Original Message-----\nFrom: GilbertoCamara [mailto:gilberto.camara.inpe a",
+      "thread_id": "thread-5eda90c31964",
+      "thread_depth": 2,
+      "month": "2023-03"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-74622fede7e4",
+      "subject": "general GDAL engagement",
+      "message_count": 1,
+      "participants": [
+        "Michael Sumner"
+      ],
+      "started": "2023-03-03T15:50:07+11:00",
+      "last_reply": "2023-03-03T15:50:07+11:00",
+      "root_message_id": "msg-74622fede7e4"
+    },
+    {
+      "id": "thread-0ba61188565f",
+      "subject": "Impacts for panel SDM and SDEM models in splm (revisited)",
+      "message_count": 2,
+      "participants": [
+        "Denys Dukhovnov",
+        "Roger Bivand"
+      ],
+      "started": "2023-03-08T03:20:11+00:00",
+      "last_reply": "2023-03-09T20:33:45+01:00",
+      "root_message_id": "msg-0ba61188565f"
+    },
+    {
+      "id": "thread-3383f2b391d6",
+      "subject": "rast() in terra doesn't show cell values",
+      "message_count": 3,
+      "participants": [
+        "Noah Charney",
+        "Sarah Goslee"
+      ],
+      "started": "2023-03-08T06:16:40-05:00",
+      "last_reply": "2023-03-08T21:51:49-05:00",
+      "root_message_id": "msg-3383f2b391d6"
+    },
+    {
+      "id": "thread-5eda90c31964",
+      "subject": "Guidance/ resources needed for geospatial analysis of floods",
+      "message_count": 3,
+      "participants": [
+        "GilbertoCamara",
+        "Khan, Saeed Akhtar"
+      ],
+      "started": "2023-03-27T16:50:37+00:00",
+      "last_reply": "2023-03-28T08:16:36+00:00",
+      "root_message_id": "msg-5eda90c31964"
+    }
+  ]
+}

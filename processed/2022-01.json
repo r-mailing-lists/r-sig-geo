@@ -1,0 +1,370 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2022-01",
+  "messages": [
+    {
+      "id": "msg-2ba03126586f",
+      "message_id": "<qdUNnkgf98u86-_wu1ShZGxNiyWu1JqtBlahiHURDE7-TEoaUaf9d42M7qZiV5aP_9j-oAp4Mj7XPSHDnAtT3M3pNFECucT0-oGFvZD6x4U=@protonmail.com>",
+      "from_name": "basile.lenormand",
+      "from_email_hash": "26e0d9f4e6c946b3b454aa2cc274e07b58e8998eaa48baa702e8ee9f6ad75436",
+      "date": "2022-01-03T00:49:33Z",
+      "subject": "[R-sig-Geo] leaflet in shiny error message",
+      "subject_clean": "leaflet in shiny error message",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello everyone!\n\nI am trying to create a shiny app with leaflet stuff in it. I have a problem when I am displaying the application, I got this error message :\n\n\"Error in dispatch: argument \"map\" is missing, with no default\".\n\nI searched some clues on the net, I found some examples which are working but I do not get where I going wrong. I double checked the brackets, try to change the name of the map, put the name of the spatial data frame that I am using, etc.\n\nIf someone can give me some clues I will be really glad.\nHave a great day,\nthank you for your time,\nBasile.\n\nHere is my code:\n\nui <- fluidPage(\ntitlePanel(\"\"),\n\nsidebarLayout(\nsidebarPanel(\nhelpText(\"\"),\n\nselectInput(\"var\",\nlabel = \"Choose a variable to display\",\nchoices = spdf$koppen,\nselected = \"\"\n),\nsliderInput(\"range\", \"surface br?l?e en hectare\", min(spdf$V11), max(spdf$V11),\nvalue = range(df$V11), step = 2500\n),\nsliderInput(\"range\", \"Nombre d'incendie\", min(spdf$n), max(spdf$n),\nvalue = range(df$V11), step = 2\n),\ncheckboxInput(\"legend\", \"Show legend\", TRUE)),\nmainPanel(leafletOutput(\"map\"))\n)\n)\n\nserver <- function(input, output, session) {\noutput$map <- renderLeaflet({\nleaflet(df) %>%\naddTiles(group = \"OSM\") %>%\naddProviderTiles(\"Esri.NatGeoWorldMap\", group=\"ESRI\") %>%\naddProviderTiles(\"CartoDB.DarkMatter\", group= \"CartoDB\") %>%\n#fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))%>%\naddPolygons(\ndata=spdf,\nfillColor = \"viridis\",\nweight = 0,\nopacity = 1,\ncolor = \"white\",\ndashArray = \"3\",\nfillOpacity = 0.7)#%>%\nsetView(lat= 44.2, lng=5.9, zoom=5)\n})\n}\nshinyApp(ui, server)\n\nSent with [ProtonMail](https://protonmail.com) Secure Email.\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello everyone!\n\nI am trying to create a shiny app with leaflet stuff in it. I have a problem when I am displaying the application, I got this error message :\n\n\"Error in dispatch: argument \"map\" is mi",
+      "thread_id": "thread-2ba03126586f",
+      "thread_depth": 0,
+      "month": "2022-01"
+    },
+    {
+      "id": "msg-6661b15ee681",
+      "message_id": "<0b88935c-a7dc-1325-6510-795ec523c394@gmail.com>",
+      "from_name": "Bede-Fazekas Ákos",
+      "from_email_hash": "f2e2e122dfd4dbb8b8973b23d149555486ccb4290cb5f11779739fdbbcf5b93d",
+      "date": "2022-01-03T09:22:19+01:00",
+      "subject": "[R-sig-Geo] leaflet in shiny error message",
+      "subject_clean": "leaflet in shiny error message",
+      "in_reply_to": "<qdUNnkgf98u86-_wu1ShZGxNiyWu1JqtBlahiHURDE7-TEoaUaf9d42M7qZiV5aP_9j-oAp4Mj7XPSHDnAtT3M3pNFECucT0-oGFvZD6x4U=@protonmail.com>",
+      "references": [
+        "<qdUNnkgf98u86-_wu1ShZGxNiyWu1JqtBlahiHURDE7-TEoaUaf9d42M7qZiV5aP_9j-oAp4Mj7XPSHDnAtT3M3pNFECucT0-oGFvZD6x4U=@protonmail.com>"
+      ],
+      "body_plain": "Dear Basile,\n\nthe %>% operator is accidentally commented out! Change\nfillOpacity = 0.7)#%>%\nto\nfillOpacity = 0.7) %>%\nand then setView() will get its first parameter called \"map\".\n\nHTH,\n?kos Bede-Fazekas\nCentre for Ecological Research, Hungary\n\n2022.01.03. 1:49 keltez?ssel, basile.lenormand via R-sig-Geo ?rta:\n> Hello everyone!\n>\n> I am trying to create a shiny app with leaflet stuff in it. I have a problem when I am displaying the application, I got this error message :\n>\n> \"Error in dispatch: argument \"map\" is missing, with no default\".\n>\n> I searched some clues on the net, I found some examples which are working but I do not get where I going wrong. I double checked the brackets, try to change the name of the map, put the name of the spatial data frame that I am using, etc.\n>\n> If someone can give me some clues I will be really glad.\n> Have a great day,\n> thank you for your time,\n> Basile.\n>\n> Here is my code:\n>\n> ui <- fluidPage(\n> titlePanel(\"\"),\n>\n> sidebarLayout(\n> sidebarPanel(\n> helpText(\"\"),\n>\n> selectInput(\"var\",\n> label = \"Choose a variable to display\",\n> choices = spdf$koppen,\n> selected = \"\"\n> ),\n> sliderInput(\"range\", \"surface br?l?e en hectare\", min(spdf$V11), max(spdf$V11),\n> value = range(df$V11), step = 2500\n> ),\n> sliderInput(\"range\", \"Nombre d'incendie\", min(spdf$n), max(spdf$n),\n> value = range(df$V11), step = 2\n> ),\n> checkboxInput(\"legend\", \"Show legend\", TRUE)),\n> mainPanel(leafletOutput(\"map\"))\n> )\n> )\n>\n> server <- function(input, output, session) {\n> output$map <- renderLeaflet({\n> leaflet(df) %>%\n> addTiles(group = \"OSM\") %>%\n> addProviderTiles(\"Esri.NatGeoWorldMap\", group=\"ESRI\") %>%\n> addProviderTiles(\"CartoDB.DarkMatter\", group= \"CartoDB\") %>%\n> #fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))%>%\n> addPolygons(\n> data=spdf,\n> fillColor = \"viridis\",\n> weight = 0,\n> opacity = 1,\n> color = \"white\",\n> dashArray = \"3\",\n> fillOpacity = 0.7)#%>%\n> setView(lat= 44.2, lng=5.9, zoom=5)\n> })\n> }\n> shinyApp(ui, server)\n>\n> Sent with [ProtonMail](https://protonmail.com) Secure Email.\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Dear Basile,\n\nthe %>% operator is accidentally commented out! Change\nfillOpacity = 0.7)#%>%\nto\nfillOpacity = 0.7) %>%\nand then setView() will get its first parameter called \"map\".\n\nHTH,\n?kos Bede-Faze",
+      "thread_id": "thread-2ba03126586f",
+      "thread_depth": 1,
+      "month": "2022-01"
+    },
+    {
+      "id": "msg-8fc7d08c7da2",
+      "message_id": "<yP-33A-FB1difY7mHUJ7XrnOywYf0ZpNkz47V9f9TftdsNyBzxuyprMybeusTvjb3mbu5juhKpE1ON76kK6JaY3-eoZDyLiBSb7X_zLOcvg=@protonmail.com>",
+      "from_name": "basile.lenormand",
+      "from_email_hash": "26e0d9f4e6c946b3b454aa2cc274e07b58e8998eaa48baa702e8ee9f6ad75436",
+      "date": "2022-01-03T10:18:31Z",
+      "subject": "[R-sig-Geo] leaflet in shiny error message",
+      "subject_clean": "leaflet in shiny error message",
+      "in_reply_to": "<0b88935c-a7dc-1325-6510-795ec523c394@gmail.com>",
+      "references": [
+        "<qdUNnkgf98u86-_wu1ShZGxNiyWu1JqtBlahiHURDE7-TEoaUaf9d42M7qZiV5aP_9j-oAp4Mj7XPSHDnAtT3M3pNFECucT0-oGFvZD6x4U=@protonmail.com>",
+        "<0b88935c-a7dc-1325-6510-795ec523c394@gmail.com>"
+      ],
+      "body_plain": "Thank you ?kos!\nIt works!\nHave a great day!\nBasile.\n\n\nSent with ProtonMail Secure Email.\n\n??????? Original Message ???????\nOn Monday 3 January 2022 09:22, Bede-Fazekas ?kos <bfalevlist at gmail.com> wrote:\n\n> Dear Basile,\n>\n> the %>% operator is accidentally commented out! Change\n> fillOpacity = 0.7)#%>%\n> to\n> fillOpacity = 0.7) %>%\n> and then setView() will get its first parameter called \"map\".\n>\n> HTH,\n> ?kos Bede-Fazekas\n> Centre for Ecological Research, Hungary\n>\n> 2022.01.03. 1:49 keltez?ssel, basile.lenormand via R-sig-Geo ?rta:\n>\n> > Hello everyone!\n> > I am trying to create a shiny app with leaflet stuff in it. I have a problem when I am displaying the application, I got this error message :\n> > \"Error in dispatch: argument \"map\" is missing, with no default\".\n> > I searched some clues on the net, I found some examples which are working but I do not get where I going wrong. I double checked the brackets, try to change the name of the map, put the name of the spatial data frame that I am using, etc.\n> > If someone can give me some clues I will be really glad.\n> > Have a great day,\n> > thank you for your time,\n> > Basile.\n> > Here is my code:\n> > ui <- fluidPage(\n> > titlePanel(\"\"),\n> > sidebarLayout(\n> > sidebarPanel(\n> > helpText(\"\"),\n> > selectInput(\"var\",\n> > label = \"Choose a variable to display\",\n> > choices = spdf$koppen,\n> > selected = \"\"\n> > ),\n> > sliderInput(\"range\", \"surface br?l?e en hectare\", min(spdf$V11), max(spdf$V11),\n> > value = range(df$V11), step = 2500\n> > ),\n> > sliderInput(\"range\", \"Nombre d'incendie\", min(spdf$n), max(spdf$n),\n> > value = range(df$V11), step = 2\n> > ),\n> > checkboxInput(\"legend\", \"Show legend\", TRUE)),\n> > mainPanel(leafletOutput(\"map\"))\n> > )\n> > )\n> > server <- function(input, output, session) {\n> > output$map <- renderLeaflet({\n> > leaflet(df) %>%\n> > addTiles(group = \"OSM\") %>%\n> > addProviderTiles(\"Esri.NatGeoWorldMap\", group=\"ESRI\") %>%\n> > addProviderTiles(\"CartoDB.DarkMatter\", group= \"CartoDB\") %>%\n> > #fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))%>%\n> > addPolygons(\n> > data=spdf,\n> > fillColor = \"viridis\",\n> > weight = 0,\n> > opacity = 1,\n> > color = \"white\",\n> > dashArray = \"3\",\n> > fillOpacity = 0.7)#%>%\n> > setView(lat= 44.2, lng=5.9, zoom=5)\n> > })\n> > }\n> > shinyApp(ui, server)\n> > Sent with ProtonMail Secure Email.\n> > [[alternative HTML version deleted]]\n> >\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Thank you ?kos!\nIt works!\nHave a great day!\nBasile.\n\n\nSent with ProtonMail Secure Email.\n\n??????? Original Message ???????\nOn Monday 3 January 2022 09:22, Bede-Fazekas ?kos <bfalevlist at gmail.com> w",
+      "thread_id": "thread-2ba03126586f",
+      "thread_depth": 2,
+      "month": "2022-01"
+    },
+    {
+      "id": "msg-dc20b9b06526",
+      "message_id": "<SinqyrbY1BCpFM0HR_VwzvQzXM4s3QpMnrK3mqj_85NbDVh5M5UbeT-bXjBgsfe1t7BgFmYkSb8B8KoSzmp7lp202z7rvVB-8x2fKooIXqA=@protonmail.com>",
+      "from_name": "basile.lenormand",
+      "from_email_hash": "26e0d9f4e6c946b3b454aa2cc274e07b58e8998eaa48baa702e8ee9f6ad75436",
+      "date": "2022-01-03T12:35:49Z",
+      "subject": "[R-sig-Geo] reactive map on shiny",
+      "subject_clean": "reactive map on shiny",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "It is me again, sorry I am a bit lost.\n\nI am trying to make my polygones reacting to my widgets. But I do not find how to make polygones react to sliders. I reached to do it for the second slider, but not for the others widgets. I do not reach to display the checkbox legend neither.\n\nI do not understand when I have to use reactives, also I do not find the function that plot the output of the widget for the observer on the map. Do I have to use renderPlot?\n\nIf you got some time I would be pleased,\nhave a great day,\nBasile\n\nHere is my code:\n\nui <- bootstrapPage(\ntitlePanel(\"Incendie en PACA ? l'?chelle des communes\"),\nsidebarLayout(\n\nsidebarPanel(\nhelpText(\"Cr?ez votre propre visualisation du risque\"),\nselectInput(\"climate\",\nlabel = \"Choose a variable to display\",\nchoices = spdf$koppen,\nselected = \"Csa_Clipped\"),\nsliderInput(\"range1\", \"surface br?l?e en hectare\", min(spdf$V11), max(spdf$V11),\nvalue = range(spdf$V11), step = 2500),\nsliderInput(\"range2\", \"Nombre d'incendie\", min(spdf$n), max(spdf$n),\nvalue = range(spdf$n), step = 2),\ncheckboxInput(\"legend\", \"Show legend\", TRUE)),\n\nmainPanel(\ntextOutput(\"selected_var\"),\nleafletOutput(\"map\",width = 600, height = 300)),\n)\n)\n\nserver <- function(input, output, session) {\n\noutput$map <-renderLeaflet({\nleaflet() %>%\naddTiles(group = \"OSM\") %>%\n#fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))%>%\naddPolygons(\ndata=my_summary_84,\nfillColor =~colorQuantile(\"YlOrRd\", spdfV11),\nfillOpacity = 0.7,\npopup = ~Nom_Commun) %>%\nsetView(lat= 44.2, lng=5.9, zoom=5)\n})\n\ndf_filtered <- reactive({\nspdf[spdf >= input$range2, ]\n})\n\nobserve({\nleafletProxy(mapId = \"map\", data = df_filtered()) %>%\nclearShapes() %>% ## clear previous markers\naddPolygons()\n})\n\n}\nshinyApp(ui, server)\n\nSent with [ProtonMail](https://protonmail.com) Secure Email.\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "It is me again, sorry I am a bit lost.\n\nI am trying to make my polygones reacting to my widgets. But I do not find how to make polygones react to sliders. I reached to do it for the second slider, but",
+      "thread_id": "thread-dc20b9b06526",
+      "thread_depth": 0,
+      "month": "2022-01"
+    },
+    {
+      "id": "msg-04b356eeeed6",
+      "message_id": "<CAOfb+wpC7_B4yeidy8uVhTbWnEX=Bfnqrom2vF0e6rtQ3aZTVQ@mail.gmail.com>",
+      "from_name": "Martin Hulényi",
+      "from_email_hash": "18d41608b5b9db384ee3c679b8b8aebd5942c45e02976b59143837a6c259cd4d",
+      "date": "2022-01-03T17:04:07+01:00",
+      "subject": "[R-sig-Geo] Question about spatial filtering",
+      "subject_clean": "Question about spatial filtering",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear all,\n\nI am thinking of applying spatial filetring to panel data model. Therefore\nI would like to ask if you might know of some packages/codes or any other\nresources for panel data that I could apply for my analysis.\n\nBest,\n\nMartin Hulenyi\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nI am thinking of applying spatial filetring to panel data model. Therefore\nI would like to ask if you might know of some packages/codes or any other\nresources for panel data that I could ap",
+      "thread_id": "thread-04b356eeeed6",
+      "thread_depth": 0,
+      "month": "2022-01"
+    },
+    {
+      "id": "msg-f71140b822b0",
+      "message_id": "<74593848-f7e7-5c69-f768-4a273d532751@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2022-01-04T11:07:19+01:00",
+      "subject": "[R-sig-Geo] Question about spatial filtering",
+      "subject_clean": "Question about spatial filtering",
+      "in_reply_to": "<CAOfb+wpC7_B4yeidy8uVhTbWnEX=Bfnqrom2vF0e6rtQ3aZTVQ@mail.gmail.com>",
+      "references": [
+        "<CAOfb+wpC7_B4yeidy8uVhTbWnEX=Bfnqrom2vF0e6rtQ3aZTVQ@mail.gmail.com>"
+      ],
+      "body_plain": "On Mon, 3 Jan 2022, Martin Hul?nyi wrote:\n\n> Dear all,\n>\n> I am thinking of applying spatial filetring to panel data model. Therefore\n> I would like to ask if you might know of some packages/codes or any other\n> resources for panel data that I could apply for my analysis.\n\nIt might be worth looking at the spmoran package (not panel, but under \nactive development). You can also look at adespatial for PCNM. In general, \nthe eigenvectors for the time-invariant neighbour object are also \ntime-invariant, unless your panel model is dynamic. Also find examples in \nthe literature and see whether they provide references or links to \nsoftware, for example but without direct software references:\nhttps://research.vu.nl/ws/portalfiles/portal/73350412/06049, \nhttps://doi.org/10.1177%2F0160017610386482. \nhttps://scholar.google.no/scholar?oi=bibs&hl=en&cites=15767057313182942537&as_sdt=5 \ngives citations of Patuelli et al. (2011).\n\nHope this helps,\n\nRoger\n\n>\n> Best,\n>\n> Martin Hulenyi\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=04%7C01%7CRoger.Bivand%40nhh.no%7C6c9307111ec74c16969508d9ced2d73b%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637768228115992524%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000&amp;sdata=jqOHHKrl6SxZ441roWZNQKU5hTtS76nZFJ%2FEL56xGRI%3D&amp;reserved=0\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Mon, 3 Jan 2022, Martin Hul?nyi wrote:\n\n> Dear all,\n>\n> I am thinking of applying spatial filetring to panel data model. Therefore\n> I would like to ask if you might know of some packages/codes or ",
+      "thread_id": "thread-04b356eeeed6",
+      "thread_depth": 1,
+      "month": "2022-01"
+    },
+    {
+      "id": "msg-c864a8786649",
+      "message_id": "<CAFf5Nh-p-2JAarFg9Mrt8yZ5r=0CzhGjZHPKYP5BmU3dJh+uhg@mail.gmail.com>",
+      "from_name": "Erin Stearns",
+      "from_email_hash": "842db0bfc86c1ce55adbce2c9d325b60125c7e78803039b82fe051b79b31db6f",
+      "date": "2022-01-04T12:15:07-05:00",
+      "subject": "[R-sig-Geo] EBlocal() returning NaN values",
+      "subject_clean": "EBlocal() returning NaN values",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello R-sig-Geo friends & happy 2022!\n\nRunning EBlocal() on US county sf dataset and getting NaN values where\nEmpirical Bayes and a BYM model are returning values and I do not\nunderstand why. Additionally, does anyone know how to examine the parameters\nattribute list from the output of the EBlocal() function? I have not been\nable to look at this and perhaps that would be informative.\n\n\n*Function call:*\nseb_icu <- EBlocal(thedata$icu_bed_avg, thedata$over18pop, nb = nb,\nzero.policy = TRUE)\n\n*Environment details:*\n  OS: Windows 10 x64\n  R Version: 4.1.1\n     spdep version: 1.1-11\n     sf version   : 1.0-3\n\nFull dataset and code to reproduce can be found for download here.\n<https://app.box.com/s/r26ta0gl9avwlwm65ivtze7j97hyw8i7>\n\nThank you in advance for your help!\n\nBest,\nErin\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello R-sig-Geo friends & happy 2022!\n\nRunning EBlocal() on US county sf dataset and getting NaN values where\nEmpirical Bayes and a BYM model are returning values and I do not\nunderstand why. Addition",
+      "thread_id": "thread-c864a8786649",
+      "thread_depth": 0,
+      "month": "2022-01"
+    },
+    {
+      "id": "msg-4ca317411487",
+      "message_id": "<ad53527d-837-942b-2887-6bff7a8dcf56@reclus2.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2022-01-05T21:14:27+01:00",
+      "subject": "[R-sig-Geo] EBlocal() returning NaN values",
+      "subject_clean": "EBlocal() returning NaN values",
+      "in_reply_to": "<CAFf5Nh-p-2JAarFg9Mrt8yZ5r=0CzhGjZHPKYP5BmU3dJh+uhg@mail.gmail.com>",
+      "references": [
+        "<CAFf5Nh-p-2JAarFg9Mrt8yZ5r=0CzhGjZHPKYP5BmU3dJh+uhg@mail.gmail.com>"
+      ],
+      "body_plain": "On Tue, 4 Jan 2022, Erin Stearns wrote:\n\n> Hello R-sig-Geo friends & happy 2022!\n>\n> Running EBlocal() on US county sf dataset and getting NaN values where\n> Empirical Bayes and a BYM model are returning values and I do not\n> understand why. Additionally, does anyone know how to examine the parameters\n> attribute list from the output of the EBlocal() function? I have not been\n> able to look at this and perhaps that would be informative.\n>\n\nYes, you are right:\n\nsummary(attr(seb_icu, \"parameters\")$a)\nsummary(attr(seb_icu, \"parameters\")$m)\n\nwhich(attr(seb_icu, \"parameters\")$a == 0 &\n  attr(seb_icu, \"parameters\")$m == 0)\nwhich(is.nan(seb_icu$est))\n\nshowing that the NaNs are caused by a division by zero:\n\nest <- m.i + (xi - m.i) * (a.i / (a.i + (m.i/ni)))\n\nIn fact, if m.i and C.i (see Marshall's paper) are both zero, a.i becomes \nzero, and leads to the division by zero. The underlying reason is that \nMarshall never tested a setting where many ri are zero, so the count of \ncases in a small neighbourhood of neighbouring counties was almost never \nzero:\n\n> table(thedata$icu_bed_avg == 0)\n\nFALSE  TRUE\n  1437  1783\n\nHad tests been done on > 50% cases, the problem would have been detected, \nbut probably not resolved, as the issue is with entitation - .\n\nThe same counties have NaNs if those with no neighbours are dropped (less \nthe no-neighbour counties), so this is not caused by assuming that the \nlagged value of an entity with no neighbours is zero.\n\nTo get closer to the original paper, probably counties should be \naggregated to reduce the number with no cases, and so meet the underlying \nassumptions.\n\nHope this helps,\n\nRoger\n\n>\n> *Function call:*\n> seb_icu <- EBlocal(thedata$icu_bed_avg, thedata$over18pop, nb = nb,\n> zero.policy = TRUE)\n>\n> *Environment details:*\n>  OS: Windows 10 x64\n>  R Version: 4.1.1\n>     spdep version: 1.1-11\n>     sf version   : 1.0-3\n>\n> Full dataset and code to reproduce can be found for download here.\n> <https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fapp.box.com%2Fs%2Fr26ta0gl9avwlwm65ivtze7j97hyw8i7&amp;data=04%7C01%7CRoger.Bivand%40nhh.no%7Ca717ef6fd6574eb6a40a08d9cfa5d91d%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637769134198352241%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000&amp;sdata=LJEJ3SgKe0wEzD21Re3%2B4Jfl5LpSD6SpDFYPzsFP7HE%3D&amp;reserved=0>\n>\n> Thank you in advance for your help!\n>\n> Best,\n> Erin\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=04%7C01%7CRoger.Bivand%40nhh.no%7Ca717ef6fd6574eb6a40a08d9cfa5d91d%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637769134198352241%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000&amp;sdata=l%2B5AwZrspCXeHPlJh1C61SSMHv6p7UacEYMvqSK4Gaw%3D&amp;reserved=0\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Tue, 4 Jan 2022, Erin Stearns wrote:\n\n> Hello R-sig-Geo friends & happy 2022!\n>\n> Running EBlocal() on US county sf dataset and getting NaN values where\n> Empirical Bayes and a BYM model are return",
+      "thread_id": "thread-c864a8786649",
+      "thread_depth": 1,
+      "month": "2022-01"
+    },
+    {
+      "id": "msg-b323424904cc",
+      "message_id": "<CAKoiDH+wWXttGibtfUp2+GHw_t6coy2e_Zv0NNDS-Z0Fb=vbtA@mail.gmail.com>",
+      "from_name": "Giuseppe Amatulli",
+      "from_email_hash": "a3b558e08aa6c2768dc80229110721cce180703cfba6412f7aaba244fe49e280",
+      "date": "2022-01-20T10:22:22-05:00",
+      "subject": "[R-sig-Geo] Course: Geocomputation and Machine Learning for Environmental Applications.",
+      "subject_clean": "Course: Geocomputation and Machine Learning for Environmental Applications.",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Dear Colleagues,\n\nIn view of enhancing computation skills in the geographic domain, Spatial\nEcology <http://spatial-ecology.net/>  is organising a two-month training\ncourse: Geocomputation and Machine Learning for Environmental Applications\n<http://spatial-ecology.net/geocomp_ml_2022-announcement/>.\n\nThe course will be offered on-line with a supplementary 5-day in-person\nsegment at the University of Basilicata, in the magnificent town of Matera\n<https://www.google.com/maps/place/75100+Matera,+Province+of+Matera,+Italy/@40.6646012,16.5651092,13z/data=!3m1!4b1!4m5!3m4!1s0x13477ee2482b152b:0x8f6a4ae10da9360!8m2!3d40.666379!4d16.6043199>,\nItaly. This is a wonderful opportunity for PhD students, Post-Docs and\nprofessionals to acquire advanced computational skills with a Linux\ncomputer.\n\nPlease forward to announce this opportunity within your network.\n\nSincerely, Giuseppe Amatulli  & Spatial Ecology ? Team\n\n*Geocomputation and Machine Learning for Environmental Applications\n<http://spatial-ecology.net/geocomp_ml_2022-announcement/>.** (April, May,\nJune, 2022)*\n\nIn this course, students will be introduced to an array of powerful\nopen-source geocomputation tools and machine learning methodologies under\nLinux environment. Students who have never been exposed to programming\nunder Linux are expected to reach the stage where they feel confident in\nusing very advanced open source data processing routines. Students with a\nprecedent programming background will find the course beneficial in\nenhancing their programming skills for better modelling and coding\nproficiency. Our dual teaching aim is to equip attendees with powerful\ntools as well as rendering their abilities of continuing independent\ndevelopment afterwards. The acquired skills will be beneficial, not only\nfor GIS related application, but also for general data processing and\napplied statistical computing in a number of fields. These essentially lay\nthe foundation for career development as a data scientist in the geographic\ndomain.\n\nMore information and registration:\n\nwww.spatial-ecology.net\ntwitter: @BigDataEcology\n\n-- \nGiuseppe Amatulli, Ph.D.\n\nResearch scientist at\nSchool of the Environment\nYale University\nNew Haven, CT, USA - 06511\nTweeter: @BigDataEcology\nTeaching: http://spatial-ecology.net\nWork:  https://environment.yale.edu/profile/giuseppe-amatulli/\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Colleagues,\n\nIn view of enhancing computation skills in the geographic domain, Spatial\nEcology <http://spatial-ecology.net/>  is organising a two-month training\ncourse: Geocomputation and Machine",
+      "thread_id": "thread-b323424904cc",
+      "thread_depth": 0,
+      "month": "2022-01"
+    },
+    {
+      "id": "msg-ca5397b7ddb4",
+      "message_id": "<SA1PR09MB77927876E20B5457EEFA47DAA85A9@SA1PR09MB7792.namprd09.prod.outlook.com>",
+      "from_name": "Howard, Tim G (DEC)",
+      "from_email_hash": "a84aa3bedc49dafcf096d53a93e9f721195f43f9564f5f7b35c83bb11db6fc72",
+      "date": "2022-01-20T16:43:00Z",
+      "subject": "[R-sig-Geo] model predict in subset: compare terra and stars",
+      "subject_clean": "model predict in subset: compare terra and stars",
+      "in_reply_to": "<SA1PR09MB7792E6C83E36C1F40A9972B7A85A9@SA1PR09MB7792.namprd09.prod.outlook.com>",
+      "references": [
+        "<SA1PR09MB7792E6C83E36C1F40A9972B7A85A9@SA1PR09MB7792.namprd09.prod.outlook.com>"
+      ],
+      "body_plain": "Dear all - \nClassically, if I want to create a spatial model and make a prediction for an area within the extent of my raster stack my approach would be to crop all predictor rasters to the area of interest and run the predict on that cropped set. The stars package opens up another option: to apply the crop/mask to the proxy object, which then will extract only the relevant cells from the full rasters when writing (or plotting) the result. At least that's how I understand it. \n\nThe following example has both approaches and their timings. I borrowed heavily from https://r-spatial.github.io/stars/articles/stars7.html , other stars articles, and from the terra help pages! Questions below the example.\n\n```\nlibrary(terra)\nlibrary(stars)\nlibrary(sf)\nlibrary(microbenchmark)\n\n## setup\ntif = system.file(\"tif/L7_ETMs.tif\", package = \"stars\")\nL7_orig = read_stars(tif, proxy = TRUE) %>% split()\n# create a shape within which we will want to make the prediction\ncircle = st_sfc(st_buffer(st_point(c(293749.5, 9115745)), 600), crs = st_crs(L7_orig))\n# simple set of points for training the model \ntrainCoords <- data.frame(\n? X = c(290050, 290100, 291700, 293000, 294500, 294600, 298000,\n??????? 289500, 290100, 292500, 294000, 296000, 293600, 294800),\n? Y = c(9117000, 9118500, 9117100, 9118000, 9112890, 9111700, 9120000,\n??????? 9112700, 9114000, 9115700, 9118100, 9120000, 9111650, 9116000))\n\ntrainPts <- st_as_sf(x = trainCoords, coords = c(\"X\",\"Y\"), crs = st_crs(L7_orig))\ntrainAttr <- st_drop_geometry(st_as_sf(st_extract(L7_orig, trainPts)))\nnames(trainAttr) <- c(\"X1\",\"X2\",\"X3\",\"X4\",\"X5\",\"X6\")\ntrainAttr$pa <- c(rep(1,7), rep(0,7)) #add presence-absence attribute\n\n# time both approaches\nmbm <- microbenchmark(\"starsMethod\" = {\n? L7_orig_inside = read_stars(tif, proxy = TRUE) %>% split()\n? st_model <- glm(formula=pa~.,data = trainAttr)\n? L7_crop <- L7_orig_inside[circle]\n? st_out = predict(L7_crop, st_model)\n?# st_out is still a proxy with processing steps, writing it out forces those steps to be applied\n? write_stars(st_out, file.path(tempdir(),\"stars_prediction.tif\"),overwrite = TRUE)\n},\n\"terraMethod\" = {\n? ras = terra::rast(tif)\n? # crop, mask, write out to temp dir\n? c_ras <- terra::crop(ras, circle)\n? msk <- rasterize(vect(circle), c_ras)\n? maskRas <- file.path(tempdir(),\"L7_ETMs_crop.tif\")\n? m_ras <- terra::mask(c_ras, msk, filename = maskRas, overwrite = TRUE)\n? model <- glm(formula=pa~.,data = trainAttr)\n? # read the cropped raster for predict (already in RAM, but this would be protocol)\n? mras <- rast(maskRas)\n? names(mras) <- c(\"X1\",\"X2\",\"X3\",\"X4\",\"X5\",\"X6\")\n? terra_out <- predict(mras, model, filename = file.path(tempdir(),\"terra_prediction.tif\"), overwrite = TRUE)\n}, times = 10)\n\n# > mbm\n# Unit: milliseconds\n# expr????? min?????? lq???? mean?? median?????? uq????? max neval\n# starsMethod 411.8035 442.4342 701.2864 505.4522 630.8252 1699.737??? 10\n# terraMethod? 94.0480? 99.4800 560.6102 106.9317 132.1853 4207.067??? 1\n```\n\nAs run above, using stars proxies takes a fair amount longer than cropping, saving, and predicting on the cropped rasters. I have found this to be the case for larger (more real-life) examples as well, to the level that for larger data sets and more predictors, I run out of RAM using stars proxies and that approach fails. \n\nQuestions:\n1. Am I missing something? Is there a more efficient way for running a model and predicting within a smaller area than the full extent of your predictors?\n2. On the surface of things, I would have expected the proxy approach to be faster, especially if using COG rasters (which allow read by chunk, not line). I'm not seeing that here, nor with larger datasets. Any thoughts on the potential bottlenecks?\n\nThanks in advance, \nTim",
+      "body_snippet": "Dear all - \nClassically, if I want to create a spatial model and make a prediction for an area within the extent of my raster stack my approach would be to crop all predictor rasters to the area of in",
+      "thread_id": "thread-ca5397b7ddb4",
+      "thread_depth": 0,
+      "month": "2022-01"
+    },
+    {
+      "id": "msg-42a1eb2ab06b",
+      "message_id": "<CANtt_hyYTg7eB46WrE_sNeJ6jadAEnqenQ9sJMzDAjeoOPJ03A@mail.gmail.com>",
+      "from_name": "Robert J. Hijmans",
+      "from_email_hash": "2e05ef6e5328419e725eae15adeb8274f2149fc58b56973dfb1c0aea891fb317",
+      "date": "2022-01-20T22:21:14-08:00",
+      "subject": "[R-sig-Geo] model predict in subset: compare terra and stars",
+      "subject_clean": "model predict in subset: compare terra and stars",
+      "in_reply_to": "<SA1PR09MB77927876E20B5457EEFA47DAA85A9@SA1PR09MB7792.namprd09.prod.outlook.com>",
+      "references": [
+        "<SA1PR09MB7792E6C83E36C1F40A9972B7A85A9@SA1PR09MB7792.namprd09.prod.outlook.com>",
+        "<SA1PR09MB77927876E20B5457EEFA47DAA85A9@SA1PR09MB7792.namprd09.prod.outlook.com>"
+      ],
+      "body_plain": "Hello everybody,\nI cannot answer Tim's questions, but here is a way to do the terra bit much\nfaster, by not writing intermediate steps to disk.\nCheers, Robert\n\nlibrary(terra)\nlibrary(stars)\nlibrary(sf)\nlibrary(microbenchmark)\n\n## setup\ntif = system.file(\"tif/L7_ETMs.tif\", package = \"stars\")\nL7_orig = read_stars(tif, proxy = TRUE) %>% split()\n# create a shape within which we will want to make the prediction\ncircle = st_sfc(st_buffer(st_point(c(293749.5, 9115745)), 600), crs =\nst_crs(L7_orig))\n# simple set of points for training the model\ntrainCoords <- data.frame(\n  X = c(290050, 290100, 291700, 293000, 294500, 294600, 298000,\n        289500, 290100, 292500, 294000, 296000, 293600, 294800),\n  Y = c(9117000, 9118500, 9117100, 9118000, 9112890, 9111700, 9120000,\n        9112700, 9114000, 9115700, 9118100, 9120000, 9111650, 9116000))\n\n# model for stars\ntrainPts <- st_as_sf(x = trainCoords, coords = c(\"X\",\"Y\"), crs =\nst_crs(L7_orig))\ntrainAttr <- st_drop_geometry(st_as_sf(st_extract(L7_orig, trainPts)))\nnames(trainAttr) <- c(\"X1\",\"X2\",\"X3\",\"X4\",\"X5\",\"X6\")\ntrainAttr$pa <- c(rep(1,7), rep(0,7)) #add presence-absence attribute\nst_model <- glm(formula=pa~.,data = trainAttr)\n\n# model for terra\nras = terra::rast(tif)\ntrainAttr2 <- extract(ras, trainCoords)[,-1]\ntrainAttr2$pa <- c(rep(1,7), rep(0,7))\nmodel <- glm(formula=pa~.,data = trainAttr2)\nvcircle <- vect(circle)\n\n# time both approaches\nmbm <- microbenchmark(\"starsMethod\" = {\n  L7_orig_inside = read_stars(tif, proxy = TRUE) %>% split()\n  L7_crop <- L7_orig_inside[circle]\n  st_out = predict(L7_crop, st_model)\n # st_out is still a proxy with processing steps, writing it out forces\nthose steps to be applied\n  write_stars(st_out, file.path(tempdir(),\"stars_prediction.tif\"),overwrite\n= TRUE)\n},\n\"terraMethod\" = {\n  ras = terra::rast(tif)\n  cras <- terra::crop(ras, vcircle)\n  mras <- terra::mask(cras, vcircle)\n  terra_out <- predict(mras, model, filename =\nfile.path(tempdir(),\"terra_prediction.tif\"), overwrite = TRUE)\n}, times = 10)\n\nmbm\n#Unit: milliseconds\n#        expr      min       lq      mean   median       uq      max neval\n# starsMethod 225.4070 227.4722 230.86188 231.4848 233.9374 237.5687    10\n# terraMethod  93.9507  96.0912  99.59111 100.0375 103.5670 104.1225    10\n\n\nWith terra you can use a window (\"lazy crop\")\n  window(ras) <- ext(vcircle)\n  mras <- terra::mask(ras, vcircle)\n  # but this seems faster\n  cras <- terra::crop(ras, vcircle)\n  mras <- terra::mask(cras, vcircle)\n\n\nOn Thu, Jan 20, 2022 at 8:43 AM Howard, Tim G (DEC) via R-sig-Geo <\nr-sig-geo at r-project.org> wrote:\n\n> Dear all -\n> Classically, if I want to create a spatial model and make a prediction for\n> an area within the extent of my raster stack my approach would be to crop\n> all predictor rasters to the area of interest and run the predict on that\n> cropped set. The stars package opens up another option: to apply the\n> crop/mask to the proxy object, which then will extract only the relevant\n> cells from the full rasters when writing (or plotting) the result. At least\n> that's how I understand it.\n>\n> The following example has both approaches and their timings. I borrowed\n> heavily from https://r-spatial.github.io/stars/articles/stars7.html ,\n> other stars articles, and from the terra help pages! Questions below the\n> example.\n>\n> ```\n> library(terra)\n> library(stars)\n> library(sf)\n> library(microbenchmark)\n>\n> ## setup\n> tif = system.file(\"tif/L7_ETMs.tif\", package = \"stars\")\n> L7_orig = read_stars(tif, proxy = TRUE) %>% split()\n> # create a shape within which we will want to make the prediction\n> circle = st_sfc(st_buffer(st_point(c(293749.5, 9115745)), 600), crs =\n> st_crs(L7_orig))\n> # simple set of points for training the model\n> trainCoords <- data.frame(\n>   X = c(290050, 290100, 291700, 293000, 294500, 294600, 298000,\n>         289500, 290100, 292500, 294000, 296000, 293600, 294800),\n>   Y = c(9117000, 9118500, 9117100, 9118000, 9112890, 9111700, 9120000,\n>         9112700, 9114000, 9115700, 9118100, 9120000, 9111650, 9116000))\n>\n> trainPts <- st_as_sf(x = trainCoords, coords = c(\"X\",\"Y\"), crs =\n> st_crs(L7_orig))\n> trainAttr <- st_drop_geometry(st_as_sf(st_extract(L7_orig, trainPts)))\n> names(trainAttr) <- c(\"X1\",\"X2\",\"X3\",\"X4\",\"X5\",\"X6\")\n> trainAttr$pa <- c(rep(1,7), rep(0,7)) #add presence-absence attribute\n>\n> # time both approaches\n> mbm <- microbenchmark(\"starsMethod\" = {\n>   L7_orig_inside = read_stars(tif, proxy = TRUE) %>% split()\n>   st_model <- glm(formula=pa~.,data = trainAttr)\n>   L7_crop <- L7_orig_inside[circle]\n>   st_out = predict(L7_crop, st_model)\n>  # st_out is still a proxy with processing steps, writing it out forces\n> those steps to be applied\n>   write_stars(st_out,\n> file.path(tempdir(),\"stars_prediction.tif\"),overwrite = TRUE)\n> },\n> \"terraMethod\" = {\n>   ras = terra::rast(tif)\n>   # crop, mask, write out to temp dir\n>   c_ras <- terra::crop(ras, circle)\n>   msk <- rasterize(vect(circle), c_ras)\n>   maskRas <- file.path(tempdir(),\"L7_ETMs_crop.tif\")\n>   m_ras <- terra::mask(c_ras, msk, filename = maskRas, overwrite = TRUE)\n>   model <- glm(formula=pa~.,data = trainAttr)\n>   # read the cropped raster for predict (already in RAM, but this would be\n> protocol)\n>   mras <- rast(maskRas)\n>   names(mras) <- c(\"X1\",\"X2\",\"X3\",\"X4\",\"X5\",\"X6\")\n>   terra_out <- predict(mras, model, filename =\n> file.path(tempdir(),\"terra_prediction.tif\"), overwrite = TRUE)\n> }, times = 10)\n>\n> # > mbm\n> # Unit: milliseconds\n> # expr      min       lq     mean   median       uq      max neval\n> # starsMethod 411.8035 442.4342 701.2864 505.4522 630.8252 1699.737    10\n> # terraMethod  94.0480  99.4800 560.6102 106.9317 132.1853 4207.067    1\n> ```\n>\n> As run above, using stars proxies takes a fair amount longer than\n> cropping, saving, and predicting on the cropped rasters. I have found this\n> to be the case for larger (more real-life) examples as well, to the level\n> that for larger data sets and more predictors, I run out of RAM using stars\n> proxies and that approach fails.\n>\n> Questions:\n> 1. Am I missing something? Is there a more efficient way for running a\n> model and predicting within a smaller area than the full extent of your\n> predictors?\n> 2. On the surface of things, I would have expected the proxy approach to\n> be faster, especially if using COG rasters (which allow read by chunk, not\n> line). I'm not seeing that here, nor with larger datasets. Any thoughts on\n> the potential bottlenecks?\n>\n> Thanks in advance,\n> Tim\n>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello everybody,\nI cannot answer Tim's questions, but here is a way to do the terra bit much\nfaster, by not writing intermediate steps to disk.\nCheers, Robert\n\nlibrary(terra)\nlibrary(stars)\nlibrary(sf",
+      "thread_id": "thread-ca5397b7ddb4",
+      "thread_depth": 1,
+      "month": "2022-01"
+    },
+    {
+      "id": "msg-6b03786a4d8b",
+      "message_id": "<SA1PR09MB77923EA140942753F8AE1B3BA85B9@SA1PR09MB7792.namprd09.prod.outlook.com>",
+      "from_name": "Howard, Tim G (DEC)",
+      "from_email_hash": "a84aa3bedc49dafcf096d53a93e9f721195f43f9564f5f7b35c83bb11db6fc72",
+      "date": "2022-01-21T12:41:50Z",
+      "subject": "[R-sig-Geo] model predict in subset: compare terra and stars",
+      "subject_clean": "model predict in subset: compare terra and stars",
+      "in_reply_to": "<CANtt_hyYTg7eB46WrE_sNeJ6jadAEnqenQ9sJMzDAjeoOPJ03A@mail.gmail.com>",
+      "references": [
+        "<SA1PR09MB7792E6C83E36C1F40A9972B7A85A9@SA1PR09MB7792.namprd09.prod.outlook.com>",
+        "<SA1PR09MB77927876E20B5457EEFA47DAA85A9@SA1PR09MB7792.namprd09.prod.outlook.com>",
+        "<CANtt_hyYTg7eB46WrE_sNeJ6jadAEnqenQ9sJMzDAjeoOPJ03A@mail.gmail.com>"
+      ],
+      "body_plain": "Robert, \nThank you for the reply and the tips. That's a big improvement! I'll have cases where the masked raster stack (mras) won't fit in RAM so that's why I was explicitly writing out the intermediate products. I'll explore this in that context. \n\nI've actually wondered if that was the issue on the stars side - too much RAM overhead somehow. \n\nThanks again,\nBest, \nTim\n\n>>>>>>>>\nFrom: Robert J. Hijmans <r.hijmans at gmail.com> \nSent: Friday, January 21, 2022 1:21 AM\nTo: Howard, Tim G (DEC) <tim.howard at dec.ny.gov>\nCc: r-sig-geo at r-project.org\nSubject: Re: [R-sig-Geo] model predict in subset: compare terra and stars\n\n\nHello everybody,? \nI cannot answer Tim's questions, but here is a way to do the terra bit much faster, by not writing intermediate steps to disk.\nCheers, Robert\n\nlibrary(terra)\nlibrary(stars)\nlibrary(sf)\nlibrary(microbenchmark)\n\n## setup\ntif = system.file(\"tif/L7_ETMs.tif\", package = \"stars\")\nL7_orig = read_stars(tif, proxy = TRUE) %>% split()\n# create a shape within which we will want to make the prediction\ncircle = st_sfc(st_buffer(st_point(c(293749.5, 9115745)), 600), crs = st_crs(L7_orig))\n# simple set of points for training the model\ntrainCoords <- data.frame(\n? X = c(290050, 290100, 291700, 293000, 294500, 294600, 298000,\n? ? ? ? 289500, 290100, 292500, 294000, 296000, 293600, 294800),\n? Y = c(9117000, 9118500, 9117100, 9118000, 9112890, 9111700, 9120000,\n? ? ? ? 9112700, 9114000, 9115700, 9118100, 9120000, 9111650, 9116000))\n\n# model for stars\ntrainPts <- st_as_sf(x = trainCoords, coords = c(\"X\",\"Y\"), crs = st_crs(L7_orig))\ntrainAttr <- st_drop_geometry(st_as_sf(st_extract(L7_orig, trainPts)))\nnames(trainAttr) <- c(\"X1\",\"X2\",\"X3\",\"X4\",\"X5\",\"X6\")\ntrainAttr$pa <- c(rep(1,7), rep(0,7)) #add presence-absence attribute\nst_model <- glm(formula=pa~.,data = trainAttr)\n\n# model for terra \nras = terra::rast(tif) \ntrainAttr2 <- extract(ras, trainCoords)[,-1]\ntrainAttr2$pa <- c(rep(1,7), rep(0,7))\nmodel <- glm(formula=pa~.,data = trainAttr2)\nvcircle <- vect(circle)\n\n# time both approaches\nmbm <- microbenchmark(\"starsMethod\" = {\n? L7_orig_inside = read_stars(tif, proxy = TRUE) %>% split()\n? L7_crop <- L7_orig_inside[circle]\n? st_out = predict(L7_crop, st_model)\n?# st_out is still a proxy with processing steps, writing it out forces those steps to be applied\n? write_stars(st_out, file.path(tempdir(),\"stars_prediction.tif\"),overwrite = TRUE)\n},\n\"terraMethod\" = {\n? ras = terra::rast(tif)\n? cras <- terra::crop(ras, vcircle)\n? mras <- terra::mask(cras, vcircle)\n? terra_out <- predict(mras, model, filename = file.path(tempdir(),\"terra_prediction.tif\"), overwrite = TRUE)\n}, times = 10)\n\nmbm\n#Unit: milliseconds\n# ? ? ? ?expr ? ? ?min ? ? ? lq ? ? ?mean ? median ? ? ? uq ? ? ?max neval\n# starsMethod 225.4070 227.4722 230.86188 231.4848 233.9374 237.5687 ? ?10\n# terraMethod ?93.9507 ?96.0912 ?99.59111 100.0375 103.5670 104.1225 ? ?10\n\nWith terra you can use a window (\"lazy crop\")\n? window(ras) <- ext(vcircle)\n? mras <- terra::mask(ras, vcircle)\n? # but this seems faster\n? cras <- terra::crop(ras, vcircle)\n? mras <- terra::mask(cras, vcircle)\n\n\nOn Thu, Jan 20, 2022 at 8:43 AM Howard, Tim G (DEC) via R-sig-Geo <mailto:r-sig-geo at r-project.org> wrote:\nDear all - \nClassically, if I want to create a spatial model and make a prediction for an area within the extent of my raster stack my approach would be to crop all predictor rasters to the area of interest and run the predict on that cropped set. The stars package opens up another option: to apply the crop/mask to the proxy object, which then will extract only the relevant cells from the full rasters when writing (or plotting) the result. At least that's how I understand it. \n\nThe following example has both approaches and their timings. I borrowed heavily from stars article 7, other stars articles, and from the terra help pages! Questions below the example.\n\n```\nlibrary(terra)\nlibrary(stars)\nlibrary(sf)\nlibrary(microbenchmark)\n\n## setup\ntif = system.file(\"tif/L7_ETMs.tif\", package = \"stars\")\nL7_orig = read_stars(tif, proxy = TRUE) %>% split()\n# create a shape within which we will want to make the prediction\ncircle = st_sfc(st_buffer(st_point(c(293749.5, 9115745)), 600), crs = st_crs(L7_orig))\n# simple set of points for training the model \ntrainCoords <- data.frame(\n? X = c(290050, 290100, 291700, 293000, 294500, 294600, 298000,\n??????? 289500, 290100, 292500, 294000, 296000, 293600, 294800),\n? Y = c(9117000, 9118500, 9117100, 9118000, 9112890, 9111700, 9120000,\n??????? 9112700, 9114000, 9115700, 9118100, 9120000, 9111650, 9116000))\n\ntrainPts <- st_as_sf(x = trainCoords, coords = c(\"X\",\"Y\"), crs = st_crs(L7_orig))\ntrainAttr <- st_drop_geometry(st_as_sf(st_extract(L7_orig, trainPts)))\nnames(trainAttr) <- c(\"X1\",\"X2\",\"X3\",\"X4\",\"X5\",\"X6\")\ntrainAttr$pa <- c(rep(1,7), rep(0,7)) #add presence-absence attribute\n\n# time both approaches\nmbm <- microbenchmark(\"starsMethod\" = {\n? L7_orig_inside = read_stars(tif, proxy = TRUE) %>% split()\n? st_model <- glm(formula=pa~.,data = trainAttr)\n? L7_crop <- L7_orig_inside[circle]\n? st_out = predict(L7_crop, st_model)\n?# st_out is still a proxy with processing steps, writing it out forces those steps to be applied\n? write_stars(st_out, file.path(tempdir(),\"stars_prediction.tif\"),overwrite = TRUE)\n},\n\"terraMethod\" = {\n? ras = terra::rast(tif)\n? # crop, mask, write out to temp dir\n? c_ras <- terra::crop(ras, circle)\n? msk <- rasterize(vect(circle), c_ras)\n? maskRas <- file.path(tempdir(),\"L7_ETMs_crop.tif\")\n? m_ras <- terra::mask(c_ras, msk, filename = maskRas, overwrite = TRUE)\n? model <- glm(formula=pa~.,data = trainAttr)\n? # read the cropped raster for predict (already in RAM, but this would be protocol)\n? mras <- rast(maskRas)\n? names(mras) <- c(\"X1\",\"X2\",\"X3\",\"X4\",\"X5\",\"X6\")\n? terra_out <- predict(mras, model, filename = file.path(tempdir(),\"terra_prediction.tif\"), overwrite = TRUE)\n}, times = 10)\n\n# > mbm\n# Unit: milliseconds\n# expr????? min?????? lq???? mean?? median?????? uq????? max neval\n# starsMethod 411.8035 442.4342 701.2864 505.4522 630.8252 1699.737??? 10\n# terraMethod? 94.0480? 99.4800 560.6102 106.9317 132.1853 4207.067??? 1\n```\n\nAs run above, using stars proxies takes a fair amount longer than cropping, saving, and predicting on the cropped rasters. I have found this to be the case for larger (more real-life) examples as well, to the level that for larger data sets and more predictors, I run out of RAM using stars proxies and that approach fails. \n\nQuestions:\n1. Am I missing something? Is there a more efficient way for running a model and predicting within a smaller area than the full extent of your predictors?\n2. On the surface of things, I would have expected the proxy approach to be faster, especially if using COG rasters (which allow read by chunk, not line). I'm not seeing that here, nor with larger datasets. Any thoughts on the potential bottlenecks?\n\nThanks in advance, \nTim",
+      "body_snippet": "Robert, \nThank you for the reply and the tips. That's a big improvement! I'll have cases where the masked raster stack (mras) won't fit in RAM so that's why I was explicitly writing out the intermedia",
+      "thread_id": "thread-ca5397b7ddb4",
+      "thread_depth": 2,
+      "month": "2022-01"
+    },
+    {
+      "id": "msg-4cececc1d2f8",
+      "message_id": "<SY4PR01MB56588826533F8B3E888C4CEBAC5D9@SY4PR01MB5658.ausprd01.prod.outlook.com>",
+      "from_name": "Murray Efford",
+      "from_email_hash": "82bfe0c72bb61f0f38c9ced4d7d6ebe1e213c779150a721c41da24aa8495d9a0",
+      "date": "2022-01-23T05:06:26Z",
+      "subject": "[R-sig-Geo] Distance from point(s) to polygon(s) in terra?",
+      "subject_clean": "Distance from point(s) to polygon(s) in terra?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I'm trying to simplify my R spatial code to use only terra functions, and I'm almost there. The one function I'm missing is a replacement for rgeos::gDistance for point-polygon distances. I'd be grateful for any ideas.\nMurray",
+      "body_snippet": "I'm trying to simplify my R spatial code to use only terra functions, and I'm almost there. The one function I'm missing is a replacement for rgeos::gDistance for point-polygon distances. I'd be grate",
+      "thread_id": "thread-4cececc1d2f8",
+      "thread_depth": 0,
+      "month": "2022-01"
+    },
+    {
+      "id": "msg-462799e6a11a",
+      "message_id": "<CAEGXkYX1bnOi_22obrGB833pcHLtHFXpgdOXU5G21JEUtNuoCQ@mail.gmail.com>",
+      "from_name": "Bhaskar Mitra",
+      "from_email_hash": "f2e1ec595d71ebb310af8718f3dee4dfc599711267e47cbfc04a1c11761bea1f",
+      "date": "2022-01-27T11:04:57-07:00",
+      "subject": "[R-sig-Geo] Request for advice on downscaling",
+      "subject_clean": "Request for advice on downscaling",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello Everyone,\n\nPlease pardon my ignorance, but as I am new to spatial analysis,\nI am writing for some guidance to approach a particular spatial analysis\nproblem\nand would really appreciate it if I could get some advice in that regard.\n\nI have a large shapefile and within that shapefile, it is subdivided into\nseveral grids. I have the population data for each of the subgrids and I\nwould like to partition (or downscale) one large number across the subgrids\n, weighted by population.\n\nCan anyone suggest some useful approach or particular R package that\ncan help me address the problem.\n\nThanks for your time,\n\nSincerely,\nBhaskar Mitra\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello Everyone,\n\nPlease pardon my ignorance, but as I am new to spatial analysis,\nI am writing for some guidance to approach a particular spatial analysis\nproblem\nand would really appreciate it if I c",
+      "thread_id": "thread-462799e6a11a",
+      "thread_depth": 0,
+      "month": "2022-01"
+    },
+    {
+      "id": "msg-b6ad649b815d",
+      "message_id": "<CAKnqGuQJafTiTT5bugr0293JBaWYR4o1P1pzAE_g869yjCLrSQ@mail.gmail.com>",
+      "from_name": "Rik Ferreira",
+      "from_email_hash": "cf2d58d16c73e69c2e69ac75a335c8ce9c670f5ea9beca578cce1bbd0300e360",
+      "date": "2022-01-30T12:51:51-03:00",
+      "subject": "[R-sig-Geo] How to export a GeoTIFF 8 bit raster",
+      "subject_clean": "How to export a GeoTIFF 8 bit raster",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello!\n\nHow a raster image can be exported as a 8 bit GeoTIFF image?\n\nI'm downloading a 8 bit image from this link:\nhttp://geoinfo.cnps.embrapa.br/documents/2918/download, cropping it with a\nvector mask, treating it, and exporting it with terra package (writeRaster\nfunction).\n\nHowever, the original image is a GeoTIFF with 8 bit depth but the output\nimage (terra package, writeRaster function) is a 32 bit image.\n\nI can control it with `gdal = \"NBITS=8\"` argument to writeRaster but i get\nsuch warning:\n\nWarning message:\n> In x at ptr$writeRaster(opt) :\n>   GDAL Message 6:\n> /mnt/HDD/STORAGE/r-projects/raster-bit-depth/output/recorte.tif: Only\n> NBITS=16 is supported for data type Float32\n>\n\nHow can I export this raster as a 8 bit GeoTIFF image with terra package?\n\n-- \nRik Ferreira Alves\nGraduando em Geografia - Unimontes\nhttps://rikferreira.netlify.app/\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello!\n\nHow a raster image can be exported as a 8 bit GeoTIFF image?\n\nI'm downloading a 8 bit image from this link:\nhttp://geoinfo.cnps.embrapa.br/documents/2918/download, cropping it with a\nvector ma",
+      "thread_id": "thread-b6ad649b815d",
+      "thread_depth": 0,
+      "month": "2022-01"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-2ba03126586f",
+      "subject": "leaflet in shiny error message",
+      "message_count": 3,
+      "participants": [
+        "Bede-Fazekas Ákos",
+        "basile.lenormand"
+      ],
+      "started": "2022-01-03T00:49:33+00:00",
+      "last_reply": "2022-01-03T10:18:31+00:00",
+      "root_message_id": "msg-2ba03126586f"
+    },
+    {
+      "id": "thread-dc20b9b06526",
+      "subject": "reactive map on shiny",
+      "message_count": 1,
+      "participants": [
+        "basile.lenormand"
+      ],
+      "started": "2022-01-03T12:35:49+00:00",
+      "last_reply": "2022-01-03T12:35:49+00:00",
+      "root_message_id": "msg-dc20b9b06526"
+    },
+    {
+      "id": "thread-04b356eeeed6",
+      "subject": "Question about spatial filtering",
+      "message_count": 2,
+      "participants": [
+        "Martin Hulényi",
+        "Roger Bivand"
+      ],
+      "started": "2022-01-03T17:04:07+01:00",
+      "last_reply": "2022-01-04T11:07:19+01:00",
+      "root_message_id": "msg-04b356eeeed6"
+    },
+    {
+      "id": "thread-c864a8786649",
+      "subject": "EBlocal() returning NaN values",
+      "message_count": 2,
+      "participants": [
+        "Erin Stearns",
+        "Roger Bivand"
+      ],
+      "started": "2022-01-04T12:15:07-05:00",
+      "last_reply": "2022-01-05T21:14:27+01:00",
+      "root_message_id": "msg-c864a8786649"
+    },
+    {
+      "id": "thread-b323424904cc",
+      "subject": "Course: Geocomputation and Machine Learning for Environmental Applications.",
+      "message_count": 1,
+      "participants": [
+        "Giuseppe Amatulli"
+      ],
+      "started": "2022-01-20T10:22:22-05:00",
+      "last_reply": "2022-01-20T10:22:22-05:00",
+      "root_message_id": "msg-b323424904cc"
+    },
+    {
+      "id": "thread-ca5397b7ddb4",
+      "subject": "model predict in subset: compare terra and stars",
+      "message_count": 3,
+      "participants": [
+        "Howard, Tim G (DEC)",
+        "Robert J. Hijmans"
+      ],
+      "started": "2022-01-20T16:43:00+00:00",
+      "last_reply": "2022-01-21T12:41:50+00:00",
+      "root_message_id": "msg-ca5397b7ddb4"
+    },
+    {
+      "id": "thread-4cececc1d2f8",
+      "subject": "Distance from point(s) to polygon(s) in terra?",
+      "message_count": 1,
+      "participants": [
+        "Murray Efford"
+      ],
+      "started": "2022-01-23T05:06:26+00:00",
+      "last_reply": "2022-01-23T05:06:26+00:00",
+      "root_message_id": "msg-4cececc1d2f8"
+    },
+    {
+      "id": "thread-462799e6a11a",
+      "subject": "Request for advice on downscaling",
+      "message_count": 1,
+      "participants": [
+        "Bhaskar Mitra"
+      ],
+      "started": "2022-01-27T11:04:57-07:00",
+      "last_reply": "2022-01-27T11:04:57-07:00",
+      "root_message_id": "msg-462799e6a11a"
+    },
+    {
+      "id": "thread-b6ad649b815d",
+      "subject": "How to export a GeoTIFF 8 bit raster",
+      "message_count": 1,
+      "participants": [
+        "Rik Ferreira"
+      ],
+      "started": "2022-01-30T12:51:51-03:00",
+      "last_reply": "2022-01-30T12:51:51-03:00",
+      "root_message_id": "msg-b6ad649b815d"
+    }
+  ]
+}

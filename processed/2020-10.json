@@ -1,0 +1,618 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2020-10",
+  "messages": [
+    {
+      "id": "msg-ce998f197a61",
+      "message_id": "<9fb9fcfe-9cef-0bb3-48a2-2f613825f5f1@gmail.com>",
+      "from_name": "Micha Silver",
+      "from_email_hash": "86a446f0e02a9a64c82549e8099ffb13525e0c2e5405536a3c4150e1bbd36549",
+      "date": "2020-10-03T13:29:08+03:00",
+      "subject": "[R-sig-Geo] Count of Non-NA pixels in stars object",
+      "subject_clean": "Count of Non-NA pixels in stars object",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20201003/3a263faf/attachment.html>",
+      "body_snippet": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20201003/3a263faf/attachment.html>",
+      "thread_id": "thread-ce998f197a61",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-1eede33fcf7d",
+      "message_id": "<CAKkiGbui-KBoBqti0k31U3gt89QM018YEXDaXjJHLGym9zg_cw@mail.gmail.com>",
+      "from_name": "Vijay Lulla",
+      "from_email_hash": "d004d26e190221188366bf072a760b5263377ef285b3f6047b606b92bd2cd196",
+      "date": "2020-10-03T09:32:44-04:00",
+      "subject": "[R-sig-Geo] Count of Non-NA pixels in stars object",
+      "subject_clean": "Count of Non-NA pixels in stars object",
+      "in_reply_to": "<9fb9fcfe-9cef-0bb3-48a2-2f613825f5f1@gmail.com>",
+      "references": [
+        "<9fb9fcfe-9cef-0bb3-48a2-2f613825f5f1@gmail.com>"
+      ],
+      "body_plain": "Micha,\nI am not sure why the function works individually but not on the stars\nobject. IMO, a much simpler function, at least for st_apply, of what you\nare trying to do might be:\n\ncnt_pixels1 <- function(s) { sum(!is.na(s)) }\nst_apply(m_stars, MARGIN=\"DOY\", FUN=cnt_pixels1)$cnt_pixels1\n\nAnd if you wish to call this individually you will have to do\ncnt_pixels1(as.array(m_stars[,,,1]$Value)) .\n\nHTH,\nVijay.\n\nOn Sat, Oct 3, 2020 at 6:29 AM Micha Silver <tsvibar at gmail.com> wrote:\n\n> Hello:\n> I'm trying to get the number of pixels with non-NA values in the 'Value'\n> attrib. of a stars object.\n>\n> My first try was to read a list of geotiff files into raster objects, then\n> use this function to get the number of pixels:\n> c = raster::extract(r, site,fun=function(x, ...) length(na.omit(x)))\n> This worked OK within sapply(), but was rather slow.\n>\n> Instead I read the files into a stars object and I'm trying to switch to\n> st_apply() to gain efficiency. Here's what I've tried (my reprex):\n>\n>\n> library(stars)\n>\n> # An example stars structure\n> m_stars = structure(list(Value = structure(c(NA, 13458, 13315, 13381, NA,\n>                                              13483, 13400, 13251, 13251,\n> 13282, NA, NA, 13663, 13663, 13174,\n>                                              NA, 13783, 13754, NA, NA,\n> 13664, 13643, 13800, 13800, 13797,\n>                                              NA, NA, 13796, 13796, NA, NA,\n> 13515, 13574, 13539, NA, 13383,\n>                                              13407, 13407, 13407, 13541,\n> NA, NA, 13399, 13399, 13399, NA,\n>                                              NA, NA, NA, NA, 12402, NA,\n> NA, NA, NA, NA, NA, NA, NA, NA, NA,\n>                                              13761, 13662, 13662, NA,\n> 13651, 13627, 13627, 13627, 13647, NA,\n>                                              NA, 13607, 13607, NA), .Dim =\n> c(x = 5L, y = 3L, DOY = 5L))), dimensions = structure(list(\n>                                                x = structure(list(from =\n> 1L, to = 5L, offset = -3.8610742258177,\n> delta = 0.01151941823202, refsys = structure(list(input = \"GEOGCS[\\\"WGS\n> 84\\\",DATUM[\\\"WGS_1984\\\",SPHEROID[\\\"WGS\n> 84\\\",6378137,298.257223563,AUTHORITY[\\\"EPSG\\\",\\\"7030\\\"]],AUTHORITY[\\\"EPSG\\\",\\\"6326\\\"]],PRIMEM[\\\"Greenwich\\\",0],UNIT[\\\"degree\\\",0.0174532925199433],AUTHORITY[\\\"EPSG\\\",\\\"4326\\\"]]\",\n>\n> wkt = \"GEOGCS[\\\"WGS 84\\\",\\n    DATUM[\\\"WGS_1984\\\",\\n SPHEROID[\\\"WGS\n> 84\\\",6378137,298.257223563,\\n AUTHORITY[\\\"EPSG\\\",\\\"7030\\\"]],\\n\n> AUTHORITY[\\\"EPSG\\\",\\\"6326\\\"]],\\n PRIMEM[\\\"Greenwich\\\",0],\\n\n> UNIT[\\\"degree\\\",0.0174532925199433],\\n AUTHORITY[\\\"EPSG\\\",\\\"4326\\\"]]\"),\n> class = \"crs\"),\n> point = FALSE, values = NULL), class = \"dimension\"),\n>                                                y = structure(list(from =\n> 1L, to = 3L, offset = 57.118130712839,\n> delta = -0.0141360917583313, refsys = structure(list(\n> input = \"GEOGCS[\\\"WGS 84\\\",DATUM[\\\"WGS_1984\\\",SPHEROID[\\\"WGS\n> 84\\\",6378137,298.257223563,AUTHORITY[\\\"EPSG\\\",\\\"7030\\\"]],AUTHORITY[\\\"EPSG\\\",\\\"6326\\\"]],PRIMEM[\\\"Greenwich\\\",0],UNIT[\\\"degree\\\",0.0174532925199433],AUTHORITY[\\\"EPSG\\\",\\\"4326\\\"]]\",\n>\n> wkt = \"GEOGCS[\\\"WGS 84\\\",\\n    DATUM[\\\"WGS_1984\\\",\\n SPHEROID[\\\"WGS\n> 84\\\",6378137,298.257223563,\\n AUTHORITY[\\\"EPSG\\\",\\\"7030\\\"]],\\n\n> AUTHORITY[\\\"EPSG\\\",\\\"6326\\\"]],\\n PRIMEM[\\\"Greenwich\\\",0],\\n\n> UNIT[\\\"degree\\\",0.0174532925199433],\\n AUTHORITY[\\\"EPSG\\\",\\\"4326\\\"]]\"),\n> class = \"crs\"),\n> point = FALSE, values = NULL), class = \"dimension\"),\n>                                                DOY = structure(list(from =\n> 1L, to = 5L, offset = NA_real_,\n> delta = NA_real_, refsys = NA_character_, point = NA,\n> values = c(\"DOY_2002_001\", \"DOY_2002_009\", \"DOY_2002_017\",\n> \"DOY_2002_025\", \"DOY_2002_033\")), class = \"dimension\")), raster =\n> structure(list(\n> affine = c(0, 0), dimensions = c(\"x\", \"y\"), curvilinear = FALSE), class =\n> \"stars_raster\"), class = \"dimensions\"), class = \"stars\")\n>\n> # My count function\n> cnt_pixels = function(s, na.rm = TRUE, ...) {\n> # Count number of non NA values in $Value attrib\n>   sdf = as.data.frame(s)\n>   if (na.rm) {\n>     sdf = sdf[complete.cases(sdf),]\n>   }\n>   return(length(sdf$Value))\n> }\n>\n> # Using st_apply\n> cnt = st_apply(m_stars,\n>                MARGIN = \"DOY\",\n>                FUN = cnt_pixels,\n>                na.rm = TRUE)$cnt_pixels\n>\n> # The function alone seems to work...\n> (cnt_pixels(m_stars[,,,1]))\n> (cnt_pixels(m_stars[,,,4]))\n>\n> # But run thru st_apply...\n> (cnt) # shows all zeros, ??\n>\n> Why am I getting all zeros in the resulting \"cnt\" list?\n> Am I going about this the right way? Is there some built in method that I\n> missed?\n>\n>\n> Thanks, Micha\n>\n> --\n> Micha Silver\n> Ben Gurion Univ.\n> Sde Boker, Remote Sensing Lab\n> cell: +972-523-665918https://orcid.org/0000-0002-1128-1325\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \nVijay Lulla, PhD\nORCID | <https://orcid.org/0000-0002-0823-2522> Homepage\n<http://vlulla.github.io> | Google Scholar\n<https://scholar.google.com/citations?user=VjhJWOgAAAAJ&hl=en> | Github\n<https://github.com/vlulla>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Micha,\nI am not sure why the function works individually but not on the stars\nobject. IMO, a much simpler function, at least for st_apply, of what you\nare trying to do might be:\n\ncnt_pixels1 <- functi",
+      "thread_id": "thread-ce998f197a61",
+      "thread_depth": 1,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-749c24f2c777",
+      "message_id": "<734f0cbe-287f-26ca-e0b0-99a93fb2b664@gmail.com>",
+      "from_name": "Micha Silver",
+      "from_email_hash": "86a446f0e02a9a64c82549e8099ffb13525e0c2e5405536a3c4150e1bbd36549",
+      "date": "2020-10-03T18:46:01+03:00",
+      "subject": "[R-sig-Geo] Count of Non-NA pixels in stars object",
+      "subject_clean": "Count of Non-NA pixels in stars object",
+      "in_reply_to": "<CAKkiGbui-KBoBqti0k31U3gt89QM018YEXDaXjJHLGym9zg_cw@mail.gmail.com>",
+      "references": [
+        "<9fb9fcfe-9cef-0bb3-48a2-2f613825f5f1@gmail.com>",
+        "<CAKkiGbui-KBoBqti0k31U3gt89QM018YEXDaXjJHLGym9zg_cw@mail.gmail.com>"
+      ],
+      "body_plain": "On 03/10/2020 16:32, Vijay Lulla wrote:\n> Micha,\n> I am not sure why the function works individually but not on the stars \n> object. IMO, a much simpler function, at least for st_apply, of what \n> you are trying to do might be:\n>\n> cnt_pixels1 <- function(s) { sum(!is.na <http://is.na>(s)) }\n> st_apply(m_stars, MARGIN=\"DOY\", FUN=cnt_pixels1)$cnt_pixels1\n\n\nExcellent, thanks!\n\n\n\n>\n> And if you wish to call this individually you will have to do \n> cnt_pixels1(as.array(m_stars[,,,1]$Value)) .\n>\n> HTH,\n> Vijay.\n>\n> On Sat, Oct 3, 2020 at 6:29 AM Micha Silver <tsvibar at gmail.com \n> <mailto:tsvibar at gmail.com>> wrote:\n>\n>     Hello:\n>     I'm trying to get the number of pixels with non-NA values in the\n>     'Value' attrib. of a stars object.\n>\n>     My first try was to read a list of geotiff files into raster\n>     objects, then use this function to get the number of pixels:\n>     c = raster::extract(r, site,fun=function(x, ...) length(na.omit(x)))\n>     This worked OK within sapply(), but was rather slow.\n>\n>     Instead I read the files into a stars object and I'm trying to\n>     switch to st_apply() to gain efficiency. Here's what I've tried\n>     (my reprex):\n>\n>\n>     library(stars)\n>\n>     # An example stars structure\n>     m_stars = structure(list(Value = structure(c(NA, 13458, 13315,\n>     13381, NA,\n>     ???????????????????????????????????????????? 13483, 13400, 13251,\n>     13251, 13282, NA, NA, 13663, 13663, 13174,\n>     ???????????????????????????????????????????? NA, 13783, 13754, NA,\n>     NA, 13664, 13643, 13800, 13800, 13797,\n>     ???????????????????????????????????????????? NA, NA, 13796, 13796,\n>     NA, NA, 13515, 13574, 13539, NA, 13383,\n>     ???????????????????????????????????????????? 13407, 13407, 13407,\n>     13541, NA, NA, 13399, 13399, 13399, NA,\n>     ???????????????????????????????????????????? NA, NA, NA, NA,\n>     12402, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,\n>     ???????????????????????????????????????????? 13761, 13662, 13662,\n>     NA, 13651, 13627, 13627, 13627, 13647, NA,\n>     ???????????????????????????????????????????? NA, 13607, 13607,\n>     NA), .Dim = c(x = 5L, y = 3L, DOY = 5L))), dimensions =\n>     structure(list(\n>     ?????????????????????????????????????????????? x =\n>     structure(list(from = 1L, to = 5L, offset = -3.8610742258177,\n>     delta = 0.01151941823202, refsys = structure(list(input =\n>     \"GEOGCS[\\\"WGS 84\\\",DATUM[\\\"WGS_1984\\\",SPHEROID[\\\"WGS\n>     84\\\",6378137,298.257223563,AUTHORITY[\\\"EPSG\\\",\\\"7030\\\"]],AUTHORITY[\\\"EPSG\\\",\\\"6326\\\"]],PRIMEM[\\\"Greenwich\\\",0],UNIT[\\\"degree\\\",0.0174532925199433],AUTHORITY[\\\"EPSG\\\",\\\"4326\\\"]]\",\n>\n>     wkt = \"GEOGCS[\\\"WGS 84\\\",\\n??? DATUM[\\\"WGS_1984\\\",\\n\n>     SPHEROID[\\\"WGS 84\\\",6378137,298.257223563,\\n\n>     AUTHORITY[\\\"EPSG\\\",\\\"7030\\\"]],\\n AUTHORITY[\\\"EPSG\\\",\\\"6326\\\"]],\\n\n>     PRIMEM[\\\"Greenwich\\\",0],\\n UNIT[\\\"degree\\\",0.0174532925199433],\\n\n>     AUTHORITY[\\\"EPSG\\\",\\\"4326\\\"]]\"), class = \"crs\"),\n>     point = FALSE, values = NULL), class = \"dimension\"),\n>     ?????????????????????????????????????????????? y =\n>     structure(list(from = 1L, to = 3L, offset = 57.118130712839,\n>     delta = -0.0141360917583313, refsys = structure(list(\n>     input = \"GEOGCS[\\\"WGS 84\\\",DATUM[\\\"WGS_1984\\\",SPHEROID[\\\"WGS\n>     84\\\",6378137,298.257223563,AUTHORITY[\\\"EPSG\\\",\\\"7030\\\"]],AUTHORITY[\\\"EPSG\\\",\\\"6326\\\"]],PRIMEM[\\\"Greenwich\\\",0],UNIT[\\\"degree\\\",0.0174532925199433],AUTHORITY[\\\"EPSG\\\",\\\"4326\\\"]]\",\n>\n>     wkt = \"GEOGCS[\\\"WGS 84\\\",\\n??? DATUM[\\\"WGS_1984\\\",\\n\n>     SPHEROID[\\\"WGS 84\\\",6378137,298.257223563,\\n\n>     AUTHORITY[\\\"EPSG\\\",\\\"7030\\\"]],\\n AUTHORITY[\\\"EPSG\\\",\\\"6326\\\"]],\\n\n>     PRIMEM[\\\"Greenwich\\\",0],\\n UNIT[\\\"degree\\\",0.0174532925199433],\\n\n>     AUTHORITY[\\\"EPSG\\\",\\\"4326\\\"]]\"), class = \"crs\"),\n>     point = FALSE, values = NULL), class = \"dimension\"),\n>     ?????????????????????????????????????????????? DOY =\n>     structure(list(from = 1L, to = 5L, offset = NA_real_,\n>     delta = NA_real_, refsys = NA_character_, point = NA,\n>     values = c(\"DOY_2002_001\", \"DOY_2002_009\", \"DOY_2002_017\",\n>     \"DOY_2002_025\", \"DOY_2002_033\")), class = \"dimension\")), raster =\n>     structure(list(\n>     affine = c(0, 0), dimensions = c(\"x\", \"y\"), curvilinear = FALSE),\n>     class = \"stars_raster\"), class = \"dimensions\"), class = \"stars\")\n>\n>     # My count function\n>     cnt_pixels = function(s, na.rm = TRUE, ...) {\n>     # Count number of non NA values in $Value attrib\n>     ? sdf = as.data.frame(s)\n>     ? if (na.rm) {\n>     ??? sdf = sdf[complete.cases(sdf),]\n>     ? }\n>     ? return(length(sdf$Value))\n>     }\n>\n>     # Using st_apply\n>     cnt = st_apply(m_stars,\n>     ?????????????? MARGIN = \"DOY\",\n>     ?????????????? FUN = cnt_pixels,\n>     ?????????????? na.rm = TRUE)$cnt_pixels\n>\n>     # The function alone seems to work...\n>     (cnt_pixels(m_stars[,,,1]))\n>     (cnt_pixels(m_stars[,,,4]))\n>\n>     # But run thru st_apply...\n>     (cnt) # shows all zeros, ??\n>\n>     Why am I getting all zeros in the resulting \"cnt\" list?\n>     Am I going about this the right way? Is there some built in method\n>     that I missed?\n>\n>\n>     Thanks, Micha\n>\n>     -- \n>     Micha Silver\n>     Ben Gurion Univ.\n>     Sde Boker, Remote Sensing Lab\n>     cell: +972-523-665918\n>     https://orcid.org/0000-0002-1128-1325\n>\n>     _______________________________________________\n>     R-sig-Geo mailing list\n>     R-sig-Geo at r-project.org <mailto:R-sig-Geo at r-project.org>\n>     https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n> -- \n> Vijay Lulla, PhD\n> ORCID | <https://orcid.org/0000-0002-0823-2522> Homepage \n> <http://vlulla.github.io> | Google Scholar \n> <https://scholar.google.com/citations?user=VjhJWOgAAAAJ&hl=en> | \n> Github <https://github.com/vlulla>\n>\n-- \nMicha Silver\nBen Gurion Univ.\nSde Boker, Remote Sensing Lab\ncell: +972-523-665918\nhttps://orcid.org/0000-0002-1128-1325",
+      "body_snippet": "On 03/10/2020 16:32, Vijay Lulla wrote:\n> Micha,\n> I am not sure why the function works individually but not on the stars \n> object. IMO, a much simpler function, at least for st_apply, of what \n> you",
+      "thread_id": "thread-ce998f197a61",
+      "thread_depth": 2,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-762f8256cbff",
+      "message_id": "<CANcbSEiNw94YJim4BPR0RE5NjZc6exT+tQma2M7OX0=3YxGxKg@mail.gmail.com>",
+      "from_name": "Amitha Puranik",
+      "from_email_hash": "c792727b4c2cf68159823f74afa9d6c2d28cdcd435e8f8a3bccf249893cf1d1c",
+      "date": "2020-10-04T20:12:01+05:30",
+      "subject": "[R-sig-Geo] Spatial data when the missing mechanism is MNAR (non-ignorable)",
+      "subject_clean": "Spatial data when the missing mechanism is MNAR (non-ignorable)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Is it possible to impute missing values in spatial data when the\nmissingness is *MNAR (non-ignorable)*? Can pattern mixture model or\nselection model be modified to incorporate autocorrelation property and\nused in this context?\nAny suggestion/opinion is appreciated.\n\nThanks in advance,\nAmitha Puranik\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Is it possible to impute missing values in spatial data when the\nmissingness is *MNAR (non-ignorable)*? Can pattern mixture model or\nselection model be modified to incorporate autocorrelation property",
+      "thread_id": "thread-762f8256cbff",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-8018f6b71d37",
+      "message_id": "<alpine.LFD.2.23.451.2010050949220.70746@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2020-10-05T10:18:35+02:00",
+      "subject": "[R-sig-Geo] Spatial data when the missing mechanism is MNAR (non-ignorable)",
+      "subject_clean": "Spatial data when the missing mechanism is MNAR (non-ignorable)",
+      "in_reply_to": "<CANcbSEiNw94YJim4BPR0RE5NjZc6exT+tQma2M7OX0=3YxGxKg@mail.gmail.com>",
+      "references": [
+        "<CANcbSEiNw94YJim4BPR0RE5NjZc6exT+tQma2M7OX0=3YxGxKg@mail.gmail.com>"
+      ],
+      "body_plain": "On Sun, 4 Oct 2020, Amitha Puranik wrote:\n\n> Is it possible to impute missing values in spatial data when the\n> missingness is *MNAR (non-ignorable)*? Can pattern mixture model or\n> selection model be modified to incorporate autocorrelation property and\n> used in this context?\n> Any suggestion/opinion is appreciated.\n\nMNAR possibly means \"missing not at random\". I see \nhttps://doi.org/10.1186/1476-072X-14-1 for point support data using INLA. \nFor lattice data, see perhaps https://doi.org/10.1007/s10109-019-00316-z \nand work by Thomas Suesse https://doi.org/10.1016/j.csda.2017.11.004 \nhttps://doi.org/10.1080/00949655.2017.1286495. This might be relevant: \nhttps://doi.org/10.1016/j.epsr.2020.106640, but be extremely careful of \nimputation in training/test settings with spatial data, as the spatial (or \ntemporal or both) lead to information leaking between the training and \ntest data because they are no longer independent.\n\nHope this helps,\n\nRoger\n\n>\n> Thanks in advance,\n> Amitha Puranik\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Sun, 4 Oct 2020, Amitha Puranik wrote:\n\n> Is it possible to impute missing values in spatial data when the\n> missingness is *MNAR (non-ignorable)*? Can pattern mixture model or\n> selection model be",
+      "thread_id": "thread-762f8256cbff",
+      "thread_depth": 1,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-3d9ba5c1c7ae",
+      "message_id": "<CANcbSEgpT5f4EeAaeLH5dernYt9r4tM=hoTArfv-WjDhKyzwmg@mail.gmail.com>",
+      "from_name": "Amitha Puranik",
+      "from_email_hash": "c792727b4c2cf68159823f74afa9d6c2d28cdcd435e8f8a3bccf249893cf1d1c",
+      "date": "2020-10-05T14:13:04+05:30",
+      "subject": "[R-sig-Geo] Spatial data when the missing mechanism is MNAR (non-ignorable)",
+      "subject_clean": "Spatial data when the missing mechanism is MNAR (non-ignorable)",
+      "in_reply_to": "<alpine.LFD.2.23.451.2010050949220.70746@reclus.nhh.no>",
+      "references": [
+        "<CANcbSEiNw94YJim4BPR0RE5NjZc6exT+tQma2M7OX0=3YxGxKg@mail.gmail.com>",
+        "<alpine.LFD.2.23.451.2010050949220.70746@reclus.nhh.no>"
+      ],
+      "body_plain": "Dear Roger,\n\nThank you for the quick response. I shall refer to the articles that\nyou recommended.\nThanks again!\n\nRegards,\nAmitha Puranik.\n\nOn Mon, Oct 5, 2020 at 1:48 PM Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Sun, 4 Oct 2020, Amitha Puranik wrote:\n>\n> > Is it possible to impute missing values in spatial data when the\n> > missingness is *MNAR (non-ignorable)*? Can pattern mixture model or\n> > selection model be modified to incorporate autocorrelation property and\n> > used in this context?\n> > Any suggestion/opinion is appreciated.\n>\n> MNAR possibly means \"missing not at random\". I see\n> https://doi.org/10.1186/1476-072X-14-1 for point support data using INLA.\n> For lattice data, see perhaps https://doi.org/10.1007/s10109-019-00316-z\n> and work by Thomas Suesse https://doi.org/10.1016/j.csda.2017.11.004\n> https://doi.org/10.1080/00949655.2017.1286495. This might be relevant:\n> https://doi.org/10.1016/j.epsr.2020.106640, but be extremely careful of\n> imputation in training/test settings with spatial data, as the spatial (or\n> temporal or both) lead to information leaking between the training and\n> test data because they are no longer independent.\n>\n> Hope this helps,\n>\n> Roger\n>\n> >\n> > Thanks in advance,\n> > Amitha Puranik\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics,\n> Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> https://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Roger,\n\nThank you for the quick response. I shall refer to the articles that\nyou recommended.\nThanks again!\n\nRegards,\nAmitha Puranik.\n\nOn Mon, Oct 5, 2020 at 1:48 PM Roger Bivand <Roger.Bivand at",
+      "thread_id": "thread-762f8256cbff",
+      "thread_depth": 2,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-5686e1557927",
+      "message_id": "<CANcbSEg80=H0YSoKS9nY7BvzDUYWi7cep=JUom_q09T58K=CoQ@mail.gmail.com>",
+      "from_name": "Amitha Puranik",
+      "from_email_hash": "c792727b4c2cf68159823f74afa9d6c2d28cdcd435e8f8a3bccf249893cf1d1c",
+      "date": "2020-10-06T18:11:08+05:30",
+      "subject": "[R-sig-Geo] Spatial data when the missing mechanism is MNAR (non-ignorable)",
+      "subject_clean": "Spatial data when the missing mechanism is MNAR (non-ignorable)",
+      "in_reply_to": "<CANcbSEgpT5f4EeAaeLH5dernYt9r4tM=hoTArfv-WjDhKyzwmg@mail.gmail.com>",
+      "references": [
+        "<CANcbSEiNw94YJim4BPR0RE5NjZc6exT+tQma2M7OX0=3YxGxKg@mail.gmail.com>",
+        "<alpine.LFD.2.23.451.2010050949220.70746@reclus.nhh.no>",
+        "<CANcbSEgpT5f4EeAaeLH5dernYt9r4tM=hoTArfv-WjDhKyzwmg@mail.gmail.com>"
+      ],
+      "body_plain": "Dear Prof Roger,\n\n\n\nThis is in continuation to my previous query on spatial data imputation\nwith MNAR mechanism. I have gone through the references recommended by you\nand have the following concerns which I request you to address.\n\n1. The papers by Thomas Suesse, Takafumi Kato suggest likelihood based\napproaches for predicting missing data in simultaneous autoregressive\nmodels with an assumption of *missing at random* mechanism.\n\n2. The additional reference provided by you, i.e. 'Missing Data in Wind\nFarm Time Series: Properties and Effect on Forecasts' by Tawn et al.,\nassume *missing not at random* mechanism in an autoregressive framework and\nhave applied mean imputation and multiple imputation methods.\n\n\n\nI am presently looking for a technique to deal with MNAR in spatially\nautocorrelated data. Would it be reasonable to apply the methods\nrecommended by Suesse or Kato in this scenario by ignoring the missing\nmechanism?\n\n>From what I understand, using conventional methods that are effective for\nMAR case would produce biased estimates when data is MNAR. Can the approach\napplied by Tawn et al. (i.e. mean imputation or multiple imputation) be\nused on spatial data with MNAR mechanism?\n\n\n\nAny comment/ suggestion will be appreciated.\n\n\nThanks in advance,\n\nAmitha Puranik.\n\n\n\n\n\n\n\n\n\n\n\n\nOn Mon, Oct 5, 2020 at 2:13 PM Amitha Puranik <puranik.amitha at gmail.com>\nwrote:\n\n> Dear Roger,\n>\n> Thank you for the quick response. I shall refer to the articles that you recommended.\n> Thanks again!\n>\n> Regards,\n> Amitha Puranik.\n>\n> On Mon, Oct 5, 2020 at 1:48 PM Roger Bivand <Roger.Bivand at nhh.no> wrote:\n>\n>> On Sun, 4 Oct 2020, Amitha Puranik wrote:\n>>\n>> > Is it possible to impute missing values in spatial data when the\n>> > missingness is *MNAR (non-ignorable)*? Can pattern mixture model or\n>> > selection model be modified to incorporate autocorrelation property and\n>> > used in this context?\n>> > Any suggestion/opinion is appreciated.\n>>\n>> MNAR possibly means \"missing not at random\". I see\n>> https://doi.org/10.1186/1476-072X-14-1 for point support data using\n>> INLA.\n>> For lattice data, see perhaps https://doi.org/10.1007/s10109-019-00316-z\n>> and work by Thomas Suesse https://doi.org/10.1016/j.csda.2017.11.004\n>> https://doi.org/10.1080/00949655.2017.1286495. This might be relevant:\n>> https://doi.org/10.1016/j.epsr.2020.106640, but be extremely careful of\n>> imputation in training/test settings with spatial data, as the spatial\n>> (or\n>> temporal or both) lead to information leaking between the training and\n>> test data because they are no longer independent.\n>>\n>> Hope this helps,\n>>\n>> Roger\n>>\n>> >\n>> > Thanks in advance,\n>> > Amitha Puranik\n>> >\n>> >       [[alternative HTML version deleted]]\n>> >\n>> > _______________________________________________\n>> > R-sig-Geo mailing list\n>> > R-sig-Geo at r-project.org\n>> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> >\n>>\n>> --\n>> Roger Bivand\n>> Department of Economics, Norwegian School of Economics,\n>> Helleveien 30, N-5045 Bergen, Norway.\n>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n>> https://orcid.org/0000-0003-2392-6140\n>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Prof Roger,\n\n\n\nThis is in continuation to my previous query on spatial data imputation\nwith MNAR mechanism. I have gone through the references recommended by you\nand have the following concerns w",
+      "thread_id": "thread-762f8256cbff",
+      "thread_depth": 3,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-40df9dd249c5",
+      "message_id": "<alpine.LFD.2.23.451.2010061520450.92705@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2020-10-06T15:23:34+02:00",
+      "subject": "[R-sig-Geo] Spatial data when the missing mechanism is MNAR (non-ignorable)",
+      "subject_clean": "Spatial data when the missing mechanism is MNAR (non-ignorable)",
+      "in_reply_to": "<CANcbSEg80=H0YSoKS9nY7BvzDUYWi7cep=JUom_q09T58K=CoQ@mail.gmail.com>",
+      "references": [
+        "<CANcbSEiNw94YJim4BPR0RE5NjZc6exT+tQma2M7OX0=3YxGxKg@mail.gmail.com>",
+        "<alpine.LFD.2.23.451.2010050949220.70746@reclus.nhh.no>",
+        "<CANcbSEgpT5f4EeAaeLH5dernYt9r4tM=hoTArfv-WjDhKyzwmg@mail.gmail.com>",
+        "<CANcbSEg80=H0YSoKS9nY7BvzDUYWi7cep=JUom_q09T58K=CoQ@mail.gmail.com>"
+      ],
+      "body_plain": "On Tue, 6 Oct 2020, Amitha Puranik wrote:\n\n> Dear Prof Roger,\n>\n> This is in continuation to my previous query on spatial data imputation\n> with MNAR mechanism. I have gone through the references recommended by you\n> and have the following concerns which I request you to address.\n>\n> 1. The papers by Thomas Suesse, Takafumi Kato suggest likelihood based\n> approaches for predicting missing data in simultaneous autoregressive\n> models with an assumption of *missing at random* mechanism.\n>\n> 2. The additional reference provided by you, i.e. 'Missing Data in Wind\n> Farm Time Series: Properties and Effect on Forecasts' by Tawn et al.,\n> assume *missing not at random* mechanism in an autoregressive framework and\n> have applied mean imputation and multiple imputation methods.\n>\n>\n>\n> I am presently looking for a technique to deal with MNAR in spatially\n> autocorrelated data. Would it be reasonable to apply the methods\n> recommended by Suesse or Kato in this scenario by ignoring the missing\n> mechanism?\n>\n> From what I understand, using conventional methods that are effective for\n> MAR case would produce biased estimates when data is MNAR. Can the approach\n> applied by Tawn et al. (i.e. mean imputation or multiple imputation) be\n> used on spatial data with MNAR mechanism?\n>\n\nSince probably nobody knows, you may very well need to run simulations in \nthe settings you need to determine which outcomes correspond to reasonable \npractice. Reviewers of you work would probably appreciate your having \nexplored the robustness of your choice of method. Quite a lot will depend \non the spatial support of your data too.\n\nRoger\n\n>\n>\n> Any comment/ suggestion will be appreciated.\n>\n>\n> Thanks in advance,\n>\n> Amitha Puranik.\n>\n>\n>\n>\n>\n>\n>\n>\n>\n>\n>\n>\n> On Mon, Oct 5, 2020 at 2:13 PM Amitha Puranik <puranik.amitha at gmail.com>\n> wrote:\n>\n>> Dear Roger,\n>>\n>> Thank you for the quick response. I shall refer to the articles that you recommended.\n>> Thanks again!\n>>\n>> Regards,\n>> Amitha Puranik.\n>>\n>> On Mon, Oct 5, 2020 at 1:48 PM Roger Bivand <Roger.Bivand at nhh.no> wrote:\n>>\n>>> On Sun, 4 Oct 2020, Amitha Puranik wrote:\n>>>\n>>>> Is it possible to impute missing values in spatial data when the\n>>>> missingness is *MNAR (non-ignorable)*? Can pattern mixture model or\n>>>> selection model be modified to incorporate autocorrelation property and\n>>>> used in this context?\n>>>> Any suggestion/opinion is appreciated.\n>>>\n>>> MNAR possibly means \"missing not at random\". I see\n>>> https://doi.org/10.1186/1476-072X-14-1 for point support data using\n>>> INLA.\n>>> For lattice data, see perhaps https://doi.org/10.1007/s10109-019-00316-z\n>>> and work by Thomas Suesse https://doi.org/10.1016/j.csda.2017.11.004\n>>> https://doi.org/10.1080/00949655.2017.1286495. This might be relevant:\n>>> https://doi.org/10.1016/j.epsr.2020.106640, but be extremely careful of\n>>> imputation in training/test settings with spatial data, as the spatial\n>>> (or\n>>> temporal or both) lead to information leaking between the training and\n>>> test data because they are no longer independent.\n>>>\n>>> Hope this helps,\n>>>\n>>> Roger\n>>>\n>>>>\n>>>> Thanks in advance,\n>>>> Amitha Puranik\n>>>>\n>>>>       [[alternative HTML version deleted]]\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>\n>>>\n>>> --\n>>> Roger Bivand\n>>> Department of Economics, Norwegian School of Economics,\n>>> Helleveien 30, N-5045 Bergen, Norway.\n>>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n>>> https://orcid.org/0000-0003-2392-6140\n>>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>>>\n>>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Tue, 6 Oct 2020, Amitha Puranik wrote:\n\n> Dear Prof Roger,\n>\n> This is in continuation to my previous query on spatial data imputation\n> with MNAR mechanism. I have gone through the references reco",
+      "thread_id": "thread-762f8256cbff",
+      "thread_depth": 4,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-918de76a9867",
+      "message_id": "<CANcbSEgsyeATcLxsU0QamnuyvEtNgum9tw_sYo4GpcVDsqeffA@mail.gmail.com>",
+      "from_name": "Amitha Puranik",
+      "from_email_hash": "c792727b4c2cf68159823f74afa9d6c2d28cdcd435e8f8a3bccf249893cf1d1c",
+      "date": "2020-10-06T20:44:01+05:30",
+      "subject": "[R-sig-Geo] Spatial data when the missing mechanism is MNAR (non-ignorable)",
+      "subject_clean": "Spatial data when the missing mechanism is MNAR (non-ignorable)",
+      "in_reply_to": "<alpine.LFD.2.23.451.2010061520450.92705@reclus.nhh.no>",
+      "references": [
+        "<CANcbSEiNw94YJim4BPR0RE5NjZc6exT+tQma2M7OX0=3YxGxKg@mail.gmail.com>",
+        "<alpine.LFD.2.23.451.2010050949220.70746@reclus.nhh.no>",
+        "<CANcbSEgpT5f4EeAaeLH5dernYt9r4tM=hoTArfv-WjDhKyzwmg@mail.gmail.com>",
+        "<CANcbSEg80=H0YSoKS9nY7BvzDUYWi7cep=JUom_q09T58K=CoQ@mail.gmail.com>",
+        "<alpine.LFD.2.23.451.2010061520450.92705@reclus.nhh.no>"
+      ],
+      "body_plain": "Dear Prof. Roger,\n\nThanks for that suggestion. I will go for a simulation approach then to\nidentify the appropriate method. Thanks again for your help.\n\nRegards,\nAmitha Puranik.\n\n\n\n\nOn Tue, 6 Oct, 2020, 6:53 PM Roger Bivand, <Roger.Bivand at nhh.no> wrote:\n\n> On Tue, 6 Oct 2020, Amitha Puranik wrote:\n>\n> > Dear Prof Roger,\n> >\n> > This is in continuation to my previous query on spatial data imputation\n> > with MNAR mechanism. I have gone through the references recommended by\n> you\n> > and have the following concerns which I request you to address.\n> >\n> > 1. The papers by Thomas Suesse, Takafumi Kato suggest likelihood based\n> > approaches for predicting missing data in simultaneous autoregressive\n> > models with an assumption of *missing at random* mechanism.\n> >\n> > 2. The additional reference provided by you, i.e. 'Missing Data in Wind\n> > Farm Time Series: Properties and Effect on Forecasts' by Tawn et al.,\n> > assume *missing not at random* mechanism in an autoregressive framework\n> and\n> > have applied mean imputation and multiple imputation methods.\n> >\n> >\n> >\n> > I am presently looking for a technique to deal with MNAR in spatially\n> > autocorrelated data. Would it be reasonable to apply the methods\n> > recommended by Suesse or Kato in this scenario by ignoring the missing\n> > mechanism?\n> >\n> > From what I understand, using conventional methods that are effective for\n> > MAR case would produce biased estimates when data is MNAR. Can the\n> approach\n> > applied by Tawn et al. (i.e. mean imputation or multiple imputation) be\n> > used on spatial data with MNAR mechanism?\n> >\n>\n> Since probably nobody knows, you may very well need to run simulations in\n> the settings you need to determine which outcomes correspond to reasonable\n> practice. Reviewers of you work would probably appreciate your having\n> explored the robustness of your choice of method. Quite a lot will depend\n> on the spatial support of your data too.\n>\n> Roger\n>\n> >\n> >\n> > Any comment/ suggestion will be appreciated.\n> >\n> >\n> > Thanks in advance,\n> >\n> > Amitha Puranik.\n> >\n> >\n> >\n> >\n> >\n> >\n> >\n> >\n> >\n> >\n> >\n> >\n> > On Mon, Oct 5, 2020 at 2:13 PM Amitha Puranik <puranik.amitha at gmail.com>\n> > wrote:\n> >\n> >> Dear Roger,\n> >>\n> >> Thank you for the quick response. I shall refer to the articles that\n> you recommended.\n> >> Thanks again!\n> >>\n> >> Regards,\n> >> Amitha Puranik.\n> >>\n> >> On Mon, Oct 5, 2020 at 1:48 PM Roger Bivand <Roger.Bivand at nhh.no>\n> wrote:\n> >>\n> >>> On Sun, 4 Oct 2020, Amitha Puranik wrote:\n> >>>\n> >>>> Is it possible to impute missing values in spatial data when the\n> >>>> missingness is *MNAR (non-ignorable)*? Can pattern mixture model or\n> >>>> selection model be modified to incorporate autocorrelation property\n> and\n> >>>> used in this context?\n> >>>> Any suggestion/opinion is appreciated.\n> >>>\n> >>> MNAR possibly means \"missing not at random\". I see\n> >>> https://doi.org/10.1186/1476-072X-14-1 for point support data using\n> >>> INLA.\n> >>> For lattice data, see perhaps\n> https://doi.org/10.1007/s10109-019-00316-z\n> >>> and work by Thomas Suesse https://doi.org/10.1016/j.csda.2017.11.004\n> >>> https://doi.org/10.1080/00949655.2017.1286495. This might be relevant:\n> >>> https://doi.org/10.1016/j.epsr.2020.106640, but be extremely careful\n> of\n> >>> imputation in training/test settings with spatial data, as the spatial\n> >>> (or\n> >>> temporal or both) lead to information leaking between the training and\n> >>> test data because they are no longer independent.\n> >>>\n> >>> Hope this helps,\n> >>>\n> >>> Roger\n> >>>\n> >>>>\n> >>>> Thanks in advance,\n> >>>> Amitha Puranik\n> >>>>\n> >>>>       [[alternative HTML version deleted]]\n> >>>>\n> >>>> _______________________________________________\n> >>>> R-sig-Geo mailing list\n> >>>> R-sig-Geo at r-project.org\n> >>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>>>\n> >>>\n> >>> --\n> >>> Roger Bivand\n> >>> Department of Economics, Norwegian School of Economics,\n> >>> Helleveien 30, N-5045 Bergen, Norway.\n> >>> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> >>> https://orcid.org/0000-0003-2392-6140\n> >>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n> >>>\n> >>\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics,\n> Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> https://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Prof. Roger,\n\nThanks for that suggestion. I will go for a simulation approach then to\nidentify the appropriate method. Thanks again for your help.\n\nRegards,\nAmitha Puranik.\n\n\n\n\nOn Tue, 6 Oct, 202",
+      "thread_id": "thread-762f8256cbff",
+      "thread_depth": 5,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-318851ff79e7",
+      "message_id": "<CAAQaj80XEXoLeuzRHvBYCUBnWAZ8FWx+KAE4x+g_XyT0JU4HGw@mail.gmail.com>",
+      "from_name": "Vlad Amihaesei",
+      "from_email_hash": "1700661a5f0bf25a8facafe7ff4c1450a3eafb3e12881da785ca739a94a86fe3",
+      "date": "2020-10-07T20:58:40+03:00",
+      "subject": "[R-sig-Geo] (no subject)",
+      "subject_clean": "(no subject)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\nI have  an  error when I want to install stars package from github\n\nif (!require(remotes))\n  install.packages(\"remotes\")\nremotes::install_github(\"r-spatial/stars\")\nlibrary(stars)\n I have this :\nERROR: lazy loading failed for package ?stars?\n* removing\n?/Library/Frameworks/R.framework/Versions/3.6/Resources/library/stars?\n* restoring previous\n?/Library/Frameworks/R.framework/Versions/3.6/Resources/library/stars?\nError: Failed to install 'stars' from GitHub:\n  (converted from warning) installation of package\n?/var/folders/ym/g7mjd6cn7k3fbm0sks8qp8fr0000gn/T//RtmpxiNuRD/file6583fb9afa9/stars_0.4-4.tar.gz?\nhad non-zero exit status\n>\n\nBest  regards,\n\nVlad Alexandru AMIHAESEI\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\nI have  an  error when I want to install stars package from github\n\nif (!require(remotes))\n  install.packages(\"remotes\")\nremotes::install_github(\"r-spatial/stars\")\nlibrary(stars)\n I have this :\nER",
+      "thread_id": "thread-318851ff79e7",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-94670a578693",
+      "message_id": "<alpine.LFD.2.23.451.2010072049220.111201@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2020-10-07T21:00:24+02:00",
+      "subject": "[R-sig-Geo] (no subject)",
+      "subject_clean": "(no subject)",
+      "in_reply_to": "<CAAQaj80XEXoLeuzRHvBYCUBnWAZ8FWx+KAE4x+g_XyT0JU4HGw@mail.gmail.com>",
+      "references": [
+        "<CAAQaj80XEXoLeuzRHvBYCUBnWAZ8FWx+KAE4x+g_XyT0JU4HGw@mail.gmail.com>"
+      ],
+      "body_plain": "On Wed, 7 Oct 2020, Vlad Amihaesei wrote:\n\n> Hi,\n> I have  an  error when I want to install stars package from github\n\nWhy from github? You are on your own if you do, because you must install \nall of the packages stars uses, especially sf, also from source if they \nhave changed since their last releases. Unless you must use the \ndevelopment version, use the released version, or be prepared to sort out \nany difficulties yourself. You do not say what your platform is, and \nshould do so (it is  MacOS, version unknown, but you do not say; your R \nversion is old).\n\nRoger\n\nPS. Do not use html, post plain text only. Include more of the relevant \nparts of the message.\n\n>\n> if (!require(remotes))\n>  install.packages(\"remotes\")\n> remotes::install_github(\"r-spatial/stars\")\n> library(stars)\n> I have this :\n> ERROR: lazy loading failed for package ?stars?\n> * removing\n> ?/Library/Frameworks/R.framework/Versions/3.6/Resources/library/stars?\n> * restoring previous\n> ?/Library/Frameworks/R.framework/Versions/3.6/Resources/library/stars?\n> Error: Failed to install 'stars' from GitHub:\n>  (converted from warning) installation of package\n> ?/var/folders/ym/g7mjd6cn7k3fbm0sks8qp8fr0000gn/T//RtmpxiNuRD/file6583fb9afa9/stars_0.4-4.tar.gz?\n> had non-zero exit status\n>>\n>\n> Best  regards,\n>\n> Vlad Alexandru AMIHAESEI\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 7 Oct 2020, Vlad Amihaesei wrote:\n\n> Hi,\n> I have  an  error when I want to install stars package from github\n\nWhy from github? You are on your own if you do, because you must install \nall of ",
+      "thread_id": "thread-318851ff79e7",
+      "thread_depth": 1,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-d69357e2aa8d",
+      "message_id": "<alpine.LFD.2.23.451.2010081107080.124874@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2020-10-08T11:15:54+02:00",
+      "subject": "[R-sig-Geo] New sp and rgdal versions on CRAN",
+      "subject_clean": "New sp and rgdal versions on CRAN",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "The source packages sp 1.4-4 and rgdal 1.5-17 are now on CRAN (thanks to \nthe CRAN team). They are probably the last releases prior to turning off \nby default intrusive warnings intended to alert users and package \nmaintainers to the major changes that have occurred to switch CRS \nrepresentation from Proj4 to WKT2 (2019) strings. If you notice unexpected \nbehaviour, please respond here or by email or ping @rsbivand on github if \nyour package uses it; twitter @RogerBivand is also possible, but not good \nfor longer messages.\n\nEnjoy ...\n\nRoger\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "The source packages sp 1.4-4 and rgdal 1.5-17 are now on CRAN (thanks to \nthe CRAN team). They are probably the last releases prior to turning off \nby default intrusive warnings intended to alert user",
+      "thread_id": "thread-d69357e2aa8d",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-fca7e0e38b99",
+      "message_id": "<7D7153FF-15DD-4FC1-AC52-F04607FC47BD@icloud.com>",
+      "from_name": "Tyler Frazier",
+      "from_email_hash": "43bd76186108105e6eceb55814c9885d2ca11fd308e5bbccd750bc31d4b3c17b",
+      "date": "2020-10-10T01:32:02-04:00",
+      "subject": "[R-sig-Geo] st_sample with raster",
+      "subject_clean": "st_sample with raster",
+      "in_reply_to": "<f575da64-9887-6a21-7f6c-abffc69eff3d@uni-muenster.de>",
+      "references": [
+        "<E697FE84-B258-4A29-A068-A73FB52DAC88@icloud.com>",
+        "<f575da64-9887-6a21-7f6c-abffc69eff3d@uni-muenster.de>"
+      ],
+      "body_plain": "Hi Edzer,\n\nThank you for your answer (although sorry for my slow reply).  I was reading the help doc for st_sample() and noticed the type = argument.  Is it possible to do something like the following.\n\nnew_sf_points <- st_sample(sf_polygons, table(df$vector_of_values), type = as.im(raster_of_gridcell_densities))\n\nRunning just:\n\nst_sample(sf_polygons, table(df$vector_of_values)) \n\nwhere the vector of values is equal in length to the number of polygons in the sf works fine, but I can?t seem to apply gridcell values/densities as weights.  I thought it might be possible to replicate the syntax from spatstat::rpoint() but it didn?t work.\n\nThanks so much for any additional insight you may have to offer!\n\nBest wishes,\nTyler\n\nTyler J. Frazier, Ph.D.\nLecturer of Data Science\nWilliam & Mary\nWebpage: https://tyler-frazier.github.io <https://tyler-frazier.github.io/>\n\n> On Aug 10, 2019, at 4:38 AM, Edzer Pebesma <edzer.pebesma at uni-muenster.de> wrote:\n> \n> sf::st_sample has a size argument, which can be specified as a vector to\n> operate per feature. If you give that a value equal to\n> \n> st_area(obj) * obj$required_density\n> \n> and maybe set exact = FALSE, you should get the densities you want.\n> \n> On 7/30/19 12:25 AM, Tyler Frazier via R-sig-Geo wrote:\n>> Hi All,\n>> \n>> Spatstat::rpoint has an argument f that accepts a pixel image object (class .im) to generate points based on the proportionate probability density of that raster.  Just wondering, does sf::st_sample or perhaps another function have a similar available method?\n>> \n>> Thanks so much!\n>> Ty\n>> \n>> Tyler Frazier, Ph.D.\n>> Lecturer of Interdisciplinary Studies\n>> Data Science Program\n>> College of William and Mary\n>> Webpage: http://tjfrazier.people.wm.edu\n>> Phone: +01 (757) 386-1269\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> \n> \n> -- \n> Edzer Pebesma\n> Institute for Geoinformatics\n> Heisenbergstrasse 2, 48151 Muenster, Germany\n> Phone: +49 251 8333081\n> <pEpkey.asc>_______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Edzer,\n\nThank you for your answer (although sorry for my slow reply).  I was reading the help doc for st_sample() and noticed the type = argument.  Is it possible to do something like the following",
+      "thread_id": "thread-fca7e0e38b99",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-89553ba53a29",
+      "message_id": "<CANcbSEgCz0RqV9hvWG3TJGJ098U74qa=67UN1J-oKkgsu8O7kQ@mail.gmail.com>",
+      "from_name": "Amitha Puranik",
+      "from_email_hash": "c792727b4c2cf68159823f74afa9d6c2d28cdcd435e8f8a3bccf249893cf1d1c",
+      "date": "2020-10-19T11:34:32+05:30",
+      "subject": "[R-sig-Geo] Imputation of aggregate data for spatial analysis",
+      "subject_clean": "Imputation of aggregate data for spatial analysis",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hello everyone!\n\nI have data on the proportion of screening of cervical cancer at\ndistrict-level. I have about 530 data points out of the 545 districts. I\nwant to get a complete picture of the data in order to obtain the spatial\ncluster map using LISA (local indicators of partial autocorrelation).\n\nWould it be alright if I impute the missing values of the proportion for\nthe 15 districts using multiple imputation?\n\nOr is there a better way for imputation in this case?\n\nAny suggestion/ comment is highly appreciated!\n\nRegards,\nAmitha\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello everyone!\n\nI have data on the proportion of screening of cervical cancer at\ndistrict-level. I have about 530 data points out of the 545 districts. I\nwant to get a complete picture of the data in",
+      "thread_id": "thread-89553ba53a29",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-84fb6c644e5d",
+      "message_id": "<alpine.LFD.2.23.451.2010191013110.2171801@reclus.nhh.no>",
+      "from_name": "Roger Bivand",
+      "from_email_hash": "37a3c7637f7cdc3576966201a0fd58853d44abb21284a9eb85afffcb057c33b5",
+      "date": "2020-10-19T10:21:26+02:00",
+      "subject": "[R-sig-Geo] Imputation of aggregate data for spatial analysis",
+      "subject_clean": "Imputation of aggregate data for spatial analysis",
+      "in_reply_to": "<CANcbSEgCz0RqV9hvWG3TJGJ098U74qa=67UN1J-oKkgsu8O7kQ@mail.gmail.com>",
+      "references": [
+        "<CANcbSEgCz0RqV9hvWG3TJGJ098U74qa=67UN1J-oKkgsu8O7kQ@mail.gmail.com>"
+      ],
+      "body_plain": "On Mon, 19 Oct 2020, Amitha Puranik wrote:\n\n> Hello everyone!\n>\n> I have data on the proportion of screening of cervical cancer at\n> district-level. I have about 530 data points out of the 545 districts. I\n> want to get a complete picture of the data in order to obtain the spatial\n> cluster map using LISA (local indicators of partial autocorrelation).\n>\n> Would it be alright if I impute the missing values of the proportion for\n> the 15 districts using multiple imputation?\n\nPlease do not even consider imputation of this kind of data, especially if \nLISA is your tools. It makes no sense at all.\n\nIf, however, you model the screening proportions at district level, and \nhave a model that fits well using multiple well-observed covariates, both \nINLA and other model fitting approaches can predict for unobserved \nresponses. However, in such cases, the model will have used the spatial \nautocorrelation already (for example in a BYM model, see for example here: \nhttp://www.paulamoraga.com/book-geospatial-info/), so putting the \nposterior distributions at unobserved locations into a LISA makes no \nsense, because the imputation alrready uses spatial autocorrelation. \nModelling, if you have relevant covariates, and model preferably using \nPoisson reression offset by log size of age-selected female population, \nmakes much more sense than LISA.\n\nHope this helps,\n\nRoger\n\n>\n> Or is there a better way for imputation in this case?\n>\n> Any suggestion/ comment is highly appreciated!\n>\n> Regards,\n> Amitha\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Mon, 19 Oct 2020, Amitha Puranik wrote:\n\n> Hello everyone!\n>\n> I have data on the proportion of screening of cervical cancer at\n> district-level. I have about 530 data points out of the 545 distric",
+      "thread_id": "thread-89553ba53a29",
+      "thread_depth": 1,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-5a25c90932cd",
+      "message_id": "<CANcbSEg+rXeCCT6CwnBfV6yRc5gf=xH+VmAWkOpEP+ZxS3W7SA@mail.gmail.com>",
+      "from_name": "Amitha Puranik",
+      "from_email_hash": "c792727b4c2cf68159823f74afa9d6c2d28cdcd435e8f8a3bccf249893cf1d1c",
+      "date": "2020-10-19T15:43:04+05:30",
+      "subject": "[R-sig-Geo] Imputation of aggregate data for spatial analysis",
+      "subject_clean": "Imputation of aggregate data for spatial analysis",
+      "in_reply_to": "<alpine.LFD.2.23.451.2010191013110.2171801@reclus.nhh.no>",
+      "references": [
+        "<CANcbSEgCz0RqV9hvWG3TJGJ098U74qa=67UN1J-oKkgsu8O7kQ@mail.gmail.com>",
+        "<alpine.LFD.2.23.451.2010191013110.2171801@reclus.nhh.no>"
+      ],
+      "body_plain": "Dear Prof Roger,\n\nThanks a lot for that suggestion!\n\nKind regards,\nAmitha.\n\n\n\n\n\n\n\n\n\n\n\n\n\nOn Mon, Oct 19, 2020 at 1:51 PM Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Mon, 19 Oct 2020, Amitha Puranik wrote:\n>\n> > Hello everyone!\n> >\n> > I have data on the proportion of screening of cervical cancer at\n> > district-level. I have about 530 data points out of the 545 districts. I\n> > want to get a complete picture of the data in order to obtain the spatial\n> > cluster map using LISA (local indicators of partial autocorrelation).\n> >\n> > Would it be alright if I impute the missing values of the proportion for\n> > the 15 districts using multiple imputation?\n>\n> Please do not even consider imputation of this kind of data, especially if\n> LISA is your tools. It makes no sense at all.\n>\n> If, however, you model the screening proportions at district level, and\n> have a model that fits well using multiple well-observed covariates, both\n> INLA and other model fitting approaches can predict for unobserved\n> responses. However, in such cases, the model will have used the spatial\n> autocorrelation already (for example in a BYM model, see for example here:\n> http://www.paulamoraga.com/book-geospatial-info/), so putting the\n> posterior distributions at unobserved locations into a LISA makes no\n> sense, because the imputation alrready uses spatial autocorrelation.\n> Modelling, if you have relevant covariates, and model preferably using\n> Poisson reression offset by log size of age-selected female population,\n> makes much more sense than LISA.\n>\n> Hope this helps,\n>\n> Roger\n>\n> >\n> > Or is there a better way for imputation in this case?\n> >\n> > Any suggestion/ comment is highly appreciated!\n> >\n> > Regards,\n> > Amitha\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics,\n> Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> https://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Prof Roger,\n\nThanks a lot for that suggestion!\n\nKind regards,\nAmitha.\n\n\n\n\n\n\n\n\n\n\n\n\n\nOn Mon, Oct 19, 2020 at 1:51 PM Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Mon, 19 Oct 2020, Amitha Pura",
+      "thread_id": "thread-89553ba53a29",
+      "thread_depth": 2,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-f5cd0f0b1c89",
+      "message_id": "<CABnpDg3N33NXQDFR8=LKH=c9Ub+NiLYNvWVXbibQ_sJPjuukHg@mail.gmail.com>",
+      "from_name": "Monica Palaseanu-Lovejoy",
+      "from_email_hash": "221fcd46284aeb77c8f0c8b3f6c06e268d16f90c561a600af5edd43d287ec3d2",
+      "date": "2020-10-21T10:29:38-04:00",
+      "subject": "[R-sig-Geo] sp:gIntersection warning message about projection",
+      "subject_clean": "sp:gIntersection warning message about projection",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi,\n\nI am using in my workflow gIntersection from sp package. Part of my\nrelevant sessionInfo is:\nR version 4.0.3 (2020-10-10)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 10 x64 (build 17763)\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base\n\nother attached packages:\n[1] CircStats_0.2-6 boot_1.3-25     MASS_7.3-53     stringr_1.4.0\n[5] rgeos_0.5-5     maptools_1.0-2  rgdal_1.5-18    raster_3.3-13\n[9] sp_1.4-4\n\n\nSo i am using 2  SpatialLinesDataFrame that are results of previous\ncomputation. I am not sure i can give a viable examples, but maybe this can\nbe solved without. If not i will figure out how i can give you a workable\nexample. Or if you know if there are in R already loaded 2 different line\nshapefiles with projection then i will see if i can replicate this problem.\n\nBut the main point is that my workflow was fine in R 4.0.0 and the older sp\nversion, and after i upgraded to the newest R and updated all packages i am\ngetting the projection warning.\n\nSo, first file:\n\n buff\nclass       : SpatialLinesDataFrame\nfeatures    : 1\nextent      : 560525.5, 561302.4, 4698908, 4701110  (xmin, xmax, ymin, ymax)\ncrs         : +proj=utm +zone=16 +datum=WGS84 +units=m +no_defs\nvariables   : 2\nnames       : ID, buff_dist\nvalue       :  2,       135\n\nsecond file:\n\npln\nclass       : SpatialLinesDataFrame\nfeatures    : 1\nextent      : 560615.6, 560705.4, 4698905, 4699180  (xmin, xmax, ymin, ymax)\ncrs         : +proj=utm +zone=16 +datum=WGS84 +units=m +no_defs\nvariables   : 2\nnames       :                x,                y\nvalue       : 560615.564407584, 4698904.71208346\n\nPlease observe that both files have identical projections.\n\np1 <- gIntersection(buff, pln)\nWarning message:\nIn RGEOSBinTopoFunc(spgeom1, spgeom2, byid, id, drop_lower_td,\nunaryUnion_if_byid_false,  :\n  spgeom1 and spgeom2 have different proj4 strings\n\nThis warning is baffling since both files have same projection:\ncrs(buff)\nCRS arguments:\n +proj=utm +zone=16 +datum=WGS84 +units=m +no_defs\n\ncrs(pln)\nCRS arguments:\n +proj=utm +zone=16 +datum=WGS84 +units=m +no_defs\n\nProbably i am doing something wrong but for the life of me i cannot see it\nas yet.\n\nThanks so much for any help, take care,\nMonica\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nI am using in my workflow gIntersection from sp package. Part of my\nrelevant sessionInfo is:\nR version 4.0.3 (2020-10-10)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 10 x64 (",
+      "thread_id": "thread-f5cd0f0b1c89",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-d9e3592610f5",
+      "message_id": "<33da0968-ec27-89b3-6dc1-46d892309b93@gmail.com>",
+      "from_name": "Bede-Fazekas Ákos",
+      "from_email_hash": "f2e2e122dfd4dbb8b8973b23d149555486ccb4290cb5f11779739fdbbcf5b93d",
+      "date": "2020-10-21T16:53:29+02:00",
+      "subject": "[R-sig-Geo] sp:gIntersection warning message about projection",
+      "subject_clean": "sp:gIntersection warning message about projection",
+      "in_reply_to": "<CABnpDg3N33NXQDFR8=LKH=c9Ub+NiLYNvWVXbibQ_sJPjuukHg@mail.gmail.com>",
+      "references": [
+        "<CABnpDg3N33NXQDFR8=LKH=c9Ub+NiLYNvWVXbibQ_sJPjuukHg@mail.gmail.com>"
+      ],
+      "body_plain": "Hello Monica,\n\nThe format of CRS definition changed a lot in the last years. I saw \nsimilar errors thrown by package sf, and transforming or CRS \nmodification solved the problem. Does rgeos::gIntersection() work if you \nrun one of the following lines before intersection?:\nproj4string(pln) <- proj4string(buff)\npln <- spTransform(pln, proj4string(buff))\npln <- spTransform(x = pln, CRSobj = \"+proj=utm +zone=16 +datum=WGS84 \n+units=m +no_defs\"); buff<- spTransform(x = buff, CRSobj = \"+proj=utm \n+zone=16 +datum=WGS84 +units=m +no_defs\")\n\nHave a nice week,\n?kos Bede-Fazekas\nHungarian Academy of Sciences\n\n2020.10.21. 16:29 keltez?ssel, Monica Palaseanu-Lovejoy ?rta:\n>   Hi,\n>\n> I am using in my workflow gIntersection from sp package. Part of my\n> relevant sessionInfo is:\n> R version 4.0.3 (2020-10-10)\n> Platform: x86_64-w64-mingw32/x64 (64-bit)\n> Running under: Windows 10 x64 (build 17763)\n>\n> attached base packages:\n> [1] stats     graphics  grDevices utils     datasets  methods   base\n>\n> other attached packages:\n> [1] CircStats_0.2-6 boot_1.3-25     MASS_7.3-53     stringr_1.4.0\n> [5] rgeos_0.5-5     maptools_1.0-2  rgdal_1.5-18    raster_3.3-13\n> [9] sp_1.4-4\n>\n>\n> So i am using 2  SpatialLinesDataFrame that are results of previous\n> computation. I am not sure i can give a viable examples, but maybe this can\n> be solved without. If not i will figure out how i can give you a workable\n> example. Or if you know if there are in R already loaded 2 different line\n> shapefiles with projection then i will see if i can replicate this problem.\n>\n> But the main point is that my workflow was fine in R 4.0.0 and the older sp\n> version, and after i upgraded to the newest R and updated all packages i am\n> getting the projection warning.\n>\n> So, first file:\n>\n>   buff\n> class       : SpatialLinesDataFrame\n> features    : 1\n> extent      : 560525.5, 561302.4, 4698908, 4701110  (xmin, xmax, ymin, ymax)\n> crs         : +proj=utm +zone=16 +datum=WGS84 +units=m +no_defs\n> variables   : 2\n> names       : ID, buff_dist\n> value       :  2,       135\n>\n> second file:\n>\n> pln\n> class       : SpatialLinesDataFrame\n> features    : 1\n> extent      : 560615.6, 560705.4, 4698905, 4699180  (xmin, xmax, ymin, ymax)\n> crs         : +proj=utm +zone=16 +datum=WGS84 +units=m +no_defs\n> variables   : 2\n> names       :                x,                y\n> value       : 560615.564407584, 4698904.71208346\n>\n> Please observe that both files have identical projections.\n>\n> p1 <- gIntersection(buff, pln)\n> Warning message:\n> In RGEOSBinTopoFunc(spgeom1, spgeom2, byid, id, drop_lower_td,\n> unaryUnion_if_byid_false,  :\n>    spgeom1 and spgeom2 have different proj4 strings\n>\n> This warning is baffling since both files have same projection:\n> crs(buff)\n> CRS arguments:\n>   +proj=utm +zone=16 +datum=WGS84 +units=m +no_defs\n>\n> crs(pln)\n> CRS arguments:\n>   +proj=utm +zone=16 +datum=WGS84 +units=m +no_defs\n>\n> Probably i am doing something wrong but for the life of me i cannot see it\n> as yet.\n>\n> Thanks so much for any help, take care,\n> Monica\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Hello Monica,\n\nThe format of CRS definition changed a lot in the last years. I saw \nsimilar errors thrown by package sf, and transforming or CRS \nmodification solved the problem. Does rgeos::gIntersec",
+      "thread_id": "thread-f5cd0f0b1c89",
+      "thread_depth": 1,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-1346efb023a2",
+      "message_id": "<e8844d6558bf41d39290640857099b7a@hi.no>",
+      "from_name": "Gonzalez-Mirelis, Genoveva",
+      "from_email_hash": "948345ee1652273d96a86cd0e2a6171a97e0fa66623bfcd308a5cc52b9919e98",
+      "date": "2020-10-22T08:06:44Z",
+      "subject": "[R-sig-Geo] 3-year position available in Norway on modelling the distribution of marine species and habitats",
+      "subject_clean": "3-year position available in Norway on modelling the distribution of marine species and habitats",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Maybe this is of interest to the folks in this list. My apologies for cross-posting!\n\nWe have an exciting, 3-year position available at the Institute of Marine Research in Norway under a new project aiming to develop coastal zone maps of species and habitats.\n\nYou will find all the information that you need on this link:\n\nhttps://www.jobbnorge.no/en/available-jobs/job/194806/vacant-3-year-research-position-in-the-marine-coastal-zone-mapping-project\n\nThanks, and feel free to redistribute!\n\nGenoveva Gonzalez Mirelis, Scientist\nInstitute of Marine Research\nNordnesgaten 50\n5005 Bergen, Norway\nPhone number +47 55238510\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Maybe this is of interest to the folks in this list. My apologies for cross-posting!\n\nWe have an exciting, 3-year position available at the Institute of Marine Research in Norway under a new project a",
+      "thread_id": "thread-1346efb023a2",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-99ca15b6ac0a",
+      "message_id": "<CABnpDg1yup9E+eWHz0cx8UbUqHYXkcrDS3Aoq+h3wmiijLZ3QA@mail.gmail.com>",
+      "from_name": "Monica Palaseanu-Lovejoy",
+      "from_email_hash": "221fcd46284aeb77c8f0c8b3f6c06e268d16f90c561a600af5edd43d287ec3d2",
+      "date": "2020-10-22T10:46:41-04:00",
+      "subject": "[R-sig-Geo] sp:gIntersection warning message about projection",
+      "subject_clean": "sp:gIntersection warning message about projection",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi Akos,\n\nThanks for your answer. I tried your suggestion, and for:\n\n> proj4string(pln) <- proj4string(buff)\nWarning messages:\n1: In proj4string(buff) : CRS object has comment, which is lost in output\n2: In proj4string(obj) : CRS object has comment, which is lost in output\n\n> pln <- spTransform(pln, proj4string(buff))\nWarning message:\nIn proj4string(buff) : CRS object has comment, which is lost in output\n\n> proj4string(buff)\n[1] \"+proj=utm +zone=16 +datum=WGS84 +units=m +no_defs\"\nWarning message:\nIn proj4string(buff) : CRS object has comment, which is lost in output\n\nI got these warnings, which again, i don't understand. I am trying to do an\nR package that uses sp, and specifically gIntersection for my project and i\ncannot leave it with those warnings.\n\nBut if after i have my two objects buff and pln and use these two\ntransforms you specified, where crs1 is my projection string \"+proj=utm\n+zone=16 +datum=WGS84\n+units=m +no_defs\" :\n\npln <- spTransform(x = pln, CRSobj=crs1)\n>\n> buff<- spTransform(x = buff, CRSobj=crs1)\n>\n> p1 <- gIntersection(buff, pln)\n\nThen, i get no warnings from the gIntersection function. I will test\nfurther, but maybe this is the solution, although i still don't understand\nwhy i need to transform my object with a projection when it already has\nthat projection.\n\nThanks again for your suggestion, it really helps ;-)\n\nTake care,\nMonica\n\n##################################################################\n\nMessage: 2\nDate: Wed, 21 Oct 2020 16:53:29 +0200\nFrom: =?UTF-8?Q?Bede-Fazekas_=c3=81kos?= <bfalevlist at gmail.com>\nTo: r-sig-geo at r-project.org\nSubject: Re: [R-sig-Geo] sp:gIntersection warning message about\n        projection\nMessage-ID: <33da0968-ec27-89b3-6dc1-46d892309b93 at gmail.com>\nContent-Type: text/plain; charset=\"iso-8859-2\"; Format=\"flowed\"\n\nHello Monica,\n\nThe format of CRS definition changed a lot in the last years. I saw\nsimilar errors thrown by package sf, and transforming or CRS\nmodification solved the problem. Does rgeos::gIntersection() work if you\nrun one of the following lines before intersection?:\nproj4string(pln) <- proj4string(buff)\npln <- spTransform(pln, proj4string(buff))\npln <- spTransform(x = pln, CRSobj = \"+proj=utm +zone=16 +datum=WGS84\n+units=m +no_defs\"); buff<- spTransform(x = buff, CRSobj = \"+proj=utm\n+zone=16 +datum=WGS84 +units=m +no_defs\")\n\nHave a nice week,\n?kos Bede-Fazekas\nHungarian Academy of Sciences\n\n2020.10.21. 16:29 keltez?ssel, Monica Palaseanu-Lovejoy ?rta:\n>   Hi,\n>\n> I am using in my workflow gIntersection from sp package. Part of my\n> relevant sessionInfo is:\n> R version 4.0.3 (2020-10-10)\n> Platform: x86_64-w64-mingw32/x64 (64-bit)\n> Running under: Windows 10 x64 (build 17763)\n>\n> attached base packages:\n> [1] stats     graphics  grDevices utils     datasets  methods   base\n>\n> other attached packages:\n> [1] CircStats_0.2-6 boot_1.3-25     MASS_7.3-53     stringr_1.4.0\n> [5] rgeos_0.5-5     maptools_1.0-2  rgdal_1.5-18    raster_3.3-13\n> [9] sp_1.4-4\n>\n>\n> So i am using 2  SpatialLinesDataFrame that are results of previous\n> computation. I am not sure i can give a viable examples, but maybe this\ncan\n> be solved without. If not i will figure out how i can give you a workable\n> example. Or if you know if there are in R already loaded 2 different line\n> shapefiles with projection then i will see if i can replicate this\nproblem.\n>\n> But the main point is that my workflow was fine in R 4.0.0 and the older\nsp\n> version, and after i upgraded to the newest R and updated all packages i\nam\n> getting the projection warning.\n>\n> So, first file:\n>\n>   buff\n> class       : SpatialLinesDataFrame\n> features    : 1\n> extent      : 560525.5, 561302.4, 4698908, 4701110  (xmin, xmax, ymin,\nymax)\n> crs         : +proj=utm +zone=16 +datum=WGS84 +units=m +no_defs\n> variables   : 2\n> names       : ID, buff_dist\n> value       :  2,       135\n>\n> second file:\n>\n> pln\n> class       : SpatialLinesDataFrame\n> features    : 1\n> extent      : 560615.6, 560705.4, 4698905, 4699180  (xmin, xmax, ymin,\nymax)\n> crs         : +proj=utm +zone=16 +datum=WGS84 +units=m +no_defs\n> variables   : 2\n> names       :                x,                y\n> value       : 560615.564407584, 4698904.71208346\n>\n> Please observe that both files have identical projections.\n>\n> p1 <- gIntersection(buff, pln)\n> Warning message:\n> In RGEOSBinTopoFunc(spgeom1, spgeom2, byid, id, drop_lower_td,\n> unaryUnion_if_byid_false,  :\n>    spgeom1 and spgeom2 have different proj4 strings\n>\n> This warning is baffling since both files have same projection:\n> crs(buff)\n> CRS arguments:\n>   +proj=utm +zone=16 +datum=WGS84 +units=m +no_defs\n>\n> crs(pln)\n> CRS arguments:\n>   +proj=utm +zone=16 +datum=WGS84 +units=m +no_defs\n>\n> Probably i am doing something wrong but for the life of me i cannot see it\n> as yet.\n>\n> Thanks so much for any help, take care,\n> Monica\n>\n>       [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Akos,\n\nThanks for your answer. I tried your suggestion, and for:\n\n> proj4string(pln) <- proj4string(buff)\nWarning messages:\n1: In proj4string(buff) : CRS object has comment, which is lost in output",
+      "thread_id": "thread-99ca15b6ac0a",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-e40893fd179e",
+      "message_id": "<CAF16KkXOLPYOZSo6W3P4bp3BwRk7zFWf5mz+5wZVKeX-P3EFiw-5652@mail.gmail.com>",
+      "from_name": "Robin Lovelace",
+      "from_email_hash": "8a416e214939387f4004ff832ebd5ee55f5c034dabd456e828a1db125a87ef53",
+      "date": "2020-10-26T17:31:30Z",
+      "subject": "[R-sig-Geo] NA values in predictions from gstat::krige()",
+      "subject_clean": "NA values in predictions from gstat::krige()",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hi all,\n\nWhen using the gstat package I get NA values for the majority of cells\npredicted and I'm not sure what I'm doing wrong. The data is quite noisy\nand I plan to do some aggregation on the input data before trying this\nagain with the interpolate() function from raster/terra, but thought it\nworth asking as the answer may be of use to others.\n\n# reprex\nlibrary(sf)\nlibrary(gstat)\nlibrary(stars)\nu = \"\nhttps://github.com/saferactive/saferactive/releases/download/0.1.1/rnet_lnd_1pcnt.Rds\n\"\nrnet_lnd = readRDS(url(u))\nrnet_lnd\ngrd = st_bbox(rnet_lnd) %>%\n  st_as_stars(dx = 500, dy = 500) %>%\n  st_set_crs(27700) %>%\n  st_crop(rnet_lnd)\ngrd\nv = variogram(bicycle~1, rnet_lnd, cutoff = 10000)\nplot(v)\nvm = fit.variogram(v, vgm(psill = \"Sph\", model = \"Exp\", range = 10000,\nnugget = 1))\nplot(vm, cutoff = 10000)\nrnet_krige = gstat::krige(bicycle~1, rnet_lnd, grd, vm, nmax = 100)\nplot(rnet_lnd$geometry)\nplot(rnet_krige, add = TRUE)\n\nOutcome on my computer: predictions only in raster grid cells with\nobservations but I expected from the Spatial Data Science book a continuous\nsurface with predictions for all of the grid cells, as shown here:\nhttps://keen-swartz-3146c4.netlify.app/interpolation.html\n\nI've also asked this question on stack-overflow where the output from the\nabove commands can be found: https://stackoverflow.com/questions/64541951/\n\nThanks for reading and apologies if I'm missing something obvious.\n\nRobin\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all,\n\nWhen using the gstat package I get NA values for the majority of cells\npredicted and I'm not sure what I'm doing wrong. The data is quite noisy\nand I plan to do some aggregation on the input ",
+      "thread_id": "thread-e40893fd179e",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-f07cdd5d97f9",
+      "message_id": "<CAF16KkXk-vSgAHAE4EieQEO=eJH0WwAmqKJ6fv9b16eq7=FOGA-1837@mail.gmail.com>",
+      "from_name": "Robin Lovelace",
+      "from_email_hash": "8a416e214939387f4004ff832ebd5ee55f5c034dabd456e828a1db125a87ef53",
+      "date": "2020-10-26T19:47:45Z",
+      "subject": "[R-sig-Geo] NA values in predictions from gstat::krige()",
+      "subject_clean": "NA values in predictions from gstat::krige()",
+      "in_reply_to": "<CAF16KkXOLPYOZSo6W3P4bp3BwRk7zFWf5mz+5wZVKeX-P3EFiw@mail.gmail.com>",
+      "references": [
+        "<CAF16KkXOLPYOZSo6W3P4bp3BwRk7zFWf5mz+5wZVKeX-P3EFiw@mail.gmail.com>"
+      ],
+      "body_plain": "Update, I had missed something obvious: the unnecessary st_crop. Many\nthanks to Jannes, who pointed this out:\nhttps://github.com/Robinlovelace/geocompr/issues/585#issuecomment-716780818\n\nAnd apologies for 'spamming' the list, hope my next comment/question will\nbe more enlightening!\n\nRobin\n\nOn Mon, Oct 26, 2020 at 5:31 PM Robin Lovelace <rob00x at gmail.com> wrote:\n\n> Hi all,\n>\n> When using the gstat package I get NA values for the majority of cells\n> predicted and I'm not sure what I'm doing wrong. The data is quite noisy\n> and I plan to do some aggregation on the input data before trying this\n> again with the interpolate() function from raster/terra, but thought it\n> worth asking as the answer may be of use to others.\n>\n> # reprex\n> library(sf)\n> library(gstat)\n> library(stars)\n> u = \"\n> https://github.com/saferactive/saferactive/releases/download/0.1.1/rnet_lnd_1pcnt.Rds\n> \"\n> rnet_lnd = readRDS(url(u))\n> rnet_lnd\n> grd = st_bbox(rnet_lnd) %>%\n>   st_as_stars(dx = 500, dy = 500) %>%\n>   st_set_crs(27700) %>%\n>   st_crop(rnet_lnd)\n> grd\n> v = variogram(bicycle~1, rnet_lnd, cutoff = 10000)\n> plot(v)\n> vm = fit.variogram(v, vgm(psill = \"Sph\", model = \"Exp\", range = 10000,\n> nugget = 1))\n> plot(vm, cutoff = 10000)\n> rnet_krige = gstat::krige(bicycle~1, rnet_lnd, grd, vm, nmax = 100)\n> plot(rnet_lnd$geometry)\n> plot(rnet_krige, add = TRUE)\n>\n> Outcome on my computer: predictions only in raster grid cells with\n> observations but I expected from the Spatial Data Science book a continuous\n> surface with predictions for all of the grid cells, as shown here:\n> https://keen-swartz-3146c4.netlify.app/interpolation.html\n>\n> I've also asked this question on stack-overflow where the output from the\n> above commands can be found: https://stackoverflow.com/questions/64541951/\n>\n> Thanks for reading and apologies if I'm missing something obvious.\n>\n> Robin\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Update, I had missed something obvious: the unnecessary st_crop. Many\nthanks to Jannes, who pointed this out:\nhttps://github.com/Robinlovelace/geocompr/issues/585#issuecomment-716780818\n\nAnd apologies",
+      "thread_id": "thread-f07cdd5d97f9",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-5bb48275312f",
+      "message_id": "<CAEQQd3+-XU9bZ7=FQf+UciTAnXAMZVRrGPuM_AMh8Y-XbVbFmQ@mail.gmail.com>",
+      "from_name": "PAMELLA KAGELIZA KILAVI",
+      "from_email_hash": "750ad47abc05870d34dc26768cb418e57d9e77ae444a6b6067e504c0318a1b09",
+      "date": "2020-10-31T08:01:37+03:00",
+      "subject": "[R-sig-Geo] Probabilistic risk analysis for human health",
+      "subject_clean": "Probabilistic risk analysis for human health",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I have all the input parameters which take different forms of distribution\n(Log-normal, triangular and normal distribution) for the risk analysis. I\nam using R to perform the probabilistic analysis and the dry ran output\nseems to be far away from the output of the R program. The graphs are also\nnot so good.\n\nMay someone kindly guide me on basic probabilistic risk analysis?\n\n\n-- \nPamella Kageliza Kilavi-Ndege\nPh.D. Student\nDepartment of Physics\n\n-- \n\nThe University of Nairobi is ISO 9001:2015 certified.\nWebsite: \nhttp://www.uonbi.ac.ke/ <http://www.uonbi.ac.ke/>\nFacebook: \nhttps://www.facebook.com/uonbi.ac.ke <https://www.facebook.com/uonbi.ac.ke>\nTwitter: @uonbi? https://twitter.com/uonb <https://twitter.com/uonb>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I have all the input parameters which take different forms of distribution\n(Log-normal, triangular and normal distribution) for the risk analysis. I\nam using R to perform the probabilistic analysis an",
+      "thread_id": "thread-5bb48275312f",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-04d66ecd072c",
+      "message_id": "<CAN9eD7=C3jeZu9yiv4u_=FpQiaihmp3puH8n86RMKyBgXZDWtA@mail.gmail.com>",
+      "from_name": "nevil amos",
+      "from_email_hash": "9f695963951885b36d44769d7dec9de712960aec929f4015316e69ecc7d26c5a",
+      "date": "2020-10-31T23:24:25+11:00",
+      "subject": "[R-sig-Geo] raster::levels() not working in packaged function.",
+      "subject_clean": "raster::levels() not working in packaged function.",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Apologies, I cannot see how to make a rero for this issue.\n\nI have a function that uses levels(r) tor return the RAT of a raster \"r\"\nwhen the function is sourced from a script\nsource(\".\\R\\function.r\")\nit works fine.\nwhen the function is built into a package and sourced from there\nlibrary(mypackage) using the same script file to make the package\nlevels(r)[[1]]\nthe same line throws an error, as levels(myraster returns NULL\n\nIf I modify the script to include the raster namespace:\nraster::levels(r)[[1]]\nThen I get the error\n Error: 'levels<-' is not an exported object from 'namespace:raster'\n\n\nI have also tried just using levels(r) and putting raster as a depends\nrather than an import in the DESCRIPTION file for the package, this does\nnot solve the error.\n\n\nAny suggestions on how to overcome the problem?\n\nmany thanks\n\nNevil Amos\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Apologies, I cannot see how to make a rero for this issue.\n\nI have a function that uses levels(r) tor return the RAT of a raster \"r\"\nwhen the function is sourced from a script\nsource(\".\\R\\function.r\")",
+      "thread_id": "thread-04d66ecd072c",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-fe4987008395",
+      "message_id": "<312c6bc4-9d77-9521-71a2-1aad75b9ed6d@urjc.es>",
+      "from_name": "Marcelino de la Cruz Rot",
+      "from_email_hash": "65c46abb4ca1a5f27552f6f219887e1db849802ef689daa85efcb102d34b2127",
+      "date": "2020-10-31T14:18:40+01:00",
+      "subject": "[R-sig-Geo] raster::levels() not working in packaged function.",
+      "subject_clean": "raster::levels() not working in packaged function.",
+      "in_reply_to": "<CAN9eD7=C3jeZu9yiv4u_=FpQiaihmp3puH8n86RMKyBgXZDWtA@mail.gmail.com>",
+      "references": [
+        "<CAN9eD7=C3jeZu9yiv4u_=FpQiaihmp3puH8n86RMKyBgXZDWtA@mail.gmail.com>"
+      ],
+      "body_plain": "Maybe including\n\nimport(raster)\n\nor\n\nimportFrom(\"raster\", \"levels\")\n\nin the package NAMESPACE would help.\n\nCheers,\n\nMarcelino\n\nEl 31/10/2020 a las 13:24, nevil amos escribi?:\n> Apologies, I cannot see how to make a rero for this issue.\n>\n> I have a function that uses levels(r) tor return the RAT of a raster \"r\"\n> when the function is sourced from a script\n> source(\".\\R\\function.r\")\n> it works fine.\n> when the function is built into a package and sourced from there\n> library(mypackage) using the same script file to make the package\n> levels(r)[[1]]\n> the same line throws an error, as levels(myraster returns NULL\n>\n> If I modify the script to include the raster namespace:\n> raster::levels(r)[[1]]\n> Then I get the error\n>   Error: 'levels<-' is not an exported object from 'namespace:raster'\n>\n>\n> I have also tried just using levels(r) and putting raster as a depends\n> rather than an import in the DESCRIPTION file for the package, this does\n> not solve the error.\n>\n>\n> Any suggestions on how to overcome the problem?\n>\n> many thanks\n>\n> Nevil Amos\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> .\n\n\n-- \nMarcelino de la Cruz Rot\nDepto. de Biolog?a y Geolog?a\nF?sica y Qu?mica Inorg?nica\nUniversidad Rey Juan Carlos\nM?stoles Espa?a",
+      "body_snippet": "Maybe including\n\nimport(raster)\n\nor\n\nimportFrom(\"raster\", \"levels\")\n\nin the package NAMESPACE would help.\n\nCheers,\n\nMarcelino\n\nEl 31/10/2020 a las 13:24, nevil amos escribi?:\n> Apologies, I cannot see",
+      "thread_id": "thread-04d66ecd072c",
+      "thread_depth": 1,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-88eb6f8ee0c8",
+      "message_id": "<4e33932b-b8f7-384d-0e9b-bb3bb42a1127@uni-muenster.de>",
+      "from_name": "Edzer Pebesma",
+      "from_email_hash": "80a3c0260cb28c409993aa1b5caba819dc4bf73ba5e27fec46c2811c88c72c17",
+      "date": "2020-10-31T15:05:54+01:00",
+      "subject": "[R-sig-Geo] raster::levels() not working in packaged function.",
+      "subject_clean": "raster::levels() not working in packaged function.",
+      "in_reply_to": "<CAN9eD7=C3jeZu9yiv4u_=FpQiaihmp3puH8n86RMKyBgXZDWtA@mail.gmail.com>",
+      "references": [
+        "<CAN9eD7=C3jeZu9yiv4u_=FpQiaihmp3puH8n86RMKyBgXZDWtA@mail.gmail.com>"
+      ],
+      "body_plain": "On 10/31/20 1:24 PM, nevil amos wrote:\n> Apologies, I cannot see how to make a rero for this issue.\n> \n> I have a function that uses levels(r) tor return the RAT of a raster \"r\"\n> when the function is sourced from a script\n> source(\".\\R\\function.r\")\n> it works fine.\n> when the function is built into a package and sourced from there\n> library(mypackage) using the same script file to make the package\n> levels(r)[[1]]\n> the same line throws an error, as levels(myraster returns NULL\n> \n> If I modify the script to include the raster namespace:\n> raster::levels(r)[[1]]\n> Then I get the error\n>   Error: 'levels<-' is not an exported object from 'namespace:raster'\n\nThe error suggests that you are trying to assign levels, rather than \nretrieve them.\n\n> \n> \n> I have also tried just using levels(r) and putting raster as a depends\n> rather than an import in the DESCRIPTION file for the package, this does\n> not solve the error.\n> \n> \n> Any suggestions on how to overcome the problem?\n> \n> many thanks\n> \n> Nevil Amos\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48149 Muenster, Germany\nPhone: +49 251 8333081",
+      "body_snippet": "On 10/31/20 1:24 PM, nevil amos wrote:\n> Apologies, I cannot see how to make a rero for this issue.\n> \n> I have a function that uses levels(r) tor return the RAT of a raster \"r\"\n> when the function is",
+      "thread_id": "thread-04d66ecd072c",
+      "thread_depth": 1,
+      "month": "2020-10"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-ce998f197a61",
+      "subject": "Count of Non-NA pixels in stars object",
+      "message_count": 3,
+      "participants": [
+        "Micha Silver",
+        "Vijay Lulla"
+      ],
+      "started": "2020-10-03T13:29:08+03:00",
+      "last_reply": "2020-10-03T18:46:01+03:00",
+      "root_message_id": "msg-ce998f197a61"
+    },
+    {
+      "id": "thread-762f8256cbff",
+      "subject": "Spatial data when the missing mechanism is MNAR (non-ignorable)",
+      "message_count": 6,
+      "participants": [
+        "Amitha Puranik",
+        "Roger Bivand"
+      ],
+      "started": "2020-10-04T20:12:01+05:30",
+      "last_reply": "2020-10-06T20:44:01+05:30",
+      "root_message_id": "msg-762f8256cbff"
+    },
+    {
+      "id": "thread-318851ff79e7",
+      "subject": "(no subject)",
+      "message_count": 2,
+      "participants": [
+        "Roger Bivand",
+        "Vlad Amihaesei"
+      ],
+      "started": "2020-10-07T20:58:40+03:00",
+      "last_reply": "2020-10-07T21:00:24+02:00",
+      "root_message_id": "msg-318851ff79e7"
+    },
+    {
+      "id": "thread-d69357e2aa8d",
+      "subject": "New sp and rgdal versions on CRAN",
+      "message_count": 1,
+      "participants": [
+        "Roger Bivand"
+      ],
+      "started": "2020-10-08T11:15:54+02:00",
+      "last_reply": "2020-10-08T11:15:54+02:00",
+      "root_message_id": "msg-d69357e2aa8d"
+    },
+    {
+      "id": "thread-fca7e0e38b99",
+      "subject": "st_sample with raster",
+      "message_count": 1,
+      "participants": [
+        "Tyler Frazier"
+      ],
+      "started": "2020-10-10T01:32:02-04:00",
+      "last_reply": "2020-10-10T01:32:02-04:00",
+      "root_message_id": "msg-fca7e0e38b99"
+    },
+    {
+      "id": "thread-89553ba53a29",
+      "subject": "Imputation of aggregate data for spatial analysis",
+      "message_count": 3,
+      "participants": [
+        "Amitha Puranik",
+        "Roger Bivand"
+      ],
+      "started": "2020-10-19T11:34:32+05:30",
+      "last_reply": "2020-10-19T15:43:04+05:30",
+      "root_message_id": "msg-89553ba53a29"
+    },
+    {
+      "id": "thread-f5cd0f0b1c89",
+      "subject": "sp:gIntersection warning message about projection",
+      "message_count": 2,
+      "participants": [
+        "Bede-Fazekas Ákos",
+        "Monica Palaseanu-Lovejoy"
+      ],
+      "started": "2020-10-21T10:29:38-04:00",
+      "last_reply": "2020-10-21T16:53:29+02:00",
+      "root_message_id": "msg-f5cd0f0b1c89"
+    },
+    {
+      "id": "thread-1346efb023a2",
+      "subject": "3-year position available in Norway on modelling the distribution of marine species and habitats",
+      "message_count": 1,
+      "participants": [
+        "Gonzalez-Mirelis, Genoveva"
+      ],
+      "started": "2020-10-22T08:06:44+00:00",
+      "last_reply": "2020-10-22T08:06:44+00:00",
+      "root_message_id": "msg-1346efb023a2"
+    },
+    {
+      "id": "thread-99ca15b6ac0a",
+      "subject": "sp:gIntersection warning message about projection",
+      "message_count": 1,
+      "participants": [
+        "Monica Palaseanu-Lovejoy"
+      ],
+      "started": "2020-10-22T10:46:41-04:00",
+      "last_reply": "2020-10-22T10:46:41-04:00",
+      "root_message_id": "msg-99ca15b6ac0a"
+    },
+    {
+      "id": "thread-e40893fd179e",
+      "subject": "NA values in predictions from gstat::krige()",
+      "message_count": 1,
+      "participants": [
+        "Robin Lovelace"
+      ],
+      "started": "2020-10-26T17:31:30+00:00",
+      "last_reply": "2020-10-26T17:31:30+00:00",
+      "root_message_id": "msg-e40893fd179e"
+    },
+    {
+      "id": "thread-f07cdd5d97f9",
+      "subject": "NA values in predictions from gstat::krige()",
+      "message_count": 1,
+      "participants": [
+        "Robin Lovelace"
+      ],
+      "started": "2020-10-26T19:47:45+00:00",
+      "last_reply": "2020-10-26T19:47:45+00:00",
+      "root_message_id": "msg-f07cdd5d97f9"
+    },
+    {
+      "id": "thread-5bb48275312f",
+      "subject": "Probabilistic risk analysis for human health",
+      "message_count": 1,
+      "participants": [
+        "PAMELLA KAGELIZA KILAVI"
+      ],
+      "started": "2020-10-31T08:01:37+03:00",
+      "last_reply": "2020-10-31T08:01:37+03:00",
+      "root_message_id": "msg-5bb48275312f"
+    },
+    {
+      "id": "thread-04d66ecd072c",
+      "subject": "raster::levels() not working in packaged function.",
+      "message_count": 3,
+      "participants": [
+        "Edzer Pebesma",
+        "Marcelino de la Cruz Rot",
+        "nevil amos"
+      ],
+      "started": "2020-10-31T23:24:25+11:00",
+      "last_reply": "2020-10-31T15:05:54+01:00",
+      "root_message_id": "msg-04d66ecd072c"
+    }
+  ]
+}
