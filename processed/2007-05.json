@@ -1307,6 +1307,24 @@
       "thread_id": "thread-c0a68456d78e",
       "thread_depth": 2,
       "month": "2007-05"
+    },
+    {
+      "id": "msg-134d9adcfce5",
+      "message_id": "<465F965E.3070500@mail.montclair.edu>",
+      "from_name": "Danlin Yu",
+      "from_email_hash": "52a43c700ac6d7ea1e30d65a6ff9514e2bf099f176b8b988deb182e7462e4628",
+      "date": "2007-05-31T23:45:34-04:00",
+      "subject": "[R-sig-Geo] All zero link when reading a modified shapefile into R",
+      "subject_clean": "All zero link when reading a modified shapefile into R",
+      "in_reply_to": "<Pine.LNX.4.44.0705312226490.23714-100000@reclus.nhh.no>",
+      "references": [
+        "<Pine.LNX.4.44.0705312226490.23714-100000@reclus.nhh.no>"
+      ],
+      "body_plain": "Dear Roger:\n\nThanks very much for your response. By increasing the snap value, the \nneighbor list was successfully created, which leads me to believe ArcGIS \nmust have done something really wierd for when some polygons were \ndeleted. However, after I loaded the original file and started to try \nyour suggestions, I found that I was totally wrong - previously I \nthought I used the orginal shapefile to create the neighbor list, but I \nactually used a built and cleaned one - which was created from the \norginal file. While in the meantime, I found that the original tract \nshapefile does not contain any topological information in it, that's why \nneither R nor GeoDa can create a useful neighbor list.\n\nTotally my bad. But three lessons learned nonetheless:\n\n1. with increased snap value in poly2nb, a useful link based on \ncontiguity can be built from a spaghetti shapefile, but caution needs to \nbe taken;\n2. never create too many shapefiles at the same time with similar names\n3. by converting a non-topology shapefile to a feature class into a \npersonal Geodatabase and convert it back to shapefile, you can \nsuccessfully build a shapefile with topology.\n\nThanks to Roger and apology to the list for my carelessness.\n\nBest,\nDanlin\n\nRoger Bivand wrote:\n\n>On Thu, 31 May 2007, Danlin Yu wrote:\n>\n>  \n>\n>>Hi all-\n>>\n>>When I read a shapefile using read.shape into R, and used Map2poly ->\n>>poly2nb to create my neighbor list, the summary of the newly created\n>>neighbor list indicates that all the regions have zero link.\n>>\n>>The shapefile is a modified census tract shapefile of New Jersey: a few\n>>tracts that have no useful attributal information were deleted from the\n>>map (hence left some holes) in ArcGIS &#65288;Start Edit -> select ->\n>>delete).\n>>\n>>The original shapefile (with all the tracts) was read fine and create\n>>the correct neighbor list. But when using this modified one, I got all\n>>zero link. The same happened when I used GeoDa. Is this because of the\n>>holes created in the shapefile by deleting some polygons? If so, how can\n>>I make it work? If not, can anyone please direct me to the right\n>>solution?\n>>    \n>>\n>\n>Could you try with just one deleted polygon first? Is it possible that \n>ArcGIS does some cleaning at the same time, and moves the shapes apart? \n>If that is the case, might increasing the snap= argument in poly2nb() \n>help?\n>\n>Incidentally, poly2nb() does take an object extending SpatialPolygons too, \n>so you can also do:\n>\n>x <- readShapePoly(\"x.shp\")\n>plot(x)\n>x_nb <- poly2nb(x) # maybe increase snap=\n>\n>avoiding using Map and polylist objects. Then\n>\n>plot(x, border=\"grey\")\n>plot(x_nb, coordinates(x), pch=\".\")\n>\n>plots the neighbour graph on the tract boundaries.\n>\n>In the last resort, do the deletion in R:\n>\n>x <- readShapePoly(\"x.shp\")\n>keep <- x$attribute is useful, logical condition\n>table(keep)\n>plot(x, col=c(\"red\", \"green\")[(keep+1)])\n>x_subset <- x[keep,]\n>writePolyShape(x_subset, fn=\"x_subset\")\n>\n>or the equivalent readOGR() and writeOGR() functions in rgdal.\n>\n>Hope this helps,\n>\n>Roger\n>\n>  \n>\n>>Many thanks.\n>>\n>>Best,\n>>Danlin\n>>\n>>___________________________________________\n>>Danlin Yu, Ph.D.\n>>Assistant Professor\n>>Department of Earth & Environmental Studies\n>>Montclair State University\n>>Montclair, NJ, 07043\n>>Tel: 973-655-4313\n>>Fax: 973-655-4072\n>>email: yud at mail.montclair.edu\n>>\n>>_______________________________________________\n>>R-sig-Geo mailing list\n>>R-sig-Geo at stat.math.ethz.ch\n>>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>    \n>>\n>\n>  \n>",
+      "body_snippet": "Dear Roger:\n\nThanks very much for your response. By increasing the snap value, the \nneighbor list was successfully created, which leads me to believe ArcGIS \nmust have done something really wierd for ",
+      "thread_id": "thread-f9d7dcff7326",
+      "thread_depth": 2,
+      "month": "2007-05"
     }
   ],
   "threads": [
@@ -1660,13 +1678,13 @@
     {
       "id": "thread-f9d7dcff7326",
       "subject": "All zero link when reading a modified shapefile into R",
-      "message_count": 2,
+      "message_count": 3,
       "participants": [
         "Danlin Yu",
         "Roger Bivand"
       ],
       "started": "2007-05-31T16:20:13-04:00",
-      "last_reply": "2007-05-31T22:39:19+02:00",
+      "last_reply": "2007-05-31T23:45:34-04:00",
       "root_message_id": "msg-f9d7dcff7326"
     }
   ]
