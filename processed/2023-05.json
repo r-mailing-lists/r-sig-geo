@@ -597,25 +597,6 @@
       "thread_id": "thread-ad561b9b1e2f",
       "thread_depth": 0,
       "month": "2023-05"
-    },
-    {
-      "id": "msg-7806bef5143c",
-      "message_id": "<CALrbzg2xo26AgcasG3qHS2JzKE6oti9Pmd+-v-fR=VG7f9sKTQ@mail.gmail.com>",
-      "from_name": "Ben Tupper",
-      "from_email_hash": "715c796f300568f44190a795995f5d8c66b19c1f8bc2156d2221fcda4991bb5a",
-      "date": "2023-05-31T18:16:29-04:00",
-      "subject": "[R-sig-Geo] Mapping census tracts with leaflet(): \"sf layer has inconsistent datum\" error",
-      "subject_clean": "Mapping census tracts with leaflet(): \"sf layer has inconsistent datum\" error",
-      "in_reply_to": "<010001887367c22b-cfdf7f66-7212-4fe4-8dd5-001439a110f8-000000@email.amazonses.com>",
-      "references": [
-        "<5a45b608-91b2-3aaf-5d39-d50c6b57c136@zembower.org>",
-        "<010001887367c22b-cfdf7f66-7212-4fe4-8dd5-001439a110f8-000000@email.amazonses.com>"
-      ],
-      "body_plain": "Hi,\n\nThis is a great place to ask - and nice reproducible code!\n\nYou have a two issues as far as I can see.  First it seems you have dropped\nthe \"4\" in \"WGS84\".  And second you want to transform rw_pop, not the\noutput of leaflet().  The following works for me.\n\n## Start\nlibrary(tidyverse)\nlibrary(tidycensus)\nlibrary(leaflet)\nlibrary(sf)\n\nrw_blocks <- c(3000, 3001, 3002, 3005, 3006, 3007, 3008, 3009, 3010, 3011)\n\nrw_pop <- get_decennial(\n  geography = \"block\",\n  variables = \"P1_001N\",\n  year = 2020,\n  state = \"MD\",\n  county = \"Baltimore city\",\n  geometry = TRUE\n) %>%\n  filter(substr(GEOID, 6, 11) == \"271101\" &\n           substr(GEOID, 12, 15) %in% rw_blocks\n  ) ## %>% st_transform('+proj=longlat +datum=WGS8')\n\n(rw_pop_map <- rw_pop %>%\n    st_transform('+proj=longlat +datum=WGS84') %>%\n    leaflet() %>%\n    fitBounds(-76.616, 39.352, -76.610, 39.346) %>%\n    addTiles() %>%\n    addPolygons()\n)\n## End\n\nOn Wed, May 31, 2023 at 4:03?PM Kevin Zembower via R-sig-Geo <\nr-sig-geo at r-project.org> wrote:\n\n> Hello, all. Newbie to sf, tidycensus and the tidyverse here.\n>\n> First off, is this the appropriate list to ask this question? If not,\n> let me know and I'll go away.\n>\n> I'm trying to map census blocks for my neighborhood to a base map. I'm\n> using tidycensus to get the geometry of the census blocks, and leaflet\n> to map them to the OSM base maps. Mostly, this is going really well, and\n> I'm very pleased with the speed of development (I just started this\n> morning) and results.\n>\n> However, I get this error:\n>\n>   Warning message:\n> sf layer has inconsistent datum (+proj=longlat +datum=NAD83 +no_defs).\n> Need '+proj=longlat +datum=WGS84'\n>\n> I think I need to use st_transform, but can't get it to work.\n>\n> Here's a reproducible example, with some commented out lines of what\n> I've tried:\n>\n> ## Reproducible example:\n> library(tidyverse)\n> library(tidycensus)\n> library(leaflet)\n> library(sf)\n>\n> rw_blocks <- c(3000, 3001, 3002, 3005, 3006, 3007, 3008, 3009, 3010, 3011)\n>\n> rw_pop <- get_decennial(\n>      geography = \"block\",\n>      variables = \"P1_001N\",\n>      year = 2020,\n>      state = \"MD\",\n>      county = \"Baltimore city\",\n>      geometry = TRUE\n> ) %>%\n>      filter(substr(GEOID, 6, 11) == \"271101\" &\n>             substr(GEOID, 12, 15) %in% rw_blocks\n>             ) ## %>% st_transform('+proj=longlat +datum=WGS8')\n>\n> (rw_pop_map <- rw_pop %>%\n>      leaflet() %>%\n>       ## st_transform('+proj=longlat +datum=WGS8') %>%\n>      fitBounds(-76.616, 39.352, -76.610, 39.346) %>%\n>      addTiles() %>%\n>      addPolygons()\n>      )\n> ## Error occurs when executing above block\n>\n> Can anyone offer me a hint as to how to resolve this error?\n>\n> Thanks so much for any advice and guidance.\n>\n> -Kevin\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
-      "body_snippet": "Hi,\n\nThis is a great place to ask - and nice reproducible code!\n\nYou have a two issues as far as I can see.  First it seems you have dropped\nthe \"4\" in \"WGS84\".  And second you want to transform rw_po",
-      "thread_id": "thread-ad561b9b1e2f",
-      "thread_depth": 1,
-      "month": "2023-05"
     }
   ],
   "threads": [
@@ -760,13 +741,12 @@
     {
       "id": "thread-ad561b9b1e2f",
       "subject": "Mapping census tracts with leaflet(): \"sf layer has inconsistent datum\" error",
-      "message_count": 2,
+      "message_count": 1,
       "participants": [
-        "Ben Tupper",
         "Kevin Zembower"
       ],
       "started": "2023-05-31T20:02:39+00:00",
-      "last_reply": "2023-05-31T18:16:29-04:00",
+      "last_reply": "2023-05-31T20:02:39+00:00",
       "root_message_id": "msg-ad561b9b1e2f"
     }
   ]

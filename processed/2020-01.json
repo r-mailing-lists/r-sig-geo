@@ -93,6 +93,26 @@
       "month": "2020-01"
     },
     {
+      "id": "msg-9a2f87dbb4d5",
+      "message_id": "<23d44e3c-7f03-2aae-aefe-dbddb3878f09@yahoo.com.br>",
+      "from_name": "ASANTOS",
+      "from_email_hash": "9c328798782fdba9a5eb7253ec556480706d126689efca25bdfbcd5bdfb8dc96",
+      "date": "2020-01-09T10:35:19-04:00",
+      "subject": "[R-sig-Geo] Comparing distance among point pattern events",
+      "subject_clean": "Comparing distance among point pattern events",
+      "in_reply_to": "<CAM_vjukvthJGT8XBBNOPnaCYVWbk+bZCNdXrdP2ztt94CjJ00w@mail.gmail.com>",
+      "references": [
+        "<14602263-48a5-46a4-26db-096fa3626473.ref@yahoo.com.br>",
+        "<14602263-48a5-46a4-26db-096fa3626473@yahoo.com.br>",
+        "<CAM_vjukvthJGT8XBBNOPnaCYVWbk+bZCNdXrdP2ztt94CjJ00w@mail.gmail.com>"
+      ],
+      "body_plain": "Dear R-Sig-Geo Members,\n\nI have the three hypothetical point process situation (A, B and C) and my question is: What point distribution (B or C) is more close to A?\n\nFor this problem, I make a simple example:\n\nlibrary(spatstat)\nset.seed(2023)\nA <- rpoispp(30) ## First event\nB <- rpoispp(30) ## Second event\nC <- rThomas(10,0.02,5) ## Third event with Thomas cluster process\nplot(A, pch=16)\nplot(B, col=\"red\", add=T)\nplot(C, col=\"blue\", add=T)\n\nFirst, I takesthe distances between pairs of events:\n\nABd<-crossdist(A, B)\nACd<-crossdist(A, C)\n\nmean(ABd)\n# 0.4846027\nmean(ACd)\n# 0.5848766\n\n\n\n# test the hypothesis that ABd is equal to ACd courtesy of Sarah Goslee\n\nnperm <- 999\n\npermout <- data.frame(ABd = rep(NA, nperm), ACd = rep(NA, nperm))\n\n# create framework for a random assignment of B and C to the existing points\n\nBC <- superimpose(B, C)\nB.len <- npoints(B)\nC.len <- npoints(C)\nB.sampvect <- c(rep(TRUE, B.len), rep(FALSE, C.len))\n\nset.seed(2023)\nfor(i in seq_len(nperm)) {\n ??? B.sampvect <- sample(B.sampvect)\n ??? B.perm <- BC[B.sampvect]\n ??? C.perm <- BC[!B.sampvect]\n\n ??? permout[i, ] <- c(mean(crossdist(A, B.perm)), mean(crossdist(A, C.perm)))\n}\n\n\nboxplot(permout$ABd - permout$ACd)\npoints(1, mean(ABd) - mean(ACd), col=\"red\")\n\ntable(abs(mean(ABd) - mean(ACd)) >= abs(permout$ABd - permout$ACd))\n#TRUE\n# 999\n\nsum(abs(mean(ABd) - mean(ACd)) >= abs(permout$ABd - permout$ACd)) / nperm\n# [1] 1\n\n\nThe difference between ACd and ABd is distinguishable from that obtained by a random resampling of B and C.\nThen B (0.4846027) is more close to A, that C (0.5848766).\n\n\nBut, now I comparing the distance to mean nearest neighbour and minimum distance between each pair of types:\n\nmarks(A)<-as.factor(\"A\")\nmarks(B)<-as.factor(\"B\")\nmarks(C)<-as.factor(\"C\")\n\n# distance to nearest neighbour A to B\nnnda <- nncross(A,B, by=marks(A,B))\n\n# mean nearest neighbour distances\nmean(nnda[,1])\n#[1] 0.09847543\n\n# distance to nearest neighbour A to C\nnndb <- nncross(A,C, by=marks(A,C))\n\n# mean nearest neighbour distances\nmean(nndb[,1])\n#[1] 0.151127\n\n# test again the hypothesis that ABd is equal to ACd\n\nnperm <- 999\n\npermout <- data.frame(ABd = rep(NA, nperm), ACd = rep(NA, nperm))\n\n# create framework for a random assignment of B and C to the existing points\n\nBC <- superimpose(B, C)\nB.len <- npoints(B)\nC.len <- npoints(C)\nB.sampvect <- c(rep(TRUE, B.len), rep(FALSE, C.len))\n\nset.seed(2023)\nfor(i in seq_len(nperm)) {\n     B.sampvect <- sample(B.sampvect)\n     B.perm <- BC[B.sampvect]\n     C.perm <- BC[!B.sampvect]\n     ab<-nncross(A, B.perm)\n     ac<-nncross(A, C.perm)\n\n     permout[i, ] <- c(mean(ab[,1]), mean(ac[,1]))\n}\n\n\nboxplot(permout$ABd - permout$ACd)\npoints(1, mean(nnda[,1]) - mean(nndb[,1]), col=\"red\")\n\ntable(abs(mean(nnda[,1]) - mean(nndb[,1])) >= abs(permout$ABd - permout$ACd))\n#FALSE  TRUE\n#   91   908\n\nsum(abs(mean(nnda[,1]) - mean(nndb[,1])) >= abs(permout$ABd - permout$ACd)) / nperm\n#[1] 0.9089089\n\n\nNow, the same conclusion or the mean nearest neighbour distances of A to B (0.10887343) is smaller than A to C (0.151127),\nbut is not so clear for me, what is the better approach if a comparing crossdist() and nndist () results for a good answer to my question?\n\nAny conceptual tips?\n\nThanks in advance,\n\n-- \nAlexandre dos Santos\nGeotechnologies and Spatial Statistics applied to Forest Entomology\nInstituto Federal de Mato Grosso (IFMT) - Campus Caceres\nCaixa Postal 244 (PO Box)\nAvenida dos Ramires, s/n - Distrito Industrial\nCaceres - MT - CEP 78.200-000 (ZIP code)\nPhone: (+55) 65 99686-6970 / (+55) 65 3221-2674\nLattes CV: http://lattes.cnpq.br/1360403201088680\nOrcID: orcid.org/0000-0001-8232-6722\nResearchGate: www.researchgate.net/profile/Alexandre_Santos10\nPublons: https://publons.com/researcher/3085587/alexandre-dos-santos/\n--\n\nEm 22/11/2019 10:09, Sarah Goslee escreveu:\n> Hi,\n>\n> Great question, and clear example.\n>\n> The first problem:\n> ACd<-pairdist(A) instead of ACd <- pairdist(AC)\n>\n> BUT\n>\n> pairdist() is the wrong function: that calculates the mean distance\n> between ALL points, A to A and C to C as well as A to C.\n>\n> You need crossdist() instead.\n>\n> The most flexible approach is to roll your own permutation test. That\n> will work even if B and C are different sizes, etc. If you specify the\n> problem more exactly, there are probably parametric tests, but I like\n> permutation tests.\n>\n>\n> library(spatstat)\n> set.seed(2019)\n> A <- rpoispp(100) ## First event\n> B <- rpoispp(50) ## Second event\n> C <- rpoispp(50) ## Third event\n> plot(A, pch=16)\n> plot(B, col=\"red\", add=T)\n> plot(C, col=\"blue\", add=T)\n>\n> ABd<-crossdist(A, B)\n> ACd<-crossdist(A, C)\n>\n> mean(ABd)\n> # 0.5168865\n> mean(ACd)\n> # 0.5070118\n>\n>\n> # test the hypothesis that ABd is equal to ACd\n>\n> nperm <- 999\n>\n> permout <- data.frame(ABd = rep(NA, nperm), ACd = rep(NA, nperm))\n>\n> # create framework for a random assignment of B and C to the existing points\n>\n> BC <- superimpose(B, C)\n> B.len <- npoints(B)\n> C.len <- npoints(C)\n> B.sampvect <- c(rep(TRUE, B.len), rep(FALSE, C.len))\n>\n> set.seed(2019)\n> for(i in seq_len(nperm)) {\n>      B.sampvect <- sample(B.sampvect)\n>      B.perm <- BC[B.sampvect]\n>      C.perm <- BC[!B.sampvect]\n>\n>      permout[i, ] <- c(mean(crossdist(A, B.perm)), mean(crossdist(A, C.perm)))\n> }\n>\n>\n> boxplot(permout$ABd - permout$ACd)\n> points(1, mean(ABd) - mean(ACd), col=\"red\")\n>\n> table(abs(mean(ABd) - mean(ACd)) >= abs(permout$ABd - permout$ACd))\n> # FALSE  TRUE\n> #  573   426\n>\n> sum(abs(mean(ABd) - mean(ACd)) >= abs(permout$ABd - permout$ACd)) / nperm\n> # 0.4264264\n>\n> The difference between ACd and ABd is indistinguishable from that\n> obtained by a random resampling of B and C.\n>\n>\n> Sarah\n>\n> On Fri, Nov 22, 2019 at 8:26 AM ASANTOS via R-sig-Geo\n> <r-sig-geo at r-project.org> wrote:\n>> Dear R-Sig-Geo Members,\n>>\n>> I have the hypothetical point process situation:\n>>\n>> library(spatstat)\n>> set.seed(2019)\n>> A <- rpoispp(100) ## First event\n>> B <- rpoispp(50) ## Second event\n>> C <- rpoispp(50) ## Third event\n>> plot(A, pch=16)\n>> plot(B, col=\"red\", add=T)\n>> plot(C, col=\"blue\", add=T)\n>>\n>> I've like to know an adequate spatial approach for comparing if on\n>> average the event B or C is more close to A. For this, I try to make:\n>>\n>> AB<-superimpose(A,B)\n>> ABd<-pairdist(AB)\n>> AC<-superimpose(A,C)\n>> ACd<-pairdist(A)\n>> mean(ABd)\n>> #[1] 0.5112954\n>> mean(ACd)\n>> #[1] 0.5035042\n>>\n>> With this naive approach, I concluded that event C is more close of A\n>> that B. This sounds enough for a final conclusion or more robust\n>> analysis is possible?\n>>\n>> Thanks in advance,\n>>\n>> Alexandre\n>>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear R-Sig-Geo Members,\n\nI have the three hypothetical point process situation (A, B and C) and my question is: What point distribution (B or C) is more close to A?\n\nFor this problem, I make a simple ",
+      "thread_id": "thread-9a2f87dbb4d5",
+      "thread_depth": 0,
+      "month": "2020-01"
+    },
+    {
       "id": "msg-b45a83a2c184",
       "message_id": "<CA+2FMU7qAjEgyPkF4FJZ1XqG_sFs5=5VfZugF0t3VSFFGdHOzg@mail.gmail.com>",
       "from_name": "Bakary Faty",
@@ -730,6 +750,17 @@
       "started": "2020-01-08T12:06:37-05:00",
       "last_reply": "2020-01-08T12:06:37-05:00",
       "root_message_id": "msg-2504278219f4"
+    },
+    {
+      "id": "thread-9a2f87dbb4d5",
+      "subject": "Comparing distance among point pattern events",
+      "message_count": 1,
+      "participants": [
+        "ASANTOS"
+      ],
+      "started": "2020-01-09T10:35:19-04:00",
+      "last_reply": "2020-01-09T10:35:19-04:00",
+      "root_message_id": "msg-9a2f87dbb4d5"
     },
     {
       "id": "thread-9a2f87dbb4d5",

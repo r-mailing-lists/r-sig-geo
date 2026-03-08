@@ -2143,22 +2143,6 @@
       "thread_id": "thread-f241b8e7468f",
       "thread_depth": 0,
       "month": "2014-11"
-    },
-    {
-      "id": "msg-2f2deba11af7",
-      "message_id": "<CALxJZ4ASkj7whCE6M5mXYJProL7v=2vCaW9UoGpo7euhs7zAvg@mail.gmail.com>",
-      "from_name": "Robert Way",
-      "from_email_hash": "f702cb70b1c60f78a33bf4c545e571852d73f0c620f5b0196bc7a145067841a7",
-      "date": "2014-11-30T20:25:21-05:00",
-      "subject": "[R-sig-Geo] Spatial interpolation using thin plate spline [fields] through time",
-      "subject_clean": "Spatial interpolation using thin plate spline [fields] through time",
-      "in_reply_to": null,
-      "references": [],
-      "body_plain": "Hello,\nI am trying to interpolate air temperature surfaces through time and space\nin my study region. After testing a number of different techniques (e.g.\nco-kriging) I have evaluated that for my test data the Thin Plate Spline\nimplementation from the *fields *package gives the best results against\nout-of-sample data over a test period.\n\nI am looking to apply the TPS interpolation to cover the whole time period\nof study (e.g. 50 years) at the seasonal timescale with .geotiffs of\ninterpolated air temperatures being output at each step meaning that I am\nlooking to iteratively feed the TPS function the same X-inputs\n(xposition,yposition, zposition) from the station data but different\ncolumns of my Y-input with the temperature of each season through the time\ninterval.\n\nI am hoping to get some advice on the best way of solving this problem\nwhich efficiently uses computing resources considering this project will be\na huge drain on computing time for the more powerful computers in our Lab.\nFor instance, is it best if I find a way to build a function and feed it\nwith a loop or alternatively other methods such as with apply(). Another\nquestion is whether it is best to output each raster individually or to\ncreate a rasterstack or rasterbrick and split it afterwards. Overall i've\nfound outputting the .tif files and running calcs on large rasters in R to\nbe time consuming so any advice would be helpful. Thank you for your time.\n\n\nAlthough I have not written a test example the code below is very simple\nand shows what I have done:\n\n### Load required packages ###\nlibrary(fields)\nlibrary(raster)\nlibrary(spatial.tools)\nlibrary(gdalUtils)\nlibrary(mapplots)\nlibrary(rgdal)\nlibrary(gstat)\n\n### Use more computing resources ###\nsfQuickInit()\n\n### Load X-Data - in this case three columns with x,y and z positions per\nstation ###\nxdata <- file.choose()\nx <- read.csv(xdata, TRUE, \",\")\n\n### Load Y-Data - in this case data.frame of air temperatures through time\nper station ###\n### Columns = time intervals ### Rows = individual stations\nydata <- file.choose()\ny <- read.csv(ydata, TRUE, \",\")\n\n### Load elevation data ###\nelev1k <- raster(\"dem1k.tif\")\n\n### Thin plate spline fit for first time interval ###\nfit <- Tps(x, y[,1])\n\n## Output diagnostic plots ###\nset.panel(2,2)\nplot(fit)\ndev.off()\n\n### Creating interpolated surface for first time interval ###\nresult <- interpolate(elev1k,fit, xyOnly=FALSE)\n\n### Output geotiff ###\nwriteRaster(result, \"TPSresult.tif\", overwrite=TRUE)\n\n-- \n\n*Robert*\n\n\t[[alternative HTML version deleted]]",
-      "body_snippet": "Hello,\nI am trying to interpolate air temperature surfaces through time and space\nin my study region. After testing a number of different techniques (e.g.\nco-kriging) I have evaluated that for my test",
-      "thread_id": "thread-2f2deba11af7",
-      "thread_depth": 0,
-      "month": "2014-11"
     }
   ],
   "threads": [
@@ -2717,17 +2701,6 @@
       "started": "2014-11-28T17:22:46+01:00",
       "last_reply": "2014-11-28T17:22:46+01:00",
       "root_message_id": "msg-1c6a7ff2865e"
-    },
-    {
-      "id": "thread-2f2deba11af7",
-      "subject": "Spatial interpolation using thin plate spline [fields] through time",
-      "message_count": 1,
-      "participants": [
-        "Robert Way"
-      ],
-      "started": "2014-11-30T20:25:21-05:00",
-      "last_reply": "2014-11-30T20:25:21-05:00",
-      "root_message_id": "msg-2f2deba11af7"
     },
     {
       "id": "thread-f241b8e7468f",

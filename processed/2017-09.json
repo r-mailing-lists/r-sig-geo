@@ -1208,6 +1208,28 @@
       "month": "2017-09"
     },
     {
+      "id": "msg-1407f63ecf95",
+      "message_id": "<CABFLJOmkDws2bKJRNNbCK4RZ22DyN1vNhU8tZ8oquvZh_DgyzA@mail.gmail.com>",
+      "from_name": "Kátia Emidio",
+      "from_email_hash": "6f744daac7440ede11821efd2aa7c18a6bbb5fac4f6d49a01d25a0a3a088123c",
+      "date": "2017-09-14T12:03:52-04:00",
+      "subject": "[R-sig-Geo] [FORGED]  circular spatial polygon",
+      "subject_clean": "[FORGED]  circular spatial polygon",
+      "in_reply_to": "<58f95e81-43ab-ee38-68b3-dd7c51896ef1@auckland.ac.nz>",
+      "references": [
+        "<CABFLJOmjC72tBC3kZDxjE1-Mkx3ThZ5cEzL4CC_V9NP3YPTOsg@mail.gmail.com>",
+        "<1d336cbd-3257-9a72-148d-eb3391b8d1d5@auckland.ac.nz>",
+        "<CABFLJO=buiE_9m7Zs-33G6Wo7ado9cuG16+BEss-4HNvLimqtg@mail.gmail.com>",
+        "<d09a9b7e-0a05-679a-942d-90bf4441415e@auckland.ac.nz>",
+        "<58f95e81-43ab-ee38-68b3-dd7c51896ef1@auckland.ac.nz>"
+      ],
+      "body_plain": "Dear Rolf,\nThanks so much for your help! The script worked well, as I wanted. Only\nthing that is need to correct, in order to have it in a projected world (in\nmy case UTM-zone 20S), is to change one of the values associated to object\n\"cntr\"... the coordinates are the same in the above code.... changing to\nX/Y UTM coordinates, everthing worked well!\nThanks!!\n\nKatia\n\n\n\n\n2017-09-13 3:47 GMT-04:00 Rolf Turner <r.turner at auckland.ac.nz>:\n\n>\n> Whoops. I cc-ed my message to r-help rather than to r-sig-geo.  (Duhhhh!)\n>\n> Consequently I'm resending, with r-sig-geo as a cc recipient.\n>\n> cheers,\n>\n> Rolf Turner\n>\n> --\n> Technical Editor ANZJS\n> Department of Statistics\n> University of Auckland\n> Phone: +64-9-373-7599 ext. 88276\n>\n> On 13/09/17 19:37, Rolf Turner wrote:\n>\n>> On 13/09/17 13:24, K?tia Emidio wrote:\n>>\n>>> Dear Rolf,\n>>>\n>>> Thanks for your help!\n>>>\n>>> What I need is a spatial window with shape equal to the figure attached.\n>>> This figure I made using ArcGis, but it is important to me make it in R.\n>>> After having this figure I will make some analysis using spatstat among\n>>> others. The points within figure are trees...\n>>>\n>>\n>> (1) I believe that this discussion should be kept on-list.  It is not my\n>> role to provide private consulting for you.  I  am therefore cc-ing the\n>> list in this email.\n>>\n>> (2) It is still not completely clear what you really want; the figure\n>> that you attached appears to be a disc with 4 diameters superimposed. So\n>> you might be after a single (circular) owin object and a line segment\n>> pattern consisting of the 4 diameters.  Or you might be after *eight* owin\n>> objects, each being one the eight disc-segments into which the diameters\n>> divide the disc.\n>>\n>> I shall assume the latter.  To start with define a function, say \"wedge\":\n>>\n>> wedge <- function(theta1,theta2,radius,npoly=100,centre=c(0,0)){\n>>      library(spatstat)\n>> # Should do some checking on the values of theta1 and theta2 here,\n>> # but I shan't bother.\n>>      theta <- seq(theta1,theta2,length=npoly+1)\n>>      x <- c(0,radius*cos(theta),0)\n>>      y <- c(0,radius*sin(theta),0)\n>>      W <- owin(poly=list(x=x,y=y))\n>>      return(affine(W,vec=centre))\n>> }\n>>\n>> Then do something like:\n>>\n>> wedgies <- vector(\"list\",length=8)\n>> cntr <- c(673593.21,673593.21)\n>> for(i in 1:8) wedgies[[i]] <- wedge((i-1)*pi/4,i*pi/4,15,centre=cntr)\n>> ttt <- tess(tiles=wedgies)\n>> plot(ttt) # Looks OK to me.\n>>\n>> And maybe also do:\n>>\n>> W <- do.call(union.owin,wedgies)\n>> plot(W)\n>> for(i in 1:8) {\n>>      plot(wedgies[[i]],add=TRUE,border=\"red\")\n>>      readline(\"Go? \")\n>> }\n>>\n>> Also looks OK to me.\n>>\n>> Is *this* what you want?\n>>\n>\n\n\n-- \nK?tia Em?dio da Silva DSc\nEng. Florestal\nManaus/AM\n\n\n\nForestry Engineer\nManaus/AM-Brazil\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Rolf,\nThanks so much for your help! The script worked well, as I wanted. Only\nthing that is need to correct, in order to have it in a projected world (in\nmy case UTM-zone 20S), is to change one o",
+      "thread_id": "thread-d950b6cc47f2",
+      "thread_depth": 1,
+      "month": "2017-09"
+    },
+    {
       "id": "msg-226ef023d93a",
       "message_id": "<CAG4NReKuU+KMHk8bcogBOEvESZwoUDV2Ac9y8NsXUexqk9HZ4Q@mail.gmail.com>",
       "from_name": "Agustin Lobo",
@@ -2299,7 +2321,7 @@
     {
       "id": "thread-d950b6cc47f2",
       "subject": "[FORGED]  circular spatial polygon",
-      "message_count": 2,
+      "message_count": 3,
       "participants": [
         "Kátia Emidio",
         "Rolf Turner"

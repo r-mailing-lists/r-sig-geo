@@ -4,43 +4,6 @@
   "month": "2012-03",
   "messages": [
     {
-      "id": "msg-5b23f4e73451",
-      "message_id": "<CAAcGz981PLRmzcEQxTKh_R_Zcu+eMBTOEHZB7VCL4-LvjatHPg@mail.gmail.com>",
-      "from_name": "Michael Sumner",
-      "from_email_hash": "acd579fb79d1a9375bc76a80cfcc85617e73f5138102204ab0c04aca43dd7766",
-      "date": "2012-03-01T07:44:01+11:00",
-      "subject": "[R-sig-Geo] Get coordinates from huge shapefiles.",
-      "subject_clean": "Get coordinates from huge shapefiles.",
-      "in_reply_to": "<CAAHdiqxBLMgLnwb77gwFmq-bEzJ-TUOP6KgjhONTO=0PJwCZ0Q@mail.gmail.com>",
-      "references": [
-        "<CAAHdiqxBLMgLnwb77gwFmq-bEzJ-TUOP6KgjhONTO=0PJwCZ0Q@mail.gmail.com>"
-      ],
-      "body_plain": "You can do this:\n\nhttps://stat.ethz.ch/pipermail/r-sig-geo/2010-February/007619.html\n\n(The email archive, or my browser has auto-converted \"x @ y\" symbols\nto \"x at y\" rather helpfully so you will need to fix that if that's\nwhat you see).\n\nThe fortify tools (in ggplot2) and the geometry/topology-sense in\nrgeos are important to consider though, fortify is trying to build a\ntable that still stores all the topology so that (for e.g.) ggplot2\ncan work with it in a standard way.\n\nRaw extraction does not take any care with whether the polygons make\nsense, but that takes work since shapefiles just don't store that\ninformation, they are just sets of ring boundaries and it's up to the\nsoftware using them to build the actual topology. My code at that post\njust drops the final duplicated coordinate . . .\n\nCheers, Mike.\n\nOn Thu, Mar 1, 2012 at 5:15 AM, Christian Jansson <chrjan70 at gmail.com> wrote:\n> Hi,\n>\n> Thanks to everyone on this list. It is a true source of help!\n>\n> I'm reading huge shapefiles like this:\n>\n> shp_0 <- rgdal::readOGR(dsn=\"dir\", layer=\"TheLayer\")\n>\n> There are two columns in the shp_0 at data: bin1 and bin2.\n>\n> I need to get a table with three columns: id, X, Y.\n>\n> First I do this:\n> shp_0 at data$id = rownames(shp_0 at data)\n>\n> When I then run this:\n> tbl_coords <-fortify.SpatialPolygonsDataFrame(shp_0)\n> I get: \"Using bin1 to define regions.\n> Error in createPolygonsComment(p) :\n> ?rgeos_PolyCreateComment: orphaned hole, cannot find containing polygon\n> for hole at index 3\"\n>\n> After reading in previous messages on this email-list, I tried:\n>\n> slot(shp_0, \"polygons\") <- lapply(slot(shp_0, \"polygons\"),\n> checkPolygonsHoles), which proceeds to a new R-prompt with no issue\n> mentioned.\n>\n> But everytime I then run\n> shp_1 <- unionSpatialPolygons(shp_0, as.character(shp_0$id))\n> I get another crasch:\n> \"This application has requested the Runtime to terminate it in an unusual\n> way.\n> Please contact the application's support team for more information.\"\n>\n> How can I get the coordinates per polygon in one large table? I know how to\n> get them per polygon, but to rbind more than 30 000 polygons take forever.\n> To get the areas is easy \"sapply(shp_0 at polygons, function(x) x at area)\", but\n> the coords are deeper into the sp-object and I don't know how to \"apply-it\n> out\".\n>\n> Thank you very much for all help.\n>\n> /Chris\n>\n> ? ? ? ?[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n-- \nMichael Sumner\nInstitute for Marine and Antarctic Studies, University of Tasmania\nHobart, Australia\ne-mail: mdsumner at gmail.com",
-      "body_snippet": "You can do this:\n\nhttps://stat.ethz.ch/pipermail/r-sig-geo/2010-February/007619.html\n\n(The email archive, or my browser has auto-converted \"x @ y\" symbols\nto \"x at y\" rather helpfully so you will need",
-      "thread_id": "thread-5b23f4e73451",
-      "thread_depth": 0,
-      "month": "2012-03"
-    },
-    {
-      "id": "msg-868c500fb992",
-      "message_id": "<CAAcGz9_vt5nAcOzt7nCNtMstVzXZgLm+N0yhWAVzWRkmFnkcNA@mail.gmail.com>",
-      "from_name": "Michael Sumner",
-      "from_email_hash": "acd579fb79d1a9375bc76a80cfcc85617e73f5138102204ab0c04aca43dd7766",
-      "date": "2012-03-01T07:44:38+11:00",
-      "subject": "[R-sig-Geo] Get coordinates from huge shapefiles.",
-      "subject_clean": "Get coordinates from huge shapefiles.",
-      "in_reply_to": "<CAAcGz981PLRmzcEQxTKh_R_Zcu+eMBTOEHZB7VCL4-LvjatHPg@mail.gmail.com>",
-      "references": [
-        "<CAAHdiqxBLMgLnwb77gwFmq-bEzJ-TUOP6KgjhONTO=0PJwCZ0Q@mail.gmail.com>",
-        "<CAAcGz981PLRmzcEQxTKh_R_Zcu+eMBTOEHZB7VCL4-LvjatHPg@mail.gmail.com>"
-      ],
-      "body_plain": "Sorry, that should have been \"x at y\" for the raw access to S4 elements.\n\nOn Thu, Mar 1, 2012 at 7:44 AM, Michael Sumner <mdsumner at gmail.com> wrote:\n> You can do this:\n>\n> https://stat.ethz.ch/pipermail/r-sig-geo/2010-February/007619.html\n>\n> (The email archive, or my browser has auto-converted \"x @ y\" symbols\n> to \"x at y\" rather helpfully so you will need to fix that if that's\n> what you see).\n>\n> The fortify tools (in ggplot2) and the geometry/topology-sense in\n> rgeos are important to consider though, fortify is trying to build a\n> table that still stores all the topology so that (for e.g.) ggplot2\n> can work with it in a standard way.\n>\n> Raw extraction does not take any care with whether the polygons make\n> sense, but that takes work since shapefiles just don't store that\n> information, they are just sets of ring boundaries and it's up to the\n> software using them to build the actual topology. My code at that post\n> just drops the final duplicated coordinate . . .\n>\n> Cheers, Mike.\n>\n> On Thu, Mar 1, 2012 at 5:15 AM, Christian Jansson <chrjan70 at gmail.com> wrote:\n>> Hi,\n>>\n>> Thanks to everyone on this list. It is a true source of help!\n>>\n>> I'm reading huge shapefiles like this:\n>>\n>> shp_0 <- rgdal::readOGR(dsn=\"dir\", layer=\"TheLayer\")\n>>\n>> There are two columns in the shp_0 at data: bin1 and bin2.\n>>\n>> I need to get a table with three columns: id, X, Y.\n>>\n>> First I do this:\n>> shp_0 at data$id = rownames(shp_0 at data)\n>>\n>> When I then run this:\n>> tbl_coords <-fortify.SpatialPolygonsDataFrame(shp_0)\n>> I get: \"Using bin1 to define regions.\n>> Error in createPolygonsComment(p) :\n>> ?rgeos_PolyCreateComment: orphaned hole, cannot find containing polygon\n>> for hole at index 3\"\n>>\n>> After reading in previous messages on this email-list, I tried:\n>>\n>> slot(shp_0, \"polygons\") <- lapply(slot(shp_0, \"polygons\"),\n>> checkPolygonsHoles), which proceeds to a new R-prompt with no issue\n>> mentioned.\n>>\n>> But everytime I then run\n>> shp_1 <- unionSpatialPolygons(shp_0, as.character(shp_0$id))\n>> I get another crasch:\n>> \"This application has requested the Runtime to terminate it in an unusual\n>> way.\n>> Please contact the application's support team for more information.\"\n>>\n>> How can I get the coordinates per polygon in one large table? I know how to\n>> get them per polygon, but to rbind more than 30 000 polygons take forever.\n>> To get the areas is easy \"sapply(shp_0 at polygons, function(x) x at area)\", but\n>> the coords are deeper into the sp-object and I don't know how to \"apply-it\n>> out\".\n>>\n>> Thank you very much for all help.\n>>\n>> /Chris\n>>\n>> ? ? ? ?[[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n> --\n> Michael Sumner\n> Institute for Marine and Antarctic Studies, University of Tasmania\n> Hobart, Australia\n> e-mail: mdsumner at gmail.com\n\n\n\n-- \nMichael Sumner\nInstitute for Marine and Antarctic Studies, University of Tasmania\nHobart, Australia\ne-mail: mdsumner at gmail.com",
-      "body_snippet": "Sorry, that should have been \"x at y\" for the raw access to S4 elements.\n\nOn Thu, Mar 1, 2012 at 7:44 AM, Michael Sumner <mdsumner at gmail.com> wrote:\n> You can do this:\n>\n> https://stat.ethz.ch/pipe",
-      "thread_id": "thread-5b23f4e73451",
-      "thread_depth": 1,
-      "month": "2012-03"
-    },
-    {
       "id": "msg-b1ba33fc8c00",
       "message_id": "<DUB112-W135AF409B973E6DFAAF98BCF6C0@phx.gbl>",
       "from_name": "Julian WITTISCHE",
@@ -6590,25 +6553,6 @@
       "thread_id": "thread-fde10563c32d",
       "thread_depth": 1,
       "month": "2012-03"
-    },
-    {
-      "id": "msg-e9c7d98f9d8e",
-      "message_id": "<1333232278866-7425816.post@n2.nabble.com>",
-      "from_name": "agus",
-      "from_email_hash": "694291646c5e93e203813cce2e595da88822ac4c7fd04e4552a25d5c16be1c47",
-      "date": "2012-03-31T15:17:58-07:00",
-      "subject": "[R-sig-Geo] Problem accessing gshhs database of world coastlines",
-      "subject_clean": "Problem accessing gshhs database of world coastlines",
-      "in_reply_to": "<Pine.LNX.4.44.0510161951280.12372-100000@reclus.nhh.no>",
-      "references": [
-        "<99449F52-343F-431C-8D02-593B5A6B35E2@globetrotter.net>",
-        "<Pine.LNX.4.44.0510161951280.12372-100000@reclus.nhh.no>"
-      ],
-      "body_plain": "Dear Denis and Roger,\n\nI am trying to use this thread to import coastlines into R, however i am not\nsucceeding:\n\nWhen I try(with latest version of maptools  and psbmapping just installed):\n\na) wcoastline <- read.shp(\"C:/Users/Agus/Desktop/Distributional range\nsize/GSHHS_shp/gshhs_land.shp\")\nI get\n Error: could not find function \"read.shp\"\n\nb)  coastline=importGSHHS(\"C:/Users/Agus/Desktop/Distributional range\nsize/GSHHS_shp/gshhs_land.shp\"\n                      , xlim=c(envir at extent@xmin,envir at extent@xmax), \n                               ylim=c(envir at extent@ymin,envir at extent@ymax))\n\nI get:\n\nimportGSHHS status:\n--> Pass 1: complete: 0 bounding boxes within limits.\n--> Pass 2: \nError in importGSHHS(\"C:/Users/Agus/Desktop/Distributional range\nsize/GSHHS_shp/gshhs_land.shp\",  : \n  call to gshhs failed.\n\nCould you please give me any hint?\n\nthere it goes my session info\nsessionInfo()\nR version 2.14.1 (2011-12-22)\nPlatform: x86_64-pc-mingw32/x64 (64-bit)\n\nlocale:\n[1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252   \nLC_MONETARY=English_Australia.1252\n[4] LC_NUMERIC=C                       LC_TIME=English_Australia.1252    \n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nother attached packages:\n [1] PBSmapping_2.62.34 plyr_1.7.1         geosphere_1.2-26   rgdal_0.7-8       \noutliers_0.14      XML_3.9-4.1       \n [7] dismo_0.7-14       raster_1.9-58      maptools_0.8-14    lattice_0.20-0    \nsp_0.9-93          foreign_0.8-48    \n\nloaded via a namespace (and not attached):\n[1] grid_2.14.1  tools_2.14.1\n\nTHANKS!!\nAgus\n\n--\nView this message in context: http://r-sig-geo.2731867.n2.nabble.com/Accessing-gshhs-database-of-world-coastlines-tp2761898p7425816.html\nSent from the R-sig-geo mailing list archive at Nabble.com.",
-      "body_snippet": "Dear Denis and Roger,\n\nI am trying to use this thread to import coastlines into R, however i am not\nsucceeding:\n\nWhen I try(with latest version of maptools  and psbmapping just installed):\n\na) wcoastl",
-      "thread_id": "thread-e9c7d98f9d8e",
-      "thread_depth": 0,
-      "month": "2012-03"
     }
   ],
   "threads": [
@@ -6635,17 +6579,6 @@
       "started": "2012-03-01T07:39:23-08:00",
       "last_reply": "2012-03-05T09:53:20-08:00",
       "root_message_id": "msg-c061dd8d89c9"
-    },
-    {
-      "id": "thread-5b23f4e73451",
-      "subject": "Get coordinates from huge shapefiles.",
-      "message_count": 2,
-      "participants": [
-        "Michael Sumner"
-      ],
-      "started": "2012-03-01T07:44:01+11:00",
-      "last_reply": "2012-03-01T07:44:38+11:00",
-      "root_message_id": "msg-5b23f4e73451"
     },
     {
       "id": "thread-be5c7dfdfa48",
@@ -8174,17 +8107,6 @@
       "started": "2012-03-30T15:14:34-03:00",
       "last_reply": "2012-03-30T15:14:34-03:00",
       "root_message_id": "msg-874fae8c3a80"
-    },
-    {
-      "id": "thread-e9c7d98f9d8e",
-      "subject": "Problem accessing gshhs database of world coastlines",
-      "message_count": 1,
-      "participants": [
-        "agus"
-      ],
-      "started": "2012-03-31T15:17:58-07:00",
-      "last_reply": "2012-03-31T15:17:58-07:00",
-      "root_message_id": "msg-e9c7d98f9d8e"
     }
   ]
 }
