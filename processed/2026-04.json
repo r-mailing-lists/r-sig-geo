@@ -18,6 +18,22 @@
       "thread_id": "thread-296a784d7571",
       "thread_depth": 0,
       "month": "2026-04"
+    },
+    {
+      "id": "msg-7d79ab1b0704",
+      "message_id": "<CAGg5H0auRT8Z59Y7v1U9pHbAXdY7dJij0VOkuAGPyMezGRk1rg@mail.gmail.com>",
+      "from_name": "Nikolaos Tziokas",
+      "from_email_hash": "8312105e7618a0b91bd7038dde37c1862aea2c44337b9a99a2f8e8cdbaab259c",
+      "date": "2026-04-26T11:59:30Z",
+      "subject": "[R-sig-Geo] How to apply a geometric anisotropic filter 1/cos²(theta) to a raster?",
+      "subject_clean": "How to apply a geometric anisotropic filter 1/cos²(theta) to a raster?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "I am downscaling (i.e., increasing the spatial resolution) VIIRS nighttime\nlights imagery. The transfer function between the coarse and fine\nresolution is approximated by a Gaussian filter whose width\n\nIn the cross?track direction (left?right), the sigma scales as\n\n?(?) = ?_0/cos(^2)?\n\nwhere *?* is the per?pixel viewing angle. The filter should act only\nhorizontally (along x), pooling all y?values within the column uniformly.\nMy earlier attempt simply multiplied the raster values by 1/cos(^2)? but I\nnow realise the operation is a *convolution* with a 1?D Gaussian kernel\nwhose width depends on the column?s *?*.\n\nGiven a value raster x and an angle raster theta with identical dimensions,\nwhat is the correct and efficient way in R (using terra) to apply a 1?D\nGaussian blur on each row, where the kernel?s standard deviation is\ndetermined by theta at the central pixel?s column?\n\n*Current (incomplete) attempt:*\n\nlibrary(terra)\n# ---- 1. Create example rasters ----\nset.seed(42)\nnrows <- 5\nncols <- 200\n\nx <- rast(nrows = nrows, ncols = ncols, vals = runif(nrows * ncols))\ntheta_vals <- rep(seq(20, 26, length.out = ncols), each = nrows)\ntheta <- rast(nrows = nrows, ncols = ncols, vals = theta_vals)\n# ---- 2. Spatially varying Gaussian blur function ----# sigma0 =\nstandard deviation of Gaussian at nadir (in pixel units)# theta:\nraster of angles in degrees (same dimensions as x)\nanisotropic_blur <- function(x, theta, sigma0 = 10) {\n  # Convert to matrix (rows = y, cols = x)\n  mat_x <- as.matrix(x, wide = TRUE)\n  mat_angle <- as.matrix(theta, wide = TRUE)  # same dimensions\n  nr <- nrow(mat_x)\n  nc <- ncol(mat_x)\n  mat_out <- matrix(NA_real_, nr, nc)\n\n  # For each row, apply convolution with column-dependent sigma\n  for (r in 1:nr) {\n    row_vals <- mat_x[r, ]\n    for (c in 1:nc) {\n      theta_c <- mat_angle[r, c]               # angle at this pixel (degrees)\n      sigma <- sigma0 / (cos(theta_c * pi/180)^2)\n      halfwin <- ceiling(3 * sigma)            # kernel half?width\n      col_idx <- max(1, c - halfwin) : min(nc, c + halfwin)\n      dist <- abs(col_idx - c)\n      w <- exp(-0.5 * (dist / sigma)^2)\n      w <- w / sum(w)\n      mat_out[r, c] <- sum(w * row_vals[col_idx])\n    }\n  }\n  # Return as raster with same properties\n  rast(mat_out, crs = crs(x), ext = ext(x))}\n# ---- 3. Apply the filter ----\nx_blurred <- anisotropic_blur(x, theta, sigma0 = 10)\n# ---- 4. Plot side?by?side ----\npar(mfrow = c(1, 2))\nplot(x, main = \"Original predictor\")\nplot(x_blurred, main = expression(\"Filtered: Gaussian \"*sigma*\" =\n\"*sigma[0]/cos^2*theta))\n\n I need to actually perform a 1?D Gaussian convolution along rows with a\ncolumn?varying (\\sigma). What is an idiomatic way to do this in terra?\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am downscaling (i.e., increasing the spatial resolution) VIIRS nighttime\nlights imagery. The transfer function between the coarse and fine\nresolution is approximated by a Gaussian filter whose width",
+      "thread_id": "thread-7d79ab1b0704",
+      "thread_depth": 0,
+      "month": "2026-04"
     }
   ],
   "threads": [
@@ -31,6 +47,17 @@
       "started": "2026-04-17T17:10:08Z",
       "last_reply": "2026-04-17T17:10:08Z",
       "root_message_id": "msg-296a784d7571"
+    },
+    {
+      "id": "thread-7d79ab1b0704",
+      "subject": "How to apply a geometric anisotropic filter 1/cos²(theta) to a raster?",
+      "message_count": 1,
+      "participants": [
+        "Nikolaos Tziokas"
+      ],
+      "started": "2026-04-26T11:59:30Z",
+      "last_reply": "2026-04-26T11:59:30Z",
+      "root_message_id": "msg-7d79ab1b0704"
     }
   ]
 }
