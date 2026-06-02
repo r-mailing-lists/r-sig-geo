@@ -1,0 +1,38 @@
+{
+  "list": "r-sig-geo",
+  "description": "",
+  "month": "2026-06",
+  "messages": [
+    {
+      "id": "msg-bf538522305f",
+      "message_id": "<CAGg5H0aK9pFY9FmZqsh_pkPX_rSEW4owFg=atf_G5UOr2V2aFg@mail.gmail.com>",
+      "from_name": "Nikolaos Tziokas",
+      "from_email_hash": "8312105e7618a0b91bd7038dde37c1862aea2c44337b9a99a2f8e8cdbaab259c",
+      "date": "2026-06-02T09:42:02Z",
+      "subject": "[R-sig-Geo]  How to apply a geometric anisotropic filter 1/cos²(theta) to a raster?",
+      "subject_clean": "How to apply a geometric anisotropic filter 1/cos²(theta) to a raster?",
+      "in_reply_to": "<CAGg5H0auRT8Z59Y7v1U9pHbAXdY7dJij0VOkuAGPyMezGRk1rg@mail.gmail.com>",
+      "references": [
+        "<CAGg5H0auRT8Z59Y7v1U9pHbAXdY7dJij0VOkuAGPyMezGRk1rg@mail.gmail.com>"
+      ],
+      "body_plain": "Anyone has any idea(s) on how to move forward with the issue?\n\nMany thanks.\n\n???? ??? 26 ??? 2026 ???? 1:59??.?., ?/? Nikolaos Tziokas <\nnikos.tziokas at gmail.com> ??????:\n\n> I am downscaling (i.e., increasing the spatial resolution) VIIRS nighttime\n> lights imagery. The transfer function between the coarse and fine\n> resolution is approximated by a Gaussian filter whose width\n>\n> In the cross?track direction (left?right), the sigma scales as\n>\n> ?(?) = ?_0/cos(^2)?\n>\n> where *?* is the per?pixel viewing angle. The filter should act only\n> horizontally (along x), pooling all y?values within the column uniformly.\n> My earlier attempt simply multiplied the raster values by 1/cos(^2)? but I\n> now realise the operation is a *convolution* with a 1?D Gaussian kernel\n> whose width depends on the column?s *?*.\n>\n> Given a value raster x and an angle raster theta with identical\n> dimensions, what is the correct and efficient way in R (using terra) to\n> apply a 1?D Gaussian blur on each row, where the kernel?s standard\n> deviation is determined by theta at the central pixel?s column?\n>\n> *Current (incomplete) attempt:*\n>\n> library(terra)\n> # ---- 1. Create example rasters ----\n> set.seed(42)\n> nrows <- 5\n> ncols <- 200\n>\n> x <- rast(nrows = nrows, ncols = ncols, vals = runif(nrows * ncols))\n> theta_vals <- rep(seq(20, 26, length.out = ncols), each = nrows)\n> theta <- rast(nrows = nrows, ncols = ncols, vals = theta_vals)\n> # ---- 2. Spatially varying Gaussian blur function ----# sigma0 = standard deviation of Gaussian at nadir (in pixel units)# theta: raster of angles in degrees (same dimensions as x)\n> anisotropic_blur <- function(x, theta, sigma0 = 10) {\n>   # Convert to matrix (rows = y, cols = x)\n>   mat_x <- as.matrix(x, wide = TRUE)\n>   mat_angle <- as.matrix(theta, wide = TRUE)  # same dimensions\n>   nr <- nrow(mat_x)\n>   nc <- ncol(mat_x)\n>   mat_out <- matrix(NA_real_, nr, nc)\n>\n>   # For each row, apply convolution with column-dependent sigma\n>   for (r in 1:nr) {\n>     row_vals <- mat_x[r, ]\n>     for (c in 1:nc) {\n>       theta_c <- mat_angle[r, c]               # angle at this pixel (degrees)\n>       sigma <- sigma0 / (cos(theta_c * pi/180)^2)\n>       halfwin <- ceiling(3 * sigma)            # kernel half?width\n>       col_idx <- max(1, c - halfwin) : min(nc, c + halfwin)\n>       dist <- abs(col_idx - c)\n>       w <- exp(-0.5 * (dist / sigma)^2)\n>       w <- w / sum(w)\n>       mat_out[r, c] <- sum(w * row_vals[col_idx])\n>     }\n>   }\n>   # Return as raster with same properties\n>   rast(mat_out, crs = crs(x), ext = ext(x))}\n> # ---- 3. Apply the filter ----\n> x_blurred <- anisotropic_blur(x, theta, sigma0 = 10)\n> # ---- 4. Plot side?by?side ----\n> par(mfrow = c(1, 2))\n> plot(x, main = \"Original predictor\")\n> plot(x_blurred, main = expression(\"Filtered: Gaussian \"*sigma*\" = \"*sigma[0]/cos^2*theta))\n>\n>  I need to actually perform a 1?D Gaussian convolution along rows with a\n> column?varying (\\sigma). What is an idiomatic way to do this in terra?\n>\n>\n\n-- \nTziokas Nikolaos\nPost-doctoral Researcher at Luxembourg Institute of Science and Technology\n\nTel:(+30)6974365780\nLinkedIn <http://linkedin.com/in/nikolaos-tziokas-896081130>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Anyone has any idea(s) on how to move forward with the issue?\n\nMany thanks.\n\n???? ??? 26 ??? 2026 ???? 1:59??.?., ?/? Nikolaos Tziokas <\nnikos.tziokas at gmail.com> ??????:\n\n> I am downscaling (i.e., ",
+      "thread_id": "thread-bf538522305f",
+      "thread_depth": 0,
+      "month": "2026-06"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-bf538522305f",
+      "subject": "How to apply a geometric anisotropic filter 1/cos²(theta) to a raster?",
+      "message_count": 1,
+      "participants": [
+        "Nikolaos Tziokas"
+      ],
+      "started": "2026-06-02T09:42:02Z",
+      "last_reply": "2026-06-02T09:42:02Z",
+      "root_message_id": "msg-bf538522305f"
+    }
+  ]
+}
