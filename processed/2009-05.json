@@ -49,11 +49,14 @@
       "references": [
         "<FF6A0F95D42347438A5CCC4E38C99D68@toshibauser>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090501/f4af9b47/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090501/f4af9b47/attachment.pl>",
+      "body_plain": "Hi Chrissy,\n\nI think a good idea may be you\ntry R inside GRASS, so you can\nrun all grass gis capability and\nintegrate the outputs with R capabilities.\n\ncheers\n\nmilton\n\nOn Fri, May 1, 2009 at 12:27 AM, Huizhu \"Chrissy\" Li\n<chrissy.li at yahoo.com>wrote:\n\n> Dear All,\n>\n> I am working on a project which involves shortest path, cost distance\n> analysis. I could not find any package in R that can do this analysis. Does\n> anyone know which package has related functions?\n> Thank you in advance!\n>\n> Chrissy\n>        [[alternative HTML version deleted]]\n>\n>\n> __________________________________________________\n> 8O?lW\"2aQE;\"3,4sH]A?Cb7QSJOd?\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Chrissy,\n\nI think a good idea may be you\ntry R inside GRASS, so you can\nrun all grass gis capability and\nintegrate the outputs with R capabilities.\n\ncheers\n\nmilton\n\nOn Fri, May 1, 2009 at 12:27 AM,",
       "thread_id": "thread-e840c4ffd331",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090501/f4af9b47/attachment.pl"
+      ]
     },
     {
       "id": "msg-349d44b2780a",
@@ -68,11 +71,14 @@
         "<3c75698d0904221720g7629780cna79cd6b03511841e@mail.gmail.com>",
         "<alpine.LRH.2.00.0904231316160.27708@reclus.nhh.no>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090501/ff6dbfb4/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090501/ff6dbfb4/attachment.pl>",
+      "body_plain": "Dear Roger,\nthanks for the quick response. I ran debug as you advised, and got this\n\nBrowse[1]> cor(Zp)\n            Rho (Intercept)         Pop        PctA       AgeA       EducA\nRho           1          NA          NA          NA         NA          NA\n(Intercept)  NA           1          NA          NA         NA          NA\nPop          NA          NA  1.00000000  0.06233083 0.02604018 -0.08305616\nPctA         NA          NA  0.06233083  1.00000000 0.21103112 -0.21089741\nAgeA         NA          NA  0.02604018  0.21103112 1.00000000  0.09762170\nEducA        NA          NA -0.08305616 -0.21089741 0.09762170  1.00000000\nIncMed       NA          NA -0.19474344 -0.00996023 0.03553646  0.47054366\nPctOM        NA          NA  0.21678235 -0.06551557 0.08429103 -0.26513718\n                 IncMed       PctOM\nRho                  NA          NA\n(Intercept)          NA          NA\nPop         -0.19474344  0.21678235\nPctA        -0.00996023 -0.06551557\nAgeA         0.03553646  0.08429103\nEducA        0.47054366 -0.26513718\nIncMed       1.00000000 -0.47546336\nPctOM       -0.47546336  1.00000000\nWarning messages:\n1: In lag.listw(listw, y) : NAs in lagged values\n2: In cor(Zp) : the standard deviation is zero\n\n\nI am trying to figure out what went wrong, but I am not that familiar with\nmechanics of stsls. Please let me know if you have any quick\nrecommendations.\n\nBest regards,\nadam\n\n\nOn Thu, Apr 23, 2009 at 7:29 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Wed, 22 Apr 2009, Adam Okulicz-Kozaryn wrote:\n>\n>  Hello,\n>> i am trying to run  stsls from spdep, and I am getting error:\n>>\n>> Error in solve.default(ZpZp) :\n>>  system is computationally singular: reciprocal condition number = 0\n>>\n>> I would get the same error in lagsarlm, but I can fix it by setting\n>>\n>\n> I don't think that this is the same problem. In the *sarlm case, the\n> problem is only in computing the asymptotic covariance matrix, and occurs\n> when the scaling of rho or lambda and the betas varies a lot.\n>\n> Here it is occurring in the middle of TSLS, and suggests that there are\n> colinearities around at the second stage, probably between yendp, the fitted\n> endogenous lagged y and X (yendp fitted using X and WX). Setting the\n> tolerance for solve will not help here at all. If you like, set\n> debug(spdep:::tsls) and before running solve(ZpZp), eyeball the values going\n> into Zp (cor(Zp) for example, or pairs(Zp)).\n>\n> Hope this helps,\n>\n> Roger\n>\n>\n>\n>> tot.solve=1e-12\n>>\n>> as suggested here\n>>\n>> http://www.nabble.com/Error-in-spdep%3A-system-is-computationally-singular-tt19880274.html#a19896513\n>>\n>> I cannot do that in stsls. I already rescaled variables to similar scale.\n>> Is\n>> there any way to fix that?\n>> best,\n>> adam\n>>\n>>\n>>\n>>\n> --\n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>\n>\n\n\n-- \nAdam Okulicz-Kozaryn\nPostdoctoral Fellow\nInstitute for Quantitative Social Science at Harvard University (IQSS)\nHarvard - MIT Data Center (HMDC)\nCGIS South Bldg S306\n1730 Cambridge Street, Cambridge, MA 02138\n\n972 408 6919\nadam.okulicz.kozaryn at gmail.com\npeople.hmdc.harvard.edu/~akozyarn\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Roger,\nthanks for the quick response. I ran debug as you advised, and got this\n\nBrowse[1]> cor(Zp)\n            Rho (Intercept)         Pop        PctA       AgeA       EducA\nRho           1      ",
       "thread_id": "thread-349d44b2780a",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090501/ff6dbfb4/attachment.pl"
+      ]
     },
     {
       "id": "msg-239d7fb91320",
@@ -139,11 +145,14 @@
         "<49FD1504.7060101@earthlink.net>",
         "<49FD187D.2000706@earthlink.net>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090503/d1a50ee5/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090503/d1a50ee5/attachment.pl>",
+      "body_plain": "If you have a SpatialPalygons called \"poly\" you can take polylist from this object.\n\n> class(poly)\n[1] \"SpatialPolygons\"\nattr(,\"package\")\n[1] \"sp\"\n## i=1\n> class(poly at polygons[[1]]@Polygons[[1]]@coords) \n[1] \"matrix\"\n#you could use like this\n> inout(cbind(yourLAT, youLONG),\n                    poly at polygons[[i]]@Polygons[[1]]@coords)\n### one function you could use to get the point data from pattern is.\npatterndata <- t(sapply(1:399, function(i) {\n  id <- which(inout(cbind(yourLAT, yourLONG),\n                    poly at polygons[[i]]@Polygons[[1]]@coords))\n  apply(yourpointsdata[id, ],2, mean,na.rm=TRUE)\n}))\n\nregards\n\n \n\n_______________________\nGledson Luiz Picharski\nPET Estatística - UFPR\nhttp://www.leg.ufpr.br/~gledson\nhttp://www.leg.ufpr.br/pet\n\n\n\n\n\n________________________________\nDe: Jim Burke <j.burke at earthlink.net>\nPara: r-sig-geo at stat.math.ethz.ch\nEnviadas: Domingo, 3 de Maio de 2009 1:07:25\nAssunto: Re: [R-sig-Geo] How can I convert a \"SpatialPolygons\" object to a \"polylist\"?\n\nAnd using shape2poly does not work either.\n\n>census_poly_sp <- shape2poly(census_sp, region.id = NULL)\nError in shape2poly(census_sp, region.id = NULL) :\nNo shp component in this list\n\n\nThe above file was read in (see below). Internal\nmeasurements are in long lats. I can spplot and\nmake a KML file just fine for example.\ncensus_sp <- readShapePoly(\"HD_102_census_blocks_sp.shp\",\nIDvar=\"BLKIDFP00\", proj4string=CRS(\"+init=epsg:4326\"))\n\n\nThanks,\nJim Burke\n\n\n\nJim Burke wrote:\n> How can I convert a \"SpatialPolygons\" object to a \"polylist\"\n> I have a file read in with \"readShapePoly\". This contains the polygon\n> long lats in a slot called \"coords\". I want to use the package \"splancs\"\n> \"inout\" function which works according to the doc with polygon data sets.\n> An example Map2Poly which works with \"inout\" lists itself as a class \"polylist\". Thanks,\n> Jim Burke\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n> \n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n[[elided Yahoo spam]]\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "If you have a SpatialPalygons called \"poly\" you can take polylist from this object.\n\n> class(poly)\n[1] \"SpatialPolygons\"\nattr(,\"package\")\n[1] \"sp\"\n## i=1\n> class(poly at polygons[[1]]@Polygons[[1]]@co",
       "thread_id": "thread-59840e46ab11",
       "thread_depth": 2,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090503/d1a50ee5/attachment.pl"
+      ]
     },
     {
       "id": "msg-821649161f30",
@@ -346,11 +355,14 @@
         "<f58db2700904290911r7a5ffe4ct4ed83ff16b1fca2c@mail.gmail.com>",
         "<alpine.LRH.2.00.0904291918400.30188@reclus.nhh.no>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090505/6a0bed53/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090505/6a0bed53/attachment.pl>",
+      "body_plain": "I'm still working on trying to combine two spatial files.\nSo far I've done the following\n\nzipmaps1a<- unionSpatialPolygons(zipmaps1,IDs=paste(zipmaps1$ZCTA))\nzipmaps1_df<- as(zipmaps1, \"data.frame\") [!duplicated(zipmaps1$ZCTA),\n-(1:4)]\nrow.names(zipmaps1_df)<- paste(zipmaps1_df$ZCTA)\nzipmaps1b <- SpatialPolygonsDataFrame(zipmaps1a,zipmaps1_df)\n\nzipmaps2a<- unionSpatialPolygons(zipmaps2,IDs=paste(zipmaps2$ZCTA))\nzipmaps2_df<- as(zipmaps2, \"data.frame\") [!duplicated(zipmaps2$ZCTA),\n-(1:4)]\nrow.names(zipmaps2_df)<- paste(zipmaps2_df$ZCTA)\nzipmaps2b <- SpatialPolygonsDataFrame(zipmaps2a,zipmaps2_df)\n\nI've checked both of my files and at this point they DO both contain unique\nid's - no duplicate records. However when I try to go ahead and combine them\nusing\n\nzipmaps_1_2 <- spRbind(spRbind(zipmaps1b, zipmaps1a))\n\nI get the following error message\nError in spRbind(spRbind(zipmaps1b, zipmaps1a)) :\n  error in evaluating the argument 'obj' in selecting a method for function\n'spRbind'\n\nI'm not sure what else I need to specify in my spRbind command\n\n\nOn Wed, Apr 29, 2009 at 12:32 PM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Wed, 29 Apr 2009, Alina Sheyman wrote:\n>\n>  Using examples in Chapter 5, I am trying to get rid of non-unique\n>> polygons.\n>>\n>\n> Actually, maybe my advice wasn't well-judged, unless you are happy to\n> interpret code in a fairly naked setting, you may actually need the book\n> text to see what is going on. The code treats a number of different issues,\n> not all of which are necessarily relevant for your case.\n>\n>  I'm working with a Massachusetts shapefile by zips. The file consists the\n>> following fields\n>> ZCTA  NAME LSAD   LSAD_TRANS\n>>\n>> I've done the following  to get rid of duplicate records\n>>\n>>  zipmaps1_df <- as(zipmaps1,\n>>> \"data.frame\")[!duplicated(zipmaps1$LSAT_TRANS)]\n>>>\n>> # not LSAD_TRANS?\n>\n>> row.names(zipmaps1_df) <- zipmaps1_df$LSAD_TRANS\n>>> zipmaps1a <- SpatialPolygonsDataFrame(zipmaps1, zipmaps1_df) ,\n>>>\n>>\n>>\n> I guess that you need all of the features (geometries) in zipmaps1, but\n> that some zipcodes have several features. Don't discard geometries unless\n> you know that that is what you really want to do. Even if they are not\n> contiguous, use:\n>\n> zipmaps1u <- unionSpatialPolygons(as(zipmaps1, \"SpatialPolygons\"),\n>  as.character(zipmaps1$LSAD_TRANS))\n>\n> to group all of the features belonging to each value of LSAD_TRANS as\n> Polygon objects in unique Polygons objects (with multiple features).\n>\n> The output (re. your next mail) is a SpatialPolygons object. How you then\n> aggregate the data.frame part of the input object is up to you. The ID\n> values of the Polygons objects in zipmaps1u will be the unique values of\n> LSAD_TRANS. Unless you need to work with attribute data, you could stay just\n> with SpatialPolygons objects until you are through.\n>\n>  but get the following error message\n>> Error in SpatialPolygonsDataFrame(zipmaps1, zipmaps1_df) :\n>>  row.names of data and Polygons IDs do not match\n>>\n>>\n>> How do I find out what field R is treating as Polygon ID, so that I can\n>> set\n>> my row.names to that?\n>>\n>\n> If you need it later on, you could look at spChFIDs as I suggested before.\n>\n> Hope this helps,\n>\n> Roger\n>\n>\n>\n>>\n>> On Wed, Apr 29, 2009 at 2:42 AM, Roger Bivand <Roger.Bivand at nhh.no>\n>> wrote:\n>>\n>>  On Tue, 28 Apr 2009, Alina Sheyman wrote:\n>>>\n>>>  I'm trying to combine two shapefiles using\n>>>\n>>>> zipmaps5 <- spRbind(zipmaps1,zipmaps2)\n>>>>\n>>>> and getting the following error message\n>>>> Error in spRbind(as(obj, \"SpatialPolygons\"), as(x, \"SpatialPolygons\")) :\n>>>>  non-unique polygon IDs\n>>>>\n>>>> Does anyone know how I can get rid of duplicate polygons in a shapefile?\n>>>>\n>>>>\n>>> This isn't the problem. The real problem is that zipmaps1 and zipmaps2\n>>> have\n>>> non-unique polygon IDs, so that it isn't obvious to the function what you\n>>> want to do. By default:\n>>>\n>>> sapply(slot(zipmaps1, \"polygons\"), slot, \"ID\")\n>>>\n>>> is set to the FID of the shapefile in readOGR() and equivalently in\n>>> readShapeSpatial() in maptools. These typically run 0:(n-1). For two\n>>> objects, they obviously overlap. Please use spChFIDs() methods in\n>>> maptools\n>>> to assign IDs that are unique for the output object; in the worst case:\n>>>\n>>> zipmaps1 <- spChFIDs(zipmaps1, paste(\"map1\", sapply(slot(zipmaps1,\n>>>  \"polygons\"), slot, \"ID\"), sep=\"_\"))\n>>>\n>>> and a different \"map*\" string for zipmaps2 will work, but a unique,\n>>> meaningful ID is best.\n>>>\n>>> This is covered in detail in the code examples for Chapter 5 in our book,\n>>> and on the help page for ?\"spChFIDs-methods\".\n>>>\n>>> Hope this helps,\n>>>\n>>> Roger\n>>>\n>>>\n>>>  thank you!\n>>>>\n>>>>       [[alternative HTML version deleted]]\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at stat.math.ethz.ch\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>\n>>>>\n>>>>  --\n>>> Roger Bivand\n>>> Economic Geography Section, Department of Economics, Norwegian School of\n>>> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n>>> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n>>> e-mail: Roger.Bivand at nhh.no\n>>>\n>>>\n>>>\n>>\n> --\n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I'm still working on trying to combine two spatial files.\nSo far I've done the following\n\nzipmaps1a<- unionSpatialPolygons(zipmaps1,IDs=paste(zipmaps1$ZCTA))\nzipmaps1_df<- as(zipmaps1, \"data.frame\") [",
       "thread_id": "thread-8fa02ba80d25",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090505/6a0bed53/attachment.pl"
+      ]
     },
     {
       "id": "msg-23c3ddf385b3",
@@ -407,11 +419,14 @@
         "<alpine.LRH.2.00.0904291918400.30188@reclus.nhh.no>",
         "<f58db2700905050816l6349c662oc2853e047130d2b4@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090505/eaea56c4/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090505/eaea56c4/attachment.pl>",
+      "body_plain": "and for some reason I am still getting the error that I have non-unique id's\neventhough i had deduped both of my files. Any idea why this would be\nhappening?\n\nOn Tue, May 5, 2009 at 10:16 AM, Alina Sheyman <alinashe at gmail.com> wrote:\n\n>\n> I'm still working on trying to combine two spatial files.\n> So far I've done the following\n>\n> zipmaps1a<- unionSpatialPolygons(zipmaps1,IDs=paste(zipmaps1$ZCTA))\n> zipmaps1_df<- as(zipmaps1, \"data.frame\") [!duplicated(zipmaps1$ZCTA),\n> -(1:4)]\n> row.names(zipmaps1_df)<- paste(zipmaps1_df$ZCTA)\n> zipmaps1b <- SpatialPolygonsDataFrame(zipmaps1a,zipmaps1_df)\n>\n> zipmaps2a<- unionSpatialPolygons(zipmaps2,IDs=paste(zipmaps2$ZCTA))\n> zipmaps2_df<- as(zipmaps2, \"data.frame\") [!duplicated(zipmaps2$ZCTA),\n> -(1:4)]\n> row.names(zipmaps2_df)<- paste(zipmaps2_df$ZCTA)\n> zipmaps2b <- SpatialPolygonsDataFrame(zipmaps2a,zipmaps2_df)\n>\n> I've checked both of my files and at this point they DO both contain unique\n> id's - no duplicate records. However when I try to go ahead and combine them\n> using\n>\n> zipmaps_1_2 <- spRbind(spRbind(zipmaps1b, zipmaps1a))\n>\n> I get the following error message\n> Error in spRbind(spRbind(zipmaps1b, zipmaps1a)) :\n>   error in evaluating the argument 'obj' in selecting a method for function\n> 'spRbind'\n>\n> I'm not sure what else I need to specify in my spRbind command\n>\n>\n>\n> On Wed, Apr 29, 2009 at 12:32 PM, Roger Bivand <Roger.Bivand at nhh.no>wrote:\n>\n>> On Wed, 29 Apr 2009, Alina Sheyman wrote:\n>>\n>>  Using examples in Chapter 5, I am trying to get rid of non-unique\n>>> polygons.\n>>>\n>>\n>> Actually, maybe my advice wasn't well-judged, unless you are happy to\n>> interpret code in a fairly naked setting, you may actually need the book\n>> text to see what is going on. The code treats a number of different issues,\n>> not all of which are necessarily relevant for your case.\n>>\n>>  I'm working with a Massachusetts shapefile by zips. The file consists the\n>>> following fields\n>>> ZCTA  NAME LSAD   LSAD_TRANS\n>>>\n>>> I've done the following  to get rid of duplicate records\n>>>\n>>>  zipmaps1_df <- as(zipmaps1,\n>>>> \"data.frame\")[!duplicated(zipmaps1$LSAT_TRANS)]\n>>>>\n>>> # not LSAD_TRANS?\n>>\n>>> row.names(zipmaps1_df) <- zipmaps1_df$LSAD_TRANS\n>>>> zipmaps1a <- SpatialPolygonsDataFrame(zipmaps1, zipmaps1_df) ,\n>>>>\n>>>\n>>>\n>> I guess that you need all of the features (geometries) in zipmaps1, but\n>> that some zipcodes have several features. Don't discard geometries unless\n>> you know that that is what you really want to do. Even if they are not\n>> contiguous, use:\n>>\n>> zipmaps1u <- unionSpatialPolygons(as(zipmaps1, \"SpatialPolygons\"),\n>>  as.character(zipmaps1$LSAD_TRANS))\n>>\n>> to group all of the features belonging to each value of LSAD_TRANS as\n>> Polygon objects in unique Polygons objects (with multiple features).\n>>\n>> The output (re. your next mail) is a SpatialPolygons object. How you then\n>> aggregate the data.frame part of the input object is up to you. The ID\n>> values of the Polygons objects in zipmaps1u will be the unique values of\n>> LSAD_TRANS. Unless you need to work with attribute data, you could stay just\n>> with SpatialPolygons objects until you are through.\n>>\n>>  but get the following error message\n>>> Error in SpatialPolygonsDataFrame(zipmaps1, zipmaps1_df) :\n>>>  row.names of data and Polygons IDs do not match\n>>>\n>>>\n>>> How do I find out what field R is treating as Polygon ID, so that I can\n>>> set\n>>> my row.names to that?\n>>>\n>>\n>> If you need it later on, you could look at spChFIDs as I suggested before.\n>>\n>> Hope this helps,\n>>\n>> Roger\n>>\n>>\n>>\n>>>\n>>> On Wed, Apr 29, 2009 at 2:42 AM, Roger Bivand <Roger.Bivand at nhh.no>\n>>> wrote:\n>>>\n>>>  On Tue, 28 Apr 2009, Alina Sheyman wrote:\n>>>>\n>>>>  I'm trying to combine two shapefiles using\n>>>>\n>>>>> zipmaps5 <- spRbind(zipmaps1,zipmaps2)\n>>>>>\n>>>>> and getting the following error message\n>>>>> Error in spRbind(as(obj, \"SpatialPolygons\"), as(x, \"SpatialPolygons\"))\n>>>>> :\n>>>>>  non-unique polygon IDs\n>>>>>\n>>>>> Does anyone know how I can get rid of duplicate polygons in a\n>>>>> shapefile?\n>>>>>\n>>>>>\n>>>> This isn't the problem. The real problem is that zipmaps1 and zipmaps2\n>>>> have\n>>>> non-unique polygon IDs, so that it isn't obvious to the function what\n>>>> you\n>>>> want to do. By default:\n>>>>\n>>>> sapply(slot(zipmaps1, \"polygons\"), slot, \"ID\")\n>>>>\n>>>> is set to the FID of the shapefile in readOGR() and equivalently in\n>>>> readShapeSpatial() in maptools. These typically run 0:(n-1). For two\n>>>> objects, they obviously overlap. Please use spChFIDs() methods in\n>>>> maptools\n>>>> to assign IDs that are unique for the output object; in the worst case:\n>>>>\n>>>> zipmaps1 <- spChFIDs(zipmaps1, paste(\"map1\", sapply(slot(zipmaps1,\n>>>>  \"polygons\"), slot, \"ID\"), sep=\"_\"))\n>>>>\n>>>> and a different \"map*\" string for zipmaps2 will work, but a unique,\n>>>> meaningful ID is best.\n>>>>\n>>>> This is covered in detail in the code examples for Chapter 5 in our\n>>>> book,\n>>>> and on the help page for ?\"spChFIDs-methods\".\n>>>>\n>>>> Hope this helps,\n>>>>\n>>>> Roger\n>>>>\n>>>>\n>>>>  thank you!\n>>>>>\n>>>>>       [[alternative HTML version deleted]]\n>>>>>\n>>>>> _______________________________________________\n>>>>> R-sig-Geo mailing list\n>>>>> R-sig-Geo at stat.math.ethz.ch\n>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>>\n>>>>>\n>>>>>  --\n>>>> Roger Bivand\n>>>> Economic Geography Section, Department of Economics, Norwegian School of\n>>>> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n>>>> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n>>>> e-mail: Roger.Bivand at nhh.no\n>>>>\n>>>>\n>>>>\n>>>\n>> --\n>> Roger Bivand\n>> Economic Geography Section, Department of Economics, Norwegian School of\n>> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n>> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n>> e-mail: Roger.Bivand at nhh.no\n>>\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "and for some reason I am still getting the error that I have non-unique id's\neventhough i had deduped both of my files. Any idea why this would be\nhappening?\n\nOn Tue, May 5, 2009 at 10:16 AM, Alina Sh",
       "thread_id": "thread-8fa02ba80d25",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090505/eaea56c4/attachment.pl"
+      ]
     },
     {
       "id": "msg-6b72ec6f0ace",
@@ -512,11 +527,14 @@
       "subject_clean": "Gradient calculation with ESRI grid (.asc) format",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090506/202d0d11/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090506/202d0d11/attachment.pl>",
+      "body_plain": "I'm looking to calculate gradients from oceanographic variables (ie. sea\nsurface temperature, chlorophyll, etc.) for which I have downloaded in ESRI\ngrid format (.asc).  From some research on gradient analysis, I have found a\nfew people who have used a Sobel filter to estimate gradients in images (ie.\npresumably .tif or similar files).  However, I have tons of data in ESRI\ngrid format, and all of it is unprojected (ie. lat/lon coordinates).  I'd\nappreciate suggestions on this if anyone has ideas.  One of the primary\nissues to overcome is that the units of my grids are different (ie.\nx=longitude, y=latitude, z=temperature) and my grid files span the entire\nsouth Pacific Ocean.\n\nThanks,\n\nTim\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I'm looking to calculate gradients from oceanographic variables (ie. sea\nsurface temperature, chlorophyll, etc.) for which I have downloaded in ESRI\ngrid format (.asc).  From some research on gradient",
       "thread_id": "thread-59c311f23d4e",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090506/202d0d11/attachment.pl"
+      ]
     },
     {
       "id": "msg-6d9b5ae967a8",
@@ -625,11 +643,14 @@
       "references": [
         "<4A0154E1.8E3B.0073.0@csir.co.za>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090506/a1521d18/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090506/a1521d18/attachment.pl>",
+      "body_plain": "Hi Wesley,\n \nThe proj.4 string definition is available at (bookmark it!):\n \nhttp://trac.osgeo.org/proj/wiki/GenParms\n \nand then a list of projections is available at:\n \nhttp://www.remotesensing.org/geotiff/proj_list/\n \nall the best from Split,\n \nTom Hengl\nhttp://spatial-analyst.net/\n\n________________________________\n\nFrom: Wesley Roberts\nSent: Wed 5/6/2009 9:14\nTo: r-sig-geo at stat.math.ethz.ch\nSubject: [R-sig-Geo] EPSG codes for LO31 WGS84 projection data\n\n\nDear Colleagues,\n\nI have a data set which is projected using the following projection, Hartebeeshoek94 Projection Gauss Conform LO31. This is a local projection used in South Africa. So far, I have only been able to find the EPSG code for the projection from http://spatialreference.org/ref/epsg/2054/ . I am actually looking for the Proj4 definition as the library in rgdal does not contain any information regarding the projection. Using the following command I found no information for the specified code\n\n> poly <- readShapePoly(\"PCA_AreaOne_2_water_EPSG.shp\", IDvar=\"cat\", proj4string=CRS(\"+init=epsg:2054\"))\nError in CRS(\"+init=epsg:2054\") : no options found in 'init' file\n\nCould someone please provide me with the full proj4 definition as the spatial reference site does not seem to have it.\n\nMany thanks and kind regards,\nWesley\n\n\n\n\nWesley Roberts MSc.\nResearcher: Earth Observation (Ecosystems)\nNatural Resources and the Environment\nCSIR\nTel: +27 (21) 888-2490\nFax: +27 (21) 888-2693\n\n\"To know the road ahead, ask those coming back.\"\n- Chinese proverb\n\n\n\n\n-- \nThis message is subject to the CSIR's copyright terms and conditions, e-mail legal notice, and implemented Open Document Format (ODF) standard. \nThe full disclaimer details can be found at http://www.csir.co.za/disclaimer.html.\n\n\nand is believed to be clean.  MailScanner thanks Transtec Computers for their support.\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Wesley,\n \nThe proj.4 string definition is available at (bookmark it!):\n \nhttp://trac.osgeo.org/proj/wiki/GenParms\n \nand then a list of projections is available at:\n \nhttp://www.remotesensing.org/ge",
       "thread_id": "thread-414a941cfaa1",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090506/a1521d18/attachment.pl"
+      ]
     },
     {
       "id": "msg-cbb32b0cc157",
@@ -641,11 +662,14 @@
       "subject_clean": "testing for spatial variability of the parameters in GWR with R",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090506/7fe5f376/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090506/7fe5f376/attachment.pl>",
+      "body_plain": "Thank you Roger.\nI did'nt know what this LMZ.F3GWR.test() function was for. It seems that \nit is what I need, but when I try to run it, I have an error message \ncoming up :\n\n/Error: cannot allocate vector of size 52.5 Mo.\n\n/I read on the R-sig-geo list that this could be due to the size of my \ndataset (3710 points) and that there was no way around... In that case, \nhow to test big datasets ? The tests I'm doing now concern just one part \nof the total sample, so the problem will get bigger when I use all my data !\nWould a random selection of points in the dataset be suitable for \ntesting the spatial variability of the parameters ?\n\nThanks for your help\n\nMarie\n\nOn Wed, 6 May 2009, Marie CHARRU wrote:\n\n> Hi !\n>\n> I would like to know how to carry out the test for spatial variability \n> of the parameters of a geographically weighted regression model in R. \n> A test using a Monte Carlo approach is described in Fotheringham & \n> al., 2002, but I can't find how to run it with R.\n> I would appreciate any help about this matter.\n\nSee the LMZ.F3GWR.test() function in the spgwr package for the Leung et \nal. test - other tests for GWR against OLS, but not for coefficients, \nare in that package. The help page has examples. Are you looking for \nother tests?\n\nHope this helps,\n\nRoger\n\nPS. Consider posting on the R-sig-geo list, where others may be able to \nhelp more.\n\n>\n> Thank you,\n>\n> Marie\n> / /\n>\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no\n\n-- \nMarie CHARRU\nDoctorante\nUMR 1092 INRA/AgroParisTech - ENGREF\nLaboratoire d'Etude des Ressources Forêt-Bois (LERFoB) - Equipe Ecologie Forestière\n14, rue Girardet - CS 14216   -  54042 Nancy - France\nTel. : 03.83.39.68.80  - Fax. : 03.83.30.22.54\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you Roger.\nI did'nt know what this LMZ.F3GWR.test() function was for. It seems that \nit is what I need, but when I try to run it, I have an error message \ncoming up :\n\n/Error: cannot allocate ve",
       "thread_id": "thread-cbb32b0cc157",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090506/7fe5f376/attachment.pl"
+      ]
     },
     {
       "id": "msg-e37310fa9e65",
@@ -691,11 +715,14 @@
       "subject_clean": "RgoogleMaps package",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/d2e528f8/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/d2e528f8/attachment.pl>",
+      "body_plain": "Dear R-mappers and analyzers of spatial data,\njust wanted to bring your attention to a new package on CRAN, RgoogleMaps,\nwhich allows you to plot on Google map tiles in R.\nThe package serves two purposes:\n(i) Provide a comfortable R interface to query the Google server for static\nmaps\n(ii) Use the map as a background image to overlay plots within R. This\nrequires proper coordinate scaling.\n\nIt makes use of the Google Static Maps API and basically allows the user to\nplot lat/lon points on a map in a properly aligned way without leaving R\n(e.g. using overlays in kml or so).\n\nAs of now, the package requires rgdal, though that is only to load png files\ninto R. I have a second version that handles jpg files but as that depends\non rimage which is not currently compiling, its release is on hold.\n\nI would ideally like to eliminate the dependence on any other package\naltogether. If anyone knows of a small portable utility that reads in png or\njpg files and returns them as a RGB matrix, let me know.\n\nThanks,\n\nMarkus\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear R-mappers and analyzers of spatial data,\njust wanted to bring your attention to a new package on CRAN, RgoogleMaps,\nwhich allows you to plot on Google map tiles in R.\nThe package serves two purpo",
       "thread_id": "thread-f6181fc6a08b",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/d2e528f8/attachment.pl"
+      ]
     },
     {
       "id": "msg-77463b25c4fc",
@@ -707,11 +734,14 @@
       "subject_clean": "Change color of binary mask in spatstat",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/950c7a9f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/950c7a9f/attachment.pl>",
+      "body_plain": "I would like to change the color of a binary mask when I plot it. The \ndefault is red and beige. I've tried setting col parameter, but it is \nonly working with polygonal windows.\n\ndata(demopat)\nplot(demopat$window, col=3)\n#Not OK :\nplot(as.mask(demopat$window), col=3)\n\nThanks,\nEtienne\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I would like to change the color of a binary mask when I plot it. The \ndefault is red and beige. I've tried setting col parameter, but it is \nonly working with polygonal windows.\n\ndata(demopat)\nplot(d",
       "thread_id": "thread-77463b25c4fc",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/950c7a9f/attachment.pl"
+      ]
     },
     {
       "id": "msg-dfb6cf5dd54c",
@@ -741,11 +771,14 @@
       "references": [
         "<4A034E8F.3090807@cirad.fr>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/91255a60/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/91255a60/attachment.pl>",
+      "body_plain": "Hi Renaud,\n\nmay be you find some solution reading last posts.\n\nhttp://search.r-project.org/cgi-bin/namazu.cgi?query=utm+to+latlong&max=20&result=normal&sort=score&idxname=Rhelp02a&idxname=functions&idxname=docs\n\ncheers\n\nmilton\nOn Thu, May 7, 2009 at 5:11 PM, Renaud Lancelot <renaud.lancelot at cirad.fr>wrote:\n\n> Dear all,\n>\n> I have a big dataset (> 200,000 lines) of georeferenced locations where the\n> coordinates are given in UTM, spanning over several zones. Is is possible to\n> convert all the UTM coordinates into longlat WGS84 with a single call ?\n>\n> Renaud\n> --\n> Renaud Lancelot\n> EDEN Project, coordinator\n> http://www.eden-fp6project.net/\n>\n> UMR CIRAD-INRA \"Contrôle des maladies animales exotiques et émergentes\"\n> Joint research unit \"Control of emerging and exotic animal diseases\"\n>\n> CIRAD\n> Campus International de Baillarguet TA A-DIR / B\n> F34398 Montpellier\n> http://www.cirad.fr  http://bluetongue.cirad.fr/\n>\n> Tel.  +33 4 67 59 37 17  -  Fax  +33 4 67 59 37 95\n> Secr. +33 4 67 59 37 37  - Cell. +33 6 77 52 08 69\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Renaud,\n\nmay be you find some solution reading last posts.\n\nhttp://search.r-project.org/cgi-bin/namazu.cgi?query=utm+to+latlong&max=20&result=normal&sort=score&idxname=Rhelp02a&idxname=functions&id",
       "thread_id": "thread-dfb6cf5dd54c",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/91255a60/attachment.pl"
+      ]
     },
     {
       "id": "msg-36f93627b092",
@@ -778,11 +811,14 @@
         "<4A034E8F.3090807@cirad.fr>",
         "<3aaf1a030905071445w3c3b1c4bge8385162fa9fd5ef@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/06dba1fc/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/06dba1fc/attachment.pl>",
+      "body_plain": "Thank you Milton. I have already explored this source, without success.\n\nRenaud\n\n2009/5/7 milton ruser <milton.ruser at gmail.com>\n\n> Hi Renaud,\n>\n> may be you find some solution reading last posts.\n>\n>\n> http://search.r-project.org/cgi-bin/namazu.cgi?query=utm+to+latlong&max=20&result=normal&sort=score&idxname=Rhelp02a&idxname=functions&idxname=docs\n>\n> cheers\n>\n> milton\n> On Thu, May 7, 2009 at 5:11 PM, Renaud Lancelot <renaud.lancelot at cirad.fr\n> >wrote:\n>\n> > Dear all,\n> >\n> > I have a big dataset (> 200,000 lines) of georeferenced locations where\n> the\n> > coordinates are given in UTM, spanning over several zones. Is is possible\n> to\n> > convert all the UTM coordinates into longlat WGS84 with a single call ?\n> >\n> > Renaud\n> > --\n> > Renaud Lancelot\n> > EDEN Project, coordinator\n> > http://www.eden-fp6project.net/\n> >\n> > UMR CIRAD-INRA \"Contrôle des maladies animales exotiques et émergentes\"\n> > Joint research unit \"Control of emerging and exotic animal diseases\"\n> >\n> > CIRAD\n> > Campus International de Baillarguet TA A-DIR / B\n> > F34398 Montpellier\n> > http://www.cirad.fr  http://bluetongue.cirad.fr/\n> >\n> > Tel.  +33 4 67 59 37 17  -  Fax  +33 4 67 59 37 95\n> > Secr. +33 4 67 59 37 37  - Cell. +33 6 77 52 08 69\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n>         [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\n\n-- \nRenaud Lancelot\nEDEN Project, coordinator\nhttp://www.eden-fp6project.net/\n\nUMR CIRAD-INRA \"Contrôle des maladies animales exotiques et émergentes\"\nJoint research unit \"Control of emerging and exotic animal diseases\"\n\nCIRAD\nCampus International de Baillarguet TA A-DIR / B\nF34398 Montpellier\nhttp://www.cirad.fr  http://bluetongue.cirad.fr/\n\nTel.  +33 4 67 59 37 17  -  Fax  +33 4 67 59 37 95\nSecr. +33 4 67 59 37 37  - Cell. +33 6 77 52 08 69\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you Milton. I have already explored this source, without success.\n\nRenaud\n\n2009/5/7 milton ruser <milton.ruser at gmail.com>\n\n> Hi Renaud,\n>\n> may be you find some solution reading last posts.\n>",
       "thread_id": "thread-dfb6cf5dd54c",
       "thread_depth": 2,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/06dba1fc/attachment.pl"
+      ]
     },
     {
       "id": "msg-444c3822d091",
@@ -797,11 +833,14 @@
         "<4A034E8F.3090807@cirad.fr>",
         "<4A035705.5050800@uni-muenster.de>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/0a4ea254/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/0a4ea254/attachment.pl>",
+      "body_plain": "Thank you Edzer. I was hoping there was a simpler solution, but it's still\nfairly simple.\n\nRenaud\n\n2009/5/7 Edzer Pebesma <edzer.pebesma at uni-muenster.de>\n\n> Yes, but you will not like that call.\n>\n> In R (package sp), each spatial data set can only have one single\n> projection. I'd suggest, in pseudo-code\n>\n> - import the data into a data.frame\n> - for each UTM zone do:\n>   select the locations\n>   set their CRS\n>   reproject to long/lat\n> - cbind the locations to a single data structure\n> - convert back to data.frame if needed.\n> --\n> Edzer Pebesma\n> Institute for Geoinformatics (ifgi), University of Münster\n> Weseler Straße 253, 48151 Münster, Germany. Phone: +49 251\n> 8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\n> http://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de\n>\n> Renaud Lancelot wrote:\n> > Dear all,\n> >\n> > I have a big dataset (> 200,000 lines) of georeferenced locations\n> > where the coordinates are given in UTM, spanning over several zones.\n> > Is is possible to convert all the UTM coordinates into longlat WGS84\n> > with a single call ?\n> >\n> > Renaud\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n\n-- \nRenaud Lancelot\nEDEN Project, coordinator\nhttp://www.eden-fp6project.net/\n\nUMR CIRAD-INRA \"Contrôle des maladies animales exotiques et émergentes\"\nJoint research unit \"Control of emerging and exotic animal diseases\"\n\nCIRAD\nCampus International de Baillarguet TA A-DIR / B\nF34398 Montpellier\nhttp://www.cirad.fr  http://bluetongue.cirad.fr/\n\nTel.  +33 4 67 59 37 17  -  Fax  +33 4 67 59 37 95\nSecr. +33 4 67 59 37 37  - Cell. +33 6 77 52 08 69\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you Edzer. I was hoping there was a simpler solution, but it's still\nfairly simple.\n\nRenaud\n\n2009/5/7 Edzer Pebesma <edzer.pebesma at uni-muenster.de>\n\n> Yes, but you will not like that call.\n>\n",
       "thread_id": "thread-dfb6cf5dd54c",
       "thread_depth": 2,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090507/0a4ea254/attachment.pl"
+      ]
     },
     {
       "id": "msg-f50cbd44bd8b",
@@ -838,11 +877,14 @@
         "<c2ee56800905071454l4323c5f5yd1d54851057b7c5d@mail.gmail.com>",
         "<4A035FD9.9020409@earthlink.net>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090508/61e4ed16/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090508/61e4ed16/attachment.pl>",
+      "body_plain": "Thank you, here is the full process trying to follow Edzer's suggestion:\n\nlibrary(RODBC)\nlibrary(rgdal)\nchannel <- odbcConnectAccess(\"farms.mdb\")\nsigal <- sqlQuery(channel, \"select * from T_SIGAL\")\nListe <- by(sigal,\n            list(zone = sigal$zone),\n            function(x){\n                strg <- paste(\"+proj=utm +ellps=intl +zone=\",\nunique(x$zone), sep = \"\")\n                SP <- SpatialPoints(cbind(x$UTM_X, x$UTM_Y),\nproj4string=CRS(strg))\n                as.data.frame(spTransform(SP, CRS(\"+proj=longlat\n+datum=WGS84\")))\n                })\nsigal2 <- do.call(\"rbind\", Liste)\ndimnames(sigal2) <- list(seq(nrow(sigal2)), c(\"x\", \"y\"))\n\nPlotting the result looks fine but I need to check further.\n\nBTW, is it possible to stack directly the SpatialPoints objects?\n\nThank you for your help!\n\nRenaud\n\n2009/5/8 Jim Burke <j.burke at earthlink.net>\n\n> Its all quite simple I think (i.e. \"hope\"). Have\n> you used spTransform(rdgal)?\n>\n> ## here I have a file from a local group delivered\n> ## in UTM format that I transformed OK to long-lat.\n>\n> library(rgdal) # for map projection support; automatically loads sp\n> ## transform internal measurements from UTM to long lat format\n> longlat_sp <- spTransform(UTM_format_sp, CRS(\"+init=epsg:4326\"))\n> sapply(slot(longlat_sp, \"polygons\"), function(x) slot(x, \"ID\"))\n>\n>\n> > showMethods(\"spTransform\")\n> Function: spTransform (package rgdal)\n> x=\"SpatialGridDataFrame\", CRSobj=\"CRS\"\n> x=\"SpatialLines\", CRSobj=\"CRS\"\n> x=\"SpatialLinesDataFrame\", CRSobj=\"CRS\"\n> x=\"SpatialPixelsDataFrame\", CRSobj=\"CRS\"\n> x=\"SpatialPoints\", CRSobj=\"CRS\"\n> x=\"SpatialPointsDataFrame\", CRSobj=\"CRS\"\n> x=\"SpatialPolygons\", CRSobj=\"CRS\"\n> x=\"SpatialPolygonsDataFrame\", CRSobj=\"CRS\"\n>\n> Hope this helps,\n> Jim Burke\n>\n>\n>\n> Renaud Lancelot wrote:\n>\n>> Thank you Edzer. I was hoping there was a simpler solution, but it's still\n>> fairly simple.\n>>\n>> Renaud\n>>\n>> 2009/5/7 Edzer Pebesma <edzer.pebesma at uni-muenster.de>\n>>\n>>\n>>\n>>> Yes, but you will not like that call.\n>>>\n>>> In R (package sp), each spatial data set can only have one single\n>>> projection. I'd suggest, in pseudo-code\n>>>\n>>> - import the data into a data.frame\n>>> - for each UTM zone do:\n>>>  select the locations\n>>>  set their CRS\n>>>  reproject to long/lat\n>>> - cbind the locations to a single data structure\n>>> - convert back to data.frame if needed.\n>>> --\n>>> Edzer Pebesma\n>>> Institute for Geoinformatics (ifgi), University of Münster\n>>> Weseler Straße 253, 48151 Münster, Germany. Phone: +49 251\n>>> 8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\n>>> http://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de\n>>>\n>>> Renaud Lancelot wrote:\n>>>\n>>>\n>>>> Dear all,\n>>>>\n>>>> I have a big dataset (> 200,000 lines) of georeferenced locations\n>>>> where the coordinates are given in UTM, spanning over several zones.\n>>>> Is is possible to convert all the UTM coordinates into longlat WGS84\n>>>> with a single call ?\n>>>>\n>>>> Renaud\n>>>>\n>>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at stat.math.ethz.ch\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>>\n>>>\n>>\n>>\n>>\n>>  ------------------------------------------------------------------------\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>\n>\n>\n\n\n-- \nRenaud Lancelot\nEDEN Project, coordinator\nhttp://www.eden-fp6project.net/\n\nUMR CIRAD-INRA \"Contrôle des maladies animales exotiques et émergentes\"\nJoint research unit \"Control of emerging and exotic animal diseases\"\n\nCIRAD\nCampus International de Baillarguet TA A-DIR / B\nF34398 Montpellier\nhttp://www.cirad.fr  http://bluetongue.cirad.fr/\n\nTel.  +33 4 67 59 37 17  -  Fax  +33 4 67 59 37 95\nSecr. +33 4 67 59 37 37  - Cell. +33 6 77 52 08 69\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you, here is the full process trying to follow Edzer's suggestion:\n\nlibrary(RODBC)\nlibrary(rgdal)\nchannel <- odbcConnectAccess(\"farms.mdb\")\nsigal <- sqlQuery(channel, \"select * from T_SIGAL\")\nLi",
       "thread_id": "thread-dfb6cf5dd54c",
       "thread_depth": 4,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090508/61e4ed16/attachment.pl"
+      ]
     },
     {
       "id": "msg-1e44026220e8",
@@ -854,11 +896,14 @@
       "subject_clean": "Define projection using Raster package",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090508/c9cfb6bf/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090508/c9cfb6bf/attachment.pl>",
+      "body_plain": "I need to take an ESRI grid (.asc) which is in geographic coordinates\n(lat/lon) and project it to UTM coordinates.  The following command is\ngiving me an error saying I'm giving it an undefined argument.  I can read\nthe raster without the projs arguement, but I'm stuck when adding that on.\n\n> r<-raster(paste(asc.in.dir, \"\\\\\", asc.in.files[i], sep=\"\"),\nprojs=\"+proj=tmerc +lat_0=0 +lon_0=0 +k=9996 +x_0=500000 +y_0=10000000\")\nError in .local(x, ...) :\n  unused argument(s) (projs = \"+proj=tmerc +lat_0=0 +lon_0=0 +k=9996\n+x_0=500000 +y_0=10000000\")\n\nThanks,\n\nTim\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I need to take an ESRI grid (.asc) which is in geographic coordinates\n(lat/lon) and project it to UTM coordinates.  The following command is\ngiving me an error saying I'm giving it an undefined argume",
       "thread_id": "thread-1e44026220e8",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090508/c9cfb6bf/attachment.pl"
+      ]
     },
     {
       "id": "msg-d745e452eb42",
@@ -970,11 +1015,14 @@
         "<c2ee56800905071622n23ad9a83l29443eb086753da6@mail.gmail.com>",
         "<alpine.LRH.2.00.0905080745530.32137@reclus.nhh.no>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090508/830ff1d5/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090508/830ff1d5/attachment.pl>",
+      "body_plain": "Thank you Roger. Using\n\ndo.call(\"spRbind\", myListOfSpatialPointsObjects)\n\ndo not work, but I can work around.\n\nRenaud\n\n2009/5/8 Roger Bivand <Roger.Bivand at nhh.no>\n\n> On Fri, 8 May 2009, Renaud Lancelot wrote:\n>\n>  Thank you, here is the full process trying to follow Edzer's suggestion:\n>>\n>> library(RODBC)\n>> library(rgdal)\n>> channel <- odbcConnectAccess(\"farms.mdb\")\n>> sigal <- sqlQuery(channel, \"select * from T_SIGAL\")\n>> Liste <- by(sigal,\n>>           list(zone = sigal$zone),\n>>           function(x){\n>>               strg <- paste(\"+proj=utm +ellps=intl +zone=\",\n>> unique(x$zone), sep = \"\")\n>>               SP <- SpatialPoints(cbind(x$UTM_X, x$UTM_Y),\n>> proj4string=CRS(strg))\n>>               as.data.frame(spTransform(SP, CRS(\"+proj=longlat\n>> +datum=WGS84\")))\n>>               })\n>> sigal2 <- do.call(\"rbind\", Liste)\n>> dimnames(sigal2) <- list(seq(nrow(sigal2)), c(\"x\", \"y\"))\n>>\n>> Plotting the result looks fine but I need to check further.\n>>\n>> BTW, is it possible to stack directly the SpatialPoints objects?\n>>\n>\n> Yes, you could use the spRbind() method in maptools:\n>\n> library(maptools)\n> set.seed(1)\n> a <- SpatialPoints(matrix(runif(100), ncol=2))\n> b <- SpatialPoints(matrix(runif(100), ncol=2))\n> c <- spRbind(a, b)\n> plot(c, axes=TRUE)\n> points(a, col=\"green\")\n> points(b, col=\"red\")\n>\n> Roger\n>\n>\n>> Thank you for your help!\n>>\n>> Renaud\n>>\n>> 2009/5/8 Jim Burke <j.burke at earthlink.net>\n>>\n>>  Its all quite simple I think (i.e. \"hope\"). Have\n>>> you used spTransform(rdgal)?\n>>>\n>>> ## here I have a file from a local group delivered\n>>> ## in UTM format that I transformed OK to long-lat.\n>>>\n>>> library(rgdal) # for map projection support; automatically loads sp\n>>> ## transform internal measurements from UTM to long lat format\n>>> longlat_sp <- spTransform(UTM_format_sp, CRS(\"+init=epsg:4326\"))\n>>> sapply(slot(longlat_sp, \"polygons\"), function(x) slot(x, \"ID\"))\n>>>\n>>>\n>>>  showMethods(\"spTransform\")\n>>>>\n>>> Function: spTransform (package rgdal)\n>>> x=\"SpatialGridDataFrame\", CRSobj=\"CRS\"\n>>> x=\"SpatialLines\", CRSobj=\"CRS\"\n>>> x=\"SpatialLinesDataFrame\", CRSobj=\"CRS\"\n>>> x=\"SpatialPixelsDataFrame\", CRSobj=\"CRS\"\n>>> x=\"SpatialPoints\", CRSobj=\"CRS\"\n>>> x=\"SpatialPointsDataFrame\", CRSobj=\"CRS\"\n>>> x=\"SpatialPolygons\", CRSobj=\"CRS\"\n>>> x=\"SpatialPolygonsDataFrame\", CRSobj=\"CRS\"\n>>>\n>>> Hope this helps,\n>>> Jim Burke\n>>>\n>>>\n>>>\n>>> Renaud Lancelot wrote:\n>>>\n>>>  Thank you Edzer. I was hoping there was a simpler solution, but it's\n>>>> still\n>>>> fairly simple.\n>>>>\n>>>> Renaud\n>>>>\n>>>> 2009/5/7 Edzer Pebesma <edzer.pebesma at uni-muenster.de>\n>>>>\n>>>>\n>>>>\n>>>>  Yes, but you will not like that call.\n>>>>>\n>>>>> In R (package sp), each spatial data set can only have one single\n>>>>> projection. I'd suggest, in pseudo-code\n>>>>>\n>>>>> - import the data into a data.frame\n>>>>> - for each UTM zone do:\n>>>>>  select the locations\n>>>>>  set their CRS\n>>>>>  reproject to long/lat\n>>>>> - cbind the locations to a single data structure\n>>>>> - convert back to data.frame if needed.\n>>>>> --\n>>>>> Edzer Pebesma\n>>>>> Institute for Geoinformatics (ifgi), University of M?nster\n>>>>> Weseler Stra?e 253, 48151 M?nster, Germany. Phone: +49 251\n>>>>> 8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\n>>>>> http://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de\n>>>>>\n>>>>> Renaud Lancelot wrote:\n>>>>>\n>>>>>\n>>>>>  Dear all,\n>>>>>>\n>>>>>> I have a big dataset (> 200,000 lines) of georeferenced locations\n>>>>>> where the coordinates are given in UTM, spanning over several zones.\n>>>>>> Is is possible to convert all the UTM coordinates into longlat WGS84\n>>>>>> with a single call ?\n>>>>>>\n>>>>>> Renaud\n>>>>>>\n>>>>>>\n>>>>>>  _______________________________________________\n>>>>> R-sig-Geo mailing list\n>>>>> R-sig-Geo at stat.math.ethz.ch\n>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>>\n>>>>>\n>>>>>\n>>>>>\n>>>>\n>>>>\n>>>>\n>>>>  ------------------------------------------------------------------------\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at stat.math.ethz.ch\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>\n>>>>\n>>>>\n>>>\n>>>\n>>\n>>\n>>\n> --\n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>\n>\n\n\n-- \nRenaud Lancelot\nEDEN Project, coordinator\nhttp://www.eden-fp6project.net/\n\nUMR CIRAD-INRA \"Contrôle des maladies animales exotiques et émergentes\"\nJoint research unit \"Control of emerging and exotic animal diseases\"\n\nCIRAD\nCampus International de Baillarguet TA A-DIR / B\nF34398 Montpellier\nhttp://www.cirad.fr  http://bluetongue.cirad.fr/\n\nTel.  +33 4 67 59 37 17  -  Fax  +33 4 67 59 37 95\nSecr. +33 4 67 59 37 37  - Cell. +33 6 77 52 08 69\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you Roger. Using\n\ndo.call(\"spRbind\", myListOfSpatialPointsObjects)\n\ndo not work, but I can work around.\n\nRenaud\n\n2009/5/8 Roger Bivand <Roger.Bivand at nhh.no>\n\n> On Fri, 8 May 2009, Renaud Lanc",
       "thread_id": "thread-dfb6cf5dd54c",
       "thread_depth": 6,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090508/830ff1d5/attachment.pl"
+      ]
     },
     {
       "id": "msg-cdbc2efc818e",
@@ -1024,11 +1072,14 @@
       "subject_clean": "Calculating Risk at point locations (without rasterising)",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090508/a8b37d2f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090508/a8b37d2f/attachment.pl>",
+      "body_plain": "I would appreciate advice on how to do a spatial statistics task:\ndetecting points at a high risk of Cases (and cluster analysis). I have\nsemi-randomly located vector point data with 2 attributes (Cases and\nControls) at each point, i.e. marked point data. I want to apply spatial\nsmoothing as I hypothesize that the underlying process is such that\nclusters of cases are of interest (although I also know that the process\noperates on a small enough scale that isolated points with high numbers\nof cases are also of interest). Having read the book by Bivand et al\n\"Applied Spatial Data Analysis with R\" I was following the approach of\nan inhomogeneous Poisson process analysis (p.175) to calculate a risk\nimage of log(cases/controls), which incidentally gives a few challenges\nwith divide by zeros. This risk image (I used data class ppp in R\nlibrary SpatStat as I had marked point data) is a raster interpolated\nimage, even though I originated with vector point data. However, the aim\nof my analysis is to score each of the (vector) points with its risk\nvalue, i.e. give each of my original vector points a new attribute\ncalled Risk. For my application I am not interested in what happens in\nbetween my point locations (as the point locations have a meaning). So\nmy problem is how to get the Risk value at the original point locations.\nMy current approach involves converting the points to raster, so I lose\nthe precise point location and I have a large data set so in practice\ncannot set a very fine resolution. So my key question is: please, can\nsomeone offer me advice on how to get the Risk value at the original\npoint locations? \n\nI wonder if I can avoid raster and do all processing in a vector map\n(perhaps by interpolation or spline approximation). This would mean I\ncan avoid resampling a raster map back to the original vector point\nlocations as occasionally  the locations are so close (less than\nresolution) this will create inaccuracy. \n\n(Background: I have not done much spatial statistics before so am trying\nto keep it simple; I have used GRASS; not much experience with R).\n\nWhen I originally import the map into R it has class\nSpatialPointsDataFrame. Below are a couple of code examples:\n> Case <- smooth.ppp(Cases,75, eps=50)   # smooth my Case data with a\nkernel width of 75m; 50m pixel dimension in the resulting smoothed ppp.\n> plot(eval.im( log((Case+9e-6)/(Control+1e-5)) + 0.3521755)) # to get\nthe Risk map; the 9e6- and 1e-5 are how I avoid divide by zero type\nproblems.\n\nThankyou,\nMike Elliott,\nUK.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I would appreciate advice on how to do a spatial statistics task:\ndetecting points at a high risk of Cases (and cluster analysis). I have\nsemi-randomly located vector point data with 2 attributes (Cas",
       "thread_id": "thread-ce41e97edfc0",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090508/a8b37d2f/attachment.pl"
+      ]
     },
     {
       "id": "msg-68b3d3bcf94f",
@@ -1090,11 +1141,14 @@
       "subject_clean": "clump of binary pixels on raster package",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090510/d1840030/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090510/d1840030/attachment.pl>",
+      "body_plain": "Dear all,\n\nsorry for this double-posting, I know it is not a good idea,\nbut may be this list is more appropriated for this issue.\n\nThanks a lot\n\nmilton\n\n---------- Forwarded message ----------\nFrom: milton ruser <milton.ruser at gmail.com>\nDate: Sat, May 9, 2009 at 5:59 PM\nSubject: clump of binary pixels on raster\nTo: \"r-help at r-project.org\" <r-help at r-project.org>\n\n\nDear all,\n\nI have a set od 30,000 binary landscapes, which represent habitat and\nnon-habitat cover.\nI need to generate images that identify those neighbour (rule 8) pixels as\none patch ID,\nand a different patch ID for each clump of pixels. I coded it using\nlabcon(adehabitat),\nbut as some of my landscapes have so many patches, labcon not finish and\nentry in\na eternal looping. By other side, I coded another solution using R & grass\n(r.clump),\nbut the solution is so slow, and as I need to run it a lot of time, I will\nneed about 3 weeks\nto finish... I was thinking if raster package could do the job fastly than\nR-grass.\nBelow you can find a simulation of what I need. On the second image, each\ncolor\nhave different values.\n\nMyMatrix<-matrix(rep(0,100), ncol=10)\nMyMatrix[2:4,3:6]<-1\nMyMatrix[7:8,1:3]<-1\nMyMatrix[8,7:8]<-1\nMyMatrix[8,7:8]<-1\nMyMatrix[6:7,8:9]<-1\nx11(800,400)\npar(mfrow=c(1,2))\nimage(MyMatrix)\n\nMyClusters<-matrix(rep(0,100), ncol=10)\nMyClusters[2:4,3:6]<-1\nMyClusters[7:8,1:3]<-2\nMyClusters[8,7:8]<-3\nMyClusters[8,7:8]<-4\nMyClusters[6:7,8:9]<-4\nimage(MyClusters, col=c(\"transparent\", 1,3,4,5))\n\nRegards a lot,\n\nmilton\nbrazil=toronto.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nsorry for this double-posting, I know it is not a good idea,\nbut may be this list is more appropriated for this issue.\n\nThanks a lot\n\nmilton\n\n---------- Forwarded message ----------\nFrom: m",
       "thread_id": "thread-e9ff46eb70e6",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090510/d1840030/attachment.pl"
+      ]
     },
     {
       "id": "msg-6c8d8c571ac4",
@@ -1160,11 +1214,14 @@
       "references": [
         "<974C3AAC-D108-474A-84DC-D32AD94031E2@uni-rostock.de>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090511/669f54ef/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090511/669f54ef/attachment.pl>",
+      "body_plain": "Hi Gerald\n\nMay be elide function help the job.\n\nCheers\n\nmilton\n\nOn Mon, May 11, 2009 at 3:31 AM, Dr. Gerald Jurasinski <\ngerald.jurasinski at uni-rostock.de> wrote:\n\n> Dear List,\n>\n> There is a nice implementation to create hexagonal grids in the sp package\n> as an option to the spsample method. Many thanks to Edzer for this. In the\n> ASDAR book on page 137 it is written: \"Note that an alternative hexagonal\n> representation is obtained by rotating this grid 90°; we will not further\n> consider that here\". That's a pity because that is what I would like to do.\n> So can you give a  hint on how to obtain grid rotations? In general and\n> specifically for hexagonal grids (I guess it is the same)? And is it\n> possible to rotate the grid easily with whatever angle wanted? Maybe it\n> would be interesting to include the grid rotation as an example in the\n> spsample help?\n>\n> Thank you very much\n> Best regards\n> Gerald\n>\n> ——————————————————\n>\n> Dr. Gerald Jurasinski\n> Landscape Ecology and Site Evaluation\n> Institute for Management of Rural Areas\n> Faculty of Agricultural and Environmental Sciences\n> University of Rostock\n> Justus-von-Liebig-Weg 6\n> 18059 Rostock\n> Germany\n>\n> gerald.jurasinski at uni-rostock.de\n> http://www.auf.uni-rostock.de/loe\n> +49 381 4983225 (tel)\n> +49 381 4983222 (fax)\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Gerald\n\nMay be elide function help the job.\n\nCheers\n\nmilton\n\nOn Mon, May 11, 2009 at 3:31 AM, Dr. Gerald Jurasinski <\ngerald.jurasinski at uni-rostock.de> wrote:\n\n> Dear List,\n>\n> There is a nice i",
       "thread_id": "thread-f6c8ccbce85f",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090511/669f54ef/attachment.pl"
+      ]
     },
     {
       "id": "msg-f7024c5c1da1",
@@ -1293,11 +1350,14 @@
         "<3aaf1a030905101430x438c1008l33c01389b1347579@mail.gmail.com>",
         "<AFBF317E3DEC0B43BF750B4618EBFA0D01840E0F@HERMES>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090511/09681aeb/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090511/09681aeb/attachment.pl>",
+      "body_plain": "Dear Dylan and Jacob,\n\nIn fact I not wrote to GRASS list, because it is working grass, and as my\nimages are about 512x512, grass can deal with the r.clump without problem.\nBut it takes about 1min for each image (i have other steps not mentioned\nthat sum this 1min), and as I have about 30,000 images, it is so many time.\n\nLabcon/adehabitat is fast then r.clump/grass, but some times when images\nhave so many clumps, labcon() not finish the task, and not go to next image\n(it appears like a spiral processing, without end). So labcon, for this job,\nis not a good solution for me.\n\nI was thinking about raster package, but the discussed issued on the list\nnot give - apparently - a solution like that one I need (see the sample\ncode).\n\nBy the way, I am running Vista on a dell 6GB ram machine.\n\nAny other suggestion are welcome.\n\nmilton\nbrazil=toronto\n\nOn Sun, May 10, 2009 at 7:56 PM, van Etten, Jacob (IRRI) <\nJ.vanEtten at cgiar.org> wrote:\n\n> This seems to be a connected components problem, discussed recently on\n> this list.\n>\n> Jacob.\n>\n> -----Original Message-----\n> From: r-sig-geo-bounces at stat.math.ethz.ch\n> [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of milton ruser\n> Sent: Monday, May 11, 2009 5:30 AM\n> To: r-sig-geo at stat.math.ethz.ch\n> Subject: [R-sig-Geo] Fwd: clump of binary pixels on raster package\n>\n> Dear all,\n>\n> sorry for this double-posting, I know it is not a good idea,\n> but may be this list is more appropriated for this issue.\n>\n> Thanks a lot\n>\n> milton\n>\n> ---------- Forwarded message ----------\n> From: milton ruser <milton.ruser at gmail.com>\n> Date: Sat, May 9, 2009 at 5:59 PM\n> Subject: clump of binary pixels on raster\n> To: \"r-help at r-project.org\" <r-help at r-project.org>\n>\n>\n> Dear all,\n>\n> I have a set od 30,000 binary landscapes, which represent habitat and\n> non-habitat cover.\n> I need to generate images that identify those neighbour (rule 8) pixels\n> as\n> one patch ID,\n> and a different patch ID for each clump of pixels. I coded it using\n> labcon(adehabitat),\n> but as some of my landscapes have so many patches, labcon not finish and\n> entry in\n> a eternal looping. By other side, I coded another solution using R &\n> grass\n> (r.clump),\n> but the solution is so slow, and as I need to run it a lot of time, I\n> will\n> need about 3 weeks\n> to finish... I was thinking if raster package could do the job fastly\n> than\n> R-grass.\n> Below you can find a simulation of what I need. On the second image,\n> each\n> color\n> have different values.\n>\n> MyMatrix<-matrix(rep(0,100), ncol=10)\n> MyMatrix[2:4,3:6]<-1\n> MyMatrix[7:8,1:3]<-1\n> MyMatrix[8,7:8]<-1\n> MyMatrix[8,7:8]<-1\n> MyMatrix[6:7,8:9]<-1\n> x11(800,400)\n> par(mfrow=c(1,2))\n> image(MyMatrix)\n>\n> MyClusters<-matrix(rep(0,100), ncol=10)\n> MyClusters[2:4,3:6]<-1\n> MyClusters[7:8,1:3]<-2\n> MyClusters[8,7:8]<-3\n> MyClusters[8,7:8]<-4\n> MyClusters[6:7,8:9]<-4\n> image(MyClusters, col=c(\"transparent\", 1,3,4,5))\n>\n> Regards a lot,\n>\n> milton\n> brazil=toronto.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Dylan and Jacob,\n\nIn fact I not wrote to GRASS list, because it is working grass, and as my\nimages are about 512x512, grass can deal with the r.clump without problem.\nBut it takes about 1min for ",
       "thread_id": "thread-e9ff46eb70e6",
       "thread_depth": 2,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090511/09681aeb/attachment.pl"
+      ]
     },
     {
       "id": "msg-551634eb2a59",
@@ -1331,11 +1391,14 @@
         "<AFBF317E3DEC0B43BF750B4618EBFA0D01840E0F@HERMES>",
         "<3aaf1a030905111104x6eb7c06dl3f899c8ac1121a1@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090512/e8b8bfb3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090512/e8b8bfb3/attachment.pl>",
+      "body_plain": "Clumps (patches) from binary pixels\n\n \n\nThis is a solution using raster and igraph. \n\n \n\n(It seems that a raster only solution is underway.) \n\n \n\n=========================\n\n \n\ninstall.packages(\"raster\",repos=\"r-forge.r-project.org\")\n\n \n\nrequire(raster)\n\nrequire(igraph)\n\n \n\n#New function to make clumps, MM is a Raster object\n\n \n\nclumps <- function(MM)\n\n{\n\n            adj <-\nadjacency(MM,which(values(MM)==1),which(values(MM)==1),directions=8)\n\n            adjv <- as.vector(t(adj))\n\n            g <- graph(adjv, directed=FALSE)\n\n            cl <- clusters(g)\n\n            memb <- cbind(0:(length(cl$membership)-1),cl$membership)\n\n            memb <- memb[memb[,2] %in% (which(cl$csize>1)-1),]\n\n            MC <- raster(MM)\n\n            MC[memb[,1]] <- memb[,2]\n\n            return(MC)\n\n}\n\n \n\n#Your example\n\n \n\nMyMatrix<-matrix(rep(0,100), ncol=10)\n\nMyMatrix[2:4,3:6]<-1\n\nMyMatrix[7:8,1:3]<-1\n\nMyMatrix[8,7:8]<-1\n\nMyMatrix[8,7:8]<-1\n\nMyMatrix[6:7,8:9]<-1\n\n \n\n# Make a raster from the matrix\n\nMM <- raster(MyMatrix)\n\n \n\n# Make a raster with clumps\n\nMC <- clumps(MM)\n\n \n\n#Make a matrix from it again\n\nMyClusters <- matrix(values(MC),nrow=10,ncol=10)\n\nimage(MyClusters)\n\n \n\n#Time evaluation with 100 500x500 rasters with random values (0,1)\n\neval <- function()\n\n{\n\nfor(i in 1:100)\n\n{\n\nr1 <- raster(proj=\"\",nrows=500,ncols=500)\n\nr1[] <- sample(c(0,1), ncell(r1), replace=T)\n\nclumps(r1)\n\n}\n\n}\n\n \n\nsystem.time(eval())\n\n \n\n====================================\n\n \n\nMy computer did this:\n\n \n\n   user  system elapsed \n\n117.42        9.89  127.66 \n\n \n\nThis does not seem to run into problems. I have not compared with the\nalternatives, but would be interested to know.\n\n \n\nJacob van Etten\n\n________________________________\n\nFrom: milton ruser [mailto:milton.ruser at gmail.com] \nSent: Tuesday, May 12, 2009 2:04 AM\nTo: van Etten, Jacob (IRRI)\nCc: r-sig-geo at stat.math.ethz.ch\nSubject: Re: [R-sig-Geo] Fwd: clump of binary pixels on raster package\n\n\n\nDear Dylan and Jacob,\n\n\n\nIn fact I not wrote to GRASS list, because it is working grass, and as\nmy images are about 512x512, grass can deal with the r.clump without\nproblem. But it takes about 1min for each image (i have other steps not\nmentioned that sum this 1min), and as I have about 30,000 images, it is\nso many time.\n\n\n\nLabcon/adehabitat is fast then r.clump/grass, but some times when images\nhave so many clumps, labcon() not finish the task, and not go to next\nimage (it appears like a spiral processing, without end). So labcon, for\nthis job, is not a good solution for me.\n\n\n\nI was thinking about raster package, but the discussed issued on the\nlist not give - apparently - a solution like that one I need (see the\nsample code).\n\n\n\nBy the way, I am running Vista on a dell 6GB ram machine.\n\n\n\nAny other suggestion are welcome.\n\n\n\nmilton\n\nbrazil=toronto\n\nOn Sun, May 10, 2009 at 7:56 PM, van Etten, Jacob (IRRI)\n<J.vanEtten at cgiar.org> wrote:\n\nThis seems to be a connected components problem, discussed recently on\nthis list.\n\nJacob.\n\n\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch\n[mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of milton ruser\nSent: Monday, May 11, 2009 5:30 AM\nTo: r-sig-geo at stat.math.ethz.ch\nSubject: [R-sig-Geo] Fwd: clump of binary pixels on raster package\n\nDear all,\n\nsorry for this double-posting, I know it is not a good idea,\nbut may be this list is more appropriated for this issue.\n\nThanks a lot\n\nmilton\n\n---------- Forwarded message ----------\nFrom: milton ruser <milton.ruser at gmail.com>\nDate: Sat, May 9, 2009 at 5:59 PM\nSubject: clump of binary pixels on raster\nTo: \"r-help at r-project.org\" <r-help at r-project.org>\n\n\nDear all,\n\nI have a set od 30,000 binary landscapes, which represent habitat and\nnon-habitat cover.\nI need to generate images that identify those neighbour (rule 8) pixels\nas\none patch ID,\nand a different patch ID for each clump of pixels. I coded it using\nlabcon(adehabitat),\nbut as some of my landscapes have so many patches, labcon not finish and\nentry in\na eternal looping. By other side, I coded another solution using R &\ngrass\n(r.clump),\nbut the solution is so slow, and as I need to run it a lot of time, I\nwill\nneed about 3 weeks\nto finish... I was thinking if raster package could do the job fastly\nthan\nR-grass.\nBelow you can find a simulation of what I need. On the second image,\neach\ncolor\nhave different values.\n\nMyMatrix<-matrix(rep(0,100), ncol=10)\nMyMatrix[2:4,3:6]<-1\nMyMatrix[7:8,1:3]<-1\nMyMatrix[8,7:8]<-1\nMyMatrix[8,7:8]<-1\nMyMatrix[6:7,8:9]<-1\nx11(800,400)\npar(mfrow=c(1,2))\nimage(MyMatrix)\n\nMyClusters<-matrix(rep(0,100), ncol=10)\nMyClusters[2:4,3:6]<-1\nMyClusters[7:8,1:3]<-2\nMyClusters[8,7:8]<-3\nMyClusters[8,7:8]<-4\nMyClusters[6:7,8:9]<-4\nimage(MyClusters, col=c(\"transparent\", 1,3,4,5))\n\nRegards a lot,\n\nmilton\nbrazil=toronto.\n\n       [[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Clumps (patches) from binary pixels\n\n \n\nThis is a solution using raster and igraph. \n\n \n\n(It seems that a raster only solution is underway.) \n\n \n\n=========================\n\n \n\ninstall.packages(\"raster",
       "thread_id": "thread-e9ff46eb70e6",
       "thread_depth": 3,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090512/e8b8bfb3/attachment.pl"
+      ]
     },
     {
       "id": "msg-a9711c821e82",
@@ -1495,11 +1558,14 @@
       "subject_clean": "Constraining movements in adehabitat",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090513/c0490c7b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090513/c0490c7b/attachment.pl>",
+      "body_plain": "Dear List,\n\nI am using the package adehabitat to analyze the movement patterns and home range of the manta ray (Manta birostris) in Hawaii.  The manta rays in this study stayed close to shore, often feeding along the shore line or in small bays.  Since they can not go on land (being fish) their home range is obviously limited to the ocean area.  In calculating home range statistics, is there a way to limit the avalible area to the ocean.  I have read through the papers on Adehabitat but have not found a way to limit the area. The closest I have found is the function buffer().  Have I missed something?  Is there a way to constrain the movements so that kernels will only be computed for data points located in the ocean?\n\nI appreciate your help and guidence.\n\nTim Clark\nPhD Student \nUniversity of Hawaii\nHonolulu, HI 96816\n\n\n\n      \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear List,\n\nI am using the package adehabitat to analyze the movement patterns and home range of the manta ray (Manta birostris) in Hawaii.  The manta rays in this study stayed close to shore, often f",
       "thread_id": "thread-68508f7a4bbd",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090513/c0490c7b/attachment.pl"
+      ]
     },
     {
       "id": "msg-9eeede1ee093",
@@ -1719,11 +1785,14 @@
       "subject_clean": "Moran's I : list of neighbour and generating residual maps.",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090513/77898ed2/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090513/77898ed2/attachment.pl>",
+      "body_plain": "Dear GeoR Gurus,\n\nI have some raster maps, with continuous values, and I would like\nto (1) calculate Local Moran's I ;  (2) generate a residual map considering\ndifferent lags. I am trying to follow the Bivand and colleague's book,\nbut I don't know how to generate the neighbour list for each lag.\n\nOn the page 268 of book one can find a example of how to\nplot the moran I index like moran.plot(NY8$Cases, listw=nb2listw (NY_b,\nstyle=\"C\")).\n\nOn the code I read a raster map, vectorize it (each pixel is one polygon),\nand\nthe pixel value are stored as attribute for the polygon.\n\nSo, if somebody can help to solve the TWO questions listed above\nI would be very thanks.\n\nCheers\n\nmilton\n====\nrequire(rgdal)\nrequire(adehabitat)\n(file1 <-  paste(system.file(package = \"adehabitat\"),\n               \"ascfiles/elevation.asc\", sep = \"/\"))\nel <- readGDAL(file1)\nimage(el, axes=T)\nel.pix <- as(el, \"SpatialPixelsDataFrame\")\nel.pol <- as.SpatialPolygons.SpatialPixels(el.pix)\nstr(el.pol, max.level=2)\nel.pol at polygons[[1]]\nplot(el.pol)\n\nrn <- sapply(slot(el.pol, \"polygons\"), function(x) slot(x, \"ID\"))\ndf <- data.frame(rn=rn, row.names=rn)\n\nel.pol.spdf<-SpatialPolygonsDataFrame(el.pol, data=df)\nel.pol.spdf at data$pixvalue<-overlay(el<el.pol.spdf at data$pixvalue%3C-overlay(el>,\nel.pix)@data[,1]\nimage(el, axes=T)\nplot(el.pol, add=T)\nhead(el.pol.spdf at data)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear GeoR Gurus,\n\nI have some raster maps, with continuous values, and I would like\nto (1) calculate Local Moran's I ;  (2) generate a residual map considering\ndifferent lags. I am trying to follow th",
       "thread_id": "thread-344183475b15",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090513/77898ed2/attachment.pl"
+      ]
     },
     {
       "id": "msg-421fa6db0400",
@@ -1840,11 +1909,14 @@
       "references": [
         "<3aaf1a030905131555n48be1f1g1b1e2329b5e4c31a@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090514/7f63e2a9/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090514/7f63e2a9/attachment.pl>",
+      "body_plain": "Dear all,\n\nSorry for I forward this message to the list, but I got one error during\nyesterday when send it, and I am not sorry if it worked fine.\n\nBests\n\nmilton\n\n---------- Forwarded message ----------\nFrom: milton ruser <milton.ruser at gmail.com>\nDate: Wed, May 13, 2009 at 6:55 PM\nSubject: Moran's I : list of neighbour and generating residual maps.\nTo: r-sig-geo at stat.math.ethz.ch\n\n\nDear GeoR Gurus,\n\nI have some raster maps, with continuous values, and I would like\nto (1) calculate Local Moran's I ;  (2) generate a residual map considering\ndifferent lags. I am trying to follow the Bivand and colleague's book,\nbut I don't know how to generate the neighbour list for each lag.\n\nOn the page 268 of book one can find a example of how to\nplot the moran I index like moran.plot(NY8$Cases, listw=nb2listw (NY_b,\nstyle=\"C\")).\n\nOn the code I read a raster map, vectorize it (each pixel is one polygon),\nand\nthe pixel value are stored as attribute for the polygon.\n\nSo, if somebody can help to solve the TWO questions listed above\nI would be very thanks.\n\nCheers\n\nmilton\n====\nrequire(rgdal)\nrequire(adehabitat)\n(file1 <-  paste(system.file(package = \"adehabitat\"),\n               \"ascfiles/elevation.asc\", sep = \"/\"))\nel <- readGDAL(file1)\nimage(el, axes=T)\nel.pix <- as(el, \"SpatialPixelsDataFrame\")\nel.pol <- as.SpatialPolygons.SpatialPixels(el.pix)\nstr(el.pol, max.level=2)\nel.pol at polygons[[1]]\nplot(el.pol)\n\nrn <- sapply(slot(el.pol, \"polygons\"), function(x) slot(x, \"ID\"))\ndf <- data.frame(rn=rn, row.names=rn)\n\nel.pol.spdf<-SpatialPolygonsDataFrame(el.pol, data=df)\nel.pol.spdf at data$pixvalue<-overlay(el<el.pol.spdf at data$pixvalue%3C-overlay(el>,\nel.pix)@data[,1]\nimage(el, axes=T)\nplot(el.pol, add=T)\nhead(el.pol.spdf at data)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nSorry for I forward this message to the list, but I got one error during\nyesterday when send it, and I am not sorry if it worked fine.\n\nBests\n\nmilton\n\n---------- Forwarded message ---------",
       "thread_id": "thread-344183475b15",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090514/7f63e2a9/attachment.pl"
+      ]
     },
     {
       "id": "msg-1339422c82f1",
@@ -2010,11 +2082,14 @@
       "subject_clean": "Raster package, projectRaster() filetype issue",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090519/e2cc3c7e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090519/e2cc3c7e/attachment.pl>",
+      "body_plain": "I'm using the raster package version 0.8.9-17 on R2.9.0. While using the\nfunction projectRaster I'm projecting my data and need to output a new ESRI\ngrid (.asc).  The following code I think should do the job, but it is\nwriting two different files (.grd and .gri) instead of the .asc I need.  Is\nthis a bug?\n\nasc.in.dir<-\"C:\\\\..\\\\raster.directory\"\nasc.out.dir<-\"C:\\\\...\\\\raster.directory\\\\UTMprojected\"\nasc.in.files<-dir(asc.in.dir, pattern='.asc$')\nr<-raster(paste(asc.in.dir, \"\\\\\", asc.in.files[i], sep=\"\"))\nr[]<-1:ncell(r)\nprojection(r) <- \"+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0\"\nnewproj <- \"+proj=sinu\"\nprojext <- projectExtent(object=r, projs=newproj)\nprojras <- projectRaster(from=r, to=projext, method=\"ngb\", filetype=\"ascii\",\n\n  filename=paste(asc.out.dir, \"\\\\UTM <file://utm/>\", asc.in.files[i],\nsep=\"\"))\n\nTim\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I'm using the raster package version 0.8.9-17 on R2.9.0. While using the\nfunction projectRaster I'm projecting my data and need to output a new ESRI\ngrid (.asc).  The following code I think should do ",
       "thread_id": "thread-8708c065efbd",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090519/e2cc3c7e/attachment.pl"
+      ]
     },
     {
       "id": "msg-3f2016475e48",
@@ -2062,11 +2137,14 @@
       "subject_clean": "subsetting SpatialGridDataFrame",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090518/76dae7b0/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090518/76dae7b0/attachment.pl>",
+      "body_plain": "Dear all,\n\nI have a SpatialGridDataFrame which I read from grass\n   myrast<-readRAST6(\"DRENVAL\")\n\nNow I attrib a sequential number for each pixel with:\n    myrast @ data[[1]]<-1:dim(myrast @ data)[1]\n\nNow I need to select record by record, from 1 to N, get the bbox()\nfrom each record, set the g.region and compute somethings\nfor the region of each pixel.\n\nBut my problem relies on subset each of object. I tryed something like:\n\nfor (i in 1:dim(myrast @ data)[1]) {\n myrast.pixel<-subset(myrast, myrast @ data$DRENVAL==i)\n OR\n myrast.pixel<-myrast[myrast @ data$DRENVAL==i,]\n ...my processing\n }\nBut I don't know how subset the SGDF. Sorry for not provide a reproducible\nexample.\n\nBests,\n\nmilton\n> sessionInfo()\nR version 2.9.0 alpha (2009-03-26 r48224)\ni386-pc-mingw32\nlocale:\nLC_COLLATE=English_Canada.1252;LC_CTYPE=English_Canada.1252;LC_MONETARY=English_Canada.1252;LC_NUMERIC=C;LC_TIME=English_Canada.1252\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base\nother attached packages:\n[1] spgrass6_0.6-5   XML_2.3-0        rgdal_0.6-7      maptools_0.7-20\nsp_0.9-32\n[6] foreign_0.8-34   gpclib_1.4-3     adehabitat_1.8.2 ade4_1.4-10\nloaded via a namespace (and not attached):\n[1] grid_2.9.0      lattice_0.17-20\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nI have a SpatialGridDataFrame which I read from grass\n   myrast<-readRAST6(\"DRENVAL\")\n\nNow I attrib a sequential number for each pixel with:\n    myrast @ data[[1]]<-1:dim(myrast @ data)[1]\n",
       "thread_id": "thread-3410fcb6ced9",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090518/76dae7b0/attachment.pl"
+      ]
     },
     {
       "id": "msg-568b18bb6dd9",
@@ -2144,11 +2222,14 @@
       "subject_clean": "convert owin object to SpatialPolygons object (write buffered MCP to shapefile)",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090519/05dbb4ac/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090519/05dbb4ac/attachment.pl>",
+      "body_plain": "I know R is not meant to do all things a GIS would do but is there no simple\nway to create a buffer around a spatial object?\n\nI'd like to create a buffered minimum convex polygon around a set of points\nand write the buffered polygon to a shapefile.  I have two columns, x and y,\nfor the geographic locations.  I can use convexhull.xy in spatstat to create\nthe MCP as an owin, then use dilate.owin to enlarge the window, but how can\nI now convert the owin (or im) object into a SpatialPolygons object in order\nto write it to a shapefile?  Most things seem possible when converting to\nspatstat from sp objects but the other way around does not seem to hold....\n\nThe other option is potentially to use mcp in adehabitat, but then how do I\nconvert an area object into a Spatial object?  I want the SpatialPolygon in\nshapefile format, not a dxf file of the areas....\n\nTyler\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I know R is not meant to do all things a GIS would do but is there no simple\nway to create a buffer around a spatial object?\n\nI'd like to create a buffered minimum convex polygon around a set of point",
       "thread_id": "thread-a033d3423574",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090519/05dbb4ac/attachment.pl"
+      ]
     },
     {
       "id": "msg-e6e1de8ba98b",
@@ -2333,11 +2414,14 @@
       "references": [
         "<9fb1ae890905191147y6655ffdcub08c967606416a4a@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090520/473c84cd/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090520/473c84cd/attachment.pl>",
+      "body_plain": "This seems to work, at least until the polygonal owin object is created...\nhere<-convexhull.xy(vertices(dilate.owin(convexhull.xy(mydata),0.2)))\n\nHowever the conversion to a Spatial Polygons object does not seem to work\n(using spatstat 1.15-3 and maptools 0.7-22):\n> as(here, \"SpatialPolygons\")\n*Error in as(here, \"SpatialPolygons\") :\n  no method or default for coercing \"owin\" to \"SpatialPolygons\"*\n\nTyler\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "This seems to work, at least until the polygonal owin object is created...\nhere<-convexhull.xy(vertices(dilate.owin(convexhull.xy(mydata),0.2)))\n\nHowever the conversion to a Spatial Polygons object do",
       "thread_id": "thread-a033d3423574",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090520/473c84cd/attachment.pl"
+      ]
     },
     {
       "id": "msg-bdb924b1ad18",
@@ -2439,11 +2523,14 @@
       "subject_clean": "Interpolation of data",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090521/f15e7719/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090521/f15e7719/attachment.pl>",
+      "body_plain": "Hi all,\n\nI currently have a global data set at 1 degree resolution that I wish to convert to 0.5 degrees. The data is in the form of a table of 3 columns: 'Latitude', 'Longitude' and 'Value'. I was wondering what is the best way to interpolate the data to make my resolution finer?\n\nI'm very new to R and so any help will be much appreciated!\n\nMany thanks,\n\nAndy\n\n_________________________________________________________________\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all,\n\nI currently have a global data set at 1 degree resolution that I wish to convert to 0.5 degrees. The data is in the form of a table of 3 columns: 'Latitude', 'Longitude' and 'Value'. I was wo",
       "thread_id": "thread-a60bb1f0d610",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090521/f15e7719/attachment.pl"
+      ]
     },
     {
       "id": "msg-7aaffce32633",
@@ -2455,11 +2542,14 @@
       "subject_clean": "Finding the county shapefile polygon closest to a long-lat position",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090521/2946d74f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090521/2946d74f/attachment.pl>",
+      "body_plain": "Greetings\nI have a large number of long-lat locations dispersed over the  US and need \n \nto identify which US county that each point is located in  (or nearest to). \n  \nAfter reading the past posts  and Roger's book, I have been able to use the \noverlay function  \nto  identify the appropriate counties for the set of  locations \nwith  long-lats lying within or on a polygon boundary.   However, due to  \nlonglat precision errors (I am assuming), some of the  points lie  outside \nall of \nmy shapefile's county polygon  boundaries.   \n\nIs there an R function similar to \"overlay\" that I could use to find  which \n \ncounty polygon is closest to each of my longlat points that do  not lie  \nwithin the shapefile's polygons?  I have spent quite a  bit of time  \nsearching \nand browsing past list discussions and can seem  to find my  answer.\n\nMy apologies if I have missed an obvious  answer.\n\nJoe          \n\n\n**************Huge savings on HDTVs from Dell.com! \n(http://pr.atwola.com/promoclk/100126575x1221836042x1201399880/aol?redir=http:%2F%2Fad.doubleclick.ne\nt%2Fclk%3B215073686%3B37034322%3Bb)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Greetings\nI have a large number of long-lat locations dispersed over the  US and need \n \nto identify which US county that each point is located in  (or nearest to). \n  \nAfter reading the past posts  a",
       "thread_id": "thread-7aaffce32633",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090521/2946d74f/attachment.pl"
+      ]
     },
     {
       "id": "msg-0dcb59bfa9f8",
@@ -2473,11 +2563,14 @@
       "references": [
         "<bf6.2eb3ce0e.374701fa@aol.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090521/ff3c7763/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090521/ff3c7763/attachment.pl>",
+      "body_plain": "Dear Joe,\nMaybe you could use a similar process that Marcelino suggested to me yesterday in order to compute the shortest distance from points to a polyline.\nYou need to 1)convert your point data to ppp object in spatstat, 2)coerce your polygon data to a psp object in spatstat.\n3)nncross between the two.\nYou'll get \"dist\" - the nearest neighbour distance between the two patterns and \"which\" the nearest neighbour index of the second pattern.\nMaybe it won't be so straightforward to know which ids of the coerced polyline correspond to each polygon but I am not sure about this point.\nBest regards,\nPilar\n\n\n-----Mensaje original-----\nDe: r-sig-geo-bounces at stat.math.ethz.ch en nombre de BRWIN338 at aol.com\nEnviado el: jue 21/05/2009 21:14\nPara: r-sig-geo at stat.math.ethz.ch\nAsunto: [R-sig-Geo] Finding the county shapefile polygon closest to along-lat position\n \nGreetings\nI have a large number of long-lat locations dispersed over the  US and need \n \nto identify which US county that each point is located in  (or nearest to). \n  \nAfter reading the past posts  and Roger's book, I have been able to use the \noverlay function  \nto  identify the appropriate counties for the set of  locations \nwith  long-lats lying within or on a polygon boundary.   However, due to  \nlonglat precision errors (I am assuming), some of the  points lie  outside \nall of \nmy shapefile's county polygon  boundaries.   \n\nIs there an R function similar to \"overlay\" that I could use to find  which \n \ncounty polygon is closest to each of my longlat points that do  not lie  \nwithin the shapefile's polygons?  I have spent quite a  bit of time  \nsearching \nand browsing past list discussions and can seem  to find my  answer.\n\nMy apologies if I have missed an obvious  answer.\n\nJoe          \n\n\n**************Huge savings on HDTVs from Dell.com! \n(http://pr.atwola.com/promoclk/100126575x1221836042x1201399880/aol?redir=http:%2F%2Fad.doubleclick.ne\nt%2Fclk%3B215073686%3B37034322%3Bb)\n\n\t[[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\nLa información contenida en este e-mail y sus ficheros adjuntos es totalmente confidencial y no debería ser usado si no fuera usted alguno de los destinatarios. Si ha recibido este e-mail por error, por favor avise al remitente y bórrelo de su buzón o de cualquier otro medio de almacenamiento.   This email is confidential and should not be used by anyone who is not the original intended  recipient. If you have received this e-mail in  error please inform the sender and delete it from  your mailbox or any other storage mechanism.\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Joe,\nMaybe you could use a similar process that Marcelino suggested to me yesterday in order to compute the shortest distance from points to a polyline.\nYou need to 1)convert your point data to p",
       "thread_id": "thread-7aaffce32633",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090521/ff3c7763/attachment.pl"
+      ]
     },
     {
       "id": "msg-abb3de31c354",
@@ -2580,11 +2673,14 @@
       "references": [
         "<mailman.13.1242986402.30725.r-sig-geo@stat.math.ethz.ch>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090523/677d23ff/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090523/677d23ff/attachment.pl>",
+      "body_plain": "Dear Anne,\nThanks for the enquiry. I think we should have done this long before. I\nhavent done any geostatistics with GRASS but I did alot in ArcGIS and also\nin R (variography). I have to tell you that ArcGIS is for those who want to\nhave a surface only by just clicking on \"finish\" button trought its\npowerfull interface. That is, it does not provide a good scientific\nbackgroud for you to check the procedure. for example how it fitted the\nvariogram model or how exactly it does the \"validation\". That is why the\n\"Geostatistical package\" objects or classes are not available for the\nprogrammers to program with (there is a kriging in \"Spatial analyst\" package\nthough that its object is programmable and I personally did some with it.\nbut it lacks the variogram modeling). I think they are still working on it.\nIn short I dont recommend ArcGIS for the so called scientific kriging. In\nthe other hand R is very powerfull in that it gives you freedom to do your\nown style through coding. I worked with \"GeoR\" pakcage and it is pretty nice\nboth in terms of variography and kriging. There are other package like\n\"Gstat\" that I havent worked with but have good qualities. GeoR implements\nthe so called \"model based geostatistics\" which is the application of\nbayesian statististics to the geostistics I guess and it is quite new.\n\nI hope these comments were helpful and please let me know if you need any\nfurther explanation from me,\n\nEbrahim\n\n\n\n\nOn Fri, May 22, 2009 at 6:00 PM, <r-sig-geo-request at stat.math.ethz.ch>wrote:\n\n> Send R-sig-Geo mailing list submissions to\n>        r-sig-geo at stat.math.ethz.ch\n>\n> To subscribe or unsubscribe via the World Wide Web, visit\n>        https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> or, via email, send a message with subject or body 'help' to\n>        r-sig-geo-request at stat.math.ethz.ch\n>\n> You can reach the person managing the list at\n>        r-sig-geo-owner at stat.math.ethz.ch\n>\n> When replying, please edit your Subject line so it is more specific\n> than \"Re: Contents of R-sig-Geo digest...\"\n>\n>\n> Today's Topics:\n>\n>   1. [SoC] GRASS module for kriging - call for users (Anne Ghisla)\n>   2. Re: Comparing spatial distributions - permutation test\n>      implementation (JiHO)\n>   3. Interpolation of data (Andrew Aldersley)\n>   4. Finding the county shapefile polygon closest to a long-lat\n>      position (BRWIN338 at aol.com)\n>   5. Re: Finding the county shapefile polygon closest to       along-lat\n>      position (Pilar Tugores Ferra)\n>   6. Re: Finding the county shapefile polygon closest to a\n>      long-lat position (Paul Hiemstra)\n>   7. convert owin object to SpatialPolygons object (Adrian Baddeley)\n>   8. Re: Finding the county shapefile polygon closest to along-lat\n>      position (Roger Bivand)\n>\n>\n> ----------------------------------------------------------------------\n>\n> Message: 1\n> Date: Thu, 21 May 2009 12:14:31 +0200\n> From: Anne Ghisla <a.ghisla at studenti.uninsubria.it>\n> Subject: [R-sig-Geo] [SoC] GRASS module for kriging - call for users\n> To: r-sig-geo <r-sig-geo at stat.math.ethz.ch>,\n>        r-sig-ecology at r-project.org\n> Message-ID: <1242900871.4154.5.camel at galadriel.uagra.net>\n> Content-Type: text/plain; charset=\"us-ascii\"\n>\n> Hello list, and sorry for cross-posting,\n>\n> my Google Summer of Code project aims to provide a wxPython interface to\n> v.autokrige and to add functionality [0].\n> I would ask to people who perform kriging analyses (with GRASS, R or\n> ArcGIS)\n> what are the most common use cases, what they like and dislike in the\n> interfaces and functionalities provided by the software they use.\n>\n> After some feedback about this, I will prepare the interface and load it on\n> GRASS addons SVN repository [1] for comments.\n>\n> many thanks in advance,\n>\n> Anne Ghisla\n>\n> [0]\n>\n> http://socghop.appspot.com/student_project/show/google/gsoc2009/osgeo/t124023165994\n> [1] https://svn.osgeo.org/grass/grass-addons/vector/\n> --\n> Please consider the environment before printing this email\n> Please do not send attachments in proprietary formats\n> http://www.gnu.org/philosophy/no-word-attachments.html\n> Use the UNI CEI Standard ISO/IEC 26300:2006\n> -----------------------------------------------------------\n> O< stop html mail - http://www.asciiribbon.org\n> -------------- next part --------------\n> A non-text attachment was scrubbed...\n> Name: not available\n> Type: application/pgp-signature\n> Size: 197 bytes\n> Desc: Questa ? una parte del messaggio  firmata digitalmente\n> URL: <\n> https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090521/3a40811e/attachment-0001.bin\n> >\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Anne,\nThanks for the enquiry. I think we should have done this long before. I\nhavent done any geostatistics with GRASS but I did alot in ArcGIS and also\nin R (variography). I have to tell you tha",
       "thread_id": "thread-d03eb929cca6",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090523/677d23ff/attachment.pl"
+      ]
     },
     {
       "id": "msg-cdd29be23a9e",
@@ -2653,11 +2749,14 @@
       "subject_clean": "Constraining a linear regression model",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090523/fc3e6789/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090523/fc3e6789/attachment.pl>",
+      "body_plain": "Jean-Paul\nIf I understand your questions, imposing your restrictions on  the \npredicted values\nand on sums (or even using weighted sums where each  observation in the \n\"sum\" \ndoes not receive equal weight) of linear  combination of subsets of the \ncolumns of \nX is not difficult. Sets of the  resulting linear restrictions can be \neasily imposed and \ntested using the  \"car\" package.  Unless things have changed in the past \nyear, \nI believe  the only package that currently allows you to explicitly recover \nyour  \nparameter estimates is the 'systemfit' package that can also be used  to\nestimate a single equation.  I believe the author of \"systemfit\"  utilizes \nthe \naugmented Lagrangian matrix in obtaining the parameter  estimates.   \n \nAlternatively, I can send you an R function that uses generalized inverse  \nprojections\nto obtain solutions and test statistics while imposing linear  equality \nrestrictions \non a linear regression.  I have other code  that uses the projection \napproach to impose linear \nequality parameter  restrictions when estimating and testing nonlinear \n(i.e. logit-probit  type)\nmodels.   \n \nTo demonstate: \nLet w' be a weighted \"summing\" row vector. Note that if  each element in w \nis 1, you have the \nnormal summing operator. Let X denote  the data matrix and let bhat denote \nthe parameter vector.\nYour restriction on  the predicted values can then be written as:\n \nw' %*% (X %*% bhat) = c    or  (w' %*% X) bhat =  c  or  r' %*% bhat = c\n \nwhere r' = w' %*% X is your restriction's  row vector.  Again all  elements \nin w' can be 1 giving your summing restriction.\n \n\nWhat you wanted in the second part of your question was not as clear to  \nme.  If you \nare wanting to impose restrictions on reachable subspaces  of the column \nspace of X,\nthis can also be easily accomplished.\n \nFor example:  \n \nLet w(j) denote a vector of weights that apply to the j'th column in X.  \nAgain summing is a special\ncase where w(j) (or all w(j)'s) can be set to a  vector of ones. Let x(j) \ndenote \nthe j'th column in X and bhat(j) the  corresponding parameter estimate.  \nAssume that you \nwant to impose the  following restriction:\n \nw(1)' %*% [x(1)  bhat(1)]   +   w(2)' %*%  [x(2)  bhat(2)]  = c  \n \nor\n \n[w(1)' %*% x(1)] bhat(1)   +   [w(2)' %*% x(2)]   bhat(2)  = c  \n \n\nwhich can be written as an additional restriction\n \n(r(1) bhat(1) + r(2) bhat(2)) = c\n \nor\n \nr' %*% bhat = c\n \nThis can be easily extended to various type of restrictions or to  \nincorporate additional simultaneous restrictions assuming they  are consistent and \nyou have a sufficient number of variables in  your design matrix. If you have \nmultiple simultaneous restrictions, both the  'car' and 'systemfit' \npackages allow multiple restrictions.  \n \nIf this is not clear please let me know.\n \nHope this helps.\n \nJoe\n \n#################################################################\nIn reply to:\n>Hi All,\n\n>I have two questions:\n>\n>I am computing  a linear regression model with 0 as Intercept.\n>\n>Well, I would like  the sum of my predicted values be equal to a constant\n>and therefore  analyze if my coefficients are significatively different\n>using or not  this constraint.\n>\n>Does anyone know how I can constrain my model in  a such way?\n>\n>Here is the code:\n>\n>data<-read.table  (\"input.txt\", header=T, dec=\".\", sep=\"\\t\"); attach(data)\n>lm <-lm(pop ~  ag + sav + mf -1, data=data)\n>pred <-  predict(lm)\n>sum(pred)\n\n>So I want to constrain my sum (pred) to  be equal to C, with C=sum(pop)\n\n\n>\n>My second question is: is  it possible to make the same constraint BUT with\n>C as a vector of  values?\n\n>If I have 5 observations in 'data' (for simplification  reasons), with\n>'pop' as the first column. I want to compute the same  model as above with\n>a 'vector' of constraints. In that case, C=xi (with i  from 1 to 3)\n\n>x1 = sum (data[c(2:4), 1])\n>x2 = sum(data [c(1,3),  1])\n>x3 = data[5,1]\n\n\n>Thanks in advance -- Any help is  welcome!\n>\n>\n>Jean-Paul  Kibambe\n#############################################################\n\n\n**************A strong credit score is 700 or above. See Yours in Just 2 \nEasy Steps! \n(http://pr.atwola.com/promoclk/100126575x1222585033x1201462753/aol?redir=http://www.freecreditreport.com/pm/default.aspx?sc=668072&hmpgID=115&b\ncd=Maystrongfooter52309NO115)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Jean-Paul\nIf I understand your questions, imposing your restrictions on  the \npredicted values\nand on sums (or even using weighted sums where each  observation in the \n\"sum\" \ndoes not receive equal we",
       "thread_id": "thread-c79f82474f73",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090523/fc3e6789/attachment.pl"
+      ]
     },
     {
       "id": "msg-e479ef2ca11e",
@@ -2669,11 +2768,14 @@
       "subject_clean": "Finding the county shapefile polygon closest to along-lat pos...",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090523/4b707f90/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090523/4b707f90/attachment.pl>",
+      "body_plain": "Torleif\n \nThanks for replying to my post and for the code. I have been getting a  \nnumber of useful suggestions\nand am attempting to modify your code to address  my particular problem.  I \nwill be letting everyone know\nhow this comes  out.    \n \nHave a great week.\n \nJoe \n\n\n\n\n\nIn a message dated 5/22/2009 5:07:36 A.M. Mountain Daylight Time,  \ntorleif.lunde at cih.uib.no writes:\n\nHi  Joe\n\nLike Roger says you should first look at the possible datum  problem. The \nexample below shows one method to find the closest polygon,  and to add \nthat \nto the overlay. Notice however that if you change the  projection and/or \nellipsoid the closest points (end of lines) are  different. Closest line in \nthis case is calculated  by:\nabs((x2-x1)*(y1-y0)-(x1-x0)*(y2-y1))/sqrt(((x2-x1)^2+(y2-y1)^2))^2)\n\nwhere  x0, and y0 is the point, while x1, y1, and x2, y2 are the line ends.\n\nTo  find the two closest points, spDistsN1 is used. \n\nTry to play with  un-commenting polys <- spTransform(polys, CRS(\"+proj=moll \n \n+ellps=WGS84\"))\nand changing ll.logical=FALSE/TRUE (FALSE = Euclidean,  TRUE = Great Circle \ndistance)\n\nOne of the things you will see is  that the closest points are different \nwhen \nyou calculate the distance in  km (ll.logical=TRUE) combined with \nproj4string=CRS(\"+proj=moll  +ellps=WGS84\")\n\nI hope this gives some insight in the problem.  \n\nThe code can also be downloaded from  http://open.uib.no/R/mindist.R\n\nI do not guarantee the code is bug  free.\n\nYou could try to replace polys with your polygon, and ssample  with your \npoints, and see if it makes sense.\n\nBest  wishes\nTorleif\n\n\n\n\n\n**************A strong credit score is 700 or above. See Yours in Just 2 \nEasy Steps! \n(http://pr.atwola.com/promoclk/100126575x1222585033x1201462753/aol?redir=http://www.freecreditreport.com/pm/default.aspx?sc=668072&hmpgID=115&b\ncd=Maystrongfooter52309NO115)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Torleif\n \nThanks for replying to my post and for the code. I have been getting a  \nnumber of useful suggestions\nand am attempting to modify your code to address  my particular problem.  I \nwill be let",
       "thread_id": "thread-e479ef2ca11e",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090523/4b707f90/attachment.pl"
+      ]
     },
     {
       "id": "msg-c1464b8eff49",
@@ -2689,11 +2791,14 @@
         "<b0a6ce470905222031w4010f1feo1970e8bab178bae6@mail.gmail.com>",
         "<4A183995.7060606@studenti.uninsubria.it>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090524/9b672ff0/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090524/9b672ff0/attachment.pl>",
+      "body_plain": "Dear Ann,\nI think having a \"finish\" button is the ulitimate thing that all of us\nlooking for in a software!. Unfourtunately it is not possible. There are far\ntoo many issues regarding a good kriging operation that prevents you from\ntrusting a nice package like \"Geostatistical Analyst\" in ArcGIS. The\nevidence is that you cant find two geostatistical package that their resutl\nis the same (I know this is a big statement but I have seen this for a\ncouple of softwares!). I cant say the surface that is generated by ArcGIS is\nnot accurate but it bothers me to not know what happens beneath the program\nwhen it fits the variogram and calculates the matrices for kriging and more\nimportantly a \"routine\" that you mentioned will not work for all the data.\nSo personaly I will go for the chors of GeoR or Gstat instead of using the\nArcGIS. Though it is not complete and I have to admit that I have a lot of\nproblem adapting to it.\nEbrahim\n\nOn Sun, May 24, 2009 at 1:59 AM, Anne Ghisla Insubriae <\na.ghisla at studenti.uninsubria.it> wrote:\n\n> -----BEGIN PGP SIGNED MESSAGE-----\n> Hash: SHA1\n>\n> Ebrahim Jahanshiri a écrit:\n> > Dear Anne,\n>\n> Ebrahim,\n>\n> > Thanks for the enquiry. I think we should have done this long before. I\n> > havent done any geostatistics with GRASS but I did alot in ArcGIS and\n> also\n> > in R (variography). I have to tell you that ArcGIS is for those who want\n> to\n> > have a surface only by just clicking on \"finish\" button trought its\n> > powerfull interface. That is, it does not provide a good scientific\n> > backgroud for you to check the procedure. for example how it fitted the\n> > variogram model or how exactly it does the \"validation\". That is why the\n> > \"Geostatistical package\" objects or classes are not available for the\n> > programmers to program with (there is a kriging in \"Spatial analyst\"\n> package\n> > though that its object is programmable and I personally did some with it.\n> > but it lacks the variogram modeling). I think they are still working on\n> it.\n> > In short I dont recommend ArcGIS for the so called scientific kriging.\n>\n> I was afraid of this. Therefore I guess an interface with too many\n> mandatory options would be considered overcomplicated.\n> There should be as more options as needed for a flexible calculations,\n> and also proper defaults to clik on Ok and get an acceptable result.\n> What do you think about this solution?\n>\n> > In\n> > the other hand R is very powerfull in that it gives you freedom to do\n> your\n> > own style through coding. I worked with \"GeoR\" pakcage and it is pretty\n> nice\n> > both in terms of variography and kriging. There are other package like\n> > \"Gstat\" that I havent worked with but have good qualities. GeoR\n> implements\n> > the so called \"model based geostatistics\" which is the application of\n> > bayesian statististics to the geostistics I guess and it is quite new.\n>\n> I'm presently having a look at both geoR and gstat, and also the wrapper\n> package automap.\n> I guess that the first users of the new module would be already familiar\n> with R and GRASS, so their feedback about most used functions is very\n> important.\n>\n> > I hope these comments were helpful and please let me know if you need any\n> > further explanation from me,\n>\n> Very helpful, thank you very much!\n>\n> > Ebrahim\n> >\n> best regards,\n> Anne\n>\n> -----BEGIN PGP SIGNATURE-----\n> Version: GnuPG v1.4.9 (MingW32)\n> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org\n>\n> iEYEARECAAYFAkoYOZUACgkQrgxAvFOwDdgNjgCfZEFAIMpX5zeZ/OdraSfbqcRJ\n> G7oAnRwIUfGvmTgOj3GSspTN/Lht0UG7\n> =KTO6\n> -----END PGP SIGNATURE-----\n>\n\n\n\n-- \nEbrahim\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Ann,\nI think having a \"finish\" button is the ulitimate thing that all of us\nlooking for in a software!. Unfourtunately it is not possible. There are far\ntoo many issues regarding a good kriging o",
       "thread_id": "thread-d03eb929cca6",
       "thread_depth": 2,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090524/9b672ff0/attachment.pl"
+      ]
     },
     {
       "id": "msg-72fc85130701",
@@ -2788,11 +2893,14 @@
         "<b0a6ce470905232334v4d43db97o5904beae9130c911@mail.gmail.com>",
         "<4A1A75F9.2090804@uni-muenster.de>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090525/a724c0d6/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090525/a724c0d6/attachment.pl>",
+      "body_plain": "for kriging a preliminary analysis is important. We should know if the data\nhas trend or how are the ouliers? should we remove them or not. Some of the\nkriging techniques like universal kriging create very odd values at some\npoints if we dont deal with the data frist hand before kriging. I hope that\nwe can come up with the software that does all this by itselft ( some sort\nof decision maker like AI). I hope to see this kind of sotware pretty soon\nand I wish it be open source.\nAbout the issue of the result from any two geostatistical pakcage. I have\ntried the same datasets with some commercial softwares lilke ArcGIS, GS+ and\nGenstat.\n\nOn Mon, May 25, 2009 at 6:42 PM, Edzer Pebesma <\nedzer.pebesma at uni-muenster.de> wrote:\n\n> I believe that many interpolation problems \"out there\" are simple, and\n> can be solved using geostatistics with a \"finish\" or \"interpolate\"\n> button. A question I find interesting is whether this button should\n> always do its best, or should it be so clever to warn the user in case a\n> problem is not \"that simple\", and what the criteria are for this.\n>\n> Of course this SoC project is about an \"interpolate\" button using open\n> source software, so the user is always able to find out every detail\n> behind it. But will she or he actually do this in a non-simple case?\n>\n> As of your claim that no two geostatistical packages provide the same\n> result, as a more optimistic person I'd like to provide some\n> counter-evidence; please run:\n>\n> require(gstat)\n> require(geoR)\n> xyz = data.frame(x = c(0,0,1), y = c(0, 1, 1), z = c(1,2,3))\n> coordinates(xyz)=~x+y\n> x0 = SpatialPoints(data.frame(x=0,y=.5))\n> kr1 = krige(z~1,xyz,x0,vgm(1, \"Exp\", 1))\n> kr2 = krige.conv(as.geodata(xyz), locations=coordinates(x0),\n>        krige=list(cov.model=\"exponential\", cov.par=c(1,1)))\n> kr1\n> c(kr2$predict, kr2$krige.var)\n> kr1[[1]] - kr2$predict\n> kr1[[2]] - kr2$krige.var\n>\n> I'd be more than happy if someone could repeat this, or another example,\n> with ArcGIS or other software, of course.\n> --\n> Edzer\n>\n> Ebrahim Jahanshiri wrote:\n> > Dear Ann,\n> > I think having a \"finish\" button is the ulitimate thing that all of us\n> > looking for in a software!. Unfourtunately it is not possible. There are\n> far\n> > too many issues regarding a good kriging operation that prevents you from\n> > trusting a nice package like \"Geostatistical Analyst\" in ArcGIS. The\n> > evidence is that you cant find two geostatistical package that their\n> resutl\n> > is the same (I know this is a big statement but I have seen this for a\n> > couple of softwares!). I cant say the surface that is generated by ArcGIS\n> is\n> > not accurate but it bothers me to not know what happens beneath the\n> program\n> > when it fits the variogram and calculates the matrices for kriging and\n> more\n> > importantly a \"routine\" that you mentioned will not work for all the\n> data.\n> > So personaly I will go for the chors of GeoR or Gstat instead of using\n> the\n> > ArcGIS. Though it is not complete and I have to admit that I have a lot\n> of\n> > problem adapting to it.\n> > Ebrahim\n> >\n> > On Sun, May 24, 2009 at 1:59 AM, Anne Ghisla Insubriae <\n> > a.ghisla at studenti.uninsubria.it> wrote:\n> >\n> > Ebrahim Jahanshiri a écrit:\n> >>>> Dear Anne,\n> > Ebrahim,\n> >\n> >>>> Thanks for the enquiry. I think we should have done this long before.\n> I\n> >>>> havent done any geostatistics with GRASS but I did alot in ArcGIS and\n> > also\n> >>>> in R (variography). I have to tell you that ArcGIS is for those who\n> want\n> > to\n> >>>> have a surface only by just clicking on \"finish\" button trought its\n> >>>> powerfull interface. That is, it does not provide a good scientific\n> >>>> backgroud for you to check the procedure. for example how it fitted\n> the\n> >>>> variogram model or how exactly it does the \"validation\". That is why\n> the\n> >>>> \"Geostatistical package\" objects or classes are not available for the\n> >>>> programmers to program with (there is a kriging in \"Spatial analyst\"\n> > package\n> >>>> though that its object is programmable and I personally did some with\n> it.\n> >>>> but it lacks the variogram modeling). I think they are still working\n> on\n> > it.\n> >>>> In short I dont recommend ArcGIS for the so called scientific kriging.\n> > I was afraid of this. Therefore I guess an interface with too many\n> > mandatory options would be considered overcomplicated.\n> > There should be as more options as needed for a flexible calculations,\n> > and also proper defaults to clik on Ok and get an acceptable result.\n> > What do you think about this solution?\n> >\n> >>>> In\n> >>>> the other hand R is very powerfull in that it gives you freedom to do\n> > your\n> >>>> own style through coding. I worked with \"GeoR\" pakcage and it is\n> pretty\n> > nice\n> >>>> both in terms of variography and kriging. There are other package like\n> >>>> \"Gstat\" that I havent worked with but have good qualities. GeoR\n> > implements\n> >>>> the so called \"model based geostatistics\" which is the application of\n> >>>> bayesian statististics to the geostistics I guess and it is quite new.\n> > I'm presently having a look at both geoR and gstat, and also the wrapper\n> > package automap.\n> > I guess that the first users of the new module would be already familiar\n> > with R and GRASS, so their feedback about most used functions is very\n> > important.\n> >\n> >>>> I hope these comments were helpful and please let me know if you need\n> any\n> >>>> further explanation from me,\n> > Very helpful, thank you very much!\n> >\n> >>>> Ebrahim\n> >>>>\n> > best regards,\n> > Anne\n> >\n> >>\n>\n> > ------------------------------------------------------------------------\n>\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> --\n> Edzer Pebesma\n> Institute for Geoinformatics (ifgi), University of Münster\n> Weseler Straße 253, 48151 Münster, Germany. Phone: +49 251\n> 8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\n> http://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de\n>\n\n\n\n-- \nEbrahim\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "for kriging a preliminary analysis is important. We should know if the data\nhas trend or how are the ouliers? should we remove them or not. Some of the\nkriging techniques like universal kriging create",
       "thread_id": "thread-d03eb929cca6",
       "thread_depth": 4,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090525/a724c0d6/attachment.pl"
+      ]
     },
     {
       "id": "msg-85e75b71b2a8",
@@ -2966,11 +3074,14 @@
       "subject_clean": "spplot - polygons with colored borderlines",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090526/9bad7799/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090526/9bad7799/attachment.pl>",
+      "body_plain": "Hi Roger,\n\n thank you for your reply. After sending my email to R-sig-Geo I recognized \nthat you answered a similar question somedays ago.\n\n However, if I use col = \"transparent\" some of my polygons are only \"colored \ndots in the space\".\n\n Is there no posibility to get filled colored polygons and colored borders?\n\nThank you,\nIngo\n\n\nOn Tue, 26 May 2009, Ingo Holz wrote:\n\n> Hi,\n>\n> I am using function spplot (library sp) to plot polygons:\n>\n> spplot(SPDF, \"var\", col.regions=topo.colors(100))\n>\n> SPDF is a SpatialPolygonsDataFrame\n>\n> Some of my polygons are very small and you can not see the color of the\n> polygon (only the black borderlines).\n>\n> I could use\n>\n> spplot(as(SPDF, \"SpatialLinesDataFrame\"), \"variable1\",\n> col.regions=topo.colors(100))\n>\n> to get colored borderlines.\n>\n> Is there a possibility to get filled colored polygons with borderlines \n> in the same color?\n\nAlthough it isn't obvious, you use the col= argument passed through to \ngrid.polygon() used internally - see ?gpar after loading the gris package. \nYou'll find that col=\"transparent\" is OK:\n\nlibrary(rgdal)\nscot_BNG <- readOGR(system.file(\"vectors\", package = \"rgdal\")[1],\n   \"scot_BNG\")\nspplot(scot_BNG, \"SMR\")\nspplot(scot_BNG, \"SMR\", col=\"transparent\")\n\nHope this helps,\n\nRoger\n\n>\n> Thank you for your help.\n> Best wishes,\n> Ingo\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian \nSchool of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Roger,\n\n thank you for your reply. After sending my email to R-sig-Geo I recognized \nthat you answered a similar question somedays ago.\n\n However, if I use col = \"transparent\" some of my polygons a",
       "thread_id": "thread-95df84dd9e2d",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090526/9bad7799/attachment.pl"
+      ]
     },
     {
       "id": "msg-5e2bb579ddf1",
@@ -3116,11 +3227,14 @@
       "subject_clean": "nb object  for spatial weigths",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090527/59145c7c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090527/59145c7c/attachment.pl>",
+      "body_plain": "Hi everyone,\nI'm a total newbie in geo, so sorry if my question is basic.\n\nFollowing chp 9 and chp 10  from \"Applied Spatial Data Analysis with R\", \nI 've got confused on how to get  from coordinates to a nb-object, \nto get to spatial weights need for modeling.\nSeems that the example at pag.245 :\n\ncoords<- coordinates(Syracuse)\nIDs <- row.names(as(Syracuse, \"data.frame\"))\nlibrary(tripack)\nSy4_nb<- tri2nb(coords, row.names=IDs)\nSy5_nb<- graph2nb(soi.graph(Sy4_nb, coords), row.names=IDs)\nSy6_nb<- graph2nb(gabrielneigh(coords), row.names=IDs)\nSy7_nb<- graph2nb(relativeneigh(coords), row.names=IDs)\n\nin not working anymore, due to the fact that  tri2nd has\nbeen deprecated; so I tried instead \n\n\ntritest.tr <- tri.mesh(mydata$x,mydata$y)\ntritest.nb<- neighbours(tritest.tr)\nclass(tritest.nb)\n[1] \"list\"\n\nhow can I get tritest.tr to a nb object?\nOr there is another way ?\n\nDo I need necessarily a gal file? as I've seen in the examples.\nThanks \n\nAnna\n\n\n\n\n >sessionInfo()\nR version 2.9.0 Patched (2009-05-03 r48460) \ni686-pc-linux-gnu \n\nlocale:\nLC_CTYPE=en_US.UTF-8;LC_NUMERIC=C;LC_TIME=en_US.UTF-8;LC_COLLATE=en_US.UTF-8;LC_MONETARY=C;LC_MESSAGES=en_US.UTF-8;LC_PAPER=en_US.UTF-8;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=en_US.UTF-8;LC_IDENTIFICATION=C\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nother attached packages:\n [1] tripack_1.2-11  nlme_3.1-91     MASS_7.2-47     xtable_1.5-5   \n [5] lattice_0.17-25 sp_0.9-36       sqldf_0-1.4     gsubfn_0.3-8   \n [9]  proto_0.3-8     RSQLite_0.7-1   DBI_0.2-4       foreign_0.8-35 \n\nloaded via a namespace (and not attached):\n[1] grid_2.9.0  tcltk_2.9.0 tools_2.9.0\n\n\n\n\nAnna Freni Sterrantino\nPh.D Student \nDepartment of Statistics\nUniversity of Bologna, Italy\nvia Belle Arti 41, 40124 BO.\n\n\n\n      \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi everyone,\nI'm a total newbie in geo, so sorry if my question is basic.\n\nFollowing chp 9 and chp 10  from \"Applied Spatial Data Analysis with R\", \nI 've got confused on how to get  from coordinates ",
       "thread_id": "thread-978811c210bd",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090527/59145c7c/attachment.pl"
+      ]
     },
     {
       "id": "msg-8ea140eb7c5a",
@@ -3244,11 +3358,14 @@
       "subject_clean": "Problem with rand.kselect(adehabitat)",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090528/e1c70cb7/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090528/e1c70cb7/attachment.pl>",
+      "body_plain": "Hi Clement-\n\nI trying to run kselect analysis on radio tracking data to assess the\nimportance of different habitat variables.  I'm having trouble with two\ndifferent things in this process.\n\n1) I've subsampled some of my data, running the dudi.pca on different\nsubsamples.  One of the subsampled datasets is giving me the following\nerror:\n\n>d0<-dudi.pca(df=imputed.data0.0[,15:ncol(imputed.data0.0)],\nrow.w=usage0.0$usage, scannf=F, nf=2, scale=T, center=T)\nError in eigen(df, symmetric = TRUE) : infinite or missing values in 'x'\n\nHowever, when running the PCA on my other subsamples, I don't get an error.\n\n2) When running rand.kselect() on the 'good' subsamples that don't give an\nerror from dudi.pca step, I get a fatal error forcing R to shut down.\n\n3) When running kselect() on one of the successful dudi.pca subsamples, it\nseems fine with no apparent errors.\n\nCould there be a bug in the rand.kselect() function?  I've run a debugger on\nthe dudi.pca command, which leads me into the error mentioned above.\nThe error message in 1) regarding the eigen() function seems to be nested in\nthe dudi.pca() function.  I'm a bit bogged down with errors to debug\nand would be very grateful for your help.\n\nI'm using adehabitat v1.8.3 on R2.9.0.  I can provide the data I'm using if\nit is helpful.\n\nThanks and best regards,\n\nTim Sippel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Clement-\n\nI trying to run kselect analysis on radio tracking data to assess the\nimportance of different habitat variables.  I'm having trouble with two\ndifferent things in this process.\n\n1) I've su",
       "thread_id": "thread-77c29fde0862",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090528/e1c70cb7/attachment.pl"
+      ]
     },
     {
       "id": "msg-0183ce11ab29",
@@ -3262,11 +3379,14 @@
       "references": [
         "<79a13c220905272137k44ccc325q5f49fcfe8b45a8f4@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090528/e1702164/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090528/e1702164/attachment.pl>",
+      "body_plain": "Sorry...I meant to send this message below to Clement Calenge directly, but\nsent it to the whole r-sig-geo list mistakenly.\nOn Thu, May 28, 2009 at 4:37 PM, Tim Sippel <tsippel at gmail.com> wrote:\n\n> Hi Clement-\n>\n> I trying to run kselect analysis on radio tracking data to assess the\n> importance of different habitat variables.  I'm having trouble with two\n> different things in this process.\n>\n> 1) I've subsampled some of my data, running the dudi.pca on different\n> subsamples.  One of the subsampled datasets is giving me the following\n> error:\n>\n> >d0<-dudi.pca(df=imputed.data0.0[,15:ncol(imputed.data0.0)],\n> row.w=usage0.0$usage, scannf=F, nf=2, scale=T, center=T)\n> Error in eigen(df, symmetric = TRUE) : infinite or missing values in 'x'\n>\n> However, when running the PCA on my other subsamples, I don't get an error.\n>\n> 2) When running rand.kselect() on the 'good' subsamples that don't give an\n> error from dudi.pca step, I get a fatal error forcing R to shut down.\n>\n> 3) When running kselect() on one of the successful dudi.pca subsamples, it\n> seems fine with no apparent errors.\n>\n> Could there be a bug in the rand.kselect() function?  I've run a debugger\n> on the dudi.pca command, which leads me into the error mentioned above.\n> The error message in 1) regarding the eigen() function seems to be nested in\n> the dudi.pca() function.  I'm a bit bogged down with errors to debug\n> and would be very grateful for your help.\n>\n> I'm using adehabitat v1.8.3 on R2.9.0.  I can provide the data I'm using if\n> it is helpful.\n>\n> Thanks and best regards,\n>\n> Tim Sippel\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Sorry...I meant to send this message below to Clement Calenge directly, but\nsent it to the whole r-sig-geo list mistakenly.\nOn Thu, May 28, 2009 at 4:37 PM, Tim Sippel <tsippel at gmail.com> wrote:\n\n>",
       "thread_id": "thread-77c29fde0862",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090528/e1702164/attachment.pl"
+      ]
     },
     {
       "id": "msg-2618684d0196",
@@ -3359,11 +3479,14 @@
       "subject_clean": "Problems loading hydrosanity package",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090528/11c1c389/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090528/11c1c389/attachment.pl>",
+      "body_plain": "Good Morning:\n \nI need to construct a set of Thiessen Polygons centered around  \napproximately 4500 longlat positions in the US.  After searching the R  site, I was \ngoing to attempt to use the arealsubPolygons function in the  hydrosanity \npackage.  I am using a Windows system.  \n \nWhen attempting to call the package I get the following error messages  \nunder both R2.8.1 and R2.9.0.\n##################################################################\n> require(hydrosanity)\nLoading required package:  hydrosanity\nLoading required package: playwith\nLoading required package:  lattice\nLoading required package: cairoDevice\nError in inDL(x,  as.logical(local), as.logical(now), ...) : \nunable to load shared  library  \n'C:/PROGRA~1/R/R-28~1.1/library/cairoDevice/libs/cairoDevice.dll':\nLoadLibrary failure:  The specified module could not be found.\n \n\nError: package 'cairoDevice' could not be  loaded\n###################################################################\nI have tried downloading the package and it's dependencies from  several \nlocations and get the same errors each time.\n \nAny suggestions with respect to this package or others that I might  use to \nconstruct my polygons would be appreciated.  I need a set  of polygons that \ncover the entire US county polygon.  \n \nJoe \n**************Cooking Dinner For Two? Sign Up & Get Immediate Member-Only \nSavings. \n(http://pr.atwola.com/promoclk/100126575x1222652750x1201460983/aol?redir=http:%2F%2Fad.doubleclick.net%2Fclk%3B215225797%3B37274671%3Bq%3Fhttp:%2\nF%2Frecipes.cookingfor2.pillsbury.com%2F%3FESRC%3D934)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Good Morning:\n \nI need to construct a set of Thiessen Polygons centered around  \napproximately 4500 longlat positions in the US.  After searching the R  site, I was \ngoing to attempt to use the areals",
       "thread_id": "thread-478dccc8ceef",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090528/11c1c389/attachment.pl"
+      ]
     },
     {
       "id": "msg-32a8fbc9df09",
@@ -3503,11 +3626,14 @@
       "subject_clean": "Spatial regression",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090529/5c1b2874/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090529/5c1b2874/attachment.pl>",
+      "body_plain": "Hi everyone,\n\nIn R, the function lm.LMtests is used to select which spatial model fits\nbetter the data, an error or lag one. It looks to me that there are some\n“limitations” using this function like being constraint to use only\nrow-standardized spatial weights and it does not support weighted lm object\nas argument. Also it is not helpful when both LM tests (LMerr and LMlag) are\nsignificant (let’s say their robust forms are not).\n\nSo my question is: is there another way or approach to select between a\nspatial error and lag model?\n\n\n\nThanks for your time.\n\n\n\nAdrian\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi everyone,\n\nIn R, the function lm.LMtests is used to select which spatial model fits\nbetter the data, an error or lag one. It looks to me that there are some\n“limitations” using this function like b",
       "thread_id": "thread-b23b09b8883c",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20090529/5c1b2874/attachment.pl"
+      ]
     },
     {
       "id": "msg-de06a1ce62b6",

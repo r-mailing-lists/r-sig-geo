@@ -103,11 +103,14 @@
       "references": [
         "<459E0270020000F20001D99C@TMIA1.AUBURN.EDU>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070105/083aa628/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070105/083aa628/attachment.pl>",
+      "body_plain": "Jeffrey,\n\nJust look at:\n\nlibrary(maptools)\n?readAsciiGrid\n\nlibrary(rgdal)\n?readGDAL\n\nand try the examples. They read grid files direct and in both cases the \noutput is an object of class \"SpatialGridDataFrame\". This class is \neasily handled then with spsample() or overlay().\n\nI have transformed \"SpatialPolygonDataFrame\" into \"SpatialGridDataFrame\" \nsome months ago. If I remember right I managed clipping a SpatialGrid \n(at te resolution you want) onto a \"SpatialPolygonDataFrame\" with the \nfonction overlay(). Each pixel of the grid can be then linked to the \nattributes of the polygon it belongs to. Maybe Roger Bivand or Edzer \nPemesba can comment on that... it may be some other more straight way to \ndo it...\n\nHope this can help,\n\nPatrick\n\n\nJeffrey Stratford a écrit :\n> Patrick,\n>\n> Thanks very much for the reply.  I went through the maptools pdf and I\n> did not find where one can alter readShapePoly for a raster/grid file. \n> Do you have an example of importing an ESRI grid file(s).\n>\n> In ArcCatalog (using WindowsXP) the file is\n> C:\\Georgia\\GIS\\landcov_2\\landcov_2 (no extensions) and using explorer\n> there are seven .adf files and a xml file in the landcov_2 folder.  \n>\n> Thanks for your patience,\n>\n> Jeff\n>\n>   \n>>>> Patrick Giraudoux <patrick.giraudoux at univ-fcomte.fr> 01/05/07 6:01\n>>>>         \n> AM >>>\n> Jeffrey,\n>\n> You may want to have a look at the maptools and sp packages. maptools\n> has a readShapePoly() function which straightforward read polygon\n> shapefiles (equivalent exist for \"points\" , \"lines\", \"grid\", etc.), and\n> then you can use spsample() from the package sp.\n>\n> sp and maptools combined provide extremely powerful tools for reading,\n> handling (see eg the function overlay()) and writing shapefiles. The\n> package rgdal even permit (among many other things) conversion between\n> projections!!!\n>\n> To be somehow used to S4 objects may be an advantage since each object\n> once in R has a fixed structure organised with the concept of \"slots\"\n> whose avantage is to be completely transparent and whose drawback is a\n> relative level of complexity at first sight (but don't stay on this\n> impression: one can go through quite easy).\n>\n> Patrick\n>\n>\n>\n>   \n>> Date: Thu, 04 Jan 2007 20:49:06 -0600\n>> From: \"Jeffrey Stratford\" <stratja at auburn.edu>\n>> Subject: [R-sig-Geo] random samples of a grid\n>> To: <r-sig-geo at stat.math.ethz.ch>\n>> Message-ID: <459D6842020000F20001D91A at TMIA1.AUBURN.EDU>\n>> Content-Type: text/plain; charset=US-ASCII\n>>\n>> Hi,  is there a way to sample an ESRI grid using random sample points?\n>>     \n>\n>   \n>> In the past I used ESRI's spatial analyst but I would like to switch\n>>     \n> all\n>   \n>> my analyses to R if possible.  The grid is from the National Land\n>>     \n> Cover\n>   \n>> Dataset  (30m res, 7 landcover classes).  I had roadside points from\n>> which I extracted data such as % grassland, % pine, etc in buffers of\n>> 90, 210, and 990 m radii.  I would like to generate 200 random samples\n>> from the same map to compare the roadside points to random samples\n>>     \n> (and,\n>   \n>> hopefully, there are no differences).   Make sense?  Hope so. \n>>\n>> Thanks,\n>>\n>> Jeff\n>>\n>> ****************************************\n>> Jeffrey A. Stratford, Ph.D.\n>> Postdoctoral Associate\n>> 331 Funchess Hall\n>> Department of Biological Sciences\n>> Auburn University\n>> Auburn, AL 36849\n>> 334-329-9198\n>> FAX 334-844-9234\n>> http://www.auburn.edu/~stratja\n>>\n>>\n>>\n>> ------------------------------\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>\n>> End of R-sig-Geo Digest, Vol 41, Issue 2\n>> ****************************************\n>>\n>>\n>>\n>>   \n>>     \n>\n>\n>\n>\n>\n>\n>\n>   \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Jeffrey,\n\nJust look at:\n\nlibrary(maptools)\n?readAsciiGrid\n\nlibrary(rgdal)\n?readGDAL\n\nand try the examples. They read grid files direct and in both cases the \noutput is an object of class \"SpatialGridD",
       "thread_id": "thread-358cd41b544f",
       "thread_depth": 0,
-      "month": "2007-01"
+      "month": "2007-01",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070105/083aa628/attachment.pl"
+      ]
     },
     {
       "id": "msg-42c52dd47a27",
@@ -119,11 +122,14 @@
       "subject_clean": "where goes wrong with my programs on geoRglm package?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070108/66e5ab2f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070108/66e5ab2f/attachment.pl>",
+      "body_plain": "Dear friends,\n  I have learned to  use geoRglm package for some time, but met an urgent\nproblem which can't be solved by me.  I think it should be some wrong\nunderstanding on\nthe arguments in geoRglm package. Could anybody help me to correct the\nfollowing geoRglm programs?\n  My dataset includes 1 responsible and 6 explanatory varaibles, the\nfollowing are my programs:\n\na<-read.csv('d:/deleting/models.csv',header=T,sep=',')\n\ngeodata<-as.geodata(a,coords.col=c(9,8),data.col=11,covar.col=c(2,4:7,10),\nna.action=\"none\",borders=T) #data.col define the responsbile\nvar,covar.colspecify 6 explanatory varaibles\n\nmodel2<-list(trend=trend.spatial\n(~covariate[,1]+covariate[,2]+covariate[,3]+covariate[,4]+covariate[,5]+covariate[,6]),\ncov.pars=c(1,1,1,1,1,1),beta=58,family=\"poisson\") #covariate[,*]specify 6\nexplanatory varaibles\n\nmcmc2.test2<-mcmc.control(S.scale=0.5,thin=1)\ntest2.tune<-glsm.mcmc(geodata=geodata,model=model2,mcmc.input=mcmc2.test2)\n\nError is: glsm.mcmc(geodata = geodata, model = model2, mcmc.input =\nmcmc2.test2) :\n       *  size of beta is incompatible with trend specified\n*Maybe there are wrong specify both  in cov.pars=c(1,1,1,1,1,1) and beta=58\n(model2).\n I have try to use it to analyze my data for a long time, but failed.\n Any comments or help are greatly appreciate.\n\n\n\n-- \nWith Kind Regards,\n\noooO:::::::::\n(..):::::::::\n:\\.(:::Oooo::\n::\\_)::(..)::\n:::::::)./:::\n::::::(_/::::\n:::::::::::::\n[***********************************************************************]\nZhi Jie,Zhang ,PHD\nTel:86-21-54237149   epistat at gmail.com\nDept. of Epidemiology,school of public health,Fudan University\nAddress:No. 138 Yi Xue Yuan Road,Shanghai,China\nPostcode:200032\n[***********************************************************************]\noooO:::::::::\n(..):::::::::\n:\\.(:::Oooo::\n::\\_)::(..)::\n:::::::)./:::\n::::::(_/::::\n:::::::::::::\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear friends,\n  I have learned to  use geoRglm package for some time, but met an urgent\nproblem which can't be solved by me.  I think it should be some wrong\nunderstanding on\nthe arguments in geoRglm ",
       "thread_id": "thread-42c52dd47a27",
       "thread_depth": 0,
-      "month": "2007-01"
+      "month": "2007-01",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070108/66e5ab2f/attachment.pl"
+      ]
     },
     {
       "id": "msg-7853d4cced8b",
@@ -295,11 +301,14 @@
       "references": [
         "<45A5435B.8000309@nceas.ucsb.edu>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070110/d3051c43/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070110/d3051c43/attachment.pl>",
+      "body_plain": "Rick,\n\nLooks like GDAL supports HDF4/5 format so you should be able to read data\nusing rgdal. I've not tried it myself. Let me know what you find.\n\nCheers,\nTim\n\nOn 1/10/07, Rick Reeves <reeves at nceas.ucsb.edu> wrote:\n>\n>\n> Greetings:\n>\n> This week I am working with HDF format files containing ocean color\n> imagery (CZCS, SeaWIFS) secured from NASA GSFC,\n> and would like to bring the image maps into the R environment.\n>\n> One way I have done this is to use the SeaDAS software to extract a\n> 2-dim binary floating point matrix (from the HDF file)\n> and write it to disk, then use R pixmap() to read it in to a vector.\n> This works, but one loses all of the image attributes\n> contained in the HDF header. Now, it would be good to read the HDF file\n> directly into R, capturing the header attributes.\n>\n> I have tried the R HDF5 library routine hdf5load(), which seems to read\n> the new .hdf5 format\n> but NOT the older .hdf format (I tried, unsuccessfully)\n>\n> Question is: Has anyone developed a technique to read HDF files with R?\n>\n> Thanks in advance, Rick R\n>\n> --\n> Rick Reeves\n> Scientific Programmer / Analyst\n> National Center for Ecological Analysis and Synthesis\n> UC Santa Barbara\n> reeves at nceas.ucsb.edu\n> www.nceas.ucsb.edu\n> 805 892 2533\n>\n>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n>\n\n\n-- \nTimothy H. Keitt, University of Texas at Austin\nContact info and schedule at http://www.keittlab.org/tkeitt/\nReprints at http://www.keittlab.org/tkeitt/papers/\nODF attachment? See http://www.openoffice.org/\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Rick,\n\nLooks like GDAL supports HDF4/5 format so you should be able to read data\nusing rgdal. I've not tried it myself. Let me know what you find.\n\nCheers,\nTim\n\nOn 1/10/07, Rick Reeves <reeves at ncea",
       "thread_id": "thread-aa4fb5222197",
       "thread_depth": 1,
-      "month": "2007-01"
+      "month": "2007-01",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070110/d3051c43/attachment.pl"
+      ]
     },
     {
       "id": "msg-86f06aacb579",
@@ -449,11 +458,14 @@
       "references": [
         "<Pine.LNX.4.44.0701141812110.26000-100000@reclus.nhh.no>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070114/a823f06b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070114/a823f06b/attachment.pl>",
+      "body_plain": "Roger Bivand a écrit :\n> Patrick,\n>\n> On Sun, 14 Jan 2007, Patrick Giraudoux wrote:\n>\n>   \n>> Sorry to answer to myself. I have found a solution for the 2nd question: \n>> from R within windows the gps can be read with:\n>>\n>> shell(\"gpsbabel -w -i garmin -f com4: -o openoffice -F \\\"wpt.txt\\\"\")\n>>\n>>     \n>\n> Good.\n>\n>   \n>> The 1th question about reading the gps data directly to an R object \n>> unstead of a text file is still unanswered...\n>>\n>>     \n>\n> Since the files are not too large, would pasting an R temporary file into \n> the system call, and then reading from it be a fix?\nYes!!! Excellent idea...\n>  I've tried \"-\" as the \n> file name under Linux, and it does return the data to stdout (terminal \n> screen), but I haven't got any further because on RedHat EL 4 I can't see \n> how to use gpsbabel without being administrator (I've tried both the FC \n> tips on the gpsbabel website with no effect). system(intern=TRUE) should \n> grab that output:\n>\n> wps <- system(\"gpsbabel -w -i garmin -f usb: -o tabsep -F -\", intern=TRUE)\n> wps_df <- read.table(textConnection(wps), fill=TRUE)\n>\n> but there is a lot of unneeded information there. Could the xcsv format be \n> used with a suitable style?\n>   \nI will explore that next week-end. Not to be an administrator seems not \nto be a problem here with Ubuntu.\n\nAnyway using a temporary file may make it for sure if one cannot go \nthrough with writing straight into R\n\nThanks a lot for the hint anyway..\n\nBest wishes,\n\nPatrick\n\n> Best wishes,\n>\n> Roger\n>\n>\n>   \n>> Cheers,\n>>\n>> Patrick\n>>\n>>\n>>\n>> Patrick Giraudoux a écrit :\n>>     \n>>> Dear Listers,\n>>>\n>>> I am trying to write R fonctions to read data from a gps through \n>>> gpsbabel.\n>>>\n>>> Within linux I have tried this (read garmin gps and write a tab \n>>> delimited text file wp.txt) and it works well:\n>>>\n>>> system(\"gpsbabel -w -i garmin -o openoffice /dev/ttyUSB0 \n>>> /home/giraudoux/wp.txt\")\n>>>\n>>> I have two questions:\n>>>\n>>> 1/ I wonder whether it would be technically possible to open the \n>>> connexion directly to a R object (eg data.frame) rather than to write \n>>> a text file (here wp.txt) ?\n>>>\n>>> 2/ I wonder how to open a USB device/port within a windows XP \n>>> environment (linux equivalent of /dev/ttyUSB0).\n>>>\n>>> Thanks in advance for any hint...\n>>>\n>>> Patrick\n>>>\n>>>\n>>>\n>>>       \n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>     \n>\n>   \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Roger Bivand a écrit :\n> Patrick,\n>\n> On Sun, 14 Jan 2007, Patrick Giraudoux wrote:\n>\n>   \n>> Sorry to answer to myself. I have found a solution for the 2nd question: \n>> from R within windows the gps",
       "thread_id": "thread-560741b550e3",
       "thread_depth": 3,
-      "month": "2007-01"
+      "month": "2007-01",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070114/a823f06b/attachment.pl"
+      ]
     },
     {
       "id": "msg-0abad973b28d",
@@ -483,11 +495,14 @@
       "references": [
         "<Pine.LNX.4.44.0701142131200.26032-100000@reclus.nhh.no>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070114/229d8f44/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070114/229d8f44/attachment.pl>",
+      "body_plain": ">>>\n>>> wps <- system(\"gpsbabel -w -i garmin -f usb: -o tabsep -F -\", intern=TRUE)\n>>> wps_df <- read.table(textConnection(wps), fill=TRUE)\n>>>       \n>\n> If gpsbabel is on your Windows path, this should work on XP too, certainly \n> the command itself works in a console (for me, with a Garmin USB cable).\n>   \nJust tried right now...\n\nwps <- system(\"gpsbabel -w -i garmin -f com4: -o tabsep -F -\", intern=TRUE)\n\nYipiiiiiiiii ! Makes it perfect... Fantastic...\n>   \n>>> but there is a lot of unneeded information there. Could the xcsv format be \n>>> used with a suitable style?\n>>>       \nMaybe, but anyway the info is quite easy to sort out within R keeping \nrelevant columns only. One wants generally the waypoints ID, x, y and \nthe altitude...\n\nThanks a lot...\n\nPatrick\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": ">>>\n>>> wps <- system(\"gpsbabel -w -i garmin -f usb: -o tabsep -F -\", intern=TRUE)\n>>> wps_df <- read.table(textConnection(wps), fill=TRUE)\n>>>       \n>\n> If gpsbabel is on your Windows path, this sho",
       "thread_id": "thread-560741b550e3",
       "thread_depth": 5,
-      "month": "2007-01"
+      "month": "2007-01",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070114/229d8f44/attachment.pl"
+      ]
     },
     {
       "id": "msg-7edb04b76306",
@@ -907,11 +922,14 @@
       "subject_clean": "convUL to convert UTM in Lat/Long",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070122/cebab88e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070122/cebab88e/attachment.pl>",
+      "body_plain": "Hi R-geo users, \nI am trying to convert a data set in UTM (from Spain, zone=30) to the corresponding \ndata set in longitude-latitude. Using convUL, it gives me strange results. Here I send my code, just in case somebody can tell me what i am missing. I suspect it has something to do with + proj or something that it is needed. \nThank you so much in advance,\nBerta\n\nlibrary(PBSmapping)\ndatainUTM<-data.frame(cbind(c(559994, 559673),c(4781905,4781583), c(0, 0), c(1,2)))\nnames(datainUTM)<-c(\"X\", \"Y\", \"PID\", \"POS\")\nattr(datainUTM, \"projection\") <-\"UTM\"\nattr(datainUTM, \"zone\") <-30\ndatosLL<-convUL(datainUTM)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi R-geo users, \nI am trying to convert a data set in UTM (from Spain, zone=30) to the corresponding \ndata set in longitude-latitude. Using convUL, it gives me strange results. Here I send my code, ju",
       "thread_id": "thread-d4881f8aa5d3",
       "thread_depth": 0,
-      "month": "2007-01"
+      "month": "2007-01",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070122/cebab88e/attachment.pl"
+      ]
     },
     {
       "id": "msg-c84d85da34e3",
@@ -923,11 +941,14 @@
       "subject_clean": "convUL to convert UTM in Lat/Long",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070122/ea6454e1/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070122/ea6454e1/attachment.pl>",
+      "body_plain": "Hi again R-Geo users, \n\nafter reading previous suggestions from Roger Bivand, I have used that the UTM I have were given  (I believe) in ED50 UTM in zone 30 string is:  \"+proj=utm +zone=30 +ellps=intl +units=m towgs84=-87,-98,-121,0,0,0,0\"\nand the WGS84/LL string is  \"+proj=longlat +datum=WGS84\"\nHence, using the same example, it would be (hopefully):\n\nlibrary(rgdal)\ndatosUTM<-data.frame(cbind(c(559994, 559673),c(4781905,4781583)))\nnames(datosUTM)<-c(\"x\", \"y\")\ncoordinates(datosUTM)<-c(\"x\", \"y\")\nproj4string(datosUTM)<-CRS(\"+proj=utm +zone=30 +ellps=intl +units=m towgs84=-87,-98,-121,0,0,0,0\" )\nsummary(datosUTM)\ndatosLL<-spTransform(datosUTM, CRS(\"+proj=longlat +datum=WGS84\" ))\ndatosLL\n#SpatialPoints:\n             x        y\n[1,] -2.261748 43.18594\n[2,] -2.265733 43.18306\n\nHope this way is OK. Otherwise please let me know. Thanks a lot, \n\nBerta\n\n\n\nHi R-geo users, \n  I am trying to convert a data set in UTM (from Spain, zone=30) to the corresponding \n  data set in longitude-latitude. Using convUL, it gives me strange results. Here I send my code, just in case somebody can tell me what i am missing. I suspect it has something to do with + proj or something that it is needed. \n  Thank you so much in advance,\n  Berta\n\n  library(PBSmapping)\n  datainUTM<-data.frame(cbind(c(559994, 559673),c(4781905,4781583), c(0, 0), c(1,2)))\n  names(datainUTM)<-c(\"X\", \"Y\", \"PID\", \"POS\")\n  attr(datainUTM, \"projection\") <-\"UTM\"\n  attr(datainUTM, \"zone\") <-30\n  datosLL<-convUL(datainUTM)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi again R-Geo users, \n\nafter reading previous suggestions from Roger Bivand, I have used that the UTM I have were given  (I believe) in ED50 UTM in zone 30 string is:  \"+proj=utm +zone=30 +ellps=intl",
       "thread_id": "thread-c84d85da34e3",
       "thread_depth": 0,
-      "month": "2007-01"
+      "month": "2007-01",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070122/ea6454e1/attachment.pl"
+      ]
     },
     {
       "id": "msg-d973016a7368",
@@ -1186,11 +1207,14 @@
       "subject_clean": "calculating area",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070126/827ab39c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070126/827ab39c/attachment.pl>",
+      "body_plain": "I am a psychology student who has been using R to analyze experimental data\nmainly within the general linear model for about 2 years.  I have some\nworking knowledge with R, but by no means would call myself proficient so\nbear with me.  Currently I'm running a series of experiments dealing with\nspatial data.  I'm tracking peoples movements using gps units which give me\nlatitude, heading, longitude, speed, altitude, and time variables.  I have\nbeen using the packages \"maps\" and \"mapproj\" to plot the routes which these\nindividuals take which is a great visualization tool.  I would like to know\nif there is a package or set of commands which would calculate the area\nthese people occupy?  So far the closest I have been able to get to\naccomplishing this task is basically taking the max and min for both lat and\nlong coordinates and calculating the size of that area, but I would like\nsomething more accurate.  Another thing I'm trying to accomplish is creating\nwhat I would call a density map. This is probably not the correct term so\nlet me explain what I mean.  I'm trying to characterize how people occupy\nspace.  Especially how people visit certain places more than others.  Is\nthere a way to create a map which shows the amount of times a particular\nplace is visited by these people both within subjects and a second map\nbetween subjects? Help would be greatly appreciated, as my academic advisors\nknow next to nothing about working with this type of data.\n\nPedro\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am a psychology student who has been using R to analyze experimental data\nmainly within the general linear model for about 2 years.  I have some\nworking knowledge with R, but by no means would call ",
       "thread_id": "thread-f88ff86091d2",
       "thread_depth": 0,
-      "month": "2007-01"
+      "month": "2007-01",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070126/827ab39c/attachment.pl"
+      ]
     },
     {
       "id": "msg-d639787f272f",
@@ -1316,11 +1340,14 @@
       "subject_clean": "Processing HDF4 data files with R / GeospatialDataAbstraction Library (GDAL)",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070127/46803cfa/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070127/46803cfa/attachment.pl>",
+      "body_plain": "Hello, can you specify a particular set of HDF4 files with multiple\nbands?  I will try to access them from R. \n\nI have some SeaWiFS files in HDF4 but they only have the single band. \n\nI have rgdal built against FWTools on Windows and have been able to\naccess data from many different HDF files, but I've not checked which\nwhere HDF4 vs. HDF5.  I'd certainly like to know which files could give\nproblems and try to get to the bottom of it. \n\nCheers, Mike.",
+      "body_snippet": "Hello, can you specify a particular set of HDF4 files with multiple\nbands?  I will try to access them from R. \n\nI have some SeaWiFS files in HDF4 but they only have the single band. \n\nI have rgdal bui",
       "thread_id": "thread-dffffa130a3a",
       "thread_depth": 0,
-      "month": "2007-01"
+      "month": "2007-01",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070127/46803cfa/attachment.pl"
+      ]
     },
     {
       "id": "msg-a3c4e00335a4",

@@ -47,11 +47,14 @@
       "subject_clean": "Using R spatial tools to merge polygons",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080901/7f4c2e09/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080901/7f4c2e09/attachment.pl>",
+      "body_plain": "Good day all,\n\nI've only recently been introduced to the useful spatial tools available in R (and indeed to GIS in general!).  I have found reading some of the posts on this mailing list quite useful, so am hoping that someone can help, or else let me know it can't be done!\n\nI have a map in Shapefile format, which I can read into R.  The shapefile is divided into regions.  What I want to do is merge the regions on the shapefile into larger areas.  The link between each of the individual shapefile regions and the larger regions is on a text file of the following format:\n\nArea_ID    Larger_ID\n1                    1\n2                    1\n3                    1\n4                    2\n5                    2\n\nIs it possible for me to do this in R, without the use of other GIS software?\n\nThanks in advance for any help that may be provided.\n\nKind regards\nLyndon\n\n\n      Win a MacBook Air or iPod touch with Yahoo!7. http://au.docs.yahoo.com/homepageset\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Good day all,\n\nI've only recently been introduced to the useful spatial tools available in R (and indeed to GIS in general!).  I have found reading some of the posts on this mailing list quite useful,",
       "thread_id": "thread-8fd62c7df64c",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080901/7f4c2e09/attachment.pl"
+      ]
     },
     {
       "id": "msg-bbcbee95601b",
@@ -151,11 +154,14 @@
       "subject_clean": "Utm to latlong conversion (Datum problem)",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080902/c353e090/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080902/c353e090/attachment.pl>",
+      "body_plain": "Dear all,\n\nI know that it is a knew issue, but I have some troubles\non the conversion of UTM to Latlong of my shape file.\nIn fact, it apears to work but my input file is on South America Datum\n(SAD69),\nbut I can´t find the how to indicate the datum. I tryed to include\n\"+datum=SAD69\"\non the proj4string, but I received the following error: \"unknown elliptical\nparameter name\"\nAny help are welcome.\n\nBest wishes,\n\nmiltinho astronaura\nbrazil\n-------------\n\nrequire(sp)\nrequire(maptools)\nrequire(rgdal)\n\nsetwd(\"G:\\\\HDExt\\\\R_scripts_genericos\\\\converte_utm_latlong\")\n\nSP<-readShapePoly(\"area_infl_ind.shp\", IDvar=NULL,\nproj4string=CRS(\"+proj=utm +zone=22 +units=m +south\"))\n\nSPll<-spTransform(SP, CRS(\"+proj=longlat +datum=WGS84\"))\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nI know that it is a knew issue, but I have some troubles\non the conversion of UTM to Latlong of my shape file.\nIn fact, it apears to work but my input file is on South America Datum\n(SAD69)",
       "thread_id": "thread-d29491cabbe5",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080902/c353e090/attachment.pl"
+      ]
     },
     {
       "id": "msg-d2357a96c749",
@@ -203,11 +209,14 @@
       "references": [
         "<3aaf1a030809021104j438c105aibc362f0d2c769f2b@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080903/a68bb5d8/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080903/a68bb5d8/attachment.pl>",
+      "body_plain": "Dear Miltinho,\n\nYou might want to take a look at this website:\n\nhttp://spatialreference.org/ref/epsg/?search=SAD69\n\nIt allows you to export an existing coordinate system into a proj4 string, e.g.:\n\nProj4js.defs[\"EPSG:29170\"] = \"+proj=utm +zone=20 +ellps=aust_SA +units=m +no_defs \";\n\nThis you can then edit this by hand, e.g. to modify the datum:\n\n\"+proj=utm +zone=20 +ellps=aust_SA +towgs84=-57,1,-41 +units=m +no_defs \" \n\n\ncheers,\n\nTom Hengl\nhttp://spatial-analyst.net\n\nPS: please be careful when using the spatialreference.org website - I discovered that the proj4 string often does not completely correspond to the CRS in use.\n\n\n\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch on behalf of milton ruser\nSent: Tue 9/2/2008 8:04 PM\nTo: r-sig-geo at stat.math.ethz.ch\nSubject: [R-sig-Geo] Utm to latlong conversion (Datum problem)\n \nDear all,\n\nI know that it is a knew issue, but I have some troubles\non the conversion of UTM to Latlong of my shape file.\nIn fact, it apears to work but my input file is on South America Datum\n(SAD69),\nbut I can´t find the how to indicate the datum. I tryed to include\n\"+datum=SAD69\"\non the proj4string, but I received the following error: \"unknown elliptical\nparameter name\"\nAny help are welcome.\n\nBest wishes,\n\nmiltinho astronaura\nbrazil\n-------------\n\nrequire(sp)\nrequire(maptools)\nrequire(rgdal)\n\nsetwd(\"G:\\\\HDExt\\\\R_scripts_genericos\\\\converte_utm_latlong\")\n\nSP<-readShapePoly(\"area_infl_ind.shp\", IDvar=NULL,\nproj4string=CRS(\"+proj=utm +zone=22 +units=m +south\"))\n\nSPll<-spTransform(SP, CRS(\"+proj=longlat +datum=WGS84\"))\n\n\t[[alternative HTML version deleted]]\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Miltinho,\n\nYou might want to take a look at this website:\n\nhttp://spatialreference.org/ref/epsg/?search=SAD69\n\nIt allows you to export an existing coordinate system into a proj4 string, e.g.:\n\nPr",
       "thread_id": "thread-d29491cabbe5",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080903/a68bb5d8/attachment.pl"
+      ]
     },
     {
       "id": "msg-e78fe371f5d2",
@@ -271,11 +280,14 @@
       "subject_clean": "vgm with a Cauchy function",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080904/de85c0f1/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080904/de85c0f1/attachment.pl>",
+      "body_plain": "Hello,\n\nI again send this below request to the List, because I do not receive  \nan answer to it, since July 8th.\nPerhaps anyone can help me ?\nThanks you.\n\n\nMy question:\n\n  I'm exploring the possibilities of the gstat package in the  \nR_Library context, to make variograms and kriging in a problem of  \nelectromagnetic field.\n\n  This is my question:\n\n  To fit my points_variograms, the  vgm routine displays a closed set  \nof default functions (\"Sph\", \"Gau\", \"Bes\", etc.).\n\n  I'd like try a different fitting model (a Cauchy function  \nprecisely). Do anyone knows if it is possible (and how to do it) to  \nuse an owner_defined function to fit a\n  particular variogram ?\n\nThanks you very much.\n\n(I'm new on this list and I don't know how to get the archived past  \nquestions and answers)\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI again send this below request to the List, because I do not receive  \nan answer to it, since July 8th.\nPerhaps anyone can help me ?\nThanks you.\n\n\nMy question:\n\n  I'm exploring the possibilit",
       "thread_id": "thread-f8fdd863eda4",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080904/de85c0f1/attachment.pl"
+      ]
     },
     {
       "id": "msg-25d109f4bb88",
@@ -341,11 +353,14 @@
       "subject_clean": "How to remove polygons according to their attributes?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080905/bcc36405/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080905/bcc36405/attachment.pl>",
+      "body_plain": "Hi, everyone\n\nI have a shapefile with many adjacent polygons in. Each has a series of\nattributes such as ID and area. Now I want to remove some of them based on\nattributes, e.g. to remove polygons with areas less than a given value. How\ncan I proceed?\n\nThanks a lot.=)\n\nLin Xin\n\n-- \nLin Xin\nDepartment of Ecology,\nCollege of Urban and Environmental Sciences\nPeking University\nBeijing 100871, China\nTel: +8610 62765578\nMobile: +86 15801416516\nEmail: linxin.pku at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi, everyone\n\nI have a shapefile with many adjacent polygons in. Each has a series of\nattributes such as ID and area. Now I want to remove some of them based on\nattributes, e.g. to remove polygons wit",
       "thread_id": "thread-bd0345461281",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080905/bcc36405/attachment.pl"
+      ]
     },
     {
       "id": "msg-8b952ba17b9e",
@@ -375,11 +390,14 @@
       "references": [
         "<66bcfc490809050107s4f7cab75l72712bc4dd5dc474@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080905/ad98be10/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080905/ad98be10/attachment.pl>",
+      "body_plain": "In the past I have encountered numerical shapefile attributes stored as\nfactors, not numbers.  So you would have to make the following change to\nFriderike's code to select by area:\n\nrequire(rgdal)\nCtries=readOGR(dsn='C:/data/datasets/HornOfAfrica', layer='HornOfAfrica',\np4s=NULL)\nstr(Ctries at data)\n\n# This is the part that is different\nnum_area <- as.numeric(as.vector(Ctries$AREA))\ntry<-Ctries[num_area>100,]\n\nspplot(try, zcol='ADM0_CODE')\n# or:\nKenya<-Ctries[Ctries$ADM0_NAME=='Kenya',]\nspplot(Ctries, zcol='ADM0_CODE',sp.layout=list(list(\"sp.polygons\",Kenya,\ncol=\"red\")), scales=list(draw=TRUE), xlim=c(30,52), ylim=c(-10,18),\ncol.regions='transparent', colorkey=FALSE)\n\nOn Fri, Sep 5, 2008 at 3:07 AM, Xin LIN <linxin.pku at gmail.com> wrote:\n\n> Hi, everyone\n>\n> I have a shapefile with many adjacent polygons in. Each has a series of\n> attributes such as ID and area. Now I want to remove some of them based on\n> attributes, e.g. to remove polygons with areas less than a given value. How\n> can I proceed?\n>\n> Thanks a lot.=)\n>\n> Lin Xin\n>\n> --\n> Lin Xin\n> Department of Ecology,\n> College of Urban and Environmental Sciences\n> Peking University\n> Beijing 100871, China\n> Tel: +8610 62765578\n> Mobile: +86 15801416516\n> Email: linxin.pku at gmail.com\n>\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "In the past I have encountered numerical shapefile attributes stored as\nfactors, not numbers.  So you would have to make the following change to\nFriderike's code to select by area:\n\nrequire(rgdal)\nCtr",
       "thread_id": "thread-bd0345461281",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080905/ad98be10/attachment.pl"
+      ]
     },
     {
       "id": "msg-f135630708d2",
@@ -473,11 +491,14 @@
       "subject_clean": "clipping psp & owin",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080905/74ad6129/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080905/74ad6129/attachment.pl>",
+      "body_plain": "Dear all,\n\n\n\nI'm running on R 2.7.1 (win), and I'm trying to \"clip\" a psp and an owin\nobject, without success. Here is the code that I'm using:\n\n\n\n############################################\n\nlibrary(maptools)\n\nlibrary(spatstat)\n\n\n\na<-readShapeSpatial(\"area.shp\")\n\nb <- as(as(a, \"SpatialPolygons\"), \"owin\")\n\nplot(b)\n\n\n\ng<-0:360\n\n\n\n            pt<-runifpoint(1, b)\n\n            pt_v<-as.data.frame(pt)\n\n\n\n            x<-pt_v[,1]\n\n            y<-pt_v[,2]\n\n\n\n            dest<-gcDestination(x, y, bearing=sample(g, 1), dist=4,\ndist.units = \"km\")\n\n            trans <- psp(x, y, dest[,1],dest[,2],  window=owin())\n\n\n\n            plot(trans, lwd=2, add=TRUE)\n\n\n\n###############################################\n\n\n\nMy question is what should I do to get the information of what is inside the\nclipping object (trans), having as an input object an owin (b).\n\n\n\nSorry if the code looks silly (and/or the question!), but I'm a nearby.\n\n\n\nThanks in advance for any help,\n\n\n\nCheers,\n\n\n\nAlexandre Camargo Martensen\n\n**********************************\n\nLandscape Ecology and Conservation Lab\n\nUniversity of Sao Paulo\n\nSao Paulo – Brazil\n\n**********************************\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\n\n\nI'm running on R 2.7.1 (win), and I'm trying to \"clip\" a psp and an owin\nobject, without success. Here is the code that I'm using:\n\n\n\n############################################\n\nlibrary",
       "thread_id": "thread-216fc1811c32",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080905/74ad6129/attachment.pl"
+      ]
     },
     {
       "id": "msg-b21871f6310d",
@@ -489,11 +510,14 @@
       "subject_clean": "ArcGIS Geostatistical Analyst -- how does it display / fit variograms?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080906/dfee2b42/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080906/dfee2b42/attachment.pl>",
+      "body_plain": "Hi, I know this is mostly an R-spatial list but this is where the most  \ncomputational geostats experts hang out, so please forgive me for  \nasking an ArcGIS question.\n\nI use R almost exclusively for my own work, but have been asked to  \nsupervise the development of an introductory geostats course for our  \npartner at the University of Rwanda. They have standardized on ArcGIS  \nfor all of their GIS work (and SPSS for non-spatial stats), and the  \nprospective students (mostly centre workers and collaborating  \nresearchers) are familiar with it. The decision was taken by their  \nadministration not to use my R/gstat material from the ITC distance  \neducation course, rather to develop the course with ArcGIS.\n\nMy counterpart is now with me developing the course. The deficiencies  \nof ESRI documentation are well-known. I have dug around quite a bit  \nboth within the ESRI docs (on-line and with the program) and through  \nvarious mailing lists and the web and can not find out some basic  \ninformation. I hope you can shed some light,\n\n1. What exactly is the display of the empirical variogram? The doc.  \nimplies there is one average semivariance per bin (as is usual) but  \nthe display often has several at the same bin. The variogram can be  \nexported as a table, where it shows multiple (2 - 6 or so)  \nsemivariances for each bin; the table also shows a \"weight\" for each  \nof these, but they do not add to 1 or 100 or anything I can  \nrecognize!  The close-range bins usually have one, then the number  \nincreases. So I guess each dot represents some number of point-pairs.\n\n2. How is the variogram being fit? What weighting, what solver?  If  \nthe user changes the cutoff/bin width, the solution changes (as it  \nshould); but I can't see how it's solving, and I can't find any option  \nto change the weighting (as in e.g. gstat).\n\n3. When fitting direct and cross-variograms for co-kriging, it seems  \nthat a linear model of co-regionalization is being enforced (i.e. same  \nrange). Again, how is the fit being done? Like fit.lmc in gstat?\n\nNaturally we want the students to understand what the program is doing  \nfor them!  Although ESRI promotes \"press the button and look at the  \ncross-validation\". I do like their disclaimer in the ArcGIS Desktop  \n9.3 help: \"Kriging is a complex procedure that requires greater  \nknowledge about spatial statistics than can be conveyed in this  \ncommand reference\". They then ref. Burrough (1986! not even the  \nrevised book), Heine (1986), McBratney & Webster Journal of Soil Sci.  \n37:317 (1986), Oliver IJGIS 4 (1990), Press etc. Numerical Recipes,  \nand Royle et al. Geoprocessing 1 (1981). Not exactly the most up to  \ndate or accessible reference list (no offrence to the fine authors  \nmentioned).\n\nThanks for your help.\n\nD. G. Rossiter\nSenior University Lecturer\nDepartment of Earth Systems Analysis\nInternational Institute for Geo-Information Science and Earth  \nObservation (ITC)\nPO Box 6, 7500 AA Enschede, The Netherlands\nInternet: http://www.itc.nl/personal/rossiter/pubs/list.html#pubs_m_R\n\n\n\nInternational Institute for Geo-Information Science and Earth Observation (ITC)\nChamber of Commerce: 410 27 560\n\nE-mail disclaimer\nThe information in this e-mail, including any attachments, is intended for the addressee only. If you are not the intended recipient, you are hereby notified that any disclosure, copying, distribution or action in relation to the content of this information is strictly prohibited. If you have received this e-mail by mistake, please delete the message and any attachment and inform the sender by return e-mail. ITC accepts no liability for any error or omission in the message content or for damage of any kind that may arise as a result of e-mail transmission.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi, I know this is mostly an R-spatial list but this is where the most  \ncomputational geostats experts hang out, so please forgive me for  \nasking an ArcGIS question.\n\nI use R almost exclusively for ",
       "thread_id": "thread-b21871f6310d",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080906/dfee2b42/attachment.pl"
+      ]
     },
     {
       "id": "msg-bae4b2b7327d",
@@ -648,11 +672,14 @@
       "references": [
         "<mailman.5.1220781602.4785.r-sig-geo@stat.math.ethz.ch>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080907/8a32bc19/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080907/8a32bc19/attachment.pl>",
+      "body_plain": "Dear David,\n\n \n\nYou can find information on Geostatistical Analyst here:\n\nhttp://www.esri.com/software/arcgis/extensions/geostatistical/index.html\n\nhttp://www.esri.com/software/arcgis/extensions/geostatistical/eval/evalcd.html\n\nhttp://webhelp.esri.com/arcgisdesktop/9.3/index.cfm?TopicName=An_overview_of_Geostatistical_Analyst (online documentation; i.e. condensed version of the Geostatistical Analyst manual)\n\n \n\nSeveral research papers on the models implemented in Geostatistical Analyst can be found here:\n\nhttp://www.esri.com/software/arcgis/extensions/geostatistical/about/literature.html. These papers are relatively old since I was busy writing a book on spatial statistics for GIS users. The book's content:\n\n\"Introduction to Spatial Statistical Data Analysis for GIS Users\" \n\nKonstantin Krivoruchko\n\nPreface\n\nPART ONE. INTRODUCTION TO STATISTICAL DATA ANALYSIS\n\nChapter 1: Statistical approach to GIS data analysis\n\nChapter 2: Examples of the importance of estimating data and model uncertainty\n\nChapter 3: Uncertainty and error in GIS data\n\nChapter 4: Importance of the distribution assumption\n\nChapter 5: Methods for sensitivity and uncertainty analysis\n\nChapter 6: Types of spatial data, statistical models, and model diagnostics\n\nChapter 7: Spatial interpolation using deterministic models\n\nPART TWO. PRINCIPLES OF MODELING SPATIAL DATA\n\nChapter 8: Principles of modeling geostatistical data: basic models and tools \n\nChapter 9: Kriging models and their assumptions\n\nChapter 10. Optimal monitoring network design and principles of geostatistical simulation \n\nChapter 11: Principles of modeling regional data\n\nChapter 12: Spatial regression models: concepts and comparison\n\nChapter 13. Principles of modeling discrete points \n\nPART THREE. STATISTICAL SOFTWARE USAGE\n\nChapter 14: Geostatistics for exploratory spatial data analysis\n\nChapter 15: Using commercial statistical software for spatial data analysis\n\nChapter 16. Using freeware R statistical packages for spatial data analysis\n\nAppendix A: Using ArcGIS Geostatistical Analyst 9.2\n\nAppendix B: Using R as a companion to ArcGIS\n\nAppendix C: Introduction to Bayesian modeling using WinBUGS\n\nAppendix D: Introduction to spatial regression modeling using SAS \n\nGlossary\n\nBibliography\n\nIndex\n\n \n\nESRI Press plans to publish this book in January-February of 2009. In this book, I'm explaining how to use several R software packages (NON-GEOSTATISTICAL because I don't know a good reason to use non-Bayesian geostatistical R packages if one has access to Geostatistical Analyst). \n\n \n\nFYI: for the future version of Geostatistical Analyst, we are developing several new models and tools, including the following:\n\n- interpolation using non-Euclidean distance metric (see paper Krivoruchko, K. and Gribov, A. (2004) Geostatistical interpolation in the presence of barriers. In: geoENV IV - Geostatistics for Environmental Applications: Proceedings of the Fourth European Conference on Geostatistics for Environmental Applications 2002 (Quantitative Geology and Geostatistics), 331-342. at http://www.esri.com/software/arcgis/extensions/geostatistical/about/literature.html)\n\n- \"areal interpolation\" (see Gotway, C.A. and Young, L.J.  (2007) A geostatistical approach to linking geographically aggregated data from different sources. Journal of Computational and Graphical Statistics 16 (1), pp. 115-135.)\n\n- non-Gaussian disjunctive kriging models\n\n- monitoring network design tools\n\n- additional options for Gaussian geostatistical simulation\n\n \n\n \n\nBest wishes,\n\nKonstantin Krivoruchko, Ph.D.\n\nSenior Research Associate, Software Development Team\n\nEnvironmental Systems Research Institute\n\n380 New York St. Redlands, CA, 92373-8100 USA \n\nkkrivoruchko at esri.com <mailto:kkrivoruchko at esri.com> \n\nhttp://www.esri.com/software/arcgis/extensions/geostatistical/about/literature.html <http://www.esri.com/software/arcgis/extensions/geostatistical/about/literature.html> \n\n \n\n\n________________________________\n\n\n\nMessage: 1\nDate: Sat, 6 Sep 2008 16:06:47 +0200\nFrom: D G Rossiter <rossiter at itc.nl>\nSubject: [R-sig-Geo] ArcGIS Geostatistical Analyst -- how does it\n        display /       fit variograms?\nTo: r-sig-geo at stat.math.ethz.ch\nMessage-ID: <C78D7D02-C9B4-40B1-A085-5871251D3355 at itc.nl>\nContent-Type: text/plain\n\nHi, I know this is mostly an R-spatial list but this is where the most \ncomputational geostats experts hang out, so please forgive me for \nasking an ArcGIS question.\n\nI use R almost exclusively for my own work, but have been asked to \nsupervise the development of an introductory geostats course for our \npartner at the University of Rwanda. They have standardized on ArcGIS \nfor all of their GIS work (and SPSS for non-spatial stats), and the \nprospective students (mostly centre workers and collaborating \nresearchers) are familiar with it. The decision was taken by their \nadministration not to use my R/gstat material from the ITC distance \neducation course, rather to develop the course with ArcGIS.\n\nMy counterpart is now with me developing the course. The deficiencies \nof ESRI documentation are well-known. I have dug around quite a bit \nboth within the ESRI docs (on-line and with the program) and through \nvarious mailing lists and the web and can not find out some basic \ninformation. I hope you can shed some light,\n\n1. What exactly is the display of the empirical variogram? The doc. \nimplies there is one average semivariance per bin (as is usual) but \nthe display often has several at the same bin. The variogram can be \nexported as a table, where it shows multiple (2 - 6 or so) \nsemivariances for each bin; the table also shows a \"weight\" for each \nof these, but they do not add to 1 or 100 or anything I can \nrecognize!  The close-range bins usually have one, then the number \nincreases. So I guess each dot represents some number of point-pairs.\n\n2. How is the variogram being fit? What weighting, what solver?  If \nthe user changes the cutoff/bin width, the solution changes (as it \nshould); but I can't see how it's solving, and I can't find any option \nto change the weighting (as in e.g. gstat).\n\n3. When fitting direct and cross-variograms for co-kriging, it seems \nthat a linear model of co-regionalization is being enforced (i.e. same \nrange). Again, how is the fit being done? Like fit.lmc in gstat?\n\nNaturally we want the students to understand what the program is doing \nfor them!  Although ESRI promotes \"press the button and look at the \ncross-validation\". I do like their disclaimer in the ArcGIS Desktop \n9.3 help: \"Kriging is a complex procedure that requires greater \nknowledge about spatial statistics than can be conveyed in this \ncommand reference\". They then ref. Burrough (1986! not even the \nrevised book), Heine (1986), McBratney & Webster Journal of Soil Sci. \n37:317 (1986), Oliver IJGIS 4 (1990), Press etc. Numerical Recipes, \nand Royle et al. Geoprocessing 1 (1981). Not exactly the most up to \ndate or accessible reference list (no offrence to the fine authors \nmentioned).\n\nThanks for your help.\n\nD. G. Rossiter\nSenior University Lecturer\nDepartment of Earth Systems Analysis\nInternational Institute for Geo-Information Science and Earth \nObservation (ITC)\nPO Box 6, 7500 AA Enschede, The Netherlands\nInternet: http://www.itc.nl/personal/rossiter/pubs/list.html#pubs_m_R\n\n\n\nInternational Institute for Geo-Information Science and Earth Observation (ITC)\nChamber of Commerce: 410 27 560\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear David,\n\n \n\nYou can find information on Geostatistical Analyst here:\n\nhttp://www.esri.com/software/arcgis/extensions/geostatistical/index.html\n\nhttp://www.esri.com/software/arcgis/extensions/geost",
       "thread_id": "thread-d5f756561445",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080907/8a32bc19/attachment.pl"
+      ]
     },
     {
       "id": "msg-c828569bf682",
@@ -664,11 +691,14 @@
       "subject_clean": "importing and viewing a JPEG2000 file",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080907/31d0dc41/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080907/31d0dc41/attachment.pl>",
+      "body_plain": "Hello,\n\nPlease forgive any breaches in protocol or the simplicity of this question.\n\nI would like to import and display a JPEG2000 satellite image in R.  Could someone be so kind as to advise on how to do this?  And more generally: is it possible to import multi-band satellite images and to display them in colour using a subset of 3 of the bands, as in a standard GIS program?\n\nMany thanks,\n\nRobin Naidoo\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nPlease forgive any breaches in protocol or the simplicity of this question.\n\nI would like to import and display a JPEG2000 satellite image in R.  Could someone be so kind as to advise on how t",
       "thread_id": "thread-c828569bf682",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080907/31d0dc41/attachment.pl"
+      ]
     },
     {
       "id": "msg-b9e9f92a4a3c",
@@ -816,11 +846,14 @@
       "references": [
         "<12DDB272B3619B49ACE8A185DEB6CD34165751@EX6.d.ethz.ch>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080911/858fbd5f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080911/858fbd5f/attachment.pl>",
+      "body_plain": "Hi Mario,\nI don´t know if it is the problem, but the code line below need be changed:\n\nsubset(d.geb, d.geb$MUNICIP == 1)\n\nbest wishes,\n\nmiltinho astronauta\nbrazil\n\nOn Thu, Sep 11, 2008 at 8:12 AM, Gellrich Mario\n<mario.gellrich at env.ethz.ch>wrote:\n\n> Hi,\n>\n> I've got a question regarding distance-based neighbourhood statistics using\n> two separate spatial data sets. What I have are municipalities and buildings\n> within municipalities which both come with x- and y-coordinates. I merged\n> the two datasets row-wise and used the following code to obtain aggregated\n> values for the number of builings surrounding a municipality. The code hower\n> doesn't work appropriately. Can anybody help?\n>\n>\n> d.geb <- read.table(\"gebaeuderecord_selection_test.csv\", header=T, sep=\";\")\n> d.geb[1:10,]\n>\n>     MUNICIP     NAME GEBID NUMBERGEB ABPER    LON    LAT\n> 1          0 Gebaeude  4262         1     1 681864 225868\n> 2          0 Gebaeude 14168         1     7 682190 224294\n> 3          0 Gebaeude 33346         1     5 682176 224354\n> 4          0 Gebaeude 44610         1    15 681571 225189\n> 5          0 Gebaeude 62785         1     1 679800 226040\n> 6          0 Gebaeude 72287         1     1 684619 224239\n> 7          0 Gebaeude 83044         1     8 681701 224818\n> 8          0 Gebaeude 84827         1     2 684878 230975\n> 9          0 Gebaeude 86671         1     0 685733 227247\n> 10         0 Gebaeude 88022         1     1 685691 230548\n>\n>\n> # Variable description:\n>\n> # MUNICIP:   zero for buildings; one for municipalities\n> # NAME   :   if 'Gebaeude' == building; otherwise municipality name\n> # GEBID:     ID of building; -99 otherwise\n> # NUMBERGEB: number of buildings - one for each building-record; set to\n> zero if record represents municipality\n> # ABWOW:     number of flats in a building\n>\n>\n> ### Creates neighbourhood list and should provide aggregates values within\n> a distance of 1 kilometer from a municipality for the variables NUMBERGEB or\n> ABWOW\n>\n> library(spdep)\n> geb.nb2         <- dnearneigh(as.matrix(d.geb[,6:7]), 0, 1, longlat=TRUE)\n> d.geb$SUMGEB    <- unlist(lapply(geb.nb2, function(x) ifelse(any(x==0), 0,\n> sum(d.geb$ABPER[x]))))\n>\n> subset(d.geb, MUNICIP == 1)\n>\n>\n> Best regards,\n>\n> Mario\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Mario,\nI don´t know if it is the problem, but the code line below need be changed:\n\nsubset(d.geb, d.geb$MUNICIP == 1)\n\nbest wishes,\n\nmiltinho astronauta\nbrazil\n\nOn Thu, Sep 11, 2008 at 8:12 AM, Gel",
       "thread_id": "thread-255c87cbe544",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080911/858fbd5f/attachment.pl"
+      ]
     },
     {
       "id": "msg-60721532d915",
@@ -1044,11 +1077,14 @@
       "references": [
         "<30306872.369201221525730258.JavaMail.coremail@app141.163.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080916/b74d1bc4/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080916/b74d1bc4/attachment.pl>",
+      "body_plain": "Dear author without name,\n\nI have too little information to reproduce your problem, so I can only \nguess. A possibility is that fit.lmc yields variograms that reflect a \nperfect or near-perfect correlation. An option to correct for this is to \nuse fit.lmc(..., correct.diagonal = 1.01).\n\nBeyond the gstat manual you'll find information like this on the \nfunction documentation, e.g. type on the R prompt\n\n? fit.lmc\n\nfurther, most of the R-spatial and R/gstat-related questions go to the \nr-sig-geo mailing list.\n--\nEdzer\n\n\nzhangyang wrote:\n>\n> Dear everyone,\n>\n> I am using gstat in R to do cokriging and sequential simulation job \n> with remote sensing data. I can successfully get a good cokriging \n> result but fail to simulation procedure. The error is ¡°\"chfactor.c\", \n> line 66: matrix not positive definite in function CHfactor()¡±. I have \n> consulted the gstat manual for this trouble but still have not any \n> improvement. So I want your help urgently! Below are the details about \n> my experiment.\n>\n> # read the data value of target variable (band6.data,16*16 pixels) and \n> co-variable (band4.data, 32*32 pixels)\n>\n> band6.data<-read.table (\"band6.dat.bak\", col.names=c \n> (\"x\",\"y\",\"DN6\",\"indicator6\"))\n>\n> band4.data<-read.table (\"band4.dat.bak\", col.names=c \n> (\"x\",\"y\",\"DN4\",\"indicator4\"))\n>\n> # these two variables are stored in a gstat object named ¡°g¡±.\n>\n> g<-gstat(id=\"indicator6\",formula=indicator6~x+y+x*y+sqrt(x)+sqrt(y),location=~x+y,data=band6.data)\n>\n> g<-gstat(g,id=\"indicator4\",formula=indicator4~x+y+x*y+sqrt(x)+sqrt(y),location=~x+y,data=band4.data)\n>\n> #calculate sample variograms and cross variograms, fit a linear model \n> of coregionalisation to direct and cross variograms and plot the \n> variograms and fitted models.\n>\n> g<-gstat(g,model=vgm(0.097,\"Sph\",368,0.002),fill.all=T)\n>\n> v.cross<-variogram(g)\n>\n> g <- fit.lmc(v.cross, g)\n>\n> plot (variogram(g), model=g$model)\n>\n> #creat newdata=band8.grid using the coordinates of band8.data (64*64 \n> pixels) for kriging work.\n>\n> band8.data<-read.table(\"band8.dat.bak\",col.names=c(\"x\",\"y\",\"DN8\",\"indicator8\"))\n>\n> band8.grid=band8.data[c(\"x\",\"y\")]\n>\n> #store two-variable cokriging predictions in k.c.\n>\n> k.c<-predict.gstat(g, band8.grid)\n>\n> coordinates(k.c)=~x+y\n>\n> spplot(k.c[\"indicator6.pred\"])\n>\n> set.seed(131)\n>\n> # creat newdata=band8.grid2 using the coordinates of band8.data \n> forsimulation work.\n>\n> band8.grid2=band8.data[c(\"x\",\"y\")]\n>\n> coordinates (band8.grid2)=~x+y\n>\n> #fail to sequential simulation.\n>\n> band6.sim<-predict.gstat(g, band8.grid2,nmax=16, nsim=1)\n>\n> Error: \"chfactor.c\", line 66: matrix not positive definite in function \n> CHfactor()\n>\n>\n>\n> ------------------------------------------------------------------------\n> [¹ã¸æ] Âò·¿²»±Ø¶«±¼Î÷×ß£¬ÉÏ·¿ÀÏ´ó£¬¿´\"¶þÊÖ·¿\"ÍøÉÏ·¿Õ¹»á \n> <http://popme.163.com/link/003984_0909_8679.html> \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M¨¹nster,\nWeseler Stra?e 253, 48151 M¨¹nster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear author without name,\n\nI have too little information to reproduce your problem, so I can only \nguess. A possibility is that fit.lmc yields variograms that reflect a \nperfect or near-perfect correl",
       "thread_id": "thread-9368d90ae7f6",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080916/b74d1bc4/attachment.pl"
+      ]
     },
     {
       "id": "msg-bc022b149b68",
@@ -1060,11 +1096,14 @@
       "subject_clean": "R-SAGA-GRASS-ArcGIS strengths/weaknesses",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080916/9793faa6/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080916/9793faa6/attachment.pl>",
+      "body_plain": "If a non-experienced person wanted to decide for one program in which to\ninvest time and if one was to highlight the strengths and weaknesses of R,\nSAGA, GRASS and ArcGIS in comparison to each other in a simplistic way ... \n\n\t\t\tR\tSAGA\tGRASS\tArcGIS\ngeostatistical analysis\t+\t+/-\t-\t-\nspatial time-series analysis\t+/-\t-\t-\t?\nraster data calculation\t+\t+\t+\t+\nvector data calculation\t-\t+/-\t+\t+\nimage processing\t-\t-\t+\t+\nvisualisation\t\t+\t+\t+\t+\ngraphical layout\t\t+\t-\t-\t+\nGUI\t\t\t-\t+\t+/-\t+\ncommand line\t\t+\t+/-\t+ \t+/-\nautomatisation\t\t+\t+/-\t+\t+/-\ninteroperability\t\t+\t+/-\t+\t-\nfile size limits\t\t?\t?\t?\t?\nhelp pages\t\t+/-\t-\t+\t-\ndocumentation\t\t+\t+\t-\t-\nlearning curve\t\t+/-\t+\t+/-\t+/-\t(from fast + to slow\n-)\ncost\t\t\t+\t+\t+\t- \t(from no cost + to\nexpensive -)\nopen-source\t\t+\t+\t+\t- \n\nwould this look somehow realistic? \n\nI have more experience with GRASS and R than with SAGA or ArcGIS, so probably\nmy view is biased or even incorrect. Could somebody else suggest a better\njudgement? \n\nOf course, I am aware that these programs -particularly R vs. GIS-  serve\ndifferent purposes, but supposing that you don't know any of these and you\nwanted to have a starting point to select your tool for basic spatial data\nanalysis and mapping, would this table help?\n\nAny comment/suggestion is most welcome,\nmany thanks,\nFriderike\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "If a non-experienced person wanted to decide for one program in which to\ninvest time and if one was to highlight the strengths and weaknesses of R,\nSAGA, GRASS and ArcGIS in comparison to each other i",
       "thread_id": "thread-bc022b149b68",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080916/9793faa6/attachment.pl"
+      ]
     },
     {
       "id": "msg-dd74bc457553",
@@ -1165,11 +1204,14 @@
       "references": [
         "<1A28265B00AA7E4085BB761555D3FCE8033C8B1F@hqagex02.fao.org>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080917/45fa14c4/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080917/45fa14c4/attachment.pl>",
+      "body_plain": "Dear Fredrike\n\nI don´t use SAGA (I just run some tests with RSAGA), and my skill on\nsp/maptools/spatstat/gstat/etc on R are low. I work with ArcGis and GRASS (i\nstarted to use grass on 1995, after I needed to chance to other GIS and now\nI also use - but not prefer - ArcGis).\n\nI think that you can also include \"Interactive raster data handling\" and\n\"Vector data handling\".\n\nI don´t aggree with you that R have a + graphical layout.\n\nI believe that SAGA have +/- or + Image Processing (you need to check it).\n\nI think that R have a poor visualization when copared to GRASS and ArcGis (I\ndon´t have opinion about SAGA).\n\nI think that SAGA have - command line when compared to others (you need to\ndeep so much to get the options of each modules; but others may have\ndifferent opinion).\n\nHow about database handling? Because may vector data may have tabular\nattributes, and one may need to handle it to reach up desired results.\n\nAbout help page, I suggest that SAGA is +/- because have several pdf\nmanuals/tutorial that help the beginers start and run many of tasks on few\nhours/days.\n\nI suggest you change de attribs of learning curve. R have a so hard learning\ncurve (-); ArcGis (almost for trivial tasks) have a + learning curve; GRASS\nis +/- to me.\n\nCosts is ok.\n\nDespite ArcGis is a black box for geostats, some could suggest that it is\n+/- instead of -.\n\nI hope this help.\n\nBest wishes,\n\nmiltinho astronauta\nbrazil\n\n\nOn Tue, Sep 16, 2008 at 9:34 AM, Oehler, Friderike (AGPP) <\nFriderike.Oehler at fao.org> wrote:\n\n> If a non-experienced person wanted to decide for one program in which to\n> invest time and if one was to highlight the strengths and weaknesses of R,\n> SAGA, GRASS and ArcGIS in comparison to each other in a simplistic way ...\n\n\n>\n>                        R       SAGA    GRASS   ArcGIS\n> geostatistical analysis +       +/-     -       -\n> spatial time-series analysis    +/-     -       -       ?\n> raster data calculation +       +       +       +\n> vector data calculation -       +/-     +       +\n> image processing        -       -       +       +\n> visualisation           +       +       +       +\n> graphical layout                +       -       -       +\n> GUI                     -       +       +/-     +\n> command line            +       +/-     +       +/-\n> automatisation          +       +/-     +       +/-\n> interoperability                +       +/-     +       -\n> file size limits                ?       ?       ?       ?\n> help pages              +/-     -       +       -\n> documentation           +       +       -       -\n> learning curve          +/-     +       +/-     +/-     (from fast + to\n> slow\n> -)\n> cost                    +       +       +       -       (from no cost + to\n> expensive -)\n> open-source             +       +       +       -\n>\n> would this look somehow realistic?\n>\n> I have more experience with GRASS and R than with SAGA or ArcGIS, so\n> probably\n> my view is biased or even incorrect. Could somebody else suggest a better\n> judgement?\n>\n> Of course, I am aware that these programs -particularly R vs. GIS-  serve\n> different purposes, but supposing that you don't know any of these and you\n> wanted to have a starting point to select your tool for basic spatial data\n> analysis and mapping, would this table help?\n>\n> Any comment/suggestion is most welcome,\n> many thanks,\n> Friderike\n>\n>\n>\n>\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Fredrike\n\nI don´t use SAGA (I just run some tests with RSAGA), and my skill on\nsp/maptools/spatstat/gstat/etc on R are low. I work with ArcGis and GRASS (i\nstarted to use grass on 1995, after I n",
       "thread_id": "thread-bc022b149b68",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080917/45fa14c4/attachment.pl"
+      ]
     },
     {
       "id": "msg-d9af70d095a3",
@@ -1372,11 +1414,14 @@
         "<1A28265B00AA7E4085BB761555D3FCE8033C8B1F@hqagex02.fao.org>",
         "<3aaf1a030809161909m6fa06e7en1f8afb71b88c362f@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080917/ba813c61/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080917/ba813c61/attachment.pl>",
+      "body_plain": "Dear Friederike, miltinho,\n\nFYI I have tried to create table comparison of various geostatistical software few years ago (this table is available in http://dx.doi.org/10.1016/j.cageo.2007.05.001). The things is - it is rather tricky to say which software is 'better' in doing specific tasks. If you make the task rather general (e.g. image processing), then it is even trickier. I think you should focus on specific methods (e.g. variogram fitting), and then you might even be able to parameterize your comparison (e.g. statistical sophistication, speed, memory handling, flexibility, bugs etc).\n\nHere are few clarifications:\n\n1. SAGA does have extensive image processing capabilities (filtering, buffer operations, fuzzy logic, classification etc.). It actually can be compared to GRASS a lot, except it runs also on Windows (easier to install in any case) and can be completely controlled from R. I actually never used GRASS (I only saw some demos). SAGA has now over 350 built-in operations - what about GRASS?\n\n2. I do not think that ArcGIS (ArcInfo!) syntax is easier to learn that the R syntax. In fact, I find R sytnax for processing of spatial data much easier to follow, especially because you can see the structure of the spatial data (sp classes). I guess also that ArcInfo scripting courses are much much more expensive (right?), which makes things even steeper.\n\n3. N52 just released ILWIS 3.5 open GIS that can be also called from R. By combining capabilities of R packages, SAGA and ILWIS, I think you will be able to use 80% of GIS/image processing functionality available in any other GIS (see some examples below). Note that you can now also use ILWIS also to open maps from R (i.e. instead of using spplots which will have serious problems with big data). \n\n4. I agree with Miltinho - spatial data exploration and interactive visualization in R is not recommended (R was never meant to develop into a GIS). \n\nFinally, I do not think that R vs GIS comparison is needed at all - I use both R and GIS functionality together ('R on top'), so what you should really compare is R+SAGA+ILWIS (windows) vs ArcGIS vs R+GRASS (Linux) vs Erdas Imagine vs... \n\n\n###################################\n\n# DEM processing and extraction of channel networks;\n\nlibrary(maptools)\nlibrary(rgdal)\nlibrary(RSAGA) \n# ! download and install SAGA GIS (www.saga-gis.org) and ILWIS GIS (www.n52.org) to your machine first!\nrsaga.env(path=\"C:/Progra~1/saga_vc\")\nILWIS <- \"C:\\\\Progra~1\\\\N52\\\\SetupIlwis\\\\IlwisClient.exe -C\"\n\n# obtain the data:\ndownload.file(\"http://www.geomorphometry.org/data/DEM25m.zip\", destfile=paste(getwd(),\"DEM25m.zip\",sep=\"/\"))\nfname <- zip.file.extract(file=\"DEM25m.asc\", zipname=\"DEM25m.zip\")\nfile.copy(fname, \"./DEM25m.asc\", overwrite=TRUE)\n\n# view the data in ILWIS:\ndem25m <- readGDAL(\"DEM25m.asc\")\nproj4string(dem25m) <- CRS(\"+proj=tmerc +lat_0=0 +lon_0=18 +k=0.9999 +x_0=6500000 +y_0=0 +ellps=bessel +towgs84=682,-199,480 +units=m\")\nwriteGDAL(dem25m[1], \"dem25m.mpr\", \"ILWIS\")\nshell(cmd=paste(ILWIS, \"open dem25m.mpr -noask\"), wait=F)\n# make a relief view in ILWIS (automatically opens the output map):\nshell(cmd=paste(ILWIS, \"run C:\\\\Progra~1\\\\N52\\\\SetupIlwis\\\\Scripts\\\\Hydro-DEM\\\\dem_visualization dem25m.mpr dem25m_c.mpr\"), wait=F)\n\n# load to SAGA and derive drainage network:\nrsaga.esri.to.sgrd(in.grids=\"dem25m.asc\", out.sgrds=\"dem25m.sgrd\", in.path=getwd())\n# First, fill the spurious sinks:\nrsaga.get.modules(\"ta_preprocessor\")\nrsaga.get.usage(\"ta_preprocessor\", 2)\nrsaga.geoprocessor(lib=\"ta_preprocessor\", module=2, param=list(DEM=\"dem25m.sgrd\", RESULT=\"dem25m_f.sgrd\", MINSLOPE=0.05))\n# Second, extract the channel network:\nrsaga.get.modules(\"ta_channels\")\nrsaga.get.usage(\"ta_channels\", 0)\nrsaga.geoprocessor(lib=\"ta_channels\", module=0, param=list(ELEVATION=\"dem25m_f.sgrd\", CHNLNTWRK=\"channel_ntwrk.sgrd\", CHNLROUTE=\"channel_route.sgrd\", SHAPES=\"channels.shp\", INIT_GRID=\"dem25m_f.sgrd\", DIV_CELLS=3, MINLEN=40))\nchannels <- readOGR(\"channels.shp\", \"channels\")\nspplot(channels[\"LENGTH\"], col.regions=bpy.colors())\n\n# Export to Google Earth (use ILWIS to resample):\ndem25m.ll <- spTransform(dem25m[1], CRS(\"+proj=longlat +datum=WGS84\"))\ncorrf = (1+cos((dem25m.ll at bbox[2,2]+dem25m.ll at bbox[2,1])/2*pi/180))/2\ngeogrd.cell = corrf*(dem25m.ll at bbox[1,2]-dem25m.ll at bbox[1,1])/dem25m at grid at cells.dim[1]\ngeoarc = spsample(dem25m.ll, type=\"regular\", cellsize=c(geogrd.cell,geogrd.cell))\ngridded(geoarc) = TRUE\ngridparameters(geoarc)\ngridparameters(dem25m)\n\n# resample the map (Bilinear) to the new geographic grid:  \nshell(cmd=paste(ILWIS, \" crgrf geoarc.grf \",geoarc at grid at cells.dim[[2]],\" \",geoarc at grid at cells.dim[[1]],\" -crdsys=LatlonWGS84 -lowleft=(\",geoarc at grid at cellcentre.offset[[1]],\",\",geoarc at grid at cellcentre.offset[[2]],\") -pixsize=\",geoarc at grid at cellsize[[1]],sep=\"\"), wait=F)\nshell(cmd=paste(ILWIS, \"dem25m_ll_c.mpr = MapResample(dem25m_c.mpr, geoarc, BiLinear)\"), wait=F)\nshell(cmd=paste(ILWIS, \"open dem25m_ll_c.mpr -noask\"), wait=F)\nshell(cmd=paste(ILWIS, \"export tiff(dem25m_ll_c.mpr, dem25m_c.tif)\"), wait=F)\n\n# generate a KML (ground overlay):\ndem25m.kml = GE_SpatialGrid(geoarc)\nkmlOverlay(dem25m.kml, \"dem25m_c.kml\", \"dem25m_c.tif\", name=\"Shaded relief in ILWIS\")\n\nproj4string(channels) <- CRS(\"+proj=tmerc +lat_0=0 +lon_0=18 +k=0.9999 +x_0=6500000 +y_0=0 +ellps=bessel +towgs84=682,-199,480 +units=m\")\nchannels.ll  <- spTransform(channels[3], CRS(\"+proj=longlat +datum=WGS84\"))\nwriteOGR(channels.ll, \"channels.kml\", \"channels\", \"KML\")\n\n# the background GE map and generated maps do not match! problems with datum definition...\n\n##########\n\nyours,\n\nTom Hengl\nhttp://spatial-analyst.net\n\n\n\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch on behalf of milton ruser\nSent: Wed 9/17/2008 4:09 AM\nTo: Oehler, Friderike (AGPP)\nCc: r-sig-geo at stat.math.ethz.ch\nSubject: Re: [R-sig-Geo] R-SAGA-GRASS-ArcGIS strengths/weaknesses\n\nDear Fredrike\n\nI don´t use SAGA (I just run some tests with RSAGA), and my skill on\nsp/maptools/spatstat/gstat/etc on R are low. I work with ArcGis and GRASS (i\nstarted to use grass on 1995, after I needed to chance to other GIS and now\nI also use - but not prefer - ArcGis).\n\nI think that you can also include \"Interactive raster data handling\" and\n\"Vector data handling\".\n\nI don´t aggree with you that R have a + graphical layout.\n\nI believe that SAGA have +/- or + Image Processing (you need to check it).\n\nI think that R have a poor visualization when copared to GRASS and ArcGis (I\ndon´t have opinion about SAGA).\n\nI think that SAGA have - command line when compared to others (you need to\ndeep so much to get the options of each modules; but others may have\ndifferent opinion).\n\nHow about database handling? Because may vector data may have tabular\nattributes, and one may need to handle it to reach up desired results.\n\nAbout help page, I suggest that SAGA is +/- because have several pdf\nmanuals/tutorial that help the beginers start and run many of tasks on few\nhours/days.\n\nI suggest you change de attribs of learning curve. R have a so hard learning\ncurve (-); ArcGis (almost for trivial tasks) have a + learning curve; GRASS\nis +/- to me.\n\nCosts is ok.\n\nDespite ArcGis is a black box for geostats, some could suggest that it is\n+/- instead of -.\n\nI hope this help.\n\nBest wishes,\n\nmiltinho astronauta\nbrazil\n\n\nOn Tue, Sep 16, 2008 at 9:34 AM, Oehler, Friderike (AGPP) <\nFriderike.Oehler at fao.org> wrote:\n\n> If a non-experienced person wanted to decide for one program in which to\n> invest time and if one was to highlight the strengths and weaknesses of R,\n> SAGA, GRASS and ArcGIS in comparison to each other in a simplistic way ...\n\n\n>\n>                        R       SAGA    GRASS   ArcGIS\n> geostatistical analysis +       +/-     -       -\n> spatial time-series analysis    +/-     -       -       ?\n> raster data calculation +       +       +       +\n> vector data calculation -       +/-     +       +\n> image processing        -       -       +       +\n> visualisation           +       +       +       +\n> graphical layout                +       -       -       +\n> GUI                     -       +       +/-     +\n> command line            +       +/-     +       +/-\n> automatisation          +       +/-     +       +/-\n> interoperability                +       +/-     +       -\n> file size limits                ?       ?       ?       ?\n> help pages              +/-     -       +       -\n> documentation           +       +       -       -\n> learning curve          +/-     +       +/-     +/-     (from fast + to\n> slow\n> -)\n> cost                    +       +       +       -       (from no cost + to\n> expensive -)\n> open-source             +       +       +       -\n>\n> would this look somehow realistic?\n>\n> I have more experience with GRASS and R than with SAGA or ArcGIS, so\n> probably\n> my view is biased or even incorrect. Could somebody else suggest a better\n> judgement?\n>\n> Of course, I am aware that these programs -particularly R vs. GIS-  serve\n> different purposes, but supposing that you don't know any of these and you\n> wanted to have a starting point to select your tool for basic spatial data\n> analysis and mapping, would this table help?\n>\n> Any comment/suggestion is most welcome,\n> many thanks,\n> Friderike\n>\n>\n>\n>\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Friederike, miltinho,\n\nFYI I have tried to create table comparison of various geostatistical software few years ago (this table is available in http://dx.doi.org/10.1016/j.cageo.2007.05.001). The",
       "thread_id": "thread-bc022b149b68",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080917/ba813c61/attachment.pl"
+      ]
     },
     {
       "id": "msg-4f69f1f76547",
@@ -1591,11 +1636,14 @@
         "<48D3BB11.7050603@uni-muenster.de>",
         "<48D3BE78.9020001@scimail.uwaterloo.ca>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080919/8a6bf36b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080919/8a6bf36b/attachment.pl>",
+      "body_plain": "Dear Edzer,\n \nI do have a similar problem (extensive computation time, memory limits). I would like to run interpolation of 60,000 points for 500,000 new points using OK and nmax of 30 closest points (I am using a windowsxp machine with 2GB RAM).\n \nBut I have doubts that it can ever run in less than few hours in gstat. I mean, at each new location, the algorithm has to derive distances to all locations (60,000^2 matrix) and then find the 30 closest ones. There is no more intelligent way to pick up the closest points - or is there?\n \nThanx,\n \nTom\n \n\n________________________________\n\nFrom: r-sig-geo-bounces at stat.math.ethz.ch on behalf of Dave Depew\nSent: Fri 9/19/2008 5:00 PM\nTo: Edzer Pebesma\nCc: Chris Taylor; r-sig-geo at stat.math.ethz.ch\nSubject: Re: [R-sig-Geo] cokriging question\n\n\n\nThanks for the quick responses.\nI've often done global OK or UK that can take ~ 2-3 days to complete. I\nalways assumed that it was b/c the matrices were so large. Looking at\ntask manager indicated that Rgui.exe only consumed ~ 800 Mb of RAM\nduring the processes.\nI'll try it by passing the maxdist to gstat() rather than predict.gstat().\nThe only other time I encounter the memory.c line is when I neglect to\nremove duplicate observations.\n\nI think I only should have at most 500 or so points within a 100-200m\nmaxdist...\n\n\n\n\nEdzer Pebesma wrote:\n> Good morning Dave (late afternoon here),\n>\n> Chris Taylor wrote:\n>> Good morning Edzer and Dave,\n>> Thanks for bringing up this point.  I had a similar issue recently\n>> using krige().  Observations at 5800 locations, attempting to krige()\n>> predictions at 112,000 locations resulted in the same \"memory.c\"\n>> error message.  Reducing predicted locations to <<50,000 and reducing\n>> max.dist seemed to help, but the predictions still took a very long\n>> time (>2 hours).  (Running winxp with 4GB memory.)\n>> Can you clarify your suspicion regarding the \"lack of standardization\n>> of coordinates\"?\n> In this message, a trend was modelled based on x and y coordinates, as\n> follows:\n>       x                y                DN4          indicator4\n> Min.   :670462   Min.   :4215236   Min.   :18.00   Min.   :0.0000\n> 1st Qu.:670683   1st Qu.:4215456   1st Qu.:24.00   1st Qu.:0.0000\n> Median :670904   Median :4215677   Median :32.50   Median :0.0000\n> Mean   :670904   Mean   :4215677   Mean   :43.26   Mean   :0.4795\n> 3rd Qu.:671125   3rd Qu.:4215898   3rd Qu.:64.00   3rd Qu.:1.0000\n> Max.   :671346   Max.   :4216119   Max.   :87.00   Max.   :1.0000\n> >\n> g<-gstat(id=\"indicator6\",formula=indicator6~x+y+x*y+sqrt(x)+sqrt(y),location=~x+y,data=band6.data,...\n>\n>\n> computing the x*y will give numbers many orders of magnitude larger\n> than sqrt(x),or the intercept. The advice is usually to (somewhat)\n> standardize coordinates before using them as a trend. But I doubt this\n> helps you very much.\n>\n> I find it hard to consider > 2 hours as a very long time before I know\n> all the details (e.g. how many points were there within your\n> maxdist?), the reason why you want an instant answer, and preferably\n> have heard a comparison with other software. If you then tell me what\n> your budget is, I might come up with possible solutions (starting very\n> cheap, e.g. look at demo(snow) in package gstat, or use an OS that can\n> assign this 4Gb to a single process).\n> --\n> Edzer\n>>\n>> Chris\n>>\n>> Edzer Pebesma wrote:\n>>> Dave,\n>>>\n>>> 12000 observations fit, in the c representation, in less than 1 Mb\n>>> (64 bytes per observation).\n>>>\n>>> The issue is that you think that passing maxdist to predict.gstat\n>>> has an effect. It doesn't; you need to pass it to function gstat().\n>>>\n>>> The same thing happened in this\n>>> https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004182.html\n>>> message, where nmax was passed to predict.gstat, and simulation took\n>>> forever. The other issue in that question was, I suspect, lack of\n>>> standardization of coordinates, used in a trend surface.\n>>> --\n>>> Edzer\n>>>\n>>> Dave Depew wrote:\n>>>> Is there a limit to the # of observations or size of file that can\n>>>> be co-kriged in gstat?\n>>>> I have a ~12000 observation data set (2 variables), the variograms,\n>>>> cross variogram and lmc are fit well, and co-kriging starts ok\n>>>>\n>>>> Linear Model of Coregionalization found. Good.\n>>>> [using ordinary cokriging]\n>>>>\n>>>> then immediately outputs\n>>>>\n>>>> \"memory.c\", line 57: can't allocate memory in function m_get()\n>>>> Error in predict.gstat(fit.ck, newdata = EcoSAV.grid, maxdist = 100) :\n>>>>  m_get\n>>>>\n>>>> Iv tried different maxdist from 10 to 1000, with exactly the same\n>>>> result.\n>>>> I recently upgraded my RAM to 4Gb and flipped the windows XP /3GB\n>>>> switch.\n>>>>\n>>>>\n>>>\n>>\n>\n\n\n--\nDavid Depew\nPhD Candidate\nDepartment of Biology\nUniversity of Waterloo\n200 University Ave W.\nWaterloo, ON. Canada\nN2L 3G1\n\n(T) 1-519-888-4567 x33895\n(F) 1-519-746-0614\n\nhttp://www.science.uwaterloo.ca/~ddepew\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Edzer,\n \nI do have a similar problem (extensive computation time, memory limits). I would like to run interpolation of 60,000 points for 500,000 new points using OK and nmax of 30 closest points ",
       "thread_id": "thread-873d7109883c",
       "thread_depth": 5,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080919/8a6bf36b/attachment.pl"
+      ]
     },
     {
       "id": "msg-ffdf6feaf21f",
@@ -1630,11 +1678,14 @@
       "subject_clean": "from ArcGIS GRID to .ASC",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080919/29c76a0b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080919/29c76a0b/attachment.pl>",
+      "body_plain": "Dear all,\nI am reading a set of maps from ArcGRID format using rgdal and I need to\nexport to ASC format.\n\nBut when I try the commands below, I get an error.\n\nrequire(rgdal)\n\nmes01jan<-readGDAL(\"jan_00\")\nimage(mes01jan, col=topo.colors(50))  #looks find\nwriteGDAL(mes01jan, \"mes01jan.asc\", drivername = \"AAIGrid\", type=\"Byte\")\n\nAny idea?\n\nmiltinho, brazil\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\nI am reading a set of maps from ArcGRID format using rgdal and I need to\nexport to ASC format.\n\nBut when I try the commands below, I get an error.\n\nrequire(rgdal)\n\nmes01jan<-readGDAL(\"jan_00",
       "thread_id": "thread-4e3489f01107",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080919/29c76a0b/attachment.pl"
+      ]
     },
     {
       "id": "msg-3aeeace2ce47",
@@ -1646,11 +1697,14 @@
       "subject_clean": "from ArcGIS GRID to .ASC",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080920/6fb714a0/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080920/6fb714a0/attachment.pl>",
+      "body_plain": "At a guess the Byte type might be causing problems, please provide (at a\nminimum) the actual error text you see, and (preferably) exact steps to\nreproduce the problem - is it specific to your dataset or does it fail\nwith other datasets? Is there any difference if you change the output\ntype or driver?  \n\nCheers, Mike.\n\n==============Original message text===============\nOn Sat, 20 Sep 2008 7:01:10 +1000 \"milton ruser\" wrote:\n\nDear all,\nI am reading a set of maps from ArcGRID format using rgdal and I need to\nexport to ASC format.\n\nBut when I try the commands below, I get an error.\n\nrequire(rgdal)\n\nmes01jan<-readGDAL(\"jan_00\")\nimage(mes01jan, col=topo.colors(50))  #looks find\nwriteGDAL(mes01jan, \"mes01jan.asc\", drivername = \"AAIGrid\", type=\"Byte\")\n\nAny idea?\n\nmiltinho, brazil\n\n\t[[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n===========End of original message text===========\n\n\n\nIf it wasn't backed-up, then it wasn't important. ~ Anon sysadmin\n\nMike Sumner (Phd. Candidate)\nhttp://www.antcrc.utas.edu.au/~mdsumner/ http://www.zoo.utas.edu.au/awru/  IASOS/AWRU\nUniversity of Tasmania\nPrivate Bag 80\nHobart Tasmania 7001\nAUSTRALIA\nEmail: mdsumner at utas.edu.au \nPhone: 03 6226 1752 (W)\n       0408599921   (M)\nFax:   03 6226 2745",
+      "body_snippet": "At a guess the Byte type might be causing problems, please provide (at a\nminimum) the actual error text you see, and (preferably) exact steps to\nreproduce the problem - is it specific to your dataset ",
       "thread_id": "thread-3aeeace2ce47",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080920/6fb714a0/attachment.pl"
+      ]
     },
     {
       "id": "msg-20b53c88be9e",
@@ -1735,11 +1789,14 @@
         "<3aaf1a030809191401v8048246v67af6bed70163e3e@mail.gmail.com>",
         "<48D447E2.6030402@utas.edu.au>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080919/ab835690/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080919/ab835690/attachment.pl>",
+      "body_plain": "Dear all,\nI tryed both suggestions and they worked fine.\nIn fact, the short solution is\n\nrequire(rgdal)\nrequire(maptools)\nmes01jan<-readGDAL(\"jan_00\")\nwrite.asciigrid(mes01jan,\"mes01jan.asc\")\n\nThanks Mike! Thanks Alex!\n\nbest wishes,\n\nmiltinho astronauta\nbrazil\n\nOn Fri, Sep 19, 2008 at 10:46 PM, Michael Sumner <mdsumner at utas.edu.au>wrote:\n\n> I tried this, and AAIGrid is not available for creation by rgdal on my\n> machine. See gdalDrivers() for those available.\n>\n> If you install FWTools you can use a workaround to convert the export\n> externally, e.g.\n>\n> x <- readGDAL(system.file(\"external/test.ag\", package=\"sp\")[1])\n>\n> ## write to GeoTIFF\n> writeGDAL(x, \"mes01jan.tif\",  type = \"Byte\")\n>\n> ## convert externally to AAIGrid\n> system(\"gdal_translate mes01jan.tif mes01jan.asc -of AAIGrid -ot Byte\")\n>\n> ## check result\n> system(\"gdalinfo mes01jan.asc\")\n>\n> I don't believe that AAIGrid can explicitly support type Byte without\n> augmentation, so I would carefully check the coercion that occurs (if it's\n> actually needed).\n>\n> Cheers, Mike.\n>\n> milton ruser wrote:\n>\n>> Dear all,\n>> I am reading a set of maps from ArcGRID format using rgdal and I need to\n>> export to ASC format.\n>>\n>> But when I try the commands below, I get an error.\n>>\n>> require(rgdal)\n>>\n>> mes01jan<-readGDAL(\"jan_00\")\n>> image(mes01jan, col=topo.colors(50))  #looks find\n>> writeGDAL(mes01jan, \"mes01jan.asc\", drivername = \"AAIGrid\", type=\"Byte\")\n>>\n>> Any idea?\n>>\n>> miltinho, brazil\n>>\n>>        [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>  ------------------------------------------------------------------------\n>>\n>>\n>> No virus found in this incoming message.\n>> Checked by AVG - http://www.avg.com Version: 8.0.169 / Virus Database:\n>> 270.7.0/1681 - Release Date: 9/19/2008 3:54 PM\n>>\n>>\n>>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\nI tryed both suggestions and they worked fine.\nIn fact, the short solution is\n\nrequire(rgdal)\nrequire(maptools)\nmes01jan<-readGDAL(\"jan_00\")\nwrite.asciigrid(mes01jan,\"mes01jan.asc\")\n\nThanks ",
       "thread_id": "thread-4e3489f01107",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080919/ab835690/attachment.pl"
+      ]
     },
     {
       "id": "msg-8a07e19c57c1",
@@ -1771,11 +1828,14 @@
       "subject_clean": "question about simulating patchy landscapes",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080924/27487786/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080924/27487786/attachment.pl>",
+      "body_plain": "Hello, \n\n \n\nI am a very new user of R, but have used S-Plus for about a year or so.\nI am curious about methods of creating simulated patch landscapes in R,\nand how to parameterize patch cover values and modify the\nperiodicity/regularity of the patches in said landscapes. \n\n \n\nCan anyone point me in the right direction? \n\n \n\nThank you, \n\n \n\nPaul M. Satterthwaite\n\nMS Student, Forest Science\n\nRichardson 201A\n\nOregon State University\n\nCorvallis, OR 97331\n\npaul.satterthwaite at oregonstate.edu\n\n \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello, \n\n \n\nI am a very new user of R, but have used S-Plus for about a year or so.\nI am curious about methods of creating simulated patch landscapes in R,\nand how to parameterize patch cover values a",
       "thread_id": "thread-8d7abdd9d57f",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080924/27487786/attachment.pl"
+      ]
     },
     {
       "id": "msg-2c91a9e96f32",
@@ -1945,11 +2005,14 @@
       "subject_clean": "lat/lon to timezone",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080925/c84e3ecb/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080925/c84e3ecb/attachment.pl>",
+      "body_plain": "Dear geo users,\npardon this trivial question (I did not succeed in searching the archives):\nis there an R function in one of the many spatial packages which returns the\ntime zone for a given lat/lon pair ?\n\nThanks !\n\nMarkus\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear geo users,\npardon this trivial question (I did not succeed in searching the archives):\nis there an R function in one of the many spatial packages which returns the\ntime zone for a given lat/lon p",
       "thread_id": "thread-678e39a9bf5c",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080925/c84e3ecb/attachment.pl"
+      ]
     },
     {
       "id": "msg-72da450585cb",
@@ -2040,11 +2103,14 @@
         "<48DB9E0C.9080309@udel.edu>",
         "<d8ad40b50809250752x747cfccboe19d78825b7c6fdd@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080925/02cf00a7/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080925/02cf00a7/attachment.pl>",
+      "body_plain": "That's a handy little script to have, and learn from.  Geonames.org also \nhosts web services for finding the elevation, nearby populated places, \nnearby Wikipedia entries, some reverse geocoding, and a few more. \n(http://www.geonames.org/export/web-services.html)   Thanks for posting \nthe script!\n\n- John\n\n\n\nBarry Rowlingson wrote:\n> 2008/9/25 John Callahan <john.callahan at udel.edu>:\n>   \n>> If there's not a function within R for this, maybe there's a way to use the\n>> web services from Geonames.org and parse the results.  Maybe this could be\n>> done within R, or in a separate script called by R.  I haven't used R enough\n>> to know if this is possible.\n>>\n>> http://ws.geonames.org/timezone?lat=47.01&lng=10.2&style=full\n>>     \n>\n>   Oh well, in that case it is trivial...\n>\n> getTZ <- function(lat,long){\n>   url=paste(\"http://ws.geonames.org/timezone?lat=\",lat,\"&lng=\",long,\"&style=full\",sep=\"\")\n>   u=url(url,open=\"r\")\n>   text=readLines(u)\n>   tz = text[grep(\"timezoneId\",text)]\n>   tz = sub(\"<timezoneId>\",\"\",tz)\n>   tz = sub(\"</timezoneId>\",\"\",tz)\n>   return(tz)\n> }\n>\n>  note how I avoid parsing XML....\n>\n> Barry\n>   \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "That's a handy little script to have, and learn from.  Geonames.org also \nhosts web services for finding the elevation, nearby populated places, \nnearby Wikipedia entries, some reverse geocoding, and ",
       "thread_id": "thread-678e39a9bf5c",
       "thread_depth": 3,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080925/02cf00a7/attachment.pl"
+      ]
     },
     {
       "id": "msg-f91df70f41aa",
@@ -2167,11 +2233,14 @@
       "subject_clean": "Creating new neighbour's list for aggregated regions and writing to shapefile",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080927/0229ba11/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080927/0229ba11/attachment.pl>",
+      "body_plain": "Hi All,\n\nI want to aggregate my NUTS-3 regions in bigger ones, for which, of course, I have corresponding codes.\nI have two main problems:\n\n1) In terms of map visualization, I used unionSpatialPolygons(), starting from my original shape file. At this point I would like to write the resulting object out to a shape file by writePolyShape(), but R gives me the following answer:\nclass(x) == \"SpatialPolygonsDataFrame\" is not TRUE\n\n2) In order to use spatial econometric techniques, I need to obtain a new neighbours list. Because of islands problems that have already been solved, rather than creating a new spatial weights matrix, I would like to obtain this by aggregating the one based on the original regions, or by aggregating directly the neighbour's set (a listw object for example), if possible.\n\nCan anyone help on these two problems?\n\nThanks and best regards,\nRoberto Patuelli\n\n\n\n********************\nRoberto Patuelli, Ph.D.\nPost-doc researcher\nInstitute for Economic Research (IRE)\nUniversity of Lugano (USI)\nvia Maderno 24, CP 4361\nCH-6904 Lugano\nSwitzerland\nPhone: +41-(0)58-666-4166\nEmail: roberto.patuelli at lu.unisi.ch\n********************\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi All,\n\nI want to aggregate my NUTS-3 regions in bigger ones, for which, of course, I have corresponding codes.\nI have two main problems:\n\n1) In terms of map visualization, I used unionSpatialPolygon",
       "thread_id": "thread-ab7971ca5bc2",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080927/0229ba11/attachment.pl"
+      ]
     },
     {
       "id": "msg-2a58b6c921c2",
@@ -2240,11 +2309,14 @@
         "<48DD62AF.7050601@noaa.gov>",
         "<Pine.LNX.4.64.0809281517070.7333@reclus.nhh.no>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080928/ef1bcff3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080928/ef1bcff3/attachment.pl>",
+      "body_plain": "Dear Jason,\nJust following the Roger´s solution, you can see the different results\nusing:\n\nplot(nc.sids)\nplot(nc.sids[1,], border=\"red\", add=T)\nplot(nc.sids1[1,], border=\"blue\", add=T)\n\n:-) Best wishes,\n\nmiltinho\nbrazil\n\nOn Sun, Sep 28, 2008 at 11:19 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Fri, 26 Sep 2008, Jason Gasper wrote:\n>\n>  I am using the readShapePoly() function in the maptools package to read in\n>> shape files.  I need to order an attribute in the shapefile in ascending\n>> order. For example, I have three attributes: C1,C2,C3\n>>           C1         C2         C3\n>> [1,] -0.5658135  0.0374106 -1.7702093\n>> [2,]  0.6783104 -0.1110221 -0.7005937\n>> [3,] -0.2228110  0.9176706  1.7612472\n>>\n>> ordered attributes based on ascending order in C2 would look like this:\n>>\n>>           C1         C2         C3\n>> [1,]  0.6783104 -0.1110221 -0.7005937\n>> [2,] -0.5658135  0.0374106 -1.7702093\n>> [3,] -0.2228110  0.9176706  1.7612472\n>>\n>> The problem of course is that I am dealing with a shapefile and thus\n>> cannot treat the attributes as a vector using the \"order\" function.  Has\n>> anyone found a way to order attributes in a shapefile? The reason I need to\n>> do this is that I have a bunch of 0's that I will need to eliminate after\n>> spatial weights are created (using the poly2nb() and nb2WB() functions.  So\n>> I need the index for spatial weighting and cannot simply pull out each\n>> attribute and create a new sorted vector.\n>>\n>\n> Probably using the \"[\" method on the SpatialPolygonsDataFrame object:\n>\n> library(spdep)\n> example(nc.sids)\n> nc.sids1 <- nc.sids[order(nc.sids$SID74),]\n> nc.sids$SID74\n> nc.sids1$SID74\n>\n> Construct the indexing variable first if need be to check what is going on.\n>\n> Hope this helps,\n>\n> Roger\n>\n>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>\n> --\n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Jason,\nJust following the Roger´s solution, you can see the different results\nusing:\n\nplot(nc.sids)\nplot(nc.sids[1,], border=\"red\", add=T)\nplot(nc.sids1[1,], border=\"blue\", add=T)\n\n:-) Best wishe",
       "thread_id": "thread-2a4be1fc95f6",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080928/ef1bcff3/attachment.pl"
+      ]
     },
     {
       "id": "msg-692611fa2fe5",
@@ -2256,11 +2328,14 @@
       "subject_clean": "exporting Geoda data to R",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/96af028e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/96af028e/attachment.pl>",
+      "body_plain": "I  have exported data from Geoda to R in the past just fine.  However,\nwith a file I am working on today when I used the Tools > Data Export\n>ASII in Geoda not all of the variable names in the file are listed for\nexport.  Does anyone know why this might be happening?  I need to bring\nthat file, and its associated spatial weights, into spdep in R.  Could I\nby-pass the Geoda export step by saving the .dbf as a .csv file and read\nthat data file with the read.csv function and then read the .gal spatial\nweights file with the read.gal function?\nThanks,\nMike\n \nMichael McManus\nSenior Aquatic Ecologist\nThe Nature Conservancy\n \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I  have exported data from Geoda to R in the past just fine.  However,\nwith a file I am working on today when I used the Tools > Data Export\n>ASII in Geoda not all of the variable names in the file ar",
       "thread_id": "thread-692611fa2fe5",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/96af028e/attachment.pl"
+      ]
     },
     {
       "id": "msg-aec184c6f06d",
@@ -2272,11 +2347,14 @@
       "subject_clean": "used read.dbf function from spsurvey",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/58a50daa/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/58a50daa/attachment.pl>",
+      "body_plain": "I was able to work around my export Geoda problem by using the read.dbf\nfunction in the spsurvey package.\nMike\n \nMichael McManus\nSenior Aquatic Ecologist\nThe Nature Conservancy\n \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I was able to work around my export Geoda problem by using the read.dbf\nfunction in the spsurvey package.\nMike\n \nMichael McManus\nSenior Aquatic Ecologist\nThe Nature Conservancy\n \n\n\t[[alternative HTML ",
       "thread_id": "thread-aec184c6f06d",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/58a50daa/attachment.pl"
+      ]
     },
     {
       "id": "msg-ffa5163afc8d",
@@ -2288,11 +2366,14 @@
       "subject_clean": "polygons from pixels.",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/8269d11f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/8269d11f/attachment.pl>",
+      "body_plain": "Dear RGeo-Gurus,\n\nI have a ASC file, and would like that each pixel come to be a polygon.\nAny help are welcome.\n\nrequire(rgdal)\nrequire(adehabitat)\n\n(file1 <-  paste(system.file(package = \"adehabitat\"),\n               \"ascfiles/elevation.asc\", sep = \"/\"))\nel <- readGDAL(file1)\nimage(el, axes=T)\n\nbest wishes,\n\nmiltinho astronauta\nbrazil\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear RGeo-Gurus,\n\nI have a ASC file, and would like that each pixel come to be a polygon.\nAny help are welcome.\n\nrequire(rgdal)\nrequire(adehabitat)\n\n(file1 <-  paste(system.file(package = \"adehabitat\"",
       "thread_id": "thread-ffa5163afc8d",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/8269d11f/attachment.pl"
+      ]
     },
     {
       "id": "msg-a90fa2b0abc6",
@@ -2306,11 +2387,14 @@
       "references": [
         "<3aaf1a030809291239l2af8df2cxf619de8bcf0404e6@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080930/f5e064a9/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080930/f5e064a9/attachment.pl>",
+      "body_plain": "********\n> require(rgdal)\n> require(adehabitat)\n\n> (file1 <-  paste(system.file(package = \"adehabitat\"),\n               \"ascfiles/elevation.asc\", sep = \"/\"))\n> el <- readGDAL(file1)\n> image(el, axes=T)\n> el.pix <- as(el, \"SpatialPixelsDataFrame\")\n> el.pol <- as.SpatialPolygons.SpatialPixels(el.pix)\n> str(el.pol, max.level=2)\n> el.pol at polygons[[1]]\n> plot(el.pol)\n********\n\nif you want to do \"map segmentation\" in SAGA GIS or \"map slicing\" in ILWIS GIS, then you could do something like:\n\n********\n> setwd <- paste(system.file(package = \"adehabitat\"),\"ascfiles/\",sep=\"\"))\n> library(RSAGA) \n# ! download and install SAGA GIS (www.saga-gis.org) and ILWIS GIS (www.52north.org) to your machine first!\n> rsaga.env(path=\"C:/Progra~1/saga_vc\")\n> ILWIS <- \"C:\\\\Progra~1\\\\N52\\\\SetupIlwis\\\\IlwisClient.exe -C\"\n> rsaga.get.usage(\"grid_discretisation\", 3)\n> rsaga.esri.to.sgrd(in.grids=\"elevation.asc\", out.sgrds=\"el.sgrd\", in.path=getwd())\n> rsaga.geoprocessor(lib=\"grid_discretisation\", module=3, param=list(INPUT=\"el.sgrd\", SEGMENTS=\"seg.sgrd\", OBJECTS=\"obj.sgrd\", METHOD=0, VALUES=0))\n...\n> breaks.el <- as.factor(hist(el at data[[1]], plot=F)$breaks)\n> writeGDAL(el[1], \"elevation.mpr\", \"ILWIS\")\n> shell(cmd=paste(ILWIS, \" crdom breaks.dom -type=group -items=0\",sep=\"\"), wait=F)\n> for(i in 1:length(levels(breaks.el))){\n   shell(cmd=paste(ILWIS, \" additemtodomaingroup breaks.dom \", i+.01,\" cl\",i,sep=\"\"), wait=F)\n}\n> shell(cmd=paste(ILWIS, \"elevation_sliced.mpr = MapSlicing(elevation.mpr, breaks.dom)\"), wait=F)\n> shell(cmd=paste(ILWIS, \"open elevation_sliced.mpr -noask\"), wait=F)\n...\n********\n\n\nTom Hengl\nhttp://spatial-analyst.net\n\n\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch on behalf of milton ruser\nSent: Mon 29/09/2008 9:39 PM\nTo: r-sig-geo at stat.math.ethz.ch\nSubject: [R-sig-Geo] polygons from pixels.\n \nDear RGeo-Gurus,\n\nI have a ASC file, and would like that each pixel come to be a polygon.\nAny help are welcome.\n\nrequire(rgdal)\nrequire(adehabitat)\n\n(file1 <-  paste(system.file(package = \"adehabitat\"),\n               \"ascfiles/elevation.asc\", sep = \"/\"))\nel <- readGDAL(file1)\nimage(el, axes=T)\n\nbest wishes,\n\nmiltinho astronauta\nbrazil\n\n\t[[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "********\n> require(rgdal)\n> require(adehabitat)\n\n> (file1 <-  paste(system.file(package = \"adehabitat\"),\n               \"ascfiles/elevation.asc\", sep = \"/\"))\n> el <- readGDAL(file1)\n> image(el, axes=T",
       "thread_id": "thread-ffa5163afc8d",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080930/f5e064a9/attachment.pl"
+      ]
     },
     {
       "id": "msg-d7970a301b8c",
@@ -2325,11 +2409,14 @@
         "<3aaf1a030809291239l2af8df2cxf619de8bcf0404e6@mail.gmail.com>",
         "<37382E8DCB905042969BA78541F6570624D5E9@kwek.ic.uva.nl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/354e3d3c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/354e3d3c/attachment.pl>",
+      "body_plain": "Dear Dr. Tom,\n\nYour suggestions worked fine to me.\nVery thanks for the multitude of solutions.\n\nBest wishes,\n\nmiltinho\n\nOn Mon, Sep 29, 2008 at 7:50 PM, Hengl, T. <T.Hengl at uva.nl> wrote:\n\n>\n> ********\n> > require(rgdal)\n> > require(adehabitat)\n>\n> > (file1 <-  paste(system.file(package = \"adehabitat\"),\n>                \"ascfiles/elevation.asc\", sep = \"/\"))\n> > el <- readGDAL(file1)\n> > image(el, axes=T)\n> > el.pix <- as(el, \"SpatialPixelsDataFrame\")\n> > el.pol <- as.SpatialPolygons.SpatialPixels(el.pix)\n> > str(el.pol, max.level=2)\n> > el.pol at polygons[[1]]\n> > plot(el.pol)\n> ********\n>\n> if you want to do \"map segmentation\" in SAGA GIS or \"map slicing\" in ILWIS\n> GIS, then you could do something like:\n>\n> ********\n> > setwd <- paste(system.file(package = \"adehabitat\"),\"ascfiles/\",sep=\"\"))\n> > library(RSAGA)\n> # ! download and install SAGA GIS (www.saga-gis.org) and ILWIS GIS (\n> www.52north.org) to your machine first!\n> > rsaga.env(path=\"C:/Progra~1/saga_vc\")\n> > ILWIS <- \"C:\\\\Progra~1\\\\N52\\\\SetupIlwis\\\\IlwisClient.exe -C\"\n> > rsaga.get.usage(\"grid_discretisation\", 3)\n> > rsaga.esri.to.sgrd(in.grids=\"elevation.asc\", out.sgrds=\"el.sgrd\",\n> in.path=getwd())\n> > rsaga.geoprocessor(lib=\"grid_discretisation\", module=3,\n> param=list(INPUT=\"el.sgrd\", SEGMENTS=\"seg.sgrd\", OBJECTS=\"obj.sgrd\",\n> METHOD=0, VALUES=0))\n> ...\n> > breaks.el <- as.factor(hist(el at data[[1]], plot=F)$breaks)\n> > writeGDAL(el[1], \"elevation.mpr\", \"ILWIS\")\n> > shell(cmd=paste(ILWIS, \" crdom breaks.dom -type=group -items=0\",sep=\"\"),\n> wait=F)\n> > for(i in 1:length(levels(breaks.el))){\n>    shell(cmd=paste(ILWIS, \" additemtodomaingroup breaks.dom \", i+.01,\"\n> cl\",i,sep=\"\"), wait=F)\n> }\n> > shell(cmd=paste(ILWIS, \"elevation_sliced.mpr = MapSlicing(elevation.mpr,\n> breaks.dom)\"), wait=F)\n> > shell(cmd=paste(ILWIS, \"open elevation_sliced.mpr -noask\"), wait=F)\n> ...\n> ********\n>\n>\n> Tom Hengl\n> http://spatial-analyst.net\n>\n>\n>\n> -----Original Message-----\n> From: r-sig-geo-bounces at stat.math.ethz.ch on behalf of milton ruser\n> Sent: Mon 29/09/2008 9:39 PM\n> To: r-sig-geo at stat.math.ethz.ch\n> Subject: [R-sig-Geo] polygons from pixels.\n>\n> Dear RGeo-Gurus,\n>\n> I have a ASC file, and would like that each pixel come to be a polygon.\n> Any help are welcome.\n>\n> require(rgdal)\n> require(adehabitat)\n>\n> (file1 <-  paste(system.file(package = \"adehabitat\"),\n>                \"ascfiles/elevation.asc\", sep = \"/\"))\n> el <- readGDAL(file1)\n> image(el, axes=T)\n>\n> best wishes,\n>\n> miltinho astronauta\n> brazil\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Dr. Tom,\n\nYour suggestions worked fine to me.\nVery thanks for the multitude of solutions.\n\nBest wishes,\n\nmiltinho\n\nOn Mon, Sep 29, 2008 at 7:50 PM, Hengl, T. <T.Hengl at uva.nl> wrote:\n\n>\n> *****",
       "thread_id": "thread-ffa5163afc8d",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/354e3d3c/attachment.pl"
+      ]
     },
     {
       "id": "msg-323b363e57b6",

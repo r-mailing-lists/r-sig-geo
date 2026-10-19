@@ -183,11 +183,14 @@
       "subject_clean": "going from R to ESRI grids",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050106/386d932c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050106/386d932c/attachment.pl>",
+      "body_plain": "Just wondering if others have worked with this, and if I am missing\nsomething totally obvious to make this simpler, apologies for my ignorance -\n\n\n \n\nOK - it is my understanding that when you reshape a vector (nx1) into a\nmatrix in R, it reads the matrix by columns, correct?  I discovered that if\nyou read a vector into GRID, it will read the matrix by rows.  Therefore, it\nseems that if you want to take a column vector in R and reshape it to a\nmatrix in R, you should take the transpose of that column vector before\nforming it to a matrix.  Correct?\n\n \n\nSO - let's say for example I generated a random uniform column vector 16x1\nwhich I was assuming to represent a 4x4 grid, and then I created a 4x4\nneighborhood for that grid, then a matrix from that neighborhood (wrk16),\nand calculated a spatial moving average:\n\n \n\ngrid1 -> 0.3 * wrk16 %*% grid + grid\n\n \n\nThe result is again a 16x1 column vector - now let's say I want to output\nthis and read it into GRID - should I reshape it into a 4x4 matrix of the\ntranspose of the grid1 column vector?\n\n \n\nThat's the best I can figure out.  Seems logical.  BUT, I opened up a grid\nwhose values I knew, and the southwest corner of the source data was the\nnorthwest corner of the resulting grid.  If I don't do a transpose, the data\nare definitely not correct.\n\n \n\nThank you,\n\nDarla Munroe\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Just wondering if others have worked with this, and if I am missing\nsomething totally obvious to make this simpler, apologies for my ignorance -\n\n\n \n\nOK - it is my understanding that when you reshape ",
       "thread_id": "thread-80385a32ec63",
       "thread_depth": 0,
-      "month": "2005-01"
+      "month": "2005-01",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050106/386d932c/attachment.pl"
+      ]
     },
     {
       "id": "msg-ee5eebc75097",

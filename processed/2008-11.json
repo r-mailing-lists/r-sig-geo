@@ -13,11 +13,14 @@
       "subject_clean": "Newbie question: Reclassifying raster (ndvi) using fisher method",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081101/e5ffd9f5/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081101/e5ffd9f5/attachment.pl>",
+      "body_plain": "Hi all,\n\nI am not sure as to which list this best fits (Grass or R-sig-geo).\n\nI am trying to reclass a raster map (ndvi) into 5 different zones using the\nfisher method, ultimatley i am trying to reclass as natural breaks.\n\nThe point of this exercise is for precision agriculture. I want to determine\nmanagement zones according to the current crop, so i can use this\ninformation for inputs for next years crop. Therefore i have no use for a\nrange of ndvi values -1 thru 1. I need to split this into a number of zones\n(5 or 7 is good number, unless i can get an algorithm to determine the exact\nnumber of groups it needs). Each zone then in turn needs to be ground\ntruthed (hence need for classifying into 5 or 7 zones).\n\nMy problem at the moment is that the way i am doing it takes a while... I\nwould sure love it if anyone has any suggestions to speed up the process...\nIs it possible to do the reclass bit in R and export the raster\n(SpatialDataFrame) back into grass? I have read a post from Roger Bivand on\nhow to do the whole classinterval thing (thank you Roger) however i am\nunsure of how then to create a new image from those values. I have looked\nthrough the sp package breifly but I dont very well understand the R system.\n\n\nCurrent method (this has to be done for each paddock, or paddocks can be\ngrouped if they have similar management history).\n\ncreate ndvi\nr.mapcalc 'ndvi=1.0*(nir-red)/(nir+red)'\nmove ndvi raster to R\n-R-R-R-----------------\nlibrary(spgrass6)\nG <- gmeta6()\nndvi <- readRAST6(ndvi at mapset)\nlibrary(classInt)\nt1 <- classIntervals(ndvi$ndvi.mapset, n=5, style=\"fisher\")\nprint(t1)\n--------------------------------\ncreate text document for reclass rules, multiply everything by 10,000,000\n(as reclass will round my numbers)\n-----------------------------\nback in grass\nr.mapcalc ndvi_10M = ndvi * 10000000\nr.reclass input=ndvi_10M output=ndvi.reclass rules=\"rules created in text\ndoc\" title=\"title\"\n\n\nI hope this all makes sense. Thank you for your time and reading through my\nproblem. If you have any suggestions i sure would be greatful.\n\nKind regards,\nEd\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all,\n\nI am not sure as to which list this best fits (Grass or R-sig-geo).\n\nI am trying to reclass a raster map (ndvi) into 5 different zones using the\nfisher method, ultimatley i am trying to recla",
       "thread_id": "thread-c43032ba30ec",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081101/e5ffd9f5/attachment.pl"
+      ]
     },
     {
       "id": "msg-e664402a206c",
@@ -133,11 +136,14 @@
       "references": [
         "<OFE5AD0B15.1A2880F4-ONC12574F6.007DCC3D-C12574F6.007DCC40@sgu.se>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081104/3d15236f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081104/3d15236f/attachment.pl>",
+      "body_plain": "Dear Mikael,\n \nTry to split the locations you want to interpolate into different\nsubset. Interpolate each of the subsets and them merge them together.\n \nHTH,\n \nThierry\n \n\n------------------------------------------------------------------------\n----\nir. Thierry Onkelinx\nInstituut voor natuur- en bosonderzoek / Research Institute for Nature\nand Forest\nCel biometrie, methodologie en kwaliteitszorg / Section biometrics,\nmethodology and quality assurance\nGaverstraat 4\n9500 Geraardsbergen\nBelgium\ntel. + 32 54/436 185\nThierry.Onkelinx at inbo.be\nwww.inbo.be\n\nTo call in the statistician after the experiment is done may be no more\nthan asking him to perform a post-mortem examination: he may be able to\nsay what the experiment died of.\n~ Sir Ronald Aylmer Fisher\n\nThe plural of anecdote is not data.\n~ Roger Brinner\n\nThe combination of some data and an aching desire for an answer does not\nensure that a reasonable answer can be extracted from a given body of\ndata.\n~ John Tukey\n\n\n\n\n________________________________\n\nVan: r-sig-geo-bounces at stat.math.ethz.ch\n[mailto:r-sig-geo-bounces at stat.math.ethz.ch] Namens Mikael Carlsson\nVerzonden: maandag 3 november 2008 23:54\nAan: r-sig-geo at stat.math.ethz.ch\nOnderwerp: [R-sig-Geo] Memory issue\n\n\nHi,\n\n\n\nFirst, thanks for all help so far...but I still have some problems.\nHere is the code:\ncumark <- read.table(\"k:/test/helamarkcu.txt\", header=T, sep = \";\")\n\nmemory.limit(size = 1897)    \nattach(cumark)\nvew <- as.vector(ew)\nvns <- as.vector(ns)\nvcu <- as.vector(cu)\n\nfcumark <- data.frame(vew, vns, vcu)\n\ncoordinates(fcumark) <- ~vew+vns  \n\nL1 <-round((max(vew)- min(vew))/100,0)\nL2 <-round((max(vns)- min(vns))/100,0)\n\n\nfcumark.interp.old <- interp.old(vew, vns, vcu,\n                xo= seq(min(vew), max(vew), length = L1),\n                yo= seq(min(vns), max(vns), length = L2),\n                ncp = 0,  \n                extrap= FALSE,\n                duplicate = \"mean\",\n                dupfun = NULL)\nThen I get this;\nError: cannot allocate vector of size 351.8 Mb\n\nWhen I tested with a smaller file (~2000 rows) I come to the end without\nproblems.\n\nRest of the code..\n\nfcumark.interp.old.grid <-\nas.SpatialGridDataFrame.im(as.im(fcumark.interp.old))\n\n##  spplot(fcumark.interp.old.grid, col.regions=bpy.colors(),\nsp.layout=list(\"sp.points\", pch=\"+\", fcumark))\n\nslot(slot(fcumark.interp.old.grid, \"grid\"), \"cellsize\") <-\nrep(mean(slot(slot(fcumark.interp.old.grid,\n   \"grid\"), \"cellsize\")), 2)\n\nwrite.asciigrid(fcumark.interp.old.grid[1], \"k:/test/helamarkcu.asc\",\nna.value = -9999)\n## End run\n\nhelamarkcu.txt is a plain ascii file, looks like...\new;ns;cu\n1344628;6138662;24.0\n1340104;6138880;17.0\n1342246;6138946;21.0\n1347259;6140911;19.0\n1339968;6140932;15.0\n1349906;6140987;21.0\n...\n..\n.\n(38155 rows)\nHave anybody a solution? Writing result from interp.old direct to\ndisk/file on the \"fly\"?\n\nRunning R 2.7.2 and WinXP\n\nRegards,\nMikael\n\n\nDit bericht en eventuele bijlagen geven enkel de visie van de schrijver weer \nen binden het INBO onder geen enkel beding, zolang dit bericht niet bevestigd is\ndoor een geldig ondertekend document. The views expressed in  this message\nand any annex are purely those of the writer and may not be regarded as stating \nan official position of INBO, as long as the message is not confirmed by a duly \nsigned document.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Mikael,\n \nTry to split the locations you want to interpolate into different\nsubset. Interpolate each of the subsets and them merge them together.\n \nHTH,\n \nThierry\n \n\n-----------------------------",
       "thread_id": "thread-0cb5f58fa705",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081104/3d15236f/attachment.pl"
+      ]
     },
     {
       "id": "msg-c65bb7575dcf",
@@ -167,11 +173,14 @@
       "subject_clean": "classIntervals function not finishing",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081105/7b8e6798/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081105/7b8e6798/attachment.pl>",
+      "body_plain": "Hi List,\n\nI am having trouble with the classIntervals function. Something seems to be\ngoing wrong as the function is not returning (in 8hr +).\n\ni am trying to call the function as follows\n\nt1 <- classIntervals(map$map.mapset, n=7, style=\"fisher\")\n\nthere are about 2.3 million cells in the image.\n\nThe cpu goes to 100% cycle and the function never returns.\n\nI have tried the function with other styles \"pretty\" and \"kmeans\" and it\nreturns fine.\n\nIs there a way i can verbose output from the function to see if i have done\nsomething wrong?\n\nTHanks,\nEd\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi List,\n\nI am having trouble with the classIntervals function. Something seems to be\ngoing wrong as the function is not returning (in 8hr +).\n\ni am trying to call the function as follows\n\nt1 <- class",
       "thread_id": "thread-7cd79160d6ea",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081105/7b8e6798/attachment.pl"
+      ]
     },
     {
       "id": "msg-6ffbfa86337e",
@@ -201,11 +210,14 @@
       "subject_clean": "merge 2 txt file",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081104/11b51aba/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081104/11b51aba/attachment.pl>",
+      "body_plain": "Hi all,\n\n \n\nI have two txt file with X,Y,Z column and I need to merge together\n\n \n\nI tried \n\nfile_all <- merge(\"file1.txt\",\"file2.txt\")\n\nbut I don't sure about the result. Is It this code correct?\n\nThanks Ale \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all,\n\n \n\nI have two txt file with X,Y,Z column and I need to merge together\n\n \n\nI tried \n\nfile_all <- merge(\"file1.txt\",\"file2.txt\")\n\nbut I don't sure about the result. Is It this code correct?\n\nTh",
       "thread_id": "thread-16e867a20511",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081104/11b51aba/attachment.pl"
+      ]
     },
     {
       "id": "msg-6896f5d25063",
@@ -337,11 +349,14 @@
       "subject_clean": "How to put a network diagram onto a map",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081107/a970898b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081107/a970898b/attachment.pl>",
+      "body_plain": "Hi there GIS people\n\nI have a problem that perhaps is simple. I hope you may be able to help\nme.\n\nI would like to get a network diagram on to a map. I can produce a NZ\nmap or network diagram but cant seem to put the network diagram on to\nthe NZ map.\n\nA) NZ map\nplot.polylist(NZ.regions.map, border = \"red\", xaxt = \"n\",lty=10, yaxt =\n\"n\", xlab = \"Easting (km)\", ylab = \"Northing\n(km)\")\n\nB) Network diagram\ngplot(trace.sna, thresh = 5000, coord = coord/10000, displaylabels =\nTRUE, \n   edge.lwd = edge.width,  label.cex = 0.25, boxed.labels = FALSE, \n   displayisolates = FALSE, add=TRUE)\n\nI would really appreciate your asistance.\n\nRegards\n\nAndy\n\n\n########################################################################\nThis email message and any attachment(s) is intended solely for the\naddressee(s) named above. The information it contains is confidential\nand may be legally privileged.  Unauthorised use of the message, or the\ninformation it contains, may be unlawful. If you have received this\nmessage by mistake please call the sender immediately on 64 4 8940100\nor notify us by return email and erase the original message and\nattachments. Thank you.\n\nThe Ministry of Agriculture and Forestry accepts no responsibility for\nchanges made to this email or to any attachments after transmission from\nthe office.\n########################################################################\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi there GIS people\n\nI have a problem that perhaps is simple. I hope you may be able to help\nme.\n\nI would like to get a network diagram on to a map. I can produce a NZ\nmap or network diagram but cant ",
       "thread_id": "thread-ae4c5a9d51ff",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081107/a970898b/attachment.pl"
+      ]
     },
     {
       "id": "msg-ec83799b796b",
@@ -353,11 +368,14 @@
       "subject_clean": "shared boundary weight matrix",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081106/4d5f5212/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081106/4d5f5212/attachment.pl>",
+      "body_plain": "Hello,\nis there a way to create shared boundary weight matrix in R or GeoDa, that\nis a matrix that is based on length of common border between polygons?\nThanks,\nadam\n\n-- \nAdam Okulicz-Kozaryn\nHarvard - MIT Data Center (HMDC)\nCGIS South Bldg S306\n1730 Cambridge Street, Cambridge, MA 02138\n\n972 408 6919\nadam.okulicz.kozaryn at gmail.com\npeople.hmdc.harvard.edu/~akozyarn\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\nis there a way to create shared boundary weight matrix in R or GeoDa, that\nis a matrix that is based on length of common border between polygons?\nThanks,\nadam\n\n-- \nAdam Okulicz-Kozaryn\nHarvard ",
       "thread_id": "thread-ec83799b796b",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081106/4d5f5212/attachment.pl"
+      ]
     },
     {
       "id": "msg-120f926a9d36",
@@ -456,11 +474,14 @@
       "subject_clean": "Instrumental Varibles",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081110/bfab6153/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081110/bfab6153/attachment.pl>",
+      "body_plain": "Hi!\n\nIs there any way to estimate model with instrumental variables in R?\n\nRegards,\n\nRaphael Saldanha\nsaldanha.plangeo at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi!\n\nIs there any way to estimate model with instrumental variables in R?\n\nRegards,\n\nRaphael Saldanha\nsaldanha.plangeo at gmail.com\n\n\t[[alternative HTML version deleted]]",
       "thread_id": "thread-fca3f794f34d",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081110/bfab6153/attachment.pl"
+      ]
     },
     {
       "id": "msg-40f50a163573",
@@ -472,11 +493,14 @@
       "subject_clean": "Improve memory in Windows Vista",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081110/d5f7e2fd/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081110/d5f7e2fd/attachment.pl>",
+      "body_plain": "HI Users,\n\n \n\nI must processing a large data set in R and I wish improve my PC memory. I\nhave a Windows Vista with 4 Gb di RAM and Intel centrino \n\n \n\nIn ordinary modality my memory is this\n\n> memory.size(TRUE)\n\n[1] 13.4375\n\n> memory.size()\n\n[1] 11.01423\n\n \n\nIf I use the command line \"C:\\program files\\R\\R-2.7.1\\bin>Rgui.exe\n--max-mem-size=2048M\"\n\n \n\n> memory.size(TRUE)\n\n[1] 13.4375\n\n> memory.size()\n\n[1] 11.01418\n\n> vegetation <- read.delim(\"vegetation_2674147_2684147.txt\",\nsep=\",\",header=TRUE)\n\n> coordinates(vegetation) =~X+Y\n\nError: cannot allocate vector of size 232.5 Mb\n\n \n\nIs there a solution of this limitation?\n\n \n\nale\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "HI Users,\n\n \n\nI must processing a large data set in R and I wish improve my PC memory. I\nhave a Windows Vista with 4 Gb di RAM and Intel centrino \n\n \n\nIn ordinary modality my memory is this\n\n> memory.",
       "thread_id": "thread-40f50a163573",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081110/d5f7e2fd/attachment.pl"
+      ]
     },
     {
       "id": "msg-893051ae7077",
@@ -542,11 +566,14 @@
       "references": [
         "<49198355.6020808@dpi.inpe.br>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081111/51dd23b3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081111/51dd23b3/attachment.pl>",
+      "body_plain": "Olá Virgínia!\n\nLegal ver brazileiros nessa lista! Vou dar uma olhada no seu problema e lhe\nescrevo.\n\nOn Tue, Nov 11, 2008 at 10:06 AM, Virginia <virginia at dpi.inpe.br> wrote:\n\n> I have some questions:\n>\n> I got an error. I dont't know why.\n>\n> Somebody to help me?\n>\n> Thanks,\n>\n>  Virginia Ragoni\n>\n> require(spgwr)\n> require(foreign)\n> x <- read.shape(\"cidade.shp\")\n> plot(x)\n> mappolys <- Map2poly1(x,as.character(x$att.data$ID9100),raw=FALSE)\n>\n> mapbbs=Map2bbs(x)\n> mapcents=get.Pcent(x)\n> tab= x$att.data\n>\n> # cálculo da largura da banda\n> sjc.bw <- gwr.sel((tab$TX_CRESC~tab$LOGDEN),data=tab,coords=mapcents)\n>\n> # error -  Erro em spDistsN1(bbox, bbox[2, ], longlat) :\n> #  NA/NaN/Inf em chamada de função externa (argumento 1)\n>\n> sp.gauss  <- gwr((tab$PERIDOSO~tab$PERREN20),data=tab,coords=mapcents,\n> bandwidth=sjc.bw, hatmatrix=TRUE)\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n\n-- \nAtenciosamente,\n\nRaphael Saldanha\nsaldanha.plangeo at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Olá Virgínia!\n\nLegal ver brazileiros nessa lista! Vou dar uma olhada no seu problema e lhe\nescrevo.\n\nOn Tue, Nov 11, 2008 at 10:06 AM, Virginia <virginia at dpi.inpe.br> wrote:\n\n> I have some question",
       "thread_id": "thread-bf67b04783a5",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081111/51dd23b3/attachment.pl"
+      ]
     },
     {
       "id": "msg-d5f5cfe08dcf",
@@ -785,11 +812,14 @@
       "subject_clean": "Manually defining the regression model in universal kriging [SEC=UNCLASSIFIED]",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081114/8c24066a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081114/8c24066a/attachment.pl>",
+      "body_plain": "Hello list,\n\nI am trying to use universal kriging (gstat, R) to create a gridded\ndaily rainfall surface. I have rain gauge data and satellite grid data\nand have applied the following script successfully. I would now like to\nmanually define the regression model that defines the relationship\nbetween the gauge and satellite at the collocated points so I can apply\nthe same model to a series of days. Is it possible to manually define\nthe regression equation and have it applied within the krige function? \n\n \n\nDatasets\n\nObsSat_UTM = collocated gauge and satellite data.\n\nSatDat_UTM = Satellite grid. \n\n \n\n# Define the regression model to define relationships between dependent\n(gauge) and independent (sat) variables at collocated points. \n\nObsSat.lm <-lm(formula = Obs_rain~sat_rain, ObsSat_UTM)\n\n \n\n#Variogram of residuals of regression between obs and sat data a gauge\nsites\n\nObsSat.rev <- variogram(Obs_rain~sat_rain, ObsSat_UTM)\n\nObsSat.rvgm <- fit.variogram(ObsSat.rev, vgm(20,\"Exp\", 50,0))\n\n \n\n#predict onto the Sat grid\n\nObsSat.rk <- krige(Obs_rain~sat_rain, ObsSat_UTM, SatDat_UTM,\nObsSat.rvgm)\n\n \n\nIf this question has already been answered I apologise. I have had\ntrouble finding any examples of how to include this into my script.\n\nThanks very much \n\nAlison Oke\n\n \n\nHydrologist\n\nWater Division\n\nBureau of Meteorology\n\nGPO Box 1289\n\nMelbourne, VIC 3001\n\n \n\nPhone:  +61 (0) 3 8638 8212\n\nFax:      +61 (0) 3 8638 8200\n\nE-mail:   a.oke at bom.gov.au\n\n \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello list,\n\nI am trying to use universal kriging (gstat, R) to create a gridded\ndaily rainfall surface. I have rain gauge data and satellite grid data\nand have applied the following script successful",
       "thread_id": "thread-8b16c577e3bf",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081114/8c24066a/attachment.pl"
+      ]
     },
     {
       "id": "msg-2f859b1a2062",
@@ -906,11 +936,14 @@
       "subject_clean": "Bug report in Merged module di R+SAGA",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081114/b3ade0c3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081114/b3ade0c3/attachment.pl>",
+      "body_plain": "Hi All,\n\n \n\nThere is a bug in the SAGA merged module in R.\n\n \n\nI tried it with SAGA 2.0.3 from within R, with different grids, and It's ran\nforever. This must be a bug in the Merged module, specifically in the\ncommand line version of SAGA (saga_cmd). It's been a problem in some other\nproblems too that the saga_cmd binding crashed but the saga_gui version of\nthe same modules worked.\n\n \n\nToday I report this bug in Sourcefourge project web site for SAGA.\n\n \n\nAle\n\n \n\n \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi All,\n\n \n\nThere is a bug in the SAGA merged module in R.\n\n \n\nI tried it with SAGA 2.0.3 from within R, with different grids, and It's ran\nforever. This must be a bug in the Merged module, specifical",
       "thread_id": "thread-feb353d34c60",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081114/b3ade0c3/attachment.pl"
+      ]
     },
     {
       "id": "msg-ba983d5c700e",
@@ -961,11 +994,14 @@
         "<mailman.9.1226746802.29467.r-sig-geo@stat.math.ethz.ch>",
         "<492020DF.4050304@univ-fcomte.fr>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081117/f1f91c90/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081117/f1f91c90/attachment.pl>",
+      "body_plain": "The easiest thing to do is probably to write the data.frame to a\ntab-delimited text file using write.table and then read in the written file\nlike you have done above.  See ?write.table - as I recall there are plenty\nof options that will allow you to specify the separator, whether or not to\nwrite headings, etc.\n\n-James\n\n\n\nOn 11/16/08, Patrick Giraudoux <patrick.giraudoux at univ-fcomte.fr> wrote:\n>\n> Dear listers,\n>\n> I am writing a R function to upload waypoints to a GPS Garmin Etrex with\n>  gpsbabel. This works quite well reading from a text file as following:\n>\n> df<-\"mytabfile.txt\"\n> system(paste(\"gpsbabel -w -i tabsep -f \",df,\" -o garmin -F com5:\",sep=\"\"))\n>\n> However, I would prefer to upload from a data.frame within R rather than\n> reading a tab delimited text file on the disk.\n>\n> Any idea about how to specify it in the command line (should be trivial,\n> but I cannot figure it out) ?\n>\n> Thanks in advance,\n>\n> Patrick\n>\n>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "The easiest thing to do is probably to write the data.frame to a\ntab-delimited text file using write.table and then read in the written file\nlike you have done above.  See ?write.table - as I recall t",
       "thread_id": "thread-ba983d5c700e",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081117/f1f91c90/attachment.pl"
+      ]
     },
     {
       "id": "msg-2d402ed3f7fb",
@@ -997,11 +1033,14 @@
       "subject_clean": "Models",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081117/1024e463/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081117/1024e463/attachment.pl>",
+      "body_plain": "Hi!\n\nRunning some models, I'm having, pratically, the same results with the\nmodels *spautolm(TX07 ~ X35A39 + TXPIB05, data=mg, family=\"SAR\",\nlistw=rook_Ww)* and *errorsarlm(TX07 ~ X35A39 + TXPIB05, data=mg,\nlistw=rook_Ww)*. And looking the help don't helpe a lot... so, what are the\nbasically differences between spautolm with SAR and errorsarlm, and what\nconclusions can I reach with similar results?\n\n> summary(mg_sar)\n\nCall: spautolm(formula = TX07 ~ X35A39 + TXPIB05, data = mg, listw =\nrook_Ww,     family = \"SAR\")\n\nResiduals:\n     Min       1Q   Median       3Q      Max\n-17.4249  -3.2110  -1.3689   1.7380  47.3231\n\nCoefficients:\n             Estimate Std. Error z value Pr(>|z|)\n(Intercept) -2.668712   2.999516 -0.8897 0.373619\nX35A39       1.332412   0.417628  3.1904 0.001421\nTXPIB05     -0.055142   0.024987 -2.2068 0.027326\n\nLambda: 0.70216 LR test value: 348.09 p-value: < 2.22e-16\n\nLog likelihood: -2859.839\nML residual variance (sigma squared): 42.561, (sigma: 6.5239)\nNumber of observations: 853\nNumber of parameters estimated: 5\nAIC: 5729.7\n\n############\n\n> summary(mg_errorsar)\n\nCall:errorsarlm(formula = TX07 ~ X35A39 + TXPIB05, data = mg, listw =\nrook_Ww)\n\nResiduals:\n     Min       1Q   Median       3Q      Max\n-17.4249  -3.2110  -1.3689   1.7380  47.3231\n\nType: error\nCoefficients: (asymptotic standard errors)\n             Estimate Std. Error z value Pr(>|z|)\n(Intercept) -2.668712   2.999516 -0.8897 0.373619\nX35A39       1.332412   0.417628  3.1904 0.001421\nTXPIB05     -0.055142   0.024987 -2.2068 0.027326\n\nLambda: 0.70216 LR test value: 348.09 p-value: < 2.22e-16\nAsymptotic standard error: 0.030286 z-value: 23.185 p-value: < 2.22e-16\nWald statistic: 537.52 p-value: < 2.22e-16\n\nLog likelihood: -2859.839 for error model\nML residual variance (sigma squared): 42.561, (sigma: 6.5239)\nNumber of observations: 853\nNumber of parameters estimated: 5\nAIC: 5729.7, (AIC for lm: 6075.8)\n\n-- \nRegards,\n\nRaphael Saldanha\nsaldanha.plangeo at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi!\n\nRunning some models, I'm having, pratically, the same results with the\nmodels *spautolm(TX07 ~ X35A39 + TXPIB05, data=mg, family=\"SAR\",\nlistw=rook_Ww)* and *errorsarlm(TX07 ~ X35A39 + TXPIB05, da",
       "thread_id": "thread-326c9cc2752b",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081117/1024e463/attachment.pl"
+      ]
     },
     {
       "id": "msg-b9b3974ad204",
@@ -1034,11 +1073,14 @@
         "<c85849370811171352i2f3949b6m5804723f835aec41@mail.gmail.com>",
         "<alpine.LRH.2.00.0811172332470.28284@reclus.nhh.no>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081117/7f759ab2/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081117/7f759ab2/attachment.pl>",
+      "body_plain": "Thanks professor! You always helps a lot!\n\nOn Mon, Nov 17, 2008 at 8:36 PM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Mon, 17 Nov 2008, Raphael Saldanha wrote:\n>\n>  Hi!\n>>\n>> Running some models, I'm having, pratically, the same results with the\n>> models *spautolm(TX07 ~ X35A39 + TXPIB05, data=mg, family=\"SAR\",\n>> listw=rook_Ww)* and *errorsarlm(TX07 ~ X35A39 + TXPIB05, data=mg,\n>> listw=rook_Ww)*. And looking the help don't helpe a lot... so, what are\n>> the\n>> basically differences between spautolm with SAR and errorsarlm, and what\n>> conclusions can I reach with similar results?\n>>\n>\n> spautolm() is a re-implementation of errorsarlm(), adding support for\n> weights and for CAR and SMA. So the \"similarity\" of results is by design,\n> they are doing exactly the same thing, but written in a more general way in\n> spautolm(). There are differences in the summary methods, so the model\n> output looks a bit different, but only in appearance and internal structure,\n> not in the methods being implemented.\n>\n> Hope this helps,\n>\n> Roger\n>\n>\n>\n>>  summary(mg_sar)\n>>>\n>>\n>> Call: spautolm(formula = TX07 ~ X35A39 + TXPIB05, data = mg, listw =\n>> rook_Ww,     family = \"SAR\")\n>>\n>> Residuals:\n>>    Min       1Q   Median       3Q      Max\n>> -17.4249  -3.2110  -1.3689   1.7380  47.3231\n>>\n>> Coefficients:\n>>            Estimate Std. Error z value Pr(>|z|)\n>> (Intercept) -2.668712   2.999516 -0.8897 0.373619\n>> X35A39       1.332412   0.417628  3.1904 0.001421\n>> TXPIB05     -0.055142   0.024987 -2.2068 0.027326\n>>\n>> Lambda: 0.70216 LR test value: 348.09 p-value: < 2.22e-16\n>>\n>> Log likelihood: -2859.839\n>> ML residual variance (sigma squared): 42.561, (sigma: 6.5239)\n>> Number of observations: 853\n>> Number of parameters estimated: 5\n>> AIC: 5729.7\n>>\n>> ############\n>>\n>>  summary(mg_errorsar)\n>>>\n>>\n>> Call:errorsarlm(formula = TX07 ~ X35A39 + TXPIB05, data = mg, listw =\n>> rook_Ww)\n>>\n>> Residuals:\n>>    Min       1Q   Median       3Q      Max\n>> -17.4249  -3.2110  -1.3689   1.7380  47.3231\n>>\n>> Type: error\n>> Coefficients: (asymptotic standard errors)\n>>            Estimate Std. Error z value Pr(>|z|)\n>> (Intercept) -2.668712   2.999516 -0.8897 0.373619\n>> X35A39       1.332412   0.417628  3.1904 0.001421\n>> TXPIB05     -0.055142   0.024987 -2.2068 0.027326\n>>\n>> Lambda: 0.70216 LR test value: 348.09 p-value: < 2.22e-16\n>> Asymptotic standard error: 0.030286 z-value: 23.185 p-value: < 2.22e-16\n>> Wald statistic: 537.52 p-value: < 2.22e-16\n>>\n>> Log likelihood: -2859.839 for error model\n>> ML residual variance (sigma squared): 42.561, (sigma: 6.5239)\n>> Number of observations: 853\n>> Number of parameters estimated: 5\n>> AIC: 5729.7, (AIC for lm: 6075.8)\n>>\n>>\n>>\n> --\n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>\n>\n\n\n-- \nAtenciosamente,\n\nRaphael Saldanha\nsaldanha.plangeo at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks professor! You always helps a lot!\n\nOn Mon, Nov 17, 2008 at 8:36 PM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Mon, 17 Nov 2008, Raphael Saldanha wrote:\n>\n>  Hi!\n>>\n>> Running some mod",
       "thread_id": "thread-326c9cc2752b",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081117/7f759ab2/attachment.pl"
+      ]
     },
     {
       "id": "msg-30ffe7096179",
@@ -1084,11 +1126,14 @@
       "subject_clean": "Spatial and temporal analysis",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081118/ddb9b932/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081118/ddb9b932/attachment.pl>",
+      "body_plain": "Hi!\nI'm looking for some introductory bibliography about modelling spatial and\ntemporal series for areal data. Recommendations?\n\n-- \nKing regards,\n\nRaphael Saldanha\nsaldanha.plangeo at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi!\nI'm looking for some introductory bibliography about modelling spatial and\ntemporal series for areal data. Recommendations?\n\n-- \nKing regards,\n\nRaphael Saldanha\nsaldanha.plangeo at gmail.com\n\n\t[[a",
       "thread_id": "thread-711e6c794580",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081118/ddb9b932/attachment.pl"
+      ]
     },
     {
       "id": "msg-f90ea59c6ff0",
@@ -1187,11 +1232,14 @@
       "subject_clean": "calculate geometric mean of mass of points",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081119/4ccc9799/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081119/4ccc9799/attachment.pl>",
+      "body_plain": "Hi all,\n\n \n\nI have a points shape and I wish to calculate the geometric centre of this\npoints shape and create a new points with R. But It's over my knowledge. Is\nthere suggestions?\n\n \n\nThanks\n\n \n\nAle \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all,\n\n \n\nI have a points shape and I wish to calculate the geometric centre of this\npoints shape and create a new points with R. But It's over my knowledge. Is\nthere suggestions?\n\n \n\nThanks\n\n \n\nAle",
       "thread_id": "thread-94de70b09aa7",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081119/4ccc9799/attachment.pl"
+      ]
     },
     {
       "id": "msg-ee9ff5910d9a",
@@ -1279,11 +1327,14 @@
       "subject_clean": "problem with loop formula in my analysis",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081119/790f3374/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081119/790f3374/attachment.pl>",
+      "body_plain": "Hi All,\n\nI read a lot about loop formula but this morning I tried to applied the loop\nfor the following formulas   \n\nI know it's easy for an expertise, but sorry I am working with R in this\nmounts and I change completely my GIS philosophy.\n\n \n\nThanks for help\n\n \n\ngive a coordinates attribution\n\n \n\ncoordinates(centre_plot1) =~X+Y \n\ncoordinates(centre_plot2) =~X+Y\n\ncoordinates(centre_plot3) =~X+Y\n\ncoordinates(centre_plot4) =~X+Y\n\n......................\n\n.....................\n\n(I HAVE 500 plot)\n\n \n\nproj4string(centre_plot1) <- CRS(\"+init=epsg:26911\")\n\nproj4string(centre_plot2) <- CRS(\"+init=epsg:26911\")\n\nproj4string(centre_plot3) <- CRS(\"+init=epsg:26911\")\n\nproj4string(centre_plot4) <- CRS(\"+init=epsg:26911\")\n\n \n\nwriteOGR(centre_plot1 [\"Z\"], \" centre_plot1.shp\", \" centre_plot1\",\ndriver=\"ESRI Shapefile\")\n\nwriteOGR(centre_plot2 [\"Z\"], \" centre_plot2.shp\", \" centre_plot2\",\ndriver=\"ESRI Shapefile\")\n\nwriteOGR(centre_plot3 [\"Z\"], \" centre_plot3.shp\", \" centre_plot3\",\ndriver=\"ESRI Shapefile\")\n\nwriteOGR(centre_plot4 [\"Z\"], \" centre_plot4.shp\", \" centre_plot4\",\ndriver=\"ESRI Shapefile\")\n\n \n\nAle\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi All,\n\nI read a lot about loop formula but this morning I tried to applied the loop\nfor the following formulas   \n\nI know it's easy for an expertise, but sorry I am working with R in this\nmounts and",
       "thread_id": "thread-2db68f03ad17",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081119/790f3374/attachment.pl"
+      ]
     },
     {
       "id": "msg-88e6dda9bfc0",
@@ -1336,11 +1387,14 @@
         "<e12429640811191403p2b6659dak80517fd69379fa5b@mail.gmail.com>",
         "<e12429640811191414y6a9997f4u4c20258f7eac0a94@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081119/96b8ef5a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081119/96b8ef5a/attachment.pl>",
+      "body_plain": "Hi,\n\nI just replied to Alessandro off-list, but having see your reply, I thought I might as well go on list with my answer/question...\n\nI think a slight adaptation is still required:\n\ncp <- paste(sep=\"\",\"centre_plot\",i) \nshould be \ncp <- as.data.frame(get(paste(\"centre_plot\",i,sep=\"\")))\nor coordinates(cp) should be coordinates(as.data.frame(get(cp))\nbecause the coordinates() function asks for a data.frame object, where get() returns a matrix.\n\nThen your get(cp)[z] is unnecessary, if I am right, but the character object for the file names need to be reconstructed.\n\nSo something like:\n\nfor(i in 1:500)\n{\ncp <- as.data.frame(get(paste(\"centre_plot\",i,sep=\"\")))\ncoordinates(cp) =~X+Y\nproj4string(cp) <- CRS(\"+init=epsg:26911\")\nwriteOGR(cp[\"Z\"], paste(paste(\"centre_plot\",i,sep=\"\"), \".shp\", sep=\"\"),paste(\"centre_plot\",i,sep=\"\"),driver=\"ESRI Shapefile\")\n}\n\nHope this works. When I played around with it, it did....\n\n\nKami\n\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch on behalf of G. Allegri\nSent: Wed 19.11.2008 22:14\nTo: Alessandro\nCc: r-sig-geo at stat.math.ethz.ch\nSubject: Re: [R-sig-Geo] problem with loop formula in my analysis\n \nA correction.\ncp[\"Z\"] should be get(cp)[z], to evaluate the string to a variable name...\n\n2008/11/19 G. Allegri <giohappy at gmail.com>:\n> Alessandro,\n> I suggest to read some startup tutorials before asking in ML.\n> Anyway you can do this:\n>\n>  for(i in 1:500){\n> cp <- paste(sep=\"\",\"centre_plot\",i)\n> coordinates(cp) =~X+Y\n> proj4string(cp) <- CRS(\"+init=epsg:26911\")\n> writeOGR(cp[\"Z\"], paste(sep=\"\",cp,\".shp\"), cp,driver=\"ESRI Shapefile\")\n> }\n>\n>\n>\n> 2008/11/19 Alessandro <alessandro.montaghi at unifi.it>:\n>> Hi All,\n>>\n>> I read a lot about loop formula but this morning I tried to applied the loop\n>> for the following formulas\n>>\n>> I know it's easy for an expertise, but sorry I am working with R in this\n>> mounts and I change completely my GIS philosophy.\n>>\n>>\n>>\n>> Thanks for help\n>>\n>>\n>>\n>> give a coordinates attribution\n>>\n>>\n>>\n>> coordinates(centre_plot1) =~X+Y\n>>\n>> coordinates(centre_plot2) =~X+Y\n>>\n>> coordinates(centre_plot3) =~X+Y\n>>\n>> coordinates(centre_plot4) =~X+Y\n>>\n>> ......................\n>>\n>> .....................\n>>\n>> (I HAVE 500 plot)\n>>\n>>\n>>\n>> proj4string(centre_plot1) <- CRS(\"+init=epsg:26911\")\n>>\n>> proj4string(centre_plot2) <- CRS(\"+init=epsg:26911\")\n>>\n>> proj4string(centre_plot3) <- CRS(\"+init=epsg:26911\")\n>>\n>> proj4string(centre_plot4) <- CRS(\"+init=epsg:26911\")\n>>\n>>\n>>\n>> writeOGR(centre_plot1 [\"Z\"], \" centre_plot1.shp\", \" centre_plot1\",\n>> driver=\"ESRI Shapefile\")\n>>\n>> writeOGR(centre_plot2 [\"Z\"], \" centre_plot2.shp\", \" centre_plot2\",\n>> driver=\"ESRI Shapefile\")\n>>\n>> writeOGR(centre_plot3 [\"Z\"], \" centre_plot3.shp\", \" centre_plot3\",\n>> driver=\"ESRI Shapefile\")\n>>\n>> writeOGR(centre_plot4 [\"Z\"], \" centre_plot4.shp\", \" centre_plot4\",\n>> driver=\"ESRI Shapefile\")\n>>\n>>\n>>\n>> Ale\n>>\n>>\n>>        [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n\nClick https://www.mailcontrol.com/sr/wQw0zmjPoHdJTZGyOCrrhg==  to report this email as spam.\n\n\n\nThe Zoological Society of London is incorporated by Royal Charter\nPrincipal Office England. Company Number RC000749\nRegistered address: \nRegent's Park, London, England NW1 4RY\nRegistered Charity in England and Wales no. 208728 \n\n_________________________________________________________________________\nThis e-mail has been sent in confidence to the named add...{{dropped:20}}",
+      "body_snippet": "Hi,\n\nI just replied to Alessandro off-list, but having see your reply, I thought I might as well go on list with my answer/question...\n\nI think a slight adaptation is still required:\n\ncp <- paste(sep=",
       "thread_id": "thread-88e6dda9bfc0",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081119/96b8ef5a/attachment.pl"
+      ]
     },
     {
       "id": "msg-67f5ce30b7c5",
@@ -1386,11 +1440,14 @@
       "subject_clean": "Missing library",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081120/c720d079/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081120/c720d079/attachment.pl>",
+      "body_plain": "Hello!\n\nI'm running R2.8.0 , Solaris and a Sparc machine\n\nGet the following error, and don't know what to do...\n\nRegards,\nMikael\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n- - - - - - - - - - - - - - - - - - - - - - \nlibrary(akima) \nlibrary(maptools) \nlibrary(sp) \n\ncumark <- read.table(\"sydnorr5000.txt\", header=T, sep = \";\")\nattach(cumark)\nvew <- as.vector(ew)\nvns <- as.vector(ns)\nvcu <- as.vector(cu)\n\nfcumark <- data.frame(vew, vns, vcu)\n\ncoordinates(fcumark) <- ~vew+vns \n\nL1 <-round((max(vew)- min(vew))/100,0)\nL2 <-round((max(vns)- min(vns))/100,0)\n\n\nfcumark.interp.old <- interp.old(vew, vns, vcu,\n                xo= seq(min(vew), max(vew), length = L1),\n                yo= seq(min(vns), max(vns), length = L2),\n                ncp = 0, \n                extrap= FALSE,\n                duplicate = \"mean\",\n                dupfun = NULL)\n\nfcumark.interp.old.grid <- \nas.SpatialGridDataFrame.im(as.im(fcumark.interp.old))\n\nLoading required package: deldir\ndeldir 0.0-7 \nError in dyn.load(file, DLLpath = DLLpath, ...) : \n  unable to load shared library \n'/usr/local/R-2.8.0/lib/R/library/spatstat/libs/spatstat.so':\n  ld.so.1: R: fatal: relocation error: file \n/usr/local/R-2.8.0/lib/R/library/spatstat/libs/spatstat.so: symbol \n__gxx_personality_v0: referenced symbol not found\nError in as.SpatialGridDataFrame.im(as.im(fcumark.interp.old)) : \n  could not find function \"as.im\"\n\n(program stop!)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello!\n\nI'm running R2.8.0 , Solaris and a Sparc machine\n\nGet the following error, and don't know what to do...\n\nRegards,\nMikael\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -",
       "thread_id": "thread-df4b15a3930b",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081120/c720d079/attachment.pl"
+      ]
     },
     {
       "id": "msg-bc819f81e5c2",
@@ -1439,11 +1496,14 @@
       "subject_clean": "Ang. Re:  Missing library",
       "in_reply_to": "<alpine.LRH.2.00.0811201330570.20142@reclus.nhh.no>",
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081120/1c3ba956/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081120/1c3ba956/attachment.pl>",
+      "body_plain": "Couldn't load using library(spatstat)\ngot this error:\n> library(spatstat)\nError in dyn.load(file, DLLpath = DLLpath, ...) : \n  unable to load shared library \n'/usr/local/R-2.8.0/lib/R/library/spatstat/libs/spatstat.so':\n  ld.so.1: R: fatal: relocation error: file \n/usr/local/R-2.8.0/lib/R/library/spatstat/libs/spatstat.so: symbol \n__gxx_personality_v0: referenced symbol not found\nError in library(spatstat) : .First.lib failed for 'spatstat'\n> \n\nRegards,\n/M\n\n\n\nRoger Bivand <Roger.Bivand at nhh.no> \n2008-11-20 13:33\nSänd svar till\nRoger.Bivand at nhh.no\n\n\nTill\nMikael Carlsson <Mikael.Carlsson at sgu.se>\nKopia\nr-sig-geo at stat.math.ethz.ch\nÄrende\nRe: [R-sig-Geo] Missing library\n\n\n\n\n\n\nOn Thu, 20 Nov 2008, Mikael Carlsson wrote:\n\n> Hello!\n>\n> I'm running R2.8.0 , Solaris and a Sparc machine\n>\n> Get the following error, and don't know what to do...\n\nThe problem is in loading spatstat. Can you load spatstat manually:\n\nlibrary(spatstat)\n\nWhen that works, the coercion should work too. I expect that spatstat \nisn't installed adequately (built against an older version of some \nlibrary, probably the g++ runtime library from googling on the missing \nfunction).\n\nRoger\n\n>\n> Regards,\n> Mikael\n> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n-\n> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n-\n> - - - - - - - - - - - - - - - - - - - - - -\n> library(akima)\n> library(maptools)\n> library(sp)\n>\n> cumark <- read.table(\"sydnorr5000.txt\", header=T, sep = \";\")\n> attach(cumark)\n> vew <- as.vector(ew)\n> vns <- as.vector(ns)\n> vcu <- as.vector(cu)\n>\n> fcumark <- data.frame(vew, vns, vcu)\n>\n> coordinates(fcumark) <- ~vew+vns\n>\n> L1 <-round((max(vew)- min(vew))/100,0)\n> L2 <-round((max(vns)- min(vns))/100,0)\n>\n>\n> fcumark.interp.old <- interp.old(vew, vns, vcu,\n>                xo= seq(min(vew), max(vew), length = L1),\n>                yo= seq(min(vns), max(vns), length = L2),\n>                ncp = 0,\n>                extrap= FALSE,\n>                duplicate = \"mean\",\n>                dupfun = NULL)\n>\n> fcumark.interp.old.grid <-\n> as.SpatialGridDataFrame.im(as.im(fcumark.interp.old))\n>\n> Loading required package: deldir\n> deldir 0.0-7\n> Error in dyn.load(file, DLLpath = DLLpath, ...) :\n>  unable to load shared library\n> '/usr/local/R-2.8.0/lib/R/library/spatstat/libs/spatstat.so':\n>  ld.so.1: R: fatal: relocation error: file\n> /usr/local/R-2.8.0/lib/R/library/spatstat/libs/spatstat.so: symbol\n> __gxx_personality_v0: referenced symbol not found\n> Error in as.SpatialGridDataFrame.im(as.im(fcumark.interp.old)) :\n>  could not find function \"as.im\"\n>\n> (program stop!)\n>\n>                [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Couldn't load using library(spatstat)\ngot this error:\n> library(spatstat)\nError in dyn.load(file, DLLpath = DLLpath, ...) : \n  unable to load shared library \n'/usr/local/R-2.8.0/lib/R/library/spatstat",
       "thread_id": "thread-df4b15a3930b",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081120/1c3ba956/attachment.pl"
+      ]
     },
     {
       "id": "msg-615c9c64feb7",
@@ -1555,11 +1615,14 @@
       "subject_clean": "calculating integral for spectral signatures",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081122/1548fd90/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081122/1548fd90/attachment.pl>",
+      "body_plain": "Dear list members,\nDoes anyone know how to calculate in R integral of bivariate distribution of\ndiscrete points suche as the following\nx       y\n1       1\n2       2\n3       9\n5       11\n7       7\n12      20\n13      10\nBut I've thousands of x,y points with x always increasing: I'm talking about\nspectral signature.\nI think I need some function that \"constructs\" (not interpolates) a polyline\nfrom these x,y points and then calculate the underlying area, because I've\nto compare several distributions.\n\nCould anyone help me?\n\nThanks\n\n-- \nEnrico Guastaldi\nCentro di GeoTecnologie dell'Università degli Studi Siena,\nVia Vetri Vecchi, 34\n52027 - San Giovanni Valdarno (AR)\nItaly\n\nTel.   +39 349 4025017\nFax.   +39 055 9119439\nurl:   www.geotecnologie.unisi.it\n\nIo uso Linux!\nuser #466775 counter.li.org\n\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nPlease try to avoid to send me .dwg, .doc, .xls, .ppt files.\nI prefer free formats.\nhttp://en.wikipedia.org/wiki/Open_format\n\nPlease consider the environment before printing this e-mail\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list members,\nDoes anyone know how to calculate in R integral of bivariate distribution of\ndiscrete points suche as the following\nx       y\n1       1\n2       2\n3       9\n5       11\n7       7\n12  ",
       "thread_id": "thread-d945e1bdec55",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081122/1548fd90/attachment.pl"
+      ]
     },
     {
       "id": "msg-59028f59358b",
@@ -1644,11 +1707,14 @@
       "subject_clean": "R GRASS bindings Mac OSX",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081123/e09636c7/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081123/e09636c7/attachment.pl>",
+      "body_plain": "Hi list,\n\nI'm trying to find the packages rgdal and spgrass6 (and all dependencies) for R 2.8 and GRASS 6.3 for Mac OSX 10.5.x. I haven't been lucky so far as non of them are listed in the repositories. Are these functions not supported as I got them running like a charm on linux and a lot of my scripts depend on GRASS R interaction.\n\nAny input would be welcome...\n\nKind regards,\nKoen\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi list,\n\nI'm trying to find the packages rgdal and spgrass6 (and all dependencies) for R 2.8 and GRASS 6.3 for Mac OSX 10.5.x. I haven't been lucky so far as non of them are listed in the repositorie",
       "thread_id": "thread-0532e7575d47",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081123/e09636c7/attachment.pl"
+      ]
     },
     {
       "id": "msg-b167e6d7245a",
@@ -1751,11 +1817,14 @@
       "references": [
         "<dc22b2570811232050o48a039afw7d122bda33c1e463@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081124/fda4e023/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081124/fda4e023/attachment.pl>",
+      "body_plain": "Dear Robert,\nthanks for the answer, it's working perfectley!\nSo simple???\nCheers,\n\nEnrico\n\n\nI need\n2008/11/24 Robert Hijmans <r.hijmans at gmail.com>\n\n> Enrico,\n>\n> I think something like this should work for your purpose:\n>\n> x <- c(1,2,3,5,7,12,13)\n> y <- c(1,2,9,11,7,20,10)\n>\n> y1 <- y[-length(y)]\n> y2 <- y[-1]\n> dy <- y2 - y1\n> dx <- x[-1] - x[-length(x)]\n> dxy <- dx * (y1 + 0.5 * dy)\n> integral <- sum(dxy)\n>\n> Robert\n>\n> > Today's Topics:\n> >\n> >   1.  calculating integral for spectral signatures (Enrico Guastaldi)\n> >   2. posting on behalf of Kevin, Yen (Roger Bivand)\n> >   3. Re: WMS, WFS, WCS an WPS for R (Roger Bivand)\n> >\n> >\n> > ----------------------------------------------------------------------\n> >\n> > Message: 1\n> > Date: Sat, 22 Nov 2008 12:59:51 +0100\n> > From: \"Enrico Guastaldi\" <enrico.guastaldi at gmail.com>\n> > Subject: [R-sig-Geo]  calculating integral for spectral signatures\n> > To: r-sig-geo at stat.math.ethz.ch\n> > Message-ID:\n> >        <7ce8d7d30811220359n755d2e22k488ca33c10a6d509 at mail.gmail.com>\n> > Content-Type: text/plain\n> >\n> > Dear list members,\n> > Does anyone know how to calculate in R integral of bivariate distribution\n> of\n> > discrete points suche as the following\n> > x       y\n> > 1       1\n> > 2       2\n> > 3       9\n> > 5       11\n> > 7       7\n> > 12      20\n> > 13      10\n> > But I've thousands of x,y points with x always increasing: I'm talking\n> about\n> > spectral signature.\n> > I think I need some function that \"constructs\" (not interpolates) a\n> polyline\n> > from these x,y points and then calculate the underlying area, because\n> I've\n> > to compare several distributions.\n> >\n> > Could anyone help me?\n> >\n> > Thanks\n> >\n> > --\n> > Enrico Guastaldi\n> > Centro di GeoTecnologie dell'Università degli Studi Siena,\n> > Via Vetri Vecchi, 34\n> > 52027 - San Giovanni Valdarno (AR)\n> > Italy\n> >\n> > Tel.   +39 349 4025017\n> > Fax.   +39 055 9119439\n> > url:   www.geotecnologie.unisi.it\n> >\n> > Io uso Linux!\n> > user #466775 counter.li.org\n> >\n> >\n> > ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n> > Please try to avoid to send me .dwg, .doc, .xls, .ppt files.\n> > I prefer free formats.\n> > http://en.wikipedia.org/wiki/Open_format\n> >\n> > Please consider the environment before printing this e-mail\n> > ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n> >\n> >        [[alternative HTML version deleted]]\n> >\n> >\n> >\n> > ------------------------------\n> >\n> > Message: 2\n> > Date: Sat, 22 Nov 2008 13:42:39 +0100 (CET)\n> > From: Roger Bivand <Roger.Bivand at nhh.no>\n> > Subject: [R-sig-Geo] posting on behalf of Kevin, Yen\n> > To: r-sig-geo at stat.math.ethz.ch\n> > Message-ID: <alpine.LRH.2.00.0811221337310.7189 at reclus.nhh.no>\n> > Content-Type: text/plain; charset=\"iso-8859-15\"; Format=\"flowed\"\n> >\n> > I'm posting this on behalf Kevin, Yen - the same text was trapped\n> > yesterday as spam, so this is also a technical issue, and the reason for\n> > helping in this way:\n> > -----------------------\n> > Hi, lists,\n> >\n> > I am reading meterials about GWR, but there are some problems puzzling me\n> > very much:\n> >\n> > If there are N observations at N locations g(g1,????gn),the dependent and\n> > independent variables are Y(y1,...yn) and X(x1,...xn). The formula for\n> the\n> > regression is Y=X*Beta, where Beta is the function of location g.\n> >\n> > My questions are as follows:\n> >   1.How many groups should be grouped for regressing? N groups for the N\n> > locations or M groups (M is a arbitrary number less than N)?\n> >   2.When the parameter beta(gi) at location gi is estimated, weight Wi is\n> > used. So how is W used? Are the neighboring k(with in the bandwidth h)\n> > observations used for calculation?\n> >   3.Beta is the function of location. Is Beta same as W or expressed as a\n> > function including W like Beta=W*f(g)?\n> >\n> > Many thanks and best wishes\n> >\n> > Kevin,Yen\n> > LIESMARS,Wuhan University,China\n> >\n> > --\n> > Roger Bivand\n> > Economic Geography Section, Department of Economics, Norwegian School of\n> > Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> > Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> > e-mail: Roger.Bivand at nhh.no\n> >\n> > ------------------------------\n> >\n> > Message: 3\n> > Date: Sat, 22 Nov 2008 14:01:16 +0100 (CET)\n> > From: Roger Bivand <Roger.Bivand at nhh.no>\n> > Subject: Re: [R-sig-Geo] WMS, WFS, WCS an WPS for R\n> > To: Barry Rowlingson <b.rowlingson at lancaster.ac.uk>\n> > Cc: r-sig-geo at stat.math.ethz.ch\n> > Message-ID: <alpine.LRH.2.00.0811221357040.7189 at reclus.nhh.no>\n> > Content-Type: text/plain; charset=\"iso-8859-15\"; Format=\"flowed\"\n> >\n> > On Sat, 22 Nov 2008, Barry Rowlingson wrote:\n> >\n> >> 2008/11/22 Hisaji ONO <hi_ono2001 at ybb.ne.jp>:\n> >>> Hello.\n> >>>\n> >>>  There are lots of services of OGC(Open Geospatial\n> >>> Consortium:http://www.opengeospatial.org/)'s<http://www.opengeospatial.org/%29%27s>standard\n> >>> based Geo-Web ervices incluing WMS(Web Map Service),\n> >>> WFS(Web Feature Service), WCS(Web Coverage Service) and\n> >>> WPS(Web Processing Service) all over the world.\n> >>>\n> >>>  Does anyone try to use these services from R?\n> >>\n> >> Any access to WMS and WFS would probably be best done using GDAL and\n> >> OGR via the rgdal package.... Let's see...\n> >>\n> >> GDAL has a WMS driver, but it seems you do have to create a 'local\n> >> service description' file. www.gdal.org seems down at the moment, so\n> >> here's a google cache link:\n> >>\n> >>\n> http://216.239.59.132/search?q=cache:21OOLtr9yj0J:www.gdal.org/frmt_wms.html+gdal+wms&hl=en&ct=clnk&cd=1&gl=uk\n> >>\n> >> For WFS, there's some recent discussion on the gdal-dev list:\n> >>\n> >> http://www.nabble.com/OGR-WFS-driver-td20485363.html\n> >>\n> >> so it might be coming soon. Can you wait?\n> >>\n> >> To do WFS from scratch in R is probably going to need XML parsing,\n> >> and then it'll probably also need OGR too unless you want to hand-code\n> >> understanding the returned GML...\n> >\n> > Yes, so OGR needs to be built against the Xerces libraries. I agree that\n> > WMS and WFS are best handled by using work that is already going on in\n> the\n> > OSGeo community. An example of R in a a WPS setting is:\n> >\n> > Katharina Henneb?hl, Edzer Pebesma:\n> > Providing R functionality through the OGC Web Processing Service\n> >\n> > given at useR! 2008 in Dortmund in August - there is an abstract on the\n> > conference website. I think that their trial site may be ready before\n> > long, together with the underlying software.\n> >\n> > Roger\n> >\n> >>\n> >> Barry\n> >>\n> >> _______________________________________________\n> >> R-sig-Geo mailing list\n> >> R-sig-Geo at stat.math.ethz.ch\n> >> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>\n> >\n> > --\n> > Roger Bivand\n> > Economic Geography Section, Department of Economics, Norwegian School of\n> > Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> > Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> > e-mail: Roger.Bivand at nhh.no\n> >\n> > ------------------------------\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> >\n> > End of R-sig-Geo Digest, Vol 63, Issue 20\n> > *****************************************\n> >\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Robert,\nthanks for the answer, it's working perfectley!\nSo simple???\nCheers,\n\nEnrico\n\n\nI need\n2008/11/24 Robert Hijmans <r.hijmans at gmail.com>\n\n> Enrico,\n>\n> I think something like this should ",
       "thread_id": "thread-1cd27ea5a1e6",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081124/fda4e023/attachment.pl"
+      ]
     },
     {
       "id": "msg-57422f1ed1f0",
@@ -1957,11 +2026,14 @@
       "subject_clean": "Regression Kriging",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081127/692d255a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081127/692d255a/attachment.pl>",
+      "body_plain": "Hello Sir/Madam\n\n\nThis is Pritam Chand, working as Technical Associate in Forest Survey of\nIndia, Dehrdaun. I have some doubts regarding regression kriging. Actually I\nam trying to make final regression kriging predicted map and using R and\nILWIS software. I am able to reach steps upto variogram analysis of\nresiduals but in last command for regression kriging it is giving error that\nthe predictor variables are in different coordinate systems........ it might\nbe because of using ILWIS...... as it is its basic problem.... I am using 8\npredictor variable maps......and with the help of these predicting soil\norganic carbon......All the steps are running except the final one command\nof regression kriging......\n\nPlease help me regarding this query or kindly send me some link or email\nfrom where I get help regrading this query. If possible then plz send me\nsample code for this problem so I can get idea and go forward with my\nobjectives.\n\nWith regards,\n\nPritam Chand Sharma,\nFSI, Dheradun,\nIndia\n\n\n\n-- \nThe Earth was not given to us by our parents. It was loaned to us by our\nchildren.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello Sir/Madam\n\n\nThis is Pritam Chand, working as Technical Associate in Forest Survey of\nIndia, Dehrdaun. I have some doubts regarding regression kriging. Actually I\nam trying to make final regressi",
       "thread_id": "thread-597bbfab2a4a",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081127/692d255a/attachment.pl"
+      ]
     },
     {
       "id": "msg-6bbd78b984de",
@@ -2062,11 +2134,14 @@
       "subject_clean": "moving averages and hole effect models",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081130/eb11b0e3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081130/eb11b0e3/attachment.pl>",
+      "body_plain": "Hello, \n\n \n\nI am a beginner with R, and have 2 questions concerning\nspatial/geostatistics. \n\n \n\nI have an artificial landscape composed of a binary grid of patches\n(patch=1) or gaps (patch=0), which leads to very periodic empirical\nsemivariograms. \n\n \n\n1)Is there an already-existing model semivariogram that contains a \"hole\neffect\", i.e., includes some periodicity in the model semivariogram fit\nto the empirical data? \n\n \n\n \n\n2) Is there a way I can smooth this periodicity using a local/moving\naverage of values in a local neighborhood around each point in the grid?\n\n \n\nAny ideas would be GREATLY appreciated!\n\nCheers!\n\n \n\nSincerely, \n\n \n\n \n\nPaul M. Satterthwaite\n\nMS Student, Forest Science\n\nRichardson 201A\n\nOregon State University\n\nCorvallis, OR 97331\n\npaul.satterthwaite at oregonstate.edu\n<mailto:paul.satterthwaite at oregonstate.edu> \n\n \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello, \n\n \n\nI am a beginner with R, and have 2 questions concerning\nspatial/geostatistics. \n\n \n\nI have an artificial landscape composed of a binary grid of patches\n(patch=1) or gaps (patch=0), which l",
       "thread_id": "thread-64c9cbbea36f",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081130/eb11b0e3/attachment.pl"
+      ]
     }
   ],
   "threads": [

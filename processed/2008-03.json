@@ -207,11 +207,14 @@
       "subject_clean": "ArcGIS raster/vector to SPATSTATS im image file conversion",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080305/8b37c225/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080305/8b37c225/attachment.pl>",
+      "body_plain": "Hello,\n\n \n\nI would like to convert ArcGIS vector/raster grids to SPATSTATS image\nfiles (*.im files) and would like to know how this can be done.\n\n \n\nI have not used SPATSTATS before (I use ArcGIS regularly), however I\nwould like to try spatial modelling of a point pattern in SPATSTATS,\nusing a ArcGIS point pattern (shapefile) with environmental variables of\nclimate, land cover, and landscape indicators (ArcGIS raster grids of\neither continuous or categorical data). I can also convert these grids\nto ASCII file formats also if that helps.\n\n \n\nI would be grateful for any assistance you can provide.\n\n \n\nKind regards,\n\n \n\nLiza Storey.\n\n \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\n \n\nI would like to convert ArcGIS vector/raster grids to SPATSTATS image\nfiles (*.im files) and would like to know how this can be done.\n\n \n\nI have not used SPATSTATS before (I use ArcGIS regu",
       "thread_id": "thread-98abda95676f",
       "thread_depth": 0,
-      "month": "2008-03"
+      "month": "2008-03",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080305/8b37c225/attachment.pl"
+      ]
     },
     {
       "id": "msg-f7ea923a3003",
@@ -503,11 +506,14 @@
       "subject_clean": "SpatialPixelDataFrame over a polygon",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080306/891e87df/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080306/891e87df/attachment.pl>",
+      "body_plain": "Hello list,\nI need to create a SpatialPixelDataFrame to do a gaussian simulation over an\narea delimited by a polygon. The object I want to produce is something\nsimilar to the \"meuse.grid\" example.\nI could do it in Grass, converting first the polygon to raster (with the\nresolution of the Grass region), and then converting the raster to points\nvector. Then I import it with spgrass6 and \"grid\" it to SPDF.\nIs there a more straightforward way to accomplish it totally inside R?\n\nGiovanni\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello list,\nI need to create a SpatialPixelDataFrame to do a gaussian simulation over an\narea delimited by a polygon. The object I want to produce is something\nsimilar to the \"meuse.grid\" example.\nI c",
       "thread_id": "thread-6dba27fd497f",
       "thread_depth": 0,
-      "month": "2008-03"
+      "month": "2008-03",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080306/891e87df/attachment.pl"
+      ]
     },
     {
       "id": "msg-70dc84e84040",
@@ -542,11 +548,14 @@
         "<8e01f5830803041645lc0f3207l5e6020334fde4435@mail.gmail.com>",
         "<Pine.LNX.4.64.0803050756410.6584@reclus.nhh.no>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080306/4aa4e778/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080306/4aa4e778/attachment.pl>",
+      "body_plain": "Roger,\n\nI end splitting the data for the predictors, 3 sections and then imported\nthem to R. Your are right, I am calibrating the model using 163 obs but I do\nnot understand what you meant with four orders of magnitude more grid\ncells?. However, I tried the suggested code but still the regression kriging\ncan not be completed for memory allocation. In some of the data had to be\nsplitted in smaller areas.\n\nThanks,\n\nJose\n\n But no use of maxdist= or nmax=? I would have said:\n>\n>  g1 <- gstat(formula=yststep$call$formula, data=ystdec3, model=vgf1yst)\n>  ystrk <- predict(g1, newdata=predictors)\n>\n>  anyway, which shows exactly how to resolve the problem - subset ystdec3\n>  into tiles and patch them together again afterwards (patching may need\n>  thinking through clearly). I assume that you have now successfully read\nin\n>  the predictors? Do I understand that you are calibrating your model on\n163\n>  observations, and predicting for roughly four orders of magnitude more\n>  grid cells?\n>\n>  gc() can help to clean out garbage sometimes - say in a loop, gctorture()\n>  really only during development, not in regular use.\n>\n>  Roger\n\nOn Wed, Mar 5, 2008 at 2:08 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> On Tue, 4 Mar 2008, Jose Funes wrote:\n>\n>  > Roger,\n>  >\n>  > I am running it in Windows and is 8 bytes. I tried to use the gc() for\n>  > the regression kriging but it did not work, instead I did employ the\n>  > gctorture() that turn \"R\" to run extremely slow (it is still running,\n>  > almost 8 hours so far, it may finish tomorrow). For the regression\n>  > kriging, I am using 163 data points:\n>  >\n>  > R code: Regression kriging\n>  > ystrk = krige(yststep$call$formula,ystdec3,predictors,vgf1yst)\n>  >\n>  > where:\n>  > yststep: is the regression residual\n>  > ystdec3: are the data points (163 points)\n>  > predictors: are the asciigrid file containing the predictor variables\n>  > (9 raster layers)\n>  > vgf1yst: fitted variogram\n>\n>  But no use of maxdist= or nmax=? I would have said:\n>\n>  g1 <- gstat(formula=yststep$call$formula, data=ystdec3, model=vgf1yst)\n>  ystrk <- predict(g1, newdata=predictors)\n>\n>  anyway, which shows exactly how to resolve the problem - subset ystdec3\n>  into tiles and patch them together again afterwards (patching may need\n>  thinking through clearly). I assume that you have now successfully read\nin\n>  the predictors? Do I understand that you are calibrating your model on\n163\n>  observations, and predicting for roughly four orders of magnitude more\n>  grid cells?\n>\n>  gc() can help to clean out garbage sometimes - say in a loop, gctorture()\n>  really only during development, not in regular use.\n>\n>  Roger\n>\n>\n>\n>  >\n>  > error message:\n>  > In addition: There were 12 warnings (use warnings() to see them)\n>  >\n>  > warning messages:\n>  > 1: Reached total allocation of 1535Mb: see help(memory.size)\n>  > ...\n>  > 3: In slot(value, what) <- slot(from, what) :\n>  > ...\n>  > 8: In slot(value, what) <- slot(from, what) :\n>  > Reached total allocation of 1535Mb: see help(memory.size)\n>  > ...\n>  > 12: In `slot<-`(`*tmp*`, what, value = structure(c(-293438.89990765,\n ... :\n>  > Reached total allocation of 1535Mb: see help(memory.size)\n>  >\n>  >\n>  > Is there another way to get around garbage collection than\ngctorture().?\n>  >\n>  > Sincerely,\n>  >\n>  > Jose\n>  >\n>  >\n>  >\n>  >\n>  > On Tue, Mar 4, 2008 at 3:48 AM, Roger Bivand <Roger.Bivand at nhh.no>\nwrote:\n>  >> On Mon, 3 Mar 2008, Jose Funes wrote:\n>  >>\n>  >> > Dear members,\n>  >> >\n>  >> > I would like to share some of the problems that I have run into R\nwhen\n>  >> > importing ascii files. I described the problem below, if any have\n>  >> > experienced similar issues I will appreciate you support.\n>  >> >\n>  >> > I am working with raster data(maps) and importing it as ascii files\nto\n>  >> > R. I am stacking 9 layers (10MB~each, total 90MB). However, when\n>  >> > stacking the eight layer I get the following message \"Error: cannot\n>  >> > allocate vector of size 10.8 Mb\". I did a little of bit of reading\n>  >> > about this, and some suggestions are to increase the memory\n>  >> > allocation. I increased it to 3GB  using the following command:\n>  >> > memory.limit(size=3000) but the problem still persist.\n>  >> >\n>  >>\n>  >>  Which platform? Windows? Its performance is systematically worse than\n>  >>  other OS on the same hardware. When you say 10Mb, is this 8 bytes *\n>  >>  roughly 1.2 million cells? Are you running gc() between calls to\n>  >>  readAsciiGrid() to force garbage collection? While readAsciiGrid() is\n>  >>  working, I think that at least three copies of the data are in\nmemory.\n>  >>\n>  >>  Have you tried using rgdal? Maybe readGDAL() keeps fewer internal\ncopies?\n>  >>  (in readGDAL, that may be at least two copies, but I'm not sure (NAs\nare\n>  >>  handled by GDAL)). Because input needs to be converted from\nrepresentation\n>  >>  to representation, it is not possible to avoid multiple copies.\n>  >>\n>  >>\n>  >> > code:\n>  >> > 1. predictorslide2 <- readAsciiGrid(\"sol_spr_lide2.asc\")\n>  >> > ...\n>  >> > ...\n>  >> > 8. predictorslide2 <-\ncbind(predictorslide2,readAsciiGrid(\"umca_pr_lide2.asc\"))\n>  >> >\n>  >>\n>  >>  It may be possible to get round cbind() copying if that turns out to\nbe\n>  >>  the problem, by taking the SpatialGrid from the first read, putting\nit\n>  >>  aside, and storing the single columns of the data slots of read data\nin a\n>  >>  single, pre-allocated data frame. Re-allocating to predictorslide2\n>  >>  successively is not a good idea for large objects - Braun & Murdoch\nin\n>  >>  their nice book on R programming treat it as a worst case on speed\nand\n>  >>  memory usage.\n>  >>\n>  >>\n>  >>\n>  >> > Also I got a similar error when running regression kriging:\n>  >> > Error: cannot allocate vector of size 6.7 Mb\n>  >>\n>  >>  Without the command, this isn't informative. Were you using local\nareas\n>  >>  (maximum distance or # data points)? How large were the data= and\nnewdata=\n>  >>  objects?\n>  >>\n>  >>  Roger\n>  >>\n>  >>\n>  >> > In addition: There were 12 warnings (use warnings() to see them)\n>  >> >\n>  >> > warning messages:\n>  >> > 1: Reached total allocation of 1535Mb: see help(memory.size)\n>  >> > ...\n>  >> > 3: In slot(value, what) <- slot(from, what) :\n>  >> > ...\n>  >> > 8: In slot(value, what) <- slot(from, what) :\n>  >> >  Reached total allocation of 1535Mb: see help(memory.size)\n>  >> > ...\n>  >> > 12: In `slot<-`(`*tmp*`, what, value = structure(c(-293438.89990765,\n ... :\n>  >> >  Reached total allocation of 1535Mb: see help(memory.size)\n>  >> >\n>  >> > I will appreciate your suggestions. I have also considered splitting\n>  >> > the data  but would like to explore other solutions.\n>  >> >\n>  >> > Regards,\n>  >> >\n>  >> > Jose Funes\n>  >> >\n>  >> > _______________________________________________\n>  >> > R-sig-Geo mailing list\n>  >> > R-sig-Geo at stat.math.ethz.ch\n>  >> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>  >> >\n>  >>\n>  >>  --\n>  >>  Roger Bivand\n>  >>  Economic Geography Section, Department of Economics, Norwegian School\nof\n>  >>  Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n>  >>  Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n>  >>  e-mail: Roger.Bivand at nhh.no\n>  >>\n>  >>\n>  >\n>\n>  --\n>\n>\n> Roger Bivand\n>  Economic Geography Section, Department of Economics, Norwegian School of\n>  Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n>  Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n>  e-mail: Roger.Bivand at nhh.no\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Roger,\n\nI end splitting the data for the predictors, 3 sections and then imported\nthem to R. Your are right, I am calibrating the model using 163 obs but I do\nnot understand what you meant with four o",
       "thread_id": "thread-005e0027e393",
       "thread_depth": 4,
-      "month": "2008-03"
+      "month": "2008-03",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080306/4aa4e778/attachment.pl"
+      ]
     },
     {
       "id": "msg-f8e2910f8fc2",
@@ -561,11 +570,14 @@
         "<e12429640803061409r7401eb70o967f14da65de8e0b@mail.gmail.com>",
         "<47D070AA.50106@geo.uu.nl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080307/45d53597/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080307/45d53597/attachment.pl>",
+      "body_plain": "spsample! I looked inside the sp manual a lot of times, without seeing it!\n:-)\nThanks Paul\n\n2008/3/6, Paul Hiemstra <p.hiemstra at geo.uu.nl>:\n>\n> G. Allegri schreef:\n>\n> > Hello list,\n> > I need to create a SpatialPixelDataFrame to do a gaussian simulation\n> over an\n> > area delimited by a polygon. The object I want to produce is something\n> > similar to the \"meuse.grid\" example.\n> > I could do it in Grass, converting first the polygon to raster (with the\n> > resolution of the Grass region), and then converting the raster to\n> points\n> > vector. Then I import it with spgrass6 and \"grid\" it to SPDF.\n> > Is there a more straightforward way to accomplish it totally inside R?\n> >\n> > Giovanni\n> >\n>\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> Hi Giovanni,\n>\n> You can use spsample() to make a grid within a polygon, use the\n> \"cellsize =\" argument to set the size of your grid cells, e.g.:\n>\n> grd = spsample(polygon, cellsize = 1e3)\n>\n> cheers,\n> Paul\n>\n> --\n> Drs. Paul Hiemstra\n> Department of Physical Geography\n> Faculty of Geosciences\n> University of Utrecht\n> Heidelberglaan 2\n> P.O. Box 80.115\n> 3508 TC Utrecht\n> Phone:     +31302535773\n> Fax:    +31302531145\n> http://intamap.geo.uu.nl/~paul\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "spsample! I looked inside the sp manual a lot of times, without seeing it!\n:-)\nThanks Paul\n\n2008/3/6, Paul Hiemstra <p.hiemstra at geo.uu.nl>:\n>\n> G. Allegri schreef:\n>\n> > Hello list,\n> > I need to c",
       "thread_id": "thread-6dba27fd497f",
       "thread_depth": 2,
-      "month": "2008-03"
+      "month": "2008-03",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080307/45d53597/attachment.pl"
+      ]
     },
     {
       "id": "msg-4b44bd9c4159",
@@ -875,11 +887,14 @@
       "subject_clean": "geoR: specification of trend.d and trend.l in krige.control()",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080312/5b4b1787/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080312/5b4b1787/attachment.pl>",
+      "body_plain": "Dear Subscribers,\n\n \n\nI have some trouble in specifying the parameters trend.d and trend.l\ncorrectly.\n\n \n\nAs global trend I assume row and column effects which translate into the\nformula:\n\n \n\ntrend=~factor(Row)+factor(Column) \n\n \n\nConsequently, I obtain the parameters of a the model via variofit() and want\nto do OK-estimation\n\nfor each point of a grid. Therefore, I call krige.cov() n times, for my n\ndata points. Each time leaving\n\nout the point which I want to estimate. Actually, I want to smooth the\nsurface using information\n\nof neighboring locations.\n\n \n\nparms <- krige.control( type.krige=\"ok\", obj.model=my.model, aniso.pars=c(\nai.axis,ai.ratio),\n\n                            trend.d =….?, trend.l =….? )\n\n \n\nI always get the error: “..trend.spatial(trend = krige$trend.d, geodata =\ngeodata) : \n\ntrend elements not found.\n\n \n\nThe geodata object I pass to krige.conv() contains the covariates Row and\nColumn.\n\n \n\nHow can I specify the parameters “trend.d” and “trend.l” correctly in order\nto do the OK-estimation\n\nlocation by location?\n\n \n\n \n\nI would appreciate to get a hint how to do that.\n\n \n\nThanks,\n\n \n\n   Andre\n\n \n\n \n\n \n\n \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Subscribers,\n\n \n\nI have some trouble in specifying the parameters trend.d and trend.l\ncorrectly.\n\n \n\nAs global trend I assume row and column effects which translate into the\nformula:\n\n \n\ntrend=~f",
       "thread_id": "thread-caf518c156d6",
       "thread_depth": 0,
-      "month": "2008-03"
+      "month": "2008-03",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080312/5b4b1787/attachment.pl"
+      ]
     },
     {
       "id": "msg-d5f2f2831627",
@@ -1424,11 +1439,14 @@
       "subject_clean": "writing shapefiles using write.pointShape",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080315/8c5a8dec/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080315/8c5a8dec/attachment.pl>",
+      "body_plain": "More a work-around than a solution, but you could export the results\ndata.frame as a csv and then import as an xy in arcmap (then save as a shp).\nThe Columbus example...\n\n## GWR example\n\nlibrary(spgwr)\n\ndata(columbus)\n\nmain <- columbus\n\nmain <- cbind(main, region=1:49)\n\nmain.lm <- lm(crime ~ income + housing, data=main)\n\nsummary(main.lm)\n\nmain.bw <- gwr.sel(crime ~ income + housing, data=main,\n\n  coords=cbind(main$x, main$y))\n\nmain.gauss <- gwr(crime ~ income + housing, data=main,\n\n  coords=cbind(main$x, main$y), bandwidth=main.bw, hatmatrix=TRUE)\n\nmain.gauss\n\nmain.gauss$SDF\n\nmain_res <- cbind(main, main.gauss$SDF)\n\nmain_res\n\nwrite.table(main_res, file = \"main_gwr.csv\", sep = \",\", col.names = NA)\n\n\n\n\nJakob Petersen\n\nPhD candidate\nGeography UCL\n\npbokaj... at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "More a work-around than a solution, but you could export the results\ndata.frame as a csv and then import as an xy in arcmap (then save as a shp).\nThe Columbus example...\n\n## GWR example\n\nlibrary(spgwr",
       "thread_id": "thread-dfdbfe7677f6",
       "thread_depth": 0,
-      "month": "2008-03"
+      "month": "2008-03",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080315/8c5a8dec/attachment.pl"
+      ]
     },
     {
       "id": "msg-22456f340095",
@@ -1642,11 +1660,14 @@
       "subject_clean": "smoother contour maps",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080317/87059fcc/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080317/87059fcc/attachment.pl>",
+      "body_plain": "Hello everyone,\n   I was wondering if anyone knows how to smooth out a\ncontour-line plot. I am currently using the following\nset of commands to create my plot\n\nfilled.contour(xx,yy, PP,\n   color=cm.colors,\n   plot.axes = {\n     contour(xx, yy, P2,add=T, col=\"grey\",drawlabels=FALSE)\n     axis(1,1:length(xx),labels=tx)\n     axis(2,1:length(yy),labels=ty)\n    })\n\n   The resulting plot looks OK but rather irregular,\nwith too many \"sharp corners\". Is there a way to\nsmooth the contour lines?\n\n   Thank you so much\n   Fernando\n\n       \n---------------------------------\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello everyone,\n   I was wondering if anyone knows how to smooth out a\ncontour-line plot. I am currently using the following\nset of commands to create my plot\n\nfilled.contour(xx,yy, PP,\n   color=cm.co",
       "thread_id": "thread-aa3c6b61cb8e",
       "thread_depth": 0,
-      "month": "2008-03"
+      "month": "2008-03",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080317/87059fcc/attachment.pl"
+      ]
     },
     {
       "id": "msg-75a9d12fdfff",
@@ -1676,11 +1697,14 @@
       "subject_clean": "smoother contour maps",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080318/eb42dd4b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080318/eb42dd4b/attachment.pl>",
+      "body_plain": "I once used Gabor Grothendieck's trick using apply across an\narray-redimmed matrix: \n\nhttp://tolstoy.newcastle.edu.au/R/help/06/07/31720.html\nYou would have convert XYZ table data to image list form, and it performs \na resize, but it might be worth pursuing. \n\nCheers, Mike. \n\n\n==============Original message text===============\nOn Tue, 18 Mar 2008 7:54:58 +1000 Fernando De Sales wrote:\n\n\n   Hello everyone,\n   I was wondering if anyone knows how to smooth out a\ncontour-line plot. I am currently using the following\nset of commands to create my plot\n\nfilled.contour(xx,yy, PP,\n   color=cm.colors,\n   plot.axes = {\n     contour(xx, yy, P2,add=T, col=\"grey\",drawlabels=FALSE)\n     axis(1,1:length(xx),labels=tx)\n     axis(2,1:length(yy),labels=ty)\n    })\n\n   The resulting plot looks OK but rather irregular,\nwith too many \"sharp corners\". Is there a way to\nsmooth the contour lines?\n\n   Thank you so much\n   Fernando\n\n       \n---------------------------------\n\n\t[[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n===========End of original message text===========\n\n\n\nIf it wasn't backed-up, then it wasn't important. ~ Anon sysadmin\n\nMike Sumner (Phd. Candidate)\nhttp://www.antcrc.utas.edu.au/~mdsumner/ http://www.zoo.utas.edu.au/awru/  IASOS/AWRU\nUniversity of Tasmania\nPrivate Bag 80\nHobart Tasmania 7001\nAUSTRALIA\nEmail: mdsumner at utas.edu.au \nPhone: 03 6226 1752 (W)\n       0408599921   (M)\nFax:   03 6226 2745",
+      "body_snippet": "I once used Gabor Grothendieck's trick using apply across an\narray-redimmed matrix: \n\nhttp://tolstoy.newcastle.edu.au/R/help/06/07/31720.html\nYou would have convert XYZ table data to image list form, ",
       "thread_id": "thread-93f7dcf573da",
       "thread_depth": 0,
-      "month": "2008-03"
+      "month": "2008-03",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080318/eb42dd4b/attachment.pl"
+      ]
     },
     {
       "id": "msg-4f0cccce6b59",
@@ -1692,11 +1716,14 @@
       "subject_clean": "Finding closest match to GIS coordinates - R code",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080318/5e2a3902/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080318/5e2a3902/attachment.pl>",
+      "body_plain": "Hi all,\nI recently joined, and have a rather basic question. I'd appreciate any\nhelp to find some R routines to find the closest match to GIS\ncoordinates. I suspect simply using the Euclidean distance. I could\nwrite some code but I suspect there is some already.  I describe three\nclasses of difficulties below. \n1. Sometimes there are simple measurement error differences in GIS from\nvine coordinates measurement at different times. This may also relate to\nability to get close to trunk in addition to equipment measurement\nerror.\n2. Sometimes we encounter the problem of matching aerial spatial records\nwith vines. Aerial and satellite imagery is on a different scales\n(pixels) to vine spacing. But we would like to be able to match these as\nbest we can.\n3. Sometimes we want to match kriged clusters to target vine GPS\ncoordinates.\n\nTypically I have 100 target vines at each of 5 vineyards.\n\nEuclidean distance  approx. = square root of  ( differences between\nEastings squared plus the differences between Northings squared)\n\nAny help will be appreciated  Mary Barnes\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all,\nI recently joined, and have a rather basic question. I'd appreciate any\nhelp to find some R routines to find the closest match to GIS\ncoordinates. I suspect simply using the Euclidean distance",
       "thread_id": "thread-4f0cccce6b59",
       "thread_depth": 0,
-      "month": "2008-03"
+      "month": "2008-03",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080318/5e2a3902/attachment.pl"
+      ]
     },
     {
       "id": "msg-812700e56f8f",
@@ -1708,11 +1735,14 @@
       "subject_clean": "How to produce a R2 for semivariance model fitting",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080318/b42831f8/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080318/b42831f8/attachment.pl>",
+      "body_plain": "Hi ALL,\n\n \n\nI try to use gstat to do spatial analyse. But I have difficulty to\nobtain the R2 for the fitted model of semivariance.\n\nHere I used R2 = 1 -\nattributes(model)$SSErr/sum((variogram$gamma-mean(variogram$gamma))^2),\nbut the R2 is always close to 1.0.\n\nAny help would be greatly appreciated.\n\n \n\nYong Li\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi ALL,\n\n \n\nI try to use gstat to do spatial analyse. But I have difficulty to\nobtain the R2 for the fitted model of semivariance.\n\nHere I used R2 = 1 -\nattributes(model)$SSErr/sum((variogram$gamma-me",
       "thread_id": "thread-812700e56f8f",
       "thread_depth": 0,
-      "month": "2008-03"
+      "month": "2008-03",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080318/b42831f8/attachment.pl"
+      ]
     },
     {
       "id": "msg-31e8027a914b",
@@ -1927,11 +1957,14 @@
         "<p06230903c4085fc03705@128.115.92.33>",
         "<bb61ce440803201322r52e91d1ek4eac693a8c6ef23c@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080320/8600b6cd/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080320/8600b6cd/attachment.pl>",
+      "body_plain": "Don & Facundo,\n\nThis is something that I'm interested in as well for coastal marine\napplications.\n\nThe only solution I've found so far is a cumbersome \"barrier\" function\navailable in the kriging operation of ArcGIS. I would be interested in\nseeing an (better) implementation of the idea in R.\n\nI was able to find a few references on the subject that I pass along to you\nand anyone else that might find it useful:\n\nKrioruchko, K. and A. Gribov. 2002. Geostatistical interpolation and\nsimulation in the presence of barriers. X. Sanchez-Vila et al. (eds.), *geoENV\nIV -- Geostatistics for Environmental Applications,* pp. 331-342. Kluwer\nAcademic Publishers: the Netherlands.\n\nCurriero, F.C. 1997. The use of non-Euclidean distances in geostatistics,\nPhD thesis.\n\nLittle, LS, D Edwards and DE Porter. 1997. Kriging in estuaries: as the crow\nflies or as the fish swims? Journal of experimental marine biology and\necology. 213:1-11.\n\nRathbun, S. 1998. Spatial modeling in irregularly shaped regions: kriging\nestuaries. Envirometrics. 9:109-129.\n\nJensen, OP, MC Christman and TJ Mller. 2006. Landscape-based geostatistics:\na case study of the distribution of blue crab in Chesapeake Bay.\nEnvirometrics. 17:605-621.\n\nRegards,\n\nAlisa Coffin\n\n\nOn Thu, Mar 20, 2008 at 2:42 PM, Don MacQueen <macq at llnl.gov> wrote:\n\n> Facundo,\n>\n> I am interested in essentially the same thing,\n> though my application is inside buildings. I am\n> wondering what technique(s), software, etc. you\n> would be using to calculate your distances.\n>\n> I asked about this about a month ago, here on\n> r-sig-geo, and received some helpful replies. The\n> subject line at that time was\n>    [R-sig-Geo] Shortest path around obstacles (OT)\n>\n> -Don\n>\n> At 7:05 PM +0100 3/20/08, Facundo Muñoz wrote:\n> >Hello All,\n> >\n> >I'm performing  regression kriging (using both gstat and geoR)  in an\n> >urban environment. Thus, i have discontinuities (buildings) in the\n> >prediction space which make distances to be non-euclidean.\n> >\n> >I need to estimate variogram and make predictions using distances\n> >calculated by myself and passed to the algorithms (say, in a distance\n> >matrix), instead of letting them calculate distances based on\n> coordinates.\n> >\n> >¿Has anyone faced this issue before?\n> >\n> >Thanks in advance,\n> >     Facundo Muñoz\n> >\n> >--\n> >Departament d'Estadística i Investigació Operativa Universitat de\n> >València (Estudi General)\n> >Facultat de Matemàtiques, Dr. Moliner 50, 46100 Burjassot, Spain.\n> >(+34) 96 354 3987, fax: (+34) 96 354 3238\n> >e-mail: Facundo.Munoz at uv.es, web: http://www.uv.es/~famarmu/<http://www.uv.es/%7Efamarmu/>\n> >\n> >_______________________________________________\n> >R-sig-Geo mailing list\n> >R-sig-Geo at stat.math.ethz.ch\n> >https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> --\n> --------------------------------------\n> Don MacQueen\n> Environmental Protection Department\n> Lawrence Livermore National Laboratory\n> Livermore, CA, USA\n> 925-423-1062\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n-- \nAlisa Coffin, PhD. Candidate\nDepartment of Geography\nUniversity of Florida\nGainesville, FL 32611\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Don & Facundo,\n\nThis is something that I'm interested in as well for coastal marine\napplications.\n\nThe only solution I've found so far is a cumbersome \"barrier\" function\navailable in the kriging opera",
       "thread_id": "thread-f15b66019c7f",
       "thread_depth": 0,
-      "month": "2008-03"
+      "month": "2008-03",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080320/8600b6cd/attachment.pl"
+      ]
     },
     {
       "id": "msg-38e91b1fc28e",
@@ -2144,11 +2177,14 @@
         "<47E2A761.1070703@alumni.uv.es>",
         "<p06230903c4085fc03705@[128.115.92.33]>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080326/c3854a70/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080326/c3854a70/attachment.pl>",
+      "body_plain": "Hi Don, sorry about de delay,\n\nDon MacQueen escribió:\n> Facundo,\n>\n> I am interested in essentially the same thing, though my application \n> is inside buildings. I am wondering what technique(s), software, etc. \n> you would be using to calculate your distances.\nwell, in fact i didn't face the problem yet, (i will soon) but i'm \npretty sure it can be well done with GRASS GIS, specifically r.cost. \n<http://grass.itc.it/grass63/manuals/html63_user/r.cost.html>\nIt is very flexible, and in particular allows to define (trough raster \nmaps) barriers (walls). It finds the minimum-cost distance between points..\n> I asked about this about a month ago, here on r-sig-geo, and received \n> some helpful replies. The subject line at that time was\n>    [R-sig-Geo] Shortest path around obstacles (OT)\nYes i remember, sorry i didn't answer: i thought you wanted to do than \ninside R\nI hope this helps.\n\n    Facundo.-\n\n-Don\n\nAt 7:05 PM +0100 3/20/08, Facundo Muñoz wrote:\n> Hello All,\n>\n> I'm performing  regression kriging (using both gstat and geoR)  in an\n> urban environment. Thus, i have discontinuities (buildings) in the\n> prediction space which make distances to be non-euclidean.\n>\n> I need to estimate variogram and make predictions using distances\n> calculated by myself and passed to the algorithms (say, in a distance\n> matrix), instead of letting them calculate distances based on \n> coordinates.\n>\n> ¿Has anyone faced this issue before?\n>\n> Thanks in advance,\n>     Facundo Muñoz\n>\n> -- \n> Departament d'Estadística i Investigació Operativa Universitat de\n> València (Estudi General)\n> Facultat de Matemàtiques, Dr. Moliner 50, 46100 Burjassot, Spain.\n> (+34) 96 354 3987, fax: (+34) 96 354 3238\n> e-mail: Facundo.Munoz at uv.es, web: http://www.uv.es/~famarmu/\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Don, sorry about de delay,\n\nDon MacQueen escribió:\n> Facundo,\n>\n> I am interested in essentially the same thing, though my application \n> is inside buildings. I am wondering what technique(s), soft",
       "thread_id": "thread-6957c2bc8784",
       "thread_depth": 2,
-      "month": "2008-03"
+      "month": "2008-03",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080326/c3854a70/attachment.pl"
+      ]
     },
     {
       "id": "msg-c5fdd340f8b5",
@@ -2165,11 +2201,14 @@
         "<bb61ce440803201322r52e91d1ek4eac693a8c6ef23c@mail.gmail.com>",
         "<bb61ce440803201333i164dadccga7cee385a05252b6@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080326/ea1431d3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080326/ea1431d3/attachment.pl>",
+      "body_plain": "Alisa, those references are certainly *very* relevant!\nThanks!\n\n       Facundo.-\n\n\nAlisa Coffin escribió:\n> Don & Facundo,\n>\n> This is something that I'm interested in as well for coastal marine\n> applications.\n>\n> The only solution I've found so far is a cumbersome \"barrier\" function\n> available in the kriging operation of ArcGIS. I would be interested in\n> seeing an (better) implementation of the idea in R.\n>\n> I was able to find a few references on the subject that I pass along to you\n> and anyone else that might find it useful:\n>\n> Krioruchko, K. and A. Gribov. 2002. Geostatistical interpolation and\n> simulation in the presence of barriers. X. Sanchez-Vila et al. (eds.), *geoENV\n> IV -- Geostatistics for Environmental Applications,* pp. 331-342. Kluwer\n> Academic Publishers: the Netherlands.\n>\n> Curriero, F.C. 1997. The use of non-Euclidean distances in geostatistics,\n> PhD thesis.\n>\n> Little, LS, D Edwards and DE Porter. 1997. Kriging in estuaries: as the crow\n> flies or as the fish swims? Journal of experimental marine biology and\n> ecology. 213:1-11.\n>\n> Rathbun, S. 1998. Spatial modeling in irregularly shaped regions: kriging\n> estuaries. Envirometrics. 9:109-129.\n>\n> Jensen, OP, MC Christman and TJ Mller. 2006. Landscape-based geostatistics:\n> a case study of the distribution of blue crab in Chesapeake Bay.\n> Envirometrics. 17:605-621.\n>\n> Regards,\n>\n> Alisa Coffin\n>\n>\n> On Thu, Mar 20, 2008 at 2:42 PM, Don MacQueen <macq at llnl.gov> wrote:\n>\n>   \n>> Facundo,\n>>\n>> I am interested in essentially the same thing,\n>> though my application is inside buildings. I am\n>> wondering what technique(s), software, etc. you\n>> would be using to calculate your distances.\n>>\n>> I asked about this about a month ago, here on\n>> r-sig-geo, and received some helpful replies. The\n>> subject line at that time was\n>>    [R-sig-Geo] Shortest path around obstacles (OT)\n>>\n>> -Don\n>>\n>> At 7:05 PM +0100 3/20/08, Facundo Muñoz wrote:\n>>     \n>>> Hello All,\n>>>\n>>> I'm performing  regression kriging (using both gstat and geoR)  in an\n>>> urban environment. Thus, i have discontinuities (buildings) in the\n>>> prediction space which make distances to be non-euclidean.\n>>>\n>>> I need to estimate variogram and make predictions using distances\n>>> calculated by myself and passed to the algorithms (say, in a distance\n>>> matrix), instead of letting them calculate distances based on\n>>>       \n>> coordinates.\n>>     \n>>> ¿Has anyone faced this issue before?\n>>>\n>>> Thanks in advance,\n>>>     Facundo Muñoz\n>>>\n>>> --\n>>> Departament d'Estadística i Investigació Operativa Universitat de\n>>> València (Estudi General)\n>>> Facultat de Matemàtiques, Dr. Moliner 50, 46100 Burjassot, Spain.\n>>> (+34) 96 354 3987, fax: (+34) 96 354 3238\n>>> e-mail: Facundo.Munoz at uv.es, web: http://www.uv.es/~famarmu/<http://www.uv.es/%7Efamarmu/>\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at stat.math.ethz.ch\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>       \n>> --\n>> --------------------------------------\n>> Don MacQueen\n>> Environmental Protection Department\n>> Lawrence Livermore National Laboratory\n>> Livermore, CA, USA\n>> 925-423-1062\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>\n>>     \n>> ------------------------------------------------------------------------\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>     \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Alisa, those references are certainly *very* relevant!\nThanks!\n\n       Facundo.-\n\n\nAlisa Coffin escribió:\n> Don & Facundo,\n>\n> This is something that I'm interested in as well for coastal marine\n> app",
       "thread_id": "thread-f15b66019c7f",
       "thread_depth": 1,
-      "month": "2008-03"
+      "month": "2008-03",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080326/ea1431d3/attachment.pl"
+      ]
     },
     {
       "id": "msg-8ba4ae52296b",
@@ -2539,11 +2578,14 @@
         "<Pine.LNX.4.64.0803291659310.22048@reclus.nhh.no>",
         "<Pine.LNX.4.64.0803291800070.22048@reclus.nhh.no>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080329/8ebf5583/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080329/8ebf5583/attachment.pl>",
+      "body_plain": "Dear all,\nI am trying to plot semivariogram for my data set consisting of 1373 values. As I plotted semivariogram, trend was seen. Then I decided to remove the trend so I tried to find the trend's coefficients for Linear, quadratic and cubic using geoR package. Fortunately its worked thanks to all the R-sig_Geo users. But as i tried to plot the semivariogram of these residuals form linear, quadratic and cubic plot, the result were unusual. The plot of semivarigram for all these trends were more or less exactly the same as the semivariogram plot of original data ( trend clearly seen). Could anyone suggest me what had happened to my data. I would be thankful if i get insight in this matter.\nThanking you\nPujan\n_________________________________________________________________\nWatch “Cause Effect,” a show about real people making a real difference.  Learn more.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\nI am trying to plot semivariogram for my data set consisting of 1373 values. As I plotted semivariogram, trend was seen. Then I decided to remove the trend so I tried to find the trend's coe",
       "thread_id": "thread-f184a77532c5",
       "thread_depth": 7,
-      "month": "2008-03"
+      "month": "2008-03",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080329/8ebf5583/attachment.pl"
+      ]
     },
     {
       "id": "msg-110a194e2215",

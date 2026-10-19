@@ -29,11 +29,14 @@
       "subject_clean": "Coerce list to SpatialGridDataFrame?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060803/5b0aa904/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060803/5b0aa904/attachment.pl>",
+      "body_plain": "I have the output of an interp() in \"standard\" list form:\n\nie: \"x\", \"y\", \"z\", where x is a vector of longs, y is a vector of lats, z is\na (x-1 x y-1) matrix of depth values\n\nwhich I would like to coerce to SpatialGridDataFrame so that I can export it\nto an external GIS via writeGDAL(), but I am struggling with understanding\nhow to do this...\n\nd <- interp(...)\n\ncells.dim <- c(dim(d$z)[1], dim(d$y)[2])\ndx <- diff(d$x[2:1])\ndy <- diff(d$y[2:1])\ncellsize <- c(dx, dy)\ncc.offset <- c(min(d$x) + dx/2, min(d$y) + dy/2)\n\ngt <- GridTopology(cc.offset, cellsize, cells.dim)\n\n## Is this a viable (preferable?) alternative path to gt, btw?\n## pts <- expand.grid(x = d$x, y = d$y)\n## gt <- SpatialPixels(pts)\n\nSpatialGrid(gt)\n\nand here I am stuck. How do I associate the matrix d$z with the SpatialGrid?\n\n(I think that an alternative solution, which I would also be interested in\nlearning, would be to perform the krig directly on a SpatialPointsDataFrame\nobject.)\n\nAny advice appreciated.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I have the output of an interp() in \"standard\" list form:\n\nie: \"x\", \"y\", \"z\", where x is a vector of longs, y is a vector of lats, z is\na (x-1 x y-1) matrix of depth values\n\nwhich I would like to coer",
       "thread_id": "thread-9e3c43706a35",
       "thread_depth": 0,
-      "month": "2006-08"
+      "month": "2006-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060803/5b0aa904/attachment.pl"
+      ]
     },
     {
       "id": "msg-d1ca043cf83c",
@@ -45,11 +48,14 @@
       "subject_clean": "Coerce list to SpatialGridDataFrame?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060803/38f69b5b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060803/38f69b5b/attachment.pl>",
+      "body_plain": "OK, spending an afternoon working through the examples in sp.pdf is a\nvaluable exercise :-)\n\nThis seems to do what I need:\n\nlibrary(rgdal)\n\n## default memory limit insufficient\nmemory.limit(1536) ## 1.5e9 * 1024 Mb\n\npts = expand.grid(long = d$x, lat = d$y)\ngrd.atts = data.frame(pts, depth = as.vector(d$z))\nrm(d, pts)\ncoordinates(grd.atts)  = ~ long + lat\ngridded(grd.atts) <- TRUE\nfullgrid(grd.atts) <- TRUE\n\nimage(as.image.SpatialGridDataFrame(grd.atts),\n      col= terrain.colors(256), main = \"Reference Image\")\n\nwriteGDAL(grd.atts[\"depth\"], \"surface.tif\", mvFlag = -32768)\n\n\nThanks to the sp implementors!\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "OK, spending an afternoon working through the examples in sp.pdf is a\nvaluable exercise :-)\n\nThis seems to do what I need:\n\nlibrary(rgdal)\n\n## default memory limit insufficient\nmemory.limit(1536) ## 1",
       "thread_id": "thread-d1ca043cf83c",
       "thread_depth": 0,
-      "month": "2006-08"
+      "month": "2006-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060803/38f69b5b/attachment.pl"
+      ]
     },
     {
       "id": "msg-1962ede8b5cb",
@@ -129,11 +135,14 @@
       "subject_clean": "Coerce list to SpatialGridDataFrame?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060804/ee622628/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060804/ee622628/attachment.pl>",
+      "body_plain": "expand.grid can be a wasteful way of defining your grid, because of\ndata.frame rownames -so you should try to avoid that by using\nSpatialGridDataFrame (and AttributeList) directly, rather than the\n(convenient) SPDF->gridded->fullgrid path. \n\nI can't test at the moment, so sorry for that but this might help. \n\n## you might have to work with the cell corners, rather than centres\n## and I might have the x/y cells.dim order the wrong way around, \n##  or the orientation of d$z incorrect . . .\n\n## create the grid topology\ngt <- GridTopology(cellcentre.offset = c(d$x[1], d$x[2]), cellsize =\nc(diff(d$x[1:2])/2, diff(d$y[1:2])/2), cells.dim = dim(d$z))  \n\n## create the SGDF\ngrd.atts <- SpatialGridDataFrame(gt, list(depth = as.vector(d$z)))\n\nHTH\n\nCheers, Mike",
+      "body_snippet": "expand.grid can be a wasteful way of defining your grid, because of\ndata.frame rownames -so you should try to avoid that by using\nSpatialGridDataFrame (and AttributeList) directly, rather than the\n(co",
       "thread_id": "thread-409c133f84bc",
       "thread_depth": 0,
-      "month": "2006-08"
+      "month": "2006-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060804/ee622628/attachment.pl"
+      ]
     },
     {
       "id": "msg-e5d31c81ca9a",
@@ -145,11 +154,14 @@
       "subject_clean": "Coerce list to SpatialGridDataFrame?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060804/5b53d1f6/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060804/5b53d1f6/attachment.pl>",
+      "body_plain": "A correction (due to grid orientation), with example:\n\nlibrary(rgdal)\nd <- list(x  =1:10, y = 2:11, z = matrix(1:100, 10, 10))\ngt <- GridTopology(cellcentre.offset = c(d$x[1], d$x[2]), \n    cellsize = c(diff(d$x[1:2])/2, diff(d$y[1:2])/2), cells.dim = dim(d$z))\n\n ## because of the way the grids are oriented compared to the normal R image\n grd.atts <- SpatialGridDataFrame(gt, list(depth =\nas.vector(d$z[,ncol(d$z):1])))",
+      "body_snippet": "A correction (due to grid orientation), with example:\n\nlibrary(rgdal)\nd <- list(x  =1:10, y = 2:11, z = matrix(1:100, 10, 10))\ngt <- GridTopology(cellcentre.offset = c(d$x[1], d$x[2]), \n    cellsize =",
       "thread_id": "thread-e5d31c81ca9a",
       "thread_depth": 0,
-      "month": "2006-08"
+      "month": "2006-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060804/5b53d1f6/attachment.pl"
+      ]
     },
     {
       "id": "msg-38a0f1720a52",
@@ -295,11 +307,14 @@
       "references": [
         "<Pine.LNX.4.44.0608092017320.31423-100000@reclus.nhh.no>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060810/527ba7e8/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060810/527ba7e8/attachment.pl>",
+      "body_plain": "Roger,\n\nIt seems likely from what you say that it is the particular shape file I am working with that is causing the problems. This potentially could make sense. I downloaded separate ward boundary files for England and Wales from the Edina.ac.uk mapping service. I then merged these in ArcView and exported it as a shapefile. Perhaps it is this merged shapefile that is the problem.\n\nTo check this I will attempt to follow your original instructions with an original, unmerged shapefile from Edina.ac.uk and see if this works. If so, I think this will confirm your diagnosis.\n\nI am more than happy to post the file to you on a CD-Rom but cannot really post it online as I had to sign a licence agreement to download it originally, and think that this would be a breach of its terms. I will dispatch it to you immediately to the address in your email signature.\n\nI will also try the other tests you outlined in your previous post and will get back to you with the results.\n\nThanks again for your help,\nGraham\n\n\n\n\n-----Original Message-----\nFrom: Roger Bivand [mailto:Roger.Bivand at nhh.no]\nSent: Wed 8/9/2006 7:34 PM\nTo: Cookson, Graham D\nCc: r-sig-geo at stat.math.ethz.ch\nSubject: Re: [R-sig-Geo] Map2Poly: Error message\n \nOn Wed, 9 Aug 2006, Graham Cookson wrote:\n\n> \n> \n> Dear Roger (...and the list)\n> \n> Thank you Roger for that useful insight. I have tried your suggestion and,\n> once again, encountered some error messages. I've played around with it a\n> little bit, but I'm getting nowhere.\n> \n> Perhaps you will have come across this problem before.\n> \n> I tried your routine so I typed:\n> \n> library(foreign)\n> library(maptools)\n> library(spdep)\n> map<-readShapePoly(\"englandandwales.shp\")\n> \n> But I got the following error:\n> \n> Error in if (rD < 0) hole <- TRUE : missing value where TRUE/FALSE needed\n> \n> Following the various examples in the help file I then tried\n> \n> map<-readShapePoly(\"englandandwales.shp\", IDvar=\"LABEL\")\n> \n> But now get the following error:\n> \n> Error in from [j]: to [j]: NA/NaN argument\n> \n> Error in coordinates(coords): unable to find the argument 'obj' in selecting\n> a method for function 'coordinates'\n> \n> \n> I've got this feeling I'm just doing something really silly but can't work\n> it out. Any help welcome. It may help to know that all I want to do is\n> produce a proximity matrix of contiguous boundary neighbours from the\n> Shapefile for now.\n> \n> \n> Again, I'm using R2.2.0 on an Apple iBook G4. The shapefile is a merged file\n> of England and Wales ward boundaries downloaded from Edina.ac.uk and was\n> merged in ArcView. It contains some 8,500 polygons and is 250MB.\n\nGraham,\n\nThere is almost certainly something wrong with the shapefile, and the only \nway to debug this is either for you to do it, or for you to make the file \navailable for the maptools package maintainer (me) to do it. It's too \nlarge to email, you may not want to post it on an open website, so maybe \ncopy it to a CDROM and send it by post?\n\nWe know that firms like Geolytics sell shapefiles breaking the ESRI\nspecification, and I would not be surprised if this is also the case.\n\nIn my original reply \n\nhttps://stat.ethz.ch/pipermail/r-sig-geo/2006-August/001214.html\n\nI suggested that you should include sessionInfo() and traceback()  \ninformation. Since you have not done this, we don't know which version of\nmaptools you are using, not what the call context of the error messages \nactually was. Since you are on OSX, you could install the rgdal\npackage from source (if you can do that, involving installing GDAL and \nPROJ.4 too, try readOGR() in that package). \n\nWhat we need to dig out is first which shape is throwing the error, and\nthen what value is present that leads to the error. This will involve\nusing debug() on the private functions I named before and trying to read\nyour data (or similar data with the same error).\n\nCan other software read the file? \n\nRoger\n\n> \n> Thank you,\n> Graham\n> \n> \n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Roger,\n\nIt seems likely from what you say that it is the particular shape file I am working with that is causing the problems. This potentially could make sense. I downloaded separate ward boundary fi",
       "thread_id": "thread-fc8dd7bdba24",
       "thread_depth": 4,
-      "month": "2006-08"
+      "month": "2006-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060810/527ba7e8/attachment.pl"
+      ]
     },
     {
       "id": "msg-d753b1640357",
@@ -327,11 +342,14 @@
       "subject_clean": "biivariate moran",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060813/1784373a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060813/1784373a/attachment.pl>",
+      "body_plain": "Hi Luc,\n\nI have been using GEODA to compute bivariate Moran's I to examine\nspatial correlations between various plant and soil variables I have\ncollected. I am favouring the use of a bivariate Moran's I over\ncross-correlograms as my plots are very small (5m x 5m) and there is not\nmuch spatial structure on this scale in my system. It is, therefore,\nnice to be able to use the threshold weighting capability in GEODA to\ncompare values of one variable with another over certain threshold\ndistances, rather than using spatial lag distances. Could you perhaps\npoint me in the direction of a reference that gives explicit methods for\nhow GEODA makes these computations? (i.e. does GEODA use Wartenberg's\nbivariate Moran's I? how are points near the sample point weighted\n(1/d?) etc).\n\nThanks so much\n\nKate\n\n \n\nKate Searle\n\nPost Doctoral Fellow\n\nCSIRO - Sustainable Ecosystems\n\nDavies Lab\n\nPMB PO Aitkenvale\n\nQueensland 4814\n\nAustralia\n\nkate.searle at csiro.au\n\n61 7 4753 8564\n\n \n\nWe shall not cease from exploration\n\nAnd the end of all our exploring\n\nWill be to arrive where we started\n\nAnd know the place for the first time\n\nT. S. Elliot\n\n \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Luc,\n\nI have been using GEODA to compute bivariate Moran's I to examine\nspatial correlations between various plant and soil variables I have\ncollected. I am favouring the use of a bivariate Moran's",
       "thread_id": "thread-a82985db4c1c",
       "thread_depth": 0,
-      "month": "2006-08"
+      "month": "2006-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060813/1784373a/attachment.pl"
+      ]
     },
     {
       "id": "msg-36c911c225f9",
@@ -393,11 +411,14 @@
       "subject_clean": "multi-attribute tiff files?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060815/9aab1255/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060815/9aab1255/attachment.pl>",
+      "body_plain": "Hello,\n\nObviously SpatialGridDataFrame can handle multiple attributes associated\nwith each position in the grid:\n\ny = readGDAL(system.file(\"pictures/Rlogo.jpg\", package = \"rgdal\")[1])\nsummary(y)\nspplot(y, zcol=1:3, names.attr=c(\"red\",\"green\",\"blue\"),\n          col.regions=grey(0:100/100),\n          main=\"example of three-layer (RGB) raster image\", as.table=TRUE)\n\n\nand I can see that I could write a TIFF file for a single attribute using:\n\nwriteGDAL(y[\"red\"],  \"test.tiff\", ...)\n\nCan someone enlighten me as to how I might go about writing multiple\nattributes from a SpatialGridDataFrame to TIFF?\n\n\nThanks in Advance.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nObviously SpatialGridDataFrame can handle multiple attributes associated\nwith each position in the grid:\n\ny = readGDAL(system.file(\"pictures/Rlogo.jpg\", package = \"rgdal\")[1])\nsummary(y)\nspplo",
       "thread_id": "thread-88830d4710f0",
       "thread_depth": 0,
-      "month": "2006-08"
+      "month": "2006-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060815/9aab1255/attachment.pl"
+      ]
     },
     {
       "id": "msg-e27d47c8611e",
@@ -443,11 +464,14 @@
       "subject_clean": "Mass conversions of Lat/Long to UTM (many zone)",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060824/981fabad/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060824/981fabad/attachment.pl>",
+      "body_plain": "Hi everyone!  I'm new to R.  I'll try using it for some Kriging.  My aim in the short-term is to convert my 2300 stations database from lat-long to UTM.  This network of stations goes from Virginia to the south, to Montréal to the north, east coast to Michigan in the west.  So, I have a lot of UTM zones to consider.  \n\n \n\nReading the archives, I've seen this formula to calculate the zones, based on lat-long coordinates :\n\n \n\nUTM = floor((lon + 180) / 6) + 1\n\n \n\nSo, if I understand correctly, I need to run this formula on each station to get their zone, abnd then I use something like convUL ?\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi everyone!  I'm new to R.  I'll try using it for some Kriging.  My aim in the short-term is to convert my 2300 stations database from lat-long to UTM.  This network of stations goes from Virginia to",
       "thread_id": "thread-9e7ad23d94b1",
       "thread_depth": 0,
-      "month": "2006-08"
+      "month": "2006-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060824/981fabad/attachment.pl"
+      ]
     },
     {
       "id": "msg-481be85ae7da",

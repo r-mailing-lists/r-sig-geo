@@ -137,11 +137,14 @@
       "subject_clean": "Analyzing large, longitudinal raster dataset",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091201/5d8a512b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091201/5d8a512b/attachment.pl>",
+      "body_plain": "Hi folks,\n\nI've got a consulting client who has high-resolution (0.4 m) raster data\nfrom remote sensing that covers an area about 5 km x 5 km, which naturally\nyields a very large dataset (~ 15.625 million pixels) at each point in time.\nThey have repeated measurements at 4 time points for this area on a\ncontinuous variable that essentially represents which kind of vegetation is\nmost dominant (forage plants vs. weeds) within the pixel. They want to use\nthings like land use type, precipitation, soil type, and the slope and\naspect of the ground in each pixel to predict the changes over time in the\noutcome variable.\n\nMy initial thought about how to analyze the data was to use a hierarchical\nlinear (mixed effects) model with time points nested within pixels to model\nthe typical longitudinal trajectory of the outcome and how the predictors\naffect that trajectory. My dilemma is that they want to use the entire\ndataset to do their models, which means the dataset is so large that most of\nthe analysis tools I'm used to using are simply going to choke on it. In\naddition, using a random effect for each pixel might account for temporal\nautocorrelation, but I suspect there would still be substantial spatial\nautocorrelation not modeled with that approach. \n\nSo, I thought I'd ask here to see what suggestions you have on software\ntools and/or statistical models that might be able to handle this. The\nclient mentioned IDL & ENVI having good tools for handling large raster\ndatasets, but I'm not familiar with them and what they can do in terms of\nestimating formal statistical models. \n\nSteven J. Pierce, M.S., Ph.D. Candidate\nAssociate Director\nCenter for Statistical Training & Consulting (CSTAT)\nMichigan State University\n178 Giltner Hall\nEast Lansing, MI 48824\n\nOffice Phone: (517) 353-9288 \nOffice Fax: (517) 353-9307\nE-mail: pierces1 at msu.edu\nWeb: http://www.cstat.msu.edu\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi folks,\n\nI've got a consulting client who has high-resolution (0.4 m) raster data\nfrom remote sensing that covers an area about 5 km x 5 km, which naturally\nyields a very large dataset (~ 15.625 mil",
       "thread_id": "thread-2933b2d141b5",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091201/5d8a512b/attachment.pl"
+      ]
     },
     {
       "id": "msg-a4eb508edee5",
@@ -174,11 +177,14 @@
       "references": [
         "<25E9E50D09314CADB30697D6142CCFBD@TheVoid>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091201/3f380a55/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091201/3f380a55/attachment.pl>",
+      "body_plain": "I prefere Grass and R :-)\nIn fact I believe that they have a set of sampling points on 4 times, and\nnot 4 repetions on time for EACH pixel. It is pratically insane, isn't it?\nExcept If they estimated the cover of a kind of vegetation from four\ndifferent\nlandcovers. So if the want to estimate something as a response variable\ninfluenced\nby the four cover maps, I suggest you use grass, set coarse and handleble\nraster dimension, run your mixed effect model on Grass, reset your\nfine resolution, and apply your model on tiles of your original map.\n\nAnd how about your client be worried about multi-scale (moving windows with\ndifferent radii) instead on a unique 0.4m scale?\n\nbests\n\nmilton\n\nOn Tue, Dec 1, 2009 at 2:15 PM, Steven J. Pierce <pierces1 at msu.edu> wrote:\n\n> Hi folks,\n>\n> I've got a consulting client who has high-resolution (0.4 m) raster data\n> from remote sensing that covers an area about 5 km x 5 km, which naturally\n> yields a very large dataset (~ 15.625 million pixels) at each point in\n> time.\n> They have repeated measurements at 4 time points for this area on a\n> continuous variable that essentially represents which kind of vegetation is\n> most dominant (forage plants vs. weeds) within the pixel. They want to use\n> things like land use type, precipitation, soil type, and the slope and\n> aspect of the ground in each pixel to predict the changes over time in the\n> outcome variable.\n>\n> My initial thought about how to analyze the data was to use a hierarchical\n> linear (mixed effects) model with time points nested within pixels to model\n> the typical longitudinal trajectory of the outcome and how the predictors\n> affect that trajectory. My dilemma is that they want to use the entire\n> dataset to do their models, which means the dataset is so large that most\n> of\n> the analysis tools I'm used to using are simply going to choke on it. In\n> addition, using a random effect for each pixel might account for temporal\n> autocorrelation, but I suspect there would still be substantial spatial\n> autocorrelation not modeled with that approach.\n>\n> So, I thought I'd ask here to see what suggestions you have on software\n> tools and/or statistical models that might be able to handle this. The\n> client mentioned IDL & ENVI having good tools for handling large raster\n> datasets, but I'm not familiar with them and what they can do in terms of\n> estimating formal statistical models.\n>\n> Steven J. Pierce, M.S., Ph.D. Candidate\n> Associate Director\n> Center for Statistical Training & Consulting (CSTAT)\n> Michigan State University\n> 178 Giltner Hall\n> East Lansing, MI 48824\n>\n> Office Phone: (517) 353-9288\n> Office Fax: (517) 353-9307\n> E-mail: pierces1 at msu.edu\n> Web: http://www.cstat.msu.edu\n>\n>\n>\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I prefere Grass and R :-)\nIn fact I believe that they have a set of sampling points on 4 times, and\nnot 4 repetions on time for EACH pixel. It is pratically insane, isn't it?\nExcept If they estimated ",
       "thread_id": "thread-2933b2d141b5",
       "thread_depth": 1,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091201/3f380a55/attachment.pl"
+      ]
     },
     {
       "id": "msg-bcc27a296144",
@@ -208,11 +214,14 @@
       "subject_clean": "grasp?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091202/4e4ef558/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091202/4e4ef558/attachment.pl>",
+      "body_plain": "I have been looking at the literature for the package \"grasp\", which seems to fit exactly with the analyses I want to do.  However, the literature seems out of the date, and the package maintainer email no longer exists.  Does anyone still use grasp, or is there another package which has superseded it or which does similar analyses?\n\nThanks,\nAlison\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I have been looking at the literature for the package \"grasp\", which seems to fit exactly with the analyses I want to do.  However, the literature seems out of the date, and the package maintainer ema",
       "thread_id": "thread-1bcc07070611",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091202/4e4ef558/attachment.pl"
+      ]
     },
     {
       "id": "msg-e087575f1d62",
@@ -406,11 +415,14 @@
       "subject_clean": "Kriging",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091203/ed267400/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091203/ed267400/attachment.pl>",
+      "body_plain": "Hi, I have a very non-specific question about the number of sample points that\ncan be used \nfor developing experimental variograms and kriging in R/gstat/etc. Does anyone\nhave experience \nusing a very large number of data points in the kriging processes with R?  It\nhas been a few \nyears since my last spatial stats course but I recall that I was limited in the\nnumber of data \npoints that R could handle.  I have a regional archaeological dataset with many\ndata points.\nMy sub-regions that I would like to use for kriging can contain 8,000-10,000\ndata points.  Many \nof these are zero values (not no data).  Am I going to have sample my sample if\nI want to \ngenerate experimental variograms in R? Thanks in advance for any ideas, \nGreg Luna\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi, I have a very non-specific question about the number of sample points that\ncan be used \nfor developing experimental variograms and kriging in R/gstat/etc. Does anyone\nhave experience \nusing a very",
       "thread_id": "thread-bb84a9631712",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091203/ed267400/attachment.pl"
+      ]
     },
     {
       "id": "msg-d041c9879ec3",
@@ -477,11 +489,14 @@
       "subject_clean": "plotting 100 variograms on the same plot",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091204/c83e3a0d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091204/c83e3a0d/attachment.pl>",
+      "body_plain": "Dear all,\nI would like to plot 100 variograms on the same plot, possibly using a loop.\n\nAt the moment I am using autofitVariogram in the package Automap to fit the\nvariograms automatically.\nI found some code calling the lattice package (\nhttp://tolstoy.newcastle.edu.au/R/e7/help/09/06/0940.html), but it is giving\nsome problems for high numbers of variograms.\n\nThank you very much in advance!\n\nLaura\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\nI would like to plot 100 variograms on the same plot, possibly using a loop.\n\nAt the moment I am using autofitVariogram in the package Automap to fit the\nvariograms automatically.\nI found so",
       "thread_id": "thread-a2afae35c818",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091204/c83e3a0d/attachment.pl"
+      ]
     },
     {
       "id": "msg-663338b3ff54",
@@ -546,11 +561,14 @@
       "subject_clean": "logistic GWR",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091205/bde646d8/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091205/bde646d8/attachment.pl>",
+      "body_plain": "Hi,\ni just wondering if its possible to perform Logistic Geographically Weighted\nRegression in R software.\n\nAny suggestion?\n\nThank you in advance.\n\nRobert Pazur\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\ni just wondering if its possible to perform Logistic Geographically Weighted\nRegression in R software.\n\nAny suggestion?\n\nThank you in advance.\n\nRobert Pazur\n\n\t[[alternative HTML version deleted]]",
       "thread_id": "thread-237e2e565eeb",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091205/bde646d8/attachment.pl"
+      ]
     },
     {
       "id": "msg-d61da47f75ae",
@@ -566,11 +584,14 @@
         "<4B191FEF.40107@geo.uu.nl>",
         "<4B1921C3.10202@geo.uu.nl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091205/b426dbff/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091205/b426dbff/attachment.pl>",
+      "body_plain": "Thank you very much for the code, that helped me a lot to organise my\nvariograms objects!\nNow what I am trying to get is a plot with all 100 variograms overlapping,\nto show the spread due to simulations from a distribution. Is this possible\nwith the xyplot function?\n\nThank you very much!\n\nLaura\n\n\n\n2009/12/4 Paul Hiemstra <p.hiemstra at geo.uu.nl>\n\n> Paul Hiemstra wrote:\n>\n>> Laura Poggio wrote:\n>>\n>>> Dear all,\n>>> I would like to plot 100 variograms on the same plot, possibly using a\n>>> loop.\n>>>\n>>> At the moment I am using autofitVariogram in the package Automap to fit\n>>> the\n>>> variograms automatically.\n>>> I found some code calling the lattice package (\n>>> http://tolstoy.newcastle.edu.au/R/e7/help/09/06/0940.html), but it is\n>>> giving\n>>> some problems for high numbers of variograms.\n>>>\n>>> Thank you very much in advance!\n>>>\n>>> Laura\n>>>\n>>> [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at stat.math.ethz.ch\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>> Hi Laura,\n>>\n>> The trick is to organize your data, an example using the meuse dataset:\n>>\n>> library(lattice)\n>>\n> ...and ofcourse you need to do:\n>\n> library(automap)\n>\n>\n>> # Make a dataset with 100 fitted variogram models\n>> # Don't know how you've organized your 100 models,\n>> # But I put them in a list.\n>> data(meuse)\n>> coordinates(meuse) =~ x+y\n>> av_list = lapply(1:100, function(x) autofitVariogram(zinc~1, meuse))\n>>\n>> # Now extract the sample variograms, add an extra\n>> # identification column to them and rbind them together\n>> sv_list = do.call(\"rbind\", lapply(1:length(av_list), function(x) {\n>> sv = av_list[[x]]$exp_var\n>> sv$identification = as.character(x)\n>> return(sv)\n>> }))\n>>\n>> # Make a list of fitted models\n>> model_list = lapply(av_list, function(x) x$var_model)\n>>\n>> # Make the plot, notice the formula part!\n>> # I use panel.number(), the current panel number,\n>> # to extract the appropriate variogram model\n>> xyplot(gamma ~ dist | identification, sv_list,\n>> panel = function(...) {\n>> panel.xyplot(...) # points of the sample var\n>> ret = variogramLine(model_list[[panel.number()]], maxdist =\n>> max(sv_list$dist))\n>> llines(ret$dist, ret$gamma, col = \"red\")\n>> })\n>>\n>> cheers,\n>> Paul\n>>\n>>\n>\n> --\n> Drs. Paul Hiemstra\n> Department of Physical Geography\n> Faculty of Geosciences\n> University of Utrecht\n> Heidelberglaan 2\n> P.O. Box 80.115\n> 3508 TC Utrecht\n> Phone:  +3130 274 3113 Mon-Tue\n> Phone:  +3130 253 5773 Wed-Fri\n> http://intamap.geo.uu.nl/~paul <http://intamap.geo.uu.nl/%7Epaul>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you very much for the code, that helped me a lot to organise my\nvariograms objects!\nNow what I am trying to get is a plot with all 100 variograms overlapping,\nto show the spread due to simulatio",
       "thread_id": "thread-a2afae35c818",
       "thread_depth": 3,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091205/b426dbff/attachment.pl"
+      ]
     },
     {
       "id": "msg-7fca2460df7b",
@@ -851,11 +872,14 @@
       "subject_clean": "Convert a list of N dataframes to N dataframes",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091207/dc11f487/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091207/dc11f487/attachment.pl>",
+      "body_plain": "Hello,\n\nI have used the following command:\n\ndatalist<-list(data1,data2,data3,data4,data5,data6)\n\nto make a list of my dataframes, which I then manipulated with these\ncommands:\n\ndatalist<-llply(datalist,\"LogDepth\")\ndatalist<-llply(datalist,\"LogArea\")\ndatalist<-llply(datalist,\"p\")\ndatalist<-llply(datalist,\"Exp\")\ndatalist<-llply(datalist,\"s\")\n\nThis worked very nicely (thanks for plyr, Hadley) but now I would like to\n\"unlist\" my list into the individual dataframes, preferably with their\noriginal names (data1, etc).\n\nI've tried to do this with:\n\n> ldply(datalist,unlist)\n\nbut that's not working. Any help with this would be much appreciated.\n\nThanks, Mark\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI have used the following command:\n\ndatalist<-list(data1,data2,data3,data4,data5,data6)\n\nto make a list of my dataframes, which I then manipulated with these\ncommands:\n\ndatalist<-llply(datalis",
       "thread_id": "thread-fa1666c7ed68",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091207/dc11f487/attachment.pl"
+      ]
     },
     {
       "id": "msg-476da190ed74",
@@ -1008,11 +1032,14 @@
       "subject_clean": "convert KML file into shape file or CSV file",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091208/4775a3de/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091208/4775a3de/attachment.pl>",
+      "body_plain": "Hi all,\n  Does anybody know how to import a KML file in R and them save it as a\nshape or CSV file. Take the following KML file as an example,\nhttp://www.nature.com/nature/googleearth/avianflu1.kml\n  I have tried several extentions of\nARCGIS,e.g.KML2Shape,KMLCSVConverter,KMLCSVConverter and XToolsPro, but\nunfortunately failed to do that. I didnot find a method to solve it in R.\n If this cannot be done in R, i'd like to see your alternative method to do\nthat.\n  Any help or suggestions are greatly appreciated.\n\n-- \n-----------------\nJane Chang\nQueen's\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all,\n  Does anybody know how to import a KML file in R and them save it as a\nshape or CSV file. Take the following KML file as an example,\nhttp://www.nature.com/nature/googleearth/avianflu1.kml\n  I",
       "thread_id": "thread-143a5e0a5294",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091208/4775a3de/attachment.pl"
+      ]
     },
     {
       "id": "msg-8a33e2580d88",
@@ -1062,11 +1089,14 @@
       "subject_clean": "zscore for krige.cv with IDW",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091209/de643ef8/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091209/de643ef8/attachment.pl>",
+      "body_plain": "Hello,\n\nI am trying to compare the zscores of using various kriging methods with inverse distance weighting.\n\nWhen I run\n\ncrossval_idw <- krige.cv(Prec00hr~1, DataCoordhr, nfold=2)\n\nI get all NA's for the zscore. As the residual is a valid number, I am assuming that the standard deviation is not being calculated properly. However, I can calculate the standard deviation of the residual:\n\nsd(crossval_idw$residual)\n\nAs an aside, I also get all NA's for the variances even though, I also can calculate the variances separately.\n\nvar(crossval_idw$residual)\n\nAny ideas?\n\nThank you for your help,\n\nCara\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI am trying to compare the zscores of using various kriging methods with inverse distance weighting.\n\nWhen I run\n\ncrossval_idw <- krige.cv(Prec00hr~1, DataCoordhr, nfold=2)\n\nI get all NA's for",
       "thread_id": "thread-d8ee70b97313",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091209/de643ef8/attachment.pl"
+      ]
     },
     {
       "id": "msg-a712c0813ae4",
@@ -1149,11 +1179,14 @@
       "subject_clean": "reading select values from a binary file",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091209/d820d3e1/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091209/d820d3e1/attachment.pl>",
+      "body_plain": "Hopefully there is a simple solution to this problem. I process really large satellite images in R and, in order to not offend the memory-limitation demi-gods, I open each row of the imagery one at a time, process it, write the results, and then open the next line. I use readBin() to open each line.  For examaple, say I have the following file:\n\nwriteBin(1:20,con=\"desktop/temp.bip\",size=2,endian=\"big\")\n\nwhich I can open using readBin():\n\nreadBin(\"desktop/temp.bip\",\"integer\",size=2,endian=\"big\",n=20)\n\nNow I want to open select values from the binary file, not a complete line.  Say I want to read values 3, 7, and 10, process them, write the result, and then read values 4, 5, and 17.  How do I direct readBin to those specific values? Thanks.\n\n\nJonathan B. Thayn, Ph.D.\nIllinois State University\nDepartment of Geography - Geology\n200A Felmley Hall\nNormal, Illinois 61790-4400\n\n(309) 438-8112\njthayn at ilstu.edu\nmy.ilstu.edu/~jthayn\n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hopefully there is a simple solution to this problem. I process really large satellite images in R and, in order to not offend the memory-limitation demi-gods, I open each row of the imagery one at a ",
       "thread_id": "thread-b6b24f7db1a2",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091209/d820d3e1/attachment.pl"
+      ]
     },
     {
       "id": "msg-b43a6e99841f",
@@ -1351,11 +1384,14 @@
         "<a835c81e0912081722o4d35b198y25d38ce41d9495a8@mail.gmail.com>",
         "<d8ad40b50912090532h4693f581t6222ae8b7e9af8c2@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091209/8553e857/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091209/8553e857/attachment.pl>",
+      "body_plain": "It is the problem of the file. I should have thought of this because i\nhave tried several tools. Thanks.\n  Based on your replies, i think it is easy to convert the files between KML\nand SHP if the files are correct and have simple structure. We only\nneed readOGR and writeOGR in rgdal package to do that. Something like the\nfollowing arguments.\n#Convert KML to SHP\nreadOGR(\"pathtofile\",layer.kml)\nwriteOGR(\"pathtooutput\",driver=\"ESRI Shapefile\",layer=output.shp)\n#Convert SHP to KML\nreadOGR(\"pathtofile\",layer.shp)\nwriteOGR(\"pathtooutput\",driver=\"KML\",layer=output.kml)\n  Right?\n  Thanks a lot.\n2009/12/9 Barry Rowlingson <b.rowlingson at lancaster.ac.uk>\n\n> On Wed, Dec 9, 2009 at 1:22 AM, rusers.sh <rusers.sh at gmail.com> wrote:\n> > Hi all,\n> >  Does anybody know how to import a KML file in R and them save it as a\n> > shape or CSV file. Take the following KML file as an example,\n> > http://www.nature.com/nature/googleearth/avianflu1.kml\n> >  I have tried several extentions of\n> > ARCGIS,e.g.KML2Shape,KMLCSVConverter,KMLCSVConverter and XToolsPro, but\n> > unfortunately failed to do that. I didnot find a method to solve it in R.\n> >  If this cannot be done in R, i'd like to see your alternative method to\n> do\n> > that.\n> >  Any help or suggestions are greatly appreciated.\n> >\n>\n>  As well as the validation problems reported by Alex Mandel, the\n> structure of this KML file isn't appropriate for straight conversion\n> to a shape or CSV file.\n>\n>  It has several parts, some \"NetworkLink\" structures without URLs that\n> just provide some HTML info boxes, and some network link structures\n> that point to other kmz files. You can download these kmz files, unzip\n> them, and possibly convert them to other formats. For example, one of\n> the links is to:\n>\n> http://www.declanbutler.info/Flumaps1/4_Human_cases/Maps_of_human_cases_by\n> period/Cases_by_period1.kmz\n>\n> which when unzipped produces doc.kml and some png files for markers.\n> ogrinfo tells us:\n>\n> $ ogrinfo doc.kml\n> Had to open data source read-only.\n> INFO: Open of `doc.kml'\n>      using driver `KML' successful.\n> 1: Data (3D Point)\n> 2: Data (3D Point)\n> 3: Data (3D Point)\n> 4: Data (3D Point)\n> 5: Data (3D Point)\n> 6: Data (3D Point)\n> 7: Data (3D Point)\n> 8: Data (3D Point)\n>\n>  - which is a bit weird, 8 layers all called 'Data'. That makes it\n> hard to extract individual layers by name. So I edited the file and\n> renamed them Data to Data8....\n>\n>  I can then read them in R:\n>\n> > data2=readOGR(\"doc.kml\",\"Data2\")\n> > plot(data2)\n>\n>  I can then use writeOGR to create shapefiles, but it's easier on the\n> command line:\n>\n> $ mkdir shapefile\n> $ ogr2ogr -f \"ESRI Shapefile\" shapefile doc.kml\n>\n> So there's umpteen things going on here, above and beyond any possible\n> structural problems with the KML in the first place:\n>\n> 1. The original KML file points to a bunch of KMZ files, and readOGR\n> isn't going to do all that work for you.\n> 2. Even if it could do all that work, the KML is a complex structure\n> with all sorts of geographic and no-geographic entities and so it\n> can't bung it all into a simple shapefile\n> 3. The individual KMZ files which do contain the data have multiple layers.\n> 4. The layers within a KMZ file (or at least, the one I bothered to\n> look at) have identical names which breaks stuff.\n>\n> Otherwise, it's easy! :)\n>\n> Barry\n>\n\n\n\n-- \n-----------------\nJane Chang\nQueen's\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "It is the problem of the file. I should have thought of this because i\nhave tried several tools. Thanks.\n  Based on your replies, i think it is easy to convert the files between KML\nand SHP if the fil",
       "thread_id": "thread-143a5e0a5294",
       "thread_depth": 2,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091209/8553e857/attachment.pl"
+      ]
     },
     {
       "id": "msg-fe6a0112b3ca",
@@ -1409,11 +1445,14 @@
       "subject_clean": "converting grid objects to spatial polygon objects and export as shapefile",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091209/dee8e72d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091209/dee8e72d/attachment.pl>",
+      "body_plain": "Good Evening:\nI have been trying to figure this one out but just can't make it work yet.\n\nIs there a straightforward way to convert a grid object (such as an earthwide or regional long-lat grid) generated using sp into a spatial polygon object that I could then export as a shapefile.  I want to be able to use the maptools overlay function to assign locations to a grid and then color each grid area based upon mean or other characteristics of the locations within each grid.  I also want to create a shapefile with attributes from each polygon saved in the @data component.  Please excuse me if this is a simple problem or has been addressed previously by the list but I have not been able to find an answer in previous posts.\n\nJoe  \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Good Evening:\nI have been trying to figure this one out but just can't make it work yet.\n\nIs there a straightforward way to convert a grid object (such as an earthwide or regional long-lat grid) gener",
       "thread_id": "thread-f235f4467202",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091209/dee8e72d/attachment.pl"
+      ]
     },
     {
       "id": "msg-723ec8986782",
@@ -1462,11 +1501,14 @@
         "<12897_1260427894_1260427894_4B209A36.3020101@cebc.cnrs.fr>",
         "<1260429784.6923.29.camel@whitebox>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/cc7325ae/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/cc7325ae/attachment.pl>",
+      "body_plain": "On Thu, Dec 10, 2009 at 9:23 AM, Dan Putler <dan.putler at sauder.ubc.ca>wrote:\n\n> Hi Alexandre,\n>\n> Greetings from yesterday evening.\n>\n> I think I know what you want, and I've been working on the same problem\n> in a very different substantive context. To make sure I understand the\n> question, you are basically stating that if the gap between \"nearest\"\n> birds of the same species exceeds 1000 meters, then the two birds cannot\n> be considered to be in the same cluster. Returning to your example of\n> birds along a straight line, assume the birds run from A to B to C, and\n> A and B are 700 meters apart, while B and C are 1001 meters apart, then\n> it is the case that A and B are in a cluster, but C is not a member of\n> that cluster.\n>\n\nAnother approach (can be automated without user interaction):\n\n1) create a distance matrix for the individuals (if I remember correctly\ndist())\n2) iterate through all individuals and for this focal individual:\n  a) identify all individuals closer to the focal animal then 1000m\n(neighbours_focal)\n  b) go through all neighbours_focal and identify all individuals closer\nthen 1000m neighbours_focal_2\n  c) exclude all neighbours_focal from neighbours_focal_2 and go back to b\nfor all neighbours_focal_2\n  d) repeat b + c until the number of neighbours_focal_2 is zero, i.e. no\nindividual is closer to one in the cluster then 1000m\n  e) all these individuals are your cluster_1\n2) exclude all individuals in cluster_1\nrepeat s and 3 until no individuals are left\n\nHope this helps,\n\nRainer\n\n\n\n>\n> Assuming what I said is correct, one thing you can do is create a\n> relative neighbor graph of your points, and then drop any edges from the\n> graph that exceed 1000 meters. This will create a set up unconnected\n> sub-graphs, and the points within each sub-graph constitutes a cluster.\n> I've written a function (using the spdens package) that removes the long\n> edges from the relative neighbor graph, there by creating the set of\n> clusters. I've pasted my function below (at some point I will create an\n> R package that includes this function, but it is likely a couple of\n> months away).\n>\n> The function follows:\n>\n> # dropLongLinks takes an nb (neighbor list) object, the original\n> coordinates,\n> # and a maximum distance, then removes links from the nb object for\n> links that\n> # exceed the maximum distance.\n>\n> # Programer: Dan Putler\n> # Created: 08Feb09\n> # Modified: 08Feb09\n>\n> dropLongLinks <- function(nb, coords, max.dist) {\n>    require(spdep)\n>    if(!is.matrix(coords)) coords <- as.matrix(coords)\n>    dists <- nbdists(nb, coords)\n>    nb.new <-\n>      lapply(1:length(nb), function(i) nb[[i]] <- nb[[i]][dists[[i]] <=\n> max.dist])\n>    class(nb.new) <- \"nb\"\n>    return(nb.new)\n>     }\n>\n> On Thu, 2009-12-10 at 07:50 +0100, Alexandre VILLERS wrote:\n> > Good morning (and sorry for the cross posting on the R sig ecology),\n> >\n> > I'm still working on the spatial distribution of an aggregated bird\n> species. I would like to test different between birds distances to create\n> clusters and thus identify groups of birds (leks). It would be \"visually\"\n> quite easy to do it but I would like to repeat this clustering objectively\n> for many years in order to characterize some biological processes. So I\n> would like for example to group all the birds who share neighbours in less\n> than 1000 meters in the same cluster. Thus, 3 birds lying on a straight line\n> 700 meters from each other would belong to the same cluster (hope this is\n> clear).\n> >\n> > I can get groups of points whose distances are below a certain threshold\n> with dnearneigh() from package \"spdep\" but this would still require to write\n> an iterative function to group points.\n> > Is there an existing function that can do the whole trick? I know many\n> packages are available for clustering with R but I haven't found one that I\n> can parametrize in a such way yet.\n> >\n> > Any link will be appreciated.\n> > Thanks\n> >\n> >\n> > Alex\n> >\n> > P.S.: to get this visually\n> >\n> > x<-c(0,700,1400, 3000)\n> > y<-c(0,0,0,0)\n> > plot(y~x, col=c(\"red\",\"red\", \"red\", \"black\"), pch=c(16,16,16,16)) # red\n> points belong to the same cluster while the black doesn't\n> >\n> >\n> --\n> Dan Putler\n> Sauder School of Business\n> University of British Columbia\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n\n-- \nNEW GERMAN FAX NUMBER!!!\n\nRainer M. Krug, PhD (Conservation Ecology, SUN), MSc (Conservation Biology,\nUCT), Dipl. Phys. (Germany)\n\nCentre of Excellence for Invasion Biology\nNatural Sciences Building\nOffice Suite 2039\nStellenbosch University\nMain Campus, Merriman Avenue\nStellenbosch\nSouth Africa\n\nCell:           +27 - (0)83 9479 042\nFax:            +27 - (0)86 516 2782\nFax:            +49 - (0)321 2125 2244\nemail:          Rainer at krugs.de\n\nSkype:          RMkrug\nGoogle:         R.M.Krug at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "On Thu, Dec 10, 2009 at 9:23 AM, Dan Putler <dan.putler at sauder.ubc.ca>wrote:\n\n> Hi Alexandre,\n>\n> Greetings from yesterday evening.\n>\n> I think I know what you want, and I've been working on the sa",
       "thread_id": "thread-242975579584",
       "thread_depth": 1,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/cc7325ae/attachment.pl"
+      ]
     },
     {
       "id": "msg-2b0a93e20d75",
@@ -1536,11 +1578,14 @@
         "<8CC4755FF335DDD-29E4-A52E@webmail-d100.sysops.aol.com>",
         "<alpine.LRH.2.00.0912100952060.3176@reclus.nhh.no>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/2f195313/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/2f195313/attachment.pl>",
+      "body_plain": "Roger\nThanks once again for your assistance. Your code did exactly what I was wanting to do.\nI was able to export the spatial dataframe as a shapefile and use it in my application.\nJoe\n\n\n\n-----Original Message-----\nFrom: Roger Bivand <Roger.Bivand at nhh.no>\nTo: brwin338 at aol.com\nCc: r-sig-geo at stat.math.ethz.ch\nSent: Thu, Dec 10, 2009 2:11 am\nSubject: Re: [R-sig-Geo] converting grid objects to spatial polygon objects and export as shapefile\n\n\nOn Wed, 9 Dec 2009, brwin338 at aol.com wrote: \n \n> \n> Good Evening: \n> I have been trying to figure this one out but just can't make it work yet. \n> \n> Is there a straightforward way to convert a grid object (such as an > earthwide or regional long-lat grid) generated using sp into a spatial > polygon object that I could then export as a shapefile. I want to be > able to use the maptools overlay function to assign locations to a grid > and then color each grid area based upon mean or other characteristics > of the locations within each grid. I also want to create a shapefile > with attributes from each polygon saved in the @data component. Please > excuse me if this is a simple problem or has been addressed previously > by the list but I have not been able to find an answer in previous > posts. \n \nHave you considered coercing to SpatialPixels, then to SpatialPolygons: as(as(grd, \"SpatialPixels\"), \"SpatialPolygons\")? \n \ngt <- GridTopology(c(-177.5, -87.5), c(5, 5), c(72, 36)) \ngrd <- SpatialGrid(gt, proj4string=CRS(\"+proj=longlat\")) \nspix <- as(grd, \"SpatialPixels\") \nspol <- as(spix, \"SpatialPolygons\") \n \nWhether the sp package overlay methods will be more efficient on which representation is a question that needs addressing. Then something like: \n \npts <- spsample(grd, n=50000, type=\"random\") \nspts <- SpatialPointsDataFrame(pts, data=data.frame(x=rnorm(50000))) \no <- overlay(spol, spts) \nspdf <- SpatialPolygonsDataFrame(spol, data=data.frame(id=row.names(spol), \n  row.names=row.names(spol))) \nspdf$xbar <- aggregate(spts$x, list(o), mean)$x \nspplot(spdf, \"xbar\") \n \nbut you might just as well use the SpatialGrid* or SpatialPixels* representation, maybe? \n \nHope this helps, \n \nRoger \n \n> \n> Joe \n> \n> [[alternative HTML version deleted]] \n> \n> _______________________________________________ \n> R-sig-Geo mailing list \n> R-sig-Geo at stat.math.ethz.ch \n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo \n> \n \n-- Roger Bivand \nEconomic Geography Section, Department of Economics, Norwegian School of \nEconomics and Business Administration, Helleveien 30, N-5045 Bergen, \nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43 \ne-mail: Roger.Bivand at nhh.no \n \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Roger\nThanks once again for your assistance. Your code did exactly what I was wanting to do.\nI was able to export the spatial dataframe as a shapefile and use it in my application.\nJoe\n\n\n\n-----Origina",
       "thread_id": "thread-f235f4467202",
       "thread_depth": 2,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/2f195313/attachment.pl"
+      ]
     },
     {
       "id": "msg-7544a7224ee3",
@@ -1552,11 +1597,14 @@
       "subject_clean": "Spatial categories for risk data.",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/ddf16f25/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/ddf16f25/attachment.pl>",
+      "body_plain": "Hello,\n\n \n\nI currently have a map that looks something like this:\n\n \n\n-----------------------------------------\n\n|   x           x    o   x    o     x   |\n\n|  x     x         x       x     a o  a |\n\n|      a       x       o      o    x    |\n\n|  x      x       o      o     o     a  |\n\n|  x  x      x      o       a   o   a  o|\n\n|  x     x     o   x  o   x   a  a    a |\n\n| x   x    o      o     a   a      a    |\n\n-----------------------------------------\n\n    \n\nx = low risk\n\no = moderate risk\n\na = high risk\n\n\n\nEach letter represents a person, and the entire map represents a state.\nEach person's \"risk score\" is a continuous numeric value, but I have\ncategorized it into low, moderate, and high for visual simplicity. What\nI'm hoping to do is draw lines that will divide out the categories. The\nlines do not have to necessarily be straight, but I would like them to\nbe simple enough. I figure that I would have to account for any\noverlapping or outlying persons. This is my initial idea of how the map\nwould turn out:\n\n\n\n-----------------------------------------\n\n|                  /             /      |\n\n|                 /             /       |\n\n|      x         /     o       /    a   |\n\n|               /             /         |\n\n|              /             /          |\n\n|             /             /           |\n\n|            /             /            |\n\n-----------------------------------------    \n\n\n\nI have downloaded and installed GRASS and R, but I am not sure what type\nof spatial method or analysis to use. Could someone please offer me\nadvice on how to get started with this project? Thanks so much!\n\n\n\n\n\n------------------------------------------------------\n\nArthur Hintermeister\n\nahintermeister at amica.com <mailto:ahintermeister at amica.com> \n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\n \n\nI currently have a map that looks something like this:\n\n \n\n-----------------------------------------\n\n|   x           x    o   x    o     x   |\n\n|  x     x         x       x     a o  a |\n\n|",
       "thread_id": "thread-7544a7224ee3",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/ddf16f25/attachment.pl"
+      ]
     },
     {
       "id": "msg-c775c32e44ba",
@@ -1584,11 +1632,14 @@
       "subject_clean": "error for converting between KML and Shape file",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/2291d35a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/2291d35a/attachment.pl>",
+      "body_plain": "Hi all,\n  I try to use the readOGR and writeOGR in rgdal package to do the\nconversion KML and Shape files, but failed. Following is my codes for a\nsimulated dataset.\n#library(rgdal);library(maptools);ogrDrivers()\n#generate a simulated point SHAPE file,its name is \"pointexamle0\" and save\nin \"h:/example\".\nx<-runif(5)*180;y<-runif(5)*90\npointsam<-SpatialPoints(data.frame(x,y), proj4string=CRS(\"+proj=longlat\n+ellps=WGS84\"))\nwrite.pointShape(coordinates(pointsam), df=as(pointsam, \"data.frame\"),\nfile=\"h:/example/pointexamle0\")\n\n#1. Conver SHAPE file to KML file\nimportshp <- readOGR(dsn=\"h:/example\",layer=\"pointexamle0\") #correct\nproj4string(importshp)<-CRS(\"+proj=longlat +ellps=WGS84\")\nwriteOGR(obj=importshp,dsn=\"h:/example\",driver=\"KML\",layer=\"output\")\n #????Errors\n#Error in writeOGR(obj = importshp, dsn = \"h:/example\", driver = \"KML\",  :\n          GDAL Error 4: Failed to create KML file h:/example.\n\n#2. Conver KML file to SHAPE file\n#I use the XTools Pro for ARCGIS to generate the KML file for the above\n\"pointexamle0\" SHAPE file.Its name is \"pointkml.kml\" and save\nin \"h:/example\".\nimportkml <- readOGR(dsn=\"h:/example\",layer=\"pointkml\")  #???Errors?\n#in ogrInfo(dsn = dsn, layer = layer, input_field_name_encoding =\ninput_field_name_encoding) :\n  Cannot open layer\n\nwriteOGR(obj=importkml,dsn=\"h:/example\",driver=\"ESRI\nShapefile\",layer=\"output2\") #cannot have a try,maybe there is also errors.\n\n  Does anybody know where i made a mistake to use these two functions?\nThanks a lot.\n\n-- \n-----------------\nJane Chang\nQueen's\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all,\n  I try to use the readOGR and writeOGR in rgdal package to do the\nconversion KML and Shape files, but failed. Following is my codes for a\nsimulated dataset.\n#library(rgdal);library(maptools);",
       "thread_id": "thread-f53ecd8532aa",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/2291d35a/attachment.pl"
+      ]
     },
     {
       "id": "msg-a38b2f521e4e",
@@ -1621,11 +1672,14 @@
         "<a835c81e0912101217o4e5cf0aax616cfe69ea72e6b5@mail.gmail.com>",
         "<d8ad40b50912101241q3d126345pfc39f65df886359c@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/b6212065/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/b6212065/attachment.pl>",
+      "body_plain": "Thanks Barry. The problem is i didnot understand the parameters in the\nfunctions correctly. Thanks for your detailed explanation.\n\n2009/12/10 Barry Rowlingson <b.rowlingson at lancaster.ac.uk>\n\n> On Thu, Dec 10, 2009 at 8:17 PM, rusers.sh <rusers.sh at gmail.com> wrote:\n> > Hi all,\n> >  I try to use the readOGR and writeOGR in rgdal package to do the\n> > conversion KML and Shape files, but failed. Following is my codes for a\n> > simulated dataset.\n> > #library(rgdal);library(maptools);ogrDrivers()\n> > #generate a simulated point SHAPE file,its name is \"pointexamle0\" and\n> save\n> > in \"h:/example\".\n> > x<-runif(5)*180;y<-runif(5)*90\n> > pointsam<-SpatialPoints(data.frame(x,y), proj4string=CRS(\"+proj=longlat\n> > +ellps=WGS84\"))\n> > write.pointShape(coordinates(pointsam), df=as(pointsam, \"data.frame\"),\n> > file=\"h:/example/pointexamle0\")\n> >\n> > #1. Conver SHAPE file to KML file\n> > importshp <- readOGR(dsn=\"h:/example\",layer=\"pointexamle0\") #correct\n> > proj4string(importshp)<-CRS(\"+proj=longlat +ellps=WGS84\")\n> > writeOGR(obj=importshp,dsn=\"h:/example\",driver=\"KML\",layer=\"output\")\n> >  #????Errors\n> > #Error in writeOGR(obj = importshp, dsn = \"h:/example\", driver = \"KML\",\n>  :\n> >          GDAL Error 4: Failed to create KML file h:/example.\n> >\n>\n>  The devil, as we say, is in the details (which for some reason are\n> truncated!):\n>\n> Details:\n>\n>    Working out which combination of dsn, layer, and driver (and\n>    option) values give the desired output takes time and care, and is\n>    constrained by the ability of drivers to write output; many ar\n>\n> The parameters for writeOGR are:\n>\n> writeOGR(object, fileName, layerName,driver=\"KML\")\n>\n> Here 'object' is your R Spatial Points/Poly/etc, 'fileName' is the\n> path (including filename) for your output KML, and 'layerName' is a\n> label that your layer will get in the KML - you'll see this in the\n> layer list in Google Earth, for example.\n>\n>  Example:\n>\n> writeOGR(myPoints,\"/tmp/test.kml\",\"TestLayer\",driver=\"KML\")\n>\n>\n> Barry\n> --\n> blog: http://geospaced.blogspot.com/\n> web: http://www.maths.lancs.ac.uk/~rowlings\n> web: http://www.rowlingson.com/\n> twitter: http://twitter.com/geospacedman\n> pics: http://www.flickr.com/photos/spacedman\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n\n-- \n-----------------\nJane Chang\nQueen's\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks Barry. The problem is i didnot understand the parameters in the\nfunctions correctly. Thanks for your detailed explanation.\n\n2009/12/10 Barry Rowlingson <b.rowlingson at lancaster.ac.uk>\n\n> On T",
       "thread_id": "thread-f53ecd8532aa",
       "thread_depth": 2,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091210/b6212065/attachment.pl"
+      ]
     },
     {
       "id": "msg-cb2ff69546e0",
@@ -1687,11 +1741,14 @@
       "subject_clean": "Cross validation for conditional Gaussian simulations",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091211/119b5e59/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091211/119b5e59/attachment.pl>",
+      "body_plain": "Dear all,\n\nI have some soil moisture measurements\ndistributed in the basin and I’m trying to find the best simulation method for\nmy data through the cross validation. I started with the tutorial of Meuse\ndataset that implemented in gstat. In the case of\npredictions, the cross validation is straight forward:\n\n> lzn.kriged = krige(log(zinc) ~ 1,\nmeuse, meuse.grid, model = lzn.fit) \n\n[using ordinary kriging]\n\n>\nspplot(lzn.kriged[\"var1.pred\"]) \n\n> spplot(lzn.kriged[\"var1.var\"])\n\n\n> str(lzn.kriged )\n\nFormal class 'SpatialPixelsDataFrame'\n[package \"sp\"] with 7 slots\n\n \n..@ data       :'data.frame':            3103\nobs. of  2 variables:\n\n \n.. ..$ var1.pred: num [1:3103] 6.5 6.62 6.51 6.39 6.76 ...\n\n \n.. ..$ var1.var : num [1:3103] 0.32 0.252 0.273 0.296 0.178 ...\n\n \n..@ coords.nrs : num(0) \n\n \n..@ grid       :Formal class 'GridTopology'\n[package \"sp\"] with 3 slots\n\n \n.. .. ..@ cellcentre.offset: Named num [1:2] 178460 329620\n\n \n.. .. .. ..- attr(*, \"names\")= chr [1:2] \"x\"\n\"y\"\n\n \n.. .. ..@ cellsize         : Named num [1:2]\n40 40\n\n \n.. .. .. ..- attr(*, \"names\")= chr [1:2] \"x\"\n\"y\"\n\n \n.. .. ..@ cells.dim        : Named int [1:2] 78 104\n\n \n.. .. .. ..- attr(*, \"names\")= chr [1:2] \"x\"\n\"y\"\n\n \n..@ grid.index : int [1:3103] 69 146 147 148 223 224 225 226 300 301 ...\n\n \n..@ coords    \n: num [1:3103, 1:2] 181180 181140 181180 181220 181100 ...\n\n \n.. ..- attr(*, \"dimnames\")=List of 2\n\n \n.. .. ..$ : NULL\n\n \n.. .. ..$ : chr [1:2] \"x\" \"y\"\n\n \n..@ bbox       : num [1:2, 1:2] 178440 329600\n181560 333760\n\n \n.. ..- attr(*, \"dimnames\")=List of 2\n\n \n.. .. ..$ : chr [1:2] \"x\" \"y\"\n\n \n.. .. ..$ : chr [1:2] \"min\" \"max\"\n\n \n..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n\n \n.. .. ..@ projargs: chr NA\n\n \n\nIn the case of simulations it works also as\nfollows:\n\n> lzn.condsim = krige(log(zinc) ~ 1,\nmeuse, meuse.grid, model = lzn.fit, \n\n+ \nnmax = 30, nsim = 4) \n\ndrawing 4 GLS realisations of beta...\n\n[using conditional Gaussian simulation]\n\n>  spplot(lzn.condsim, main = \"three\nconditional simulations\")\n\nWhen I put\n\n> str(lzn.condsim)\n\nIt shows the following:\n\nFormal class 'SpatialPixelsDataFrame'\n[package \"sp\"] with 7 slots\n\n \n..@ data       :'data.frame':            3103\nobs. of  4 variables:\n\n \n.. ..$ sim1: num [1:3103] 6.12 6.58 5.98 5.66 5.92 ...\n\n \n.. ..$ sim2: num [1:3103] 6.68 6.65 7.01 6.29 6.65 ...\n\n \n.. ..$ sim3: num [1:3103] 5.43 5.32 6.22 5.75 6.85 ...\n\n \n.. ..$ sim4: num [1:3103] 5.91 5.88 6.09 5.82 6.64 ...\n\n \n..@ coords.nrs : num(0) \n\n \n..@ grid       :Formal class 'GridTopology'\n[package \"sp\"] with 3 slots\n\n \n.. .. ..@ cellcentre.offset: Named num [1:2] 178460 329620\n\n \n.. .. .. ..- attr(*, \"names\")= chr [1:2] \"x\"\n\"y\"\n\n \n.. .. ..@ cellsize         : Named num [1:2]\n40 40\n\n \n.. .. .. ..- attr(*, \"names\")= chr [1:2] \"x\"\n\"y\"\n\n \n.. .. ..@ cells.dim        : Named int [1:2] 78 104\n\n \n.. .. .. ..- attr(*, \"names\")= chr [1:2] \"x\"\n\"y\"\n\n \n..@ grid.index : int [1:3103] 69 146 147 148 223 224 225 226 300 301 ...\n\n \n..@ coords    \n: num [1:3103, 1:2] 181180 181140 181180 181220 181100 ...\n\n \n.. ..- attr(*, \"dimnames\")=List of 2\n\n \n.. .. ..$ : NULL\n\n \n.. .. ..$ : chr [1:2] \"x\" \"y\"\n\n \n..@ bbox       : num [1:2, 1:2] 178440 329600\n181560 333760\n\n \n.. ..- attr(*, \"dimnames\")=List of 2\n\n \n.. .. ..$ : chr [1:2] \"x\" \"y\"\n\n \n.. .. ..$ : chr [1:2] \"min\" \"max\"\n\n \n..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n\n \n.. .. ..@ projargs: chr NA\n\n \n\nIn the case of prediction I have the\nvariance (lzn.kriged$ var1.var) and residual (lzn.kriged$ residual) directly,\nbut How can I determine the best simulation (sim1,sim2 ….) for my data doing\nthe cross validation, I did not find var1.var and lzn.condsim$residuals in the lzn.condsim.\n\n\n\n Thanks,\n\nAgeel\n\n \n\n \n\n \n\n \n\n \n\n\n\n\n\n      \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nI have some soil moisture measurements\ndistributed in the basin and I’m trying to find the best simulation method for\nmy data through the cross validation. I started with the tutorial of Me",
       "thread_id": "thread-b5927f27268c",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091211/119b5e59/attachment.pl"
+      ]
     },
     {
       "id": "msg-4da6a54764bb",
@@ -1755,11 +1812,14 @@
       "references": [
         "<4B252466.6090307@spatial-analyst.net>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091213/807ccba7/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091213/807ccba7/attachment.pl>",
+      "body_plain": "Dear Tom,\nmy best acknowledgment for the Ecogrid challenging initiative.\nI guess the main limitation will be \"time\" and this is related to the  \nsize of grids.\nWhat is the extent of the grids ?\nWhat tool you plan to use for point 1. Overlay some point data and  \nget the values of grids ?\n\nOn a more theoretical basis,\n\"distribution models should rely upon data that covers the whole  \nextent of the distribution of the biota under examination\"\n\nPlease consider forest data from\nhttp://forest.jrc.ec.europa.eu/climate-change\nas supplementary predictors variables within an European biodiversity  \nand nature conservation application.\n\nCheers\nStefano\n\n\n________________________________\n\nStefano Casalegno, Ph.D.\n\nvia Greppi 16, 21021 Angera - Italy\nemail: stefano at casalegno.net\nweb: http://www.casalegno.net/stefano\n________________________________\n\n\nOn Dec 13, 2009, at 6:29 PM, Tomislav Hengl wrote:\n\n>\n> Dear R-sig-geo,\n>\n> As a part of our project (EcoGRID.nl) we have prepared some 60  \n> thematic grids that we use as auxiliary predictors for species  \n> distribution modeling. At this stage, we would like to put the  \n> gridded maps (50/100 m base resolution) into some efficient  \n> sharable geo-database.\n>\n> We will most probably put the data into the NetCDF format (http:// \n> www.unidata.ucar.edu/software/netcdf/) because it can handle any- \n> dimensional array data, and because it has been in continuous  \n> development and widespread use for many years. NetCDF grids can be  \n> read relatively easy into R using the RNetCDF package (e.g. http:// \n> spatial-analyst.net/DATA/readNCDF.zip). Another alternative is to  \n> use PostGIS WKT Raster format (http://trac.osgeo.org/postgis/wiki/ \n> WKTRaster), but this seems to be still rather experimental (?).\n>\n> Once we put the grids into NetCDF format. We plan to install  \n> OPeNDAP (http://www.opendap.org) server on top to make the files  \n> accessible through the web; then Geoserver (http:// \n> www.geoserver.org) or UMN Mapserver (http://mapserver.org) to feed  \n> a WMS from NetCDF files (raster data). Finally, we plan to add a  \n> simple OpenLayers interface on top of that (Geoserver has it built  \n> in) to allow direct browsing of the data and metadata (e.g. such as  \n> this one: http://africamap.harvard.edu/)\n>\n> Just to be clear, we want to put the data on a server because we  \n> would like to run a number of operations directly on the server  \n> (via rgdal?):\n>\n> 1. Overlay some point data and get the values of grids (without a  \n> need to download the grids locally);\n> 2. Subset/mask and resample gridded data of interest (for a given  \n> bounding box and proj4 string; again without a need to download the  \n> data locally);\n> 3. Upscale the grids from 100 m to 250, 500 m and 1 km resolution  \n> (then download the upscaled grids).\n> 4. Write/upload new grids to the database (e.g. using WebDAV).\n> 5. Browse the grids (and metadata) via the OpenLayers.\n>\n> These are only our wishes of course. We do not know if all this is  \n> really possible with the current software.\n>\n> Any examples or comments/suggestions/experiences are welcome  \n> (before we start installing and testing the functionality).\n>\n> Thanx!\n>\n> Tomislav Hengl and Lourens Veen\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Tom,\nmy best acknowledgment for the Ecogrid challenging initiative.\nI guess the main limitation will be \"time\" and this is related to the  \nsize of grids.\nWhat is the extent of the grids ?\nWhat t",
       "thread_id": "thread-3bc7514d84a9",
       "thread_depth": 1,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091213/807ccba7/attachment.pl"
+      ]
     },
     {
       "id": "msg-b89684b8c35a",
@@ -2119,11 +2179,14 @@
       "subject_clean": "how to create locs and make a dataframce cover it and kasc",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091215/1993c652/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091215/1993c652/attachment.pl>",
+      "body_plain": "Dear,\n\nThis is Elaine, a newbie to adehabitat for ENFA.\n\nNow I am in the stage of preparing species data and variable data.\nI learned to prepare the latter one by using kasc.\n\nHowever, I do not know how to create locs (for species data)\nand make data.frame (like puechabon$kasc, puechabon$locs) cover locs and\nkasc.\n\nPlease kindly help and thank you in advance.\n\nElaine\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear,\n\nThis is Elaine, a newbie to adehabitat for ENFA.\n\nNow I am in the stage of preparing species data and variable data.\nI learned to prepare the latter one by using kasc.\n\nHowever, I do not know h",
       "thread_id": "thread-d1293f775d4c",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091215/1993c652/attachment.pl"
+      ]
     },
     {
       "id": "msg-2ef98cae4615",
@@ -2882,11 +2945,14 @@
       "subject_clean": "Spatial Variable selection",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091218/63648681/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091218/63648681/attachment.pl>",
+      "body_plain": "Hello.\n\nI am making a variable selection from Landsat(6 optical spectral bands),\nndvi, tasseled cap and Texture for every band to apply classification\nalgorithms.\n\nI would like to select the best variables based on the best criterion.  I\nfound in [http://www.stat.umn.edu/geyer/5102/examp/select.html] an example\nhow to do it, but I get negative AIC and BIC.\n\nI use for my variables modifying that script into this other:\n# First BIC\nlibrary(leaps)\nout <- regsubsets(class ~ B1 + B2 + B3 + B4 + B5 + B7 + ndvi + tc1 +\n  tc2 + tc3 + tc4 + txt1 + txt2 + txt3 + txt4 + txt5 + txt7,\n    data = X, nvmax = 17)\nsout <- summary(out)\nVariables <- apply(sout$which, 1, sum)\nplot(Variables, sout$bic, ylab = \"Information Criterion\", main=\"Sector 3\")\n# cuántas variables son necesarias?\nfoo <- sout$which[ibest, ]\nform <- names(foo)[foo][-1]\nform <- paste(form, collapse = \" + \")\nform <- paste(\"class ~\", form)\nout.best <- lm(as.formula(form))\nsummary(out.best)\n\n# The output is\n#\n#  form\n# [1] \"class ~ B1 + B2 + B3 + B4 + B7 + ndvi + tc3 + txt1 + txt4\"\n#\n# Residuals:\n#      Min       1Q   Median       3Q      Max\n# -3.46583 -0.56196  0.02730  0.52519  3.39027\n#\n# Coefficients:\n#               Estimate Std. Error t value Pr(>|t|)\n# (Intercept)   2.037002   0.050966  39.968  < 2e-16 ***\n# B1           -0.218933   0.021871 -10.010  < 2e-16 ***\n# B2            0.137357   0.008865  15.495  < 2e-16 ***\n# B3           -0.106930   0.014052  -7.609 3.13e-14 ***\n# B4            0.111385   0.002029  54.896  < 2e-16 ***\n# B7            0.041983   0.002597  16.163  < 2e-16 ***\n# ndvi        -20.795321   0.389077 -53.448  < 2e-16 ***\n# tc3           0.166754   0.025366   6.574 5.27e-11 ***\n# txt1          0.048127   0.003709  12.976  < 2e-16 ***\n# txt4          0.022993   0.003329   6.907 5.39e-12 ***\n# ---\n# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\n#\n# Residual standard error: 0.8927 on 6769 degrees of freedom\n# Multiple R-squared: 0.6597,     Adjusted R-squared: 0.6592\n# F-statistic:  1458 on 9 and 6769 DF,  p-value: < 2.2e-16\n#\n# Second AIC\nlibrary(leaps)\nout <- regsubsets(class ~ B1 + B2 + B3 + B4 + B5 + B7 + ndvi + tc1 +\n  tc2 + tc3 + tc4 + txt1 + txt2 + txt3 + txt4 + txt5 + txt7,\n    data = X, nvmax = 17)\nsout <- summary(out)\nn <- length(class)\nVariables <- apply(sout$which, 1, sum)\naic <- sout$bic - log(n) * Variables + 2 * Variables\nibest <- seq(along = aic)[aic == Peq]\nfoo <- sout$which[ibest, ]\nform <- names(foo)[foo][-1]\nform <- paste(form, collapse = \" + \")\nform <- paste(\"class ~\", form)\nout.best <- lm(as.formula(form))\nsummary(out.best)\n# the output\n#  form\n# [1] \"class ~ B1 + B2 + B3 + B4 + B5 + B7 + ndvi + tc1 + tc3 + txt1 + txt2\n+ txt4 + txt7\"\n#\n# Residuals:\n#      Min       1Q   Median       3Q      Max\n# -3.48263 -0.56219  0.02763  0.51635  3.41503\n#\n# Coefficients:\n#               Estimate Std. Error t value Pr(>|t|)\n# (Intercept)   2.031540   0.050916  39.899  < 2e-16 ***\n# B1           -0.185973   0.033972  -5.474 4.55e-08 ***\n# B2            0.110704   0.013140   8.425  < 2e-16 ***\n# B3           -0.174186   0.025891  -6.728 1.86e-11 ***\n# B4            0.068012   0.020383   3.337 0.000852 ***\n# B5           -0.040734   0.016423  -2.480 0.013152 *\n# B7            0.033628   0.007184   4.681 2.91e-06 ***\n# ndvi        -20.758645   0.396766 -52.320  < 2e-16 ***\n# tc1           0.079111   0.036553   2.164 0.030478 *\n# tc3           0.099407   0.038271   2.597 0.009413 **\n# txt1          0.023957   0.007587   3.158 0.001596 **\n# txt2          0.011419   0.007000   1.631 0.102892\n# txt4          0.018587   0.003496   5.316 1.09e-07 ***\n# txt7          0.008603   0.003881   2.217 0.026684 *\n# ---\n# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\n#\n# Residual standard error: 0.8915 on 6765 degrees of freedom\n# Multiple R-squared: 0.6608,     Adjusted R-squared: 0.6601\n# F-statistic:  1014 on 13 and 6765 DF,  p-value: < 2.2e-16\n\nWhen I ask for aic values, I get this\n> aic\n        1         2         3         4         5         6\n-3483.702 -5182.951 -6193.507 -6755.429 -6856.620 -7177.527\n        7         8         9        10        11        12\n-7237.782 -7269.351 -7286.895 -7293.416 -7296.468 -7300.116\n       13        14        15        16        17\n-7300.781 -7299.345 -7297.589 -7295.617 -7293.638\n\nI have three questions:\n1- Is BIC enough for selecting variables?\n2- Is it valid to apply AIC in this approach? Like Faraway's\nstepAIC(modelo, direction=\"forward\",\n  scope=list(lower=~ndvi,upper=~ B1 + B2 + B3 + B4 + B5 + B7 + ndvi + tc1 +\n  tc2 + tc3 + tc4 + txt1 + txt2 + txt3 + txt4 + txt5 + txt7),\n  family=binomial, trace = T )\n\n3- Because my output Class is cathegorical, is it convenient to choose  a\nbinomial distribution? Not all my variables behave normally.\n\nThank you in advance.\nJuan\n\nJuan Ygnacio LÓPEZ HERNÁNDEZ\nFelis. Freiburg University\nTennenbacherstr. 4\nD-79106 Freiburg\nTel. ++49-(0)761-203-3699\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello.\n\nI am making a variable selection from Landsat(6 optical spectral bands),\nndvi, tasseled cap and Texture for every band to apply classification\nalgorithms.\n\nI would like to select the best vari",
       "thread_id": "thread-e90dcdfddc01",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091218/63648681/attachment.pl"
+      ]
     },
     {
       "id": "msg-e7e7449c196b",
@@ -2898,11 +2964,14 @@
       "subject_clean": "How to write R dataframe to shapefile",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091220/9b9bbd1c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091220/9b9bbd1c/attachment.pl>",
+      "body_plain": "Hello,\n\nI have an R dataframe with four columns (lat, long, date and time); these\ndata were imported from a .gpx and then manipulated. Now, I'd like to write\nthese data to a shapefile, using lat and long to specify the spatial\ncoordinates and specifying WGS 84 for the geographic coordinate system.\n\nI'd appreciate any pointers, thank you.\n\nMark Na\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI have an R dataframe with four columns (lat, long, date and time); these\ndata were imported from a .gpx and then manipulated. Now, I'd like to write\nthese data to a shapefile, using lat and l",
       "thread_id": "thread-e7e7449c196b",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091220/9b9bbd1c/attachment.pl"
+      ]
     },
     {
       "id": "msg-df30ed3f4cfd",
@@ -3066,11 +3135,14 @@
       "subject_clean": "Intersect polygon with grid",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091222/080365dc/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091222/080365dc/attachment.pl>",
+      "body_plain": "Dear List,\n\nI am trying to do the following:\nI have a shapefile, that I want to overlay with a raster and then assign\neach raster cell a value that represents the percentage covered by the shape\nfile. I have found a way to do that with small data sets, but I am\nstruggling with large datasets (1mio+ cells).\n\nMy approach so far is:\n\n1.) Create rectangular polygons (covering the whole area), that will be used\nfor the grid afterwards.\n2.) Intersect the each polygon with the shapefile and calculate the area.\n3.) Create a grid from the rectangular polygons.\n\nAny suggestions are very welcome!\n\nThanks in advance\n\nJohannes\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear List,\n\nI am trying to do the following:\nI have a shapefile, that I want to overlay with a raster and then assign\neach raster cell a value that represents the percentage covered by the shape\nfile.",
       "thread_id": "thread-c87c3543d65a",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091222/080365dc/attachment.pl"
+      ]
     },
     {
       "id": "msg-19f1d66f6317",
@@ -3164,11 +3236,14 @@
         "<4B30B54A.8080308@geo.uu.nl>",
         "<dc22b2570912221047p6a0d2d06l69e8e1e58387b2ab@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091222/2631f30c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091222/2631f30c/attachment.pl>",
+      "body_plain": "Dear Paul and Robert,\n\nthanks a lot for your valuable hints, which are working well.\n\nAll the best Johannes\n\nOn Tue, Dec 22, 2009 at 7:47 PM, Robert J. Hijmans <r.hijmans at gmail.com>wrote:\n\n> Johannes,\n>\n> Here is another approximation, based on the concept that Paul\n> suggested (first disaggregating, then aggregating the results):\n>\n> library(raster)\n>\n> # get some data\n> data(meuse.riv)\n> pol = SpatialPolygons(list(Polygons(list(Polygon(meuse.riv)),\"meuse\")))\n> data(meuse.grid)\n> coordinates(meuse.grid) = c(\"x\", \"y\")\n> gridded(meuse.grid) = TRUE\n>\n> # create a RasterLayer (in your case from file)\n> r <- raster(meuse.grid)\n>\n> rr <- disaggregate(raster(r), 10)\n> pr <- polygonsToRaster(pol, rr, -1, progress='text')\n> ra <- aggregate(pr, 10, sum, progress='text')\n>\n> plot(ra)\n> plot(pol, add=TRUE)\n>\n> These should work on a raster of any size (and ample patience).\n>\n> Robert\n>\n>\n>\n> On Tue, Dec 22, 2009 at 4:02 AM, Paul Hiemstra <p.hiemstra at geo.uu.nl>\n> wrote:\n> > Hi,\n> >\n> > A simple approach would be the following:\n> >\n> > 1. Create a point dataset that comprises of the center points of the grid\n> > 2. Overlay the pointset with the polygon set using the overlay() command\n> > 3. Convert the pointset into a grid using the gridded() command\n> >\n> > A problem could be that if your polygons are small in regard to the\n> > gridsize, only the center point of the gridcell determines the value of\n> the\n> > gridcell. It does not look at how much area from several polygons is in a\n> > gridcell, and creating a weigted average by area. You could remedy this\n> by\n> > making the pointset much denser, doing step 1-3 and then aggregating the\n> > dense grid into a coarser grid, calculating for example the mean. This\n> can\n> > be done using the pointsToRaster() function from the raster package.\n> >\n> > cheers,\n> > Paul\n> >\n> > Johannes Signer wrote:\n> >>\n> >> Dear List,\n> >>\n> >> I am trying to do the following:\n> >> I have a shapefile, that I want to overlay with a raster and then assign\n> >> each raster cell a value that represents the percentage covered by the\n> >> shape\n> >> file. I have found a way to do that with small data sets, but I am\n> >> struggling with large datasets (1mio+ cells).\n> >>\n> >> My approach so far is:\n> >>\n> >> 1.) Create rectangular polygons (covering the whole area), that will be\n> >> used\n> >> for the grid afterwards.\n> >> 2.) Intersect the each polygon with the shapefile and calculate the\n> area.\n> >> 3.) Create a grid from the rectangular polygons.\n> >>\n> >> Any suggestions are very welcome!\n> >>\n> >> Thanks in advance\n> >>\n> >> Johannes\n> >>\n> >>        [[alternative HTML version deleted]]\n> >>\n> >> _______________________________________________\n> >> R-sig-Geo mailing list\n> >> R-sig-Geo at stat.math.ethz.ch\n> >> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>\n> >\n> >\n> > --\n> > Drs. Paul Hiemstra\n> > Department of Physical Geography\n> > Faculty of Geosciences\n> > University of Utrecht\n> > Heidelberglaan 2\n> > P.O. Box 80.115\n> > 3508 TC Utrecht\n> > Phone:  +3130 274 3113 Mon-Tue\n> > Phone:  +3130 253 5773 Wed-Fri\n> > http://intamap.geo.uu.nl/~paul <http://intamap.geo.uu.nl/%7Epaul>\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Paul and Robert,\n\nthanks a lot for your valuable hints, which are working well.\n\nAll the best Johannes\n\nOn Tue, Dec 22, 2009 at 7:47 PM, Robert J. Hijmans <r.hijmans at gmail.com>wrote:\n\n> Johann",
       "thread_id": "thread-c87c3543d65a",
       "thread_depth": 3,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091222/2631f30c/attachment.pl"
+      ]
     },
     {
       "id": "msg-a79bb943b665",
@@ -3203,11 +3278,14 @@
         "<alpine.LRH.2.00.0912211525190.20489@reclus.nhh.no>",
         "<4B31C242.8060801@wildintellect.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091223/05814124/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091223/05814124/attachment.pl>",
+      "body_plain": "On Wed, Dec 23, 2009 at 9:09 AM, Alex Mandel <tech_dev at wildintellect.com>wrote:\n\n> Roger Bivand wrote:\n> > On Mon, 21 Dec 2009, Alexandre VILLERS wrote:\n> >\n> >> Good afternoon,\n> >>\n> >> I was wondering if the reading and creating of ecw files was planned\n> >> for the rgdal library. I suppose it is a bit tricky to include this\n> >> function because of the need for the ECW SDK library from ER mapper...\n>\n\nCheck out http://trac.osgeo.org/ubuntugis/wiki/UserTutorials  on how to\ninclude ECW support under Ubuntu.\n\nHope this helps,\n\nRainer\n\n>\n> > Correct, we cannot distribute this library from CRAN. If you need this\n> > driver, you have to provide it yourself, on Windows using the\n> > instructions for the alternative build approach in:\n> >\n> > file.show(system.file(\"README.windows\", package=\"rgdal\"))\n> >\n> > You will have to improvise a little, as - for example - building R\n> > packages from source is easier now than it was in 2007.\n> >\n> > Hope this helps,\n> >\n> > Roger\n> >\n>\n> I believe the ECW dll for GDAL is available in the OSGEO4W package, and\n> my understanding of it is that as long as the dll is present on your\n> gdal path for the gdal install that rgdal is using it should work.\n> http://trac.osgeo.org/osgeo4w/\n>\n> I can't speak for ECW but I do know for MrSID there's been clarification\n> on several occasions that it is ok to distribute the built binary.\n>\n> Alex\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n\n-- \nNEW GERMAN FAX NUMBER!!!\n\nRainer M. Krug, PhD (Conservation Ecology, SUN), MSc (Conservation Biology,\nUCT), Dipl. Phys. (Germany)\n\nCentre of Excellence for Invasion Biology\nNatural Sciences Building\nOffice Suite 2039\nStellenbosch University\nMain Campus, Merriman Avenue\nStellenbosch\nSouth Africa\n\nCell:           +27 - (0)83 9479 042\nFax:            +27 - (0)86 516 2782\nFax:            +49 - (0)321 2125 2244\nemail:          Rainer at krugs.de\n\nSkype:          RMkrug\nGoogle:         R.M.Krug at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "On Wed, Dec 23, 2009 at 9:09 AM, Alex Mandel <tech_dev at wildintellect.com>wrote:\n\n> Roger Bivand wrote:\n> > On Mon, 21 Dec 2009, Alexandre VILLERS wrote:\n> >\n> >> Good afternoon,\n> >>\n> >> I was won",
       "thread_id": "thread-7815d5d226d7",
       "thread_depth": 3,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091223/05814124/attachment.pl"
+      ]
     },
     {
       "id": "msg-e0a3f5987fec",
@@ -3327,11 +3405,14 @@
       "references": [
         "<mailman.11.1261652402.21688.r-sig-geo@stat.math.ethz.ch>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091224/a15d1823/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091224/a15d1823/attachment.pl>",
+      "body_plain": "I'm new to using geo info in R, though I'm familiar with Arc & R.\n\nI have numerous ESRI grid files with image band and biophysical info that I'd like to use with RandomForest to do predictive habitat modeling with species occurrence points. I've tried looking on the web, but haven't found anything helpful.\n\nCan anyone point me to a resource that can step me through this process? I need to stack multiple grids and use the info from point locations with RandomForest. The grid files all have the same cell size, same projection, and the point locations are also in the same projection. So, I think the data is ready to go.\n\nLee Elliott\nMissouri Resource Assessment Partnership\nUniversity of Missouri\nColumbia, MO \n \t\t \t   \t\t  \n_________________________________________________________________\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I'm new to using geo info in R, though I'm familiar with Arc & R.\n\nI have numerous ESRI grid files with image band and biophysical info that I'd like to use with RandomForest to do predictive habitat ",
       "thread_id": "thread-b4358e62d7f9",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091224/a15d1823/attachment.pl"
+      ]
     },
     {
       "id": "msg-9c496d720b39",
@@ -3463,11 +3544,14 @@
       "references": [
         "<57DC18C299094D4299F837570C5DF1C502D3839155@EXWA-MBX01.nexus.csiro.au>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091226/cbc58031/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091226/cbc58031/attachment.pl>",
+      "body_plain": "Dear List,\n\nThanks Adrian for your suggestion. I tried it but unfortunately my\nshapefiles are \"messy\" so the pixellate.owin regularly fails.\n\nI have a solution now based on the earlier posts from Paul and Robert. I\nbriefly outlined it below, maybe it will be useful to someone in the future:\n\n# bounding box of the end raster\n\nw=3600000\ns=2200000\ne=4800000\nn=2800000\n\n# load libraries\nlibrary(maptools)\nlibrary(raster)\nlibrary(sp)\nlibrary(rgdal)\n\nrastToPoly <- function(e,w,n,s,shapename, outdir){\n# read shapefile, assuming in the right directory already\nshape <- readShapePoly(shapename)\n# i subdivided the area to into 100km² tiles\n    for (i in seq(w,e,by=100000)){\n        for (j in seq(s,n,by=100000)){\n            xx <- seq(i,i+100000,by=100)\n            yy <- seq(j,j+100000,by=100)\n            g <- expand.grid(xx,yy)\n            coordinates(g) <- c(\"Var1\",\"Var2\")\n            gridded(g) <- T\n            r <- raster(g)\n            try(pr <- polygonsToRaster(shape, r, -1, progress=\"text\"))\n            ra <- aggregate(pr, 10, sum, progress=\"text\")\n            writeRaster(ra, paste(outdir,\"/raster\",i,\"_\",j,\".asc\",sep=\"\"),\nformat=\"ascii\")\n        }\n    }\n}\n\nThen I patched the tiles together with GRASS. Thanks everyone for your help.\n\nRegards Johannes\n\nOn Thu, Dec 24, 2009 at 2:43 AM, <Adrian.Baddeley at csiro.au> wrote:\n\n> Johannes Signer <j.m.signer at gmail.com> writes:\n>\n> > I have a shapefile, that I want to overlay with a raster\n> > and then assign each raster cell a value that represents\n> > the percentage covered by the shape file.\n>\n> In the 'spatstat' package the function 'pixellate.owin' does this\n> calculation.\n>\n> ----\n> Prof Adrian Baddeley (UWA/CSIRO)\n> CSIRO Mathematical and Information Sciences\n> Leeuwin Centre, 65 Brockway Road, Floreat WA 6014, Australia\n> Tel: 08 9333 6177 | Fax: 08 9333 6121 | Mob: 0410 447 821\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear List,\n\nThanks Adrian for your suggestion. I tried it but unfortunately my\nshapefiles are \"messy\" so the pixellate.owin regularly fails.\n\nI have a solution now based on the earlier posts from Paul",
       "thread_id": "thread-b86c9654fb65",
       "thread_depth": 1,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091226/cbc58031/attachment.pl"
+      ]
     },
     {
       "id": "msg-44fc3884d036",
@@ -3479,11 +3563,14 @@
       "subject_clean": "Map of flows?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091226/d9e3ef0a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091226/d9e3ef0a/attachment.pl>",
+      "body_plain": "Dear SIG,\nDoes anyone knows and have worked with a good working flow mapper?\nPlease hints I keep having some troubles with tobler flowmapper.\nThanks\nJuan\n\n-- \nJuan Tomás Sayago\nUniversidad Central\nhttp://sites.google.com/site/juantomassayago/\nObjetivo: Garantizar a cada ser humano que habite en el país, una cantidad\nmínima de agua con calidad segura para el consumo humano, en forma regular,\npermanente y suficiente para la vida y la salud\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear SIG,\nDoes anyone knows and have worked with a good working flow mapper?\nPlease hints I keep having some troubles with tobler flowmapper.\nThanks\nJuan\n\n-- \nJuan Tomás Sayago\nUniversidad Central\nhtt",
       "thread_id": "thread-44fc3884d036",
       "thread_depth": 0,
-      "month": "2009-12"
+      "month": "2009-12",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091226/d9e3ef0a/attachment.pl"
+      ]
     },
     {
       "id": "msg-6c69ce07c8ed",

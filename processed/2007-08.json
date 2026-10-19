@@ -149,11 +149,14 @@
       "subject_clean": "Generating 3D Plots",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070806/acfc780f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070806/acfc780f/attachment.pl>",
+      "body_plain": "Are there R routines that do not request that x,y,z data be increasing\nbefore plotting? Trying to generate basic surfaces from\nthree-dimensional real data.  even if I put an ascending sort on one\naxis the data along projected remaining coordinates may not be\nincreasing, or monotonic.  What routines will allow be to interpolate 3D\ndata and get surface plots.  The \"persp\" is limited.\n \nBattle\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Are there R routines that do not request that x,y,z data be increasing\nbefore plotting? Trying to generate basic surfaces from\nthree-dimensional real data.  even if I put an ascending sort on one\naxis",
       "thread_id": "thread-667209931261",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070806/acfc780f/attachment.pl"
+      ]
     },
     {
       "id": "msg-e8ae4c7ec3c8",
@@ -483,11 +486,14 @@
       "subject_clean": "spautolm in Spdep",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070809/a0cdafd6/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070809/a0cdafd6/attachment.pl>",
+      "body_plain": "Hi. I'm trying to run spatial conditional autoregression (spautolm) in SPDEP. My command is simply:\n\nspautolm(vote~income, listw=listw5)\n\nListw5 is a weight matrix made up by nearest 5 neighbors. I have 22000 cases. However, the command could not run and I got the following message:\n\nError: cannot allocate vector of size 3.6 Gb\n\nI tried to reduce the number of neighbor to 1. But I still got the same message back.\n\nI tried running spatial lag regression in GeoDa and it worked fine. I wonder why the spautolm takes so much space in R? And is there another spatial regression package or command that allows 22k cases?\n\nAlso....GeoDa has bivariate moran i. Is there such routine in any of the R packages?\n\nThanks!\n\nK.\n\n\n\n       \n---------------------------------\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi. I'm trying to run spatial conditional autoregression (spautolm) in SPDEP. My command is simply:\n\nspautolm(vote~income, listw=listw5)\n\nListw5 is a weight matrix made up by nearest 5 neighbors. I ha",
       "thread_id": "thread-8c4dbb1434d4",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070809/a0cdafd6/attachment.pl"
+      ]
     },
     {
       "id": "msg-057714dd8a73",
@@ -587,11 +593,14 @@
       "subject_clean": "reading HDF5 files",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070811/f5770bf6/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070811/f5770bf6/attachment.pl>",
+      "body_plain": "Note that readGDAL can read the subdataset directly (escaping the quotes\nappropriately):\n\nd <- readGDAL(\"HDF5:\\\"RAD_NL21_PCP_NA_200707200000.h5\\\"://image1/image_data\")\n\nIt also seems that your gdal_translate to TIFF output has the extension\n.img, but then you attempt to read from a tif.\n\nJust a thought. \n\nCheers, Mike.\n\n==============Original message text===============\nOn Fri, 10 Aug 2007 19:09:00 +1000 Roger Bivand wrote:\n\nPaul,\n\nI have added a CC to the R-sig-geo list, since I myself have no experiece \nof using this format in practice. If you are not a member, please join at:\n\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\nso that you will see any replies.\n\nDid you try gdalinfo on the output file?\n\nThe error message suggests that the output file has a geographical \ncoordinate reference system, with coordinate values outside the feasible \nrange. From the HDF5 description, however, it ought to be projected, \nright? Do you need to make more use of the arguments taken by gdalinfo to \ngive the output file the correct projected CRS?\n\nRoger\n\nOn Fri, 10 Aug 2007, Paul Hiemstra wrote:\n\n> Dear Roger,\n>\n> I tried the route through a GTiff before I sent you the e-mail but\nsomehow it \n> did not work. When I use gdalinfo on one of the .h5 files I get this:\n>\n> PS E:\\LSO data\\Regenbui 20-7\\regenradar_rasters\\regenradar_hdf5> gdalinfo \n> RAD_NL21_PCP_NA_200707200000.h5\n> Driver: HDF5/Hierarchical Data Format Release 5\n> Files: RAD_NL21_PCP_NA_200707200000.h5\n> Size is 512, 512\n> Coordinate System is `'\n> Metadata:\n>  map_projection:projection_indication=Y\n>  map_projection:projection_name=STEREOGRAPHIC\n>  map_projection:projection_proj4_params=+proj=stere +lat_0=90 \n> +lon_0=0.0 +lat_ts=60.0 +a=6378.388 +b=6356.912 +x_0=0 +y_0=0\n> geographic: geo_number_rows=256\n> geographic: geo_number_columns=256\n> geographic: geo_pixel_size_x=2.500000\n> geographic: geo_pixel_size_y=-2.500000\n> geographic: geo_par_pixel=X,Y\n> geographic: geo_dim_pixel=KM,KM\n> geographic: geo_column_offset=0.000000\n> geographic: geo_row_offset=1490.906006\n> geographic: geo_pixel_def=LU\n> geographic: geo_product_corners=0.000000 49.769001 0.000000 55.296001 \n> 9.743000 54.818001 8.337000 49.373001\n> calibration: calibration_flag=Y\n> calibration: calibration_formulas=GEO = 0.5 * PV + -31.5\n> calibration: calibration_missing_data=255\n> calibration: calibration_out_of_image=255\n> statistics: stat_min_value=-1.500000\n> statistics: stat_max_value=45.000000\n> image1: image_product_name=RAD_NL21_PCP_H0.8_NA\n> image1: image_geo_parameter=REFLECTIVITY_[DBZ]\n> image1: image_size=65536d\n> image1: image_bytes_per_pixel=1d\n> overview: product_group_name=RAD_NL21_PCP_NA\n> overview: products_missing=N/A\n> overview: hdftag_version_number=3.5\n> overview: number_image_groups=1\n> overview: number_satellite_groups=0d\n> overview: number_radar_groups=2d\n> overview: number_station_groups=0\n> overview: product_datetime_start=20-JUL-2007;00:00:11.000\n> overview: product_datetime_end=20-JUL-2007;00:00:11.000\n> overview: number_lightning_groups=0d\n> overview: number_classification_groups=0d\n> overview: number_grid_groups=0d\n> overview: number_point_groups=0d\n> overview: number_vector_groups=0d\n> radar1: radar_name=De_Bilt\n> radar1: radar_location=5.179000 52.103001\n> radar2: radar_name=Den_Helder\n> radar2: radar_location=4.790000 52.955002\n> Subdatasets:\n> SUBDATASET_0_NAME=HDF5:\"RAD_NL21_PCP_NA_200707200000.h5\"://image1/image_data\n> SUBDATASET_0_DESC=[256x256] //image1/image_data (8-bit unsigned character)\n> Corner Coordinates:\n> Upper Left  (    0.0,    0.0)\n> Lower Left  (    0.0,  512.0)\n> Upper Right (  512.0,    0.0)\n> Lower Right (  512.0,  512.0)\n> Center      (  256.0,  256.0)\n>\n> Then I use gdal_translate:\n> PS E:\\LSO data\\Regenbui 20-7\\regenradar_rasters\\regenradar_hdf5> \n> gdal_translate -of GTiff \n> HDF5:\"RAD_NL21_PCP_NA_200707200000.h5\"://image1/image_data \n> RAD_NL21_PCP_NA_200707200000.img\n>\n> Then I try to read the file using rgdal produces the following error:\n>\n>>  test = readGDAL(\"regenradar_hdf5/RAD_NL21_PCP_NA_200707200000.tif\")\n> regenradar_hdf5/RAD_NL21_PCP_NA_200707200000.tif has GDAL driver GTiff\n> and has 256 rows and 256 columns\n> Closing GDAL dataset handle 0x0130b898...  destroyed ... done.\n> Error in `proj4string<-`(`*tmp*`, value = <S4 object of class \"CRS\">) :\n>        Geographical CRS given to non-conformant data\n>\n> Do you have an idea how to solve this?\n>\n> kind regards,\n>\n> Paul\n>\n>\n> Roger Bivand schreef:\n>>  Dear Paul,\n>>\n>>  There is information in the README.windows file in the package, this\n>>  should display it:\n>>\n>>  file.show(system.file(\"README.windows\", package=\"rgdal\"))\n>>\n>>  If you do not want to build against the FWTools binary, then just install\n>>  FWTools, and use the gdal_translate command line tool to convert your data\n>>  to a format that the standard rgdal windows binary can read, such as\n>>  gTiff. You'll need to play around a bit to find out what the data are\n>>  called.\n>>\n>>  On Linux, this is easier, because you can build GDAL against HDF5 before\n>>  installing rgdal, and there it \"just works\".\n>>\n>>  Hope this helps,\n>>\n>>  Roger\n>>\n>>  On Thu, 9 Aug 2007, Paul Hiemstra wrote:\n>> \n>> >  Dear mr. Bivand\n>> > \n>> >  My name is Paul Hiemstra, a PhD student of Edzer. I am trying to read \n>> >  HDF5 files through rgdal. If I use GDALinfo() on one of the files it \n>> >  produces the following error:\n>> > \n>> >  Error in .local(.Object, ...) :\n>> >        GDAL Error 4: `RAD_NL21_PCP_NA_200707200000.h5' not recognised as \n>> >  a supported file format.\n>> > \n>> >  On the mailing list \n>> >  (http://finzi.psych.upenn.edu/R/Rhelp02a/archive/92270.html) you >> >  metioned using the dll files from FWTools to get support for HDF5 into \n>> >  rgdal. How can this be done?\n>> > \n>> >  I also tried the hdf5 package on CRAN, but that does not seem to work, \n>> >  returning an empty object.\n>> > \n>> >  many thanks,\n>> > \n>> >  Paul\n>> > \n>> > \n>> \n>\n>\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n===========End of original message text===========\n\n\n\nIf it wasn't backed-up, then it wasn't important. ~ Anon sysadmin\n\nMike Sumner (Phd. Candidate)\nhttp://www.antcrc.utas.edu.au/~mdsumner/ http://www.zoo.utas.edu.au/awru/  IASOS/AWRU\nUniversity of Tasmania\nPrivate Bag 80\nHobart Tasmania 7001\nAUSTRALIA\nEmail: mdsumner at utas.edu.au \nPhone: 03 6226 1752 (W)\n       0408599921   (M)\nFax:   03 6226 2745",
+      "body_snippet": "Note that readGDAL can read the subdataset directly (escaping the quotes\nappropriately):\n\nd <- readGDAL(\"HDF5:\\\"RAD_NL21_PCP_NA_200707200000.h5\\\"://image1/image_data\")\n\nIt also seems that your gdal_tr",
       "thread_id": "thread-a3c4127bba3c",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070811/f5770bf6/attachment.pl"
+      ]
     },
     {
       "id": "msg-24b682ba6d65",
@@ -639,11 +648,14 @@
       "subject_clean": "reading HDF5 files",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070812/24a61ec7/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070812/24a61ec7/attachment.pl>",
+      "body_plain": "Hi all, \n\nthanks for the clarificaton as always Roger. These tools are so damn\nuseful I forget the assumptions I live with. \n\nCheers, Mike",
+      "body_snippet": "Hi all, \n\nthanks for the clarificaton as always Roger. These tools are so damn\nuseful I forget the assumptions I live with. \n\nCheers, Mike",
       "thread_id": "thread-c1f1ea509373",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070812/24a61ec7/attachment.pl"
+      ]
     },
     {
       "id": "msg-1eb622d23f22",
@@ -843,11 +855,14 @@
       "subject_clean": "Can anybody tell me where i can find the theoretical explanations on density.ppp(spatstat)?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070815/8eda020a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070815/8eda020a/attachment.pl>",
+      "body_plain": "Dear Rusers,\n  density.ppp(spatstat) computes a kernel smoothed intensity of point\npattern, and the help says \"This is a method for the generic function\ndensity.\".\nI'm new on it, can anybody tell me where i can find the theoretical\nexplanations on the method of density.ppp(spatstat), or send me a paper on\nit?\n  Any suggestions or help are greatly appreciated.\n\n-- \nWith Kind Regards,\n\noooO:::::::::\n(..):::::::::\n:\\.(:::Oooo::\n::\\_)::(..)::\n:::::::)./:::\n::::::(_/::::\n:::::::::::::\n[***********************************************************************]\nZhi Jie,Zhang ,PHD\nTel:86-21-54237149\nDept. of Epidemiology,School of Public Health,Fudan University\nAddress:No. 138 Yi Xue Yuan Road,Shanghai,China\nPostcode:200032\nEmail:epistat at gmail.com\nWebsite: www.statABC.com\n[***********************************************************************]\noooO:::::::::\n(..):::::::::\n:\\.(:::Oooo::\n::\\_)::(..)::\n:::::::)./:::\n::::::(_/::::\n:::::::::::::\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Rusers,\n  density.ppp(spatstat) computes a kernel smoothed intensity of point\npattern, and the help says \"This is a method for the generic function\ndensity.\".\nI'm new on it, can anybody tell me w",
       "thread_id": "thread-342dc4b75000",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070815/8eda020a/attachment.pl"
+      ]
     },
     {
       "id": "msg-c548949d2c37",
@@ -880,11 +895,14 @@
         "<2fc17e30708142351x8ad07b8nfb061843e0709173@mail.gmail.com>",
         "<57515.130.95.98.17.1187161822.squirrel@130.95.98.17>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070815/d3be827e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070815/d3be827e/attachment.pl>",
+      "body_plain": "Thanks a lot.\n  I have found the paper.\n\n\nOn 8/15/07, adrian at maths.uwa.edu.au <adrian at maths.uwa.edu.au> wrote:\n>\n>\n> Zhijie Zhang writes:\n>\n> > density.ppp(spatstat) computes a kernel smoothed intensity of point\n> > pattern,\n>\n> > I'm new on it, can anybody tell me where i can find the theoretical\n> > explanations on the method of density.ppp(spatstat), or send me a paper\n> on\n> > it?\n>\n> ---\n> See any textbook on spatial point pattern analysis,\n> or the following:\n>\n>\n> @article{digg85,\n> author =       {Diggle, P.J.},\n> title =        {A kernel method for smoothing point process data},\n> journal =      {Applied Statistics (Journal of the Royal Statistical\n> Society, series C},\n> year =         {1985},\n> volume =       {34},\n> pages =        {138--147}\n> }\n>\n> @Book{digg03,\n> author =       {Diggle, P.J.},\n> title =        {Statistical Analysis of Spatial Point Patterns},\n> publisher =    {Arnold},\n> year =         2003,\n> edition =      {Second}\n> }\n>\n> @Book{stoystoy95,\n> author =       {D. Stoyan and H. Stoyan},\n> title =        {Fractals, Random Shapes and Point Fields},\n> publisher =    wiley,\n> address =      {Chichester},\n> year =         1995\n> }\n>\n>\n>\n>\n\n\n-- \nWith Kind Regards,\n\noooO:::::::::\n(..):::::::::\n:\\.(:::Oooo::\n::\\_)::(..)::\n:::::::)./:::\n::::::(_/::::\n:::::::::::::\n[***********************************************************************]\nZhi Jie,Zhang ,PHD\nTel:86-21-54237149\nDept. of Epidemiology,School of Public Health,Fudan University\nAddress:No. 138 Yi Xue Yuan Road,Shanghai,China\nPostcode:200032\nEmail:epistat at gmail.com\nWebsite: www.statABC.com\n[***********************************************************************]\noooO:::::::::\n(..):::::::::\n:\\.(:::Oooo::\n::\\_)::(..)::\n:::::::)./:::\n::::::(_/::::\n:::::::::::::\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks a lot.\n  I have found the paper.\n\n\nOn 8/15/07, adrian at maths.uwa.edu.au <adrian at maths.uwa.edu.au> wrote:\n>\n>\n> Zhijie Zhang writes:\n>\n> > density.ppp(spatstat) computes a kernel smoothed i",
       "thread_id": "thread-342dc4b75000",
       "thread_depth": 2,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070815/d3be827e/attachment.pl"
+      ]
     },
     {
       "id": "msg-22f08916914a",
@@ -1019,11 +1037,14 @@
         "<469E4E21.4080909@noaa.gov>",
         "<FC9D0A4DDB7D5040A9EF833049B61347231375@SOAANCMSG02.soa.alaska.gov>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070821/2623aaa4/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070821/2623aaa4/attachment.pl>",
+      "body_plain": "Hi there,\n\nWith plot.polylist is there a way of not drawing the \"border\" or controlling the width of the border in order to diminish the vision of horror when using a smaller colour range  than the number of polygons and when you have quite a lot of polygons in your \"shape\".\n\nI am thinking as well of possible merging or fusion of neighbour polygons having the same color which would give an half way solution ... but I don't know the \"union\" polygon merging polygons function. (which should be standard I suppose ...)\n\nthanks\n\nDidier\n\n\n\n\nSutherland, Robert D (DFG) wrote:\n> Hi Jeff,\n>\n> This is what I did.\n>\n> HistBreaks<-quantile(datafileDf$nhunters,probs=c(0.1,0.2,\n> 0.4,0.6,0.8,0.9,1.0),na.rm=TRUE)\n> np<-findInterval(datafileDf$nhunters, histBreaks, all.inside=TRUE)\n> colorsToUse<-colorSchemeV5\n> plot.polylist(datafilePolys, col=colorsToUse[np],  forcefill=FALSE)\n> plot.polylist(datafilePolys,  density = c(-1,20,20,-1,-1,-1,-1)[np],\n> angle=c(0,0,90,0,0,0,0)[np], forcefill=FALSE,add=TRUE)\n>\n> the first plot.polylist plots the outline of the polygon, the second\n> call \"colors\" the polygon.\n>\n> I hope this helps.\n>\n> Bob\n>\n> -----Original Message-----\n> From: r-sig-geo-bounces at stat.math.ethz.ch\n> [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Jeff Jorgensen\n> Sent: Wednesday, July 18, 2007 9:30 AM\n> To: r-sig-geo at stat.math.ethz.ch\n> Subject: [R-sig-Geo] plot.polylist polygon plot order\n>\n> Hello,\n>\n> I've imported a shapefile of polygons (R v2.5.1 winxp, maptools v0.6-13)\n>\n> and I'm trying to assign colors to polygons in plot.polylist().  Is \n> there a way to force the order in which polygons are plotted get the \n> correct color associations to the corresponding polygons?\n>\n> Best regards,\n>\n> Jeff\n>\n>\n>   \n\n\nThis message has been checked for viruses but the contents of an attachment\nmay still contain software viruses, which could damage your computer system:\nyou are advised to perform your own checks. Email communications with the\nUniversity of Nottingham may be monitored as permitted by UK legislation.\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi there,\n\nWith plot.polylist is there a way of not drawing the \"border\" or controlling the width of the border in order to diminish the vision of horror when using a smaller colour range  than the nu",
       "thread_id": "thread-82bab1959443",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070821/2623aaa4/attachment.pl"
+      ]
     },
     {
       "id": "msg-56f9af371f13",
@@ -1221,11 +1242,14 @@
       "subject_clean": "Reg: SRTM 90m elevated data",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070824/f8e6c712/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070824/f8e6c712/attachment.pl>",
+      "body_plain": "Dear All,\n\nAfter acquiring SRTM data from jpl NASA ftp link in hgt format, i have\nimported it in ER Mapper .hgt to .ers format,  but i have a query here, how\nto overcome sink fills or how to solve the problem of sink fills in ERDAS /\nER MApper/ENVI?\n\nkindly answer my query waiting for reply\n\nregards\n\nSuraj\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear All,\n\nAfter acquiring SRTM data from jpl NASA ftp link in hgt format, i have\nimported it in ER Mapper .hgt to .ers format,  but i have a query here, how\nto overcome sink fills or how to solve the",
       "thread_id": "thread-e245e9cb9cfa",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070824/f8e6c712/attachment.pl"
+      ]
     },
     {
       "id": "msg-1c0dce8dcc63",
@@ -1322,11 +1346,14 @@
       "subject_clean": "sp.correlogram",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070826/9f6c0c2f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070826/9f6c0c2f/attachment.pl>",
+      "body_plain": "Hi. I have a question about sp.correlogram in SPDEP.\n\nI created a weight matrix of 5 nearest neighbors. To play around with the sp.correlogram function, I specified an order of 10 (which is the max. lag order). The plot came out  with spatial autocorrelation with 10 lags.\n\nHow to understand the 10 spatial lags? I mean the weight matrix only has information of the nearest 5 neighbors (i.e. the matrix only provides information for the first 5 lags). How does the program know which are the 6th-10th lag?\n\nSorry for the odd question. Perhaps it's because I misunderstood the concept of lag in the program. Can someone clarify this for me?\n\nThanks!\n\nK.\n\n\n\n\n\n\n       \n---------------------------------\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi. I have a question about sp.correlogram in SPDEP.\n\nI created a weight matrix of 5 nearest neighbors. To play around with the sp.correlogram function, I specified an order of 10 (which is the max. l",
       "thread_id": "thread-e7a1582f1214",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070826/9f6c0c2f/attachment.pl"
+      ]
     },
     {
       "id": "msg-84c0e828c2dc",
@@ -1356,11 +1383,14 @@
       "subject_clean": "(no subject)",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070828/63599247/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070828/63599247/attachment.pl>",
+      "body_plain": "Hello,\n\nIn our lab we have an actual mapping problem and maybe there is an R  \nsolution to it.\nAim is to calculate a surface from calculated data of fine root  \nbiomass. Therefore a number of single trees (approx. 3000) have been  \nsampled. With a function from the literature it is possible to  \nestimate the spatial distribution of the fine root biomass of this  \nsingle tree depending on tree species, tree diameter at breast height  \nand the distance from the stem. Around each tree something like a  \nGaussian bell curve results.\n\nWe thought about creating radial polygons around each tree (the  \nradius results from the application of the function), To sample a  \nnumber (depending on the radius) of randomly distributed points  \ninside each polygon (with sample.Spatial). To calculate the value of  \nfine root biomasss for each of the points (from the formula). And to  \nuse this points to create the surface.\n\nIs there maybe a better and more straightforward way to do this?\n\nMany thanks for suggestions.\nGerald Jurasinski\n\n——————————————————\n\nDr. Gerald Jurasinski\nLandschaftsökologie und Standortkunde\nInstitut Management Ländlicher Räume\nAgrar- und Umweltwissenschaftliche Fakultät\nUniversität Rostock\nJustus-von-Liebig-Weg 6\n18059 Rostock\n\ngerald.jurasinski at uni-rostock.de\nhttp://www.auf.uni-rostock.de/loe\n+49 381 4983225 (tel)\n+49 381 4983222 (fax)\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nIn our lab we have an actual mapping problem and maybe there is an R  \nsolution to it.\nAim is to calculate a surface from calculated data of fine root  \nbiomass. Therefore a number of single t",
       "thread_id": "thread-8b2e98fda926",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070828/63599247/attachment.pl"
+      ]
     },
     {
       "id": "msg-afcd4265033f",
@@ -1374,11 +1404,14 @@
       "references": [
         "<mailman.17.1188295205.21171.r-sig-geo@stat.math.ethz.ch>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070828/fab294da/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070828/fab294da/attachment.pl>",
+      "body_plain": "Maybe it's about kernel density estimation and non-parametric kernel\nregression estimation in point pattern analysis. I have some materials on\napplication and theories for them, but i haven't found how to do them in R,\nrespectively.\n  Anybody can show the functions for kernel density estimation and\nnon-parametric kernel regression estimation in point pattern analysis?\n  BTW, for Dr. Gerald Jurasinski , contact me if you need the materials i\nmentioned above.\n\nOn 8/28/07, r-sig-geo-request at stat.math.ethz.ch <\nr-sig-geo-request at stat.math.ethz.ch> wrote:\n>\n> Send R-sig-Geo mailing list submissions to\n>        r-sig-geo at stat.math.ethz.ch\n>\n> To subscribe or unsubscribe via the World Wide Web, visit\n>        https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> or, via email, send a message with subject or body 'help' to\n>        r-sig-geo-request at stat.math.ethz.ch\n>\n> You can reach the person managing the list at\n>        r-sig-geo-owner at stat.math.ethz.ch\n>\n> When replying, please edit your Subject line so it is more specific\n> than \"Re: Contents of R-sig-Geo digest...\"\n>\n>\n> Today's Topics:\n>\n>   1. (no subject) (Gerald Jurasinski)\n>\n>\n> ----------------------------------------------------------------------\n>\n> Message: 1\n> Date: Tue, 28 Aug 2007 10:40:12 +0200\n> From: Gerald Jurasinski <gerald.jurasinski at uni-rostock.de>\n> Subject: [R-sig-Geo] (no subject)\n> To: r-sig-geo at stat.math.ethz.ch\n> Message-ID: <3D5CAC70-631D-43A9-BEBF-348603C3D71E at uni-rostock.de>\n> Content-Type: text/plain\n>\n> Hello,\n>\n> In our lab we have an actual mapping problem and maybe there is an R\n> solution to it.\n> Aim is to calculate a surface from calculated data of fine root\n> biomass. Therefore a number of single trees (approx. 3000) have been\n> sampled. With a function from the literature it is possible to\n> estimate the spatial distribution of the fine root biomass of this\n> single tree depending on tree species, tree diameter at breast height\n> and the distance from the stem. Around each tree something like a\n> Gaussian bell curve results.\n>\n> We thought about creating radial polygons around each tree (the\n> radius results from the application of the function), To sample a\n> number (depending on the radius) of randomly distributed points\n> inside each polygon (with sample.Spatial). To calculate the value of\n> fine root biomasss for each of the points (from the formula). And to\n> use this points to create the surface.\n>\n> Is there maybe a better and more straightforward way to do this?\n>\n> Many thanks for suggestions.\n> Gerald Jurasinski\n>\n> ——————————————————\n>\n> Dr. Gerald Jurasinski\n> Landschaftsökologie und Standortkunde\n> Institut Management Ländlicher Räume\n> Agrar- und Umweltwissenschaftliche Fakultät\n> Universität Rostock\n> Justus-von-Liebig-Weg 6\n> 18059 Rostock\n>\n> gerald.jurasinski at uni-rostock.de\n> http://www.auf.uni-rostock.de/loe\n> +49 381 4983225 (tel)\n> +49 381 4983222 (fax)\n>\n>\n>\n>\n>        [[alternative HTML version deleted]]\n>\n>\n>\n> ------------------------------\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> End of R-sig-Geo Digest, Vol 48, Issue 22\n> *****************************************\n>\n\n\n\n-- \nWith Kind Regards,\n\noooO:::::::::\n(..):::::::::\n:\\.(:::Oooo::\n::\\_)::(..)::\n:::::::)./:::\n::::::(_/::::\n:::::::::::::\n[***********************************************************************]\nZhi Jie,Zhang ,PHD\nTel:86-21-54237149\nDept. of Epidemiology,School of Public Health,Fudan University\nAddress:No. 138 Yi Xue Yuan Road,Shanghai,China\nPostcode:200032\nEmail:epistat at gmail.com\nWebsite: www.statABC.com\n[***********************************************************************]\noooO:::::::::\n(..):::::::::\n:\\.(:::Oooo::\n::\\_)::(..)::\n:::::::)./:::\n::::::(_/::::\n:::::::::::::\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Maybe it's about kernel density estimation and non-parametric kernel\nregression estimation in point pattern analysis. I have some materials on\napplication and theories for them, but i haven't found ho",
       "thread_id": "thread-afcd4265033f",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070828/fab294da/attachment.pl"
+      ]
     },
     {
       "id": "msg-84f63a4805ee",
@@ -1408,11 +1441,14 @@
       "subject_clean": "collecting significance values in sp.correlogram",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070828/a2baa0d1/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070828/a2baa0d1/attachment.pl>",
+      "body_plain": "Greetings,\n \nI'm running a simulation and want to collect the p-values from the sp.correlogram in spdep (version 0.4-4).  I've used the $res to collect the estimate and variance, but would like to collect the p-values \"on the fly\" in an intermediate step.  Any suggestions?\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Greetings,\n \nI'm running a simulation and want to collect the p-values from the sp.correlogram in spdep (version 0.4-4).  I've used the $res to collect the estimate and variance, but would like to col",
       "thread_id": "thread-5fd17b909c8d",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070828/a2baa0d1/attachment.pl"
+      ]
     },
     {
       "id": "msg-d7d284283a87",
@@ -1661,11 +1697,14 @@
       "subject_clean": "shapefile errors and kriging limits",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070830/80098cb3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070830/80098cb3/attachment.pl>",
+      "body_plain": "Dear useRs,\n\nI am trying to convert the predictions of a kriging model into a  \nshapefile but I am getting some errors and I am getting nowere with  \nmy solutions...\n\nThis is the code I am running:\n\na <- data.frame(Id=seq(1,length(pred.grid[,1]),1),X=pred.grid[, \n1],Y=pred.grid[,2])\na_dbf <- data.frame(Id=seq(1,length(pred.grid[,1]),1), data=kc2$predict)\nshp_1 <- convert.to.shapefile(a, a_dbf, field=\"Id\", type=1)\n\nwere pre.grid is determined by this code:\n\nmin_x <- 142794\nmax_x <- 152121\nmin_y <- 485080\nmax_y <- 508887\npred.grid <- expand.grid(seq(min_x, max_x, 50), seq(min_y, max_y, 50))\n\nand kc2 is an object returned by the aplication of the function  \nkrige.conv:\n\nkc2 <- krige.conv(dados_g, loc=pred.grid, krige=krige.control \n(obj.m=vario_fit2))\n\n\n\n\nAnother question:\n\nas you can see I am predicting my values to a square set of points...  \nmy question is how can I can I generate a set of point that match a  \nspecific area (because I have a specific limite(area) in an esri's  \nshapefile).\n\n\n\nThanks in advance.\nCarlos\n\n\n\nCarlos GUERRA\n\nGabinete de Sistemas de Informacao Geografica\nEscola Superior Agraria de Ponte de Lima\nMosteiro de Refoios do Lima\n4990-706 Ponte de Lima\n\nTlm: +351 91 2407109\nTlf: +351 258 909779\n\nBe a Mac user... update your self!\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear useRs,\n\nI am trying to convert the predictions of a kriging model into a  \nshapefile but I am getting some errors and I am getting nowere with  \nmy solutions...\n\nThis is the code I am running:\n\na",
       "thread_id": "thread-25d30ecf78ca",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070830/80098cb3/attachment.pl"
+      ]
     },
     {
       "id": "msg-876b892ecf55",
@@ -1677,11 +1716,14 @@
       "subject_clean": "geoR likfit message",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070830/c1054848/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070830/c1054848/attachment.pl>",
+      "body_plain": "Greetings,\n \nI am revisiting some simulations that I ran about a year ago.  When I run the likfit function from geoR; a message is returned that reads \"kappa not used for the spherical correlation function\".  The simulations still run, but wasn't sure if this message indicates another problem that I need to be aware of.  I'm not using \"fix.kappa=TRUE\" or other references to kappa.  Below is the line in the code that is returning the message.  The \"cressie\" refers to the variofit function.\n \ngeo.reml<-likfit(data.geo,coords=coords.geo,data=y,cov.model=\"spherical\",trend=~s2+s3+s4+t+ts2+ts3+ts4,method.lik=\"REML\",ini=c(cressie[2]$cov.pars[1],cressie[2]$cov.pars[2]), messages=FALSE)#  \n \nIs this anything to be concerned about?\n\nThank you,\n\nTerry   \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Greetings,\n \nI am revisiting some simulations that I ran about a year ago.  When I run the likfit function from geoR; a message is returned that reads \"kappa not used for the spherical correlation fun",
       "thread_id": "thread-876b892ecf55",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070830/c1054848/attachment.pl"
+      ]
     },
     {
       "id": "msg-78a5d1a188c8",
@@ -1727,11 +1769,14 @@
       "subject_clean": "simulation loop and creating weights",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070830/b91180a9/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070830/b91180a9/attachment.pl>",
+      "body_plain": "Greetings,\n \nIn a simulation I'm running, I would like to create a series of listw weight matrices outside of the simulation loop.  The appropriate inverse distance weights matrix I want to use is determined within the simulation loop using the sp.correlogram function.  For instance there are 5 possible different weight matrices, mat1..mat5.  Each of these matrices takes a little while to create, and with 1000 replications it takes up a lot of time.  \n \nUsing an ifelse statement I can isolate the appropriate distance from the sp.correlogram function, but when I try to paste or cat the number from the ifelse statement to the name \"mat\", it is not recognized as a listw.  Is there a way to speed the along?\n \nThank you,\n\nTerry\n \n \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Greetings,\n \nIn a simulation I'm running, I would like to create a series of listw weight matrices outside of the simulation loop.  The appropriate inverse distance weights matrix I want to use is det",
       "thread_id": "thread-13d79e55baeb",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070830/b91180a9/attachment.pl"
+      ]
     },
     {
       "id": "msg-b9320c8c41cc",
@@ -1743,11 +1788,14 @@
       "subject_clean": "center of gravity",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070831/3b08a875/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070831/3b08a875/attachment.pl>",
+      "body_plain": "Hi, everyone,\n \nI have a question coming up from my research. \n \nSuppose I want to find the center of gravity for an arbitrary 2-D shape, are there any packages or functions in R that can do it for me?  Thanks!\n \nBest,\n \nConnie\n_________________________________________________________________\nÓÃ Live Search ËÑ¾¡ÌìÏÂ×ÊÑ¶£¡\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi, everyone,\n \nI have a question coming up from my research. \n \nSuppose I want to find the center of gravity for an arbitrary 2-D shape, are there any packages or functions in R that can do it for me",
       "thread_id": "thread-b9320c8c41cc",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070831/3b08a875/attachment.pl"
+      ]
     },
     {
       "id": "msg-1bd86fd17c48",
@@ -1831,11 +1879,14 @@
       "subject_clean": "(no subject)",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070831/daa92835/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070831/daa92835/attachment.pl>",
+      "body_plain": "Dear Roger,\n\nRegarding the shapefile question I think it was a memory problem because I had 88000 points and wen I reduced the number of points to half it worked fine.\n\nRegarding the second question: thanks for the help and your solution almost solves my problems, but I forgot to tell you that I am running this on Mac OS, so rgdal doesn't run (at least that I know of). Because of this I am also strugling to find the correct method to optmise the parameters to do the fiting of the variogram (sill, range and nugget), that rgdal facilitates...\n\nCan you recomend another package beside rgdal, or do you know of a version that runs on Mac??\n\nBest regards,\nCarlos\n\n\n\n\n\nEm 30/08/2007, às 23:16, Roger Bivand escreveu:\n\nOn Thu, 30 Aug 2007, Carlos Guerra wrote:\n\nDear useRs,\n\nI am trying to convert the predictions of a kriging model into a\nshapefile but I am getting some errors and I am getting nowere with\nmy solutions...\n\nWithout the error messages and the output of sessionInfo(), it isn't easy to say.\n\n\nThis is the code I am running:\n\na <- data.frame(Id=seq(1,length(pred.grid[,1]),1),X=pred.grid[,\n1],Y=pred.grid[,2])\na_dbf <- data.frame(Id=seq(1,length(pred.grid[,1]),1), data=kc2$predict)\nshp_1 <- convert.to.shapefile(a, a_dbf, field=\"Id\", type=1)\n\nwere pre.grid is determined by this code:\n\nmin_x <- 142794\nmax_x <- 152121\nmin_y <- 485080\nmax_y <- 508887\npred.grid <- expand.grid(seq(min_x, max_x, 50), seq(min_y, max_y, 50))\n\nand kc2 is an object returned by the aplication of the function\nkrige.conv:\n\nkc2 <- krige.conv(dados_g, loc=pred.grid, krige=krige.control\n(obj.m=vario_fit2))\n\n\nAlthough you are free to use the shapefiles package, your questions suggest that you might be better served by using sp classes and either maptools or rgdal to read and write your files. If you read the points data with readOGR() or readShapePoints(), created a GridTopology for your grid, and used the overlay() method from sp to cookie-cut the grid with a SpatialPolygonsDataFrame object read by readShapePoly() or readOGR(), and then simply passed coordinates() of the SpatialPixelsDataFrame object created after the overlaying to the loc= argument, you would be very close. Use bbox() of the imported SpatialPointsDataFrame object to find out what the grid should be. Consider reading the vignette of the sp package - and finally just output the SpatialPixelsDataFrame augmented with the prediction as a new column as a GeoTiff file using writeGDAL() in rgdal, choosing only the predictions.\n\nThere are a number of steps to take, but it does work.\n\nHope this helps,\n\nRoger\n\n\n\n\nAnother question:\n\nas you can see I am predicting my values to a square set of points...\nmy question is how can I can I generate a set of point that match a\nspecific area (because I have a specific limite(area) in an esri's\nshapefile).\n\n\n\nThanks in advance.\nCarlos\n\n\n\nCarlos GUERRA\n\nGabinete de Sistemas de Informacao Geografica\nEscola Superior Agraria de Ponte de Lima\nMosteiro de Refoios do Lima\n4990-706 Ponte de Lima\n\nTlm: +351 91 2407109\nTlf: +351 258 909779\n\nBe a Mac user... update your self!\n\n\n\t[[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no\n\nCarlos GUERRA\n\nGabinete de Sistemas de Informacao Geografica\nEscola Superior Agraria de Ponte de Lima\nMosteiro de Refoios do Lima\n4990-706 Ponte de Lima\n\nTlm: +351 91 2407109\nTlf: +351 258 909779\n\nBe a Mac user... update your self!\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Roger,\n\nRegarding the shapefile question I think it was a memory problem because I had 88000 points and wen I reduced the number of points to half it worked fine.\n\nRegarding the second question: ",
       "thread_id": "thread-0b1a0d5af572",
       "thread_depth": 0,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070831/daa92835/attachment.pl"
+      ]
     },
     {
       "id": "msg-13428e9309be",
@@ -1849,11 +1900,14 @@
       "references": [
         "<DA0943DAEC5E044096035B01B6C542631C7755@ci04.mail2.esa.ipvc.pt>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070831/f399b841/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070831/f399b841/attachment.pl>",
+      "body_plain": "Dear Roger,\n\nRegarding the shapefile question I think it was a memory problem because I had 88000 points and wen I reduced the number of points to half it worked fine.\n\nRegarding the second question: thanks for the help and your solution almost solves my problems, but I forgot to tell you that I am running this on Mac OS, so rgdal doesn't run (at least that I know of). Because of this I am also strugling to find the correct method to optmise the parameters to do the fiting of the variogram (sill, range and nugget), that rgdal facilitates...\n\nCan you recomend another package beside rgdal, or do you know of a version that runs on Mac??\n\nBest regards,\nCarlos\n\n\n\n\n\nEm 30/08/2007, às 23:16, Roger Bivand escreveu:\n\nOn Thu, 30 Aug 2007, Carlos Guerra wrote:\n\nDear useRs,\n\nI am trying to convert the predictions of a kriging model into a\nshapefile but I am getting some errors and I am getting nowere with\nmy solutions...\n\nWithout the error messages and the output of sessionInfo(), it isn't easy to say.\n\n\nThis is the code I am running:\n\na <- data.frame(Id=seq(1,length(pred.grid[,1]),1),X=pred.grid[,\n1],Y=pred.grid[,2])\na_dbf <- data.frame(Id=seq(1,length(pred.grid[,1]),1), data=kc2$predict)\nshp_1 <- convert.to.shapefile(a, a_dbf, field=\"Id\", type=1)\n\nwere pre.grid is determined by this code:\n\nmin_x <- 142794\nmax_x <- 152121\nmin_y <- 485080\nmax_y <- 508887\npred.grid <- expand.grid(seq(min_x, max_x, 50), seq(min_y, max_y, 50))\n\nand kc2 is an object returned by the aplication of the function\nkrige.conv:\n\nkc2 <- krige.conv(dados_g, loc=pred.grid, krige=krige.control\n(obj.m=vario_fit2))\n\n\nAlthough you are free to use the shapefiles package, your questions suggest that you might be better served by using sp classes and either maptools or rgdal to read and write your files. If you read the points data with readOGR() or readShapePoints(), created a GridTopology for your grid, and used the overlay() method from sp to cookie-cut the grid with a SpatialPolygonsDataFrame object read by readShapePoly() or readOGR(), and then simply passed coordinates() of the SpatialPixelsDataFrame object created after the overlaying to the loc= argument, you would be very close. Use bbox() of the imported SpatialPointsDataFrame object to find out what the grid should be. Consider reading the vignette of the sp package - and finally just output the SpatialPixelsDataFrame augmented with the prediction as a new column as a GeoTiff file using writeGDAL() in rgdal, choosing only the predictions.\n\nThere are a number of steps to take, but it does work.\n\nHope this helps,\n\nRoger\n\n\n\n\nAnother question:\n\nas you can see I am predicting my values to a square set of points...\nmy question is how can I can I generate a set of point that match a\nspecific area (because I have a specific limite(area) in an esri's\nshapefile).\n\n\n\nThanks in advance.\nCarlos\n\n\n\nCarlos GUERRA\n\nGabinete de Sistemas de Informacao Geografica\nEscola Superior Agraria de Ponte de Lima\nMosteiro de Refoios do Lima\n4990-706 Ponte de Lima\n\nTlm: +351 91 2407109\nTlf: +351 258 909779\n\nBe a Mac user... update your self!\n\n\n\t[[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no\n\nCarlos GUERRA\n\nGabinete de Sistemas de Informacao Geografica\nEscola Superior Agraria de Ponte de Lima\nMosteiro de Refoios do Lima\n4990-706 Ponte de Lima\n\nTlm: +351 91 2407109\nTlf: +351 258 909779\n\nBe a Mac user... update your self!\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Roger,\n\nRegarding the shapefile question I think it was a memory problem because I had 88000 points and wen I reduced the number of points to half it worked fine.\n\nRegarding the second question: ",
       "thread_id": "thread-0b1a0d5af572",
       "thread_depth": 1,
-      "month": "2007-08"
+      "month": "2007-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070831/f399b841/attachment.pl"
+      ]
     },
     {
       "id": "msg-a4481ad5c168",

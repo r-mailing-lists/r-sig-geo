@@ -707,11 +707,14 @@
       "references": [
         "<Pine.LNX.4.44.0705171629170.24205-100000@reclus.nhh.no>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070517/14eddf11/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070517/14eddf11/attachment.pl>",
+      "body_plain": "Roger Bivand a écrit :\n> On Thu, 17 May 2007, Patrick Giraudoux wrote:\n>\n>   \n>> Dear all,\n>>\n>> Definitely, I am not that clever with projection systems: I would like \n>> to read a *.prj file (part of a set of ESRI shapefiles) and get it in a \n>> CRS compatible format (handled by the  PROJ.4 projection system) and \n>> possibly added to sp objects where needed. What would would be the \n>> simplest way to do that? I am messing with rgdal and sp without result...\n>>\n>>     \n>\n> Yes, good idea, given that the reverse is provided in showWKT() in rgdal. \n> As things are, you'll need to read it as part of a shapefile - readOGR() \n> will read it when given a shapefile to read, or readGDAL() with an Arc \n> Ascii grid, driver AAIGrid. I'll look at putting a simple *.prj reader \n> into rgdal, but for now giving an arbitrary shapefile or Ascii grid the \n> same name should do it.\n>\n> Hope this helps,\n>\n> Roger\n>\n>   \nOK, thanks. I went through it with readOGR(). I was messing with the \nreadOGR documentation not understanding about how to read a shapefile \nspecifically. Googling on the internet I found an example \n(https://stat.ethz.ch/pipermail/r-sig-geo/2007-February/001761.html) \nwhich made me make:\n\nmymap<-readOGR(\"Mth030607.shp\", layer=\"Mth030607\")\n\nwhich worked perfectly.\n\nThe trick was to understand that the first argurment 'dsn' expected a \nfull shapefile name (before I tried the name \"ESRI Shapefile\" given by \nogrDrivers(), and other deadlocks), and the second, 'layer', the file \nname truncated without its suffix. May I suggest to write an example \nabout shapefiles in the readOGR() doc ?\n\nNow there is no trouble to extract de CRS\n\ngetSlots(class(mymap))\n        data   coords.nrs       coords         bbox  proj4string\n\"data.frame\"    \"numeric\"     \"matrix\"     \"matrix\"        \"CRS\"\n\nmymap at proj4string\nCRS arguments:\n +proj=lcc +lat_1=46.8 +lat_0=46.8 +lon_0=2.337229166666667 \n+k_0=0.99987742 +x_0=600000\n+y_0=2200000 +a=6378249.2 +b=6356514.999904194 +units=m +no_defs\n\nor more simply:\n > proj4string(mymap)\n[1] \" +proj=lcc +lat_1=46.8 +lat_0=46.8 +lon_0=2.337229166666667 \n+k_0=0.99987742 +x_0=600000 +y_0=2200000 +a=6378249.2 \n+b=6356514.999904194 +units=m +no_defs\"\n\nActually, I was used to WRITE *.prj files like that:\n\nmyproj<-showWKT(proj4string(mymap))\ncat(myproj, file=\"Mth030607.prj\")\n\nNow I can close the circle writing AND reading... I am quite lazy with \nprojection files (writing is source of many mistakes), so it will be \neasy to pick them up from already existing *.prj files and to create and \nadd CRS to spatial objects and write the corresponding *.prj when \nshapefiles are written (eg with readShapePoly(), etc.). No longer need \nthe ESRI ArcToolbox.\n\nThanks,\n\nPatrick\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Roger Bivand a écrit :\n> On Thu, 17 May 2007, Patrick Giraudoux wrote:\n>\n>   \n>> Dear all,\n>>\n>> Definitely, I am not that clever with projection systems: I would like \n>> to read a *.prj file (part o",
       "thread_id": "thread-566508dfb3be",
       "thread_depth": 2,
-      "month": "2007-05"
+      "month": "2007-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070517/14eddf11/attachment.pl"
+      ]
     },
     {
       "id": "msg-dcb3445c1d2e",
@@ -990,11 +993,14 @@
       "subject_clean": "splancs and the use of a shapefile with a hole",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070526/6f57b1cf/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070526/6f57b1cf/attachment.pl>",
+      "body_plain": "Dear list,\n\nmy problem concerns the library splancs and the use of a shapefile with a hole. I found a part of code in another thread (http://finzi.psych.upenn.edu/R/Rhelp02a/archive/61525.html) saying that if I've \"more than one shape, and/or more than one ring in that shape, adjust the [[Shape]])[[ring]]\" in the \"getPolygonCoordsSlot(getPolygonsPolygonsSlot(getSpPpolygonsSlot(pol)[[2]])[[1]])\". My problem is that I can choose with the two parameters between the hole studyarea (inkluding the hole) or the hole itself but not among the studyarea excluding the hole. Below you can find the code.\n\nI appreciate every hint! Thanks\n\nMarco\n\n\n> library(splancs)\n> library(maptools)\n> setwd(\"c:/test\")\n> getwd()\n[1] \"c:/test\"\n> \n> pol <- readShapePoly(\"stadtreg_owin.shp\", verbose=T)\nShapefile type: Polygon, (5), # of Shapes: 1\n> edv <- read.table(\"C:/test/edv.txt\", header=T,\n+   sep=\";\", na.strings=\"NA\", dec=\",\", strip.white=T)\n> poi <- as.points(edv[,-c(1:25)])\n> ls()\n[1] \"edv\"          \"poi\"          \"pol\"          \"splancs_poly\"\n> \n> poi <- coordinates(poi)\n> splancs_poly <- getPolygonCoordsSlot(getPolygonsPolygonsSlot(\n+   getSpPpolygonsSlot(pol)[[1]])[[2]])\n> polymap(splancs_poly)\n\n__________________________\nMarco Helbich\nISR\nA-1010 Vienna, Postgasse 7/4/2\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list,\n\nmy problem concerns the library splancs and the use of a shapefile with a hole. I found a part of code in another thread (http://finzi.psych.upenn.edu/R/Rhelp02a/archive/61525.html) saying",
       "thread_id": "thread-1415e2a4a72a",
       "thread_depth": 0,
-      "month": "2007-05"
+      "month": "2007-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070526/6f57b1cf/attachment.pl"
+      ]
     },
     {
       "id": "msg-077426eb04ef",
@@ -1172,11 +1178,14 @@
       "references": [
         "<Pine.LNX.4.44.0705301426390.22911-100000@reclus.nhh.no>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070531/23e09719/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070531/23e09719/attachment.pl>",
+      "body_plain": "Hi Roger,\n\n \n\nThanks for the help! It works now via the code below. When you now ask\nfor the variable GRID, R says that there is no projection system. How\ncould a projection be added?  Thx. I would like to add points,  and\nshape files on the georeferenced - map (with scale bar - north arrow?).\n\n \n\n*This is the message:\n\n \n\n>GRID\n\n****\n\n[549,]  13421722  -3939674\n\n[550,]  13421722  -3939906\n\n[551,]  13421722  -3940137\n\nCoordinate Reference System (CRS) arguments: NA\n\n***\n\n \n\nS <- SpatialPoints(cbind( sinusgrid[,1], sinusgrid[,2]), proj4string =\nCRS(\"+proj=sinu +lon_0=0 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m\"))\n\nSP <- SpatialPixels(S, tolerance =4.3159264735194e-05, proj4string =\nCRS(\"+proj=sinu +lon_0=0 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m\"))\n\nGRID <- SpatialPixelsDataFrame(points = SP, tolerance\n=4.3159264735194e-05, data = sinusgrid[\"index\"], proj4string =\nCRS(\"+proj=sinu +lon_0=0 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m\"))\n\n***\n\nWith this message -->>\n\nWarning messages:\n\n1: grid has empty column/rows in dimension 1 in: points2grid(points,\ntolerance) \n\n2: grid has empty column/rows in dimension 2 in: points2grid(points,\ntolerance)\n\n***\n\n \n\nxyz <- as.image.SpatialGridDataFrame(GRID)\n\nimage(GRID, axes=TRUE) # good plot, with coordinates in the axes but\nwithout a legend! ;/ \n\ncontour(xyz, add=TRUE)\n\n \n\nIn order to add a part of the shape file on top of the map I tried the\nfollowing: (although the grid is only a small part of the shape file!).\nIt would be handy to see where in the shape file the grid is positioned.\n\n \n\nlibrary(maptools)\n\n# --> overlay shape file on top of map (extend of shape file are larger\nthan grid)\n\npdir <- \"C:\\\\DATA\\\\shapefile\\\\Greenhills\\\\\";\n\nshape<- readShapePoly(paste(pdir,\"greenhills_SINUS.shp\",sep=\"\"),\nproj4string = CRS(\"+proj=sinu +lon_0=0 +x_0=0 +y_0=0 +a=6371000\n+b=6371000 +units=m\")) \n\nplot(shape) # plot looks fine)\n\n \n\nl3 = list(\"SpatialPolygonsRescale\", layout.scale.bar(), offset\n=c(data[sy,1],data[sy,2]), scale = 500, fill=c(\"transparent\",\"black\")) #\nadd scale bar\n\nrv = list(\"sp.polygons\",shape) # add shape file\n\nspplot(GRID, c(\"ndvi\"), sp.layout=list(l3,rv))\n\n \n\n* Could the shape file first be plotted and than the grid on top of it? \n\n* Can a projection be added to the grid - see GRID? \n\n(which other function can be used to fine-tune the creation of spatial\nmaps from a combination of a grid and shape file with legend &\nscalebar?)\n\n \n\nThanks a lot for your help,\n\nJan\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Roger,\n\n \n\nThanks for the help! It works now via the code below. When you now ask\nfor the variable GRID, R says that there is no projection system. How\ncould a projection be added?  Thx. I would li",
       "thread_id": "thread-5564051dc0cc",
       "thread_depth": 2,
-      "month": "2007-05"
+      "month": "2007-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20070531/23e09719/attachment.pl"
+      ]
     },
     {
       "id": "msg-fa2d043b73b7",

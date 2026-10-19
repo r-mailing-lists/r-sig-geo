@@ -145,11 +145,14 @@
       "subject_clean": "how do we sample in spatial statistics?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060704/4cfe1d89/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060704/4cfe1d89/attachment.pl>",
+      "body_plain": "Dear friends,\n  Sorry for sending an empty email because of mismanipulation.\n  Do we also use sample() function to do the spatial sampling? I look for\nthe sample() and think it's one-dimensional sampling.\nIn spatial statistics, do we need two-dimentional sampling or some other\nsampling techniques? Which functions could be used in spatial samping in R?\nthanks very much!\n\n-- \nKind Regards,\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear friends,\n  Sorry for sending an empty email because of mismanipulation.\n  Do we also use sample() function to do the spatial sampling? I look for\nthe sample() and think it's one-dimensional sampl",
       "thread_id": "thread-86401757af23",
       "thread_depth": 0,
-      "month": "2006-07"
+      "month": "2006-07",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060704/4cfe1d89/attachment.pl"
+      ]
     },
     {
       "id": "msg-9a4290884ed9",
@@ -393,11 +396,14 @@
         "<2fc17e30607050710j3338e022j21b1962c56487c9d@mail.gmail.com>",
         "<17580.29817.450605.537921@maths.uwa.edu.au>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060707/643b1514/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060707/643b1514/attachment.pl>",
+      "body_plain": "Dear *Adrian Baddeley* ,\n  Where is the problem with me?\nI run the programs that you provide,but it can't work well, the error\ninformation is as follows:\n\nspatstat 1.9-3\n\n library(mgcv)\n library(spatstat)\nlibrary(graphics)\n\n edge<-10/3\n SPowin<-rectangle(edge)\n*ERROR: no function \"rectangle\"*\nHave i missed somthing?\n\n\n\nOn 7/6/06, Adrian Baddeley <adrian at maths.uwa.edu.au> wrote:\n>\n> Dear Zhijie Zhang,\n>\n> First can I just point out that the calculations you are describing\n> could be done much more simply in 'spatstat'.\n>\n> Instead of\n>\n> > library(spspatstat)\n> > edge <- 10/3\n> > crds <- matrix(c(0,0,0,edge,edge,edge,edge,0,0,0), ncol=2, byrow=TRUE)\n> > SPoly <- SpatialPolygons(list(Polygons(list(Polygon(crds)), ID=1)))\n> > SPowin <- as(SPoly, \"owin\")\n>\n> you could just write\n>\n>    library(spatstat)\n>    edge <- 10/3\n>    SPowin <- rectangle(edge)\n>\n> Then after generating the point pattern 'pp', instead of\n>\n> > nc <- 10  #define the number of grids in rows/columns\n> > edge_nc <- edge/nc\n> > grd <- GridTopology(c(edge_nc/2, edge_nc/2), c(edge_nc, edge_nc), c(nc,\n> nc))\n> > SG <- SpatialGrid(grd)\n> > ng <- prod(slot(grd, \"cells.dim\"))\n> > SP_MC03 <- as(pp, \"SpatialPoints\")\n> > where <- overlay(SG, SP_MC03)\n> > counts <- table(where)  #here,means tables to count the number of points\n> in\n> > each grid?\n> > res <- rep(0, ng)\n> > res[as.integer(names(counts))] <- counts\n> > SGDF <- SpatialGridDataFrame(grd, data=AttributeList(list(MC03=res)))\n> > image(SGDF, \"MC03\")\n>\n> you can just write (in spatstat 1.9-3 or later)\n>\n>    MC03 <- quadratcount(pp, nc)\n>    image(MC03)\n>\n> The object MC03 contains the counts. You can also `plot' and `print' it.\n> If you plot it, the counts will be displayed as text. You can extract the\n> counts themselves by writing as.matrix(MC03) or as.table(MC03).\n>\n> But anyway, to answer your question!   %^]\n>\n> > I hope to control the sample intervals with the numbers of grids,.\n> >  E.G. In my dataset , i generated 10*10 grids, the grids maybe coded\n> like\n> > this(row number, column number)--row(1-10)*col(1-10)grids.  Suppose my\n> > systematic sampling is one grid space, then my subset should be\n> > row(1,3,5,7,9)*col(1,3,5,7,9)grids=25grids. I think this maybe done by\n> > row/column index, but i didn't find it. Anybody has ideas on it? By the\n> way,\n> > i also want to keep the attributes in my subset.\n>\n> If I understand correctly, what you want to do is to take a systematic\n> sample\n> from a matrix (every k-th row and every m-th column, where in your example\n> k=2 and m=2).\n>\n> First convert your count data to a matrix.\n>      If you used the 'spatstat' code listed above, just write M <-\n> as.matrix(MC03).\n>      If you used the 'sp' code in your message, I guess it will be\n>      something like M <- as.matrix(SGDF).\n>\n> Then generate two vectors that specify which rows and which columns\n> you sample.\n>\n>    Suppose you want a sample of every k-th row and every m-th column.\n> Then:\n>\n>    rowphase <- sample(1:k, 1)\n>    colphase <- sample(1:m, 1)\n>    rowsample <- seq(rowphase, nrow(M), by=k)\n>    colsample <- seq(colphase, ncol(M), by=m)\n>\n> Then take the sample.\n>\n>     Msample <- M[cbind(rowsample, colsample), drop=FALSE]\n>\n> The result is a matrix.\n>\n> [There is actually an undocumented function in spatstat\n> called 'matrixsample' which does something similar. In the next version\n> of spatstat I will give it some documentation.]\n>\n> I hope this helps\n>\n> best wishes\n> Adrian Baddeley\n>\n>\n> PS: I will be on holiday for the next 12 days\n>\n>\n\n\n-- \nKind Regards,\nZhi Jie,Zhang ,PHD\nDepartment of Epidemiology\nSchool of Public Health\nFudan University\nTel:86-21-54237149\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear *Adrian Baddeley* ,\n  Where is the problem with me?\nI run the programs that you provide,but it can't work well, the error\ninformation is as follows:\n\nspatstat 1.9-3\n\n library(mgcv)\n library(spats",
       "thread_id": "thread-28cbac503212",
       "thread_depth": 0,
-      "month": "2006-07"
+      "month": "2006-07",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060707/643b1514/attachment.pl"
+      ]
     },
     {
       "id": "msg-6fa7b0d8bd16",
@@ -461,11 +467,14 @@
       "references": [
         "<BAY20-F5318C1A5D51CE1FD02560C9750@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060708/dea2aaad/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060708/dea2aaad/attachment.pl>",
+      "body_plain": "Ali, if you replace e+n with x+y, does that work?\n\nI wasn't aware that ossfim was this restrictive; there's\nclearly some room for generalisation here.\n--\nEdzer\n\nAlí Santacruz wrote:\n\n>Dear list members:\n>\n>I am trying to make a cost/benefit analysis in a sampling network for \n>organic matter soil content data. The best model fitted was exponential \n>(universal kriging, first order trend).\n>\n>So I need to know if it is possible to use ossfim function with universal \n>kriging.\n>\n>I tried to modify the ossfim function but I get an error:\n>\n>  \n>\n>>ossfim.UK<-function (spacings = 1:5, block.sizes = 1:5, model, nmax = 25,\n>>    \n>>\n>+     debug = 0)\n>+ {\n>+     n = floor(sqrt(nmax)) + 1\n>+     x = 0:(n - 1) + 0.5\n>+     x = sort(c(-x, x))\n>+     ret = matrix(NA, length(spacings) * length(block.sizes),\n>+         3)\n>+     r = 1\n>+     for (sp in spacings) {\n>+         for (bl in block.sizes) {\n>+             data.grid = data.frame(expand.grid(x * sp, x * sp),\n>+                 z = rep(1, length(x)^2))\n>+             names(data.grid) = c(\"x\", \"y\", \"z\")\n>+             gridded(data.grid) = c(\"x\", \"y\")\n>+             x0 = SpatialPoints(matrix(0, 1, 2))\n>## Next I modify the formula in krige using the coordinates names of my data\n>## to use universal kriging:\n>+             kr = krige(z ~ e+n, data.grid, x0, block = c(bl, bl),\n>+                 model = model, nmax = nmax, set = list(debug = debug))\n>+             ret[r, ] = c(sp, bl, sqrt(kr[[\"var1.var\"]][1]))\n>+             r = r + 1\n>+         }\n>+     }\n>+     ret = data.frame(ret)\n>+     names(ret) = c(\"spacing\", \"block.size\", \"kriging.se\")\n>+     ret\n>+ }\n>  \n>\n>>err.grid <- ossfim.UK(seq(10,60,10),block.sizes=0,m.f.exp.t1)\n>>    \n>>\n>Error in model.frame(formula, rownames, variables, varnames, extras, \n>extranames,  :\n>        variable lengths differ (found for 'e')\n>\n>Is it possible what I want to do? Does it have sense?\n>\n>I appreciate any help or comment.\n>\n>Sincerely,\n>\n>Alí M. Santacruz\n>M.Sc. Geomatics, Student\n>National University of Colombia\n>Bogotá D.C.\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>  \n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Ali, if you replace e+n with x+y, does that work?\n\nI wasn't aware that ossfim was this restrictive; there's\nclearly some room for generalisation here.\n--\nEdzer\n\nAlí Santacruz wrote:\n\n>Dear list member",
       "thread_id": "thread-b4d9c37ffe48",
       "thread_depth": 1,
-      "month": "2006-07"
+      "month": "2006-07",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060708/dea2aaad/attachment.pl"
+      ]
     },
     {
       "id": "msg-3b57215fb58b",
@@ -555,11 +564,14 @@
       "subject_clean": "map legend",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060711/87e4d3ce/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060711/87e4d3ce/attachment.pl>",
+      "body_plain": "Hi list!\n\nI`ve tried to do a choropleth map in R but I`ve had problems with the legend.\nI`d like only two digits in the legend but  don`t know how to do this.\nThanks\n\nSonia\n\n\nlibrary(RColorBrewer)\n\npar(mfrow=c(1,1))\n\nnivel<-cut(CIU_T,5)\n\npar(pty=\"m\")\n\nnParts<-as.numeric(nivel)\n\nmypalette<-brewer.pal(7,\"YlOrRd\")\n\nfgs<-mypalette[nParts]\n\nplot(zrp_ov,fg=fgs,xlab=\"\",ylab=\"\",xaxt=\"n\",yaxt=\"n\",bty=\"n\",ol=\"grey\")\n\nbrks<-attributes(nivel)$levels\n\nlegend(\"topleft\",legend=brks,fill=mypalette,bty=\"n\",cex=.8,title=\"CIU_T\",inset=0)\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi list!\n\nI`ve tried to do a choropleth map in R but I`ve had problems with the legend.\nI`d like only two digits in the legend but  don`t know how to do this.\nThanks\n\nSonia\n\n\nlibrary(RColorBrewer)\n\npa",
       "thread_id": "thread-7d24ca16a8f7",
       "thread_depth": 0,
-      "month": "2006-07"
+      "month": "2006-07",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060711/87e4d3ce/attachment.pl"
+      ]
     },
     {
       "id": "msg-8f375a4a4ee7",
@@ -623,11 +635,14 @@
       "subject_clean": "geo-newbie Q: overlay lat-long data onto projected map?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060717/3cb58de6/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060717/3cb58de6/attachment.pl>",
+      "body_plain": "I've spent the last 5 days trying to figure out how to overlay the  \npositions of geographic data on top of a map. I've scoured the man  \npages for the maps, mapproj, maptools, mapdata, and the huge sp  \npackage. I've experimented with countless permutations of commands.  \nSo far I've learned a lot about map projections, but I still have no  \nideas how to display my data the way I want! (sigh)\n\nThe data are the latitude-longitude coordinates of 1,599 survey sites  \nlocated across the US. I want to plot these sites on a map of the US.  \nSeems like a simple task. I've tried converting them to a  \nSpatialPoints object and worked out how to project the sites using a  \ngiven map projection (i.e. Bonne). But how do I correctly overlay  \n(i.e. display) the data points onto a similarly projected map of the  \nUS? It might be possible to do it using overlay {sp} but for that it  \nseems I would need the coordinates of the geopolitical boundary for  \nthe map of the US. Can these values be extracted somehow from the US  \nmap?\n\nHere's how I generated the SpatialPoints object:\n\n#x = longitude values in decimal degrees\n#y = latitude values in decimal degrees\n#create SpatialPoints object using CRS-class Bonne projection  \ncentered on longitude 100\nS <- SpatialPoints(cbind(x,y),CRS(\"+proj=bonne +lon_0=100\"))\n\n#this next part plots just the data points (cloud of points)\nplot(S,pch=20)\n\nHow do I overlay the same points on top of a map of the US such that  \nthey are correctly positioned wrt coordinates?\n\nAlso, the R-sig-geo info page does show an URL for a searchable  \narchive of R-sig-geo. Does one exist?\n\nMany thanks for your time.\nMike\n______________________________\nMichael M Fuller, Ph.D.\nThe Institute for Environmental Modeling\nUniversity of Tennessee\n1416 Circle Drive\nKnoxville, TN 37996-1610\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I've spent the last 5 days trying to figure out how to overlay the  \npositions of geographic data on top of a map. I've scoured the man  \npages for the maps, mapproj, maptools, mapdata, and the huge s",
       "thread_id": "thread-af14011c0d86",
       "thread_depth": 0,
-      "month": "2006-07"
+      "month": "2006-07",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060717/3cb58de6/attachment.pl"
+      ]
     },
     {
       "id": "msg-e66495c13ccc",
@@ -639,11 +654,14 @@
       "subject_clean": "problem assigning POSIX class to AttributeList column",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060718/ca493fd7/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060718/ca493fd7/attachment.pl>",
+      "body_plain": "Hello, I've been unable to use \"[[<-.AttributeList\" to assign POSIXct vectors.\n\nIt seems to be because \nis.vector(Sys.time()) \n\nis FALSE.  The test \"is.vector(value)\" is perhaps too strict ?? but I\ndon't see whether this is perhaps a problem with the datetimeClasses. \n\nExample follows. \n\nCheers, Mike.\n\n\nsessionInfo()\n#Version 2.3.1 (2006-06-01) \n#i386-pc-mingw32 \n\n#attached base packages:\n#[1] \"methods\"   \"stats\"     \"graphics\"  \"grDevices\" \"utils\"     \"datasets\" \n#[7] \"base\"     \n\n#other attached packages:\n#      sp \n#\"0.8-16\" \n\nal <- AttributeList(list(x = 1:10, y = gl(2, 5), t = Sys.time() + 1:10))\n\n\nal[[\"t\"]] <- Sys.time() + 1:10  \n#Error: is.vector(value) || is.factor(value) is not TRUE\n\ntraceback()\n#4: stop(paste(deparse(mc[[i + 1]]), \" is not \", if (length(r) > \n#       1) \"all \", \"TRUE\", sep = \"\"), call. = FALSE)\n#3: stopifnot(is.vector(value) || is.factor(value))\n#2: \"[[<-.AttributeList\"(`*tmp*`, \"t\", value = c(1153188132.868, \n#   1153188133.868, 1153188134.868, 1153188135.868, 1153188136.868, \n#   1153188137.868, 1153188138.868, 1153188139.868, 1153188140.868, \n#   1153188141.868))\n#1: \"[[<-\"(`*tmp*`, \"t\", value = c(1153188132.868, 1153188133.868, \n#   1153188134.868, 1153188135.868, 1153188136.868, 1153188137.868, \n#   1153188138.868, 1153188139.868, 1153188140.868, 1153188141.868\n#   ))\n\n\n## the same problem occurs with\nal[[3]] <- Sys.time() + 1:10\n\n## and with\n\nal[[\"t\"]] <- al[[\"t\"]]\n\n## assigning numeric to numeric OK\nal[[\"x\"]] <- 2:11\n\n## but assigning POSIX to same is not\nal[[\"x\"]] <- Sys.time() + 1:10\n\n\n# straight list version\n\nl <- list(x = 1:10, y = gl(2, 5), t = Sys.time() + 1:10)\n\n## works fine:\nl[[\"t\"]] <- l[[\"t\"]]",
+      "body_snippet": "Hello, I've been unable to use \"[[<-.AttributeList\" to assign POSIXct vectors.\n\nIt seems to be because \nis.vector(Sys.time()) \n\nis FALSE.  The test \"is.vector(value)\" is perhaps too strict ?? but I\ndo",
       "thread_id": "thread-e66495c13ccc",
       "thread_depth": 0,
-      "month": "2006-07"
+      "month": "2006-07",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060718/ca493fd7/attachment.pl"
+      ]
     },
     {
       "id": "msg-10da23e3e0d3",
@@ -749,11 +767,14 @@
       "subject_clean": "Moran's I - nb class?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060719/84012a5a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060719/84012a5a/attachment.pl>",
+      "body_plain": "Hi,\n\nI'm trying to calculate global Moran's I for residuals from glm model. I\nread the manual of spdep package and for the function 'moran'  it requires a\n'listw' object created by the function nb2listw, which in turn requires the\nobject of class 'nb'. I can't understand how to create the object of class\nnb and which function to use to create it.\n\nAny help will be appreciated.\n\nThanks,\nDebarchana.\n\n-- \nDebarchana Ghosh\nResearch Assistant,\nDepartment of Geography\nUniversity of Minnesota.\nPH: 8143607580\nwww.tc.umn.edu/~ghos0033/\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nI'm trying to calculate global Moran's I for residuals from glm model. I\nread the manual of spdep package and for the function 'moran'  it requires a\n'listw' object created by the function nb2lis",
       "thread_id": "thread-b0b7ce34b5e5",
       "thread_depth": 0,
-      "month": "2006-07"
+      "month": "2006-07",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060719/84012a5a/attachment.pl"
+      ]
     },
     {
       "id": "msg-fe8fe2556dee",
@@ -927,11 +948,14 @@
       "subject_clean": "randomForests for mapping vegetation with big data",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060731/52baefdd/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060731/52baefdd/attachment.pl>",
+      "body_plain": "Hi,\n \nI´m trying to ran randomForests in R to do vegetation suitability maps.\n \nI´m working with 1000x1000 pixel maps and 30 environmental  variables.\n \nMy software is R v2.3.1 and RandomForests 4.5-16. \n1GB Ram memory and 3GB swap partition in a Linux or Windows machine\n(the problem is the same in both configurations).\n \nR abort with an memory limits error when I try to train randomForest with \nbig data frames, 300000 rows x 30 columns and 500 trees.\n \nI have lost one week tuning the use of memory in R (I read tens of messages on it) but\nI think that it is not a R misconfiguration but a big memory expense of randomforests library implementation.\n \nMy conclusion is: I need to divide...\n \nok, to solve this memory error, I ran randomForests several times, \nwith less rows in the training data, and use the combine() function to join the forests.\n \nThe cuestion is...\n \nIs this the right way to train randomForest with big data? \nThere are another way?\nHow do you make it?\n \n\nthanks...\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n \nI´m trying to ran randomForests in R to do vegetation suitability maps.\n \nI´m working with 1000x1000 pixel maps and 30 environmental  variables.\n \nMy software is R v2.3.1 and RandomForests 4.5-1",
       "thread_id": "thread-222d8741aafa",
       "thread_depth": 0,
-      "month": "2006-07"
+      "month": "2006-07",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20060731/52baefdd/attachment.pl"
+      ]
     },
     {
       "id": "msg-da58385c28d4",

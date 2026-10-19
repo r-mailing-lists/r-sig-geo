@@ -187,11 +187,14 @@
       "subject_clean": "Various Variograms of gstat package together in a single page",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091102/d01485b5/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091102/d01485b5/attachment.pl>",
+      "body_plain": "Dear List:\n\nI need  your help. I'm a new user in R ( round two weeks...) and I'm trying\nto make several interpolations in R with Gstat package.\n\nInitially, I have a workbook in MSExcel, with several sheets, which were\nimported using xlsReadWrite package in a list in R (45 data frame in one\nobject (class=list))\n\n>d <- as.list(length(z))\n>for (i in 1:length(z))\n+d[[i]] <- read.xls('Tablas_puntos.xls', colNames=TRUE, sheet = i)\n\nLater, the data frames were convert to explicity-spatial,using the sp\npackage (I have followed the instructions of the tecnical note of D.G\nRossiter --> http://www.itc.nl/~rossiter/teach/R/R_ck.pdf).\n\nFinally, I create an object (list) with 45 variograms for each one of the\ndata sets.\n\n>v.d.temp <- as.list(length(z))\n>for(i in 1:length(z))\n+v.d.temp[[i]] <- variogram(TempC ~1, data= d.temp[[i]], cutoff=25000,\nwidth=200)\n\nAt this point, everything works OK:\n\n - The final question: How to putt several of these variogram graphics\ntogether in a single page ?\n\nI tried with par(mfrow=c(n,m)) in  together with loops (see code below), but\nit didn't work.....or I don't know how....and I`ve read the subjects about\nthis topic in this mail list (and the answers of Ezder Pebesma), but I stil\ncannot make it work.\n\n>par(mfrow=c(2,2))\n>for (i in 1:4)\n+print (plot ( v.d.temp [ [ i ] ]   ) )\n\nIn advance, thank you very much.\n\nEduardo.\n\n-- \nEduardo Bustos S.\nIng. Agr.\nM.Sc Student.\nCegRISC-UC\nefbustos at uc.cl\n+56 (2) 354 15 49\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear List:\n\nI need  your help. I'm a new user in R ( round two weeks...) and I'm trying\nto make several interpolations in R with Gstat package.\n\nInitially, I have a workbook in MSExcel, with several s",
       "thread_id": "thread-a4af1b10fa4e",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091102/d01485b5/attachment.pl"
+      ]
     },
     {
       "id": "msg-acf93c94cde1",
@@ -374,11 +377,14 @@
       "subject_clean": "Spatial analysis question",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091103/ad9c839c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091103/ad9c839c/attachment.pl>",
+      "body_plain": "Tomislav,\n\nThank you for the advice and the scripts. It seems that your suggestion will\nwork well for what I want to do. I'll try that.\n\nThanks again,\n\nMarcelo\n\nTomislav Hengl wrote:\n\nMarcelo,\n\nSurprisingly, I could not find any function in the spatstat package\n(or splancs package) that\nspecifically derives cross-correlations between multiple point processes:\n\ndata(lansing)\nplot(split(lansing))  # distribution of occurrence records for five+1 species;\nplot(density(split(lansing)), ribbon = FALSE)\n\n# fit stationary marked Poisson process with different intensity for\neach species:\n\nlansing.ppm <- ppm(lansing, ~marks, Poisson())\nsummary(lansing.ppm)\n\n\n...but this does not say anything about which species are most\ncorrelated (and which are negatively\ncorrelated). See also \"Mark correlation function\" in PART V. MARKED\nPOINT PATTERNS:\n\n\nBaddeley, A., 2008. Analysing spatial point patterns in R. CSIRO,\nCanberra, Australia.\nhttp://www.csiro.au/files/files/pn0y.pdf\n\n\nI guess that there is no reason NOT to do what you suggest:\n\n\ndens.lansing <- density(split(lansing))\ndens.lansing.sp <- as(dens.lansing[[1]], \"SpatialGridDataFrame\")\nnames(dens.lansing.sp)[1] <- names(dens.lansing)[1]\n\nfor(i in 2:length(dens.lansing)) {\n\n  dens.lansing.sp at data[names(dens.lansing)[i]] <-\nas(dens.lansing[[i]], \"SpatialGridDataFrame\")$v\n}\n\nspplot(dens.lansing.sp, col.regions=grey(rev(seq(0,1,0.025))))\nround(cor(log1p(dens.lansing.sp at data[names(dens.lansing)]),\nuse=\"complete.obs\"), 2)\n\n          blackoak hickory maple  misc redoak whiteoak\nblackoak     1.00    0.55 -0.73 -0.64  -0.51     0.23\nhickory      0.55    1.00 -0.84 -0.63  -0.52    -0.27\nmaple       -0.73   -0.84  1.00  0.75   0.50    -0.09\n\nmisc        -0.64   -0.63  0.75  1.00   0.70     0.09\nredoak      -0.51   -0.52  0.50  0.70   1.00     0.25\nwhiteoak     0.23   -0.27 -0.09  0.09   0.25     1.00\n\n# PCA:\n\nsp.formula <- as.formula(paste(\"~\", paste(\"log1p(\",\nnames(dens.lansing), \")\", collapse=\"+\"),\n\nsep=\"\"))\n\nPCA.sp <- prcomp(sp.formula, scale=TRUE, dens.lansing.sp at data)\nbiplot(PCA.sp, arrow.len=0.1, xlabs=rep(\".\", length(PCA.sp$x[,1])),\nmain=\"PCA biplot\",\n\nylabs=names(dens.lansing))\n\nwhich clearly shows that the most positively correlated species are\n\"hickory\" and \"blackoak\", while\nthe most 'competing' species are \"maple\"/\"redoak\" and \"hickory\".\n\n\n\nHTH\n\nT. Hengl\nhttp://home.medewerker.uva.nl/t.hengl/\n\n- Show quoted text -\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch\n[mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf\n\nOf Marcelo Tognelli\nSent: Friday, October 30, 2009 7:50 PM\nTo: r-sig-geo at stat.math.ethz.ch\nSubject: [R-sig-Geo] Spatial analysis question\n\nDear List,\n\n\nI have probability maps of the distribution of 4 species of venomous snakes\n(raster files output from species distribution modeling software) and point\nlocality data with information on snake bite events (most of them without\n\nthe id of the species involved in the accident). I would like to run an\nanalysis to see what species correlates best with snake bite events. My idea\nis to generate a kernel density raster from the point event data and then do\n\nsome kind of spatial correlation against the species distribution maps.\nI would greatly appreciate any suggestions on the type of analysis that I\ncan perform with these data and on the software and/or R package to run it.\n\n\nThanks in advance,\n\nMarcelo\n\n\t[[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\n\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Tomislav,\n\nThank you for the advice and the scripts. It seems that your suggestion will\nwork well for what I want to do. I'll try that.\n\nThanks again,\n\nMarcelo\n\nTomislav Hengl wrote:\n\nMarcelo,\n\nSurpri",
       "thread_id": "thread-358534c62b0c",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091103/ad9c839c/attachment.pl"
+      ]
     },
     {
       "id": "msg-e142500cdf57",
@@ -390,11 +396,14 @@
       "subject_clean": "About correlograms",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091103/48a1a383/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091103/48a1a383/attachment.pl>",
+      "body_plain": "Hi everybody,\n\n\n\nI’m using “correlog” in package “ncf” to evaluate spatial autocorrelation of\nmy data, following these steps:\n\n\n\nsetwd (\"C:/Documents and Settings/…\n\nbio <- read.table(\"bio3.csv\", header=TRUE, sep=\",\")\n\nstr(bio)\n\nlibrary(ncf)\n\nwow<-correlog(t1$x, t1$y, t1$z, w = NULL, increment=50, resamp =0, latlon =\nTRUE, na.rm = FALSE)\n\nstr(wow)\n\nplot(wow)\n\n\n\nBy the way, bio3.csv contains:\n\n\n\ny , x , z\n\n10.0833333 , -72.7166667 , 81.9975\n\n7.5 , -74.8666667 , 87.971\n\n5.6166667 , -67.15 , 75.4197\n\n5.983333 , -61.433333 , 82.4859\n\n3.85 , -65.666667 , 86.6279\n\n1.4333333 , -65.7833333 , 91.7385\n\n3.65 , -65.7666667 , 87.4672\n\n3.9 , -56.1666667 , 75.5698\n\n8.833333 , -70.533333 , 85.1626\n\n3.5 , -65.7166667 , 88\n\n3.6166667 , -65.6833333 , 87.7646\n\n6 , -62.8833333 , 86.6228\n\n5.7166667 , -65.9 , 77.4138\n\n8.1286111 , -71.4586111 , 81.8428\n\n8.2555556 , -71.7955556 , 79.7814\n\n8.0205556 , -71.7419444 , 82.6087\n\n8.7105556 , -71.4291667 , 81.7585\n\n2.8333333 , -59.5166667 , 81.6372\n\n7.87 , -72.4377778 , 82.7694\n\n4.5833333 , -61.45 , 87.2137\n\n1.5833333 , -58.6333333 , 80.7423\n\n9.2422222 , -70.2230556 , 80.2662\n\n4.416667 , -61.583333 , 86.7048\n\n5.1666667 , -59.466667 , 80.6327\n\n1.5333333 , -58.8333333 , 81.2853\n\n9.9833333 , -72.7166667 , 82.0076\n\n4.6666667 , -59.8166667 , 83.1121\n\n8.3630556 , -71.7722222 , 81.8428\n\n2.8333333 , -58.95 , 80.3623\n\n8.5047222 , -71.395 , 82.6823\n\n6.8663889 , -63.3113889 , 82.8629\n\n3.0402778 , -74.2213889 , 84.0164\n\n5.5833333 , -63.5333333 , 85.9463\n\n3.3833333 , -59.4666667 , 81.25\n\n7.3166667 , -71.95 , 85.3675\n\n9.7977778 , -70.0666667 , 82.8776\n\n6.05 , -67.4166667 , 73.642\n\n0.2 , -74.7666667 , 80.4054\n\n9.099951 , -70.674869 , 82.1181\n\n3.95 , -65.85 , 85.4167\n\n6.5933333 , -62.65 , 83.6207\n\n1.7166667 , -64.5833333 , 91.3717\n\n4.5333333 , -67.5833333 , 78.0534\n\n3.35 , -73.9333333 , 81.8871\n\n6.1 , -74.8 , 92.1254\n\n3 , -59.5166667 , 81.6964\n\n4.85 , -73.2666667 , 80.2596\n\n11.3 , -73.9525 , 82.1721\n\n11.333611 , -74.033611 , 80.9722\n\n2.6427778 , -75.9147222 , 90.9357\n\n1.0091111 , -76.3602722 , 87.1142\n\n6.5 , -66.6666667 , 71.9697\n\n2.8166667 , -59.15 , 80.9942\n\n1.4833333 , -65.7333333 , 92.029\n\n3.1666667 , -65.8166667 , 87.6984\n\n2.9333333 , -59.4833333 , 80.826\n\n\n\nwhere “y” is latitude, “x” is longitude, and “z” is a bioclimatic variable.\n\n\n\nI can get the correlograms, however their ranges sometimes (like bio3)\nexceed the supposed limits of -1 and 1 of the Moran’s Index.\n\n\n\nCan anybody tell me what am I doing wrong?\n\n\nThanks a lot!\n\n\n\nPaolo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi everybody,\n\n\n\nI’m using “correlog” in package “ncf” to evaluate spatial autocorrelation of\nmy data, following these steps:\n\n\n\nsetwd (\"C:/Documents and Settings/…\n\nbio <- read.table(\"bio3.csv\", head",
       "thread_id": "thread-e142500cdf57",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091103/48a1a383/attachment.pl"
+      ]
     },
     {
       "id": "msg-453d00d4ce46",
@@ -440,11 +449,14 @@
       "subject_clean": "Jencks' natural breaks",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091104/5c89708c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091104/5c89708c/attachment.pl>",
+      "body_plain": "I am looking to execute this calculation in a software package I am building\nbut need help with pseudo code.\n\n \n\nCan anyone point me in the right direction for a programming routine that\nuses this method to work on a set of data?\n\n \n\nThe data is used in a mapping program. Data such as GDP will be used. The\nresulting breaks will then be used to highlight the countries on a world map\ngiving them colour ranges.\n\n \n\nThanks,\n\nChris.\n\n \n\n \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am looking to execute this calculation in a software package I am building\nbut need help with pseudo code.\n\n \n\nCan anyone point me in the right direction for a programming routine that\nuses this met",
       "thread_id": "thread-4d9f3cbb785f",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091104/5c89708c/attachment.pl"
+      ]
     },
     {
       "id": "msg-33343c830914",
@@ -456,11 +468,14 @@
       "subject_clean": "Hydrological distance between sites",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091104/66bf5d04/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091104/66bf5d04/attachment.pl>",
+      "body_plain": "Dear r-sig-geo list members,\n\nDoes anyone know if some R functions exist to calculate some hydrological\ndistances between sites? By hydrological distances, I mean for example the\n'real' distance that separates two sites throughout the river network\nconnexions.\n\nThanks in advance\n\nClem\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear r-sig-geo list members,\n\nDoes anyone know if some R functions exist to calculate some hydrological\ndistances between sites? By hydrological distances, I mean for example the\n'real' distance that ",
       "thread_id": "thread-33343c830914",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091104/66bf5d04/attachment.pl"
+      ]
     },
     {
       "id": "msg-2a2edf433942",
@@ -490,11 +505,14 @@
       "subject_clean": "Help importing ascii DTM with no data values for Kriging with External Drift",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091104/63009fe4/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091104/63009fe4/attachment.pl>",
+      "body_plain": "Hello,\n\nI am having problems with kriging an ascii file DTM from ArcGIS which has many -9999 (no data) values. Do these normally have to be removed first? I want to make the elevation DTM the predictor base for kriging with external drift.\n\nMy code is the following:\nelev <- read.asciigrid(\"elev.asc\", as.image=FALSE, plot.image=TRUE)\nstr(elev)\nelev_ked <- krige(meanRain~Zloc, locations=meanRain, newdata=elev, model=fitted_vario)\n\nError in model.frame.default(terms.f, newdata, na.action = na.action) :\n  object is not a matrix\nIn addition: Warning message:\n'newdata' had 550448 rows but variable(s) found have 1 rows\n\nMy data file meanRain has X Y Z coordinates and Precipitation values (4 columns).\n\nThank you so much for your time and help!\n\nCara\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI am having problems with kriging an ascii file DTM from ArcGIS which has many -9999 (no data) values. Do these normally have to be removed first? I want to make the elevation DTM the predicto",
       "thread_id": "thread-542c6810e324",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091104/63009fe4/attachment.pl"
+      ]
     },
     {
       "id": "msg-8d41ae77b043",
@@ -612,11 +630,14 @@
       "subject_clean": "Merging two spatial polygon objects",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/0fca7083/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/0fca7083/attachment.pl>",
+      "body_plain": "Good Evening\n \nI have two spatial polygon objects. The first  \"StMaps50\"  contains state \nlevel map data for the 50 US states.  The second  \"CAMaps\" contains \nprovincial and territorial polygons  for Canada.  I would like to merge these two \nobjects into a  single Canada-US spatial polygon object that I could then write \nto a  shapefile.  The data fields in the @data component have been \nconstructed  with identical fields.  I have tried using the  maptools   \"spRbind\"  \nfunction but get the following error  message:\n \n> spRbind(StMaps50,CAMaps)\nError in spRbind(as(obj,  \"SpatialPolygons\"), as(x, \"SpatialPolygons\")) :   \nnon-unique polygon  IDs\n \nI have attached additional information below.\nAny suggestions would be appreciated.\n \nJoe\n \n##################################################\n>  class(StMaps50)\n[1] \"SpatialPolygonsDataFrame\"\nattr(,\"package\")\n[1]  \"sp\"\n\n> _StMaps50 at data[1:5_ (mailto:StMaps50 at data[1:5) ,]\nctry        sname sabbr sfips  pfips\n1   US   Washington     WA    53    NA\n2    US      Montana    MT     30    NA\n3    US        Maine     ME    23    NA\n4   US North  Dakota    ND    38     NA\n5   US South Dakota    SD     46    NA\n\n> class(CAMaps)\n[1]  \"SpatialPolygonsDataFrame\"\nattr(,\"package\")\n[1] \"sp\"\n\n> _CAMaps at data_ (mailto:CAMaps at data) \nctry                  sname sabbr sfips pfips\n0     CA                Alberta   ALB    61  CA01\n1     CA      British Columbia    BCL    62  CA02\n2     CA               Manitoba   MNT    63  CA03\n3     CA         New Brunswick    NBR    64  CA04\n4     CA           Nova  Scotia   NSC    65  CA07\n5    CA  Northwest Territories   NTR    66   CA06\n6     CA           Newfoundland   NWF    67   CA05\n7     CA                Ontario   ONT    68  CA08\n8     CA  Prince Edward Island   PEI    69   CA09\n9     CA                 Quebec   QUE    70  CA10\n10    CA           Saskatchewan   SSK    71  CA11\n11    CA       Yukon Territory    YTR    72  CA12\n>  \n################################################\n \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Good Evening\n \nI have two spatial polygon objects. The first  \"StMaps50\"  contains state \nlevel map data for the 50 US states.  The second  \"CAMaps\" contains \nprovincial and territorial polygons  for ",
       "thread_id": "thread-e9d2a6c869dd",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/0fca7083/attachment.pl"
+      ]
     },
     {
       "id": "msg-e60c8f809d97",
@@ -667,11 +688,14 @@
       "subject_clean": "Post the email address",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/91d83efd/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/91d83efd/attachment.pl>",
+      "body_plain": "[[alternative HTML version deleted]]",
+      "body_snippet": "[[alternative HTML version deleted]]",
       "thread_id": "thread-c300e66ec78c",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/91d83efd/attachment.pl"
+      ]
     },
     {
       "id": "msg-94a714cbb66a",
@@ -702,11 +726,14 @@
       "subject_clean": "hat matrix in gwr",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/37d79189/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/37d79189/attachment.pl>",
+      "body_plain": "Hello,\n\nI am currently using *gwr to make a spatial analysis. Dataset has 3055\nobservations. As read, this is a considerable number for gwr R to run.\n However, so far, I have suceeded to get local R2 (SDF), etc.\n\nThe problem is to get \"hatmatrix\". When I add \"hatmatrix=TRUE\" to the code\n(which I get localR2 with), R freezes. I must get hat matrix to calculate\nMoran'I and AICc to compare models.\n\nCould be this a case of large number of observations, or do I miss anything\nelse. Furthermore, I could get once AICc with the same dataset and code, but\nnot anylonger.\n\nAny feedback is more than welcome. Thank you.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI am currently using *gwr to make a spatial analysis. Dataset has 3055\nobservations. As read, this is a considerable number for gwr R to run.\n However, so far, I have suceeded to get local R2 ",
       "thread_id": "thread-684a2873c400",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/37d79189/attachment.pl"
+      ]
     },
     {
       "id": "msg-1a7eb025256a",
@@ -718,11 +745,14 @@
       "subject_clean": "Merging two spatial polygon objects",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/883ca0e3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/883ca0e3/attachment.pl>",
+      "body_plain": "Roger\nThank you. Your suggestion worked perfectly.\nJoe\n \n>In a message dated 11/5/2009 4:32:37 A.M. Mountain Standard Time,  \nRoger.Bivand at nhh.no writes:\n\nOn Thu,  5 Nov 2009, Roger Bivand wrote:\n\n> On Thu, 5 Nov 2009,  BRWIN338 at aol.com wrote:\n>\n>> Good Evening\n>>  \n>> I have two spatial polygon objects. The first   \"StMaps50\"  contains \nstate\n>> level map data for the 50 US  states.  The second  \"CAMaps\" contains\n>> provincial and  territorial polygons  for Canada.  I would like to merge \n \n>> these two\n>> objects into a  single Canada-US  spatial polygon object that I could \nthen \n>> write\n>> to  a  shapefile.  The data fields in the @data component have  been\n>> constructed  with identical fields.  I have tried  using the  maptools \n>> \"spRbind\"\n>> function but get  the following error  message:\n>\n> With recent versions of sp,  you can say:\n>\n> rownames(StMaps50)\n>  rownames(CAMaps)\n\nSorry, on  checking:\n\nrow.names(StMaps50)\nrow.names(CAMaps)\n\n(rownames()  is a method for matrices, row.names() for data.frames and  \nfriends).\n\nRoger\n\n>\n> By default, the IDs for each  Polygons object, corresponding to each row \nin \n> the data.frame object  in the \"data\" slot, are the feature IDs read in \nform \n> file. In the  case of shapefiles, these usually run from \"0\" to say n-1. \nSo \n> they  will be the same. Use the spChFIDs() method in maptools to change \nthe \n>  IDs of at least one of your objects to disambiguate them (say paste \"US\" \nin  \n> front of the US ones and \"CAN\" in front of the Canadian ones). I'm  also \n> assuming the the coordinate reference systems are  identical.\n>\n> Hope this  helps,\n>\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Roger\nThank you. Your suggestion worked perfectly.\nJoe\n \n>In a message dated 11/5/2009 4:32:37 A.M. Mountain Standard Time,  \nRoger.Bivand at nhh.no writes:\n\nOn Thu,  5 Nov 2009, Roger Bivand wrote:\n\n",
       "thread_id": "thread-1a7eb025256a",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/883ca0e3/attachment.pl"
+      ]
     },
     {
       "id": "msg-a98d0a194447",
@@ -770,11 +800,14 @@
       "subject_clean": "Writing ascii grid after kriging",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/6144960d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/6144960d/attachment.pl>",
+      "body_plain": "Hello,\n\nI can not properly transform my kriged data in a spatial data frame. I would like to have my kriged precipitation values put where my ditigal elevation model grid points are in elev.asc.\n\nHere is my code. Would anyone have any ideas?\n\nTHANK YOU,\n\nCara\n\n# mean data to be krigged\nmeanPrec <- read.delim(\"MEANPREC.txt\")\nnames(meanPrec) <- c(\"X\",\"Y\",\"meanPrec\",\"Z\")\nmeanPrec.x <- meanPrec$X\nmeanPrec.y <- meanPrec$Y\nmeanPrec.z <- meanPrec$Z\nstr(meanPrec)\ncoordinates(meanPrec)=~X+Y+Z\nstr(meanPrec)\n\n# Bring in GIS elevation as prediction base\nelev <- read.asciigrid(\"elev.asc\", as.image=FALSE, plot.image=TRUE)\nFormal class 'SpatialGridDataFrame' [package \"sp\"] with 6 slots\n  ..@ data       :'data.frame': 1157478 obs. of  1 variable:\n  .. ..$ elev.asc: num [1:1157478] NA NA NA NA NA NA NA NA NA NA ...\n  ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3 slots\n  .. .. ..@ cellcentre.offset: num [1:2] 549663 78563\n  .. .. ..@ cellsize         : num [1:2] 100 100\n  .. .. ..@ cells.dim        : int [1:2] 1302 889\n  ..@ grid.index : int(0)\n  ..@ coords     : num [1:2, 1:2] 549663 679763 78563 167363\n  .. ..- attr(*, \"dimnames\")=List of 2\n  .. .. ..$ : NULL\n  .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n  ..@ bbox       : num [1:2, 1:2] 549613 78513 679813 167413\n  .. ..- attr(*, \"dimnames\")=List of 2\n  .. .. ..$ : chr [1:2] \"coords.x1\" \"coords.x2\"\n  .. .. ..$ : chr [1:2] \"min\" \"max\"\n  ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n  .. .. ..@ projargs: chr NA\n\nelev <- as.data.frame(elev)\nnames(elev) <- c(\"Z\",\"X\",\"Y\")\nelev.x <- elev$X\nelev.y <- elev$Y\nelev.z <- elev$Z\ncoordinates(elev) <- ~X+Y+Z\nstr(elev)\n\n# universal kriging with meanPrec with elevation trend\nelev_ked <- krige(meanPrec~Z, meanPrec, newdata=elev, fitted_vario)\n\n# write grid to ascii file, must have SpatialGridDataFrame\nelevgrid <- GridTopology(c(549663,78563), c(100,100), c(1302,889)) ##original elev.asc information\ndata <- elev_ked ## data retured from kriging, both prediction and variance\n## trying to create spatial grid data frame, but failing\nelevgridnew <- SpatialGridDataFrame(elevgrid, data, proj4string = CRS(as.character(NA)))\nwrite.asciigrid(elev_ked[1], \"elev_ked.asc\")\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI can not properly transform my kriged data in a spatial data frame. I would like to have my kriged precipitation values put where my ditigal elevation model grid points are in elev.asc.\n\nHere",
       "thread_id": "thread-76545895e6bf",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/6144960d/attachment.pl"
+      ]
     },
     {
       "id": "msg-9fb9850901cd",
@@ -786,11 +819,14 @@
       "subject_clean": "need to create US map with colors by state",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/e6c3699e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/e6c3699e/attachment.pl>",
+      "body_plain": "I need to do something quite simple, but a search of the \"CRAN Task View:\nAnalysis of Spatial Data\" has not revealed to me the best way to do this.\nWhat I would like to do is plot a map of the U.S. with each state's color\ncorresponding to heatmap colors of a population statistic. For example, dark\nred could be a state with the highest number of H1N1 cases, pink with an\nintermediate number, and white with no cases. An ability to overlay the\ncenter of the state with the actual statistic would be nice but not\nnecessary.\n\nIs there a straightforward method to accomplish this? A vignette perhaps?\n\nThanks,\n\nMark\n\nMark W. Kimpel MD  ** Neuroinformatics ** Dept. of Psychiatry\nIndiana University School of Medicine\n\n15032 Hunter Court, Westfield, IN  46074\n\n(317) 490-5129 Work, & Mobile & VoiceMail\n(317) 399-1219 Skype No Voicemail please\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I need to do something quite simple, but a search of the \"CRAN Task View:\nAnalysis of Spatial Data\" has not revealed to me the best way to do this.\nWhat I would like to do is plot a map of the U.S. wi",
       "thread_id": "thread-9fb9850901cd",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/e6c3699e/attachment.pl"
+      ]
     },
     {
       "id": "msg-1d81b3f406bf",
@@ -893,11 +929,14 @@
       "subject_clean": "Correcting errors in the loops",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091106/49465939/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091106/49465939/attachment.pl>",
+      "body_plain": "Hi,\n I have several errors in my codes when handling with the spatial data. I\ndid not find some example data to show this and attachment wasnot allowed\nhere, so i hope that some suggested correction or ideas could be given.\nSorry for this.\n The following are the codes.\n######## CODES1 ##########\nlibrary(maptools); library(aspace)\n\npoly<-readShapePoly(\"a.shp\")\nnum<-c(0,1)\n\n#hope to get poly_0 and poly_1\nfor(i in num) {\n poly_num<-poly[poly$LABEL_FLAG==num,]\n writeSpatialShape(poly_num,fn=\"c:/poly_num\")\n}\n\nWarning messages:\n1: In poly$LABEL_FLAG == num :\n  longer object length is not a multiple of shorter object length\n2: In poly$LABEL_FLAG == num :\n  longer object length is not a multiple of shorter object length\n\nQuestion1: If i didnot use the \"for loops\", it runs without error. What is\nthe problem here?\nQuestion2: I noticed that write.polylistShape() is different from\nwriteSpatialShape(). The former needs a polylist object according to the\nhelp. How can i convert the shapepolygon poly_num to the polylist object?\n\n######## CODES2 ##########\npoint0<-readShapePoints(\"po2\")\nnum<-c(2,4)\n\n# hope to get r_sdd_2 and r_sdd_4\nfor(i in num) {\n point_i<-point0[point0$new==i,]\n r_sdd_i<-calc_sdd(id = 1, filename =\n\"c:/SDD_Output.txt\",destmat=coordinates(point_i))\n}\n\nWarning messages:\n1: In destmat[, 1] * weights :\n  longer object length is not a multiple of shorter object length\n2: In destmat[, 2] * weights :\n  longer object length is not a multiple of shorter object length\n> r_sdd_2\nError: object 'r_sdd_2' not found\n> r_sdd_4\nError: object 'r_sdd_4' not found\n\nQuestion3:  Here it will run correctly if i donot use the \"for loops\". What\nis the problem?\n\n Thanks a lot. Actually, there maybe better methods to do the above task.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n I have several errors in my codes when handling with the spatial data. I\ndid not find some example data to show this and attachment wasnot allowed\nhere, so i hope that some suggested correction o",
       "thread_id": "thread-34b0e07dabea",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091106/49465939/attachment.pl"
+      ]
     },
     {
       "id": "msg-b15f726a578f",
@@ -909,11 +948,14 @@
       "subject_clean": "ratio 1:1 of dimension X and Y axes in a plot",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/5c12180a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/5c12180a/attachment.pl>",
+      "body_plain": "Dear R resercher,\n\nI have a plot x and y with X equal of Y. I wish to have a ratio 1:1 of\ndimension of x axe and y axe, but I am reading the help (1 hour) and web in\ngeneral but I didn't find nothing.\n\nthanks\n\nGianni\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear R resercher,\n\nI have a plot x and y with X equal of Y. I wish to have a ratio 1:1 of\ndimension of x axe and y axe, but I am reading the help (1 hour) and web in\ngeneral but I didn't find nothing.",
       "thread_id": "thread-b15f726a578f",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091105/5c12180a/attachment.pl"
+      ]
     },
     {
       "id": "msg-e14b3389610b",
@@ -927,11 +969,14 @@
       "references": [
         "<518dff330911051850h1af88611l39d63b1613886e92@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091106/6fa3d4cf/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091106/6fa3d4cf/attachment.pl>",
+      "body_plain": "Hi Gianni,\n\nNot sure I got your question very well, but perhaps what you are looking for\nis the asp (aspect) option:\n\nplot(runif(50),runif(50),asp=1)\nplot(runif(50),runif(50),asp=1.1)\nplot(runif(50),runif(50),asp=2)\n\nHope it helps,\n\nPierre\n\n2009/11/6 gianni lavaredo <gianni.lavaredo at gmail.com>\n\n> Dear R resercher,\n>\n> I have a plot x and y with X equal of Y. I wish to have a ratio 1:1 of\n> dimension of x axe and y axe, but I am reading the help (1 hour) and web in\n> general but I didn't find nothing.\n>\n> thanks\n>\n> Gianni\n>\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Gianni,\n\nNot sure I got your question very well, but perhaps what you are looking for\nis the asp (aspect) option:\n\nplot(runif(50),runif(50),asp=1)\nplot(runif(50),runif(50),asp=1.1)\nplot(runif(50),r",
       "thread_id": "thread-b15f726a578f",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091106/6fa3d4cf/attachment.pl"
+      ]
     },
     {
       "id": "msg-51b91e74c2aa",
@@ -1011,11 +1056,14 @@
       "subject_clean": "Kriging with External Drift, multivariate experience?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091109/f662b635/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091109/f662b635/attachment.pl>",
+      "body_plain": "Hello,\n\nThank you all for your previous help. I began using R 2 weeks ago, and I am getting somewhere finally. I have been able to run universal kriging with a Digital Elevation Model trend. Now, does anyone have experience with kriging more than one trend variable?\n\nI assume you have to have the other variables defined at the same locations as the original grid and then at the new grid. However, can more than one new grid be defined?\n\nFor example,\n\nelev_ked <- krige(meanPrec~Z+LAM, meanPrec, newdata=elev, fitted_vario)\n\nIn this example, I want to krig the mean Precipitation relative to the elevation Z and a Limited Area Model (LAM). There is only one way to define the newdata that I know and in this case I am interpolating back to the Digital Elevation Model 'elev'. If I want to interpolate back to the LAM grid, I presume I change to newdata=LAM?\n\nHowever, is there an approach that uses the entire newdata grid of elev and a LAM grid for interpolation? Do they have to be at the same resolution?\n\nThank you so much!\n\nCara\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nThank you all for your previous help. I began using R 2 weeks ago, and I am getting somewhere finally. I have been able to run universal kriging with a Digital Elevation Model trend. Now, does",
       "thread_id": "thread-d7f89685cafa",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091109/f662b635/attachment.pl"
+      ]
     },
     {
       "id": "msg-222239d4d8ac",
@@ -1045,11 +1093,14 @@
       "subject_clean": "grid error for kriging",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091109/040a44e8/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091109/040a44e8/attachment.pl>",
+      "body_plain": "Hello,\n\nHas anyone ever used a DTM as their grid for interpolation and come across this error. My DTM has pixels 100 m by 100 m, so I really do not understand this error as it is regular. Also, this only happens when I am doing multiple iterations in time.\n\n\n\nCode:\nlist_ked[[i]] <- krige(Prec00[,i]~Zloc, locations=DataCoord, newdata=elev, model = fitted_vario)\n[using universal kriging]\n\n\n\nError:\nsuggested tolerance minimum: 0.25\nError in points2grid(points, tolerance, round, fuzz.tol) :\ndimension 1 : coordinate intervals are not constant\n\n\nI can rescale the DTM to be less refined (now it is 100 m2 for a 6,000 km2 area) if needed.\n\nThank you again,\n\nCara\n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nHas anyone ever used a DTM as their grid for interpolation and come across this error. My DTM has pixels 100 m by 100 m, so I really do not understand this error as it is regular. Also, this o",
       "thread_id": "thread-9762b7299553",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091109/040a44e8/attachment.pl"
+      ]
     },
     {
       "id": "msg-79673695f451",
@@ -1171,11 +1222,14 @@
       "subject_clean": "metadata",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091109/1d1e0726/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091109/1d1e0726/attachment.pl>",
+      "body_plain": "Hi All,\n\nI have a couple of comments here.  I'm working on some S4 classes for\nspatiotemporal data, basically extending Spatial, and I would like to\ninclude some metadata sooner or later.  I wrote some functions to get data\noff of webpages (like spatiotemporal ozone data from the EPA's air\nexplorer), and I wanted to somehow encode this origin of the data into the\nobject, so I thought a metadata object would be one way to do this.\n\nMy very first go was something like this:\n\nsetClass(\"stMetadata\",\n         representation(title=\"character\",\n                        url=\"character\",\n                        creator=\"character\",\n                        contact=\"character\",\n                        description=\"character\"\n                        ))\n\n\nOther things that I think ought to be in there are units of observations (eg\nozone in ppm), units of spatial data (eg northing/easting, lat/long,\nDorsey?),  temporal periodicity (eg daily, weekly, hourly, etc), and perhaps\nsomething about data range (is this a subset of a larger set? what are the\ntemporal/spatial bounds, etc).\n\nAnyhow, those are some of the thoughts I have.  Of course, it's much easier\nto do this when you are using scripts to create data sets than to try to\nconvince a hurried user to fill out yet another form when all they want to\ndo is \"one simple thing\"....\n\nThoughts?\nBlair\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi All,\n\nI have a couple of comments here.  I'm working on some S4 classes for\nspatiotemporal data, basically extending Spatial, and I would like to\ninclude some metadata sooner or later.  I wrote som",
       "thread_id": "thread-51011f96602b",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091109/1d1e0726/attachment.pl"
+      ]
     },
     {
       "id": "msg-0df28dc1c4c4",
@@ -1221,11 +1275,14 @@
       "subject_clean": "How to create a SpatialPolygonsDataFrame object",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091109/d6e514fa/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091109/d6e514fa/attachment.pl>",
+      "body_plain": "Hello everyone,\n\nI can read polygon shape files into SpatialPolygonsDataFrame objects using maptools library. But how to create a  SpatialPolygonsDataFrame object, for example, a 400 by 400 polygon?\nThank you in advance!\n\nBest,\nShaofei \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello everyone,\n\nI can read polygon shape files into SpatialPolygonsDataFrame objects using maptools library. But how to create a  SpatialPolygonsDataFrame object, for example, a 400 by 400 polygon?\nT",
       "thread_id": "thread-a69a1b29273d",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091109/d6e514fa/attachment.pl"
+      ]
     },
     {
       "id": "msg-6bf9a8ebdc9a",
@@ -1257,11 +1314,14 @@
       "references": [
         "<1159537468.181931257797110040.JavaMail.osg@osgjas01.cns.ufl.edu>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091110/dea16d1d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091110/dea16d1d/attachment.pl>",
+      "body_plain": "At 21:05 09/11/2009, Raya A. Pruner wrote:\n>I have another question for everyone related to the spatstat package \n>and model fitting.\n>\n>A brief background on my question of interest: We are interested in \n>the spatial aggregation of snowy plover nests on a barrier island \n>system in response to nest fates.  We hypothesize a greater level of \n>aggregation in response to a positive nest fate.  Given this, we are \n>also interested in underlying covariates.  So we have data for human \n>activity, predator activity, and prey availability. We would like to \n>see how these covariates influence the aggregation of nests as \n>well.  Currently I have been trying to create a list of images, but \n>was unsuccessful.  So I used based on what I have been able to \n>figure out and did each separately.  This was the only way I could \n>figure out in associating a continuous covariate with a pixel inmage:\n>\n>nests.extra <- read.csv(\"CIE 2009 covariates.csv\", header = T)\n>extra.chop <- subset(nests.extra, select = c(Id, \n>X,Y,Tracks,Predator_T, Invert_Tra))\n>\n>\n>covH.ppp <- ppp(extra.chop[,2], extra.chop[,3], marks \n>=extra.chop[,4],window = area1)\n>human.act=density.ppp(covH.ppp)\n>human.act\n>\n>covP.ppp <- ppp(extra.chop[,2], extra.chop[,3], marks \n>=extra.chop[,5]_T,window = area1)\n>predator.act=density.ppp(covP.ppp)\n>predator.act\n>\n>covI.ppp <- ppp(extra.chop[,2], extra.chop[,3], marks \n>=extra.chop[,6],window = area1)\n>invert.act=density.ppp(covI.ppp)\n>invert.act\n>\n>using this allows me to fit models such as this using multiple covariate:\n>cov2.cord.model=ppm(nestsF.ppp, ~x+y+Tracks+Pred, covariates = \n>list(Tracks=human.act,Pred=predator.act ))\n>\n>However, I don???t think it is working right.  I tried to plot \n>human.act and it doesn???t seem to relate to the data provided in \n>plotting covH.ppp.  The way that I collected the covariate data was \n>systematic by counting human and predator tracks every 500m linearly \n>along the beach.  So I want to be able to look at how the human \n>intensity value effects nesting aggregation and not the density of \n>covariate points themselves which is what I think it is doing \n>currently.  I am interested in the value behind the point.\n>If anyone has any insight on this, please let me know!\n\n\n From the help page of density.ppp:\n\"\n\"To perform spatial interpolation of values that were observed at the \npoints of a point pattern, use \n<mk:@MSITStore:C:\\ARCHIV~1\\R\\R-29~1.2\\library\\spatstat\\chtml\\spatstat.chm::/smooth.ppp.html>smooth.ppp.\" \n\n\nSo, instead of :\n\nhuman.act=density.ppp(covH.ppp)\n\nuse :\n\nhuman.act <- smooth.ppp(covH.ppp)\n\nAnd if the results don't fit your expectations,  try to control the \nsmooth parameters with the argument \"sigma\"\n\n\nHTH\n\nMarcelino\n\n\n\n>Cheers!!!\n>Raya\n>\n>\n>--\n>Raya A Pruner - Graduate Student\n>University of Florida\n>Department of Wildlife Ecology and Conservation\n>PO Box 110430\n>Gainesville, FL 32611-0430\n>352-214-3262\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "At 21:05 09/11/2009, Raya A. Pruner wrote:\n>I have another question for everyone related to the spatstat package \n>and model fitting.\n>\n>A brief background on my question of interest: We are intereste",
       "thread_id": "thread-a8096f487626",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091110/dea16d1d/attachment.pl"
+      ]
     },
     {
       "id": "msg-2a22f2899cd1",
@@ -1273,11 +1333,14 @@
       "subject_clean": "Multiple predictors for external drift kriging",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091110/752d4704/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091110/752d4704/attachment.pl>",
+      "body_plain": "Dear list members,\n\nI'm doing spatial interpolation of soil moisture using kriging with external drift following the example given by Tom Hengl (http://spatial-analyst.net/wiki/index.php?title=Regression-kriging_guide). When I used one predictor (in my case gradient or cos_aspect, see below) it works fine for me, but when I used multiple predictors (gradient +cos_aspect), still I'm able to have the the experimental variogram as well as the fitted theoretical variogram, however, I'm not able to have the kriged soil moisture. here is the code\n\n# import and define the input variables\n\nlibrary(sp)\nlibrary(lattice)\ntrellis.par.set(sp.theme()) # plots the final predictions using blue-pink-yellow legend\n\nwater <- read.csv(\"water_content.txt\") # table with x,y coordinates,and z is  soil moisture\nstr(water)\ncoordinates(water)=~x+y   # this makes depth a SpatialPointsDataFrame\nstr(water)\n\ncos_aspect = read.asciigrid(\"cos_aspect.asc\")  # reads ArcInfo Ascii raster map \nstr(cos_aspect)\nspplot(cos_aspect, scales=list(draw=T), sp.layout=list(\"sp.points\", water, pch=\"+\"))\ngradient= read.asciigrid(\"gradient.asc\")\nstr(gradient)\nspplot(gradient, scales=list(draw=T), sp.layout=list(\"sp.points\", water, pch=\"+\"))\n\n#Plot the xy graph target versus predictor:\n\ncos_aspect.ov = overlay(cos_aspect, water)  # create grid-points overlay\nstr(cos_aspect.ov at data) \nwater$cos_aspect.asc = cos_aspect.ov$cos_aspect.asc  \n\ngradient.ov = overlay(gradient, water)\nwater$gradient.asc= gradient.ov$gradient.asc\n\nlm.depth <- lm(z~ gradient.asc+cos_aspect.asc, as.data.frame(water))\n\nsummary(lm.depth)\n\nplot(z~ gradient.asc+cos_aspect.asc, as.data.frame(water))\nabline(lm(z~ gradient.asc, as.data.frame(water)))\nabline(lm(z~ cos_aspect.asc, as.data.frame(water)))\n\n#Fit the variogram model of the residuals:\n\nlibrary(gstat)\nnull.vgm <- vgm(var(water$z), \"Sph\", sqrt(areaSpatialGrid(cos_aspect))/4, nugget=0) #initial parameters\nvgm_depth_r <- fit.variogram(variogram(z~ cos_aspect.asc+ gradient.asc, water), model=null.vgm)\nplot(variogram(z~ gradient.asc+cos_aspect.asc,water), vgm_depth_r, main=\"fitted by gstat\")\n# It works fine till here\n# Run uk in gstat: \n\ndepth_uk <- krige(z~ cos_aspect.asc+gradient.asc, locations=water, newdata=cos_aspect, model=vgm_depth_r)\n\n\n\nthe problem it seems mainly in newdata, here is the error given by R:\nError in eval(expr, envir, enclos) : object 'gradient.asc' not found. if i assigned the  newdata= gradient then the R error message is :\nError in eval(expr, envir, enclos) : object 'cos_aspect.asc' not found\n\nas I understand that newdata is the grid where it does the interpolations\nHow can I obtained the kriged soil moisture?, what is wrong here?,\nThanks,\nAgeel\n\n\n\n      \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list members,\n\nI'm doing spatial interpolation of soil moisture using kriging with external drift following the example given by Tom Hengl (http://spatial-analyst.net/wiki/index.php?title=Regress",
       "thread_id": "thread-2a22f2899cd1",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091110/752d4704/attachment.pl"
+      ]
     },
     {
       "id": "msg-f9feba3c9df5",
@@ -1350,11 +1413,14 @@
         "<4AFAE29C.9020207@alumni.uv.es>",
         "<8f656ccd0911110832p1bc05b90j4c847355c0458bf3@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091111/340cc1ef/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091111/340cc1ef/attachment.pl>",
+      "body_plain": "Thank you very much Facu,\n\nIt is exactly what I was looking for!\n\n\nLe 11 novembre 2009 17:13, Facundo Muñoz <famuvie at alumni.uv.es> a écrit :\n\nThat is more like a geographical operation.\n> I wrote a little GRASS script suited to do this.\n> http://www.geeitema.org/doc/guenmap//docs/v.costdist.mat.zip\n>\n> You have to provide a \"cost\" surface with zeroes over land regions, and\n> with a constant value over water equal to the raster resolution you are\n> working with.\n> You then can provide a vector map of \"source\" sites and one or more maps\n> with \"end\" sites, and the script computes all hydrological distances from\n> all the source sites to all the end sites and store the values in the data\n> tables.\n> Of course you can use the same map for 'source' and 'end'. In this case you\n> get all the distances between the sites.\n>\n> Hope it helps.\n> ƒacu.-\n>\n> Clément Tisseuil escribió:\n>\n>> Dear r-sig-geo list members,\n>>\n>> Does anyone know if some R functions exist to calculate some hydrological\n>> distances between sites? By hydrological distances, I mean for example the\n>> 'real' distance that separates two sites throughout the river network\n>> connexions.\n>>\n>> Thanks in advance\n>>\n>> Clem\n>>\n>>        [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thank you very much Facu,\n\nIt is exactly what I was looking for!\n\n\nLe 11 novembre 2009 17:13, Facundo Muñoz <famuvie at alumni.uv.es> a écrit :\n\nThat is more like a geographical operation.\n> I wrote a",
       "thread_id": "thread-94be9289bbf4",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091111/340cc1ef/attachment.pl"
+      ]
     },
     {
       "id": "msg-595f185f9d1d",
@@ -1393,11 +1459,14 @@
         "<8f656ccd0911110834r1013adf9w618ac03454d2130d@mail.gmail.com>",
         "<4AFAF11E.9010908@alumni.uv.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091111/3fcf4f96/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091111/3fcf4f96/attachment.pl>",
+      "body_plain": "Facundo Muñoz escribió:\n> Sorry Clèment, please use the attached fixed version instead.\n> I thaught I had the latest version on the web.\n... which is now also up to date.\n\nBests\n       facu.-\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Facundo Muñoz escribió:\n> Sorry Clèment, please use the attached fixed version instead.\n> I thaught I had the latest version on the web.\n... which is now also up to date.\n\nBests\n       facu.-\n\n\t[[alte",
       "thread_id": "thread-94be9289bbf4",
       "thread_depth": 2,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091111/3fcf4f96/attachment.pl"
+      ]
     },
     {
       "id": "msg-4970e65e5927",
@@ -1416,11 +1485,14 @@
         "<4AFAF11E.9010908@alumni.uv.es>",
         "<4AFAF98F.1010108@alumni.uv.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091111/93405cf7/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091111/93405cf7/attachment.pl>",
+      "body_plain": "As I read in your file \"v.costdist.mat\", your function uses the r.cost\nfunction in GRASS.\n\nIt is just an idea (I have not tried), but using the r.terracost function\ncould make the execution of v.costdist.mat faster [\nhttp://www.mail-archive.com/grass-dev at lists.osgeo.org/msg10950.html]?\n\nCheers\n\n\nLe 11 novembre 2009 18:51, Facundo Muñoz <famuvie at alumni.uv.es> a écrit :\n\n>\n> Facundo Muñoz escribió:\n>\n> Sorry Clèment, please use the attached fixed version instead.\n> I thaught I had the latest version on the web.\n>\n> ... which is now also up to date.\n>\n> Bests\n>        ƒacu.-\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "As I read in your file \"v.costdist.mat\", your function uses the r.cost\nfunction in GRASS.\n\nIt is just an idea (I have not tried), but using the r.terracost function\ncould make the execution of v.costd",
       "thread_id": "thread-94be9289bbf4",
       "thread_depth": 3,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091111/93405cf7/attachment.pl"
+      ]
     },
     {
       "id": "msg-155df87017cf",
@@ -1508,11 +1580,14 @@
       "subject_clean": "Variance unchanging with krige in gstat with iterations",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091112/1423f70c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091112/1423f70c/attachment.pl>",
+      "body_plain": "Hello,\n\nI am performing kriging with an external drift and ordinary kriging in a loop to have predicted values at each time step.\n\nThe predicted values are changing reasonably, however, the variance is not changing after the first time step.\n\nHere is my simple for loop:\n\n# KED\nlist_ked <- vector(\"list\",72)\n\nfor(i in 1:72){\n list_ked[[i]] <- krige(Prec00[,i]~Z, locations=DataCoord, newdata=elev, model = fitted_vario)\n}\n\n# OK\nlist_ok <- vector(\"list\",72)\n\nfor(i in 1:72){\n     list_ok[[i]] <- krige(Prec00[,i]~1, DataCoord, newdata=coord_points, model = fitted_vario)\n}\n\nWould anyone know the solution?\n\nThank you very much,\n\nCara\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI am performing kriging with an external drift and ordinary kriging in a loop to have predicted values at each time step.\n\nThe predicted values are changing reasonably, however, the variance i",
       "thread_id": "thread-e7ed45d8b755",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091112/1423f70c/attachment.pl"
+      ]
     },
     {
       "id": "msg-57cdeec4425e",
@@ -1629,11 +1704,14 @@
       "subject_clean": "3d-Shapefile in R",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091113/8355212f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091113/8355212f/attachment.pl>",
+      "body_plain": "Dear list,\n\nI would like to have the z-values of a river shapefile in R (sp). So that I have at the end a list of x,y and z-coordinates, for which I do further analysis.\nIs there a way of importing a 3d-shapefile direct in R?\nWhen I was using the readOGR command,  the following message appear.\n****************\nriv_CH <- readOGR(\".\", \"riverz\")\nOGR data source with driver: ESRI Shapefile\nSource: \".\", layer: \"riverz\"\nwith 13 features and 13 fields\nFeature type: wkbLineString with 3 dimensions\nWarnmeldung:\nIn readOGR(\".\", \"riverz\") : Z-dimension discarded\n*****************\n\nDo you have any suggestion for handling the z-dimension?\n\nThanks a lot in advance, Rosi\n\n°°°\nRosi Siber\nSwiss Federal Institute of Aquatic Science and Technology (Eawag)\nSiam\nUeberlandstrasse 133\n8600 Duebendorf\nSwitzerland\nPhone: +41 (0)44 823 5566\nFax:   +41 (0)44 823 5375\nrosi.siber at eawag.ch\nhttp://www.eawag.ch/~siberros\n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list,\n\nI would like to have the z-values of a river shapefile in R (sp). So that I have at the end a list of x,y and z-coordinates, for which I do further analysis.\nIs there a way of importing a ",
       "thread_id": "thread-d192ebb25dea",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091113/8355212f/attachment.pl"
+      ]
     },
     {
       "id": "msg-7c86a60fb3ef",
@@ -1671,11 +1749,14 @@
         "<4AFAF98F.1010108@alumni.uv.es>",
         "<8f656ccd0911111017t22ae6456t85ec9dd8c2999f96@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091113/b5f8b8a9/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091113/b5f8b8a9/attachment.pl>",
+      "body_plain": "Interesting... I didn't know about this add-on.\n\nHowever, I don't think I will change for the moment, since:\n\n1) I think it lacks of some r.cost features that I really need \n(max_cost, and stop_points parameters and knight_move option)\n2) The benefits in speed are noticeable with very big datasets, and with \nthe use of clusters (not my situation)\n3) It looked to me that r.terracost will replace r.cost in the future, \nso I better wait\n4) I have to learn how to compile add-ons!\n\nAnyway, if you would like to change and test, I will be happy to benefit \nfrom your experience, haha.\n\nBests\n       ƒacu.-\n   \n\n\nClément Tisseuil escribió:\n> As I read in your file \"v.costdist.mat\", your function uses the r.cost \n> function in GRASS.\n>\n> It is just an idea (I have not tried), but using the r.terracost \n> function could make the execution of v.costdist.mat faster \n> [http://www.mail-archive.com/grass-dev at lists.osgeo.org/msg10950.html]?\n>\n> Cheers\n>\n>\n> Le 11 novembre 2009 18:51, Facundo Muñoz <famuvie at alumni.uv.es \n> <mailto:famuvie at alumni.uv.es>> a écrit :\n>\n>\n>     Facundo Muñoz escribió:\n>>     Sorry Clèment, please use the attached fixed version instead.\n>>     I thaught I had the latest version on the web.\n>     ... which is now also up to date.\n>\n>     Bests\n>            ƒacu.-\n>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Interesting... I didn't know about this add-on.\n\nHowever, I don't think I will change for the moment, since:\n\n1) I think it lacks of some r.cost features that I really need \n(max_cost, and stop_points",
       "thread_id": "thread-94be9289bbf4",
       "thread_depth": 4,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091113/b5f8b8a9/attachment.pl"
+      ]
     },
     {
       "id": "msg-20750f072e68",
@@ -1779,11 +1860,14 @@
       "subject_clean": "Multitype point pattern analysis",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091115/34bcf247/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091115/34bcf247/attachment.pl>",
+      "body_plain": "Hi folk,\n\nI am working on tropical forest dynamic trying to find out \"patches\" of young, adult or suppressed trees. Each tree has XY coordinates and I consider my data as a multitype point pattern (ppt), handling data with spatstat. Actually I consider each mark separately and delineate areas of aggregation (contour(density(ppt)). Then, I superimpose these high-density areas on the same map and look at non-overlapping regions. This is not very satisfying and I would like to go a step further in interpreting areas of e.g. low density of adult trees and high density of suppressed trees. I could not find any reference in the literature dealing with more than 2 types...\n\nDid anyone already deal with similar problem?? Any suggestion will be greatly helpful.\n\nThanks. Best,\nErvan\n___________________________________________________________\n\nErvan Rutishauser\nPhD student\nCIRAD - UMR AMAP\nBP 701\n97387 Kourou Cedex\ntel. 00594.594.32.92.96\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi folk,\n\nI am working on tropical forest dynamic trying to find out \"patches\" of young, adult or suppressed trees. Each tree has XY coordinates and I consider my data as a multitype point pattern (pp",
       "thread_id": "thread-712bc839b647",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091115/34bcf247/attachment.pl"
+      ]
     },
     {
       "id": "msg-f172bd8f141a",
@@ -1920,11 +2004,14 @@
         "<alpine.LRH.2.00.0911151940270.11027@reclus.nhh.no>",
         "<9643.1258329942@as220.org>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091115/7eb2b8d6/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091115/7eb2b8d6/attachment.pl>",
+      "body_plain": "Hi Tom!\n\nI'm a geographer and R enthusiast too, but what I can say is: R is a great\nsoftware to statistics. The final production of maps, although it's\npossible, it's simple and faster made with GIS softwares, like GRASS,\nQuantum GIS or ArcGIS.\n\nMy tip is: organize data with spreadsheet and GIS softwares, import (as\nshapefile, if possible) in R and make your statistical analysis and\nstatistical columns of data, export to another shapefile and manipulate the\nfinal map in GIS softwares.\n\nI repeat, it's possible make all these steps in R, and generate great maps,\nbut the most simple way is above. Personally, I use R to make the final maps\nonly when I have to produce a long series of simple maps.\n\nI think the best way is the integration of GIS software with R, each one\nwith his specialty.\n\n\nKing regards,\n\nRaphael Saldanha\nBRAZIL\nsaldanha.plangeo at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Tom!\n\nI'm a geographer and R enthusiast too, but what I can say is: R is a great\nsoftware to statistics. The final production of maps, although it's\npossible, it's simple and faster made with GIS s",
       "thread_id": "thread-27490095f89c",
       "thread_depth": 3,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091115/7eb2b8d6/attachment.pl"
+      ]
     },
     {
       "id": "msg-78f127cc7189",
@@ -2399,11 +2486,14 @@
       "subject_clean": "Question about confidence intervals for cross k with toroidal shifts",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091116/5a242ae9/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091116/5a242ae9/attachment.pl>",
+      "body_plain": "Dear list members, \n\n \n\nI want to compute the 95% confidence interval of a bivariate k for many\ndifferent pairwise comparisons of point patterns.  As you can see below,\nI have the code to calculate and draw the simulation envelopes but have\nbeen unable to figure out how to get R to calculate a confidence\ninterval.\n\n \n\nThe code I am using is pasted below.  \n\n \n\n \n\n# read in the data\n\ngrp1 <-\nread.table(\"F:/C211_MicroPlaces/Data_Analysis/Traj_Spatial24023/traj1.tx\nt\", header=TRUE, sep=\",\")\n\ngrp2 <-\nread.table(\"F:/C211_MicroPlaces/Data_Analysis/Traj_Spatial24023/traj2.tx\nt\", header=TRUE, sep=\",\")\n\n....I have a total of 8 groups\n\n \n\n# generate bounding rectangle\n\nrec=data.frame(x=c(1246428,1246428,1293320,1293320),\ny=c(184057,271525,271525,184057))\n\n \n\n# one half mile at 400 ft increments\n\ns <- seq(0,2800,400)  \n\n \n\n# Analysis of eight pairwise comparisons\n\ncrossk12 <- k12hat(grp1, grp2, rec, s)\n\ncrossk13 <- k12hat(grp1, grp3, rec, s)\n\n---- it goes on for much longer but this is a sample\n\n \n\n# Do the shifts for each comparison\n\n# Group 1 vs Group 2\n\ncrosskenv12 =kenv.tor(grp1,grp2,rec,nsim=1000,s)\n\n \n\n# Group 1 vs Group 3\n\ncrosskenv13=kenv.tor(grp1,grp3,rec,nsim=1000,s)\n\n \n\n#Now draw the three vectors on one graph for each comparison:\n\n#group the three vectors together to get plotting max and mins (grp1 vs.\ngrp2)\n\nupperkenv12 = crosskenv12$upper\n\nlowerkenv12 = crosskenv12$lower\n\nall = cbind(crossk12,upperkenv12,lowerkenv12)\n\nmax = max(all)\n\nmin = min(all)\n\nplot(s,crossk12,xlab=\"Distance\", ylab=\"K(i,j)\",ylim=c(min,max),type=\"n\")\n\nlines(s,crossk12,lty=1,col=2)\n\nind = pi * s^2\n\nlines(s,ind,lty=1,col=1)\n\nlines(s,upperkenv12,lty=2,col=3)\n\nlines(s,lowerkenv12,lty=2,col=3)\n\nlegend(locator(1),legend=c(\"Khat(i,j)\", \"Independence\",\"Simulation\nEnvelope\"), col=c(2,1,3),lty=c(1,1,2),cex=1.2)\n\ntitle(\"Cross K with 1000 Simulation Envelopes \\n for Group 1 vs. Group 2\nInteraction\")\n\n \n\n \n\nThanks in advance for any assistance.\n\n-Liz\n\n \n\nElizabeth Groff, Ph.D.\n\nAssistant Professor\n\nDepartment of Criminal Justice\n\nTemple University\n\n550 Gladfelter Hall\n\n1115 W. Berks Street\n\nPhiladelphia, PA 19122\n\n215-204-5164 (voice - PLEASE EMAIL RATHER THAN LEAVE A VOICEMAIL)\n\n215-204-3872 (fax)\n\ngroff at temple.edu (email)\n\n \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear list members, \n\n \n\nI want to compute the 95% confidence interval of a bivariate k for many\ndifferent pairwise comparisons of point patterns.  As you can see below,\nI have the code to calculate an",
       "thread_id": "thread-ee6043bfbe82",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091116/5a242ae9/attachment.pl"
+      ]
     },
     {
       "id": "msg-6e889bdcd6e9",
@@ -2785,11 +2875,14 @@
       "subject_clean": "Kriging with NA values",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091117/0ba67794/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091117/0ba67794/attachment.pl>",
+      "body_plain": "Hello,\n\nI am taking the log of precipitation values and therefore many are now NA values. I want to continue to krig my precipitation matrix.\n\nIs there a way to ignore these values with kriging.\n\nMy attempt with is.nan still gives:\n\nErreur : dimensions do not match: locations 105 and data 12\nThank you so much for your time and assistance,\n\nCara\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI am taking the log of precipitation values and therefore many are now NA values. I want to continue to krig my precipitation matrix.\n\nIs there a way to ignore these values with kriging.\n\nMy a",
       "thread_id": "thread-ab5bbfbd44d9",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091117/0ba67794/attachment.pl"
+      ]
     },
     {
       "id": "msg-399f03f5ecab",
@@ -2801,11 +2894,14 @@
       "subject_clean": "neighborhood analysis on patch systems",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091117/72f046f3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091117/72f046f3/attachment.pl>",
+      "body_plain": "I am wondering if anyone has gone through the trouble of establishing a\nneighborhood analysis on a set of polygon using the tools provided by spdep\nto analyse a set of points. In fact i'm still not sure that it makes sense.\n(¡I want to believe it does!)\nSo far, I have been using the spdep package to understand connectivity\npattern between polygon centroids arising from the coodinates() function.\nHowever, this could drastically change given the shape of the patches it\nrepresents.\n\nThe question is then, Is there any easy way to extend the nb* functions to a\nset of patches?\n\n\nthanks\n\n\n-- \nHoracio Samaniego, PhD\nInstituto de Silvicultura\nFacultad de Ciencias Forestales\nUniversidad Austral de Chile\nValdivia, Chile\n\n+56 (63) 222480 [of.]\nhttp://www.ecoinformatica.cl\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am wondering if anyone has gone through the trouble of establishing a\nneighborhood analysis on a set of polygon using the tools provided by spdep\nto analyse a set of points. In fact i'm still not su",
       "thread_id": "thread-399f03f5ecab",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091117/72f046f3/attachment.pl"
+      ]
     },
     {
       "id": "msg-415f300d15cd",
@@ -3072,11 +3168,14 @@
       "subject_clean": "Filling in holes in DTM",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091119/ed80cf85/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091119/ed80cf85/attachment.pl>",
+      "body_plain": "Hello,\n\nWould anyone know a good way to fill in holes within a DTM? There is no data inside these holes and it is affecting my calculations, so I prefer for an interpolation of the nearest neighbors to fill in a value or something similar.\n\nThank you,\n\nCara\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nWould anyone know a good way to fill in holes within a DTM? There is no data inside these holes and it is affecting my calculations, so I prefer for an interpolation of the nearest neighbors t",
       "thread_id": "thread-4263b97f3ef0",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091119/ed80cf85/attachment.pl"
+      ]
     },
     {
       "id": "msg-7d0f090e097a",
@@ -3090,11 +3189,14 @@
       "references": [
         "<EDB94195DABE64488928DD39E53B8FC68BDFD3E8D9@REX2.intranet.epfl.ch>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091119/a619f998/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091119/a619f998/attachment.pl>",
+      "body_plain": "Hi Ton\n\nCheck r.watershed/r.terraflow/r.flow/r.fill modules on Grass.\n\ncheers\nmiltinho\n\nOn Thu, Nov 19, 2009 at 9:16 AM, Tobin Cara <cara.tobin at epfl.ch> wrote:\n\n> Hello,\n>\n> Would anyone know a good way to fill in holes within a DTM? There is no\n> data inside these holes and it is affecting my calculations, so I prefer for\n> an interpolation of the nearest neighbors to fill in a value or something\n> similar.\n>\n> Thank you,\n>\n> Cara\n>\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Ton\n\nCheck r.watershed/r.terraflow/r.flow/r.fill modules on Grass.\n\ncheers\nmiltinho\n\nOn Thu, Nov 19, 2009 at 9:16 AM, Tobin Cara <cara.tobin at epfl.ch> wrote:\n\n> Hello,\n>\n> Would anyone know a goo",
       "thread_id": "thread-4263b97f3ef0",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091119/a619f998/attachment.pl"
+      ]
     },
     {
       "id": "msg-ec0d1c76d118",
@@ -3425,11 +3527,14 @@
       "subject_clean": "Error, exporting ascii grid generated by DTM grid",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091120/213fb028/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091120/213fb028/attachment.pl>",
+      "body_plain": "Hello,\n\nI am receiving a bizarre error recently:\n\nErreur dans write.asciigrid(data_int_ked[1], name1) :\n  Asciigrid does not support grids with non-square cells\n\nI do not understand this as I am putting interpolated data back into the cells of an ascii DTM grid with square cells. Information on the DTM and the file I am trying to write is below:\n\nThank you in advance for your help,\n\nCara\n\n> # Bring in GIS elevation\n> elev <- read.asciigrid(\"val200dtm.asc\", as.image=FALSE, plot.image=TRUE)\n> elev <- as.data.frame(elev)\n> names(elev) <- c(\"Z\",\"X\",\"Y\")\n> elev.x <- elev$X\n> elev.y <- elev$Y\n> elev.z <- elev$Z\n> coordinates(elev) <- ~X+Y\n> gridded(elev) = TRUE\n> fullgrid(elev) = TRUE\n> str(elev)\nFormal class 'SpatialGridDataFrame' [package \"sp\"] with 6 slots\n  ..@ data       :'data.frame': 278388 obs. of  1 variable:\n  .. ..$ Z: num [1:278388] NA NA NA NA NA NA NA NA NA NA ...\n  ..@ grid       :Formal class 'GridTopology' [package \"sp\"] with 3 slots\n  .. .. ..@ cellcentre.offset: Named num [1:2] 549720 78673\n  .. .. .. ..- attr(*, \"names\")= chr [1:2] \"X\" \"Y\"\n  .. .. ..@ cellsize         : Named num [1:2] 200 200\n  .. .. .. ..- attr(*, \"names\")= chr [1:2] \"X\" \"Y\"\n  .. .. ..@ cells.dim        : Named int [1:2] 627 444\n  .. .. .. ..- attr(*, \"names\")= chr [1:2] \"X\" \"Y\"\n  ..@ grid.index : int(0)\n  ..@ coords     : num [1:2, 1:2] 549720 674920 78673 167273\n  .. ..- attr(*, \"dimnames\")=List of 2\n  .. .. ..$ : NULL\n  .. .. ..$ : chr [1:2] \"X\" \"Y\"\n  ..@ bbox       : num [1:2, 1:2] 549620 78573 675020 167373\n  .. ..- attr(*, \"dimnames\")=List of 2\n  .. .. ..$ : chr [1:2] \"X\" \"Y\"\n  .. .. ..$ : chr [1:2] \"min\" \"max\"\n  ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n  .. .. ..@ projargs: chr NA\n\n# Interpolate and write the interpolated data to a file:\nlist_ked <- vector(\"list\",5)\nfor(i in 1:5){\n list_ked[[i]] <- krige(Prec00[,1]~Z, locations=DataCoord, newdata=elev, model = fitted_vario)\n}\n## Write files\nfor(i in 1:5){\n    data_int_ked <- list_ked[[i]]\n    gridded(data_int_ked) = TRUE\n    fullgrid(data_int_ked) = TRUE\n    name1 <- sprintf(\"KEDelevpred_zeros_hr_%i.asc\",i)\n    write.asciigrid(data_int_ked[1], name1)\n}\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI am receiving a bizarre error recently:\n\nErreur dans write.asciigrid(data_int_ked[1], name1) :\n  Asciigrid does not support grids with non-square cells\n\nI do not understand this as I am putti",
       "thread_id": "thread-1102bd8a9cf5",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091120/213fb028/attachment.pl"
+      ]
     },
     {
       "id": "msg-25e164c6b3f0",
@@ -3643,11 +3748,14 @@
       "subject_clean": "Spatially Weighted T-Test?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091121/769a2808/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091121/769a2808/attachment.pl>",
+      "body_plain": "Hi Everyone,\n\nI have a spatial dataset (US Counties with basic Census attributes and an\nattribute denoting whether or not the county has a flood protection levee)\nand I used t.test to compare the means between the groups.\n\nAll of my variables show clustering and neighborhood effects.  Is there a\nt.test procedure that accounts for spatial correlation?  Is this even\nnecessary?\n\nI've looked through Applied Spatial Data Analysis with R along with many of\nthe tutorials and notes available online and I have not found any mention of\nsuch a procedure.  In Dalgaard (2008) I found the following statement about\nthe t.test: 'The t tests are fairly robust against departures from the\nnormal distribution' which seems to say that it is not necessary to account\nfor spatial effects.  But, I wanted to see what people on the list thought\nabout that?\n\nThanks,\nEzra\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Everyone,\n\nI have a spatial dataset (US Counties with basic Census attributes and an\nattribute denoting whether or not the county has a flood protection levee)\nand I used t.test to compare the mean",
       "thread_id": "thread-65ccaa819acf",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091121/769a2808/attachment.pl"
+      ]
     },
     {
       "id": "msg-ae674ce3715d",
@@ -4347,11 +4455,14 @@
         "<4B0A8B33.9010304@geo.uu.nl>",
         "<MPG.2574d093e601f9079896ae@news.gmane.org>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091124/82fd6ba4/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091124/82fd6ba4/attachment.pl>",
+      "body_plain": "Another package I find useful for shaded views of spatial data is the rgl\npackage.\n\nIt is most useful because of its ability to zoom and turn the map\ninteractively.\n\n>From surface3d() help page :\n\ndata(volcano)\nz <- 2 * volcano\nx <- 10 * (1:nrow(z))\ny <- 10 * (1:ncol(z))\nzlim <- range(y)\nzlen <- zlim[2] - zlim[1] + 1\ncolorlut <- terrain.colors(zlen)\ncol <- colorlut[ z-zlim[1]+1 ]\nlibrary(rgl)\nopen3d()\nsurface3d(x, y, z, color=col, back=\"lines\")\n\nPierre\n\n2009/11/24 Karl Ove Hufthammer <karl at huftis.org>\n\n> On Mon, 23 Nov 2009 14:16:35 +0100 Paul Hiemstra <p.hiemstra at geo.uu.nl>\n> wrote:\n> > > The maps with shading look quite nice. Is there an R package/function\n> > > which can create similar images?\n> > >\n> > A good place to look for these kinds of graphs and how to make them is\n> > the R graph gallery [1]. Check out this one for example [2].\n>\n> Excellent idea. I have of course used 'persp' many times, but had\n> forgotten about its 'shade' option. With it, I can create very good-\n> looking (and useful!) 3D maps. I use it on a bathymetry (ocean depths)\n> dataset, and using this shading and 3D visualisation gives a whole new\n> perspective (sorry).\n>\n> One alternative that I discovered is the hillshading feature of the free\n> GIS software SAGA. It's even available in R using the 'RSAGA' package.\n> See \"http://sourceforge.net/apps/trac/saga-gis/wiki/Climbing%20Mount%\n> 20St.%20Helens\" for a nice example of its output. (I didn't manage to\n> get it to automatically use 'natural' colours for ocean and\n> land/terrain, though.)\n>\n> --\n> Karl Ove Hufthammer\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Another package I find useful for shaded views of spatial data is the rgl\npackage.\n\nIt is most useful because of its ability to zoom and turn the map\ninteractively.\n\n>From surface3d() help page :\n\ndat",
       "thread_id": "thread-58cbaa315bf8",
       "thread_depth": 7,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091124/82fd6ba4/attachment.pl"
+      ]
     },
     {
       "id": "msg-939ead8f02ec",
@@ -4715,11 +4826,14 @@
       "subject_clean": "ascii multicollinearity",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091125/73594467/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091125/73594467/attachment.pl>",
+      "body_plain": "Dear All:\n\nI tried searching the r-sig-geo forums regarding this issue but was unable\nto find a solution. I have a set of variables in ASCII format and I'm trying\nto see if there's linear inter-correlation amongst some of them. Is there a\nway in R to assess multicollinearity amongst ASCII grids?\n\nAlso, each grid contains 1,919,810 cells and is about ~13-14 MB, so far I\nhave a total of 10 grids, would that be a problem for R? I'm running 2GBs of\nmemory and two Intel dual-core processors @ 1.73GHz each.\n\nThanks for the response.\n\n-- \n__________________________________\nHakim Abdi\nErasmus Mundus Master's Programme in\nGeospatial Technologies\nhakim.abdi at uni-muenster.de\n\nInstitut für Geoinformatik\nUniversität Münster\n32U 5755408.16mN, 404463.35mE\nifgi.uni-muenster.de\n\nInstituto Superior de Estatística e Gestão de Informação\nUniversidade Nova de Lisboa\n29S 4287095.5mN, 486099.7mE\nwww.isegi.unl.pt\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear All:\n\nI tried searching the r-sig-geo forums regarding this issue but was unable\nto find a solution. I have a set of variables in ASCII format and I'm trying\nto see if there's linear inter-correl",
       "thread_id": "thread-3e3a56636278",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091125/73594467/attachment.pl"
+      ]
     },
     {
       "id": "msg-d040734f15ed",
@@ -4863,11 +4977,14 @@
       "references": [
         "<4B0E5C88.8030002@sphsu.mrc.ac.uk>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091126/4255ac1a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091126/4255ac1a/attachment.pl>",
+      "body_plain": "Hi Karen\n\nI am interested in this points too. What variable are you modeling? Counts\nor incidence? did you standardized by population areas?\n\nR has lot of spatial models for spatial models. see at\nhttp://r-spatial.sourceforge.net/\n\nhope this help\n\nivan\n\n2009/11/26 Karen Lamb <k.lamb at sphsu.mrc.ac.uk>\n\n> Hi,\n>\n> I am currently trying to determine a way of assessing whether or not there\n> is spatial autocorrelation present in my model residuals and was hoping\n> someone could help me with this.\n>\n> I have information on counts in over six thousand areas, with around half\n> of the areas found to have  a count of zero. I decided to fit a\n> Zero-Inflated Poisson model and a Negative Binomial as the data is greatly\n> overdispersed. However, neither of these approaches take into account the\n> likelihood that there is spatial autocorrelation present in the data set.\n>\n> I have been searching for the last two weeks to find appropriate methods to\n> fit a spatial glm model. However, as I am new to spatial statistical\n> methodology I am finding it difficult to decide how best to do this. It am\n> not sure that any of the existing R functions are particularly suitable to\n> my use. I am not interested in prediction as I have data on a population. I\n> am interested in assessing the coefficients of variables and whether or not\n> the variables are significant in determining outcome. I have noticed that a\n> lot of analyses use a Bayesian approach which may be the way forward.\n>\n> My question, however, relates to the glm models I have fitted. I have\n> included variables which may explain some of the spatial correlations such\n> as urban/rural classification. I would like to see if any residual spatial\n> autocorrelation remains in the model but cannot find a way of doing this. On\n> searching the R-sig-Geo archives the Morans Test or Morans I are mentioned.\n> However, I noticed someone had queried using the moran test in R for\n> residuals from a logistic regression and had been told that lm.morantest()\n> is available for linear regression but there is not an alternative for the\n> glm. Has anyone got any suggestions for how to check my residuals? Are there\n> particular plots that can be assessed?\n>\n> Thanks for your assistance.\n>\n> Cheers,\n> Karen\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n\n-- \nLuis Iván Ortiz Valencia\nEstatístico Msc.\nSpatial Analyst Msc.\n...............................................\nCurriculum Lattes\n\nhttp://buscatextual.cnpq.br/buscatextual/visualizacv.jsp?id=K4778724J3\n...............................................\nAquarela Cusco Hostel Perú\n\nhttp://www.aquarelacuscohostel.com/\n...............................................\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Karen\n\nI am interested in this points too. What variable are you modeling? Counts\nor incidence? did you standardized by population areas?\n\nR has lot of spatial models for spatial models. see at\nhtt",
       "thread_id": "thread-06e0eddf9e4e",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091126/4255ac1a/attachment.pl"
+      ]
     },
     {
       "id": "msg-46db6dfdd959",
@@ -4973,11 +5090,14 @@
       "subject_clean": "Error with KED with 2 external drift factors, one iterating in time",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091126/82fd30a0/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091126/82fd30a0/attachment.pl>",
+      "body_plain": "Hello,\n\nI am trying to krige temperature relative to an elevation and a forecast grid. The forecast changes hourly.\n\nEverything reads in well until I use the kriging command:\n\nlist_ked[[i]] <- krige(Temp00[,i]~Z+COS7, locations=DataCoordhr, newdata=elev, model = fitted_vario)\n\nError in function (classes, fdef, mtable)  :\n  unable to find an inherited method for function \"krige\", for signature \"formula\", \"data.frame\"\n> trace()\nError in methods::.TraceWithMethods(where = <environment>) :\n  element 1 is empty;\n   the part of the args list of 'is.function' being evaluated was:\n   (what)\n\n\n\nI have linked my data coordinates with both Z and COS7 and I have linked two ascii grids elev and COS7 with the following commands:\n\n\n\nCOS700 <- read.table(\"D:\\\\Krigging R\\\\COSMO7Temp2000\\\\COS7_Val_Temp_00_trans.txt\")\nCOS7hr <- COS700[,i]\n\nDataCoord <- read.delim(\"TempANZCoord_Elev_Val00.txt\")\nDataCoord <- as.matrix(DataCoord)  ## transform into a matrix\nDataCoordhr <- cbind(DataCoord,COS7hr) ## append a new column at the end\nDataCoordhr <- as.data.frame(DataCoordhr) ## backtransform into data frame\nnames(DataCoordhr) <- c(\"X\",\"Y\",\"Z\",\"COS7hr\") ## define new names\n\n\n\n#Merge COS7 and elevation into elev\nelev$COS7 = COS7[[1]] #make them into a single object, replace as newdata\n\n\n\nDoes anyone have any ideas?\n\n\n\nThank you in advance,\n\nCara\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nI am trying to krige temperature relative to an elevation and a forecast grid. The forecast changes hourly.\n\nEverything reads in well until I use the kriging command:\n\nlist_ked[[i]] <- krige(T",
       "thread_id": "thread-89fabe12c572",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091126/82fd30a0/attachment.pl"
+      ]
     },
     {
       "id": "msg-b8cd7a139e1d",
@@ -5079,11 +5199,14 @@
       "subject_clean": "add buffer to polygon and determine if points are inside or outside",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/e0b88f40/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/e0b88f40/attachment.pl>",
+      "body_plain": "Hi all\n\n \n\nI am trying to do some simulations of bird distributions overlaid on\npolygons (representing windfarms) so that we can estimate survey effort.\nPart of this involves the addition of buffers around the polygon at\nfixed distances - I thought this would be simple to do from first\nprinciples but have realised that there is more to it. I've searched for\nhelp but haven't found the solution to this. I also want to be able to\ndetermine if a (randomly generated) point, which represents a bird\nobservation, lies inside or outside the polygon.\n\n \n\nAny guidance on this would be greatly appreciated.\n\n \n\nthanks\n\nMark\n\n \n\n \n\nDr. Mark Trinder - Senior Ecologist\n\nRPS Planning and Development Ltd, 7 Clairmont Gardens, Glasgow, G3 7LW\n\n* office: 0141 332 0373  *   mobile: 07966 125169   * 0141 332 3182\n* mark.trinder at rpsgroup.com <mailto:mark.trinder at rpsgroup.com> \n\nP      Please don't print this e-mail unless you really need to.\n\n \n\n \n\n\nThis e-mail message and any attached file is the property of the sender and is sent in confidence to the addressee only.\nInternet communications are not secure and RPS is not responsible for their abuse by third parties, any alteration or corruption in transmission or for any loss or damage caused by a virus or by other means.\n \nAny advice contained in this e-mail is for information purposes only.\n\nRPS Planning and Development Limited, company number: 02947164 (England). Registered office: Centurion Court, 85 Milton Park Abingdon Oxfordshire OX14 4RY.\nRPS Group Plc web link: <http://www.rpsgroup.com>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi all\n\n \n\nI am trying to do some simulations of bird distributions overlaid on\npolygons (representing windfarms) so that we can estimate survey effort.\nPart of this involves the addition of buffers a",
       "thread_id": "thread-271bbdd53fc5",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/e0b88f40/attachment.pl"
+      ]
     },
     {
       "id": "msg-ee51d38b3efb",
@@ -5177,11 +5300,14 @@
       "subject_clean": "convert points into SHP polygons",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/bd30967e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/bd30967e/attachment.pl>",
+      "body_plain": "Hi,\n  I always need to convert between the points and polygons. For converting\nthe polygons to points, we can use the \"get.Pcent(maptools) \" to get the\ncentroids of the polygons. But for converting points to polygons (something\nlike GeoDa's \"tools->shape->point  to polygon\"), i cannot find the\ncorresponding method. I searched in R Site Search with \"point to polygon\"\nand \"generate polygon\", but still cannot get the answers.\n Does anybody know how to convert points to the SHP polygons?\n OR whether we can generate some SHP polygons randomly in R?\n##Example##\nwin<-owin(c(0,1),c(0,1))\npp <- runifpoint(10) #generate 10 points\n#i want to change these 10 points into 10 SHP polygons,something like the\nmanipulation in GeoDA, \"tools->shape->point  to polygon\"\n#plot(pp)\n  Thanks a lot.\n\n\n-- \n-----------------\nJane Chang\nQueen's\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n  I always need to convert between the points and polygons. For converting\nthe polygons to points, we can use the \"get.Pcent(maptools) \" to get the\ncentroids of the polygons. But for converting po",
       "thread_id": "thread-2ffabd83a5fc",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/bd30967e/attachment.pl"
+      ]
     },
     {
       "id": "msg-9567b854c006",
@@ -5227,11 +5353,14 @@
       "subject_clean": "Convert kde object into spatial object",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/6fd667d3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/6fd667d3/attachment.pl>",
+      "body_plain": "Is there a way to convert a kde object (ks package) into a spatial object\n(e.g. SpatialPixels, SpatialPolygons) for export into a GIS?  Alternatively,\nis there a way to generate the 2-D spatial area underneath the 3-D\nutilisation distribution of a kde object?  I have explored the package\ndescriptions and help forums and have not yet found a solution....\n\nTyler\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Is there a way to convert a kde object (ks package) into a spatial object\n(e.g. SpatialPixels, SpatialPolygons) for export into a GIS?  Alternatively,\nis there a way to generate the 2-D spatial area u",
       "thread_id": "thread-d429f930b0b7",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/6fd667d3/attachment.pl"
+      ]
     },
     {
       "id": "msg-5f2a7fe9dc96",
@@ -5245,11 +5374,14 @@
       "references": [
         "<a835c81e0911270840l18fff44idd807bc0a92f3014@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/b513525d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/b513525d/attachment.pl>",
+      "body_plain": "To make this problem more clear. Suppose i have some points in a certain\narea (e.g. 10 points in a unit square), how to cut and generate the\ncorresponding SHP polygons of containing the points (1 point in 1 polygon,\nmaybe the point as their centroid) in this certain area?\n  In GeoDa, there is a menu \"tools->shape->point  to polygon\" to achieve\nthat. I wonder how to do that in R. Thanks a lot.\n##Example##\nwin<-owin(c(0,1),c(0,1))\npp <- runifpoint(10) #generate 10 points\n#i want to change these 10 points into 10 SHP polygons,something like the\nmanipulation in GeoDA, \"tools->shape->point  to polygon\"\n#plot(pp)\n\n2009/11/27 rusers.sh <rusers.sh at gmail.com>\n\n> Hi,\n>   I always need to convert between the points and polygons. For converting\n> the polygons to points, we can use the \"get.Pcent(maptools) \" to get the\n> centroids of the polygons. But for converting points to polygons (something\n> like GeoDa's \"tools->shape->point  to polygon\"), i cannot find the\n> corresponding method. I searched in R Site Search with \"point to polygon\"\n> and \"generate polygon\", but still cannot get the answers.\n>  Does anybody know how to convert points to the SHP polygons?\n>  OR whether we can generate some SHP polygons randomly in R?\n> ##Example##\n> win<-owin(c(0,1),c(0,1))\n> pp <- runifpoint(10) #generate 10 points\n> #i want to change these 10 points into 10 SHP polygons,something like the\n> manipulation in GeoDA, \"tools->shape->point  to polygon\"\n> #plot(pp)\n>   Thanks a lot.\n>\n>\n> --\n> -----------------\n> Jane Chang\n> Queen's\n>\n\n\n\n-- \n-----------------\nJane Chang\nQueen's\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "To make this problem more clear. Suppose i have some points in a certain\narea (e.g. 10 points in a unit square), how to cut and generate the\ncorresponding SHP polygons of containing the points (1 poin",
       "thread_id": "thread-2ffabd83a5fc",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/b513525d/attachment.pl"
+      ]
     },
     {
       "id": "msg-277e6dd7dccf",
@@ -5283,11 +5415,14 @@
         "<a835c81e0911271403vc4ad033h984118ee5d96211d@mail.gmail.com>",
         "<dc22b2570911271559i4c6f65eax361ee201b493e9e7@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/b11c6345/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/b11c6345/attachment.pl>",
+      "body_plain": "Yes, what i want is really the Voronoi tessellation that you showed in the\nlink. I can generate the Voronoi tessellation  (see my codes), but my\nproblem is how to generate the the class of SpatialPolygons(sp) based on the\ngenerated  Voronoi tessellation? (SHP means shape file of polygon.)\n  Thanks a lot.\n####My code to get the Voronoi tessellation########\nlibrary(spatstat)\nwin<-owin(c(0,1),c(0,1))\npp <- runifpoint(10,win=win)\n#plot(pp)\nlibrary(tripack)\nvm <- voronoi.mosaic(pp$x,pp$y)\nplot(vm)\npar(new=T)\npoints(pp$x,pp$y,col='blue')\naxis(1,xlim=c(0,1)) #1=below\naxis(2,ylim=c(0,1)) #2=left\nbox(xlim=c(0,1),ylim=c(0,1))\n\n2009/11/27 Robert J. Hijmans <r.hijmans at gmail.com>\n\n> I think you want a Voronoi tessalation (diagram):\n> http://en.wikipedia.org/wiki/Voronoi_diagram\n>\n> But what are SHP polygons?  Is 'SHP' a class in an R package?\n>\n> Robert\n>\n> On Fri, Nov 27, 2009 at 2:03 PM, rusers.sh <rusers.sh at gmail.com> wrote:\n> >  To make this problem more clear. Suppose i have some points in a certain\n> > area (e.g. 10 points in a unit square), how to cut and generate the\n> > corresponding SHP polygons of containing the points (1 point in 1\n> polygon,\n> > maybe the point as their centroid) in this certain area?\n> >  In GeoDa, there is a menu \"tools->shape->point  to polygon\" to achieve\n> > that. I wonder how to do that in R. Thanks a lot.\n> > ##Example##\n> > win<-owin(c(0,1),c(0,1))\n> > pp <- runifpoint(10) #generate 10 points\n> > #i want to change these 10 points into 10 SHP polygons,something like the\n> > manipulation in GeoDA, \"tools->shape->point  to polygon\"\n> > #plot(pp)\n> >\n> > 2009/11/27 rusers.sh <rusers.sh at gmail.com>\n> >\n> >> Hi,\n> >>   I always need to convert between the points and polygons. For\n> converting\n> >> the polygons to points, we can use the \"get.Pcent(maptools) \" to get the\n> >> centroids of the polygons. But for converting points to polygons\n> (something\n> >> like GeoDa's \"tools->shape->point  to polygon\"), i cannot find the\n> >> corresponding method. I searched in R Site Search with \"point to\n> polygon\"\n> >> and \"generate polygon\", but still cannot get the answers.\n> >>  Does anybody know how to convert points to the SHP polygons?\n> >>  OR whether we can generate some SHP polygons randomly in R?\n> >> ##Example##\n> >> win<-owin(c(0,1),c(0,1))\n> >> pp <- runifpoint(10) #generate 10 points\n> >> #i want to change these 10 points into 10 SHP polygons,something like\n> the\n> >> manipulation in GeoDA, \"tools->shape->point  to polygon\"\n> >> #plot(pp)\n> >>   Thanks a lot.\n> >>\n> >>\n> >> --\n> >> -----------------\n> >> Jane Chang\n> >> Queen's\n> >>\n> >\n> >\n> >\n> > --\n> > -----------------\n> > Jane Chang\n> > Queen's\n> >\n> >        [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n\n\n\n-- \n-----------------\nJane Chang\nQueen's\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Yes, what i want is really the Voronoi tessellation that you showed in the\nlink. I can generate the Voronoi tessellation  (see my codes), but my\nproblem is how to generate the the class of SpatialPoly",
       "thread_id": "thread-273a73416840",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/b11c6345/attachment.pl"
+      ]
     },
     {
       "id": "msg-8a6f1119cf23",
@@ -5304,11 +5439,14 @@
         "<dc22b2570911271559i4c6f65eax361ee201b493e9e7@mail.gmail.com>",
         "<a835c81e0911271955h2b502306o7b2e237657664e65@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/247d01bb/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/247d01bb/attachment.pl>",
+      "body_plain": "Dear Robert,\nMy method to generate the Voronoi tessellation maybe not better, You can\nshow me you method to get it.\n  What i want to get is the the class of SpatialPolygons(sp) based on the\ngenerated Voronoi tessellation.\n  Any ideas or suggestions are greatly appreciated.\n\n2009/11/27 rusers.sh <rusers.sh at gmail.com>\n\n>   Yes, what i want is really the Voronoi tessellation that you showed in\n> the link. I can generate the Voronoi tessellation  (see my codes), but my\n> problem is how to generate the the class of SpatialPolygons(sp) based on the\n> generated  Voronoi tessellation? (SHP means shape file of polygon.)\n>   Thanks a lot.\n> ####My code to get the Voronoi tessellation########\n> library(spatstat)\n> win<-owin(c(0,1),c(0,1))\n> pp <- runifpoint(10,win=win)\n> #plot(pp)\n> library(tripack)\n> vm <- voronoi.mosaic(pp$x,pp$y)\n> plot(vm)\n> par(new=T)\n> points(pp$x,pp$y,col='blue')\n> axis(1,xlim=c(0,1)) #1=below\n> axis(2,ylim=c(0,1)) #2=left\n> box(xlim=c(0,1),ylim=c(0,1))\n>\n> 2009/11/27 Robert J. Hijmans <r.hijmans at gmail.com>\n>\n> I think you want a Voronoi tessalation (diagram):\n>> http://en.wikipedia.org/wiki/Voronoi_diagram\n>>\n>> But what are SHP polygons?  Is 'SHP' a class in an R package?\n>>\n>> Robert\n>>\n>> On Fri, Nov 27, 2009 at 2:03 PM, rusers.sh <rusers.sh at gmail.com> wrote:\n>> >  To make this problem more clear. Suppose i have some points in a\n>> certain\n>> > area (e.g. 10 points in a unit square), how to cut and generate the\n>> > corresponding SHP polygons of containing the points (1 point in 1\n>> polygon,\n>> > maybe the point as their centroid) in this certain area?\n>> >  In GeoDa, there is a menu \"tools->shape->point  to polygon\" to achieve\n>> > that. I wonder how to do that in R. Thanks a lot.\n>> > ##Example##\n>> > win<-owin(c(0,1),c(0,1))\n>> > pp <- runifpoint(10) #generate 10 points\n>> > #i want to change these 10 points into 10 SHP polygons,something like\n>> the\n>> > manipulation in GeoDA, \"tools->shape->point  to polygon\"\n>> > #plot(pp)\n>> >\n>> > 2009/11/27 rusers.sh <rusers.sh at gmail.com>\n>> >\n>> >> Hi,\n>> >>   I always need to convert between the points and polygons. For\n>> converting\n>> >> the polygons to points, we can use the \"get.Pcent(maptools) \" to get\n>> the\n>> >> centroids of the polygons. But for converting points to polygons\n>> (something\n>> >> like GeoDa's \"tools->shape->point  to polygon\"), i cannot find the\n>> >> corresponding method. I searched in R Site Search with \"point to\n>> polygon\"\n>> >> and \"generate polygon\", but still cannot get the answers.\n>> >>  Does anybody know how to convert points to the SHP polygons?\n>> >>  OR whether we can generate some SHP polygons randomly in R?\n>> >> ##Example##\n>> >> win<-owin(c(0,1),c(0,1))\n>> >> pp <- runifpoint(10) #generate 10 points\n>> >> #i want to change these 10 points into 10 SHP polygons,something like\n>> the\n>> >> manipulation in GeoDA, \"tools->shape->point  to polygon\"\n>> >> #plot(pp)\n>> >>   Thanks a lot.\n>> >>\n>> >>\n>> >> --\n>> >> -----------------\n>> >> Jane Chang\n>> >> Queen's\n>> >>\n>> >\n>> >\n>> >\n>> > --\n>> > -----------------\n>> > Jane Chang\n>> > Queen's\n>> >\n>> >        [[alternative HTML version deleted]]\n>> >\n>> > _______________________________________________\n>> > R-sig-Geo mailing list\n>> > R-sig-Geo at stat.math.ethz.ch\n>> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> >\n>>\n>\n>\n>\n> --\n> -----------------\n> Jane Chang\n> Queen's\n>\n\n\n\n-- \n-----------------\nJane Chang\nQueen's\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Robert,\nMy method to generate the Voronoi tessellation maybe not better, You can\nshow me you method to get it.\n  What i want to get is the the class of SpatialPolygons(sp) based on the\ngenerated ",
       "thread_id": "thread-273a73416840",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091127/247d01bb/attachment.pl"
+      ]
     },
     {
       "id": "msg-d8046c04f913",
@@ -5438,11 +5576,14 @@
         "<4B10FF56.1010103@univ-fcomte.fr>",
         "<dc22b2570911281014tfa826bdla3a2b1b87e481e90@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091128/675ab763/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091128/675ab763/attachment.pl>",
+      "body_plain": "Robert J. Hijmans a écrit :\n>> ncols  721\n>>     \n> is suspect. Presumably this is a global 0.5 degree grid. If so, ncols\n> shoud be 720 (but your file may well have 721 columns, and perhaps a\n> different x resolution; unless the ullcorner refers to the center of\n> the cell, and the raster is from -180.25 to 180.25).\n> Otherwise, if you have 721 columns, you will end up with an xr corner\n> of 180.5, which, it seems, grass interprets as -179.5 (the world is\n> round, after all). Then:\n>\n>   \n>> 0.5/721\n>>     \n> [1] 0.0006934813\n>   \n>\n> Robert\n>\n> 2009/11/28 Patrick Giraudoux <patrick.giraudoux at univ-fcomte.fr>:\n>   \n>> Dear all,\n>>\n>> I am using QGIS 0.11.0 Metis under windows and struggle to import a raster\n>> into GRASS. This is an ARCINFO/ESRI grid file in natural coordinates (WGS84)\n>> whose heading is:\n>>\n>> ncols  721\n>> nrows  360\n>> xllcorner  -180\n>> yllcorner  -90\n>> cellsize   0.5\n>> NODATA_value  254\n>>\n>> etc....\n>>\n>> I do not meet any trouble when importing it from QGIS as a raster, nor\n>> within R using the package rgdal and the function readGDAL, but when using\n>> within QGIS the GRASS importation tools (r.in.gdal or r.in.arc), something\n>> goes wrong. Il looks like the vertical resolution was respected (0.5), but\n>> the horizontal resolution unexpectedely comes to be 0.000693481 in decimal\n>> degrees (making the map a narrow vertical strip...), see the output of\n>> r.info below\n>>\n>> I get the same result reading a geotif  from QGIS/GRASS with r.in.gdal. The\n>> geotif file was obtained reading the original ascii raster from R\n>>  (everything OK), then writing it to a geotif with writeGDAL().\n>>\n>> Any idea about what may happen ?\n>>\n>> Patrick\n>>\n>>\n>>\n>> ----------------------------------------------------------------------------+\n>> | Layer:    tempave                        Date: Sat Nov 28 11:07:22 2009\n>>  |\n>> | Mapset:   giraudoux                      Login of Creator: pgiraudo\n>>  |\n>> | Location: ChinaWGS84\n>> |\n>> | DataBase: U:/Documents and Settings/pgiraudo/Mes documents/GIS/grassdata\n>> |\n>> | Title:     ( tempave )\n>> |\n>> | Timestamp: none\n>>  |\n>> |----------------------------------------------------------------------------|\n>> |\n>>  |\n>> |   Type of Map:  raster               Number of Categories: 255\n>> |\n>> |   Data Type:    FCELL\n>>  |\n>> |   Rows:         360\n>>  |\n>> |   Columns:      721\n>>  |\n>> |   Total Cells:  259560\n>> |\n>> |        Projection: Latitude-Longitude\n>>  |\n>> |            N:        90N    S:        90S   Res:  0:30\n>> |\n>> |            E:    179:30W    W:       180W   Res: 0:00:02.496533\n>>  |\n>> |   Range of data:    min = 1.#QNAN0  max = 1.#QNAN0\n>> |\n>> |\n>>  |\n>> |   Data Description:\n>>  |\n>> |    generated by r.in.gdal\n>>  |\n>> |\n>>  |\n>> |   Comments:\n>>  |\n>> |    r.in.gdal -o input=\"U:\\Documents and Settings\\pgiraudo\\Bureau\\TEMPER\\\n>> |\n>> |    AT\\TEMPAVE.tif\" output=\"tempave\"\n>>  |\n>> |\n>>  |\n>> +----------------------------------------------------------------------------+\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>     \n>\n>   \n\n\nThis was exactly that. I have removed the 721th column and kept 720 \ncolumns, and the raster was correctly imported and displayed (with \ncorrect coordinates, e.g. coast lines were compared to a georeferenced \nshapefile).\n\nSo it may be of interest to check what was wrong with the raster \nprovided from the FAO website on global climatological data (a rich \ndocumentation from \nhttp://www.fao.org/geonetwork/srv/en/metadata.show?id=7417&currTab=simple). \nI was using the file on Annual Average Temperature (Leemans & Cramer \n1989-FAO Agromet 1997). Whatever the export format:\n\n- the north coordinates exceeds 90° (due to an extra 361 column, not \ncompatible with the global 0.5 degree grid) - I had detected that and \nremoved it before coming to the list;\n- the eastern coordinates exceeds 180° (due to en extra 721 column !) - \nthis was the origin of my help call...\n\nThe workaround to get the data imported into grass is to edit an \nexported ascii file and to remove the extra row and column.\n\nThanks Robert for the hint,\n\nPatrick\n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Robert J. Hijmans a écrit :\n>> ncols  721\n>>     \n> is suspect. Presumably this is a global 0.5 degree grid. If so, ncols\n> shoud be 720 (but your file may well have 721 columns, and perhaps a\n> diffe",
       "thread_id": "thread-587073e1a1b5",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091128/675ab763/attachment.pl"
+      ]
     },
     {
       "id": "msg-e16c99ed489e",
@@ -5477,11 +5618,14 @@
         "<a835c81e0911272003y597830bameb505ccb3a28fab2@mail.gmail.com>",
         "<alpine.LRH.2.00.0911281459040.8597@reclus.nhh.no>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091128/53c42141/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091128/53c42141/attachment.pl>",
+      "body_plain": "Perfect. Thanks very much. Also thanks for kind reminding on getting\nthe centroids of polygons.\n\n2009/11/28 Roger Bivand <Roger.Bivand at nhh.no>\n\n> On Fri, 27 Nov 2009, rusers.sh wrote:\n>\n>  Dear Robert,\n>> My method to generate the Voronoi tessellation maybe not better, You can\n>> show me you method to get it.\n>>  What i want to get is the the class of SpatialPolygons(sp) based on the\n>> generated Voronoi tessellation.\n>>  Any ideas or suggestions are greatly appreciated.\n>>\n>\n> In the list archives for March 2007 (search in Nabble, for example), there\n> are hints. A more up to date version might be:\n>\n> set.seed(1)\n> crds <- cbind(runif(100), runif(100))\n> library(deldir)\n> z <- deldir(crds[,1], crds[,2])\n> w <- tile.list(z)\n> library(sp)\n> polys <- vector(mode=\"list\", length=length(w))\n> for (i in seq(along=polys)) {\n>  pcrds <- cbind(w[[i]]$x, w[[i]]$y)\n>  pcrds <- rbind(pcrds, pcrds[1,])\n>  polys[[i]] <- Polygons(list(Polygon(pcrds)), ID=as.character(i))\n> }\n> SP <- SpatialPolygons(polys)\n> SPDF <- SpatialPolygonsDataFrame(SP, data=data.frame(x=crds[,1],\n>  y=crds[,2], row.names=row.names(SP)))\n>\n> plot(SPDF)\n> points(crds, pch=3, col=\"red\")\n> text(coordinates(SPDF), label=row.names(SPDF))\n>\n> then export the SpatialPolygonsDataFrame in the usual way.\n>\n> By the way, to get the centroids (aka label points) for Polygons objects,\n> use coordinates() on their enclosing SpatialPolygons object. The (very)\n> deprecated maptools function you refered to in an earlier posting will cease\n> to be available very shortly.\n>\n> Hope this helps,\n>\n> Roger\n>\n>\n>\n>> 2009/11/27 rusers.sh <rusers.sh at gmail.com>\n>>\n>>   Yes, what i want is really the Voronoi tessellation that you showed in\n>>> the link. I can generate the Voronoi tessellation  (see my codes), but my\n>>> problem is how to generate the the class of SpatialPolygons(sp) based on\n>>> the\n>>> generated  Voronoi tessellation? (SHP means shape file of polygon.)\n>>>  Thanks a lot.\n>>> ####My code to get the Voronoi tessellation########\n>>> library(spatstat)\n>>> win<-owin(c(0,1),c(0,1))\n>>> pp <- runifpoint(10,win=win)\n>>> #plot(pp)\n>>> library(tripack)\n>>> vm <- voronoi.mosaic(pp$x,pp$y)\n>>> plot(vm)\n>>> par(new=T)\n>>> points(pp$x,pp$y,col='blue')\n>>> axis(1,xlim=c(0,1)) #1=below\n>>> axis(2,ylim=c(0,1)) #2=left\n>>> box(xlim=c(0,1),ylim=c(0,1))\n>>>\n>>> 2009/11/27 Robert J. Hijmans <r.hijmans at gmail.com>\n>>>\n>>> I think you want a Voronoi tessalation (diagram):\n>>>\n>>>> http://en.wikipedia.org/wiki/Voronoi_diagram\n>>>>\n>>>> But what are SHP polygons?  Is 'SHP' a class in an R package?\n>>>>\n>>>> Robert\n>>>>\n>>>> On Fri, Nov 27, 2009 at 2:03 PM, rusers.sh <rusers.sh at gmail.com> wrote:\n>>>>\n>>>>>  To make this problem more clear. Suppose i have some points in a\n>>>>>\n>>>> certain\n>>>>\n>>>>> area (e.g. 10 points in a unit square), how to cut and generate the\n>>>>> corresponding SHP polygons of containing the points (1 point in 1\n>>>>>\n>>>> polygon,\n>>>>\n>>>>> maybe the point as their centroid) in this certain area?\n>>>>>  In GeoDa, there is a menu \"tools->shape->point  to polygon\" to achieve\n>>>>> that. I wonder how to do that in R. Thanks a lot.\n>>>>> ##Example##\n>>>>> win<-owin(c(0,1),c(0,1))\n>>>>> pp <- runifpoint(10) #generate 10 points\n>>>>> #i want to change these 10 points into 10 SHP polygons,something like\n>>>>>\n>>>> the\n>>>>\n>>>>> manipulation in GeoDA, \"tools->shape->point  to polygon\"\n>>>>> #plot(pp)\n>>>>>\n>>>>> 2009/11/27 rusers.sh <rusers.sh at gmail.com>\n>>>>>\n>>>>>  Hi,\n>>>>>>  I always need to convert between the points and polygons. For\n>>>>>>\n>>>>> converting\n>>>>\n>>>>> the polygons to points, we can use the \"get.Pcent(maptools) \" to get\n>>>>>>\n>>>>> the\n>>>>\n>>>>> centroids of the polygons. But for converting points to polygons\n>>>>>>\n>>>>> (something\n>>>>\n>>>>> like GeoDa's \"tools->shape->point  to polygon\"), i cannot find the\n>>>>>> corresponding method. I searched in R Site Search with \"point to\n>>>>>>\n>>>>> polygon\"\n>>>>\n>>>>> and \"generate polygon\", but still cannot get the answers.\n>>>>>>  Does anybody know how to convert points to the SHP polygons?\n>>>>>>  OR whether we can generate some SHP polygons randomly in R?\n>>>>>> ##Example##\n>>>>>> win<-owin(c(0,1),c(0,1))\n>>>>>> pp <- runifpoint(10) #generate 10 points\n>>>>>> #i want to change these 10 points into 10 SHP polygons,something like\n>>>>>>\n>>>>> the\n>>>>\n>>>>> manipulation in GeoDA, \"tools->shape->point  to polygon\"\n>>>>>> #plot(pp)\n>>>>>>  Thanks a lot.\n>>>>>>\n>>>>>>\n>>>>>> --\n>>>>>> -----------------\n>>>>>> Jane Chang\n>>>>>> Queen's\n>>>>>>\n>>>>>>\n>>>>>\n>>>>>\n>>>>> --\n>>>>> -----------------\n>>>>> Jane Chang\n>>>>> Queen's\n>>>>>\n>>>>>       [[alternative HTML version deleted]]\n>>>>>\n>>>>> _______________________________________________\n>>>>> R-sig-Geo mailing list\n>>>>> R-sig-Geo at stat.math.ethz.ch\n>>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>>\n>>>>>\n>>>>\n>>>\n>>>\n>>> --\n>>> -----------------\n>>> Jane Chang\n>>> Queen's\n>>>\n>>>\n>>\n>>\n>>\n>>\n> --\n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>\n>\n\n\n-- \n-----------------\nJane Chang\nQueen's\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Perfect. Thanks very much. Also thanks for kind reminding on getting\nthe centroids of polygons.\n\n2009/11/28 Roger Bivand <Roger.Bivand at nhh.no>\n\n> On Fri, 27 Nov 2009, rusers.sh wrote:\n>\n>  Dear Rob",
       "thread_id": "thread-273a73416840",
       "thread_depth": 3,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091128/53c42141/attachment.pl"
+      ]
     },
     {
       "id": "msg-bda13c70d804",
@@ -5561,11 +5705,14 @@
       "references": [
         "<4B12F65D.9070200@ucdavis.edu>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091129/ede753c7/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091129/ede753c7/attachment.pl>",
+      "body_plain": "Hi Sam,\n\nmay be this a starting point.\n\nhttp://addictedtor.free.fr/graphiques/RGraphGallery.php?graph=128\n\nbests\n\nmilton\n\nOn Sun, Nov 29, 2009 at 5:31 PM, Sam Veloz <sdveloz at ucdavis.edu> wrote:\n\n> I have a file of points with x/y coordinates and columns for bearing and\n> distance. I would like to make a plot where each point is depicted by an\n> arrow and the direction the arrow points is based on the value of bearing\n> and the length of the arrow is based on the value of distance. Any\n> suggestions on how to do this would be greatly appreciated.\n> Thanks,\n> Sam\n>\n> --\n> ****************************************************\n> Sam Veloz\n> Postdoctoral Researcher\n> Department of Environmental Science and Policy\n> University of California, Davis\n> sdveloz at ucdavis.edu\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Sam,\n\nmay be this a starting point.\n\nhttp://addictedtor.free.fr/graphiques/RGraphGallery.php?graph=128\n\nbests\n\nmilton\n\nOn Sun, Nov 29, 2009 at 5:31 PM, Sam Veloz <sdveloz at ucdavis.edu> wrote:\n\n> ",
       "thread_id": "thread-77ad1a630365",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091129/ede753c7/attachment.pl"
+      ]
     },
     {
       "id": "msg-12aed0010890",
@@ -5686,11 +5833,14 @@
       "references": [
         "<4B13622D.1020400@bitwrit.com.au>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091130/3ce26fc2/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091130/3ce26fc2/attachment.pl>",
+      "body_plain": "Thanks Jim,\n The vectorField function is exactly what I needed. Thanks to everyone else\nfor quick responses.\nSam\n\n\nOn Mon, Nov 30, 2009 at 12:11 AM, Jim Lemon <jim at bitwrit.com.au> wrote:\n\n> Sam Veloz<sdveloz at ucdavis.edu>  wrote:\n>\n>\n>  >  I have a file of points with x/y coordinates and columns for bearing\n>> and\n>> >  distance. I would like to make a plot where each point is depicted by\n>> an\n>> >  arrow and the direction the arrow points is based on the value of\n>> bearing\n>> >  and the length of the arrow is based on the value of distance. Any\n>> >  suggestions on how to do this would be greatly appreciated.\n>>\n>>\n> Hi Sam,\n> You might be able to get what you want with the \"vectorField\" function in\n> the plotrix package.\n>\n> Jim\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks Jim,\n The vectorField function is exactly what I needed. Thanks to everyone else\nfor quick responses.\nSam\n\n\nOn Mon, Nov 30, 2009 at 12:11 AM, Jim Lemon <jim at bitwrit.com.au> wrote:\n\n> Sam Vel",
       "thread_id": "thread-036b440bee8a",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20091130/3ce26fc2/attachment.pl"
+      ]
     },
     {
       "id": "msg-571c1f4b01f3",

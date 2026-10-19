@@ -29,11 +29,14 @@
       "subject_clean": "Error with krige.cv",
       "in_reply_to": "<Pine.LNX.4.44.0609252128360.27019-100000@reclus.nhh.no>",
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061002/0352cb5e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061002/0352cb5e/attachment.pl>",
+      "body_plain": "Hi everyone, another obstacle towards the achievement :)\n\nI'm trying to do a kriging of my data on a regular grid.  My data is organized like :\n\nDonnees (the data matrix) \n\nPeriod      x(km)   y(km)      Stations      z(m)\n    1          400      400           22.5          120\n    1          430      500             34.5           56\netc....\n\nFor each period, I have 2300 stations.  \n\nSo for t=1,  I do :\n\nvario=variogram(Stations~1,loc=~x+y,Donnees[Donnees$Periode==t,],cutoff=150,width=10)\nmodele1=fit.variogram(vario,vgm(max(vario[,3]),\"Nug\"),fit.method=1)\nInfo$KO1nugget[t]= modele1$psill[1]\nvalid=krige.cv(Stations~1,~x+y,model=modele1,data=Donnees[Donnees$Periode==t,]) \nThe last command, I got this error :\n\n\" [using ordinary kriging]\n\n\"chfactor.c\", line 130: singular matrix in function LDLfactor()\nErreur dans predict.gstat(object, newdata = data[sel, ], ...) : \n        LDLfactor  \"\n\nI tried a lot of things, but nothing worked.  Any idea?\n\nThanks!\nPhilippe\n\nN.B. sessionInfo() gives :\n sessionInfo()\nVersion 2.3.1 (2006-06-01) \ni386-pc-mingw32 \n\nattached base packages:\n[1] \"methods\"   \"stats\"     \"graphics\"  \"grDevices\" \"utils\"     \"datasets\"  \"base\"     \n\nother attached packages:\n   gstat    rgdal       sp \n\"0.9-31\" \"0.4-10\" \"0.8-20\" \n\n\n \t\t\n---------------------------------\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi everyone, another obstacle towards the achievement :)\n\nI'm trying to do a kriging of my data on a regular grid.  My data is organized like :\n\nDonnees (the data matrix) \n\nPeriod      x(km)   y(km)  ",
       "thread_id": "thread-e60da2bc5dc4",
       "thread_depth": 0,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061002/0352cb5e/attachment.pl"
+      ]
     },
     {
       "id": "msg-4a60e5448f82",
@@ -115,11 +118,14 @@
       "subject_clean": "Error with krige.cv",
       "in_reply_to": "<4521271F.8030008@geo.uu.nl>",
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061002/0e17fa9e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061002/0e17fa9e/attachment.pl>",
+      "body_plain": "Thanks a lot!  It works now.  \nMaybe it could be an idea to add a note in the documentation of krige.cv which state that you can't have a duplicate observation?\n\nHave a nice day!\n\n\"Edzer J. Pebesma\" <e.pebesma at geo.uu.nl> wrote: Bertrand,\n\nSeveral causes can lead to a singular covariance matrix; the most common is\nthat you have duplicate observations (i.e. two or more observations on the\nsame location). Use zerodist to find out.\n--\nEdzer\n\nbertrand toupin wrote:\n> Hi everyone, another obstacle towards the achievement :)\n>\n> I'm trying to do a kriging of my data on a regular grid.  My data is organized like :\n>\n> Donnees (the data matrix) \n>\n> Period      x(km)   y(km)      Stations      z(m)\n>     1          400      400           22.5          120\n>     1          430      500             34.5           56\n> etc....\n>\n> For each period, I have 2300 stations.  \n>\n> So for t=1,  I do :\n>\n> vario=variogram(Stations~1,loc=~x+y,Donnees[Donnees$Periode==t,],cutoff=150,width=10)\n> modele1=fit.variogram(vario,vgm(max(vario[,3]),\"Nug\"),fit.method=1)\n> Info$KO1nugget[t]= modele1$psill[1]\n> valid=krige.cv(Stations~1,~x+y,model=modele1,data=Donnees[Donnees$Periode==t,]) \n> The last command, I got this error :\n>\n> \" [using ordinary kriging]\n>\n> \"chfactor.c\", line 130: singular matrix in function LDLfactor()\n> Erreur dans predict.gstat(object, newdata = data[sel, ], ...) : \n>         LDLfactor  \"\n>\n> I tried a lot of things, but nothing worked.  Any idea?\n>\n> Thanks!\n> Philippe\n>\n> N.B. sessionInfo() gives :\n>  sessionInfo()\n> Version 2.3.1 (2006-06-01) \n> i386-pc-mingw32 \n>\n> attached base packages:\n> [1] \"methods\"   \"stats\"     \"graphics\"  \"grDevices\" \"utils\"     \"datasets\"  \"base\"     \n>\n> other attached packages:\n>    gstat    rgdal       sp \n> \"0.9-31\" \"0.4-10\" \"0.8-20\" \n>\n>\n>    \n> ---------------------------------\n>\n>  [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n\n\n \t\t\n---------------------------------\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks a lot!  It works now.  \nMaybe it could be an idea to add a note in the documentation of krige.cv which state that you can't have a duplicate observation?\n\nHave a nice day!\n\n\"Edzer J. Pebesma\" <",
       "thread_id": "thread-e60da2bc5dc4",
       "thread_depth": 2,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061002/0e17fa9e/attachment.pl"
+      ]
     },
     {
       "id": "msg-74d24135bc7b",
@@ -245,11 +251,14 @@
       "subject_clean": "krige.cv, again :)",
       "in_reply_to": "<Pine.LNX.4.44.0610051036450.8885-100000@reclus.nhh.no>",
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061006/79f52720/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061006/79f52720/attachment.pl>",
+      "body_plain": "hi, me again :)\n\nI've read that in the help of krige.cv :\n\nNote:\n\n     Leave-one-out cross validation seems to be much faster in plain\n     (stand-alone) gstat, apparently quite a bit of the effort is spent\n     moving  data around from R to gstat.\n\nSince I have 6 ensemble of 2300 stations, I was wondering : How could I launch gstat in stand-alone?  Do I need unix or it's possible to run it on Windows?\n\nAt this moment, I'm running R 2.3.1 on a windows machine with 512MB of RAM and a P4 2.6 GHz, and it's impossible to do a leave-one-out approach that takes less than 2 days to run.\n\nThanks for any help!\n\n\n \t\t\n---------------------------------\n\n---------------------------------\nGet a sneak peak at messages with a handy reading pane.\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "hi, me again :)\n\nI've read that in the help of krige.cv :\n\nNote:\n\n     Leave-one-out cross validation seems to be much faster in plain\n     (stand-alone) gstat, apparently quite a bit of the effort is",
       "thread_id": "thread-f44eefba4de7",
       "thread_depth": 2,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061006/79f52720/attachment.pl"
+      ]
     },
     {
       "id": "msg-7df803a74f1d",
@@ -345,11 +354,14 @@
       "subject_clean": "krige.cv, again :)",
       "in_reply_to": "<10536.84.80.32.184.1160215447.squirrel@webmail.geo.uu.nl>",
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061010/bc0a629e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061010/bc0a629e/attachment.pl>",
+      "body_plain": "oh...ok!  I'm indeed using it on a large area.  Thanks!\n\npebesma at geo.uu.nl wrote: > hi, me again :)\n>\n> I've read that in the help of krige.cv :\n>\n> Note:\n>\n>      Leave-one-out cross validation seems to be much faster in plain\n>      (stand-alone) gstat, apparently quite a bit of the effort is spent\n>      moving  data around from R to gstat.\n>\n> Since I have 6 ensemble of 2300 stations, I was wondering : How could I\n> launch gstat in stand-alone?  Do I need unix or it's possible to run it on\n> Windows?\nEither of the two; windows binary is at http://www.gstat.org/\n>\n> At this moment, I'm running R 2.3.1 on a windows machine with 512MB of RAM\n> and a P4 2.6 GHz, and it's impossible to do a leave-one-out approach that\n> takes less than 2 days to run.\nDo you use kriging in a local neighbourhood? If not, moving out of R may\nnot help much, as 2300 times solving a new system of size 2299 will be the\nbottle neck.\n--\nEdzer\n\n\n\n\n \t\t\n---------------------------------\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "oh...ok!  I'm indeed using it on a large area.  Thanks!\n\npebesma at geo.uu.nl wrote: > hi, me again :)\n>\n> I've read that in the help of krige.cv :\n>\n> Note:\n>\n>      Leave-one-out cross validation se",
       "thread_id": "thread-f44eefba4de7",
       "thread_depth": 4,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061010/bc0a629e/attachment.pl"
+      ]
     },
     {
       "id": "msg-e91267cb18a9",
@@ -397,11 +409,14 @@
       "references": [
         "<mailman.17.1160733617.29872.r-sig-geo@stat.math.ethz.ch>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061014/222c04b3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061014/222c04b3/attachment.pl>",
+      "body_plain": "If you're a newer on spatial statistics, then  i suggest GeoDa is more\nappropriate for you, which is a good good for starters.\n\nOn 10/13/06, r-sig-geo-request at stat.math.ethz.ch <\nr-sig-geo-request at stat.math.ethz.ch> wrote:\n>\n> Send R-sig-Geo mailing list submissions to\n>        r-sig-geo at stat.math.ethz.ch\n>\n> To subscribe or unsubscribe via the World Wide Web, visit\n>        https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> or, via email, send a message with subject or body 'help' to\n>        r-sig-geo-request at stat.math.ethz.ch\n>\n> You can reach the person managing the list at\n>        r-sig-geo-owner at stat.math.ethz.ch\n>\n> When replying, please edit your Subject line so it is more specific\n> than \"Re: Contents of R-sig-Geo digest...\"\n>\n>\n> Today's Topics:\n>\n>   1. plot streamlines from codar data (massimodisasha)\n>\n>\n> ----------------------------------------------------------------------\n>\n> Message: 1\n> Date: Thu, 12 Oct 2006 22:35:47 +0200\n> From: massimodisasha <massimodisasha at yahoo.it>\n> Subject: [R-sig-Geo] plot streamlines from codar data\n> To: r-sig-geo at stat.math.ethz.ch\n> Message-ID: <5D23E2CC-6C0D-4FA8-9B5F-430DAFE07BBB at yahoo.it>\n> Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed\n>\n> hi, i'm tring to plot a streamline my set of data is like this :\n>\n> Vectors: dx dy                            u\n> v                              lat                  lon\n>\n>   -6.25000     -2.50000         1.717      -7.092\n> 40.644167     14.092523\n>   -6.25000     -1.25000         1.631      -9.520\n> 40.655418     14.092523\n>   -6.25000      0.00000         1.251     -12.137\n> 40.666667     14.092523\n>   -6.25000      1.25000         0.313     -12.531\n> 40.677914     14.092523\n>   -5.00000     -2.50000         2.789      -4.769\n> 40.644167     14.107351\n>   -5.00000     -1.25000         1.593      -7.360\n> 40.655418     14.107351\n>   -5.00000      0.00000         1.259      -9.956\n> 40.666667     14.107351\n>   -5.00000      1.25000        -0.763     -17.315\n> 40.677914     14.107351\n> ......\n> ........\n>\n>\n>\n> i'm studing a metod for visualize this data  any suggestion is more\n> apprechated!\n> thanks\n> Massimo\n>\n>\n>\n> ------------------------------\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> End of R-sig-Geo Digest, Vol 38, Issue 8\n> ****************************************\n>\n\n\n\n-- \nWith Kind Regards,\n\noooO:::::::::\n(..):::::::::\n:\\.(:::Oooo::\n::\\_)::(..)::\n:::::::)./:::\n::::::(_/::::\n:::::::::::::\n[***********************************************************************]\nZhi Jie,Zhang ,PHD\nTel:86-21-54237149   epistat at gmail.com\nDept. of Epidemiology,school of public health,Fudan University\nAddress:No. 138 Yi Xue Yuan Road,Shanghai,China\nPostcode:200032\n[***********************************************************************]\noooO:::::::::\n(..):::::::::\n:\\.(:::Oooo::\n::\\_)::(..)::\n:::::::)./:::\n::::::(_/::::\n:::::::::::::\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "If you're a newer on spatial statistics, then  i suggest GeoDa is more\nappropriate for you, which is a good good for starters.\n\nOn 10/13/06, r-sig-geo-request at stat.math.ethz.ch <\nr-sig-geo-request ",
       "thread_id": "thread-76d1db487c04",
       "thread_depth": 0,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061014/222c04b3/attachment.pl"
+      ]
     },
     {
       "id": "msg-68730901c3e8",
@@ -445,11 +460,14 @@
       "subject_clean": "Plotting a shapefile",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061016/e7022a2b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061016/e7022a2b/attachment.pl>",
+      "body_plain": "Hi,\n \nI am trying to read in a shapefile, which is a state map broken into\nvoting precints, and plot a map of the result.  There is no measure data\nas of yet -- only the shapefile with boundaries.  Can anybody give me\ndirection on how to start this very basic task?\n \nthanks,\nMatt\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n \nI am trying to read in a shapefile, which is a state map broken into\nvoting precints, and plot a map of the result.  There is no measure data\nas of yet -- only the shapefile with boundaries.  Ca",
       "thread_id": "thread-dc2b393a625f",
       "thread_depth": 0,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061016/e7022a2b/attachment.pl"
+      ]
     },
     {
       "id": "msg-947c10f848ba",
@@ -477,11 +495,14 @@
       "subject_clean": "Plotting a shapefile",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061016/f880002b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061016/f880002b/attachment.pl>",
+      "body_plain": "I just went through this (with Dr. Roger Bivand's help). You will find the route I used (code is messy!) to arrange my data using R instead of ArcView. Juat replace files names. It took me about a good week to get to this :-)\n\n#_________________________________________________________________________________________________\n\nlibrary(maptools)\nlibrary(spgpc)\n#aggregate polys\nnc_1 <- readShapePoly(\"ASTAE1.SHP\") # put shapefile in SpatialPolygonsDataFrame\nsummary(nc_1)\nnc_1aggregated=unionSpatialPolygons(nc_1, nc_1$MSACMSA)#if more than one polygon for same code\nnms=getSpPPolygonsIDSlots(nc_1aggregated)\nsummary(nms)\noutshp=SpatialPolygonsDataFrame(nc_1aggregated, data=data.frame(nms, row.names=nms))\nwritePolyShape(outshp, fn=\"outshp\")#save shapefile\n\n#merge data to polys\nnc_1 <- readShapePoly(\"outshp.SHP\", ID=\"nms\") # put shapefile in SpatialPolygonsDataFrame\nnc_2 <- nc_1[nc_1$NAME !=\"Honolulu, HI\",] # subset with \"[\" method\nsummary(nc_2)\ndat=data.frame(read.delim(file=\"all.txt\", header = TRUE, sep = \"\\t\", quote=\"\\\"\", dec=\".\",na.strings = \"NA\"))#data in \"tab delimited\" text file\nsummary(dat)\nnc_2$nms=as.numeric(paste(nc_2$nms))# make the two columns look alike, for merging the data\nnc_df2 <- merge(as(nc_2, \"data.frame\"), dat, by.x=\"nms\",by.y=\"cod\", all.x=TRUE, sort=FALSE)#append data to polygons\nsummary(nc_df2)\nrow.names(nc_df2)=nc_df2$SP_ID\nnc_3 <- SpatialPolygonsDataFrame(as(nc_2, \"SpatialPolygons\"), data=nc_df2)\nwritePolyShape(nc_3, \"nc_3\")\n#__________________________________________________________________________________________________\n\n\nhth,\n \n\nMihai Nica\n170 East Griffith St. G5\nJackson, MS 39201\n601-914-0361\n\n----- Original Message ----\nFrom: \"matt.pettis at thomson.com\" <matt.pettis at thomson.com>\nTo: r-sig-geo at stat.math.ethz.ch\nSent: Monday, October 16, 2006 1:27:01 PM\nSubject: [R-sig-Geo] Plotting a shapefile\n\nHi,\n \nI am trying to read in a shapefile, which is a state map broken into\nvoting precints, and plot a map of the result.  There is no measure data\nas of yet -- only the shapefile with boundaries.  Can anybody give me\ndirection on how to start this very basic task?\n \nthanks,\nMatt\n\n    [[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I just went through this (with Dr. Roger Bivand's help). You will find the route I used (code is messy!) to arrange my data using R instead of ArcView. Juat replace files names. It took me about a goo",
       "thread_id": "thread-4cf7ad275f47",
       "thread_depth": 0,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061016/f880002b/attachment.pl"
+      ]
     },
     {
       "id": "msg-4614c5a67c49",
@@ -781,11 +802,14 @@
       "subject_clean": "Problems graphing shapefiles with detailed boundaries",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061019/9f43a2d0/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061019/9f43a2d0/attachment.pl>",
+      "body_plain": "Hi,\n \nI'm loading in a shapefile with all of the voting precincts in\nMinnesota.  Each precinct belongs to a Senate district, which has a\nvariable named \"SEN\" in the .dbf  (\"Precinct\" is also in the .dbf).\n \nI am including a script that should allow anyone to replicate my\nproblems, which I will lay out here (on Windows XP, R 2.3.1):\n \n1.  I limit myself to the first 2 SEN districts.  If I subset to each\ndistrict and plot them with spplot, they individually get drawn and\ncolored just fine.  When I try to draw them together, I get a\ncheckerboard effect in the colorization (same with just drawing the\ninternal boundaries).\n \n2.  When I try to remove internal boundaries from the SEN districts, it\nworks fine on SEN == 1, but I get some phantom lines in SEN == 2.\n \nI wager these two problems might be related, but I am not sure.  Any\nideas?\n \nthanks,\nMatt\n \n########################################################################\n####\n#----------------------------------------------------------------------\n# Config\n#----------------------------------------------------------------------\n# When I need to turn off proxy\n# Sys.putenv(\"no_proxy\"=True)\nlibrary(sp)\nlibrary(maptools)\nlibrary(spgpc)\n# needed for unionSpatialPolygons?  Looks like not...\n#library(gpclib)\n \n#----------------------------------------------------------------------\n# Load Shapefile\n#----------------------------------------------------------------------\n# This shapefile is the shapefile of all of the voting precincts in\nMinnesota, 2006\n# All Precincts are contained within a SEN group\n# shapefile source:\nftp://ftp.commissions.leg.state.mn.us/pub/gis/shape/vtd2006.zip\n# unzipped to pdir\\Data\\vtd2006\npdir <- \"C:\\\\Documents and Settings\\\\U0008998\\\\My\nDocuments\\\\Projects\\\\GISVote\";\nvtd <- readShapePoly(paste(pdir,\"\\\\Data\\\\vtd2006\\\\vtd2006.shp\",sep=\"\"))\n \n#----------------------------------------------------------------------\n# Plot the whole map of Minnesota\n#----------------------------------------------------------------------\nplot(vtd)\n \n#----------------------------------------------------------------------\n# Shading regions\n#----------------------------------------------------------------------\n# Show and color SEN == 1, the Northwest corner of Minnesota\nx <- vtd[vtd[[\"SEN\"]] == c(1), \"SEN\"]\nspplot(x,col.regions=2)\n \n# Show and color SEN == 2, east and south of SEN == 1\nx <- vtd[vtd[[\"SEN\"]] == c(2), \"SEN\"]\nspplot(x,col.regions=3)\n \n# Plot them both together\nx <- vtd[vtd[[\"SEN\"]] == c(1,2), \"SEN\"]\nspplot(x,col.regions=2:3)\n \n#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n# Note that the whole regions are not colored\n#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n \n\n#----------------------------------------------------------------------\n# Plotting SEN districts together\n#----------------------------------------------------------------------\n# Subset to SEN == 1 and plot\nx <- vtd[vtd[[\"SEN\"]]  == 1,names(vtd)]\nplot(x)\n \n# Subset to SEN == 2 and plot\nx <- vtd[vtd[[\"SEN\"]]  == 2,names(vtd)]\nplot(x)\n \n# Plot SEN == 1 and 2 together\nx <- vtd[vtd[[\"SEN\"]]  == 1:2,names(vtd)]\nplot(x)\n#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n# Note that the whole regions are not plotted\n#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n \n#----------------------------------------------------------------------\n# Removing internal Precinct boundaries from SEN regions\n#----------------------------------------------------------------------\n# Subset to SEN == 1 and plot\nx <- vtd[vtd[[\"SEN\"]]  == 1,names(vtd)]\nx <- unionSpatialPolygons(x, x[[\"SEN\"]])\nplot(x)\n \n# Subset to SEN == 2 and plot\nx <- vtd[vtd[[\"SEN\"]]  == 2,names(vtd)]\nx <- unionSpatialPolygons(x, x[[\"SEN\"]])\nplot(x)\n#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n# Note that some internal boundaries are not removed from SEN == 2\n#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n \n# Subset to SEN == 1 and 2 and plot\nx <- vtd[vtd[[\"SEN\"]]  == 1:2,names(vtd)]\nx <- unionSpatialPolygons(x, x[[\"SEN\"]])\nplot(x)\n#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n# Note that most internal boundaries are not removed\n#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n########################################################################\n####\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n \nI'm loading in a shapefile with all of the voting precincts in\nMinnesota.  Each precinct belongs to a Senate district, which has a\nvariable named \"SEN\" in the .dbf  (\"Precinct\" is also in the .d",
       "thread_id": "thread-c7eed987819f",
       "thread_depth": 0,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061019/9f43a2d0/attachment.pl"
+      ]
     },
     {
       "id": "msg-eebd1a283e83",
@@ -882,11 +906,14 @@
       "subject_clean": "Variogram does not plot correctly when using layout()",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061020/147af970/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061020/147af970/attachment.pl>",
+      "body_plain": "Dear All,\n\nI want to make a plot that compares several different models fitted to the \nsame experimental variogram.\n\n# Try different models\nrad_data_mod$sph = fit.variogram(rad_data_vgm,vgm(psill=60,model=\"Sph\", \nrange=40e3,nugget=5))\nrad_data_mod$exp = fit.variogram(rad_data_vgm,vgm(psill=60,model=\"Exp\", \nrange=40e3,nugget=5))\nrad_data_mod$gau = fit.variogram(rad_data_vgm,vgm(psill=60,model=\"Gau\", \nrange=40e3,nugget=5))\n\nThen I use layout to divide the plotting area into 4 different areas:\n\nlayout(matrix(c(1,2,3,4),2,2,byrow=TRUE), TRUE)\n\nNow I want to fill the plot area by calling the plot() command three times.\n\nplot(rad_data_vgm,rad_data_mod$sph)\nplot(rad_data_vgm,rad_data_mod$exp)\nplot(rad_data_vgm,rad_data_mod$gau)\n\nI expected that the sub-areas would be filled with the three plots. But the \nvariogram plot fills the entire plot area and not just the small sub-area. \nA test function:\n\nx = seq(1:1000)\ny = x^2\nplot(x,y)\nplot(x,y)\nplot(x,y)\n\nperformed as expected producing one plot with four subplots.\n\nDoes anybody know how to make such a trellis plot for variogram plots?\n\nkind regards,\n\nPaul Hiemstra \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear All,\n\nI want to make a plot that compares several different models fitted to the \nsame experimental variogram.\n\n# Try different models\nrad_data_mod$sph = fit.variogram(rad_data_vgm,vgm(psill=60,m",
       "thread_id": "thread-65b6b58a0f75",
       "thread_depth": 0,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061020/147af970/attachment.pl"
+      ]
     },
     {
       "id": "msg-904cc1724472",
@@ -962,11 +989,14 @@
       "subject_clean": "clampy in binary image",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061021/455a90e9/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061021/455a90e9/attachment.pl>",
+      "body_plain": "Hi there,\n   \n  I have a binary image and I need to identify each clump of non-zero values and attrib a diferent \"patch\" id-number.\n  Is there a R package that do that? \n  By the way, what are the R packages for image manipulation?\n   \n  Kind regards,\n   \n  Miltinho\n  BRAZIL\n\n \t\t\n---------------------------------\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi there,\n   \n  I have a binary image and I need to identify each clump of non-zero values and attrib a diferent \"patch\" id-number.\n  Is there a R package that do that? \n  By the way, what are the R p",
       "thread_id": "thread-f1616e712eb6",
       "thread_depth": 0,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061021/455a90e9/attachment.pl"
+      ]
     },
     {
       "id": "msg-78848e3a0cf5",
@@ -1010,11 +1040,14 @@
       "subject_clean": "Map projection",
       "in_reply_to": "<Pine.LNX.4.44.0610201754460.25793-100000@reclus.nhh.no>",
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061023/285d4e51/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061023/285d4e51/attachment.pl>",
+      "body_plain": "Hi, earlier, I used those functions to transform a lat-long database to a Lambert Azimuthal Equal Area (LAEA) :\n\nLam_proj <- project(cbind(Grille$x, Grille$y),\"+proj=laea +lat_0=latitudem_grid +lon_0=longitudem_grid +x_0=0 +y_0=0 +a=6370997 +b=6370997 \n+units=m\")\n\n\nNow that my calculations is done, I'd like to show the result and I'd need to re-transform the LAEA database to a lat-long database (since \"surfm\" in Matlab needs lat-long).\n\nI used : project(cbind(Prev$x, Prev$y),\"+proj=latlong\")\n\nBut I got this error message : \"latitude or longitude exceeded limits\"\n\nThanks for any help!\n\n\n \t\t\n---------------------------------\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi, earlier, I used those functions to transform a lat-long database to a Lambert Azimuthal Equal Area (LAEA) :\n\nLam_proj <- project(cbind(Grille$x, Grille$y),\"+proj=laea +lat_0=latitudem_grid +lon_0=",
       "thread_id": "thread-c7eed987819f",
       "thread_depth": 2,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061023/285d4e51/attachment.pl"
+      ]
     },
     {
       "id": "msg-affacf002fe9",
@@ -1060,11 +1093,14 @@
       "subject_clean": "Map projection",
       "in_reply_to": "<Pine.LNX.4.44.0610231826170.23376-100000@reclus.nhh.no>",
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061023/eb5a236c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061023/eb5a236c/attachment.pl>",
+      "body_plain": "ok, seems to be the path to success!\n\nThanks again!\n\nRoger Bivand <Roger.Bivand at nhh.no> wrote: On Mon, 23 Oct 2006, bertrand toupin wrote:\n\n> Hi, earlier, I used those functions to transform a lat-long database to a Lambert Azimuthal Equal Area (LAEA) :\n> \n> Lam_proj <- project(cbind(Grille$x, Grille$y),\"+proj=laea\n> +lat_0=latitudem_grid +lon_0=longitudem_grid +x_0=0 +y_0=0 +a=6370997\n> +b=6370997 +units=m\")\n> \n> \n> Now that my calculations is done, I'd like to show the result and I'd need to re-transform the LAEA database to a lat-long database (since \"surfm\" in Matlab needs lat-long).\n> \n> I used : project(cbind(Prev$x, Prev$y),\"+proj=latlong\")\n\n?project:\n\nand see inv=\n\nThat is:\n\nproject(cbind(Prev$x, Prev$y), proj=paste(\"+proj=laea\", \n\"+lat_0=latitudem_grid +lon_0=longitudem_grid +x_0=0 +y_0=0\",\n\"+a=6370997 +b=6370997 +units=m\"), inv=TRUE))\n\n> \n> But I got this error message : \"latitude or longitude exceeded limits\"\n\nWell, yes, you gave project() LAEA coordinates in metres, and asked it to \nproject to +proj=longlat, which would be a null-op anyway, because \nproject() only goes to (inv=TRUE) and from longlat. If you need objects \nthat \"remember\" their coordinate reference systems, use sp classes and the \nspTransform() methods in rgdal.\n\nRoger\n\n> \n> Thanks for any help!\n> \n> \n>    \n> ---------------------------------\n> \n>  [[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no\n\n\n\n \t\t\n---------------------------------\nAsk a question on any topic and get answers from real people. Go to Yahoo! Answers. \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "ok, seems to be the path to success!\n\nThanks again!\n\nRoger Bivand <Roger.Bivand at nhh.no> wrote: On Mon, 23 Oct 2006, bertrand toupin wrote:\n\n> Hi, earlier, I used those functions to transform a lat-",
       "thread_id": "thread-c7eed987819f",
       "thread_depth": 4,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061023/eb5a236c/attachment.pl"
+      ]
     },
     {
       "id": "msg-a2c9d309dd51",
@@ -1182,11 +1218,14 @@
         "<6.1.0.6.0.20061020144725.01ab5f30@pop3.geo.uu.nl>",
         "<453E86CB.4080408@geo.uu.nl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061025/0edceb31/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061025/0edceb31/attachment.pl>",
+      "body_plain": "Dear Edzer,\n\nI tried your solution but I still have one problem. See the code below:\n\nrad_data_mod$sph = fit.variogram(rad_data_vgm,vgm(psill=60,model=\"Sph\", \nrange=40e3,nugget=5))\nrad_data_mod$exp = fit.variogram(rad_data_vgm,vgm(psill=60,model=\"Exp\", \nrange=40e3,nugget=5))\nrad_data_mod$gau = fit.variogram(rad_data_vgm,vgm(psill=60,model=\"Gau\", \nrange=40e3,nugget=5))\nrad_data_mod$mat = fit.variogram(rad_data_vgm,vgm(psill=60,model=\"Mat\", \nrange=40e3,nugget=5,kappa=1))\n\ng = gstat(formula = val~1,data = rad_data)\ng = gstat(g,formula = val~1,data = rad_data)\ng = gstat(g,formula = val~1,data = rad_data)\ng = gstat(g,formula = val~1,data = rad_data)\nplot(variogram(g,cross = F),\n         layout = c(2,2),\n         model = list(var1 = rad_data_mod$sph,\n                           var2 = rad_data_mod$exp,\n                           var3 = rad_data_mod$gau,\n                           var5 = rad_data_mod$mat),\n         )\n\nVar1 is printed in the lower left corner, var2 in the lower right corner \nand var3 in the upper left corner. Var4 should appear in the upper right \ncorner. But the upper right corner is skipped and a new graph is made with \njust var4 at the lower left corner. If I change layout to c(5,1) the first \nthree variograms appear at the first three positions from the left. But \nvar4 is printed at the 5th position, skipping the 4th position.\n\nIn both examples for layout var4 appears at the 5th position. How can this \nbe solved?\n\nI use gstat 0.9-33 and R 2.4.0. (Both the lastest versions I think)\n\nPaul\n\n\nAt 23:34 24-10-2006, Edzer J. Pebesma wrote:\n>Paul, please note that at least 5 R packages calculate variograms, and not \n>everyone can see from your email address which one you are using (gstat).\n>\n>plot is a generic method; to find which instance is called try\n>\n>class(plot(rad_data_vgm,rad_data_mod$sph))\n>[1] \"trellis\"\n>\n>so the plot returns is actually a trellis object; the default action on \n>returned objects is to print it, using the print.trellis function. Read \n>its help,\n>\n>library(lattice)\n>?print.trellis\n>\n>to find out how to arrange multiple trellis objects on a single page. \n>Trellis objects don't obey layout().\n>\n>More likely you don't want separate plots but rather a single trellis \n>object; you may want to work along these lines:\n>\n>library(gstat)\n>g = gstat(formula = log(zinc)~1, data = meuse)\n>g = gstat(g, formula = log(zinc)~1, data = meuse) # define it twice\n>v = variogram(log(zinc)~1,meuse)\n>vgm1 = fit.variogram(v,vgm(1, \"Sph\", 900,1))\n>vgm2 = fit.variogram(v,vgm(1, \"Exp\", 300,1))\n>plot(variogram(g,cross=F),layout=c(1,2),model=list(var1=vgm1,var2=vgm2))\n>--\n>Edzer\n>\n>\n>Paul Hiemstra wrote:\n>>Dear All,\n>>\n>>I want to make a plot that compares several different models fitted to \n>>the same experimental variogram.\n>>\n>># Try different models\n>>rad_data_mod$sph = fit.variogram(rad_data_vgm,vgm(psill=60,model=\"Sph\", \n>>range=40e3,nugget=5))\n>>rad_data_mod$exp = fit.variogram(rad_data_vgm,vgm(psill=60,model=\"Exp\", \n>>range=40e3,nugget=5))\n>>rad_data_mod$gau = fit.variogram(rad_data_vgm,vgm(psill=60,model=\"Gau\", \n>>range=40e3,nugget=5))\n>>\n>>Then I use layout to divide the plotting area into 4 different areas:\n>>\n>>layout(matrix(c(1,2,3,4),2,2,byrow=TRUE), TRUE)\n>>\n>>Now I want to fill the plot area by calling the plot() command three times.\n>>\n>>plot(rad_data_vgm,rad_data_mod$sph)\n>>plot(rad_data_vgm,rad_data_mod$exp)\n>>plot(rad_data_vgm,rad_data_mod$gau)\n>>\n>>I expected that the sub-areas would be filled with the three plots. But \n>>the variogram plot fills the entire plot area and not just the small \n>>sub-area. A test function:\n>>\n>>x = seq(1:1000)\n>>y = x^2\n>>plot(x,y)\n>>plot(x,y)\n>>plot(x,y)\n>>\n>>performed as expected producing one plot with four subplots.\n>>\n>>Does anybody know how to make such a trellis plot for variogram plots?\n>>\n>>kind regards,\n>>\n>>Paul Hiemstra   [[alternative HTML version deleted]]\n>>\n>>_______________________________________________\n>>R-sig-Geo mailing list\n>>R-sig-Geo at stat.math.ethz.ch\n>>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear Edzer,\n\nI tried your solution but I still have one problem. See the code below:\n\nrad_data_mod$sph = fit.variogram(rad_data_vgm,vgm(psill=60,model=\"Sph\", \nrange=40e3,nugget=5))\nrad_data_mod$exp = ",
       "thread_id": "thread-65b6b58a0f75",
       "thread_depth": 2,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061025/0edceb31/attachment.pl"
+      ]
     },
     {
       "id": "msg-3de9a6cce5ad",
@@ -1198,11 +1237,14 @@
       "subject_clean": "Surface Maps",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061025/ef365976/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061025/ef365976/attachment.pl>",
+      "body_plain": "Hi everyone,\n\nI'm trying to do a surface map like this one :\n\nhttp://img63.imageshack.us/my.php?image=terreeu4.jpg\n\nOf course, my domain is smaller :)\n\nMy entry are like that (polar stereographic grid from a numerical model):\n\nlat    long    Data\n40    -77.0    24.0        \n42     -77.2    23.0\n41    -76.0     22.5\n\nSo, i have about 58 pts on a 2° x 1° window in the North-Eastern US and the entry are unsorted and it's not a regular grid when I plot my points on a map.\n\nI tried help.search(\"surface map\"), but I found nothing.  It's probably in a package i still don't have.\n\nThanks for any help again! \n\n \t\t\n---------------------------------\n\n---------------------------------\nGet a sneak peak at messages with a handy reading pane.\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi everyone,\n\nI'm trying to do a surface map like this one :\n\nhttp://img63.imageshack.us/my.php?image=terreeu4.jpg\n\nOf course, my domain is smaller :)\n\nMy entry are like that (polar stereographic grid",
       "thread_id": "thread-3de9a6cce5ad",
       "thread_depth": 0,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061025/ef365976/attachment.pl"
+      ]
     },
     {
       "id": "msg-2840aa8f9cea",
@@ -1330,11 +1372,14 @@
       "subject_clean": "incorporating spatial autocorrelation (getting started)",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061028/3ee019ca/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061028/3ee019ca/attachment.pl>",
+      "body_plain": "For advanced stuff R is the thing. But you could download GeoDA (https://www.geoda.uiuc.edu/) and play. Then look over Dr. Bivand's pages at: http://sal.uiuc.edu/csiss/Rgeo/. This is how I started (I am still a beginner though :-)).\n\nhth,\n \nMihai Nica\n\n\n\n----- Original Message ----\nFrom: Jeffrey Stratford <stratja at auburn.edu>\nTo: r-sig-geo at stat.math.ethz.ch\nSent: Saturday, October 28, 2006 2:06:39 PM\nSubject: [R-sig-Geo] incorporating spatial autocorrelation (getting started)\n\nHi.  I would like to incorporate spatial autocorreation into some\necological models and I'm overwhelmed by the number of programs out\nthere and I would appreciate some advice where I can get started (and\nmaybe finish!).\n\nThe study: I surveyed birds along roads every 0.8 km and each point was\ngeoreferenced.  I clipped buffers from satellite imagery to quantify the\nproportion of cover around each point (radii of buffers = 90, 210, 990\nm).  I submitted a paper where I linked the number of species at a point\nto land use variables but this manuscript was rejected because I did not\nincorporate spatial autocorrelation.  I'm unfamiliar with spatial\nstatistics so I'll be reading Cressie and others but I would like to\nstart tinkering with the data and methods. \n\nMany thanks,\n\nJeff\n\n\n\n****************************************\nJeffrey A. Stratford, Ph.D.\nPostdoctoral Associate\n331 Funchess Hall\nDepartment of Biological Sciences\nAuburn University\nAuburn, AL 36849\n334-329-9198\nFAX 334-844-9234\nhttp://www.auburn.edu/~stratja\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "For advanced stuff R is the thing. But you could download GeoDA (https://www.geoda.uiuc.edu/) and play. Then look over Dr. Bivand's pages at: http://sal.uiuc.edu/csiss/Rgeo/. This is how I started (I ",
       "thread_id": "thread-0c6c7ecf5378",
       "thread_depth": 0,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061028/3ee019ca/attachment.pl"
+      ]
     },
     {
       "id": "msg-dff86ca0e926",
@@ -1362,11 +1407,14 @@
       "subject_clean": "'sp' for 3.2.1",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061030/c81978eb/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061030/c81978eb/attachment.pl>",
+      "body_plain": "Good Day,\nI have just loaded R base and an assistant program, \"RKWard\", onto my\ncomputer only to find that my version is two weeks too old to load the\n'sp' file from 'CRAN'. The 'R' version is 2.3.1 and I am wondering where\nI might get an older version of 'sp' to run with it. Are there other\nrepositories other than CRAN that supply for older versions of 'R'?\nThanks,\nPhil\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Good Day,\nI have just loaded R base and an assistant program, \"RKWard\", onto my\ncomputer only to find that my version is two weeks too old to load the\n'sp' file from 'CRAN'. The 'R' version is 2.3.1 a",
       "thread_id": "thread-6eb3a1ff1364",
       "thread_depth": 0,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061030/c81978eb/attachment.pl"
+      ]
     },
     {
       "id": "msg-18f3b4e01692",
@@ -1512,11 +1560,14 @@
       "subject_clean": "GRASS with R and distances between polygon edges",
       "in_reply_to": "<000f01c6fc44$b2d88db0$4efa4418@PC>",
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061030/ee518174/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061030/ee518174/attachment.pl>",
+      "body_plain": "How about FRAGSTAT?! IF help is need, fell free to write me directly.\n   \n  kind regards,\n   \n  Miltinho\n\nColin Robertson <colinr23 at gmail.com> escreveu:\n  Hi Duncan,\n\nFor calculating the distance between polygons, there are descriptions of\nthe calculations for average distance and minimum distance in the\nreference below. Although I'm not sure if they're implemented in any R\npackages.\n\nOkabe, A. and Miller, H. J. (1996) \"Exact computational methods for\ncalculating distances between objects in a cartographic database,\"\nCartography and Geographic Information Systems, 23, 180-195.\n\n\nColin\n\n\nColin Robertson\nMSc Candidate\nDept of Geography\nUniversity of Victoria\nwww.geog.uvic.ca/spar\n(250) 885-8065\n\n\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch\n[mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Duncan\nGolicher\nSent: Monday, October 30, 2006 8:10 AM\nTo: r-sig-geo at stat.math.ethz.ch\nSubject: [R-sig-Geo] GRASS with R and distances between polygon edges\n\nI have a follow up question regarding moving old (R <2.4) sp objects to \nR 2.4. It is indeed easy using GRASS as an intermediary with spgrass6. \nBut one of my students has installed GRASS with the QGIS interface \nrather than running GRASS under Cygwin. He wanted to do the same.\n\nI tried with him and quickly got R to communicate with GRASS by simply \nchanging the first lines of system to read .....\n\nfunction (command, intern = FALSE, wait = TRUE, input = NULL,\nshow.output.on.console = TRUE, minimized = FALSE, invisible = FALSE)\n{\ncommand<-paste(Sys.getenv(\"COMSPEC\"),\"/c\",command)\n\netc}\n\nBut we still couldn't get spgrass6 to import and export raster layers \neven after fiddling with the code to get rid of cygpath etc. Perhaps \nRoger has a fix? It would be useful.\n\nAlso while posting, can anyone suggest a way of measuring the closest \ndistance between disjunct polygons in R (forest fragments)? Its easy to \nuse centroids in spdep, but we were interested in the distances between \nthe edges.\n\nDuncan\n\n\n-- \nDr Duncan Golicher\nEcologia y Sistematica Terrestre\nConservación de la Biodiversidad\nEl Colegio de la Frontera Sur\nSan Cristobal de Las Casas, \nChiapas, Mexico\n\nEmail: dgoliche at sclc.ecosur.mx \n\nTel: 967 674 9000 ext 1310\nFax: 967 678 2322\n\nUnited Kingdom Skypein; 020 7870 6251\nSkype name: duncangolicher\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n \t\t\n---------------------------------\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "How about FRAGSTAT?! IF help is need, fell free to write me directly.\n   \n  kind regards,\n   \n  Miltinho\n\nColin Robertson <colinr23 at gmail.com> escreveu:\n  Hi Duncan,\n\nFor calculating the distance b",
       "thread_id": "thread-2196ba356cc5",
       "thread_depth": 2,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061030/ee518174/attachment.pl"
+      ]
     },
     {
       "id": "msg-62d78b8f44c3",
@@ -1560,11 +1611,14 @@
       "subject_clean": "GRASS with R and distances between polygon edges",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061030/85241472/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061030/85241472/attachment.pl>",
+      "body_plain": "How about FRAGSTAT?! IF help is need, fell free to write me directly.\n \nkind regards,\n \nMiltinho\n\n \t\t\n---------------------------------\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "How about FRAGSTAT?! IF help is need, fell free to write me directly.\n \nkind regards,\n \nMiltinho\n\n \t\t\n---------------------------------\n\n\t[[alternative HTML version deleted]]",
       "thread_id": "thread-641d9d749825",
       "thread_depth": 0,
-      "month": "2006-10"
+      "month": "2006-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061030/85241472/attachment.pl"
+      ]
     }
   ],
   "threads": [

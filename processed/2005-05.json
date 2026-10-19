@@ -331,11 +331,14 @@
       "subject_clean": "Interactive web mapping with Rpad",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050513/a57f5c8e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050513/a57f5c8e/attachment.pl>",
+      "body_plain": "R's excellent plotting and mapping capabilities can be combined with Rpad to\nmake some nicely interactive maps. While Google Maps doesn't have much to\nfear from this, it is easy to put together interactive maps. Here's an\nexample where Rpad is used to plot some electric utility GIS data (imported\nfrom ESRI shapefiles with the maptools package): \n\nhttp://www.rpad.org/Rpad/InterruptionMap.Rpad\n\nIt's interactive in that the data is dynamically plotted, and when the user\nmoves the mouse arrow over the data points, more details on the data point\nappear below the map.\n\nWith or without Rpad, Barry Rowlingson's imagemap package\n(http://www.maths.lancs.ac.uk/Software/Imagemap/) makes it easier to create\ninteractive web graphics. A bit of javascript is used to make the maps\ninteractive. This works well with map data. It's used in the GIS example\nabove and in these two examples: \n\nhttp://www.rpad.org/Rpad/imagemap.Rpad (nonmap example)\nhttp://www.rpad.org/Rpad/mapdemo.Rpad (map example)\n\nNote: a Mozilla browser or Internet Explorer is needed to run the demos.\n\n- Tom\n\nTom Short\nEPRI Solutions, Inc.\n\nhttp://www.Rpad.org/Rpad -- Interactive, web-based engineering solutions.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "R's excellent plotting and mapping capabilities can be combined with Rpad to\nmake some nicely interactive maps. While Google Maps doesn't have much to\nfear from this, it is easy to put together intera",
       "thread_id": "thread-13e45a9fb538",
       "thread_depth": 0,
-      "month": "2005-05"
+      "month": "2005-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050513/a57f5c8e/attachment.pl"
+      ]
     },
     {
       "id": "msg-fa763fb9fa37",
@@ -363,11 +366,14 @@
       "subject_clean": "How to create polygons for kriging",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050517/20ca7872/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050517/20ca7872/attachment.pl>",
+      "body_plain": "Hello all,\nI used geoR package to compute kriging with krige.conv() , and to draw map I used contour() like this :\n>contour(kc,locations, filled=TRUE, coords.data=geodata$coords,\n>+color=terrain.colors)\nAnd I want to limit the prediction inside data locations (with borders()) which are not rectangular, so how can I create a polygon which could contain my data? Or if someone knows where I can find polygons data frame for the states of the US?\nAnother question : the geodata$coords correspond to three states and is it possible to draw the point data in three different colors ? \nI hope someone understand my questions, and I thank you in advance!\nChloé Archinard\nCEFE_CNRS Montpellier, France\n\n-- \npasserelle antivirus du campus CNRS de Montpellier\n--\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello all,\nI used geoR package to compute kriging with krige.conv() , and to draw map I used contour() like this :\n>contour(kc,locations, filled=TRUE, coords.data=geodata$coords,\n>+color=terrain.color",
       "thread_id": "thread-d7d0efc62bae",
       "thread_depth": 0,
-      "month": "2005-05"
+      "month": "2005-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050517/20ca7872/attachment.pl"
+      ]
     },
     {
       "id": "msg-9a9bbdb498ca",
@@ -379,11 +385,14 @@
       "subject_clean": "SLDF to a segment data frame",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050517/a8c1a0c3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050517/a8c1a0c3/attachment.pl>",
+      "body_plain": "I'm impressed with R's plotting/mapping capabilities, especially with\nthe new sp package that simplifies plotting of different data\ntypes. For a recent application with Rpad (www.rpad.org), the plotting\nspeed was a little slow for line data with 250,000 line segments. To\nspeed up plotting, I converted all of the line data to one big data\nframe that holds all of the segment data. Then I just plot with\n\"segments\". The resulting data frame contains columns x1, y1, x2, y2,\nalong with an indexing vector idx that points back to the appropriate\nrow in the attributes data frame for that line segment. \n\nI wrote two functions for the conversion. One converts from the sp\npackage SLDF object. The other converts from the maptools \"Map\"\nrepresentation. Both should produce the same output. The code is\nenclosed if anyone has similar needs. Comments appreciated.\n\nThe following code is granted to the public domain:\n\nSLDFtoSegment <- function(sldf) {\n  # Convert line segments from the SLDF representation to vectors to \n  # plot with segments().\n  # It also includes an index term \"idx\" to use to index the dataframe \n  # portion of the SLDF\n  crd <- coordinates(sldf)\n  lst <- sapply(crd,\n            function(x) lapply(x, function(l) \n              cbind(l[1:(NROW(l)-1),,drop=F], l[2:NROW(l),,drop=F])))\n  seg <- data.frame(x1 = unlist(lapply(lst, function(x) x[, 1])),\n                    y1 = unlist(lapply(lst, function(x) x[, 2])), \n                    x2 = unlist(lapply(lst, function(x) x[, 3])), \n                    y2 = unlist(lapply(lst, function(x) x[, 4])))\n  segmentidx <- array(as.integer(0), NROW(seg))\n  j <- 1\n  for (i in seq(along=lst)) {\n    n <- NROW(lst[[i]])\n    segmentidx[j:(j+n-1)] <- rep(i, n)\n    j <- j + n\n  }\n  seg$idx <- segmentidx\n  seg\n}\n\nShapefiletoSegment <- function(map) {\n  # Convert line segments from the maptools \"Map\" representation \n  # (from a shapefile import) to vectors to plot with segments().\n  # It also includes an index term \"idx\" to use to index the \n  # dataframe portion.\n  extractsegs <- function(l) cbind(l$verts[1:(NROW(l$verts)-1),,drop=F],\n                                   l$verts[2:NROW(l$verts),,drop=F])\n  lst <- lapply(map$Shapes, extractsegs)\n  seg <- data.frame(x1 = unlist(lapply(lst, function(x) x[, 1])),\n                    y1 = unlist(lapply(lst, function(x) x[, 2])), \n                    x2 = unlist(lapply(lst, function(x) x[, 3])), \n                    y2 = unlist(lapply(lst, function(x) x[, 4])))\n  segmentidx <- array(as.integer(0), NROW(seg))\n  j <- 1\n  for (i in seq(along=lst)) {\n    n <- NROW(lst[[i]])\n    segmentidx[j:(j+n-1)] <- rep(i, n)\n    j <- j + n\n  }\n  seg$idx <- segmentidx\n  seg\n}\n\n# Here's an example of using it.\n# You don't need it at all for this example\n# because the data set is so small.\nlibrary(sp)\ndata(lnsshp) \nres <- shp2SLDF(lns)\nplot(res) # plot SLDF data\n\n# faster plotting with segments:\nseg <- SLDFtoSegment(res)\nplot.new()\nplot.window(xlim=range(seg$x1, seg$x2),\n            ylim=range(seg$y1, seg$y2),\n            asp=1)\nsegments(seg$x1,seg$y1,seg$x2,seg$y2)\n\n# to vary line color by some attribute, you could do:\nres[[\"length.factor\"]] <- cut(res[[\"LENGTH\"]], \n                              breaks=quantile(res[[\"LENGTH\"]]))\ncolor = as.numeric(res[[\"length.factor\"]][seg$idx])\nsegments(seg$x1, seg$y1, seg$x2, seg$y2,\n         col = color)\n\n- Tom\n\nTom Short\nEPRI Solutions, Inc.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I'm impressed with R's plotting/mapping capabilities, especially with\nthe new sp package that simplifies plotting of different data\ntypes. For a recent application with Rpad (www.rpad.org), the plotti",
       "thread_id": "thread-9a9bbdb498ca",
       "thread_depth": 0,
-      "month": "2005-05"
+      "month": "2005-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050517/a8c1a0c3/attachment.pl"
+      ]
     },
     {
       "id": "msg-4efbd91370bf",
@@ -411,11 +420,14 @@
       "subject_clean": "SLDF to a segment data frame",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050518/17994c52/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050518/17994c52/attachment.pl>",
+      "body_plain": "> With regard to speeds, could you say what OS and R version \n> you are using, \n> because the different devices behave differently on different \n> systems (in \n> particular the Windows segment drawing function seems to have \n> been impared \n> by a recent patch I think to XP). Otherwise, the work you are \n> showing on \n> Rpad is quite remarkable, far beyond anything I'd anticipated! \n\nHere are some timings of plots of GIS line data with 44000 lines and 99000\ntotal segments. These are in R 2.0.1 on Win2000 to the x11() device on an\noldish Dell laptop:\n\n# plot using the sldf data structure from the sp package:\n> system.time(plot(sldf), gcFirst = TRUE)\n[1] 240.42  10.50 259.42     NA     NA\n\n# plot using the segments data structure:\n> system.time({plot.new()\n+              plot.window(xlim=range(seg$x1, seg$x2),\n+                          ylim=range(seg$y1, seg$y2),\n+                          asp=1)\n+              segments(seg$x1, seg$y1, seg$x2, seg$y2)\n+             }, gcFirst = TRUE)\n[1] 1.11 5.32 7.97   NA   NA\n\nHere are the same timings on the much faster www.rpad.org computer running R\n2.1.0 (Debian Linux) with the png device.\n\n> system.time(plot(sldf), gcFirst = TRUE)\n[1] 36.05  0.53 37.99  0.00  0.00\n\n> system.time({plot.new()\n+              plot.window(xlim=range(seg$x1, seg$x2),\n+                          ylim=range(seg$y1, seg$y2),\n+                          asp=1)\n+              segments(seg$x1, seg$y1, seg$x2, seg$y2)\n+             },gcFirst = TRUE)\n[1] 0.14 0.01 0.19 0.00 0.00\n\nThis example is extreme, since this data has few segments per line entry, so\nthe sldf plotting has a lot of entries to loop through.\n\n- Tom\n\nTom Short\nEPRI Solutions, Inc.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "> With regard to speeds, could you say what OS and R version \n> you are using, \n> because the different devices behave differently on different \n> systems (in \n> particular the Windows segment drawing",
       "thread_id": "thread-3748fa7a2853",
       "thread_depth": 0,
-      "month": "2005-05"
+      "month": "2005-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050518/17994c52/attachment.pl"
+      ]
     },
     {
       "id": "msg-05039d20f608",
@@ -427,11 +439,14 @@
       "subject_clean": "kriging inside borders",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050519/0fad6d65/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050519/0fad6d65/attachment.pl>",
+      "body_plain": "Hello,\nI'm using geoR package to compute kriging with the function krige.conv() and I used maptools (read.shape () +  Map2poly () ) \nand splancs (borders) packages to include a object of class polylist for the attribute borders.\n But I've got this message of error when 'borders' is in krige.conv () : \nkrige.conv: there are no prediction locations inside the borders. \nMy polylist is not good? The coordinates seam to be OK when I draw a map with this polylist object.\nAnd if I use 'borders' in the contour function : message error is : \nError in as.data.frame.default(borders) : can't coerce class \"polylist\" into a data.frame\nIf someone could help me, thanks a lot!\nChloé Archinard\n\n-- \npasserelle antivirus du campus CNRS de Montpellier\n--\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\nI'm using geoR package to compute kriging with the function krige.conv() and I used maptools (read.shape () +  Map2poly () ) \nand splancs (borders) packages to include a object of class polylis",
       "thread_id": "thread-05039d20f608",
       "thread_depth": 0,
-      "month": "2005-05"
+      "month": "2005-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050519/0fad6d65/attachment.pl"
+      ]
     },
     {
       "id": "msg-53bcc0c2ea10",
@@ -573,11 +588,14 @@
       "subject_clean": "Simulation question",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050523/66d9eddb/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050523/66d9eddb/attachment.pl>",
+      "body_plain": "Hello,\n\n My name is Matthew Sokol and I am using the package geoR and I am having a \nlittle trouble using the \"grf\" function.\n\n What I am trying to do is to simulate data that follows the same variogram \nmodel as a certain data set. \n\n So I start with the built in data set s100.\n\n It says that it has a Sill equal to one and a range equal to .3 based on \nthe following commands:\n\n plot(variog(s100,max.dist=1))\n\nlines.variomodel(cov.model = \"exp\", cov.pars = c(1, 0.3),nug = 0,max.dist=1)\n\nloci <- expand.grid(seq(0,1,l=21), seq(0,1,l=21))\n\nkc <- krige.conv(s100, loc=loci,krige=krige.control(cov.pars=c(1, .3)))\n\nimage(kc)\n\n Now what I want to do is to simulate data on the same grid that follows the \nsame variogram model. So I run the following commands:\n\n sims100 <- grf(100, ylims=c(0,0), cov.pars=c(1,.3), nugget = 0, cov.model=\n\"exp\")\n\nsimkc <- krige.conv(sims100, loc=loci,krige=krige.control(cov.pars=c(1, \n.3))) \n\nimage(simkc)\n\n But when you compare the two images of 'kc' and 'simkc' they are nothing \nalike. \n\n What I am ultimately trying to do is create a new data set within my \noriginal location that accurately reflects the original data. Then I would \nlike to resample the data to see how different sampling locations affect OK \nand OK stand deviation. \n\n Would re-sampling from the data set 'kc' be ok here since the\nkrige.convcommand creates a new data set based off the original model\nat new locations\n( i.e. the location \"loci\").  \n\n I am not sure if I am running the commands wrong or if I am using the \nfunctions totally wrong. I am a novice at best when it comes to using R, and \nI hope anyone can point me in the right direction. \n\n Thanks in advance for any help.\n\n -Matthew Sokol\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\n My name is Matthew Sokol and I am using the package geoR and I am having a \nlittle trouble using the \"grf\" function.\n\n What I am trying to do is to simulate data that follows the same variogr",
       "thread_id": "thread-9b4718f20d9c",
       "thread_depth": 0,
-      "month": "2005-05"
+      "month": "2005-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050523/66d9eddb/attachment.pl"
+      ]
     },
     {
       "id": "msg-8352ee18e42b",
@@ -592,11 +610,14 @@
         "<4505b2b105052314175a9d9076@mail.gmail.com>",
         "<Pine.LNX.4.58L0.0505231842090.27231@est.ufpr.br>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050523/7c4151c4/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050523/7c4151c4/attachment.pl>",
+      "body_plain": "Paulo,\n Thank you for your quick reply. You've been very helpful. This work is part \nof my master thesis, so I want to make sure it works ok. Will The\nkrige.convcommand be fine to test sampling design from a conditionally\nsimulated data\nset? What i mean is will the new new data set produced follow the same \nvariogram model, or one very close to the original?\n Thank you for any help\n -Matthew Sokol \n\n On 5/23/05, Paulo Justiniano Ribeiro Jr <paulojus at est.ufpr.br> wrote: \n> \n> Hi Matthew\n> \n> It is important to distinghish between \"conditional\" (on the data)\n> and \"unconditional\" simulations\n> \n> krige.conv() will do the former whereas\n> grf() will perform the latter\n> \n> In other words, conditional simulation will follows the observed data\n> closely.\n> Unconditional simulation will just take a different sample of the same\n> model and it is natural to have a quite diferent simulation with ups and\n> downs in different locations -\n> your call to grf() will produce a simulation which is stocastically\n> independent of the s100 data - so a quite different aspect.\n> \n> \n> \n> On Mon, 23 May 2005, Matthew Sokol wrote:\n> \n> > Hello,\n> >\n> > My name is Matthew Sokol and I am using the package geoR and I am having \n> a\n> > little trouble using the \"grf\" function.\n> >\n> > What I am trying to do is to simulate data that follows the same \n> variogram\n> > model as a certain data set.\n> >\n> > So I start with the built in data set s100.\n> >\n> > It says that it has a Sill equal to one and a range equal to .3 based on\n> > the following commands:\n> >\n> > plot(variog(s100,max.dist=1))\n> >\n> > lines.variomodel(cov.model = \"exp\", cov.pars = c(1, 0.3),nug = 0,\n> max.dist=1)\n> >\n> > loci <- expand.grid(seq(0,1,l=21), seq(0,1,l=21))\n> >\n> > kc <- krige.conv(s100, loc=loci,krige=krige.control(cov.pars=c(1, .3)))\n> >\n> > image(kc)\n> >\n> > Now what I want to do is to simulate data on the same grid that follows \n> the\n> > same variogram model. So I run the following commands:\n> >\n> > sims100 <- grf(100, ylims=c(0,0), cov.pars=c(1,.3), nugget = 0, \n> cov.model=\n> > \"exp\")\n> >\n> > simkc <- krige.conv(sims100, loc=loci,krige=krige.control(cov.pars=c(1,\n> > .3)))\n> >\n> > image(simkc)\n> >\n> > But when you compare the two images of 'kc' and 'simkc' they are nothing\n> > alike.\n> >\n> > What I am ultimately trying to do is create a new data set within my\n> > original location that accurately reflects the original data. Then I \n> would\n> > like to resample the data to see how different sampling locations affect \n> OK\n> > and OK stand deviation.\n> >\n> > Would re-sampling from the data set 'kc' be ok here since the\n> > krige.convcommand creates a new data set based off the original model\n> > at new locations\n> > ( i.e. the location \"loci\").\n> >\n> > I am not sure if I am running the commands wrong or if I am using the\n> > functions totally wrong. I am a novice at best when it comes to using R, \n> and\n> > I hope anyone can point me in the right direction.\n> >\n> > Thanks in advance for any help.\n> >\n> > -Matthew Sokol\n> >\n> > [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> >\n> \n> Paulo Justiniano Ribeiro Jr\n> LEG (Laboratório de Estatística e Geoinformação)\n> Departamento de Estatística\n> Universidade Federal do Paraná\n> Caixa Postal 19.081\n> CEP 81.531-990\n> Curitiba, PR - Brasil\n> Tel: (+55) 41 3361 3573\n> Fax: (+55) 41 3361 3141\n> e-mail: paulojus at est.ufpr.br\n> http://www.est.ufpr.br/~paulojus\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Paulo,\n Thank you for your quick reply. You've been very helpful. This work is part \nof my master thesis, so I want to make sure it works ok. Will The\nkrige.convcommand be fine to test sampling design",
       "thread_id": "thread-8352ee18e42b",
       "thread_depth": 0,
-      "month": "2005-05"
+      "month": "2005-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050523/7c4151c4/attachment.pl"
+      ]
     },
     {
       "id": "msg-a8d612351957",
@@ -624,11 +645,14 @@
       "subject_clean": "problem running example(gwr) in package spgwr_0.2-7 (Windows binary)",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050527/50f58bfa/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050527/50f58bfa/attachment.pl>",
+      "body_plain": "I am encountering errors when attempting to run the example(gwr) in the\nspgwr package. The first 4 commands run correctly, however I receive an\nerror trying to execute the 5th command.\n\ngwr> data(columbus)\n\ngwr> col.lm <- lm(crime ~ income + housing, data = columbus)\n\ngwr> summary(col.lm)\n\ngwr> col.bw <- gwr.sel(crime ~ income + housing, data = columbus,\n    coords = cbind(columbus$x, columbus$y))\n\ngwr> col.gauss <- gwr(crime ~ income + housing, data = columbus,\n    coords = cbind(columbus$x, columbus$y), bandwidth = col.bw,\n    hatmatrix = TRUE)\nError in gridded(fit.points) : No direct or inherited method for function\n\"gridded\" for this call\n\nI'm running the following configuration on Windows XP.\nWindows R 2.0.1\nWindows Binary sp_0.7-0.zip\nWindows Binary spgwr_0.2-7.zip\n\nAny guidance would be appreciated.\n\nKen\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I am encountering errors when attempting to run the example(gwr) in the\nspgwr package. The first 4 commands run correctly, however I receive an\nerror trying to execute the 5th command.\n\ngwr> data(colu",
       "thread_id": "thread-15477052b47e",
       "thread_depth": 0,
-      "month": "2005-05"
+      "month": "2005-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050527/50f58bfa/attachment.pl"
+      ]
     },
     {
       "id": "msg-4506b4ae10cc",

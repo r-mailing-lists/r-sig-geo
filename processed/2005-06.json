@@ -61,11 +61,14 @@
       "subject_clean": "network analysis indices",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050603/fde526b8/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050603/fde526b8/attachment.pl>",
+      "body_plain": "Alisa,\n \nIndeed, the classic transportation literature has yet to be fully\nrecreated in R, but it is very suitable for this purpose.  I wrote a\ntotal connectivity function in script form (see below) that works on a\nmatrix object.  The script is simple but effective (I've compared manual\nand digital results many times and found no difference other than time\nspent).  Feedback will be appreciated.\n \nAll the best,\nScott Drzyzga\n \n \n \n \nconnectivity <- function(cm) {\n error = 0\n checkrow <- rowSums(cm)\n checkcol <- colSums(cm)\n check <- checkrow - checkcol\n if (min(check) > 0) \n  { \n  cat(\"Input matrix is not symmetrical.\")\n  error = error + 1\n  }\n if (min(checkrow) < 1 ) \n  { \n  cat(\"Row\", which.min(checkrow), \"has no connections.\\n\")\n  error = error + 2 \n  }\n if (min(checkcol) < 1 ) \n  { \n  cat(\"Column\", which.min(checkcol), \"has no connections.\\n\")\n  error = error + 4\n  }\n if (min(cm) > 0) \n  {\n  cat(\"Input matrix has total connectivity.\\n\")\n  error = error + 8\n  }\n if (error > 0)\n  { \n  cat(\"Processing stopped.\\n\")\n  }\n else\n {\n cp = cm%*%cm\n power = 2\n ct = cm + cp\n zero = min(ct)\n while(zero==0) \n {\n  cp <- cm%*%cp\n  ct <- ct + cp\n  power = power + 1\n  zero <- min(ct)\n }\n RTotal <- rowSums(ct)\n rmin <- which.min(RTotal)\n rmax <- which.max(RTotal)\n cat(\"Number of nodes =\", ncol(cm), \"\\n\")\n cat(\"Minimum connectivity =\", round(2 / ncol(cm), digits = 4), \"\\n\")\n cat(\"Diameter of network =\", power, \"\\n\")\n cat(\"The least accessible node is node\", rmin, \"with\", min(RTotal),\n\"connections.\\n\")\n cat(\"The most accessible node is node\", rmax, \"with\", max(RTotal),\n\"connections.\\n\")\n ct <- cbind(ct,RTotal)\n CTotal <- colSums(ct)\n ct <- rbind(ct,CTotal)\n write.table(ct,file=\"total.csv\", append=FALSE, sep=\",\")\n }\n}\n \nProf. Scott A. Drzyzga\nGeography & Earth Science\nShippensburg University\n \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Alisa,\n \nIndeed, the classic transportation literature has yet to be fully\nrecreated in R, but it is very suitable for this purpose.  I wrote a\ntotal connectivity function in script form (see below) t",
       "thread_id": "thread-a69323ecd2ba",
       "thread_depth": 0,
-      "month": "2005-06"
+      "month": "2005-06",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050603/fde526b8/attachment.pl"
+      ]
     },
     {
       "id": "msg-065f4244571b",
