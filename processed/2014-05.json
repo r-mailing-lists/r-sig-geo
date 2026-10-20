@@ -13,11 +13,14 @@
       "subject_clean": "Specifying Albers projection for the contiguous US",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140501/4a05f93f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140501/4a05f93f/attachment.pl>",
+      "body_plain": "You can probably use CRS(\"+proj=longlat +datum=WGS84\")\n\n---------------------------------------------------------------------------\n>Hello,\n>I?m trying to use the map function from package maps to draw the\ncontiguous United States with the projection, \"+proj=aea >+lat_1=29.5\n+lat_2=45.5 +lat_0=39.8 +lon_0=-98.6 +x_0=0 +y_0=0 +datum=WGS84 +units=km\n+no_defs\".\n>Below is my code I have written, but I don't know what to put for X. The\nmaps documentation says, \"the default is to use a >rectangular projection\nwith the aspect ratio chosen so that longitude and latitude scales are\nequivalent at the center of the >picture.\" I can't figure out how to\nspecify this in terms of a CRS string for X.\n>us = map(\"state\", plot=FALSE, fill=TRUE, col=\"transparent\")\n>us_sp = map2SpatialPolygons(us, IDs=us$names, proj4string = CRS(X) )\n#don't know what to put for X\n>proj.string.alb = CRS(\"+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=39.8\n+lon_0=-98.6 +x_0=0 +y_0=0 +datum=WGS84 >+units=km +no_defs\")\n>us_sp = spTransform(us_sp, CRS=proj.string.alb)\n>plot(us_sp)\n>Thanks for your help!\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "You can probably use CRS(\"+proj=longlat +datum=WGS84\")\n\n---------------------------------------------------------------------------\n>Hello,\n>I?m trying to use the map function from package maps to dra",
       "thread_id": "thread-0bfc965ebe5a",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140501/4a05f93f/attachment.pl"
+      ]
     },
     {
       "id": "msg-371444895b17",
@@ -70,11 +73,14 @@
       "references": [
         "<4c9b82743888419f82b23092bc27a1af@EX-1-HT0.lancs.local>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140502/64b06f74/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140502/64b06f74/attachment.pl>",
+      "body_plain": "It looks to me like the line has fallen in the cracks between raster cells,\nand is the same if you try any other cell boundary value for y coordinate.\nYour raster has cells that are 0.0083333 wide, so you get the same thing\nwith:\n\n > cds = cbind(seq(-20,20,len=3),rep(0.008333333333333333333,3))\n > Sl <- SpatialLines(list(Lines(list(Line(cds)), \"1\")))\n > proj4string(Sl) <- CRS('+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84\n+towgs84=0,0,0')\n > extract(srtm, Sl)\n [[1]]\n [1] NA\n\n change it ever so slightly and it works:\n\n > cds = cbind(seq(-20,20,len=3),rep(0.0084333333333333333333,3))\n > Sl <- SpatialLines(list(Lines(list(Line(cds)), \"1\")))\n > proj4string(Sl) <- CRS('+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84\n+towgs84=0,0,0')\n > extract(srtm, Sl)\n [[1]]\n   [1] -2539 -2620 -2756 -2789 -2897 -2974 -3006 -2967 -2916 -2861 -2936\n-3002\n  [13] -2996 -3069 -3163 -3196 -3196 -3210 -3095 -3035 -2969 -2969 -2989\n-2706\n\n[etc]\n\nNow extract for lines says:\n\n If ‘y’   represents lines, the ‘extract’ method returns the values of the\n     cells of a Raster* object that are touched by a line.\n\nYou can now argue with Robert about which cells are touched when a line is\nexactly on a raster cell boundary. Both cells, one at random, or neither?\n\n A solution may be to buffer your line slightly to a polygon (rgeos,\ngBuffer) and extract with that.\n\nBarry\n\n\n\nOn Fri, May 2, 2014 at 9:35 AM, Pascal Oettli <kridox at ymail.com> wrote:\n\n> Dear list members,\n>\n> Could someone explain me why the following example fails when the\n> latitude is equal to 0?\n>\n> Thank you,\n> Pascal\n>\n> ##############################\n> ############################################\n> library(raster)\n>\n> old <- setwd(tempdir())\n> download.file('ftp://topex.ucsd.edu/pub/srtm30_plus/srtm30/grd/w020n40.nc\n> ',\n> 'w020n40.nc', method='wget')\n> srtm <- raster('w020n40.nc')\n> proj4string(srtm) <- CRS('+proj=longlat +datum=WGS84 +no_defs\n> +ellps=WGS84 +towgs84=0,0,0')\n> extent(srtm)\n>\n> lat <- 0\n> cds <- rbind(c(-20,lat), c(20,lat))\n> Sl <- SpatialLines(list(Lines(list(Line(cds)), \"1\")))\n> proj4string(Sl) <- CRS('+proj=longlat +datum=WGS84 +no_defs\n> +ellps=WGS84 +towgs84=0,0,0')\n>\n> x11()\n> plot(srtm)\n> plot(Sl, add=TRUE)\n>\n> lon <- extract(init(srtm, v='x'), Sl)[[1]]\n> out <- extract(srtm, Sl)[[1]]\n> out   # no value\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "It looks to me like the line has fallen in the cracks between raster cells,\nand is the same if you try any other cell boundary value for y coordinate.\nYour raster has cells that are 0.0083333 wide, so",
       "thread_id": "thread-c34ec50fdba1",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140502/64b06f74/attachment.pl"
+      ]
     },
     {
       "id": "msg-7503d74683e6",
@@ -127,11 +133,14 @@
         "<CAPSaU-_BUQfSi0CH5OBMnntL8QzFreemN=RAgG8gxEQL93Oftg@mail.gmail.com>",
         "<CABdaQ+vK4E8ktx1uqGXikR9weo3G8c6uX2Gt0Mz_SU6YF5jUsw@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140503/8d9fcc31/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140503/8d9fcc31/attachment.pl>",
+      "body_plain": "Hi,\n\nMaybe this could be solution for you.\n\nm <- plotGoogleMaps(mydata, zcol=\"i1.a.\",\n                    at=3:5,\n                    colPalette = c(\"#0066FF\",\"#00CC00\"),\n                    # c(\"#FF0000\",\"#FF9900\",\"#FFFF00\",\n                    layerName=\"Some Schools\",\n                    filename=\"MyMap.html\")\n\nBest,\nMilan\n\n\nOn Wed, Apr 30, 2014 at 6:16 PM, James Holland <holland.aggie at gmail.com>wrote:\n\n> Yeah, I thought that might be it.\n>\n> Seems the other issues is when I used it with my real data, the fact I\n> don't have any any lower values.  That seems to change the legend,\n> replacing 0 with the lowest value and giving it the wrong color.  In this\n> example, 3.2 is the lowest value.\n>\n> Thank you for your help.\n>\n> ~James\n>\n> See code below.\n>\n> #  Messing around with Student Engagement Survey data\n> library(RgoogleMaps)\n> library(PBSmapping)\n> library(maptools)\n> library(reshape)\n> library(RColorBrewer)\n> library(plotGoogleMaps)\n> library(rgdal)\n>\n> rm(list=ls())\n>\n>\n> mydata <- data.frame(NAME=c(\"James Elem\",\"Chloe MS\",\"Logan HS\", \"Kristen\n> Elem\", \"Heather HS\", \"Nora MS\", \"Elizabeth JH\"),\n>                    i1.a.=c(3.2,4,3.4, 4.4, 3.5, 4.3, 4.9),\n>    lat = c(32.968, 32.874, 32.884, 32.91538, 32.91810, 32.87884, 32.94468),\n>    lon = c(-96.692, -96.725, -96.708, -96.72321, -96.71760, -96.73990,\n> -96.72850)\n>    )\n>\n>\n>\n> # ------------------------------- #\n>\n>\n> # --------------------------------------- #\n> # -- Ploting School Locations ----------- #\n>\n> coordinates(mydata) <- ~lon + lat\n> proj4string(mydata) <- CRS(\"+proj=longlat +datum=WGS84\")\n>\n> #SchoolRaceP <- SpatialPointsDataFrame, data\n>\n> # Playing around with various options\n>\n> m <- plotGoogleMaps(mydata, zcol=\"i1.a.\",\n>  at=0:5,\n> colPalette = c(\"#FF0000\",\"#FF9900\",\"#FFFF00\",\"#0066FF\",\"#00CC00\"),\n>  layerName=\"Some Schools\",\n>                     filename=\"MyMap.html\")\n>\n>\n> On Wed, Apr 30, 2014 at 2:00 AM, Milan Kilibarda <milan.kili11 at gmail.com>wrote:\n>\n>> Hi,\n>>\n>> Just set at correctly in your case at should be 0:5 . You should have one\n>> more breaks than colors.\n>>\n>>  cut(mydata$i1.a., 0:5, include.lowest=T)\n>>\n>> [1] [0,1] [0,1] (1,2] (2,3] (3,4] (4,5] (4,5]\n>> Levels: [0,1] (1,2] (2,3] (3,4] (4,5]\n>>\n>> so,\n>>\n>> m <- plotGoogleMaps(mydata, zcol=\"i1.a.\",\n>>                     at=0:5,\n>>                     colPalette =\n>> c(\"#FF0000\",\"#FF9900\",\"#FFFF00\",\"#0066FF\",\"#00CC00\"),\n>>                     layerName=\"Some Schools\",\n>>                     filename=\"MyMap.html\")\n>>\n>> works good\n>>\n>> Best,\n>> Milan\n>>\n>>\n>> On Tue, Apr 29, 2014 at 10:45 PM, James Holland <holland.aggie at gmail.com>wrote:\n>>\n>>> I cannot get the legend to display the cut points I want correctly.\n>>> Instead of doing the colors at 1, 2, 3, 4, 5 - its doing the color breaks\n>>> at odd points on the legends.  The labels seem to get coded correctly\n>>> however.\n>>>\n>>> #   Code Below\n>>>\n>>>\n>>> #----------------------------------------------------------------------------------------.\n>>>\n>>> #  Messing around with Student Engagement Survey data\n>>> library(RgoogleMaps)\n>>> library(PBSmapping)\n>>> library(maptools)\n>>> library(reshape)\n>>> library(RColorBrewer)\n>>> library(plotGoogleMaps)\n>>> library(rgdal)\n>>>\n>>> rm(list=ls())\n>>>\n>>> mydata <- data.frame(NAME=c(\"James Elem\",\"Chloe MS\",\"Logan HS\", \"Kristen\n>>> Elem\", \"Heather HS\", \"Nora MS\", \"Elizabeth JH\"),\n>>>                    i1.a.=c(0,1,2, 2.4, 3.5, 4.3, 5),\n>>>    lat = c(32.968, 32.874, 32.884, 32.91538, 32.91810, 32.87884,\n>>> 32.94468),\n>>>    lon = c(-96.692, -96.725, -96.708, -96.72321, -96.71760, -96.73990,\n>>> -96.72850)\n>>>    )\n>>>\n>>>\n>>>\n>>> # ------------------------------- #\n>>>\n>>>\n>>> # --------------------------------------- #\n>>> # -- Ploting School Locations ----------- #\n>>>\n>>> coordinates(mydata) <- ~lon + lat\n>>> proj4string(mydata) <- CRS(\"+proj=longlat +datum=WGS84\")\n>>>\n>>> #SchoolRaceP <- SpatialPointsDataFrame, data\n>>>\n>>> # Playing around with various options\n>>>\n>>> m <- plotGoogleMaps(mydata, zcol=\"i1.a.\",\n>>> at=0:4,\n>>> colPalette = c(\"#FF0000\",\"#FF9900\",\"#FFFF00\",\"#0066FF\",\"#00CC00\"),\n>>> layerName=\"Some Schools\",\n>>>                     filename=\"MyMap.html\")\n>>>\n>>>         [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>\n>>\n>>\n>> --\n>> Dr. Milan Kilibarda\n>> Assistant professor\n>> University of Belgrade,\n>> Faculty of Civil Engineering,\n>> Department of Geodesy and Geoinformatics,\n>> Address: Bulevar kralja Aleksandra 73  11000 Belgrade, Serbia,\n>> Mail:  kili at grf.bg.ac.rs\n>> Web: http://dailymeteo.org/\n>> Pub: http://scholar.google.com/citations?user=Zl2MZ3AAAAAJ&hl=en\n>> tel:+381 11 3218630\n>>\n>\n>\n\n\n-- \nDr. Milan Kilibarda\nAssistant professor\nUniversity of Belgrade,\nFaculty of Civil Engineering,\nDepartment of Geodesy and Geoinformatics,\nAddress: Bulevar kralja Aleksandra 73  11000 Belgrade, Serbia,\nMail:  kili at grf.bg.ac.rs\nWeb: http://dailymeteo.org/\nPub: http://scholar.google.com/citations?user=Zl2MZ3AAAAAJ&hl=en\ntel:+381 11 3218630\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nMaybe this could be solution for you.\n\nm <- plotGoogleMaps(mydata, zcol=\"i1.a.\",\n                    at=3:5,\n                    colPalette = c(\"#0066FF\",\"#00CC00\"),\n                    # c(\"#FF0",
       "thread_id": "thread-68d6ee41ad4c",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140503/8d9fcc31/attachment.pl"
+      ]
     },
     {
       "id": "msg-68241a6a0390",
@@ -211,11 +220,14 @@
       "subject_clean": "plotting STSDF objects",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140504/78125611/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140504/78125611/attachment.pl>",
+      "body_plain": "Hi,\n\nI am using the spacetime package to create plots of disease spread across a\nlandscape.  I have a sparse dataframe and am having trouble using the\nstplot function to show all of the spatial polygons in a sparse dataframe\n(ie I would like to plot all the spatial polygons, even those representing\ntownships with no case reports during the time period).\n\nI have used the following code:\nstplot(stsdf[,,\"lyme_cases\"], t, col.regions = brewer.pal(9,\n\"YlOrRd\"),cuts=9)\n\nI was wondering if this was the correct syntax for stplot for an STSDF\nobject and also what exactly the \"signature\" means in the Methods section\nof stplot:\nsignature(x = \"STSDF\"): plots object of class STSDF\n\nThank you very much for your help!\nBest,\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nI am using the spacetime package to create plots of disease spread across a\nlandscape.  I have a sparse dataframe and am having trouble using the\nstplot function to show all of the spatial polygo",
       "thread_id": "thread-2981e5cf0762",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140504/78125611/attachment.pl"
+      ]
     },
     {
       "id": "msg-d550f74bbdab",
@@ -487,11 +499,14 @@
       "references": [
         "<BLU436-SMTP2370E424D2B6D853642FF01D94F0@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140506/3fadf2fa/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140506/3fadf2fa/attachment.pl>",
+      "body_plain": "I think this is what you want:\n\n\"The *aspect* output raster map indicates the direction that slopes are\nfacing. The aspect categories represent the number degrees of east.\nCategory and color table files are also generated for the aspect map layer.\nThe aspect categories represent the number degrees of east and they\nincrease counterclockwise: 90deg is North, 180 is West, 270 is South 360 is\nEast. The aspect value 0 is used to indicate undefined aspect in flat areas\nwith slope=0.\"\n\nOn Tuesday, May 6, 2014, Bea GD <aguitatierra at hotmail.com> wrote:\n\n> Hi all,\n>\n> This is a bit general question. I've searched the web but I haven't gotten\n> a consistent answer.\n>\n> I've used a digital elevation model to produce another raster with aspect\n> data by using 'terrain{rater}'.\n> Aspect data ranges from 0 to 360 degrees. In the vignette of the raster\n> package it also says:\n> 'If slope = 0, aspect is set to 0.5*pi radians (or 90 degrees if\n> unit=’degrees’)'\n>\n> Could anyone help me to interpret the aspect data?\n>\n> Many thanks for your help.\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n-- \nThomas E Adams, III\n718 McBurney Drive\nLebanon, OH 45036\n\n1 (513) 739-9512 (cell)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I think this is what you want:\n\n\"The *aspect* output raster map indicates the direction that slopes are\nfacing. The aspect categories represent the number degrees of east.\nCategory and color table fil",
       "thread_id": "thread-7708926548b1",
       "thread_depth": 1,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140506/3fadf2fa/attachment.pl"
+      ]
     },
     {
       "id": "msg-3dad91d01868",
@@ -506,11 +521,14 @@
         "<BLU436-SMTP2370E424D2B6D853642FF01D94F0@phx.gbl>",
         "<CAGxgkWijzS=fDDESJ4XcfejhKKECOnvwN+jWCqRJ9fMR8N1h5w@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140506/7b53f2d2/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140506/7b53f2d2/attachment.pl>",
+      "body_plain": "Hi Thomas,\n \nThanks a lot for your answer! However, I still do not have clear why in the raster package vignette it says:\n \n'If slope = 0, aspect is set to 0.5*pi radians (or 90 degrees if unit=’degrees’)\n \nCheers\n \nDate: Tue, 6 May 2014 12:25:25 -0400\nSubject: Re: [R-sig-Geo] Aspect data interpretation\nFrom: tea3rd at gmail.com\nTo: aguitatierra at hotmail.com\nCC: r-sig-geo at r-project.org\n\nI think this is what you want:\n\"The aspect output raster map indicates the direction that slopes are facing. The aspect categories represent the number degrees of east. Category and color table files are also generated for the aspect map layer. The aspect categories represent the number degrees of east and they increase counterclockwise: 90deg is North, 180 is West, 270 is South 360 is East. The aspect value 0 is used to indicate undefined aspect in flat areas with slope=0.\"\n\nOn Tuesday, May 6, 2014, Bea GD <aguitatierra at hotmail.com> wrote:\n\nHi all,\n\n\n\nThis is a bit general question. I've searched the web but I haven't gotten a consistent answer.\n\n\n\nI've used a digital elevation model to produce another raster with aspect data by using 'terrain{rater}'.\n\nAspect data ranges from 0 to 360 degrees. In the vignette of the raster package it also says:\n\n'If slope = 0, aspect is set to 0.5*pi radians (or 90 degrees if unit=’degrees’)'\n\n\n\nCould anyone help me to interpret the aspect data?\n\n\n\nMany thanks for your help.\n\n\n\n_______________________________________________\n\nR-sig-Geo mailing list\n\nR-sig-Geo at r-project.org\n\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n-- \nThomas E Adams, III718 McBurney DriveLebanon, OH 45036\n1 (513) 739-9512 (cell)\n\n \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Thomas,\n \nThanks a lot for your answer! However, I still do not have clear why in the raster package vignette it says:\n \n'If slope = 0, aspect is set to 0.5*pi radians (or 90 degrees if unit=’degre",
       "thread_id": "thread-7708926548b1",
       "thread_depth": 2,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140506/7b53f2d2/attachment.pl"
+      ]
     },
     {
       "id": "msg-864ab6029930",
@@ -526,11 +544,14 @@
         "<CAGxgkWijzS=fDDESJ4XcfejhKKECOnvwN+jWCqRJ9fMR8N1h5w@mail.gmail.com>",
         "<DUB131-W21CAF6CC67677914CB4151D94F0@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140506/c3883389/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140506/c3883389/attachment.pl>",
+      "body_plain": "OK, I thought that might be your issue; it is an arbitrary value because\nthe surface is not sloping in ANY direction -- a flat surface!\nConsequently, the aspect is assigned the value 0.5*pi radians (or 90\ndegrees if unit =’degrees’)\n\nYou possibly could assign a different value, such as null or a missing\nvalue, e.g., -999\n\nOn Tuesday, May 6, 2014, Beatriz González Domínguez <\naguitatierra at hotmail.com> wrote:\n\n> Hi Thomas,\n>\n> Thanks a lot for your answer! However, I still do not have clear why in\n> the raster package vignette it says:\n>\n> 'If slope = 0, aspect is set to 0.5*pi radians (or 90 degrees if\n> unit=’degrees’)\n>\n> Cheers\n>\n>\n> I think this is what you want:\n>\n> \"The *aspect* output raster map indicates the direction that slopes are\n> facing. The aspect categories represent the number degrees of east.\n> Category and color table files are also generated for the aspect map layer.\n> The aspect categories represent the number degrees of east and they\n> increase counterclockwise: 90deg is North, 180 is West, 270 is South 360 is\n> East. The aspect value 0 is used to indicate undefined aspect in flat areas\n> with slope=0.\"\n>\n> On Tuesday, May 6, 2014, Bea GD <aguitatierra at hotmail.com<javascript:_e(%7B%7D,'cvml','aguitatierra at hotmail.com');>>\n> wrote:\n>\n> Hi all,\n>\n> This is a bit general question. I've searched the web but I haven't gotten\n> a consistent answer.\n>\n> I've used a digital elevation model to produce another raster with aspect\n> data by using 'terrain{rater}'.\n> Aspect data ranges from 0 to 360 degrees. In the vignette of the raster\n> package it also says:\n> 'If slope = 0, aspect is set to 0.5*pi radians (or 90 degrees if\n> unit=’degrees’)'\n>\n> Could anyone help me to interpret the aspect data?\n>\n> Many thanks for your help.\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n> --\n> Thomas E Adams, III\n> 718 McBurney Drive\n> Lebanon, OH 45036\n>\n> 1 (513) 739-9512 (cell)\n>\n>\n>\n\n-- \nThomas E Adams, III\n718 McBurney Drive\nLebanon, OH 45036\n\n1 (513) 739-9512 (cell)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "OK, I thought that might be your issue; it is an arbitrary value because\nthe surface is not sloping in ANY direction -- a flat surface!\nConsequently, the aspect is assigned the value 0.5*pi radians (o",
       "thread_id": "thread-7708926548b1",
       "thread_depth": 3,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140506/c3883389/attachment.pl"
+      ]
     },
     {
       "id": "msg-c6a21a293666",
@@ -547,11 +568,14 @@
         "<DUB131-W21CAF6CC67677914CB4151D94F0@phx.gbl>",
         "<CAGxgkWj=UiCyLc23qHfkdbhniXd=ssWihFnVU438_qN=9noN3A@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140506/56035d8f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140506/56035d8f/attachment.pl>",
+      "body_plain": "Thanks!\n \nDate: Tue, 6 May 2014 13:59:28 -0400\nSubject: Re: [R-sig-Geo] Aspect data interpretation\nFrom: tea3rd at gmail.com\nTo: aguitatierra at hotmail.com\nCC: r-sig-geo at r-project.org\n\nOK, I thought that might be your issue; it is an arbitrary value because the surface is not sloping in ANY direction -- a flat surface! Consequently, the aspect is assigned the value 0.5*pi radians (or 90 degrees if unit =’degrees’)\n\n\nYou possibly could assign a different value, such as null or a missing value, e.g., -999\n\nOn Tuesday, May 6, 2014, Beatriz González Domínguez <aguitatierra at hotmail.com> wrote:\n\n\n\n\nHi Thomas,\n \nThanks a lot for your answer! However, I still do not have clear why in the raster package vignette it says:\n \n'If slope = 0, aspect is set to 0.5*pi radians (or 90 degrees if unit=’degrees’)\n\n \nCheers\n\n\nI think this is what you want:\n\"The aspect output raster map indicates the direction that slopes are facing. The aspect categories represent the number degrees of east. Category and color table files are also generated for the aspect map layer. The aspect categories represent the number degrees of east and they increase counterclockwise: 90deg is North, 180 is West, 270 is South 360 is East. The aspect value 0 is used to indicate undefined aspect in flat areas with slope=0.\"\n\n\nOn Tuesday, May 6, 2014, Bea GD <aguitatierra at hotmail.com> wrote:\n\n\nHi all,\n\n\n\nThis is a bit general question. I've searched the web but I haven't gotten a consistent answer.\n\n\n\nI've used a digital elevation model to produce another raster with aspect data by using 'terrain{rater}'.\n\nAspect data ranges from 0 to 360 degrees. In the vignette of the raster package it also says:\n\n'If slope = 0, aspect is set to 0.5*pi radians (or 90 degrees if unit=’degrees’)'\n\n\n\nCould anyone help me to interpret the aspect data?\n\n\n\nMany thanks for your help.\n\n\n\n_______________________________________________\n\nR-sig-Geo mailing list\n\nR-sig-Geo at r-project.org\n\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n-- \nThomas E Adams, III718 McBurney DriveLebanon, OH 45036\n1 (513) 739-9512 (cell)\n\n \t\t \t   \t\t  \n\n\n-- \nThomas E Adams, III718 McBurney DriveLebanon, OH 45036\n1 (513) 739-9512 (cell)\n\n \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks!\n \nDate: Tue, 6 May 2014 13:59:28 -0400\nSubject: Re: [R-sig-Geo] Aspect data interpretation\nFrom: tea3rd at gmail.com\nTo: aguitatierra at hotmail.com\nCC: r-sig-geo at r-project.org\n\nOK, I thoug",
       "thread_id": "thread-7708926548b1",
       "thread_depth": 4,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140506/56035d8f/attachment.pl"
+      ]
     },
     {
       "id": "msg-c4b9682c5f16",
@@ -566,11 +590,14 @@
         "<CAH89e5yuQ9k66Ga9FJTYOpGad8T6USEXmSLTA_vq0mdOOS9bzA@mail.gmail.com>",
         "<CABG0rftT4b9cVkM+eO9T5wEdYcJjPmESSDLWe2Q8LN8AVUFQ3g@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/ae1e6a45/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/ae1e6a45/attachment.pl>",
+      "body_plain": "Yes, I realized that later. RandomForest is available to predict fitted\nmodel to raster data, but not RWeka classifier. However, Rpart works too.\n\nThanks!\n\n\nOn Tue, May 6, 2014 at 9:22 PM, Jonathan Greenberg <jgrn at illinois.edu>wrote:\n\n> Anusheema:\n>\n> The first error is because you didn't specify an out filename (it\n> needs to be a character).\n>\n> Re: the second error -- is there a predict.R_Weka_classifier_interface\n> (or something along those lines) in that package?  For predict to\n> work, you need a predict.* statement available.\n>\n> You might want to swap in a randomForest for the classifier you are\n> using, at least to begin with -- randomForest does work properly with\n> raster's predict() statement.\n>\n> --j\n>\n> On Tue, May 6, 2014 at 1:37 AM, Anusheema Chakraborty\n> <anusheema at gmail.com> wrote:\n> > Hi!\n> >\n> > I am trying to classify satellite image in R using RWeka classifier,\n> > J48. I have a CSV file with the classes required, and raster data\n> > loaded in R. I am able to make the tree, however, I am not able to use\n> > the same tree to classify my satellite image.\n> >\n> > Here's how it goes.\n> >\n> > inputfile=read.csv(\"E://R/Trial/naini.CSV\")\n> > m1 <- J48(Class~B1+B2+B3+B4+B5+B7, data = inputfile)\n> > if(require(\"party\", quietly = TRUE)) plot(m1)\n> > raster<- brick(\"merge.tif\")\n> > plotRGB(raster, 4, 3, 2, stretch=\"hist\")\n> >\n> > And then I am attempting to use the tree generated to classify my\n> > satellite image, but I keep getting errors.\n> >\n> > predict (test_new, J48, filename=out_classify,\n> > progress='text',format='GTiff', datatype='FLT4S', type='response',\n> > overwrite=TRUE)\n> > Error in trim(filename) : error in evaluating the argument 'x' in\n> > selecting a method for function 'trim': Error: object 'out_classify'\n> > not found\n> >\n> > And if I change the arguments, this is what I get. I am not sure how\n> > to proceed from this point forward.\n> >\n> > predict (J48, test_new, filename=out_classify,\n> > progress='text',format='GTiff', datatype='FLT4S', type='response',\n> > overwrite=TRUE)\n> > Error in UseMethod(\"predict\") : no applicable method for 'predict'\n> > applied to an object of class \"c('R_Weka_classifier_interface',\n> > 'R_Weka_interface')\"\n> >\n> > I am new to R, so I might take a while to decipher your answers. Any\n> > help would be greatly appreciated!\n> >\n> > Thanks!\n> >\n> >\n> > Best,\n> > Anusheema.\n> >\n> >\n> >\n> > --\n> > Regards\n> >\n> > Anusheema Chakraborty\n> > Ph.D. Scholar\n> > Department of Natural Resources, TERI University\n> > 10, Institutional Area, Vasant Kunj, New Delhi - 110070\n> > Website: www.teriuniversity.ac.in\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n> --\n> Jonathan A. Greenberg, PhD\n> Assistant Professor\n> Global Environmental Analysis and Remote Sensing (GEARS) Laboratory\n> Department of Geography and Geographic Information Science\n> University of Illinois at Urbana-Champaign\n> 259 Computing Applications Building, MC-150\n> 605 East Springfield Avenue\n> Champaign, IL  61820-6371\n> Phone: 217-300-1924\n> http://www.geog.illinois.edu/~jgrn/\n> AIM: jgrn307, MSN: jgrn307 at hotmail.com, Gchat: jgrn307, Skype: jgrn3007\n>\n\n\n\n-- \nRegards\n\n*Anusheema Chakraborty*\nPh.D. Scholar\nDepartment of Natural Resources, TERI University\n10, Institutional Area, Vasant Kunj, New Delhi - 110070\nWebsite: www.teriuniversity.ac.in\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Yes, I realized that later. RandomForest is available to predict fitted\nmodel to raster data, but not RWeka classifier. However, Rpart works too.\n\nThanks!\n\n\nOn Tue, May 6, 2014 at 9:22 PM, Jonathan Gr",
       "thread_id": "thread-dd7f0e268b3b",
       "thread_depth": 2,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/ae1e6a45/attachment.pl"
+      ]
     },
     {
       "id": "msg-2c8ad5e36518",
@@ -585,11 +612,14 @@
         "<CAN9eD7=zFvF+xXtmCdPRpAoP1tM13HynmMc6_WOuC965FXUpCg@mail.gmail.com>",
         "<CABG0rfvh6xHoPrhpg5j6AALgzFeTdSO=6OLOUbKm9b374ieyXQ@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/6e158394/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/6e158394/attachment.pl>",
+      "body_plain": "I have now scripted a simple example to show what I am trying to do.  I\nwish to combine two input rasters (r1,r2) to give an output raster that has\nan attribute tables which contains IDs for the unique levels of\ncombinations of r1 and r2:  this is the equivalent of a spatial analyst\ncombine function in ArcGIS.\n\nr1 <- ratify(raster(matrix(c(5,5,6),3,3)),count=T)\nr2<-ratify(raster(t(matrix(c(7,7,8),3,3))),count=T)\n\n#i have manually constructed r3 the output that I wish to obtain.\nr3<-ratify(raster(matrix(c(1,1,2,1,1,2,3,3,4),3,3)),count=T)\nrStack<-stack(r1,r2,r3)\nnames(rStack)<-c(\"r1\",\"r2\",\"r3\")\nplot(rStack)\n#The step I cannot work out is the function that calculates the levels (\nand associated attributes) -  for unique spatail combinations of the values\nof r1 and r2\n#The actual rasters have millions of cells with hudreds ouf thousands of\nlevels.\nr3 at data at attributes[[1]]$r1<-c(5,6,5,6)\nr3 at data at attributes[[1]]$r2<-c(7,7,8,8)\nprint(r3)\n\nI then wish to join attribute tables ( each containing many attributes) of\nr1 and r2 to the value attributes (r1,r2) of raster r3.\n\n\nOn Sat, Apr 12, 2014 at 12:52 AM, Jonathan Greenberg <jgrn at illinois.edu>wrote:\n\n> Nevil:\n>\n> Can you be more specific with what those attributes are?  You can use\n> a RAT table with rasters (?ratify in the raster package), but without\n> more specific details it is hard to give you a good answer.  What is\n> the data, and what, exactly, are you trying to accomplish?\n>\n> --j\n>\n> On Thu, Apr 10, 2014 at 11:14 PM, nevil amos <nevil.amos at gmail.com> wrote:\n> > How can I combine tow overlapping Rasters in R maintaining such that the\n> > output raster cells are assigned the attributes of both the input\n> rasters.\n> >  - The equivalent of ARCGIS spatial analyst combine rasters followed by\n> > joining back to each of the input raster  attribute tables?\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n> --\n> Jonathan A. Greenberg, PhD\n> Assistant Professor\n> Global Environmental Analysis and Remote Sensing (GEARS) Laboratory\n> Department of Geography and Geographic Information Science\n> University of Illinois at Urbana-Champaign\n> 259 Computing Applications Building, MC-150\n> 605 East Springfield Avenue\n> Champaign, IL  61820-6371\n> Phone: 217-300-1924\n> http://www.geog.illinois.edu/~jgrn/\n> AIM: jgrn307, MSN: jgrn307 at hotmail.com, Gchat: jgrn307, Skype: jgrn3007\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I have now scripted a simple example to show what I am trying to do.  I\nwish to combine two input rasters (r1,r2) to give an output raster that has\nan attribute tables which contains IDs for the uniqu",
       "thread_id": "thread-2c8ad5e36518",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/6e158394/attachment.pl"
+      ]
     },
     {
       "id": "msg-cb5e952720d7",
@@ -668,11 +698,14 @@
       "references": [
         "<8d4d1214949b4c8aae4170feb591042f@EX-0-HT0.lancs.local>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/919787aa/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/919787aa/attachment.pl>",
+      "body_plain": "On Wed, May 7, 2014 at 12:21 PM, Agustin Lobo <alobolistas at gmail.com> wrote:\n\n> Does anyone know if readOGR() can be used with remote files on remote\n> folders?\n> The following does not work for me:\n> NWEur <- readOGR(dsn=\"http://www.wuala.com/aloboa/NWEur\n> \",layer=\"NWEur\",stringsAsFactors=FALSE)\n> Error in ogrInfo(dsn = dsn, layer = layer, encoding = encoding,\n> use_iconv = use_iconv) :\n>   Cannot open file\n>\n\n That's not going to work - the dsn is passed through to OGR and it doesn't\nsupport that kind of thing - sadly http is not a network filesystem\n(although I suspect there are filesystem shims that let you mount http\nservers as file systems via something like Gnome VFS - read only)...\n\n\n> (note that you can paste the url into your browser and works and that\n> there is no https)\n>\n> But actually even this example from\n> https://personality-project.org/r/r.guide.html\n> does not work for me:\n>\n> datafilename <-\n> \"http://personality-project.org/r/datasets/Maps.mixx.msq1.epi.bf.txt\"\n> person.data  <- read.table(datafilename,header=TRUE)\n> Error in file(file, \"rt\") : cannot open the connection\n>\n> I also need to specify method=\"curl\" to get download.fiel()  to work:\n> download.file(\"https://dl.dropboxusercontent.com/u/3180464/NWEur.zip\n> \",\"NWEur.zip\",method=\"curl\")\n>\n> so I do not know if I have an idiosynchratic web security ward or I'm\n> just not doing things right\n>\n\n\nhelp(url) says:\n\n   Note that ‘https://’ connections are not supported except on\n     Windows [with exceptions]\n\nand although your URL starts http that actually gets a \"302 redirect\"\nresponse to an https - here's some output from wget:\n\nHTTP request sent, awaiting response... 302 Found\nLocation:\nhttps://personality-project.org/r/datasets/Maps.mixx.msq1.epi.bf.txt[following]\n\nI don't know if read.table is failing because it can't follow the redirect\nor because it does follow and then fails because its an https...\n\nBarry\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "On Wed, May 7, 2014 at 12:21 PM, Agustin Lobo <alobolistas at gmail.com> wrote:\n\n> Does anyone know if readOGR() can be used with remote files on remote\n> folders?\n> The following does not work for me",
       "thread_id": "thread-24b4715cc81c",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/919787aa/attachment.pl"
+      ]
     },
     {
       "id": "msg-15524a692a10",
@@ -718,11 +751,14 @@
       "subject_clean": "Geostatistical Space–Time Model",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/7c477a74/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/7c477a74/attachment.pl>",
+      "body_plain": "Hi, I need some help.\nDoes anyone have R code to a Geostatistical Space–Time Models applied to\npests like  the red palm weevil (Rhynchophorus ferrugineus) or fungal\npathogens of vegetable crops?\nThanks for  any advice or link to related code or documentation.\n\nToni\nDep of Statistics\nUniversity of Barcelona\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi, I need some help.\nDoes anyone have R code to a Geostatistical Space–Time Models applied to\npests like  the red palm weevil (Rhynchophorus ferrugineus) or fungal\npathogens of vegetable crops?\nThank",
       "thread_id": "thread-2f2a9ea1fa88",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/7c477a74/attachment.pl"
+      ]
     },
     {
       "id": "msg-d56143b7a93a",
@@ -825,11 +861,14 @@
         "<43543e94.124c2.145d6c9035f.Coremail.15201514761@163.com>",
         "<alpine.DEB.2.00.1405071145460.23894@pataxo.est.ufpr.br>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/c6ce1f26/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/c6ce1f26/attachment.pl>",
+      "body_plain": "In this way I can only get a list of all the values. In my codes, I set up a grid of  420  columns and 565 rows. I hope to fill those values to each grid cell,  then I can get the values on the surface. The result I expect is a 565*420 grid with values calculated with krige.conv.\n\n\n\n\n\n--\n×£ºÃ£¡\nÌÆ¹úÇ¿\nÇå»ª´óÑ§Ë®ÀûË®µç¹¤³ÌÏµ\nTel£º15201514761\n\n\n\nAt 2014-05-07 22:49:15,\"Paulo Justiniano\" <paulojus at leg.ufpr.br> wrote:\n>Ths is just about how to export R objects and any std device can be used\n>There is no specific functionin geoR\n>\n>krige.conv() retuns a list where the first two components are the\n>kriging predictions and variances which are the ones you may wish to \n>export\n>\n>Suppose kc is the object with output of krige.conv()\n>as an example you can export as a csv file with:\n>\n>write.csv(kc[1:2], file=\"kc.csv\")\n>\n>\n>On Wed, 7 May 2014, ÌÆ¹úÇ¿ wrote:\n>\n>> Dear Paulo J. Ribeiro and Peter J. Diggle:I used \"krige.conv\" to do Krige interplation in a region. But I have difficulties in export the results.I find some\n>> codes on a website https://stat.ethz.ch/pipermail/r-sig-geo/2009-July/006167.html. But I can't get it run and I can't understand it probably because the codes\n>> lose some information.\n>> Attachtment is my code. What I want to know is how to export the result of krige.conv to .asc  .xlsx or some others file.\n>> Thank you!\n>> \n>> Guoqiang Tang\n>> \n>> \n>> \n>> À´×ÔÍøÒ×ÊÖ»úºÅÂëÓÊÏäÁË½â¸ü¶à\n>> \n>>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "In this way I can only get a list of all the values. In my codes, I set up a grid of  420  columns and 565 rows. I hope to fill those values to each grid cell,  then I can get the values on the surfac",
       "thread_id": "thread-c30f11e2ee5c",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/c6ce1f26/attachment.pl"
+      ]
     },
     {
       "id": "msg-91128ca8ce9a",
@@ -897,11 +936,14 @@
       "references": [
         "<CAFFKpM08V+0i6AAhQNEn5v9t7hSY=7LBTO2nZEN67br9XTPRzw@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/f48462d5/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/f48462d5/attachment.pl>",
+      "body_plain": "Hi, I need some help.\nDoes anyone have R code to a Geostatistical Space–Time Models applied to\npests like  the red palm weevil (Rhynchophorus ferrugineus) or fungal\npathogens of vegetable crops?\nThanks for  any advice or link to related code or documentation.\n\nToni\nDep of Statistics\nUniversity of Barcelona\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi, I need some help.\nDoes anyone have R code to a Geostatistical Space–Time Models applied to\npests like  the red palm weevil (Rhynchophorus ferrugineus) or fungal\npathogens of vegetable crops?\nThank",
       "thread_id": "thread-2f2a9ea1fa88",
       "thread_depth": 1,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/f48462d5/attachment.pl"
+      ]
     },
     {
       "id": "msg-baa08b7d1fe8",
@@ -932,11 +974,14 @@
       "subject_clean": "using rank in stackApply",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140508/088c37f3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140508/088c37f3/attachment.pl>",
+      "body_plain": "Hi.\nI have a 4 layered raster brick of rainfall totals, and want to create a raster brick of rainfall total ranks (so at any x,y coordinate, the cell values down through the brick will be some permutation of 1,2,3 and 4 (assuming no ties)). There are no NA values in the data.\n\nThe brick is called temp\n\n> temp\nclass       : RasterBrick\ndimensions  : 400, 324, 129600, 4  (nrow, ncol, ncell, nlayers)\nresolution  : 0.05, 0.05  (x, y)\nextent      : 137.525, 153.725, -29.975, -9.975  (xmin, xmax, ymin, ymax)\ncoord. ref. : NA\ndata source : in memory\nnames       :  r198612,  r198701,  r198702,  r198703\nmin values  :        0,        0,        0,        0\nmax values  : 320.8333, 428.2410, 922.9112, 632.9712\n\nHowever when I use the stackApply function, I get the following error\n\n> stackApply(temp, indices=c(1,2,3,4), fun=rank)\nError in FUN(newX[, i], ...) : unused argument (na.rm = TRUE)\n\nMany thanks for any help.\nTerry\n\n\n------------------------------\nThe information in this email together with any attachments is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. There is no waiver of any confidentiality/privilege by your inadvertent receipt of this material. \nAny form of review, disclosure, modification, distribution and/or publication of this email message is prohibited, unless as a necessary part of Departmental business.\nIf you have received this message in error, you are asked to inform the sender as quickly as possible and delete this message and any copies of this message from your computer and/or your computer system network.\n------------------------------\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi.\nI have a 4 layered raster brick of rainfall totals, and want to create a raster brick of rainfall total ranks (so at any x,y coordinate, the cell values down through the brick will be some permuta",
       "thread_id": "thread-ac4c6aef5b1e",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140508/088c37f3/attachment.pl"
+      ]
     },
     {
       "id": "msg-f153246d9c89",
@@ -952,11 +997,14 @@
         "<CABG0rfvh6xHoPrhpg5j6AALgzFeTdSO=6OLOUbKm9b374ieyXQ@mail.gmail.com>",
         "<CAN9eD7mcQqNuzud9EZiM_Z0P4kD=6sFSr7qUfOh1H_-WmMkc=g@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140508/096c7590/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140508/096c7590/attachment.pl>",
+      "body_plain": "I found a near solution  back further in r-sig-geo:\nhttp://r-sig-geo.2731867.n2.nabble.com/combine-function-in-R-td7028762.html\n\n\n\nwith the addition of a line to join the attributes back to the\n@attributes[[1]] it achieves the full equivalent of the combine in spatial\nanalyst:\n\nr1 <- ratify(raster(matrix(c(5,5,6),3,3)),count=T)\nr2<-ratify(raster(t(matrix(c(7,7,8),3,3))),count=T)\ns<-stack(r1,r2)\nnames(s)<-c(\"r1\",\"r2\")\nplot(s)\nus <- unique(s)\n\nuss <- apply(us, 1, function(x)paste(x, collapse='_'))\ncomb <- function(x) match(apply(x, 1, function(x)paste(x,\ncollapse='_')),uss)\nr3 <- ratify(calc(s, comb))\nr3 at data at attributes[[1]][,2:3]<-us\n\ns<-stack(s,r3)\nr3\n\n\n\n\n\nOn Wed, May 7, 2014 at 2:50 PM, nevil amos <nevil.amos at gmail.com> wrote:\n\n> I have now scripted a simple example to show what I am trying to do.  I\n> wish to combine two input rasters (r1,r2) to give an output raster that has\n> an attribute tables which contains IDs for the unique levels of\n> combinations of r1 and r2:  this is the equivalent of a spatial analyst\n> combine function in ArcGIS.\n>\n> r1 <- ratify(raster(matrix(c(5,5,6),3,3)),count=T)\n> r2<-ratify(raster(t(matrix(c(7,7,8),3,3))),count=T)\n>\n> #i have manually constructed r3 the output that I wish to obtain.\n> r3<-ratify(raster(matrix(c(1,1,2,1,1,2,3,3,4),3,3)),count=T)\n> rStack<-stack(r1,r2,r3)\n> names(rStack)<-c(\"r1\",\"r2\",\"r3\")\n> plot(rStack)\n> #The step I cannot work out is the function that calculates the levels (\n> and associated attributes) -  for unique spatail combinations of the values\n> of r1 and r2\n> #The actual rasters have millions of cells with hudreds ouf thousands of\n> levels.\n> r3 at data at attributes[[1]]$r1<-c(5,6,5,6)\n> r3 at data at attributes[[1]]$r2<-c(7,7,8,8)\n> print(r3)\n>\n> I then wish to join attribute tables ( each containing many attributes) of\n> r1 and r2 to the value attributes (r1,r2) of raster r3.\n>\n>\n> On Sat, Apr 12, 2014 at 12:52 AM, Jonathan Greenberg <jgrn at illinois.edu>wrote:\n>\n>> Nevil:\n>>\n>> Can you be more specific with what those attributes are?  You can use\n>> a RAT table with rasters (?ratify in the raster package), but without\n>> more specific details it is hard to give you a good answer.  What is\n>> the data, and what, exactly, are you trying to accomplish?\n>>\n>> --j\n>>\n>> On Thu, Apr 10, 2014 at 11:14 PM, nevil amos <nevil.amos at gmail.com>\n>> wrote:\n>> > How can I combine tow overlapping Rasters in R maintaining such that the\n>> > output raster cells are assigned the attributes of both the input\n>> rasters.\n>> >  - The equivalent of ARCGIS spatial analyst combine rasters followed by\n>> > joining back to each of the input raster  attribute tables?\n>> >\n>> >         [[alternative HTML version deleted]]\n>> >\n>> > _______________________________________________\n>> > R-sig-Geo mailing list\n>> > R-sig-Geo at r-project.org\n>> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>\n>>\n>> --\n>> Jonathan A. Greenberg, PhD\n>> Assistant Professor\n>> Global Environmental Analysis and Remote Sensing (GEARS) Laboratory\n>> Department of Geography and Geographic Information Science\n>> University of Illinois at Urbana-Champaign\n>> 259 Computing Applications Building, MC-150\n>> 605 East Springfield Avenue\n>> Champaign, IL  61820-6371\n>> Phone: 217-300-1924\n>> http://www.geog.illinois.edu/~jgrn/\n>> AIM: jgrn307, MSN: jgrn307 at hotmail.com, Gchat: jgrn307, Skype: jgrn3007\n>>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I found a near solution  back further in r-sig-geo:\nhttp://r-sig-geo.2731867.n2.nabble.com/combine-function-in-R-td7028762.html\n\n\n\nwith the addition of a line to join the attributes back to the\n@attri",
       "thread_id": "thread-2c8ad5e36518",
       "thread_depth": 1,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140508/096c7590/attachment.pl"
+      ]
     },
     {
       "id": "msg-b0e5b3374aa2",
@@ -968,11 +1016,14 @@
       "subject_clean": "87:-(=-O",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/b4eda454/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/b4eda454/attachment.pl>",
+      "body_plain": "m9mtjwwtmpwtwdwt\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "m9mtjwwtmpwtwdwt\n\n\t[[alternative HTML version deleted]]",
       "thread_id": "thread-b0e5b3374aa2",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140507/b4eda454/attachment.pl"
+      ]
     },
     {
       "id": "msg-699fac934394",
@@ -1150,11 +1201,14 @@
         "<alpine.LRH.2.03.1405091438490.31171@reclus.nhh.no>",
         "<1399641309742-7586411.post@n2.nabble.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140509/998c1d9b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140509/998c1d9b/attachment.pl>",
+      "body_plain": "On Fri, May 9, 2014 at 8:15 AM, az14 <abidi.zineb at gmail.com> wrote:\n\n> Hi, acctually it's for the (LM tests for spatial panel data).\n> w is a distance matrix ( wih cut of 70km) .\n> M <- matrix(1, nrow=9, ncol=9)\n> W9 <- kronecker(W, M)\n> I get this error:\n>\n> Erreur dans `dimnames<-.data.frame`(`*tmp*`, value = list(n)) :\n>   invalid 'dimnames' given for data frame\n>\n>\n>\nIs this what your are after?\n\n> x = matrix(1:9, 3)\n> x\n     [,1] [,2] [,3]\n[1,]    1    4    7\n[2,]    2    5    8\n[3,]    3    6    9\n> y = x[rep(1:nrow(x), each = 3), rep(1:ncol(x), each = 3)]\n> y\n      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]\n [1,]    1    1    1    4    4    4    7    7    7\n [2,]    1    1    1    4    4    4    7    7    7\n [3,]    1    1    1    4    4    4    7    7    7\n [4,]    2    2    2    5    5    5    8    8    8\n [5,]    2    2    2    5    5    5    8    8    8\n [6,]    2    2    2    5    5    5    8    8    8\n [7,]    3    3    3    6    6    6    9    9    9\n [8,]    3    3    3    6    6    6    9    9    9\n [9,]    3    3    3    6    6    6    9    9    9\n>\n\n\nTHK\n\n\n>\n>\n> --\n> View this message in context:\n> http://r-sig-geo.2731867.n2.nabble.com/Repeat-columns-and-rows-of-matrix-tp7586408p7586411.html\n> Sent from the R-sig-geo mailing list archive at Nabble.com.\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n\n-- \nhttp://www.keittlab.org/\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "On Fri, May 9, 2014 at 8:15 AM, az14 <abidi.zineb at gmail.com> wrote:\n\n> Hi, acctually it's for the (LM tests for spatial panel data).\n> w is a distance matrix ( wih cut of 70km) .\n> M <- matrix(1, n",
       "thread_id": "thread-4916ac5da986",
       "thread_depth": 4,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140509/998c1d9b/attachment.pl"
+      ]
     },
     {
       "id": "msg-8fc97183fce6",
@@ -1166,11 +1220,14 @@
       "subject_clean": "Error when attempting to use rle in 'calc' in Raster package",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140509/f01576be/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140509/f01576be/attachment.pl>",
+      "body_plain": "Dear all,\n\nIt will probably be a very stupid thing I do, but I am trying to calculate\nresidence 'times' for a binary raster (1,0) and found the error\n\nError in .calcTest(x[1:5], fun, na.rm, forcefun, forceapply) :\n  cannot use this function\n\n\nMaybe there are other ways of doing it , but so far, for vectors, I used\nrle to calculate the repetitions of the same value across a sequence. I was\nhoping I could use it for raster too. On trying it 'cell-by-cell' I could\ndo it. However, this is a very large raster and I guess that even mcapply\nwould take a while. I was wondering if there is a neat code, or other\npackage that I could use.\n\nAny help would be greatly welcome,\n\nKind regards,\n\nJM\n\n### See code below for toy example\n\n\n#INPUT LAYERS\ntime1 <- raster(matrix  (c(1,1,0,1,0,0,0,0,0),nrow=3))\ntime2 <-  raster(matrix (c(1,1,0,0,0,1,0,0,0),nrow=3))\ntime3 <-  raster(matrix (c(0,1,0,1,0,1,0,1,0),nrow=3))\ntime4 <-  raster(matrix (c(1,1,1,1,0,1,0,1,0),nrow=3))\n\n#expected results for Max. residence (e.g. How many many\ntimes,sequentially, number 1 appears)\nr <-  raster(matrix (c(2,4,1,2,0,3,0,3,0),nrow=3))\n\n#raster stack\ns<-stack(time1,time2,time3,time4)\n\ns.test1 <- calc (s , fun=function (x){\n    count.trends <- rle(as.vector(x))\n    res.times <- count.trends$lengths[which(count.trends$values==1)]\n    res.times.max <- max(res.times)\n    res.times.ave <- mean(res.times)\n    res.times.var <- var(res.times)\n    res.times.slp <- coef(lm(res.times~seq(1:length(res.times))))[2]\n            return(res.times.max)\n            return(res.times.ave)\n            return(res.times.var)\n            return(res.times.slp)\n    }#end function\n) #end calc\n\n\n#if I convert the values of each cell to a vector first, I can do it. I\ncould go through mclapply, but it is a large raster anyways\n\ntest.per.cell <-function (s=s,cell){\n          count.trends <- rle(as.vector(s[cell]))\n          res.times <- count.trends$lengths[which(count.trends$values==1)]\n\n            #make calculations\n            res.times.max <- max(res.times)\n            res.times.ave <- mean(res.times)\n            res.times.var <- var(res.times)\n            res.times.slp <-\nas.numeric(coef(lm(res.times~seq(1:length(res.times))))[2])\n\n            #return results\n            return (res.times.max )\n            return (res.times.ave )\n            return (res.times.var )\n            return (res.times.var )\n}\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\nIt will probably be a very stupid thing I do, but I am trying to calculate\nresidence 'times' for a binary raster (1,0) and found the error\n\nError in .calcTest(x[1:5], fun, na.rm, forcefun, ",
       "thread_id": "thread-8fc97183fce6",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140509/f01576be/attachment.pl"
+      ]
     },
     {
       "id": "msg-cccfc27e9d17",
@@ -1182,11 +1239,14 @@
       "subject_clean": "Extract raster attributes ( factors) directly for points",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140512/dea36f2c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140512/dea36f2c/attachment.pl>",
+      "body_plain": "Is it possible to extract multiple values from  a raster attribute table\n(eg EVDEFG_RC2 at data at attributes[[1]][,4:7] directly to a data frame? or is\nit only possible by joining the raster attribute table to the extracted\nraster value?\n\nthanks\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Is it possible to extract multiple values from  a raster attribute table\n(eg EVDEFG_RC2 at data at attributes[[1]][,4:7] directly to a data frame? or is\nit only possible by joining the raster attribut",
       "thread_id": "thread-cccfc27e9d17",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140512/dea36f2c/attachment.pl"
+      ]
     },
     {
       "id": "msg-d94a5087376e",
@@ -1198,11 +1258,14 @@
       "subject_clean": "allocate cells according to highest values across a raster stack",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140512/3c6e7639/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140512/3c6e7639/attachment.pl>",
+      "body_plain": "Hello, I'd really appreciate some help, \n\nI have four raster layers, each one represents transition \npotential for a particular land use, e.g. 1 urban, 2 irrigated, 3 \nnon-irrigated, 4 forest. In theoretical terms, the transition potential \nlayers represent a competition for space between the 4 land uses, with \nthe eventual land use being determined by \"the highest bidder\", that's \nto say, the land use that has the highest transition potential for that \ncell.   \n\nSo, to allocate the final land use, I need to create a new layer\n from the raster stack, in which each cell contains the number of the \nlayer in the stack that had the highest value for that cell; e.g. if \nlayer r1 had the highest value for a particular cell out of all the \nlayers in the stack, that cell should have value 1 in the new layer. So \nfar, simple enough. But this is not quite what I need, because I need to\n allocate a fixed quantity of cells (the \"demand\") from each layer, not \nall the cells that won the competition. This is where it gets slightly \nmore complicated. If the cell demand (e.g. 5) for a particular layer, \ne.g. r1, is less than the number of cells that won the competition (e.g.\n 21), then the new map needs to contain 1s only where the 5 highest \nvalue cells from map 1; once these 5 cells have been allocated, no more \n1's can be allocated, so the cells that would have taken value 1 should \ntake the value from the layer that came second instead. This is as far as I've got:\n\n#start R script \nrequire(raster) \nr1 <- raster(nrows=10, ncols=10) \nr2=r3=r4=r1 \nr1[]= runif(ncell(r1)) \nr2[]= runif(ncell(r1))+0.2 \nr3[]= runif(ncell(r1))-0.2 \nr4[]= runif(ncell(r1)) \nrs=stack(r1,r2,r3,r4) \n\nr1demand <- 5  #this is the number of cells I want to allocate from r1 \nr2demand <- 8\t#this is the number of cells I want to allocate from r2 \nr3demand <- 14\t#this is the number of cells I want to allocate from r3 \nr4demand <- 7\t#this is the number of cells I want to allocate from r4 \n\nmiwhichmax <- function(x,na.rm=TRUE) which.max(x) \nrsmaxvals <- stackApply(rs,indices=c(1,1,1,1),max)  #this returns\n a single raster with the highest values from all of the other layers \nallocated <- stackApply(rs,indices=c(1,1,1,1),miwhichmax) #this \nallocates a value to each cell corresponding to the layer which has the \nhighest value for that cell. \n\n\nAny ideas?\n\nMany thanks, \nRichard \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello, I'd really appreciate some help, \n\nI have four raster layers, each one represents transition \npotential for a particular land use, e.g. 1 urban, 2 irrigated, 3 \nnon-irrigated, 4 forest. In theo",
       "thread_id": "thread-d94a5087376e",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140512/3c6e7639/attachment.pl"
+      ]
     },
     {
       "id": "msg-2d55ad37d155",
@@ -1235,11 +1298,14 @@
         "<CAN9eD7m-qYTCuLvntvFCO-TayHERSaGW6qE-WtkfCJ6smykXcw@mail.gmail.com>",
         "<CABG0rfs6FUngYgO1R1eshaRwsQgmr47HiU6K_snN+wT=r26a7g@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140513/f4746a84/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140513/f4746a84/attachment.pl>",
+      "body_plain": "Thanks\nOn Monday, May 12, 2014 <x-apple-data-detectors://24>, Jonathan Greenberg <\njgrn at illinois.edu> wrote:\n\n> Nevil:\n>\n> I think if you:\n>\n> extract(...,sp=TRUE) you'll get what you are looking for (that will\n> extract the values and place them into the data frame of the spatial\n> object -- you can always peel off the data.frame afterwards using e.g.\n> as.data.frame).\n>\n> --j\n>\n> On Mon, May 12, 2014 at 12:39 AM, nevil amos <nevil.amos at gmail.com<javascript:;>>\n> wrote:\n> > Is it possible to extract multiple values from  a raster attribute table\n> > (eg EVDEFG_RC2 at data at attributes[[1]][,4:7] directly to a data frame? or\n> is\n> > it only possible by joining the raster attribute table to the extracted\n> > raster value?\n> >\n> > thanks\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org <javascript:;>\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n> --\n> Jonathan A. Greenberg, PhD\n> Assistant Professor\n> Global Environmental Analysis and Remote Sensing (GEARS) Laboratory\n> Department of Geography and Geographic Information Science\n> University of Illinois at Urbana-Champaign\n> 259 Computing Applications Building <x-apple-data-detectors://30>, MC-150\n> 605 East Springfield Avenue <x-apple-data-detectors://31/0>\n> Champaign, IL  61820-6371 <x-apple-data-detectors://31/0>\n> Phone: 217-300-1924\n> http://www.geog.illinois.edu/~jgrn/\n> AIM: jgrn307, MSN: jgrn307 at hotmail.com <javascript:;>, Gchat: jgrn307,\n> Skype: jgrn3007\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Thanks\nOn Monday, May 12, 2014 <x-apple-data-detectors://24>, Jonathan Greenberg <\njgrn at illinois.edu> wrote:\n\n> Nevil:\n>\n> I think if you:\n>\n> extract(...,sp=TRUE) you'll get what you are looking f",
       "thread_id": "thread-cccfc27e9d17",
       "thread_depth": 2,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140513/f4746a84/attachment.pl"
+      ]
     },
     {
       "id": "msg-6aad850c3b8d",
@@ -1251,11 +1317,14 @@
       "subject_clean": "space-time class object with stConstruct",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140513/5de1eedc/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140513/5de1eedc/attachment.pl>",
+      "body_plain": "Hi all,\n\n\nI have the following error message when attempting to create a space-time class object (ST) from an existing long format table.\n\n\n\n> TempData <- stConstruct(HourlyData, space=\"Station\", time=\"Time\", SpatialObj=MetStationPts)\n\nError: nrow(object at time) == length(object at sp) is not TRUE\n\n\n\n\n\n\"HourlyData\" containins temperature measurements from 8 met stations (together with spatial ID and Time in a long format df)\nThe df is sorted by stations (8) then by time (1-hour intervals during months)\n\n\"MetStationPts\" contains the met. station coordinates.\n\n\n> str(HourlyData)\n'data.frame':  35308 obs. of  13 variables:\n$ Station      : chr  \"17030\" \"17030\" \"17030\" \"17030\"...\n$ Time         : POSIXct, format: \"2013-07-01 00:00:00\" \"2013-07-01 01:00:00\" ...\n$ TMean        : num  7.3 9.5 12.3 13.2 13.5 12.1 9.6 8.3 6.7 6.1\n\n\n\n\n> str(MetStationPts)\nFormal class 'SpatialPointsDataFrame' [package \"sp\"] with 5 slots\n  ..@ data       :'data.frame':       8 obs. of  2 variables:\n  .. ..$ ID  : chr [1:8] \"17030\" \"23899\" \"23908\" \"25643\" ...\n  .. ..$ Name: Factor w/ 8 levels \"Hamilton, Ruakura 2 Ews\",..: 3 6 7 8 1 5 4 2\n  ..@ coords.nrs : int [1:2] 3 4\n  ..@ coords     : num [1:8, 1:2] 176 175 176 176 175 ...\n  .. ..- attr(*, \"dimnames\")=List of 2\n  .. .. ..$ : chr [1:8] \"17030\" \"23899\" \"23908\" \"25643\" ...\n  .. .. ..$ : chr [1:2] \"X\" \"Y\"\n  ..@ bbox       : num [1:2, 1:2] 175.2 -39 176.9 -37.7\n  .. ..- attr(*, \"dimnames\")=List of 2\n  .. .. ..$ : chr [1:2] \"X\" \"Y\"\n  .. .. ..$ : chr [1:2] \"min\" \"max\"\n  ..@ proj4string:Formal class 'CRS' [package \"sp\"] with 1 slots\n  .. .. ..@ projargs: chr \"+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0\"\n\n\nCould anyone help me to interpret the error message?\n\nMany thanks for your help.\n\n\n\nNicolas MEURISSE\n\n\n\n________________________________\n\n\nThis e-mail and any attachments may contain information ...{{dropped:10}}",
+      "body_snippet": "Hi all,\n\n\nI have the following error message when attempting to create a space-time class object (ST) from an existing long format table.\n\n\n\n> TempData <- stConstruct(HourlyData, space=\"Station\", time",
       "thread_id": "thread-6aad850c3b8d",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140513/5de1eedc/attachment.pl"
+      ]
     },
     {
       "id": "msg-9335321a846c",
@@ -1319,11 +1388,14 @@
       "subject_clean": "spatial modelling projection question",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140513/0ad87fd5/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140513/0ad87fd5/attachment.pl>",
+      "body_plain": "Hi -\nI do some spatial modeling over the inter-mountain west of USA and am\nwondering about projections.  Most people suggest longlat is not  a proper\n'projection' for geostatistics and in fact some packages require a\nprojection with meters instead of degrees. I believe gstat will compute\ngreat circle distances for longlat data. I have seen some caveats on this,\ne.g. \"there are no checks that the variogram model can be applied sanely on\na sphere\"<http://r-sig-geo.2731867.n2.nabble.com/Kriging-and-datum-shifts-td7583666.html>\n.\nThe standard projection for a domain my size/geographic location seems to\nbe the conus albers from USGS (epsg:5070) which is an equal area projection\nso my question is: Wouldn't it make more sense to do spatial modeling with\na true distance projection, i.e. longlat, than an equal area projection for\nwhich distances are skewed? What makes the variogram model potentially\ninappropriate on a sphere (overlooking the fact that the earth isn't really\na sphere)?\nI appreciate your help understanding this.\nThanks\nDominik\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi -\nI do some spatial modeling over the inter-mountain west of USA and am\nwondering about projections.  Most people suggest longlat is not  a proper\n'projection' for geostatistics and in fact some pa",
       "thread_id": "thread-e5def726b409",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140513/0ad87fd5/attachment.pl"
+      ]
     },
     {
       "id": "msg-b4c2b149228d",
@@ -1408,11 +1480,14 @@
         "<CAHYDKLYjqOpy7Ed+RvSEHDmG8SFYi2kO_7jTHFZbQbgXjK3XKQ@mail.gmail.com>",
         "<alpine.LNX.2.11.1405131142440.11126@localhost>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/e6e79774/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/e6e79774/attachment.pl>",
+      "body_plain": "On Wed, May 14, 2014 at 4:53 AM, Rich Shepard <rshepard at appl-ecosys.com>wrote:\n\n> On Tue, 13 May 2014, Dominik Schneider wrote:\n>\n>  Most people suggest longlat is not  a proper 'projection' for\n>> geostatistics ...\n>>\n>\n> Dominik,\n>\n>   longlat represent geographic coordinates, not a projection of\n> 3-dimensional points on Earth to a 2-dimensional representation on paper or\n> a computer monitor.\n>\n>\n\nI believe that Dominik is referring to the fact that with longlat we can\nuse ellipsoid calculations for distance, which cover the most general\nsolution for \"most accurate\" across many situations. There are many map\nprojections that are more suitable for given applications, but then the\ngeneral confidence about Cartesian distances is gone: we need to be careful\nthat our distance calcs are appropriate within the constraints of that\nprojection. Any equi-distant projection can provide best accuracy only\nwithin specific constraints.  (This is not true for area, those can be\nalways accurate in an equal-area projection albeit with loss of\nconformality and usual numeric/topology constraints).\n\nI think the only general solution is to back-transform and use the\nellipsoid for distance, unless you can be sure that the Cartesian methods\nmatch your needs in the projection being used.  The only way to match\nellipsoid accuracy is to generate a local unique equi-distant projection\nfor each distance segment and measure from its centre to the other point.\n(I think Manifold does this internally for the interactive\ndistance-measuring Tracker tool when you toggle the ellipsoid key. ).\n\nI've been bothered by this for a while, especially with such a wide use of\nUTM out there. I think you always need to be concerned about it, and do\nsome checks across your region/application to make sure Cartesian distance\nis good enough when you have chosen a projection for other properties.  If\nyou can forget the need for expensive ellipsoid calculations or many local\nequidistant projections it's obviously going to be more efficient.\n\nCheers, Mike.\n\n\n\n\n\n\n\n>\n>  The standard projection for a domain my size/geographic location seems to\n>> be the conus albers from USGS (epsg:5070) which is an equal area\n>> projection so my question is: Wouldn't it make more sense to do spatial\n>> modeling with a true distance projection, i.e. longlat, than an equal area\n>> projection for which distances are skewed?\n>>\n>\n>   What question(s) are you trying to answer with your data? Depending on\n> the\n> size of the area analyzed you might find that UTM or State Plane Feet are\n> better projections for your use.\n>\n>\n>  What makes the variogram model potentially inappropriate on a sphere\n>> (overlooking the fact that the earth isn't really a sphere)? I appreciate\n>> your help understanding this.\n>>\n>\n>   Every datum (e.g., NAD83 or NAD27; the North American Datums calculated\n> in\n> the noted year) has errors because the Earth is neither a sphere or a\n> smooth ellipsoid.\n>\n>   I highly recommend your studying Snyder, J.P. 1987. Map projections -- A\n> Working Manual. USGS Professional Paper 1395. It went out of print in the\n> early 1990s but is considered the benchmark for topographic map\n> projections.\n> You can also read the documentation for Proj4, but John Snyder's monograph\n> will greatly increase your understanding.\n>\n>   Understanding projections will help you select the most appropriate one\n> for each question you want to answer. You also need to be aware of what\n> happens when your analytical area is across two zones.\n>\n> HTH,\n>\n> Rich\n>\n> --\n> Richard B. Shepard, Ph.D.        | Technically sound and legally defensible\n> Applied Ecosystem Services, Inc. | ... guaranteed.\n> www.appl-ecosys.com      Voice: 503-667-4517         Fax: 503-667-8863\n>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\n\n-- \nMichael Sumner\nSoftware and Database Engineer\nAustralian Antarctic Division\nHobart, Australia\ne-mail: mdsumner at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "On Wed, May 14, 2014 at 4:53 AM, Rich Shepard <rshepard at appl-ecosys.com>wrote:\n\n> On Tue, 13 May 2014, Dominik Schneider wrote:\n>\n>  Most people suggest longlat is not  a proper 'projection' for\n>>",
       "thread_id": "thread-e5def726b409",
       "thread_depth": 2,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/e6e79774/attachment.pl"
+      ]
     },
     {
       "id": "msg-798e760d28ef",
@@ -1443,11 +1518,14 @@
         "<CAJQosKfjGWQdpYNEU0SPKjhT=qq3TGtWFCJrXTC8_1Yqc59Khg@mail.gmail.com>",
         "<53729D49.50709@auckland.ac.nz>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/605a7a68/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/605a7a68/attachment.pl>",
+      "body_plain": "Hi Andrew,\n\nYou should give us a few more details  on the kind of application you need\nthese maps for, as well as on which sort of random process you are thinking\nof.\n\nYou yourself mentioned that randomly dividing a polygon is enough for your,\nnot needing a random generation of the outlines of the map. Then, just\nfollow Rolf's advise, with something like:\n\nrandompoints <- rpoint(500) #here it goes the number of features you want\nto dive the map into\nfinal.map <- dirichlet(randompoints)\nplot(final.map)\n\nNotice that the final outline of this \"map\" is a square. If you want it to\nbe a circle and you are fine with an uniform random distribution, you can\njust use the function runifdisc instead of rpoint. Or you can use any\npreviously read/created polygon with the parameter \"win\" in the rpoint\nfunction.\n\nNow, if you also want a random outline for the map, one possibly easy\nsolution that comes to my mind is to first generate a few random points,\nconnect them to form polygons, merge polygons into one final single polygon\nto be used as the outline. Than, you just indicate this in the \"win\"\nparameter of the rpoint function in the example above.\n\nHope it helps to get started.\n\nBest,\n\nFabricio\n\n\n\n\n2014-05-13 18:31 GMT-04:00 Rolf Turner <r.turner at auckland.ac.nz>:\n\n> On 14/05/14 10:04, Andrew Bernj wrote:\n>\n>> Dear list,\n>>\n>> I write you to ask if anyone knows of any package, function, or code\n>> to generate random polygon maps? Of course, a simpler and also good\n>> enough solution for me would be any way to divide/split a single\n>> polygon randomly into other polygons.\n>>\n>> I am willing to code it myself either in R or Python if necessary, but\n>> I fell that similar things probably have been tried so far and would\n>> not like to overlap on those.\n>>\n>\n> How random?  Random in what way?  You can always generate a random point\n> pattern and then form the Dirichlet/Voronoi tessellation of that pattern.\n>  Is that random enough for you?  If so, the facilities are provided in the\n> \"spatstat\" package (and in a more limited way in the \"deldir\" package that\n> gets used by spatstat for the guts of the tessellation calculation).  Note\n> that the polygons generated are all convex.\n>\n> cheers,\n>\n> Rolf Turner\n>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi Andrew,\n\nYou should give us a few more details  on the kind of application you need\nthese maps for, as well as on which sort of random process you are thinking\nof.\n\nYou yourself mentioned that rand",
       "thread_id": "thread-47c1ef4338d5",
       "thread_depth": 2,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/605a7a68/attachment.pl"
+      ]
     },
     {
       "id": "msg-8e8728720732",
@@ -1459,11 +1537,14 @@
       "subject_clean": "Still a bug when converting from tess to spatial polygon (sp) format?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/69acc2a1/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/69acc2a1/attachment.pl>",
+      "body_plain": "Dear all,\n\n\nAfter playing around with the tessellation functions of the spatstat\npackage to reply to a previous question on the list, I realized that there\nseems to be something odd when converting from tess format to spatial\npolygon format.\n\nUsually, spatial polygonal shapefiles read into R with functions like\nreadShapePoly or readOGR, are objects which have a slot called \"data\", that\ncan be assessed with @data and has the format of a data.frame. In there,\neach polygonal feature of the map is a row, while the columns are the\nvariables that are eventually present in the shapefiles's data. Therefore,\nif you try to check names() of a spatial polygon object read from a\nshapefile, you get these columns, while row() gives you the polygon\nfeatures present in the map.\n\nHowever, when converting a tess object generated by spatstat to shape\npolygon, by using the as( , \"SpatialPolygons\"), things look quite\ndifferent. First, no slot called data is created. Second, if you try\nnames() on the converted object, you will get each polygon features and\nwith row(), you get nothing. This looks odd, since the features should be\nthe rows of a data.frame-like slot, shouldn't them?\n\nHere it goes a reproducible example:\n\n###Code begins here\n\n#Let's first read a shp map for comparison\n\nvectors.path <- system.file(\"vectors\", package = \"rgdal\")[1]\nloaded.map <- readShapePoly(paste(vectors.path, \"/scot_BNG.shp\", sep=\"\"))\nplot(loaded.map)      #looking at the loaded map\nclass(loaded.map)      #checking if it is of the class we want\n\n#Now let's generate a shp map from tessellation\n\nrandompoints <- rpoint(100)      #generate random spatial points\nrandom.map.tess <- dirichlet(randompoints)      #tessellate the points\nrandom.map <- as(random.map.tess, \"SpatialPolygons\")      #convert to shape\npolygon\nplot(random.map)      #looking at the random generated map\nclass(random.map)      #checking if it is of the class we want\n\n\n#Finally, let's compare both polygon shape objects:\n\nnames(loaded.map)\nnames(random.map)\n\nrow(loaded.map)\nrow(random.map)\n\nnrow(loaded.map)\nnrow(random.map)\n\nncol(loaded.map)\nncol(random.map)\n\nView(loaded.map at data)\nView(random.map at data)\n\n###End of code\n\n\nNotice how things look different for the same sp objects when loading them\nor creating from a tess converted object.  I mean, I am not sure whether\nthis is really a bug or it is normal and if yes, why does it happen (that's\nwhy the subject of this email is a question, not an affirmative sentence),\nbut I though it was worth bringing to you all since it can be confusing.\nAnyway, is there any way we can convert tess objects to a sp object in the\npattern a shapefile map is read, i.e. with the \"data\" slot and with the\npolygon features as rows, no as columns?\n\nAs always, thank you all for your time.\n\nBest,\n\nFabricio Vasselai\nCPS-University of Michigan\nUniversity of São Paulo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear all,\n\n\nAfter playing around with the tessellation functions of the spatstat\npackage to reply to a previous question on the list, I realized that there\nseems to be something odd when converting fr",
       "thread_id": "thread-8e8728720732",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/69acc2a1/attachment.pl"
+      ]
     },
     {
       "id": "msg-7bd7eab5482c",
@@ -1545,11 +1626,14 @@
       "subject_clean": "Clip a polyline with a Polygon",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/608e76e0/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/608e76e0/attachment.pl>",
+      "body_plain": "Dear r-sig-geo,\n\nI have been looking for a tool / method to clip a polyline using a polygon\nand cant seem to find a suitable solution. My task is as follows.\n\nI have a property boundary which is a polyline. I have a deforestation\nlayer which is a polygon. In my property data set I have 23 boundaries. I\nneed to calculated the ratio of threatened perimeter to actual perimeter.\nTo do this I select each boundary and then clip the boundary with the\ndeforestation layer. The boundaries that remain (are spatially coincident\nwith the deforestation layer) then remain. I calculate the length of these\nand calculate my ratio. This task is very straight forward and can be easy\naccomplished using QGIS, however, I have shared boundaries and thus need to\nprocess each boundary separately. gIntersection does not return what I need.\n\nCan anyone help with a potential solution?\n\nMany thanks and kind regards,\nWesley\n\n-- \nDr Wesley Roberts\njwesroberts at gmail.com\nCell: +27(0)83 5355 646\nskype: roberts-w\n\nI hear...I forget\nI see...and I remember\nI do...and I understand\nAncient Chinese Proverb\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear r-sig-geo,\n\nI have been looking for a tool / method to clip a polyline using a polygon\nand cant seem to find a suitable solution. My task is as follows.\n\nI have a property boundary which is a pol",
       "thread_id": "thread-025386d75d2b",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/608e76e0/attachment.pl"
+      ]
     },
     {
       "id": "msg-2b361fad6719",
@@ -1561,11 +1645,14 @@
       "subject_clean": "practical range for kriging interpolation or not",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/0af1f306/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/0af1f306/attachment.pl>",
+      "body_plain": "Dear All,\nThe range obtained from fitting an exponential function to empirical\nvariogram using gstat library of R is 5.5 m. This indicates that the\npractical range is  5.5 x 3 = 16.5 m indicating a pair of sample yield\npoints whose distance is beyond 16.5 m is uncorrelated.\n\nwhat will be the value of maxdist option of krige function to produce\nestimated values within the grid? I thought of using maxdist=16.5 as my\nsearch radius in interpolation so that a data point beyond 16.5 m will not\nbe used in interpolation. Am I right to use the practical range (16.5) or\nthe original range (5.5) obtained directly from fitting the exponential\nmodel?\n\nThank you.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Dear All,\nThe range obtained from fitting an exponential function to empirical\nvariogram using gstat library of R is 5.5 m. This indicates that the\npractical range is  5.5 x 3 = 16.5 m indicating a pa",
       "thread_id": "thread-2b361fad6719",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/0af1f306/attachment.pl"
+      ]
     },
     {
       "id": "msg-f6000af8944e",
@@ -1595,11 +1682,14 @@
       "subject_clean": "Set color key for stplot",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/611c42e7/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/611c42e7/attachment.pl>",
+      "body_plain": "Hi,\nIs there a way to use a color ramp when using stplot and simultaneously\nassign a specific color for a single value?  For example, I am trying to\nplot disease cases and would like 0s to be plotted as grey and the rest of\nthe cases to be colored by a color ramp.\n\n#this plots cases including 0s as a color ramp:\nstplot(stfdf[,,\"lyme_cases\"], t, col.regions = brewer.pal(9, \"YlOrRd\"),\ncuts=9 )[28]\ncuts=c(1,seq(20,160,by=20), 186)\n\nI have tried defining cuts so that any polygon with less than 1 case is\ncolored grey, but this does not work and instead plots any polygon with <20\ncases as grey.\n\nstplot(stfdf[,,\"lyme_cases\"], t, col.regions = c(\"grey\", brewer.pal(9,\n\"YlOrRd\")), cuts=c(0.1,seq(20,160,by=20), 186) )[28]\n\nThank you very much for your help!\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\nIs there a way to use a color ramp when using stplot and simultaneously\nassign a specific color for a single value?  For example, I am trying to\nplot disease cases and would like 0s to be plotted ",
       "thread_id": "thread-866cb8ea0b5f",
       "thread_depth": 0,
-      "month": "2014-05"
+      "month": "2014-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20140514/611c42e7/attachment.pl"
+      ]
     },
     {
       "id": "msg-9b7e7e43be90",
