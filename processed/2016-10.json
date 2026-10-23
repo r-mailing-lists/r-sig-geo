@@ -17,7 +17,8 @@
       "body_snippet": "Hi friends,\n\nI have a point pattern that consist of earthquake locations.  I want to test the pattern for complete spatial randomness based on distance functions.\nI was using spatstat package allstats",
       "thread_id": "thread-6719964ee086",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024947.html"
     },
     {
       "id": "msg-9493c60291e9",
@@ -35,7 +36,8 @@
       "body_snippet": "On 02/10/16 02:02, Cenk ???Z via R-sig-Geo wrote:\n> Hi friends,\n>\n> I have a point pattern that consist of earthquake locations.  I want\n> to test the pattern for complete spatial randomness based on ",
       "thread_id": "thread-6719964ee086",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024948.html"
     },
     {
       "id": "msg-df43a5e989c7",
@@ -53,7 +55,8 @@
       "body_snippet": "Hello!\n\nMost probably not exactly what you want, but maybe useful anyways...\n\n\"Ecological Land Units Map of the World\" (Resolution is 250m)\n\nhttps://blogs.esri.com/esri/esri-insider/2014/12/09/the-fir",
       "thread_id": "thread-df43a5e989c7",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024949.html"
     },
     {
       "id": "msg-76840e640d44",
@@ -65,11 +68,12 @@
       "subject_clean": "Complete spatial randomness testing",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hi Rolf,\n\nThanks for the reply.\n\nA) I updated my R version and spatstat package. Currently  using  spatstat 1.46-1 spoiler alert and  3.3.1 version of R.\n\nB) Yes the distributions of interpoint distancess. Sorry to mention it wrong. In some sources they call distance based tests on complete spatial randomness. \n\nC)  Again yes. dp1  is a class of ppp object of spatstat constructed like this.  \nLatitude and longtitude and the specific window of the study area. \n\ndp1<-ppp(veri$Enlem, veri$Boylam, c(30,40), c(39,42))\n\nD) I also tried constructing the plot with a simulated pattern. No problem in plotting the graph.\n\nE) I performed the function Jest and plotted it . I took the same error message again unfortunately.\n\n\"\"\"Error: in Fest(X, r) the successive r values must be finely spaced: given spacing = 0.010196; required spacing <=  0.00586\"\"\"\"\n\nMy question is that I have duplicated points of earthquake occurrences in the study area. Is it a problem related to  it?\n Or the spacing is too low to draw the plot that function can not manage to draw  it such a short distance. \n\nThanks again all for the all help .\n\n-----\nRes. Asst Cenk Icoz\nAnadolu University, Department of statistics, Turkey\n\n________________________________________\nKimden: Rolf Turner [r.turner at auckland.ac.nz]\nG?nderildi: 02 Ekim 2016 Pazar 00:29\nKime: Cenk ???Z\nBilgi: r-sig-geo at r-project.org; Adrian.Baddeley at curtin.edu.au; Ege Rubak\nKonu: Re: [R-sig-Geo] Complete spatial randomness testing\n\nOn 02/10/16 02:02, Cenk ???Z via R-sig-Geo wrote:\n> Hi friends,\n>\n> I have a point pattern that consist of earthquake locations.  I want \n> to test the pattern for complete spatial randomness based on distance \n> functions. I was using spatstat package allstats function to plot 4 of \n> them together in a graph  however I took this error message:\n>\n>\n> \"  Error in plot(allstats(dp1)) : error in evaluating the argument 'x' \n> in selecting a method for function 'plot': Error: in Fest(X, r) the \n> successive r values must be finely spaced: given spacing =\n> 0.010196; required spacing <=  0.00586   \"\n>\n>\n> Is it something related to plotting window properties? Although I got \n> an error about F function , I could plot it individually. In addition \n> I could plot  all G, F, K  and L functions together in a graph \n> manually. Also I could not find a function to estimate J function in \n> spatstat package. It is only included in allstat function.\n>\n> Thanks in advance .\n\n(a) What version of spatstat are you using?  It may be out of date.  The version of spatstat currently on CRAN is 1.46-1.\n\n(b) When you say \"based on distance functions\" I presume that you mean \"based on various distributions of interpoint distances\".\n\n(c) I presume that \"dp1\" is the point pattern (object of class \"ppp\") of earthquake locations.\n\n(d) You have not provided a reproducible example of your problem.\nConsequently I checked things out with a simulated example:\n\nset.seed(42)\nX <- rpoispp(100)\nplot(allstats(X))\n\nThis ran with no problem, and produced the expected plot.\n\n(e) The function to estimate the J function is Jest().  It has been in the spatstat package for a very long time.\n\ncheers,\n\nRolf Turner\n\n--\nTechnical Editor ANZJS\nDepartment of Statistics\nUniversity of Auckland\nPhone: +64-9-373-7599 ext. 88276",
+      "body_plain": "Hi Rolf,\n\nThanks for the reply.\n\nA) I updated my R version and spatstat package. Currently  using  spatstat 1.46-1 spoiler alert and  3.3.1 version of R.\n\nB) Yes the distributions of interpoint distancess. Sorry to mention it wrong. In some sources they call distance based tests on complete spatial randomness. \n\nC)  Again yes. dp1  is a class of ppp object of spatstat constructed like this.  \nLatitude and longtitude and the specific window of the study area. \n\ndp1<-ppp(veri$Enlem, veri$Boylam, c(30,40), c(39,42))\n\nD) I also tried constructing the plot with a simulated pattern. No problem in plotting the graph.\n\nE) I performed the function Jest and plotted it . I took the same error message again unfortunately.\n\n\"\"\"Error: in Fest(X, r) the successive r values must be finely spaced: given spacing = 0.010196; required spacing <=  0.00586\"\"\"\"\n\nMy question is that I have duplicated points of earthquake occurrences in the study area. Is it a problem related to  it?\n Or the spacing is too low to draw the plot that function can not manage to draw  it such a short distance. \n\nThanks again all for the all help .\n\n-----\nRes. Asst Cenk Icoz\nAnadolu University, Department of statistics, Turkey\n\n________________________________________\nKimden: Rolf Turner [r.turner at auckland.ac.nz]\nGönderildi: 02 Ekim 2016 Pazar 00:29\nKime: Cenk İÇÖZ\nBilgi: r-sig-geo at r-project.org; Adrian.Baddeley at curtin.edu.au; Ege Rubak\nKonu: Re: [R-sig-Geo] Complete spatial randomness testing\n\nOn 02/10/16 02:02, Cenk İÇÖZ via R-sig-Geo wrote:\n> Hi friends,\n>\n> I have a point pattern that consist of earthquake locations.  I want \n> to test the pattern for complete spatial randomness based on distance \n> functions. I was using spatstat package allstats function to plot 4 of \n> them together in a graph  however I took this error message:\n>\n>\n> \"  Error in plot(allstats(dp1)) : error in evaluating the argument 'x' \n> in selecting a method for function 'plot': Error: in Fest(X, r) the \n> successive r values must be finely spaced: given spacing =\n> 0.010196; required spacing <=  0.00586   \"\n>\n>\n> Is it something related to plotting window properties? Although I got \n> an error about F function , I could plot it individually. In addition \n> I could plot  all G, F, K  and L functions together in a graph \n> manually. Also I could not find a function to estimate J function in \n> spatstat package. It is only included in allstat function.\n>\n> Thanks in advance .\n\n(a) What version of spatstat are you using?  It may be out of date.  The version of spatstat currently on CRAN is 1.46-1.\n\n(b) When you say \"based on distance functions\" I presume that you mean \"based on various distributions of interpoint distances\".\n\n(c) I presume that \"dp1\" is the point pattern (object of class \"ppp\") of earthquake locations.\n\n(d) You have not provided a reproducible example of your problem.\nConsequently I checked things out with a simulated example:\n\nset.seed(42)\nX <- rpoispp(100)\nplot(allstats(X))\n\nThis ran with no problem, and produced the expected plot.\n\n(e) The function to estimate the J function is Jest().  It has been in the spatstat package for a very long time.\n\ncheers,\n\nRolf Turner\n\n--\nTechnical Editor ANZJS\nDepartment of Statistics\nUniversity of Auckland\nPhone: +64-9-373-7599 ext. 88276",
       "body_snippet": "Hi Rolf,\n\nThanks for the reply.\n\nA) I updated my R version and spatstat package. Currently  using  spatstat 1.46-1 spoiler alert and  3.3.1 version of R.\n\nB) Yes the distributions of interpoint distan",
       "thread_id": "thread-76840e640d44",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024950.html"
     },
     {
       "id": "msg-bef12b742296",
@@ -85,7 +89,8 @@
       "body_snippet": "I am trying to sample points from a large RasterLayer (~100GB if read into\nmemory).\n\nraster::sampleRandom relies on raster raster:::.readCellsGDAL which seems\nto loop through rows, read in entire colu",
       "thread_id": "thread-bef12b742296",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024951.html"
     },
     {
       "id": "msg-cc1206c91bf3",
@@ -103,7 +108,8 @@
       "body_snippet": "Try creating it as a single layer brick, does it make a difference?\n\nCheers, Mike\n\nOn Mon, 3 Oct 2016, 08:26 Kenny Bell <kmb56 at berkeley.edu> wrote:\n\n> I am trying to sample points from a large Rast",
       "thread_id": "thread-bef12b742296",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024952.html"
     },
     {
       "id": "msg-37563a9d5a53",
@@ -122,7 +128,8 @@
       "body_snippet": "No substantial difference, no.\n\ncdl <- brick(\"Data/CDL/2015_30m_cdls/2015_30m_cdls.img\")\nsystem.time(raster::sampleRandom(cdl, size = 100))\n#   user  system elapsed\n#   4.16   21.32   25.50\nsystem.tim",
       "thread_id": "thread-bef12b742296",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024953.html"
     },
     {
       "id": "msg-0f2741ad7328",
@@ -142,7 +149,8 @@
       "body_snippet": "Is an approach that could improve this is to arrange the locations to\ncollect into contiguous blocks inside raster:::.readCellsGDAL and read them\nin block by block?\n\nOn Sun, Oct 2, 2016 at 3:32 PM, Ke",
       "thread_id": "thread-bef12b742296",
       "thread_depth": 3,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024954.html"
     },
     {
       "id": "msg-6442f64b7c79",
@@ -163,7 +171,8 @@
       "body_snippet": "Is the file tiled? Raster's extract is slow then because it scans line by\nline rather than by tile. The only fix I know  is to readAll into memory or\nwrite to a new untiled file. At any rate you might",
       "thread_id": "thread-bef12b742296",
       "thread_depth": 4,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024955.html"
     },
     {
       "id": "msg-29bb0dd9109b",
@@ -185,7 +194,8 @@
       "body_snippet": "I am unsure if the file is tiled - how do I find this out? I am finding\nthat sampling the cells directly and using `[` is also slow, though not as\nslow as sampleRandom. Is that what you meant by \"inde",
       "thread_id": "thread-bef12b742296",
       "thread_depth": 5,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024956.html"
     },
     {
       "id": "msg-88939554d7d7",
@@ -208,7 +218,8 @@
       "body_snippet": "rgdal::GDALinfo(filename) will show the block size. Here's an example of\nthe timings difference I'm talking about.\n\nlibrary(raster)\nr <- disaggregate(raster(volcano), fact = 20)\n\nwriteRaster(r, \"super",
       "thread_id": "thread-bef12b742296",
       "thread_depth": 6,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024957.html"
     },
     {
       "id": "msg-654f8a5650f6",
@@ -231,7 +242,8 @@
       "body_snippet": "I have implemented an improvement that works for my context. Is this the\nright place to suggest code improvements? This implements the approach\nwhere there is one call to rgdal::getRasterData per cont",
       "thread_id": "thread-bef12b742296",
       "thread_depth": 6,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024958.html"
     },
     {
       "id": "msg-7d254816647a",
@@ -255,7 +267,8 @@
       "body_snippet": "Hey great, this been on my never-get-to-todo list for ages.\n\nI can commit it to raster but I'd want to do a few tests first. Can you\nprovide some?\n\nI'll include some tests when I commit it, but there'",
       "thread_id": "thread-bef12b742296",
       "thread_depth": 7,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024959.html"
     },
     {
       "id": "msg-30ee1c157102",
@@ -276,7 +289,8 @@
       "body_snippet": "According to your suggestion , I excluded duplicated points. However I took the same error message.\n\nudp1<-unique.ppp(dp1)\n xxx<-allstats(udp1)\nError: in Fest(X, r) the successive r values must be fin",
       "thread_id": "thread-30ee1c157102",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024960.html"
     },
     {
       "id": "msg-22fb0598a86a",
@@ -292,7 +306,8 @@
       "body_snippet": "Hi R-List,\n\n\nI have a DEM on one hand, and on the other hand, I have an RGB aerial image\n\nI tried rasterVis and plot3D function, but I didn't find how to use the\ncolors of my RGB aerial image.\n\nFor th",
       "thread_id": "thread-22fb0598a86a",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024961.html"
     },
     {
       "id": "msg-66d491642370",
@@ -308,7 +323,8 @@
       "body_snippet": "Hi,\n\n\nI have several variables of numeric data that I whish to spplot.\n\nHow to push one classification per plot ?\n\nAlso, what is the mode of classification used by default by spplot ? Is the\ndata spli",
       "thread_id": "thread-66d491642370",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024962.html"
     },
     {
       "id": "msg-9667cf941f01",
@@ -322,11 +338,12 @@
       "references": [
         "<CAGfc75mpGqLhgJ4RvtnwnrRVNAhqp+7e15XKCe=Pg+BoFcxFjQ@mail.gmail.com>"
       ],
-      "body_plain": "On Mon, Oct 3, 2016 at 10:38 AM, Mathieu Rajerison\n<mathieu.rajerison at gmail.com> wrote:\n> Hi R-List,\n>\n>\n> I have a DEM on one hand, and on the other hand, I have an RGB aerial image\n>\n> I tried rasterVis and plot3D function, but I didn't find how to use the\n> colors of my RGB aerial image.\n\nfrom the help for plot3D:\n\n  drape: RasterLayer, to 'drape' colors representing the values of\n          this layer on the 3D representation of layer ?x?. In this\n          case?x? typically has elevation data\n\nSo plot(x=mydem, drape=myimage) will make a 3d plot with the heights\nfrom `mydem` and the colours from `myimage` draped over it - if\n`myimage` is a 3-layer RGB raster then I suspect you'll get what you\nwant...\n\nBarry",
+      "body_plain": "On Mon, Oct 3, 2016 at 10:38 AM, Mathieu Rajerison\n<mathieu.rajerison at gmail.com> wrote:\n> Hi R-List,\n>\n>\n> I have a DEM on one hand, and on the other hand, I have an RGB aerial image\n>\n> I tried rasterVis and plot3D function, but I didn't find how to use the\n> colors of my RGB aerial image.\n\nfrom the help for plot3D:\n\n  drape: RasterLayer, to 'drape' colors representing the values of\n          this layer on the 3D representation of layer ‘x’. In this\n          case‘x’ typically has elevation data\n\nSo plot(x=mydem, drape=myimage) will make a 3d plot with the heights\nfrom `mydem` and the colours from `myimage` draped over it - if\n`myimage` is a 3-layer RGB raster then I suspect you'll get what you\nwant...\n\nBarry",
       "body_snippet": "On Mon, Oct 3, 2016 at 10:38 AM, Mathieu Rajerison\n<mathieu.rajerison at gmail.com> wrote:\n> Hi R-List,\n>\n>\n> I have a DEM on one hand, and on the other hand, I have an RGB aerial image\n>\n> I tried ra",
       "thread_id": "thread-22fb0598a86a",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024963.html"
     },
     {
       "id": "msg-e96730097609",
@@ -344,7 +361,8 @@
       "body_snippet": "Hi,\n\nChek out the code under fig12.R at http://rspatial.r-forge.r-\nproject.org/gallery/.\n\nIf you don't necessarily have to use spplot, I find the choroLayer function\nin the cartography package much si",
       "thread_id": "thread-66d491642370",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024964.html"
     },
     {
       "id": "msg-0252413afff2",
@@ -359,11 +377,12 @@
         "<CAGfc75mpGqLhgJ4RvtnwnrRVNAhqp+7e15XKCe=Pg+BoFcxFjQ@mail.gmail.com>",
         "<CANVKczM6_iRedgd5OxxvzL4xPnTbWTF=RwRcZw5ftFWxzOdVcQ@mail.gmail.com>"
       ],
-      "body_plain": "Thanks Barry.\n\nThe doc says that drape uses a RasterLayer but not a RasterStack.\n\nSo I don't know to overlay my RGB 3-dim layer on top of the DEM.\n\nMaybe I should convert the RGB to a unique value ?\nHow to convert a RGB value to a unique value and does plot3D accept it ?\n?\n\n2016-10-03 13:14 GMT+02:00 Barry Rowlingson <b.rowlingson at lancaster.ac.uk>:\n\n> On Mon, Oct 3, 2016 at 10:38 AM, Mathieu Rajerison\n> <mathieu.rajerison at gmail.com> wrote:\n> > Hi R-List,\n> >\n> >\n> > I have a DEM on one hand, and on the other hand, I have an RGB aerial\n> image\n> >\n> > I tried rasterVis and plot3D function, but I didn't find how to use the\n> > colors of my RGB aerial image.\n>\n> from the help for plot3D:\n>\n>   drape: RasterLayer, to 'drape' colors representing the values of\n>           this layer on the 3D representation of layer ?x?. In this\n>           case?x? typically has elevation data\n>\n> So plot(x=mydem, drape=myimage) will make a 3d plot with the heights\n> from `mydem` and the colours from `myimage` draped over it - if\n> `myimage` is a 3-layer RGB raster then I suspect you'll get what you\n> want...\n>\n> Barry\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Thanks Barry.\n\nThe doc says that drape uses a RasterLayer but not a RasterStack.\n\nSo I don't know to overlay my RGB 3-dim layer on top of the DEM.\n\nMaybe I should convert the RGB to a unique value ?\nHow to convert a RGB value to a unique value and does plot3D accept it ?\nᐧ\n\n2016-10-03 13:14 GMT+02:00 Barry Rowlingson <b.rowlingson at lancaster.ac.uk>:\n\n> On Mon, Oct 3, 2016 at 10:38 AM, Mathieu Rajerison\n> <mathieu.rajerison at gmail.com> wrote:\n> > Hi R-List,\n> >\n> >\n> > I have a DEM on one hand, and on the other hand, I have an RGB aerial\n> image\n> >\n> > I tried rasterVis and plot3D function, but I didn't find how to use the\n> > colors of my RGB aerial image.\n>\n> from the help for plot3D:\n>\n>   drape: RasterLayer, to 'drape' colors representing the values of\n>           this layer on the 3D representation of layer ‘x’. In this\n>           case‘x’ typically has elevation data\n>\n> So plot(x=mydem, drape=myimage) will make a 3d plot with the heights\n> from `mydem` and the colours from `myimage` draped over it - if\n> `myimage` is a 3-layer RGB raster then I suspect you'll get what you\n> want...\n>\n> Barry\n>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Thanks Barry.\n\nThe doc says that drape uses a RasterLayer but not a RasterStack.\n\nSo I don't know to overlay my RGB 3-dim layer on top of the DEM.\n\nMaybe I should convert the RGB to a unique value ?\nH",
       "thread_id": "thread-22fb0598a86a",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024965.html"
     },
     {
       "id": "msg-0ae2ffb71c21",
@@ -382,7 +401,8 @@
       "body_snippet": "Thanks a lot, it's perfect\n?\n\n2016-10-03 13:22 GMT+02:00 A. Marcia BARBOSA <barbosa at uevora.pt>:\n\n> Hi,\n>\n> Chek out the code under fig12.R at http://rspatial.r-forge.r-proj\n> ect.org/gallery/.\n>\n> ",
       "thread_id": "thread-66d491642370",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024966.html"
     },
     {
       "id": "msg-222b584e4c74",
@@ -400,7 +420,8 @@
       "body_snippet": "On Mon, 3 Oct 2016 at 21:08 Mathieu Rajerison <mathieu.rajerison at gmail.com>\nwrote:\n\n> Hi R-List,\n>\n>\n> I have a DEM on one hand, and on the other hand, I have an RGB aerial image\n>\n> I tried raster",
       "thread_id": "thread-22fb0598a86a",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024967.html"
     },
     {
       "id": "msg-66462e325b1a",
@@ -412,11 +433,12 @@
       "subject_clean": "raster: crop error ('nrows > 0 is not TRUE')",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Dear list,\n\nI'm applying the 'crop' command of the raster pacakge to subset a\nRasterStack ('r') with a SpatialPolygonsDataFrame ('boundary'):\n\nraster.crop <- crop(r, boundary, snap=\"out\")\n\nand what I get is:\n\nError: nrows > 0 is not TRUE\n\n\nThe summary of the two previous objects are:\n\n> r\nclass       : RasterStack\ndimensions  : 666, 211, 140526, 8  (nrow, ncol, ncell, nlayers)\nresolution  : 0.05, 0.05  (x, y)\nextent      : -76.3, -65.75, -50, -16.7  (xmin, xmax, ymin, ymax)\ncoord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0\nnames       : Year.2003, Year.2004, Year.2005, Year.2006, Year.2007,\nYear.2008, Year.2009, Year.2010\nmin values  :         0,         0,         0,         0,         0,\n      0,         0,         0\nmax values  :    844.79,    706.53,    616.73,    888.75,    701.53,\n 853.47,    642.07,    986.31\n\n\n> boundary\nclass       : SpatialPolygonsDataFrame\nfeatures    : 16\nextent      : -75.693, -66.419, -55.914, -17.498  (xmin, xmax, ymin, ymax)\ncoord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0\nvariables   : 1\nnames       : NOM_REG\nmin values  :       1\nmax values  :       9\n\nthe previous 'crop' command worked perfectly with a different\nRasterStack object, with a similar spatial extent, and I don't now\nwhat is wrong here.\n\n\nThe output of my sessionInfo() is:\n\nsessionInfo()\nR version 3.3.1 (2016-06-21)\nPlatform: x86_64-pc-linux-gnu (64-bit)\nRunning under: Ubuntu 14.04.2 LTS\n\nlocale:\n [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C\nLC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8\nLC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_GB.UTF-8\nLC_PAPER=en_US.UTF-8       LC_NAME=C\n [9] LC_ADDRESS=C               LC_TELEPHONE=C\nLC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base\n\nother attached packages:\n [1] colorspace_1.2-6    reshape2_1.4.1      rasterVis_0.40\nlatticeExtra_0.6-28 RColorBrewer_1.1-2  lattice_0.20-34\nrgdal_1.1-10        hydroGOF_0.3-8-7    hydroTSM_0.4-8      xts_0.9-7\n         zoo_1.7-13\n[12] raster_2.5-8        sp_1.2-3\n\nloaded via a namespace (and not attached):\n [1] Rcpp_0.12.6       magrittr_1.5      maptools_0.8-39\nviridisLite_0.1.3 FNN_1.1           stringr_1.0.0     plyr_1.8.4\n tools_3.3.1       parallel_3.3.1    grid_3.3.1        gstat_1.1-3\n  e1071_1.6-7\n[13] class_7.3-14      intervals_0.15.1  automap_1.0-14    ncdf4_1.15\n      stringi_1.1.1     spacetime_1.1-5   reshape_0.8.5\nforeign_0.8-66    hexbin_1.27.1\n\n\nAny idea about how to solve this issue is highly appreciated.\n\nThanks in advance,\n\n\n\nMauricio Zambrano-Bigiarini, PhD\n\n=====================================\nDepartment of Civil Engineering\nFaculty of Engineering and Sciences\nUniversidad de La Frontera\nPO Box 54-D, Temuco, Chile\nhttp://hzambran.github.io/\n=====================================\nmailto     : mauricio.zambrano at ufrontera.cl\nwork-phone : +56 45 259 2812\n=====================================\n\"To accomplish great things, we must not only act,\nbut also dream; not only plan, but also believe\"\n(Anatole France)\n=====================================\nLinux user #454569 -- Linux Mint user\n\n-- \nLa informaci?n contenida en este correo electr?nico y cualquier anexo o \nrespuesta relacionada, puede contener datos e informaci?n confidencial y no \npuede ser usada o difundida por personas distintas a su(s) destinatario(s). \nSi usted no es el destinatario de esta comunicaci?n, le informamos que \ncualquier divulgaci?n, distribuci?n o copia de esta informaci?n constituye \nun delito conforme a la ley chilena. Si lo ha recibido por error, por favor \nborre el mensaje y todos sus anexos y notifique al remitente.",
+      "body_plain": "Dear list,\n\nI'm applying the 'crop' command of the raster pacakge to subset a\nRasterStack ('r') with a SpatialPolygonsDataFrame ('boundary'):\n\nraster.crop <- crop(r, boundary, snap=\"out\")\n\nand what I get is:\n\nError: nrows > 0 is not TRUE\n\n\nThe summary of the two previous objects are:\n\n> r\nclass       : RasterStack\ndimensions  : 666, 211, 140526, 8  (nrow, ncol, ncell, nlayers)\nresolution  : 0.05, 0.05  (x, y)\nextent      : -76.3, -65.75, -50, -16.7  (xmin, xmax, ymin, ymax)\ncoord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0\nnames       : Year.2003, Year.2004, Year.2005, Year.2006, Year.2007,\nYear.2008, Year.2009, Year.2010\nmin values  :         0,         0,         0,         0,         0,\n      0,         0,         0\nmax values  :    844.79,    706.53,    616.73,    888.75,    701.53,\n 853.47,    642.07,    986.31\n\n\n> boundary\nclass       : SpatialPolygonsDataFrame\nfeatures    : 16\nextent      : -75.693, -66.419, -55.914, -17.498  (xmin, xmax, ymin, ymax)\ncoord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0\nvariables   : 1\nnames       : NOM_REG\nmin values  :       1\nmax values  :       9\n\nthe previous 'crop' command worked perfectly with a different\nRasterStack object, with a similar spatial extent, and I don't now\nwhat is wrong here.\n\n\nThe output of my sessionInfo() is:\n\nsessionInfo()\nR version 3.3.1 (2016-06-21)\nPlatform: x86_64-pc-linux-gnu (64-bit)\nRunning under: Ubuntu 14.04.2 LTS\n\nlocale:\n [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C\nLC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8\nLC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_GB.UTF-8\nLC_PAPER=en_US.UTF-8       LC_NAME=C\n [9] LC_ADDRESS=C               LC_TELEPHONE=C\nLC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base\n\nother attached packages:\n [1] colorspace_1.2-6    reshape2_1.4.1      rasterVis_0.40\nlatticeExtra_0.6-28 RColorBrewer_1.1-2  lattice_0.20-34\nrgdal_1.1-10        hydroGOF_0.3-8-7    hydroTSM_0.4-8      xts_0.9-7\n         zoo_1.7-13\n[12] raster_2.5-8        sp_1.2-3\n\nloaded via a namespace (and not attached):\n [1] Rcpp_0.12.6       magrittr_1.5      maptools_0.8-39\nviridisLite_0.1.3 FNN_1.1           stringr_1.0.0     plyr_1.8.4\n tools_3.3.1       parallel_3.3.1    grid_3.3.1        gstat_1.1-3\n  e1071_1.6-7\n[13] class_7.3-14      intervals_0.15.1  automap_1.0-14    ncdf4_1.15\n      stringi_1.1.1     spacetime_1.1-5   reshape_0.8.5\nforeign_0.8-66    hexbin_1.27.1\n\n\nAny idea about how to solve this issue is highly appreciated.\n\nThanks in advance,\n\n\n\nMauricio Zambrano-Bigiarini, PhD\n\n=====================================\nDepartment of Civil Engineering\nFaculty of Engineering and Sciences\nUniversidad de La Frontera\nPO Box 54-D, Temuco, Chile\nhttp://hzambran.github.io/\n=====================================\nmailto     : mauricio.zambrano at ufrontera.cl\nwork-phone : +56 45 259 2812\n=====================================\n\"To accomplish great things, we must not only act,\nbut also dream; not only plan, but also believe\"\n(Anatole France)\n=====================================\nLinux user #454569 -- Linux Mint user\n\n-- \nLa información contenida en este correo electrónico y cualquier anexo o \nrespuesta relacionada, puede contener datos e información confidencial y no \npuede ser usada o difundida por personas distintas a su(s) destinatario(s). \nSi usted no es el destinatario de esta comunicación, le informamos que \ncualquier divulgación, distribución o copia de esta información constituye \nun delito conforme a la ley chilena. Si lo ha recibido por error, por favor \nborre el mensaje y todos sus anexos y notifique al remitente.",
       "body_snippet": "Dear list,\n\nI'm applying the 'crop' command of the raster pacakge to subset a\nRasterStack ('r') with a SpatialPolygonsDataFrame ('boundary'):\n\nraster.crop <- crop(r, boundary, snap=\"out\")\n\nand what I ",
       "thread_id": "thread-66462e325b1a",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024968.html"
     },
     {
       "id": "msg-3bdad6f44b9b",
@@ -430,11 +452,12 @@
       "references": [
         "<CAP6VaruqGVc1WoAJEZ2CEjtdAahYgu01xrwWA7N65ZREAW3Ekw@mail.gmail.com>"
       ],
-      "body_plain": "Isn't the southern border of your boundary shapefile outside the extent of\nyour raster? hence there are no rows to extract.\n\nOn Mon, Oct 3, 2016 at 7:45 AM, Mauricio Zambrano Bigiarini <\nmauricio.zambrano at ufrontera.cl> wrote:\n\n> Dear list,\n>\n> I'm applying the 'crop' command of the raster pacakge to subset a\n> RasterStack ('r') with a SpatialPolygonsDataFrame ('boundary'):\n>\n> raster.crop <- crop(r, boundary, snap=\"out\")\n>\n> and what I get is:\n>\n> Error: nrows > 0 is not TRUE\n>\n>\n> The summary of the two previous objects are:\n>\n> > r\n> class       : RasterStack\n> dimensions  : 666, 211, 140526, 8  (nrow, ncol, ncell, nlayers)\n> resolution  : 0.05, 0.05  (x, y)\n> extent      : -76.3, -65.75, -50, -16.7  (xmin, xmax, ymin, ymax)\n> coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs\n> +towgs84=0,0,0\n> names       : Year.2003, Year.2004, Year.2005, Year.2006, Year.2007,\n> Year.2008, Year.2009, Year.2010\n> min values  :         0,         0,         0,         0,         0,\n>       0,         0,         0\n> max values  :    844.79,    706.53,    616.73,    888.75,    701.53,\n>  853.47,    642.07,    986.31\n>\n>\n> > boundary\n> class       : SpatialPolygonsDataFrame\n> features    : 16\n> extent      : -75.693, -66.419, -55.914, -17.498  (xmin, xmax, ymin, ymax)\n> coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs\n> +towgs84=0,0,0\n> variables   : 1\n> names       : NOM_REG\n> min values  :       1\n> max values  :       9\n>\n> the previous 'crop' command worked perfectly with a different\n> RasterStack object, with a similar spatial extent, and I don't now\n> what is wrong here.\n>\n>\n> The output of my sessionInfo() is:\n>\n> sessionInfo()\n> R version 3.3.1 (2016-06-21)\n> Platform: x86_64-pc-linux-gnu (64-bit)\n> Running under: Ubuntu 14.04.2 LTS\n>\n> locale:\n>  [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C\n> LC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8\n> LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_GB.UTF-8\n> LC_PAPER=en_US.UTF-8       LC_NAME=C\n>  [9] LC_ADDRESS=C               LC_TELEPHONE=C\n> LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C\n>\n> attached base packages:\n> [1] stats     graphics  grDevices utils     datasets  methods   base\n>\n> other attached packages:\n>  [1] colorspace_1.2-6    reshape2_1.4.1      rasterVis_0.40\n> latticeExtra_0.6-28 RColorBrewer_1.1-2  lattice_0.20-34\n> rgdal_1.1-10        hydroGOF_0.3-8-7    hydroTSM_0.4-8      xts_0.9-7\n>          zoo_1.7-13\n> [12] raster_2.5-8        sp_1.2-3\n>\n> loaded via a namespace (and not attached):\n>  [1] Rcpp_0.12.6       magrittr_1.5      maptools_0.8-39\n> viridisLite_0.1.3 FNN_1.1           stringr_1.0.0     plyr_1.8.4\n>  tools_3.3.1       parallel_3.3.1    grid_3.3.1        gstat_1.1-3\n>   e1071_1.6-7\n> [13] class_7.3-14      intervals_0.15.1  automap_1.0-14    ncdf4_1.15\n>       stringi_1.1.1     spacetime_1.1-5   reshape_0.8.5\n> foreign_0.8-66    hexbin_1.27.1\n>\n>\n> Any idea about how to solve this issue is highly appreciated.\n>\n> Thanks in advance,\n>\n>\n>\n> Mauricio Zambrano-Bigiarini, PhD\n>\n> =====================================\n> Department of Civil Engineering\n> Faculty of Engineering and Sciences\n> Universidad de La Frontera\n> PO Box 54-D, Temuco, Chile\n> http://hzambran.github.io/\n> =====================================\n> mailto     : mauricio.zambrano at ufrontera.cl\n> work-phone : +56 45 259 2812\n> =====================================\n> \"To accomplish great things, we must not only act,\n> but also dream; not only plan, but also believe\"\n> (Anatole France)\n> =====================================\n> Linux user #454569 -- Linux Mint user\n>\n> --\n> La informaci?n contenida en este correo electr?nico y cualquier anexo o\n> respuesta relacionada, puede contener datos e informaci?n confidencial y no\n> puede ser usada o difundida por personas distintas a su(s) destinatario(s).\n> Si usted no es el destinatario de esta comunicaci?n, le informamos que\n> cualquier divulgaci?n, distribuci?n o copia de esta informaci?n constituye\n> un delito conforme a la ley chilena. Si lo ha recibido por error, por favor\n> borre el mensaje y todos sus anexos y notifique al remitente.\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Isn't the southern border of your boundary shapefile outside the extent of\nyour raster? hence there are no rows to extract.\n\nOn Mon, Oct 3, 2016 at 7:45 AM, Mauricio Zambrano Bigiarini <\nmauricio.zambrano at ufrontera.cl> wrote:\n\n> Dear list,\n>\n> I'm applying the 'crop' command of the raster pacakge to subset a\n> RasterStack ('r') with a SpatialPolygonsDataFrame ('boundary'):\n>\n> raster.crop <- crop(r, boundary, snap=\"out\")\n>\n> and what I get is:\n>\n> Error: nrows > 0 is not TRUE\n>\n>\n> The summary of the two previous objects are:\n>\n> > r\n> class       : RasterStack\n> dimensions  : 666, 211, 140526, 8  (nrow, ncol, ncell, nlayers)\n> resolution  : 0.05, 0.05  (x, y)\n> extent      : -76.3, -65.75, -50, -16.7  (xmin, xmax, ymin, ymax)\n> coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs\n> +towgs84=0,0,0\n> names       : Year.2003, Year.2004, Year.2005, Year.2006, Year.2007,\n> Year.2008, Year.2009, Year.2010\n> min values  :         0,         0,         0,         0,         0,\n>       0,         0,         0\n> max values  :    844.79,    706.53,    616.73,    888.75,    701.53,\n>  853.47,    642.07,    986.31\n>\n>\n> > boundary\n> class       : SpatialPolygonsDataFrame\n> features    : 16\n> extent      : -75.693, -66.419, -55.914, -17.498  (xmin, xmax, ymin, ymax)\n> coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs\n> +towgs84=0,0,0\n> variables   : 1\n> names       : NOM_REG\n> min values  :       1\n> max values  :       9\n>\n> the previous 'crop' command worked perfectly with a different\n> RasterStack object, with a similar spatial extent, and I don't now\n> what is wrong here.\n>\n>\n> The output of my sessionInfo() is:\n>\n> sessionInfo()\n> R version 3.3.1 (2016-06-21)\n> Platform: x86_64-pc-linux-gnu (64-bit)\n> Running under: Ubuntu 14.04.2 LTS\n>\n> locale:\n>  [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C\n> LC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8\n> LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_GB.UTF-8\n> LC_PAPER=en_US.UTF-8       LC_NAME=C\n>  [9] LC_ADDRESS=C               LC_TELEPHONE=C\n> LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C\n>\n> attached base packages:\n> [1] stats     graphics  grDevices utils     datasets  methods   base\n>\n> other attached packages:\n>  [1] colorspace_1.2-6    reshape2_1.4.1      rasterVis_0.40\n> latticeExtra_0.6-28 RColorBrewer_1.1-2  lattice_0.20-34\n> rgdal_1.1-10        hydroGOF_0.3-8-7    hydroTSM_0.4-8      xts_0.9-7\n>          zoo_1.7-13\n> [12] raster_2.5-8        sp_1.2-3\n>\n> loaded via a namespace (and not attached):\n>  [1] Rcpp_0.12.6       magrittr_1.5      maptools_0.8-39\n> viridisLite_0.1.3 FNN_1.1           stringr_1.0.0     plyr_1.8.4\n>  tools_3.3.1       parallel_3.3.1    grid_3.3.1        gstat_1.1-3\n>   e1071_1.6-7\n> [13] class_7.3-14      intervals_0.15.1  automap_1.0-14    ncdf4_1.15\n>       stringi_1.1.1     spacetime_1.1-5   reshape_0.8.5\n> foreign_0.8-66    hexbin_1.27.1\n>\n>\n> Any idea about how to solve this issue is highly appreciated.\n>\n> Thanks in advance,\n>\n>\n>\n> Mauricio Zambrano-Bigiarini, PhD\n>\n> =====================================\n> Department of Civil Engineering\n> Faculty of Engineering and Sciences\n> Universidad de La Frontera\n> PO Box 54-D, Temuco, Chile\n> http://hzambran.github.io/\n> =====================================\n> mailto     : mauricio.zambrano at ufrontera.cl\n> work-phone : +56 45 259 2812\n> =====================================\n> \"To accomplish great things, we must not only act,\n> but also dream; not only plan, but also believe\"\n> (Anatole France)\n> =====================================\n> Linux user #454569 -- Linux Mint user\n>\n> --\n> La información contenida en este correo electrónico y cualquier anexo o\n> respuesta relacionada, puede contener datos e información confidencial y no\n> puede ser usada o difundida por personas distintas a su(s) destinatario(s).\n> Si usted no es el destinatario de esta comunicación, le informamos que\n> cualquier divulgación, distribución o copia de esta información constituye\n> un delito conforme a la ley chilena. Si lo ha recibido por error, por favor\n> borre el mensaje y todos sus anexos y notifique al remitente.\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Isn't the southern border of your boundary shapefile outside the extent of\nyour raster? hence there are no rows to extract.\n\nOn Mon, Oct 3, 2016 at 7:45 AM, Mauricio Zambrano Bigiarini <\nmauricio.zamb",
       "thread_id": "thread-66462e325b1a",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024969.html"
     },
     {
       "id": "msg-9b5b3ef8b634",
@@ -449,11 +472,12 @@
         "<CAP6VaruqGVc1WoAJEZ2CEjtdAahYgu01xrwWA7N65ZREAW3Ekw@mail.gmail.com>",
         "<CAF1jk_mP-4egysHjwvUwRUWJWWvSg=_Wofbb6orMXpwGS8YmbQ@mail.gmail.com>"
       ],
-      "body_plain": "Thank you very much Dominik.\n\nYou are right,  the southern border of the shapefile used as boundary\nis outside the borders of the RasterStack that I want to crop, and\nthat is the difference with a previous case where the 'crop' command\nworked without any problem.\n\nHowever, reading the documentation of 'crop', I think that command\nshould rise a warning and not an error in such a case:\n\n \"Areas included in ?y? but outside the extent of  ?x? are ignored\n(see ?extend? if you want a larger area).\"\n\n\nThanks for your help.\n\nmzb\n\n=====================================\n\"To accomplish great things, we must not only act,\nbut also dream; not only plan, but also believe\"\n(Anatole France)\n=====================================\nLinux user #454569 -- Linux Mint user\n\n\nOn 3 October 2016 at 12:34, Dominik Schneider <dosc3612 at colorado.edu> wrote:\n> Isn't the southern border of your boundary shapefile outside the extent of\n> your raster? hence there are no rows to extract.\n>\n> On Mon, Oct 3, 2016 at 7:45 AM, Mauricio Zambrano Bigiarini\n> <mauricio.zambrano at ufrontera.cl> wrote:\n>>\n>> Dear list,\n>>\n>> I'm applying the 'crop' command of the raster pacakge to subset a\n>> RasterStack ('r') with a SpatialPolygonsDataFrame ('boundary'):\n>>\n>> raster.crop <- crop(r, boundary, snap=\"out\")\n>>\n>> and what I get is:\n>>\n>> Error: nrows > 0 is not TRUE\n>>\n>>\n>> The summary of the two previous objects are:\n>>\n>> > r\n>> class       : RasterStack\n>> dimensions  : 666, 211, 140526, 8  (nrow, ncol, ncell, nlayers)\n>> resolution  : 0.05, 0.05  (x, y)\n>> extent      : -76.3, -65.75, -50, -16.7  (xmin, xmax, ymin, ymax)\n>> coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs\n>> +towgs84=0,0,0\n>> names       : Year.2003, Year.2004, Year.2005, Year.2006, Year.2007,\n>> Year.2008, Year.2009, Year.2010\n>> min values  :         0,         0,         0,         0,         0,\n>>       0,         0,         0\n>> max values  :    844.79,    706.53,    616.73,    888.75,    701.53,\n>>  853.47,    642.07,    986.31\n>>\n>>\n>> > boundary\n>> class       : SpatialPolygonsDataFrame\n>> features    : 16\n>> extent      : -75.693, -66.419, -55.914, -17.498  (xmin, xmax, ymin, ymax)\n>> coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs\n>> +towgs84=0,0,0\n>> variables   : 1\n>> names       : NOM_REG\n>> min values  :       1\n>> max values  :       9\n>>\n>> the previous 'crop' command worked perfectly with a different\n>> RasterStack object, with a similar spatial extent, and I don't now\n>> what is wrong here.\n>>\n>>\n>> The output of my sessionInfo() is:\n>>\n>> sessionInfo()\n>> R version 3.3.1 (2016-06-21)\n>> Platform: x86_64-pc-linux-gnu (64-bit)\n>> Running under: Ubuntu 14.04.2 LTS\n>>\n>> locale:\n>>  [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C\n>> LC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8\n>> LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_GB.UTF-8\n>> LC_PAPER=en_US.UTF-8       LC_NAME=C\n>>  [9] LC_ADDRESS=C               LC_TELEPHONE=C\n>> LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C\n>>\n>> attached base packages:\n>> [1] stats     graphics  grDevices utils     datasets  methods   base\n>>\n>> other attached packages:\n>>  [1] colorspace_1.2-6    reshape2_1.4.1      rasterVis_0.40\n>> latticeExtra_0.6-28 RColorBrewer_1.1-2  lattice_0.20-34\n>> rgdal_1.1-10        hydroGOF_0.3-8-7    hydroTSM_0.4-8      xts_0.9-7\n>>          zoo_1.7-13\n>> [12] raster_2.5-8        sp_1.2-3\n>>\n>> loaded via a namespace (and not attached):\n>>  [1] Rcpp_0.12.6       magrittr_1.5      maptools_0.8-39\n>> viridisLite_0.1.3 FNN_1.1           stringr_1.0.0     plyr_1.8.4\n>>  tools_3.3.1       parallel_3.3.1    grid_3.3.1        gstat_1.1-3\n>>   e1071_1.6-7\n>> [13] class_7.3-14      intervals_0.15.1  automap_1.0-14    ncdf4_1.15\n>>       stringi_1.1.1     spacetime_1.1-5   reshape_0.8.5\n>> foreign_0.8-66    hexbin_1.27.1\n>>\n>>\n>> Any idea about how to solve this issue is highly appreciated.\n>>\n>> Thanks in advance,\n>>\n>>\n>>\n>> Mauricio Zambrano-Bigiarini, PhD\n>>\n>> =====================================\n>> Department of Civil Engineering\n>> Faculty of Engineering and Sciences\n>> Universidad de La Frontera\n>> PO Box 54-D, Temuco, Chile\n>> http://hzambran.github.io/\n>> =====================================\n>> mailto     : mauricio.zambrano at ufrontera.cl\n>> work-phone : +56 45 259 2812\n>> =====================================\n>> \"To accomplish great things, we must not only act,\n>> but also dream; not only plan, but also believe\"\n>> (Anatole France)\n>> =====================================\n>> Linux user #454569 -- Linux Mint user\n>>\n>> --\n>> La informaci?n contenida en este correo electr?nico y cualquier anexo o\n>> respuesta relacionada, puede contener datos e informaci?n confidencial y\n>> no\n>> puede ser usada o difundida por personas distintas a su(s)\n>> destinatario(s).\n>> Si usted no es el destinatario de esta comunicaci?n, le informamos que\n>> cualquier divulgaci?n, distribuci?n o copia de esta informaci?n constituye\n>> un delito conforme a la ley chilena. Si lo ha recibido por error, por\n>> favor\n>> borre el mensaje y todos sus anexos y notifique al remitente.\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\n-- \nLa informaci?n contenida en este correo electr?nico y cualquier anexo o \nrespuesta relacionada, puede contener datos e informaci?n confidencial y no \npuede ser usada o difundida por personas distintas a su(s) destinatario(s). \nSi usted no es el destinatario de esta comunicaci?n, le informamos que \ncualquier divulgaci?n, distribuci?n o copia de esta informaci?n constituye \nun delito conforme a la ley chilena. Si lo ha recibido por error, por favor \nborre el mensaje y todos sus anexos y notifique al remitente.",
+      "body_plain": "Thank you very much Dominik.\n\nYou are right,  the southern border of the shapefile used as boundary\nis outside the borders of the RasterStack that I want to crop, and\nthat is the difference with a previous case where the 'crop' command\nworked without any problem.\n\nHowever, reading the documentation of 'crop', I think that command\nshould rise a warning and not an error in such a case:\n\n \"Areas included in ‘y’ but outside the extent of  ‘x’ are ignored\n(see ‘extend’ if you want a larger area).\"\n\n\nThanks for your help.\n\nmzb\n\n=====================================\n\"To accomplish great things, we must not only act,\nbut also dream; not only plan, but also believe\"\n(Anatole France)\n=====================================\nLinux user #454569 -- Linux Mint user\n\n\nOn 3 October 2016 at 12:34, Dominik Schneider <dosc3612 at colorado.edu> wrote:\n> Isn't the southern border of your boundary shapefile outside the extent of\n> your raster? hence there are no rows to extract.\n>\n> On Mon, Oct 3, 2016 at 7:45 AM, Mauricio Zambrano Bigiarini\n> <mauricio.zambrano at ufrontera.cl> wrote:\n>>\n>> Dear list,\n>>\n>> I'm applying the 'crop' command of the raster pacakge to subset a\n>> RasterStack ('r') with a SpatialPolygonsDataFrame ('boundary'):\n>>\n>> raster.crop <- crop(r, boundary, snap=\"out\")\n>>\n>> and what I get is:\n>>\n>> Error: nrows > 0 is not TRUE\n>>\n>>\n>> The summary of the two previous objects are:\n>>\n>> > r\n>> class       : RasterStack\n>> dimensions  : 666, 211, 140526, 8  (nrow, ncol, ncell, nlayers)\n>> resolution  : 0.05, 0.05  (x, y)\n>> extent      : -76.3, -65.75, -50, -16.7  (xmin, xmax, ymin, ymax)\n>> coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs\n>> +towgs84=0,0,0\n>> names       : Year.2003, Year.2004, Year.2005, Year.2006, Year.2007,\n>> Year.2008, Year.2009, Year.2010\n>> min values  :         0,         0,         0,         0,         0,\n>>       0,         0,         0\n>> max values  :    844.79,    706.53,    616.73,    888.75,    701.53,\n>>  853.47,    642.07,    986.31\n>>\n>>\n>> > boundary\n>> class       : SpatialPolygonsDataFrame\n>> features    : 16\n>> extent      : -75.693, -66.419, -55.914, -17.498  (xmin, xmax, ymin, ymax)\n>> coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs\n>> +towgs84=0,0,0\n>> variables   : 1\n>> names       : NOM_REG\n>> min values  :       1\n>> max values  :       9\n>>\n>> the previous 'crop' command worked perfectly with a different\n>> RasterStack object, with a similar spatial extent, and I don't now\n>> what is wrong here.\n>>\n>>\n>> The output of my sessionInfo() is:\n>>\n>> sessionInfo()\n>> R version 3.3.1 (2016-06-21)\n>> Platform: x86_64-pc-linux-gnu (64-bit)\n>> Running under: Ubuntu 14.04.2 LTS\n>>\n>> locale:\n>>  [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C\n>> LC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8\n>> LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_GB.UTF-8\n>> LC_PAPER=en_US.UTF-8       LC_NAME=C\n>>  [9] LC_ADDRESS=C               LC_TELEPHONE=C\n>> LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C\n>>\n>> attached base packages:\n>> [1] stats     graphics  grDevices utils     datasets  methods   base\n>>\n>> other attached packages:\n>>  [1] colorspace_1.2-6    reshape2_1.4.1      rasterVis_0.40\n>> latticeExtra_0.6-28 RColorBrewer_1.1-2  lattice_0.20-34\n>> rgdal_1.1-10        hydroGOF_0.3-8-7    hydroTSM_0.4-8      xts_0.9-7\n>>          zoo_1.7-13\n>> [12] raster_2.5-8        sp_1.2-3\n>>\n>> loaded via a namespace (and not attached):\n>>  [1] Rcpp_0.12.6       magrittr_1.5      maptools_0.8-39\n>> viridisLite_0.1.3 FNN_1.1           stringr_1.0.0     plyr_1.8.4\n>>  tools_3.3.1       parallel_3.3.1    grid_3.3.1        gstat_1.1-3\n>>   e1071_1.6-7\n>> [13] class_7.3-14      intervals_0.15.1  automap_1.0-14    ncdf4_1.15\n>>       stringi_1.1.1     spacetime_1.1-5   reshape_0.8.5\n>> foreign_0.8-66    hexbin_1.27.1\n>>\n>>\n>> Any idea about how to solve this issue is highly appreciated.\n>>\n>> Thanks in advance,\n>>\n>>\n>>\n>> Mauricio Zambrano-Bigiarini, PhD\n>>\n>> =====================================\n>> Department of Civil Engineering\n>> Faculty of Engineering and Sciences\n>> Universidad de La Frontera\n>> PO Box 54-D, Temuco, Chile\n>> http://hzambran.github.io/\n>> =====================================\n>> mailto     : mauricio.zambrano at ufrontera.cl\n>> work-phone : +56 45 259 2812\n>> =====================================\n>> \"To accomplish great things, we must not only act,\n>> but also dream; not only plan, but also believe\"\n>> (Anatole France)\n>> =====================================\n>> Linux user #454569 -- Linux Mint user\n>>\n>> --\n>> La información contenida en este correo electrónico y cualquier anexo o\n>> respuesta relacionada, puede contener datos e información confidencial y\n>> no\n>> puede ser usada o difundida por personas distintas a su(s)\n>> destinatario(s).\n>> Si usted no es el destinatario de esta comunicación, le informamos que\n>> cualquier divulgación, distribución o copia de esta información constituye\n>> un delito conforme a la ley chilena. Si lo ha recibido por error, por\n>> favor\n>> borre el mensaje y todos sus anexos y notifique al remitente.\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\n-- \nLa información contenida en este correo electrónico y cualquier anexo o \nrespuesta relacionada, puede contener datos e información confidencial y no \npuede ser usada o difundida por personas distintas a su(s) destinatario(s). \nSi usted no es el destinatario de esta comunicación, le informamos que \ncualquier divulgación, distribución o copia de esta información constituye \nun delito conforme a la ley chilena. Si lo ha recibido por error, por favor \nborre el mensaje y todos sus anexos y notifique al remitente.",
       "body_snippet": "Thank you very much Dominik.\n\nYou are right,  the southern border of the shapefile used as boundary\nis outside the borders of the RasterStack that I want to crop, and\nthat is the difference with a pre",
       "thread_id": "thread-66462e325b1a",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024970.html"
     },
     {
       "id": "msg-5b1d4ade9265",
@@ -471,7 +495,8 @@
       "body_snippet": "Have you tried\n  plotRGB(gruissan)\n?\n\nplotRGB is in the raster package.\n\n-Don\n\n-- \nDon MacQueen\n\nLawrence Livermore National Laboratory\n7000 East Ave., L-627\nLivermore, CA 94550\n925-423-1062\n\n\n\n\n\nOn 1",
       "thread_id": "thread-22fb0598a86a",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024971.html"
     },
     {
       "id": "msg-3bb7fb202b51",
@@ -493,7 +518,8 @@
       "body_snippet": "On 03/10/16 20:35, Cenk ???Z wrote:\n> According to your suggestion , I excluded duplicated points. However\n> I\ntook the same error message.\n>\n> udp1<-unique.ppp(dp1) xxx<-allstats(udp1) Error: in Fest",
       "thread_id": "thread-30ee1c157102",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024972.html"
     },
     {
       "id": "msg-4feed8f4b1c0",
@@ -512,7 +538,8 @@
       "body_snippet": "HI folks,\n\nI would like to compute the fractal dimension of 2D and 3D shapes identified by k points thus on matrices kx2 or  kx3.\n\nI know fractaldim package but I have some trouble in working with it.",
       "thread_id": "thread-22fb0598a86a",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024973.html"
     },
     {
       "id": "msg-1587215c347e",
@@ -528,7 +555,8 @@
       "body_snippet": "Hi all,\n\nI have a dataset of site locality information with locality confidence\ndistances (ranging from 0 m to ~10 km). I am trying to intersect these\npoints with a polygon shape file and extract the ",
       "thread_id": "thread-1587215c347e",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024974.html"
     },
     {
       "id": "msg-3625529ed45f",
@@ -550,7 +578,8 @@
       "body_snippet": "On 03/10/16 20:35, Cenk ???Z wrote:\n> According to your suggestion , I excluded duplicated points. However I took the same error message.\n>\n> udp1<-unique.ppp(dp1)\n>  xxx<-allstats(udp1)\n> Error: in F",
       "thread_id": "thread-30ee1c157102",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024975.html"
     },
     {
       "id": "msg-8a195c1fc148",
@@ -573,7 +602,8 @@
       "body_snippet": "Dear Rolf,\n\nI installed the fixed version of spatstat from github repository. allstats and Jest worked perfectly. \nThanks for all the help. I will be waiting for the new version release.\nMany thanks f",
       "thread_id": "thread-8a195c1fc148",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024976.html"
     },
     {
       "id": "msg-9c90a0fb861b",
@@ -597,7 +627,8 @@
       "body_snippet": "On 05/10/16 21:29, Cenk ???Z wrote:\n> Dear Rolf,\n>\n> I installed the fixed version of spatstat from github repository.\n> allstats and Jest worked perfectly.\n> Thanks for all the help. I will be waitin",
       "thread_id": "thread-8a195c1fc148",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024977.html"
     },
     {
       "id": "msg-a6d08c6c6192",
@@ -613,7 +644,8 @@
       "body_snippet": "Hi All,\n\nI am creating a raster map of insect occurrence records, right now I have\nif counting up the number of occurrence points based on the pixel area.\n\nHowever because there is one area that is hi",
       "thread_id": "thread-a6d08c6c6192",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024978.html"
     },
     {
       "id": "msg-cf251e036296",
@@ -631,7 +663,8 @@
       "body_snippet": "Hi,\n\nI don't see any need to create a custom function for that, you can just\nmanipulate the final raster as requested.\n\npop <- read.table(\"allGeo.tsv\", header=TRUE, stringsAsFactors=FALSE)\nhead(pop)\nr",
       "thread_id": "thread-a6d08c6c6192",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024979.html"
     },
     {
       "id": "msg-f218e143dc91",
@@ -647,7 +680,8 @@
       "body_snippet": "Dear All,\n\nI started a week ago to use R to solve a problem I am currently facing in my PhD.\nApologies in advance for the long-winded explanation of my problem.\n\nI am trying to generate a random plana",
       "thread_id": "thread-f218e143dc91",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024980.html"
     },
     {
       "id": "msg-344153fe2fc9",
@@ -663,7 +697,8 @@
       "body_snippet": "Dear members of R-geo,\nCould someone expalin me what do\nBayesian trans-Gaussian kriging using bootstrap and using copulas mean\n\nThank you so much in advance!\n\nRegards\n\nNina Philipova\n\n\n---\n???? ????? ",
       "thread_id": "thread-344153fe2fc9",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024981.html"
     },
     {
       "id": "msg-8c4a224332ab",
@@ -675,11 +710,12 @@
       "subject_clean": "Kriging with uncertain data",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Dear R-sig-geo list members,\n\nI am curious about what are sensible approaches to spatial interpolation, most especially by using kriging, in the context of uncertain data.\n\nSuppose one has a dataset of values observed at different locations, and each value consists on the expected value and its variance. Variance here represents the uncertainty related to the observation, and shows spatial variation due to external factors, for instance the geological setting affecting the quality of the measurement.\n\nHow would you proceed to model the spatial distribution of this variable, including propagation of the (spatially varying)?\n\nI suppose one approach could be by simulation, but at there other ways of propagating the uncertainty that do not involve potentially expensive (in computation time) simulation approaches?\n\nCheers,\n\nSantiago Beguer?a\nCSIC\nSpain",
+      "body_plain": "Dear R-sig-geo list members,\n\nI am curious about what are sensible approaches to spatial interpolation, most especially by using kriging, in the context of uncertain data.\n\nSuppose one has a dataset of values observed at different locations, and each value consists on the expected value and its variance. Variance here represents the uncertainty related to the observation, and shows spatial variation due to external factors, for instance the geological setting affecting the quality of the measurement.\n\nHow would you proceed to model the spatial distribution of this variable, including propagation of the (spatially varying)?\n\nI suppose one approach could be by simulation, but at there other ways of propagating the uncertainty that do not involve potentially expensive (in computation time) simulation approaches?\n\nCheers,\n\nSantiago Beguería\nCSIC\nSpain",
       "body_snippet": "Dear R-sig-geo list members,\n\nI am curious about what are sensible approaches to spatial interpolation, most especially by using kriging, in the context of uncertain data.\n\nSuppose one has a dataset o",
       "thread_id": "thread-8c4a224332ab",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024982.html"
     },
     {
       "id": "msg-48197a547d3e",
@@ -697,7 +733,8 @@
       "body_snippet": "Just a partial suggestion: the RANN package will let you index the points \nbyk-neighbourness, avoiding some of the burden of searching for points \nwithin your 100-1000m band.\n\nHope this helps,\n\nRoger\n",
       "thread_id": "thread-f218e143dc91",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024983.html"
     },
     {
       "id": "msg-9a9a292070dc",
@@ -711,11 +748,12 @@
       "references": [
         "<F7815991-4967-449B-8173-C26865B49F2A@csic.es>"
       ],
-      "body_plain": "Dear Santiago,\n\nyou mean you have two values at each location (observed value and \nuncertainty)? Or you have an observed value that is the sum of the real \nvalue and the observation error (uncertainty). If the last, then I think \nusing the gstat::krige() function is straightforward, since the result \nof the function contains the variance of the prediction (\"Attributes \ncolumns contain prediction and\nprediction variance\"; \nhttps://cran.r-project.org/web/packages/gstat/gstat.pdf).\n\nHTH,\n?kos Bede-Fazekas\nHungarian Academy of Sciences\n\n\n\n2016.10.06. 11:52 keltez?ssel, Santiago Beguer?a ?rta:\n> Dear R-sig-geo list members,\n>\n> I am curious about what are sensible approaches to spatial interpolation, most especially by using kriging, in the context of uncertain data.\n>\n> Suppose one has a dataset of values observed at different locations, and each value consists on the expected value and its variance. Variance here represents the uncertainty related to the observation, and shows spatial variation due to external factors, for instance the geological setting affecting the quality of the measurement.\n>\n> How would you proceed to model the spatial distribution of this variable, including propagation of the (spatially varying)?\n>\n> I suppose one approach could be by simulation, but at there other ways of propagating the uncertainty that do not involve potentially expensive (in computation time) simulation approaches?\n>\n> Cheers,\n>\n> Santiago Beguer?a\n> CSIC\n> Spain\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_plain": "Dear Santiago,\n\nyou mean you have two values at each location (observed value and \nuncertainty)? Or you have an observed value that is the sum of the real \nvalue and the observation error (uncertainty). If the last, then I think \nusing the gstat::krige() function is straightforward, since the result \nof the function contains the variance of the prediction (\"Attributes \ncolumns contain prediction and\nprediction variance\"; \nhttps://cran.r-project.org/web/packages/gstat/gstat.pdf).\n\nHTH,\nÁkos Bede-Fazekas\nHungarian Academy of Sciences\n\n\n\n2016.10.06. 11:52 keltezéssel, Santiago Beguería írta:\n> Dear R-sig-geo list members,\n>\n> I am curious about what are sensible approaches to spatial interpolation, most especially by using kriging, in the context of uncertain data.\n>\n> Suppose one has a dataset of values observed at different locations, and each value consists on the expected value and its variance. Variance here represents the uncertainty related to the observation, and shows spatial variation due to external factors, for instance the geological setting affecting the quality of the measurement.\n>\n> How would you proceed to model the spatial distribution of this variable, including propagation of the (spatially varying)?\n>\n> I suppose one approach could be by simulation, but at there other ways of propagating the uncertainty that do not involve potentially expensive (in computation time) simulation approaches?\n>\n> Cheers,\n>\n> Santiago Beguería\n> CSIC\n> Spain\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
       "body_snippet": "Dear Santiago,\n\nyou mean you have two values at each location (observed value and \nuncertainty)? Or you have an observed value that is the sum of the real \nvalue and the observation error (uncertainty",
       "thread_id": "thread-8c4a224332ab",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024984.html"
     },
     {
       "id": "msg-1589c24ac104",
@@ -730,11 +768,12 @@
         "<F7815991-4967-449B-8173-C26865B49F2A@csic.es>",
         "<dde216dd-80a6-8cc5-5f9b-0ff6caca5b88@gmail.com>"
       ],
-      "body_plain": "Dear ?kos,\n\nI was referring to the former: I have data with two values at each location: measured value and uncertainty of the measurement. So, each observation is in fact a statistical variate, which we can assume is Gaussian distributed. Hence, my two values are the expected (mean) and the variance of the distribution.\n\nCheers,\n\nStg\n\n\n> El 7 oct 2016, a las 8:39, Bede-Fazekas ?kos <bfalevlist at gmail.com> escribi?:\n> \n> Dear Santiago,\n> \n> you mean you have two values at each location (observed value and uncertainty)? Or you have an observed value that is the sum of the real value and the observation error (uncertainty). If the last, then I think using the gstat::krige() function is straightforward, since the result of the function contains the variance of the prediction (\"Attributes columns contain prediction and\n> prediction variance\"; https://cran.r-project.org/web/packages/gstat/gstat.pdf).\n> \n> HTH,\n> ?kos Bede-Fazekas\n> Hungarian Academy of Sciences\n> \n> \n> \n> 2016.10.06. 11:52 keltez?ssel, Santiago Beguer?a ?rta:\n>> Dear R-sig-geo list members,\n>> \n>> I am curious about what are sensible approaches to spatial interpolation, most especially by using kriging, in the context of uncertain data.\n>> \n>> Suppose one has a dataset of values observed at different locations, and each value consists on the expected value and its variance. Variance here represents the uncertainty related to the observation, and shows spatial variation due to external factors, for instance the geological setting affecting the quality of the measurement.\n>> \n>> How would you proceed to model the spatial distribution of this variable, including propagation of the (spatially varying)?\n>> \n>> I suppose one approach could be by simulation, but at there other ways of propagating the uncertainty that do not involve potentially expensive (in computation time) simulation approaches?\n>> \n>> Cheers,\n>> \n>> Santiago Beguer?a\n>> CSIC\n>> Spain\n>> \n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
-      "body_snippet": "Dear ?kos,\n\nI was referring to the former: I have data with two values at each location: measured value and uncertainty of the measurement. So, each observation is in fact a statistical variate, which",
+      "body_plain": "Dear Ákos,\n\nI was referring to the former: I have data with two values at each location: measured value and uncertainty of the measurement. So, each observation is in fact a statistical variate, which we can assume is Gaussian distributed. Hence, my two values are the expected (mean) and the variance of the distribution.\n\nCheers,\n\nStg\n\n\n> El 7 oct 2016, a las 8:39, Bede-Fazekas Ákos <bfalevlist at gmail.com> escribió:\n> \n> Dear Santiago,\n> \n> you mean you have two values at each location (observed value and uncertainty)? Or you have an observed value that is the sum of the real value and the observation error (uncertainty). If the last, then I think using the gstat::krige() function is straightforward, since the result of the function contains the variance of the prediction (\"Attributes columns contain prediction and\n> prediction variance\"; https://cran.r-project.org/web/packages/gstat/gstat.pdf).\n> \n> HTH,\n> Ákos Bede-Fazekas\n> Hungarian Academy of Sciences\n> \n> \n> \n> 2016.10.06. 11:52 keltezéssel, Santiago Beguería írta:\n>> Dear R-sig-geo list members,\n>> \n>> I am curious about what are sensible approaches to spatial interpolation, most especially by using kriging, in the context of uncertain data.\n>> \n>> Suppose one has a dataset of values observed at different locations, and each value consists on the expected value and its variance. Variance here represents the uncertainty related to the observation, and shows spatial variation due to external factors, for instance the geological setting affecting the quality of the measurement.\n>> \n>> How would you proceed to model the spatial distribution of this variable, including propagation of the (spatially varying)?\n>> \n>> I suppose one approach could be by simulation, but at there other ways of propagating the uncertainty that do not involve potentially expensive (in computation time) simulation approaches?\n>> \n>> Cheers,\n>> \n>> Santiago Beguería\n>> CSIC\n>> Spain\n>> \n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Dear Ákos,\n\nI was referring to the former: I have data with two values at each location: measured value and uncertainty of the measurement. So, each observation is in fact a statistical variate, which",
       "thread_id": "thread-8c4a224332ab",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024985.html"
     },
     {
       "id": "msg-72981c27b4d1",
@@ -750,11 +789,12 @@
         "<dde216dd-80a6-8cc5-5f9b-0ff6caca5b88@gmail.com>",
         "<4368F5A7-18E0-4B9C-8780-D919697AE20F@csic.es>"
       ],
-      "body_plain": "If the only problem is to krige these data, the solution is pretty\ntrivial; add a location specific value to the nugget; this is what\nDelhomme in 1978 coined as regression kriging [1] (kriging of regressed\nrather than observed values, using estimates + estimation errors).\n\nAn implementation is found in gstat, look up argument \"weights\" in\n?gstat; you can use this argument in gstat::krige\n\nTrickier is to infer the variogram of the underlying, unobserved\nstationary variable from your estimates + estimation errors, in\nparticular when these estimation errors are rather large and/or vary\nstrongly. Anyone knows a good ref to a paper that tackles that issue?\n\n\n[1] Delhomme, J. P. \"Kriging in the hydrosciences.\" Advances in water\nresources 1.5 (1978): 251-266.\n\nOn 07/10/16 10:27, Santiago Beguer?a wrote:\n> Dear ?kos,\n> \n> I was referring to the former: I have data with two values at each location: measured value and uncertainty of the measurement. So, each observation is in fact a statistical variate, which we can assume is Gaussian distributed. Hence, my two values are the expected (mean) and the variance of the distribution.\n> \n> Cheers,\n> \n> Stg\n> \n> \n>> El 7 oct 2016, a las 8:39, Bede-Fazekas ?kos <bfalevlist at gmail.com> escribi?:\n>>\n>> Dear Santiago,\n>>\n>> you mean you have two values at each location (observed value and uncertainty)? Or you have an observed value that is the sum of the real value and the observation error (uncertainty). If the last, then I think using the gstat::krige() function is straightforward, since the result of the function contains the variance of the prediction (\"Attributes columns contain prediction and\n>> prediction variance\"; https://cran.r-project.org/web/packages/gstat/gstat.pdf).\n>>\n>> HTH,\n>> ?kos Bede-Fazekas\n>> Hungarian Academy of Sciences\n>>\n>>\n>>\n>> 2016.10.06. 11:52 keltez?ssel, Santiago Beguer?a ?rta:\n>>> Dear R-sig-geo list members,\n>>>\n>>> I am curious about what are sensible approaches to spatial interpolation, most especially by using kriging, in the context of uncertain data.\n>>>\n>>> Suppose one has a dataset of values observed at different locations, and each value consists on the expected value and its variance. Variance here represents the uncertainty related to the observation, and shows spatial variation due to external factors, for instance the geological setting affecting the quality of the measurement.\n>>>\n>>> How would you proceed to model the spatial distribution of this variable, including propagation of the (spatially varying)?\n>>>\n>>> I suppose one approach could be by simulation, but at there other ways of propagating the uncertainty that do not involve potentially expensive (in computation time) simulation approaches?\n>>>\n>>> Cheers,\n>>>\n>>> Santiago Beguer?a\n>>> CSIC\n>>> Spain\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics  (ifgi),  University of M?nster\nHeisenbergstra?e 2, 48149 M?nster, Germany; +49 251 83 33081\nJournal of Statistical Software:   http://www.jstatsoft.org/\nComputers & Geosciences:   http://elsevier.com/locate/cageo/\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: signature.asc\nType: application/pgp-signature\nSize: 490 bytes\nDesc: OpenPGP digital signature\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20161007/48f43c83/attachment.bin>",
+      "body_plain": "If the only problem is to krige these data, the solution is pretty\ntrivial; add a location specific value to the nugget; this is what\nDelhomme in 1978 coined as regression kriging [1] (kriging of regressed\nrather than observed values, using estimates + estimation errors).\n\nAn implementation is found in gstat, look up argument \"weights\" in\n?gstat; you can use this argument in gstat::krige\n\nTrickier is to infer the variogram of the underlying, unobserved\nstationary variable from your estimates + estimation errors, in\nparticular when these estimation errors are rather large and/or vary\nstrongly. Anyone knows a good ref to a paper that tackles that issue?\n\n\n[1] Delhomme, J. P. \"Kriging in the hydrosciences.\" Advances in water\nresources 1.5 (1978): 251-266.\n\nOn 07/10/16 10:27, Santiago Beguería wrote:\n> Dear Ákos,\n> \n> I was referring to the former: I have data with two values at each location: measured value and uncertainty of the measurement. So, each observation is in fact a statistical variate, which we can assume is Gaussian distributed. Hence, my two values are the expected (mean) and the variance of the distribution.\n> \n> Cheers,\n> \n> Stg\n> \n> \n>> El 7 oct 2016, a las 8:39, Bede-Fazekas Ákos <bfalevlist at gmail.com> escribió:\n>>\n>> Dear Santiago,\n>>\n>> you mean you have two values at each location (observed value and uncertainty)? Or you have an observed value that is the sum of the real value and the observation error (uncertainty). If the last, then I think using the gstat::krige() function is straightforward, since the result of the function contains the variance of the prediction (\"Attributes columns contain prediction and\n>> prediction variance\"; https://cran.r-project.org/web/packages/gstat/gstat.pdf).\n>>\n>> HTH,\n>> Ákos Bede-Fazekas\n>> Hungarian Academy of Sciences\n>>\n>>\n>>\n>> 2016.10.06. 11:52 keltezéssel, Santiago Beguería írta:\n>>> Dear R-sig-geo list members,\n>>>\n>>> I am curious about what are sensible approaches to spatial interpolation, most especially by using kriging, in the context of uncertain data.\n>>>\n>>> Suppose one has a dataset of values observed at different locations, and each value consists on the expected value and its variance. Variance here represents the uncertainty related to the observation, and shows spatial variation due to external factors, for instance the geological setting affecting the quality of the measurement.\n>>>\n>>> How would you proceed to model the spatial distribution of this variable, including propagation of the (spatially varying)?\n>>>\n>>> I suppose one approach could be by simulation, but at there other ways of propagating the uncertainty that do not involve potentially expensive (in computation time) simulation approaches?\n>>>\n>>> Cheers,\n>>>\n>>> Santiago Beguería\n>>> CSIC\n>>> Spain\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics  (ifgi),  University of Münster\nHeisenbergstraße 2, 48149 Münster, Germany; +49 251 83 33081\nJournal of Statistical Software:   http://www.jstatsoft.org/\nComputers & Geosciences:   http://elsevier.com/locate/cageo/\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: signature.asc\nType: application/pgp-signature\nSize: 490 bytes\nDesc: OpenPGP digital signature\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20161007/48f43c83/attachment.bin>",
       "body_snippet": "If the only problem is to krige these data, the solution is pretty\ntrivial; add a location specific value to the nugget; this is what\nDelhomme in 1978 coined as regression kriging [1] (kriging of regr",
       "thread_id": "thread-8c4a224332ab",
       "thread_depth": 3,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024986.html"
     },
     {
       "id": "msg-9da69f2c012b",
@@ -770,11 +810,12 @@
         "<dde216dd-80a6-8cc5-5f9b-0ff6caca5b88@gmail.com>",
         "<4368F5A7-18E0-4B9C-8780-D919697AE20F@csic.es>"
       ],
-      "body_plain": "Dear Santiago,\n\nin this case I would interpolate/krige the uncertainty as well. Since \nuncertainty might have different distribution, different covariates, and \ndifferent spatial autocorrelation than those of the measured value, I \nwould build a new kriging model (fit new semivariogram, etc.) and \ninterpret the predicted values of krige() as the predicted measurement \nuncertainty. I'll have now two uncertainty maps: one is the \ninterpolation uncertainty (variance from the result of the \nkrige(measurement)) and the other is the interpolated measurement \nuncertainty (predicted values from the result of krige(uncertainty)). \nAfterwards, these two can be combined or can be used separately as well.\n\nHave a nice day,\n?kos\n\n2016.10.07. 10:27 keltez?ssel, Santiago Beguer?a ?rta:\n> Dear ?kos,\n>\n> I was referring to the former: I have data with two values at each location: measured value and uncertainty of the measurement. So, each observation is in fact a statistical variate, which we can assume is Gaussian distributed. Hence, my two values are the expected (mean) and the variance of the distribution.\n>\n> Cheers,\n>\n> Stg\n>\n>\n>> El 7 oct 2016, a las 8:39, Bede-Fazekas ?kos <bfalevlist at gmail.com> escribi?:\n>>\n>> Dear Santiago,\n>>\n>> you mean you have two values at each location (observed value and uncertainty)? Or you have an observed value that is the sum of the real value and the observation error (uncertainty). If the last, then I think using the gstat::krige() function is straightforward, since the result of the function contains the variance of the prediction (\"Attributes columns contain prediction and\n>> prediction variance\"; https://cran.r-project.org/web/packages/gstat/gstat.pdf).\n>>\n>> HTH,\n>> ?kos Bede-Fazekas\n>> Hungarian Academy of Sciences\n>>\n>>\n>>\n>> 2016.10.06. 11:52 keltez?ssel, Santiago Beguer?a ?rta:\n>>> Dear R-sig-geo list members,\n>>>\n>>> I am curious about what are sensible approaches to spatial interpolation, most especially by using kriging, in the context of uncertain data.\n>>>\n>>> Suppose one has a dataset of values observed at different locations, and each value consists on the expected value and its variance. Variance here represents the uncertainty related to the observation, and shows spatial variation due to external factors, for instance the geological setting affecting the quality of the measurement.\n>>>\n>>> How would you proceed to model the spatial distribution of this variable, including propagation of the (spatially varying)?\n>>>\n>>> I suppose one approach could be by simulation, but at there other ways of propagating the uncertainty that do not involve potentially expensive (in computation time) simulation approaches?\n>>>\n>>> Cheers,\n>>>\n>>> Santiago Beguer?a\n>>> CSIC\n>>> Spain\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_plain": "Dear Santiago,\n\nin this case I would interpolate/krige the uncertainty as well. Since \nuncertainty might have different distribution, different covariates, and \ndifferent spatial autocorrelation than those of the measured value, I \nwould build a new kriging model (fit new semivariogram, etc.) and \ninterpret the predicted values of krige() as the predicted measurement \nuncertainty. I'll have now two uncertainty maps: one is the \ninterpolation uncertainty (variance from the result of the \nkrige(measurement)) and the other is the interpolated measurement \nuncertainty (predicted values from the result of krige(uncertainty)). \nAfterwards, these two can be combined or can be used separately as well.\n\nHave a nice day,\nÁkos\n\n2016.10.07. 10:27 keltezéssel, Santiago Beguería írta:\n> Dear Ákos,\n>\n> I was referring to the former: I have data with two values at each location: measured value and uncertainty of the measurement. So, each observation is in fact a statistical variate, which we can assume is Gaussian distributed. Hence, my two values are the expected (mean) and the variance of the distribution.\n>\n> Cheers,\n>\n> Stg\n>\n>\n>> El 7 oct 2016, a las 8:39, Bede-Fazekas Ákos <bfalevlist at gmail.com> escribió:\n>>\n>> Dear Santiago,\n>>\n>> you mean you have two values at each location (observed value and uncertainty)? Or you have an observed value that is the sum of the real value and the observation error (uncertainty). If the last, then I think using the gstat::krige() function is straightforward, since the result of the function contains the variance of the prediction (\"Attributes columns contain prediction and\n>> prediction variance\"; https://cran.r-project.org/web/packages/gstat/gstat.pdf).\n>>\n>> HTH,\n>> Ákos Bede-Fazekas\n>> Hungarian Academy of Sciences\n>>\n>>\n>>\n>> 2016.10.06. 11:52 keltezéssel, Santiago Beguería írta:\n>>> Dear R-sig-geo list members,\n>>>\n>>> I am curious about what are sensible approaches to spatial interpolation, most especially by using kriging, in the context of uncertain data.\n>>>\n>>> Suppose one has a dataset of values observed at different locations, and each value consists on the expected value and its variance. Variance here represents the uncertainty related to the observation, and shows spatial variation due to external factors, for instance the geological setting affecting the quality of the measurement.\n>>>\n>>> How would you proceed to model the spatial distribution of this variable, including propagation of the (spatially varying)?\n>>>\n>>> I suppose one approach could be by simulation, but at there other ways of propagating the uncertainty that do not involve potentially expensive (in computation time) simulation approaches?\n>>>\n>>> Cheers,\n>>>\n>>> Santiago Beguería\n>>> CSIC\n>>> Spain\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
       "body_snippet": "Dear Santiago,\n\nin this case I would interpolate/krige the uncertainty as well. Since \nuncertainty might have different distribution, different covariates, and \ndifferent spatial autocorrelation than ",
       "thread_id": "thread-8c4a224332ab",
       "thread_depth": 3,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024987.html"
     },
     {
       "id": "msg-2035da0881a0",
@@ -790,7 +831,8 @@
       "body_snippet": "Dear list members (and especially Robert J. Hijmans),\n\nI am actually using the excellent \"dismo\" package for flora species \ndistribution modelling, and I am wondering if there is a way to get \nimporta",
       "thread_id": "thread-2035da0881a0",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024988.html"
     },
     {
       "id": "msg-9411e48b56b4",
@@ -808,7 +850,8 @@
       "body_snippet": "Hi Fabrice,\n\nIf you want to access variable contribution from a MaxEnt model, you can\nuse still use the plot method.\n\nvar_imp <- plot(me)\nvar_imp\n\nOr build you own function based on the code of the pl",
       "thread_id": "thread-2035da0881a0",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024989.html"
     },
     {
       "id": "msg-0b38dea98478",
@@ -827,7 +870,8 @@
       "body_snippet": "Hi,\n\nAlong a similar vein, I have been assembling into a package some basic helper tools for working with dismo and in particular MaxEnt.  \n\nhttps://github.com/BigelowLab/dismotools\n\n> library(devtool",
       "thread_id": "thread-2035da0881a0",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024990.html"
     },
     {
       "id": "msg-5338078c2c66",
@@ -843,11 +887,12 @@
         "<CAP8THHWAsf=CNHhRbM_1DxUib8WH_1J5TUoTUU2vtVDw+DRQvg@mail.gmail.com>",
         "<701EA2D6-94D2-4216-A8ED-C8C8D79D06ED@bigelow.org>"
       ],
-      "body_plain": "There's also this:\n\nhttps://cran.r-project.org/web/packages/MaxentVariableSelection/index.html\n\nOn 10.10.2016 14:15, Ben Tupper wrote:\n> Hi,\n>\n> Along a similar vein, I have been assembling into a package some basic helper tools for working with dismo and in particular MaxEnt.\n>\n> https://github.com/BigelowLab/dismotools\n>\n>> library(devtools)\n>> install_github(\"BigelowLab/dismotools\")\n>> library(dismotools)\n>> maxent_get_results(me, \"importance\")\n>> maxent_get_results(me, \"contribution\")\n> Ben\n>\n>\n>\n>> On Oct 10, 2016, at 4:48 AM, Ahmadou Dicko <dicko.ahmadou at gmail.com> wrote:\n>>\n>> Hi Fabrice,\n>>\n>> If you want to access variable contribution from a MaxEnt model, you can\n>> use still use the plot method.\n>>\n>> var_imp <- plot(me)\n>> var_imp\n>>\n>> Or build you own function based on the code of the plot method\n>>\n>> var_contrib <- function(m, df = TRUE, ...) {\n>>   stopifnot(inherits(m,  \"MaxEnt\"))\n>>   res <- m at results[grep(\"contribution\", rownames(m at results)), ]\n>>   names(res) <- gsub(\".contribution\", \"\", names(res))\n>>   if (df)\n>>     res <- data.frame(var = names(res), contrib = unname(res))\n>>   res\n>> }\n>>\n>> var_contrib(me)\n>>\n>> Hope it helps\n>>\n>>\n>>\n>>\n>>\n>> On Mon, Oct 10, 2016 at 10:15 AM, Fabrice Vinatier <\n>> fabrice.vinatier.pro at gmail.com> wrote:\n>>\n>>> Dear list members (and especially Robert J. Hijmans),\n>>>\n>>> I am actually using the excellent \"dismo\" package for flora species\n>>> distribution modelling, and I am wondering if there is a way to get\n>>> importance of variables used in maxent, domain, mahal and bioclim\n>>> functions, to handle these importances in a table.\n>>>\n>>> I tested all possible models included in https://cran.r-project.org/web\n>>> /packages/dismo/vignettes/sdm.pdf and I get easily the importance of\n>>> variables issued from Random Forest, GLM and RPART models using\n>>> \"$importance\", \"$coefficients[-1], and \"$variable.importance\",\n>>> respectively, but it is more difficult to get the others, although there is\n>>> a possible indirect access to the importance variable of Maxent model using\n>>> plot(me) (if me is the fitted model).\n>>>\n>>> Best regards,\n>>>\n>>> Fabrice Vinatier\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>\n>>\n>> -- \n>> Ahmadou H. DICKO, PhD\n>> Data hacker and climate change economist\n>> Post-doctoral researcher\n>> CIRAD - UMR15 CIRAD/INRA Control of exotic and emerging diseases\n>> email : ahmadou-hamady.dicko at cirad.fr <ahmadou.dicko at ucad.edu.sn>\n>> twitter : @dickoah\n>> github : github/dickoa <https://github.com/dickoa>\n>> portable: +33 7 68 16 11 58\n>>\n>> \t[[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> Ben Tupper\n> Bigelow Laboratory for Ocean Sciences\n> 60 Bigelow Drive, P.O. Box 380\n> East Boothbay, Maine 04544\n> http://www.bigelow.org\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \n#####################################\nTim Appelhans\nDepartment of Geography\nEnvironmental Informatics\nPhilipps Universit?t Marburg\nDeutschhausstra?e 12\nRaum 00A08\n35032 Marburg (Paketpost: 35037 Marburg)\nGermany\n\nTel +49 (0) 6421 28-25957\n\nhttp://environmentalinformatics-marburg.de/",
+      "body_plain": "There's also this:\n\nhttps://cran.r-project.org/web/packages/MaxentVariableSelection/index.html\n\nOn 10.10.2016 14:15, Ben Tupper wrote:\n> Hi,\n>\n> Along a similar vein, I have been assembling into a package some basic helper tools for working with dismo and in particular MaxEnt.\n>\n> https://github.com/BigelowLab/dismotools\n>\n>> library(devtools)\n>> install_github(\"BigelowLab/dismotools\")\n>> library(dismotools)\n>> maxent_get_results(me, \"importance\")\n>> maxent_get_results(me, \"contribution\")\n> Ben\n>\n>\n>\n>> On Oct 10, 2016, at 4:48 AM, Ahmadou Dicko <dicko.ahmadou at gmail.com> wrote:\n>>\n>> Hi Fabrice,\n>>\n>> If you want to access variable contribution from a MaxEnt model, you can\n>> use still use the plot method.\n>>\n>> var_imp <- plot(me)\n>> var_imp\n>>\n>> Or build you own function based on the code of the plot method\n>>\n>> var_contrib <- function(m, df = TRUE, ...) {\n>>   stopifnot(inherits(m,  \"MaxEnt\"))\n>>   res <- m at results[grep(\"contribution\", rownames(m at results)), ]\n>>   names(res) <- gsub(\".contribution\", \"\", names(res))\n>>   if (df)\n>>     res <- data.frame(var = names(res), contrib = unname(res))\n>>   res\n>> }\n>>\n>> var_contrib(me)\n>>\n>> Hope it helps\n>>\n>>\n>>\n>>\n>>\n>> On Mon, Oct 10, 2016 at 10:15 AM, Fabrice Vinatier <\n>> fabrice.vinatier.pro at gmail.com> wrote:\n>>\n>>> Dear list members (and especially Robert J. Hijmans),\n>>>\n>>> I am actually using the excellent \"dismo\" package for flora species\n>>> distribution modelling, and I am wondering if there is a way to get\n>>> importance of variables used in maxent, domain, mahal and bioclim\n>>> functions, to handle these importances in a table.\n>>>\n>>> I tested all possible models included in https://cran.r-project.org/web\n>>> /packages/dismo/vignettes/sdm.pdf and I get easily the importance of\n>>> variables issued from Random Forest, GLM and RPART models using\n>>> \"$importance\", \"$coefficients[-1], and \"$variable.importance\",\n>>> respectively, but it is more difficult to get the others, although there is\n>>> a possible indirect access to the importance variable of Maxent model using\n>>> plot(me) (if me is the fitted model).\n>>>\n>>> Best regards,\n>>>\n>>> Fabrice Vinatier\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>\n>>\n>> -- \n>> Ahmadou H. DICKO, PhD\n>> Data hacker and climate change economist\n>> Post-doctoral researcher\n>> CIRAD - UMR15 CIRAD/INRA Control of exotic and emerging diseases\n>> email : ahmadou-hamady.dicko at cirad.fr <ahmadou.dicko at ucad.edu.sn>\n>> twitter : @dickoah\n>> github : github/dickoa <https://github.com/dickoa>\n>> portable: +33 7 68 16 11 58\n>>\n>> \t[[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> Ben Tupper\n> Bigelow Laboratory for Ocean Sciences\n> 60 Bigelow Drive, P.O. Box 380\n> East Boothbay, Maine 04544\n> http://www.bigelow.org\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \n#####################################\nTim Appelhans\nDepartment of Geography\nEnvironmental Informatics\nPhilipps Universität Marburg\nDeutschhausstraße 12\nRaum 00A08\n35032 Marburg (Paketpost: 35037 Marburg)\nGermany\n\nTel +49 (0) 6421 28-25957\n\nhttp://environmentalinformatics-marburg.de/",
       "body_snippet": "There's also this:\n\nhttps://cran.r-project.org/web/packages/MaxentVariableSelection/index.html\n\nOn 10.10.2016 14:15, Ben Tupper wrote:\n> Hi,\n>\n> Along a similar vein, I have been assembling into a pac",
       "thread_id": "thread-2035da0881a0",
       "thread_depth": 3,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024991.html"
     },
     {
       "id": "msg-f1fccaa59ba7",
@@ -864,11 +909,12 @@
         "<4368F5A7-18E0-4B9C-8780-D919697AE20F@csic.es>",
         "<488518ee-3d60-4dec-8c75-4ebd395a22aa@uni-muenster.de>"
       ],
-      "body_plain": "Hi,\n\nThank you for your suggestions. I gave the gstat with weights argument a try, but I?m not sure about the results / my implementation.\n\nI have worked out an example with the meuse dataset so I can share it with you:\n\nlibrary(gstat)\nlibrary(sp)\n\ndata(meuse)\ncoordinates(meuse) <- ~x+y\n\ndata(meuse.grid)\ngridded(meuse.grid) = ~x+y\n\nFor a starting, let?s fit a standard universal kriging model:\n\n# model 1: UK\n\nv <- variogram(log(zinc)~sqrt(dist)+x+y, meuse)\nvar1 <- fit.variogram(v, vgm(1, \"Sph\", 700, 1))\n\nm1 <- gstat(formula=log(zinc)~sqrt(dist), data=meuse, id='log_zinc',\n            model=var1)\npredm1 <- predict(m1, meuse.grid)\n\nsummary(predm1 at data)\n\nLet?s now simulate some measurement variances. I will assume the standard error to be uniformly distributed, with values between 0.2 and 0.4 times the measured values: \n\nmeuse$var <- (meuse$zinc*runif(155,0.1,0.2))^2\n\nplot(meuse$var~meuse$zinc)\nplot(log(meuse$var)~log(meuse$zinc))\n\nLet?s now fit a weighted UK model, using measurement precisions (= 1/variance) as weights:\n\n# model 2: weighted UK\n\nm2 <- update(m1, weights=1/log(meuse$var))\npredm2 <- predict(m2, meuse.grid)\n\nIf we compare the results of both models, we shall see that the variability of the predictions has shrinked a bit in model 2, while the kriging variances have increased:\n\nsummary(predm1 at data)\nsummary(predm2 at data)\n\nThe spatial distribution of the variances has also changed, reflecting the spatial distribution of the measurement variances.\n\nAll good so far: the uncertainty of the measurements has influenced the kriging model, and now we obtain slightly less certain krigged values. But this does not answer my question, since we have not propagated the measurement uncertainty to the estimated field. You can see this by comparing the magnitudes of model 2 kriging variances to the measurement variances:\n\nsummary(log(meuse$var))\nsummary(predm2 at data$log_zinc.var)\n\n?kos? suggestion, i.e. to krige the measured values and their variances separately, is a good suggestion. We can still use the weights argument to krige the observations, and we shall get separated measurement and kriging variances, which is nice. If we suspect that there is a relation between the measured values and their errors (as it is the case in my simulated example), we could even use the trigged surface of the measurement as a coverable; I suppose. \n\nWhat do you think about that approached? Does it make sense, is it statistically correct regarding the kriging assumptions?\n\nAlso, I am a bit worried about the semivariogram model fitted, since there is no way that I have found to incorporate the error variances of the measurements. There is an Err argument to the vim function in gstat, but as I understand it a single error variance for the whole spatial field is expected, i.e. it does not work with spatially varying errors.\n\nCheers,\n\nSantiago\n\n\n\n> El 7 oct 2016, a las 10:37, Edzer Pebesma <edzer.pebesma at uni-muenster.de> escribi?:\n> \n> If the only problem is to krige these data, the solution is pretty\n> trivial; add a location specific value to the nugget; this is what\n> Delhomme in 1978 coined as regression kriging [1] (kriging of regressed\n> rather than observed values, using estimates + estimation errors).\n> \n> An implementation is found in gstat, look up argument \"weights\" in\n> ?gstat; you can use this argument in gstat::krige\n> \n> Trickier is to infer the variogram of the underlying, unobserved\n> stationary variable from your estimates + estimation errors, in\n> particular when these estimation errors are rather large and/or vary\n> strongly. Anyone knows a good ref to a paper that tackles that issue?\n> \n> \n> [1] Delhomme, J. P. \"Kriging in the hydrosciences.\" Advances in water\n> resources 1.5 (1978): 251-266.\n> \n> On 07/10/16 10:27, Santiago Beguer?a wrote:\n>> Dear ?kos,\n>> \n>> I was referring to the former: I have data with two values at each location: measured value and uncertainty of the measurement. So, each observation is in fact a statistical variate, which we can assume is Gaussian distributed. Hence, my two values are the expected (mean) and the variance of the distribution.\n>> \n>> Cheers,\n>> \n>> Stg\n>> \n>> \n>>> El 7 oct 2016, a las 8:39, Bede-Fazekas ?kos <bfalevlist at gmail.com> escribi?:\n>>> \n>>> Dear Santiago,\n>>> \n>>> you mean you have two values at each location (observed value and uncertainty)? Or you have an observed value that is the sum of the real value and the observation error (uncertainty). If the last, then I think using the gstat::krige() function is straightforward, since the result of the function contains the variance of the prediction (\"Attributes columns contain prediction and\n>>> prediction variance\"; https://cran.r-project.org/web/packages/gstat/gstat.pdf).\n>>> \n>>> HTH,\n>>> ?kos Bede-Fazekas\n>>> Hungarian Academy of Sciences\n>>> \n>>> \n>>> \n>>> 2016.10.06. 11:52 keltez?ssel, Santiago Beguer?a ?rta:\n>>>> Dear R-sig-geo list members,\n>>>> \n>>>> I am curious about what are sensible approaches to spatial interpolation, most especially by using kriging, in the context of uncertain data.\n>>>> \n>>>> Suppose one has a dataset of values observed at different locations, and each value consists on the expected value and its variance. Variance here represents the uncertainty related to the observation, and shows spatial variation due to external factors, for instance the geological setting affecting the quality of the measurement.\n>>>> \n>>>> How would you proceed to model the spatial distribution of this variable, including propagation of the (spatially varying)?\n>>>> \n>>>> I suppose one approach could be by simulation, but at there other ways of propagating the uncertainty that do not involve potentially expensive (in computation time) simulation approaches?\n>>>> \n>>>> Cheers,\n>>>> \n>>>> Santiago Beguer?a\n>>>> CSIC\n>>>> Spain\n>>>> \n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>> \n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> \n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> \n> \n> -- \n> Edzer Pebesma\n> Institute for Geoinformatics  (ifgi),  University of M?nster\n> Heisenbergstra?e 2, 48149 M?nster, Germany; +49 251 83 33081\n> Journal of Statistical Software:   http://www.jstatsoft.org/\n> Computers & Geosciences:   http://elsevier.com/locate/cageo/\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\t[[alternative HTML version deleted]]",
-      "body_snippet": "Hi,\n\nThank you for your suggestions. I gave the gstat with weights argument a try, but I?m not sure about the results / my implementation.\n\nI have worked out an example with the meuse dataset so I can",
+      "body_plain": "Hi,\n\nThank you for your suggestions. I gave the gstat with weights argument a try, but I’m not sure about the results / my implementation.\n\nI have worked out an example with the meuse dataset so I can share it with you:\n\nlibrary(gstat)\nlibrary(sp)\n\ndata(meuse)\ncoordinates(meuse) <- ~x+y\n\ndata(meuse.grid)\ngridded(meuse.grid) = ~x+y\n\nFor a starting, let’s fit a standard universal kriging model:\n\n# model 1: UK\n\nv <- variogram(log(zinc)~sqrt(dist)+x+y, meuse)\nvar1 <- fit.variogram(v, vgm(1, \"Sph\", 700, 1))\n\nm1 <- gstat(formula=log(zinc)~sqrt(dist), data=meuse, id='log_zinc',\n            model=var1)\npredm1 <- predict(m1, meuse.grid)\n\nsummary(predm1 at data)\n\nLet’s now simulate some measurement variances. I will assume the standard error to be uniformly distributed, with values between 0.2 and 0.4 times the measured values: \n\nmeuse$var <- (meuse$zinc*runif(155,0.1,0.2))^2\n\nplot(meuse$var~meuse$zinc)\nplot(log(meuse$var)~log(meuse$zinc))\n\nLet’s now fit a weighted UK model, using measurement precisions (= 1/variance) as weights:\n\n# model 2: weighted UK\n\nm2 <- update(m1, weights=1/log(meuse$var))\npredm2 <- predict(m2, meuse.grid)\n\nIf we compare the results of both models, we shall see that the variability of the predictions has shrinked a bit in model 2, while the kriging variances have increased:\n\nsummary(predm1 at data)\nsummary(predm2 at data)\n\nThe spatial distribution of the variances has also changed, reflecting the spatial distribution of the measurement variances.\n\nAll good so far: the uncertainty of the measurements has influenced the kriging model, and now we obtain slightly less certain krigged values. But this does not answer my question, since we have not propagated the measurement uncertainty to the estimated field. You can see this by comparing the magnitudes of model 2 kriging variances to the measurement variances:\n\nsummary(log(meuse$var))\nsummary(predm2 at data$log_zinc.var)\n\nÁkos’ suggestion, i.e. to krige the measured values and their variances separately, is a good suggestion. We can still use the weights argument to krige the observations, and we shall get separated measurement and kriging variances, which is nice. If we suspect that there is a relation between the measured values and their errors (as it is the case in my simulated example), we could even use the trigged surface of the measurement as a coverable; I suppose. \n\nWhat do you think about that approached? Does it make sense, is it statistically correct regarding the kriging assumptions?\n\nAlso, I am a bit worried about the semivariogram model fitted, since there is no way that I have found to incorporate the error variances of the measurements. There is an Err argument to the vim function in gstat, but as I understand it a single error variance for the whole spatial field is expected, i.e. it does not work with spatially varying errors.\n\nCheers,\n\nSantiago\n\n\n\n> El 7 oct 2016, a las 10:37, Edzer Pebesma <edzer.pebesma at uni-muenster.de> escribió:\n> \n> If the only problem is to krige these data, the solution is pretty\n> trivial; add a location specific value to the nugget; this is what\n> Delhomme in 1978 coined as regression kriging [1] (kriging of regressed\n> rather than observed values, using estimates + estimation errors).\n> \n> An implementation is found in gstat, look up argument \"weights\" in\n> ?gstat; you can use this argument in gstat::krige\n> \n> Trickier is to infer the variogram of the underlying, unobserved\n> stationary variable from your estimates + estimation errors, in\n> particular when these estimation errors are rather large and/or vary\n> strongly. Anyone knows a good ref to a paper that tackles that issue?\n> \n> \n> [1] Delhomme, J. P. \"Kriging in the hydrosciences.\" Advances in water\n> resources 1.5 (1978): 251-266.\n> \n> On 07/10/16 10:27, Santiago Beguería wrote:\n>> Dear Ákos,\n>> \n>> I was referring to the former: I have data with two values at each location: measured value and uncertainty of the measurement. So, each observation is in fact a statistical variate, which we can assume is Gaussian distributed. Hence, my two values are the expected (mean) and the variance of the distribution.\n>> \n>> Cheers,\n>> \n>> Stg\n>> \n>> \n>>> El 7 oct 2016, a las 8:39, Bede-Fazekas Ákos <bfalevlist at gmail.com> escribió:\n>>> \n>>> Dear Santiago,\n>>> \n>>> you mean you have two values at each location (observed value and uncertainty)? Or you have an observed value that is the sum of the real value and the observation error (uncertainty). If the last, then I think using the gstat::krige() function is straightforward, since the result of the function contains the variance of the prediction (\"Attributes columns contain prediction and\n>>> prediction variance\"; https://cran.r-project.org/web/packages/gstat/gstat.pdf).\n>>> \n>>> HTH,\n>>> Ákos Bede-Fazekas\n>>> Hungarian Academy of Sciences\n>>> \n>>> \n>>> \n>>> 2016.10.06. 11:52 keltezéssel, Santiago Beguería írta:\n>>>> Dear R-sig-geo list members,\n>>>> \n>>>> I am curious about what are sensible approaches to spatial interpolation, most especially by using kriging, in the context of uncertain data.\n>>>> \n>>>> Suppose one has a dataset of values observed at different locations, and each value consists on the expected value and its variance. Variance here represents the uncertainty related to the observation, and shows spatial variation due to external factors, for instance the geological setting affecting the quality of the measurement.\n>>>> \n>>>> How would you proceed to model the spatial distribution of this variable, including propagation of the (spatially varying)?\n>>>> \n>>>> I suppose one approach could be by simulation, but at there other ways of propagating the uncertainty that do not involve potentially expensive (in computation time) simulation approaches?\n>>>> \n>>>> Cheers,\n>>>> \n>>>> Santiago Beguería\n>>>> CSIC\n>>>> Spain\n>>>> \n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>> \n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> \n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> \n> \n> -- \n> Edzer Pebesma\n> Institute for Geoinformatics  (ifgi),  University of Münster\n> Heisenbergstraße 2, 48149 Münster, Germany; +49 251 83 33081\n> Journal of Statistical Software:   http://www.jstatsoft.org/\n> Computers & Geosciences:   http://elsevier.com/locate/cageo/\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nThank you for your suggestions. I gave the gstat with weights argument a try, but I’m not sure about the results / my implementation.\n\nI have worked out an example with the meuse dataset so I can",
       "thread_id": "thread-8c4a224332ab",
       "thread_depth": 4,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024992.html"
     },
     {
       "id": "msg-3671af636b0f",
@@ -884,7 +930,8 @@
       "body_snippet": "Dear list members,\n\n\n\nI am trying to generate uncertainty maps of available water capacity\npredicted with a pedotransfer function via Monte-Carlo simulation. I have\nthe raster layers with the mean and",
       "thread_id": "thread-3671af636b0f",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024993.html"
     },
     {
       "id": "msg-67f9d6a6ef20",
@@ -906,7 +953,8 @@
       "body_snippet": "HI folks,\n\nI write for a (hopefully) relatively simple question:\n\nI would need to uniformly sample 1000 or more points **along the border** of a polygon (not within the area enclosed) that is identifi",
       "thread_id": "thread-8c4a224332ab",
       "thread_depth": 5,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024994.html"
     },
     {
       "id": "msg-1524b9a20c19",
@@ -929,7 +977,8 @@
       "body_snippet": "On 14/10/16 07:03, Paolo Piras wrote:\n> HI folks,\n>\n> I write for a (hopefully) relatively simple question:\n>\n> I would need to uniformly sample 1000 or more points **along the border** of a polygon (",
       "thread_id": "thread-8c4a224332ab",
       "thread_depth": 6,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024995.html"
     },
     {
       "id": "msg-24ec1b212b20",
@@ -945,7 +994,8 @@
       "body_snippet": "Hi R-Sig-Geo,\n\nI am working on a project related to deterministic probabilistic seismic\nhazard analysis (PSHA).  I know this sounds quite like an oxymoron, but the\nidea is to use deterministic simulat",
       "thread_id": "thread-24ec1b212b20",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024996.html"
     },
     {
       "id": "msg-fe11cf8b4dbc",
@@ -969,7 +1019,8 @@
       "body_snippet": "Thanks a lot Rolf!\n\nThis is virtually exactly what I need;\n\nI'm very grateful for that\n\nAll the best\n\nPaolo\n\n\n________________________________\nDa: Rolf Turner <r.turner at auckland.ac.nz>\nInviato: gio",
       "thread_id": "thread-8c4a224332ab",
       "thread_depth": 7,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024997.html"
     },
     {
       "id": "msg-e590ecc733e5",
@@ -994,7 +1045,8 @@
       "body_snippet": "You can use the spatstat function 'edges' to extract the edges of a polygonal window.\n\n\nExample:\n\n            W <- letterR    #polygonal window\n\n            E <- edges(W)\n\n            X <- runifpointO",
       "thread_id": "thread-8c4a224332ab",
       "thread_depth": 8,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024998.html"
     },
     {
       "id": "msg-31b32df28f3c",
@@ -1020,7 +1072,8 @@
       "body_snippet": "Dear Adrian,\n\neven this solution is pretty cool.\n\nAgain, thanks to all who suggested me how to do that.\n\nBest\n\nPaolo\n\n\n________________________________\nDa: Adrian Baddeley <adrian.baddeley at curtin.e",
       "thread_id": "thread-8c4a224332ab",
       "thread_depth": 9,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/024999.html"
     },
     {
       "id": "msg-426469dfb846",
@@ -1038,7 +1091,8 @@
       "body_snippet": "Dear all,I'm trying to use MannKendall test to get trend of 10 year aridity data. Can some one help me to correct this code. \n>library(raster)\n>library(trend)\n>setwd(\"D:/ClimateData/MK_aridity\")\n>list",
       "thread_id": "thread-426469dfb846",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025000.html"
     },
     {
       "id": "msg-5d63772d8738",
@@ -1065,7 +1119,8 @@
       "body_snippet": "Another possible solution is to use the spsurvey package, and think of each\nedge as a level of stratification and use the grts function to design a\nsurvey of sample points on the edges. An advantage o",
       "thread_id": "thread-8c4a224332ab",
       "thread_depth": 10,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025001.html"
     },
     {
       "id": "msg-54322c97e4ec",
@@ -1081,7 +1136,8 @@
       "body_snippet": "Hi All,\nI am puzzled by some predictions I am getting from the predict() function\non a raster stack containing a factor. I trained a gbm() model on 25\nvariables, one of which is a factor. Then, I am u",
       "thread_id": "thread-54322c97e4ec",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025002.html"
     },
     {
       "id": "msg-d2d3db458b79",
@@ -1109,7 +1165,8 @@
       "body_snippet": "Note that the spsurvey package can also do IRS (simple independent random\nsample) on points, polylines (e.g., stream networks), and area (polygons).\nWhile the irslin() function only shows shapefile an",
       "thread_id": "thread-8c4a224332ab",
       "thread_depth": 11,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025003.html"
     },
     {
       "id": "msg-537f0f556004",
@@ -1137,7 +1194,8 @@
       "body_snippet": "Thanks Mike,\n\nI'll look forward for this solution too\n\nbest\n\npaolo\n\n\n\n________________________________\nDa: mgm mgm <mgm917391 at gmail.com>\nInviato: venerd? 14 ottobre 2016 23.12\nA: Paolo Piras\nCc: Ad",
       "thread_id": "thread-8c4a224332ab",
       "thread_depth": 11,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025004.html"
     },
     {
       "id": "msg-a07fa6a0fcf1",
@@ -1155,7 +1213,8 @@
       "body_snippet": "And for another option, using sp::spsample\n\n\nmypol<-round(matrix(c(-13.8447497369687, -3.51439434200449,\n                              6.09494902836977, 6.83498916728338,\n                             ",
       "thread_id": "thread-a07fa6a0fcf1",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025006.html"
     },
     {
       "id": "msg-307595293ea2",
@@ -1171,7 +1230,8 @@
       "body_snippet": "Dear all,\n\nI have two dataframe 1 by latitude and longitude but they always do not\nmatch. Is it possible to merge them (e.g. nearest distance)?\n\n# Dataframe 1\nstructure(list(lat = c(54L, 55L, 51L, 54L",
       "thread_id": "thread-307595293ea2",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025005.html"
     },
     {
       "id": "msg-d33087e6ca79",
@@ -1190,7 +1250,8 @@
       "body_snippet": "Thanks Jeff,\n\nthis solution also works quite well!\n\nThanks again to all those that proposed different solutions.\n\nBest\n\nPaolo\n\n\n________________________________\nDa: R-sig-Geo <r-sig-geo-bounces at r-p",
       "thread_id": "thread-a07fa6a0fcf1",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025007.html"
     },
     {
       "id": "msg-6ee924e266ce",
@@ -1208,7 +1269,8 @@
       "body_snippet": "When your cross-post on StackOverflow is answered (or is answered\nhere) were you planning on cross-posting the answer as well?\n\nOn Sun, Oct 16, 2016 at 9:32 AM, Miluji Sb <milujisb at gmail.com> wrote",
       "thread_id": "thread-307595293ea2",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025008.html"
     },
     {
       "id": "msg-8d7366c99baa",
@@ -1224,7 +1286,8 @@
       "body_snippet": "Hi All,\n\nI need to reshape an ESRI shape file: http://arnulf.us/PLZ and resp \nhttp://www.metaspatial.net/download/plz.tar.gz\n\nThis means that I need to combine the areas of the ZipCodes (i. e. PLZ) to",
       "thread_id": "thread-8d7366c99baa",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025009.html"
     },
     {
       "id": "msg-ea4011b46d30",
@@ -1242,7 +1305,8 @@
       "body_snippet": "Possible solution:\n\nhttp://stackoverflow.com/a/40075289/4373531\n\nOn Sun, Oct 16, 2016 at 3:32 PM, Miluji Sb <milujisb at gmail.com> wrote:\n\n> Dear all,\n>\n> I have two dataframe 1 by latitude and longi",
       "thread_id": "thread-307595293ea2",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025010.html"
     },
     {
       "id": "msg-ab72d6f53f74",
@@ -1258,7 +1322,8 @@
       "body_snippet": "Howdy Georg,\n\nI've followed this tutorial/example to dissolve related polygons into\nlarger spatial units:\nhttps://philmikejones.wordpress.com/2015/09/03/dissolve-polygons-in-r/\n\nAnd Roger has addition",
       "thread_id": "thread-ab72d6f53f74",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025011.html"
     },
     {
       "id": "msg-732beedd0a4c",
@@ -1274,7 +1339,8 @@
       "body_snippet": "Dear list members,\n\nWe have a bivariate point pattern (two tree species) in a linear\ntransect and would like to obtain a null model equivalent to the one\nprovided by rshift in 2D to test the independe",
       "thread_id": "thread-732beedd0a4c",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025012.html"
     },
     {
       "id": "msg-cb69279f4a5a",
@@ -1292,7 +1358,8 @@
       "body_snippet": "Hi,\nI'm summarizing biophysical rasters (UDEL precipitation and temperature) \nacross administrative units for countries in Africa using (pseudo code):\n\nraster::extract(udel, admin, fun=mean, na.rm=T, ",
       "thread_id": "thread-cb69279f4a5a",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025013.html"
     },
     {
       "id": "msg-b6bf9f7d2d67",
@@ -1311,7 +1378,8 @@
       "body_snippet": "Mel,\n\nLooking at detail in cjg.png the northmost missing data island shows approx\n20-25 in Southern three quarters and 0-5 the small North at tip of island.\nDirectly above this 0-5 another coastal 0-5",
       "thread_id": "thread-cb69279f4a5a",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025014.html"
     },
     {
       "id": "msg-7bf984ee73e3",
@@ -1331,7 +1399,8 @@
       "body_snippet": "Mel,\n\nSorry, your pseudo-code:\n\nraster::extract(udel, admin, fun=mean, na.rm=T, small=T, weights = TRUE)\n\nChris\n\nOn Tue, Oct 18, 2016 at 6:10 PM, chris english <\nenglishchristophera at gmail.com> wrot",
       "thread_id": "thread-cb69279f4a5a",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025015.html"
     },
     {
       "id": "msg-137bd8f62cb0",
@@ -1351,7 +1420,8 @@
       "body_snippet": "Chris,\nThanks, using `weights=TRUE` to compute the means fixed the problem.\nPerfect, --Mel.\n\n\nOn 10/18/2016 11:10 AM, chris english wrote:\n>\n> Mel,\n>\n> Looking at detail in cjg.png the northmost missi",
       "thread_id": "thread-cb69279f4a5a",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025016.html"
     },
     {
       "id": "msg-c98f77ab81ea",
@@ -1370,7 +1440,8 @@
       "body_snippet": "Dear Roger,\n\nApologies for the late reply.\n\nYour suggestion was a life saver, the computation time by which RANN produces nearest neighbour indexes and distances is incredible. Even with more than 1.5",
       "thread_id": "thread-f218e143dc91",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025017.html"
     },
     {
       "id": "msg-69ce49292d60",
@@ -1391,7 +1462,8 @@
       "body_snippet": "Chris,\nActually I take that back, using extract() with `weights=TRUE` returned \n`0` instead of NA values for these problematic coastal admin units. \nThink I might have to impute them manually.\n\n--Mel.",
       "thread_id": "thread-cb69279f4a5a",
       "thread_depth": 3,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025018.html"
     },
     {
       "id": "msg-dfaeac7bb761",
@@ -1407,7 +1479,8 @@
       "body_snippet": "I have used a data set consisting of continuous and categorical variables\nto build a statistical (glmer) model. I now wish to produce a spatial map\nof model predictions given landscape conditions wher",
       "thread_id": "thread-dfaeac7bb761",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025019.html"
     },
     {
       "id": "msg-a024039da4cb",
@@ -1423,11 +1496,12 @@
         "<76531033-52c6-c0ba-487b-bb136f1ac6e0@mbacou.com>",
         "<CAASFQpQna=d_tM+tEQKV2Ux9vWxW9i1GctQFJxDHSJMFSoCtbA@mail.gmail.com>"
       ],
-      "body_plain": "I also found issues with the raster::extract function, for some reason, I\ngot crazy values when I compared the resulting value with the one from\nQGIS(Zonal Statistics Plugin) and ArcGIS?zonal statistics), while the value\nfrom qgis and arcgis were close but the raster::extract has a lot of\ndisturbances:\n\n#example\nlibrary(raster)\nlibrary(rgdal)\n\nr <- raster(\"PRISM_ppt_stable_4kmM3_201608_bil.bil\nhttp://prism.nacse.org/6month/\")\nsetwd(\"D:/PRISM/2005-2016/cb_2015_us_state_500k/\")\npsa <- readOGR(\".\",paste(\"cb_2015_us_state_500k\n<http://www2.census.gov/geo/tiger/GENZ2015/shp/cb_2015_us_state_500k.zip>\n\",sep=''))\ne <- extract(r, psa, weights=TRUE, sp=TRUE, na.rm=TRUE, df=TRUE,fun=mean)\n\nresult <- cbind(psa$monmean,e$PRISM_ppt_stable_4kmM3_201609_bil)\nresult\n            [,1]       [,2]\n [1,]  67.756948  59.672969\n [2,]   8.163987  44.415848\n [3,]  91.171480  53.295749\n [4,]  74.446065  52.633753\n [5,] 128.915104  56.779383\n [6,] 105.266005  93.266030\n [7,] 187.633359  45.947235\n [8,] 106.659815  90.639262\n [9,] 160.519008  46.249172\n[10,]  57.266614  26.728985\n[11,]  23.258635  49.885868\n[12,] 132.101744  46.713378\n[13,]  21.995937  51.782905\n[14,] 168.313586  93.790604\n[15,]         NA         NA\n......\n[56,]  76.527362  82.369481\n\nHas anyone have looked into this issue?\n\nThanks,\n\nPeter\n\nOn Tue, Oct 18, 2016 at 10:10 AM, chris english <\nenglishchristophera at gmail.com> wrote:\n\n> Mel,\n>\n> Looking at detail in cjg.png the northmost missing data island shows approx\n> 20-25 in Southern three quarters and 0-5 the small North at tip of island.\n> Directly above this 0-5 another coastal 0-5.\n> If a substantial east-west scarp bisected the island it might explain. I\n> would otherwise expect a very slight mismatch in projection, a thing I\n> often have problems with.\n>\n> Though reading raster::extract it looks like you want to employ the weights\n> are if your polys are relatively smaller than your cells.\n>\n> HTH\n> Chris\n>\n> On Oct 18, 2016 4:35 PM, \"Bacou, Melanie\" <mel at mbacou.com> wrote:\n>\n> > Hi,\n> > I'm summarizing biophysical rasters (UDEL precipitation and temperature)\n> > across administrative units for countries in Africa using (pseudo code):\n> >\n> > raster::extract(udel, admin, fun=mean, na.rm=T, small=T)\n> >\n> > Out of the 756 units I need data for, extract() fails to return means for\n> > a few coastal units (in red on the maps below) even though the rasters\n> show\n> > data at these locations.\n> >\n> > Is there a particular reason why this might happen? Shall I look for\n> > possible geometry errors in my source shapefiles, or could there be\n> another\n> > reason?\n> >\n> > Maps here:\n> > https://dl.dropboxusercontent.com/u/30925475/eclgcdmhapfplaml.png\n> > https://dl.dropboxusercontent.com/u/30925475/lmkgmdoohpmhdcjg.png\n> >\n> > Thanks for any tip. --Mel.\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
-      "body_snippet": "I also found issues with the raster::extract function, for some reason, I\ngot crazy values when I compared the resulting value with the one from\nQGIS(Zonal Statistics Plugin) and ArcGIS?zonal statisti",
+      "body_plain": "I also found issues with the raster::extract function, for some reason, I\ngot crazy values when I compared the resulting value with the one from\nQGIS(Zonal Statistics Plugin) and ArcGIS（zonal statistics), while the value\nfrom qgis and arcgis were close but the raster::extract has a lot of\ndisturbances:\n\n#example\nlibrary(raster)\nlibrary(rgdal)\n\nr <- raster(\"PRISM_ppt_stable_4kmM3_201608_bil.bil\nhttp://prism.nacse.org/6month/\")\nsetwd(\"D:/PRISM/2005-2016/cb_2015_us_state_500k/\")\npsa <- readOGR(\".\",paste(\"cb_2015_us_state_500k\n<http://www2.census.gov/geo/tiger/GENZ2015/shp/cb_2015_us_state_500k.zip>\n\",sep=''))\ne <- extract(r, psa, weights=TRUE, sp=TRUE, na.rm=TRUE, df=TRUE,fun=mean)\n\nresult <- cbind(psa$monmean,e$PRISM_ppt_stable_4kmM3_201609_bil)\nresult\n            [,1]       [,2]\n [1,]  67.756948  59.672969\n [2,]   8.163987  44.415848\n [3,]  91.171480  53.295749\n [4,]  74.446065  52.633753\n [5,] 128.915104  56.779383\n [6,] 105.266005  93.266030\n [7,] 187.633359  45.947235\n [8,] 106.659815  90.639262\n [9,] 160.519008  46.249172\n[10,]  57.266614  26.728985\n[11,]  23.258635  49.885868\n[12,] 132.101744  46.713378\n[13,]  21.995937  51.782905\n[14,] 168.313586  93.790604\n[15,]         NA         NA\n......\n[56,]  76.527362  82.369481\n\nHas anyone have looked into this issue?\n\nThanks,\n\nPeter\n\nOn Tue, Oct 18, 2016 at 10:10 AM, chris english <\nenglishchristophera at gmail.com> wrote:\n\n> Mel,\n>\n> Looking at detail in cjg.png the northmost missing data island shows approx\n> 20-25 in Southern three quarters and 0-5 the small North at tip of island.\n> Directly above this 0-5 another coastal 0-5.\n> If a substantial east-west scarp bisected the island it might explain. I\n> would otherwise expect a very slight mismatch in projection, a thing I\n> often have problems with.\n>\n> Though reading raster::extract it looks like you want to employ the weights\n> are if your polys are relatively smaller than your cells.\n>\n> HTH\n> Chris\n>\n> On Oct 18, 2016 4:35 PM, \"Bacou, Melanie\" <mel at mbacou.com> wrote:\n>\n> > Hi,\n> > I'm summarizing biophysical rasters (UDEL precipitation and temperature)\n> > across administrative units for countries in Africa using (pseudo code):\n> >\n> > raster::extract(udel, admin, fun=mean, na.rm=T, small=T)\n> >\n> > Out of the 756 units I need data for, extract() fails to return means for\n> > a few coastal units (in red on the maps below) even though the rasters\n> show\n> > data at these locations.\n> >\n> > Is there a particular reason why this might happen? Shall I look for\n> > possible geometry errors in my source shapefiles, or could there be\n> another\n> > reason?\n> >\n> > Maps here:\n> > https://dl.dropboxusercontent.com/u/30925475/eclgcdmhapfplaml.png\n> > https://dl.dropboxusercontent.com/u/30925475/lmkgmdoohpmhdcjg.png\n> >\n> > Thanks for any tip. --Mel.\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "I also found issues with the raster::extract function, for some reason, I\ngot crazy values when I compared the resulting value with the one from\nQGIS(Zonal Statistics Plugin) and ArcGIS（zonal statisti",
       "thread_id": "thread-cb69279f4a5a",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025020.html"
     },
     {
       "id": "msg-c45fa0286b15",
@@ -1443,7 +1517,8 @@
       "body_snippet": "Dear list members,\n\nI'm trying to do a bootstrap of a spatial count model using the\n*spatcounts-package* in R. However, resampling with replacement may lead to\n\"islands\", because sometimes no neighbor",
       "thread_id": "thread-c45fa0286b15",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025021.html"
     },
     {
       "id": "msg-481fe5e1cfd8",
@@ -1459,7 +1534,8 @@
       "body_snippet": "Hi,\n\nI would like to produce a map of riot vulnerability. I have spatial\nSpatialPoints representing shopping malls and SpataialPolygonsDataFrame\nwith data on index of socio-economic deprivation in eac",
       "thread_id": "thread-481fe5e1cfd8",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025022.html"
     },
     {
       "id": "msg-ccedd609cbfe",
@@ -1477,7 +1553,8 @@
       "body_snippet": "On 19/10/16 02:04, Ignacio Barbeito-Sanchez wrote:\n\n> Dear list members,\n>\n> We have a bivariate point pattern (two tree species) in a linear\n> transect and would like to obtain a null model equivalen",
       "thread_id": "thread-732beedd0a4c",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025023.html"
     },
     {
       "id": "msg-d40999cb1f08",
@@ -1495,7 +1572,8 @@
       "body_snippet": "Nick,\n\nI get the same error running your code.\n\nset.seed(987654321)\n\nlibrary(spatcounts)\ndata(\"sim.Yin\")\ndata(\"sim.fm.X\")\ndata(\"sim.gmat\")\ndata(\"sim.nmat\")\ndata(\"sim.region\")\nAllData <- cbind(sim.Yin,",
       "thread_id": "thread-c45fa0286b15",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025024.html"
     },
     {
       "id": "msg-e3ee3246f7ea",
@@ -1515,7 +1593,8 @@
       "body_snippet": "For Completeness:\n\nThis was what I suggested to Kimon-Vincent, offline, as I felt quite\nuncertain as to my input.\n\nKimon-Vincent,\n\nI write off list because perhaps my suggestion is just too stupid and",
       "thread_id": "thread-e3ee3246f7ea",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025025.html"
     },
     {
       "id": "msg-d54750d1e385",
@@ -1534,7 +1613,8 @@
       "body_snippet": "Hi Chris,\n\nThank you very much for your time and effort to help me out. Much\nappreciated!\nWhen I checked the structure of the example dataset, it seems that all the\nvariables are numerical. That's why",
       "thread_id": "thread-c45fa0286b15",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025026.html"
     },
     {
       "id": "msg-c1b12319f37c",
@@ -1554,7 +1634,8 @@
       "body_snippet": "Hi folks,\n\nI'm not sure if this topic could be appropriate here as it is not properly geostatistical but maybe someone could help me\n\nI have a shared space on google drive with some colleagues; I woul",
       "thread_id": "thread-a07fa6a0fcf1",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025027.html"
     },
     {
       "id": "msg-fef9622547b5",
@@ -1574,7 +1655,8 @@
       "body_snippet": "Nick,\n\nPerhaps a pitch it to the maintainer and report back here? I was just\nfooling around and it was the\nstructure of n.temp that was driving my approach, but each input finds its\nway in thru the fo",
       "thread_id": "thread-c45fa0286b15",
       "thread_depth": 3,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025028.html"
     },
     {
       "id": "msg-2a90165a4cb8",
@@ -1588,11 +1670,12 @@
       "references": [
         "<CAHMizkMvOKN8jkKGO6Zup46uUiyoGpTEFin9XJVuWBw+iv_SFw@mail.gmail.com>"
       ],
-      "body_plain": "Hi,\n\nHonestly speaking I do not have clear idea what you will plan to do. You\nwant to just create map with highlighted areas showing hypothetical \"better\nconditions\" for riots, or you want to use a model for finding such areas\nand explore potential variables causing higher risk? In any of this two\ncases, you will need slightly different data and approach... Can you care\nto elaborate?\n\nPS: Mo?esz napisa? do mnie po polsku na prywatny adres, je?li tak Ci jest\n?atwiej ;)\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Hi,\n\nHonestly speaking I do not have clear idea what you will plan to do. You\nwant to just create map with highlighted areas showing hypothetical \"better\nconditions\" for riots, or you want to use a model for finding such areas\nand explore potential variables causing higher risk? In any of this two\ncases, you will need slightly different data and approach... Can you care\nto elaborate?\n\nPS: Możesz napisać do mnie po polsku na prywatny adres, jeśli tak Ci jest\nłatwiej ;)\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Hi,\n\nHonestly speaking I do not have clear idea what you will plan to do. You\nwant to just create map with highlighted areas showing hypothetical \"better\nconditions\" for riots, or you want to use a mo",
       "thread_id": "thread-481fe5e1cfd8",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025029.html"
     },
     {
       "id": "msg-29dccfda9bf9",
@@ -1607,11 +1690,12 @@
         "<CAHMizkMvOKN8jkKGO6Zup46uUiyoGpTEFin9XJVuWBw+iv_SFw@mail.gmail.com>",
         "<CAMNc56CJb7-4HFQY+e_VeqRKauEJBR=FOPmZaBZVXVBeXxW7og@mail.gmail.com>"
       ],
-      "body_plain": "Hi Juta,\n\nIt seems to me that what you have are potential predictors of riots. I\nthink you'll also need some riot location data - that is, if you are trying\nto model vulnerability (as Jacek said) to identify important variables. If\nyou are just trying to create a map that shows potential areas (without\nmodeling - as in, you already KNOW that these are good predictors), then I\nwould probably do something simple, like create a ranking system for\nsocioeconomic status and distance from malls - add them together to ID hot\nspots. Without knowing your goal, it's probably not worth going into too\nmuch detail on those methods, but I would start by interpolating a raster\nthat shows distance to malls (ranked), and combine with census rankings. It\nseems to me these two predictors alone are not sufficient, but if that's\nwhat you're going with, this would be my simple approach.\n\nGood luck!\nTina\n\nOn Fri, Oct 21, 2016 at 8:41 AM, Jacek Stefaniak <jacek.stefaniak at gmail.com>\nwrote:\n\n> Hi,\n>\n> Honestly speaking I do not have clear idea what you will plan to do. You\n> want to just create map with highlighted areas showing hypothetical \"better\n> conditions\" for riots, or you want to use a model for finding such areas\n> and explore potential variables causing higher risk? In any of this two\n> cases, you will need slightly different data and approach... Can you care\n> to elaborate?\n>\n> PS: Mo?esz napisa? do mnie po polsku na prywatny adres, je?li tak Ci jest\n> ?atwiej ;)\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Hi Juta,\n\nIt seems to me that what you have are potential predictors of riots. I\nthink you'll also need some riot location data - that is, if you are trying\nto model vulnerability (as Jacek said) to identify important variables. If\nyou are just trying to create a map that shows potential areas (without\nmodeling - as in, you already KNOW that these are good predictors), then I\nwould probably do something simple, like create a ranking system for\nsocioeconomic status and distance from malls - add them together to ID hot\nspots. Without knowing your goal, it's probably not worth going into too\nmuch detail on those methods, but I would start by interpolating a raster\nthat shows distance to malls (ranked), and combine with census rankings. It\nseems to me these two predictors alone are not sufficient, but if that's\nwhat you're going with, this would be my simple approach.\n\nGood luck!\nTina\n\nOn Fri, Oct 21, 2016 at 8:41 AM, Jacek Stefaniak <jacek.stefaniak at gmail.com>\nwrote:\n\n> Hi,\n>\n> Honestly speaking I do not have clear idea what you will plan to do. You\n> want to just create map with highlighted areas showing hypothetical \"better\n> conditions\" for riots, or you want to use a model for finding such areas\n> and explore potential variables causing higher risk? In any of this two\n> cases, you will need slightly different data and approach... Can you care\n> to elaborate?\n>\n> PS: Możesz napisać do mnie po polsku na prywatny adres, jeśli tak Ci jest\n> łatwiej ;)\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Hi Juta,\n\nIt seems to me that what you have are potential predictors of riots. I\nthink you'll also need some riot location data - that is, if you are trying\nto model vulnerability (as Jacek said) to i",
       "thread_id": "thread-481fe5e1cfd8",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025030.html"
     },
     {
       "id": "msg-4c215564ee30",
@@ -1632,7 +1716,8 @@
       "body_snippet": "Thanks again for all your time Chris!\nI did email the maintainer, Vinzenz Erhardt, a couple of days ago but no\nreply from him. I scraped his email from some webpage because the\nemail-address mentioned",
       "thread_id": "thread-c45fa0286b15",
       "thread_depth": 4,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025031.html"
     },
     {
       "id": "msg-7334eb87ca19",
@@ -1653,7 +1738,8 @@
       "body_snippet": "Paolo,\n\nI saw your post and was just anticipating sharing some data with colleagues\nin New Zealand, and I believe that\nbetween two weeks ago and now, github has changed some Apache Server\nsettings so ",
       "thread_id": "thread-a07fa6a0fcf1",
       "thread_depth": 3,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025032.html"
     },
     {
       "id": "msg-3ea38aaf2a0e",
@@ -1675,7 +1761,8 @@
       "body_snippet": "It appears that there are ongoing DDOS incidents affecting DNS providers \nand through them the services you mention; see:\n\nhttps://tech.slashdot.org/story/16/10/21/135241/several-sites-including-twitt",
       "thread_id": "thread-a07fa6a0fcf1",
       "thread_depth": 4,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025033.html"
     },
     {
       "id": "msg-63661b7867d1",
@@ -1698,7 +1785,8 @@
       "body_snippet": "Roger,\n\nThank you for this input. I am accustomed to high latency. Though I imagine\nthat this DDOS on DSN services will escalate through the\nthe end of the present election and beyond. There's probabl",
       "thread_id": "thread-a07fa6a0fcf1",
       "thread_depth": 5,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025034.html"
     },
     {
       "id": "msg-90fc09302181",
@@ -1722,7 +1810,8 @@
       "body_snippet": "It seems my \"conspiracy\" explanation was not so wrong after all....\n\nLet's wait some time and we will see\n\nAll the best in the meantime\n\npaolo\n\n\n\n________________________________\nDa: chris english <en",
       "thread_id": "thread-a07fa6a0fcf1",
       "thread_depth": 6,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025035.html"
     },
     {
       "id": "msg-41f7fa12a998",
@@ -1738,11 +1827,12 @@
         "<CAMNc56CJb7-4HFQY+e_VeqRKauEJBR=FOPmZaBZVXVBeXxW7og@mail.gmail.com>",
         "<942af556-2cfc-4408-bba4-9461a54d0f72@HUB06.ad.oak.ox.ac.uk>"
       ],
-      "body_plain": "Thanks Tina and Jacek for your messages!\n\nMore about the problem (which hopefully I can illustrate this better now).\nI want to show that the area where 2011 rioting in London started was\nparticularly good for a quick spread of the rioting given that it was on\nthe intersection of high density of shopping malls which are targeted\nduring rioting and socio-economic deprivation. So no modelling of riots per\nse just showing that the area where the (initially peaceful) protest which\nlater turned violent happened fell into a vulnerable zone.\n\nWhat data I have:\n\nspatial points showing malls locations (see here\n<https://www.dropbox.com/s/9e9dnjcy0182txf/picture1.tiff?dl=0>)\nspatialpolygon dataframe which has a column with indices of deprivation for\neach polygon (see here\n<https://www.dropbox.com/s/3yc3sqyb9ltj7ir/picture6.tiff?dl=0> shows\nquintiles)\n\nThe concept so far is to:\n\n1. Create hotspots from shopping malls locations (here\n<https://www.dropbox.com/s/tl8x9xabxcyzp1v/picture2.tiff?dl=0>)\n2. Convert hotspots into spatial polygons (here\n<https://www.dropbox.com/s/pd7i0lz90p5pbbx/picture3.tiff?dl=0>)\n3. Calculate the mean value of deprivation within each hotspot polygon.\nBefore I would need to create a raster out of deprivation in neighbourhoods\n(here <https://www.dropbox.com/s/m43t38wywllmh2w/picture4.tiff?dl=0>)\n4. The final result would be to create a column based on multiplication of\nshopping map hotspots and mean value of deprivation in that hotspot polygon\n(here <https://www.dropbox.com/s/qune4w812sikwmr/picture5.tiff?dl=0>)\n\nI realise that this can seem quite arbitrary as a method so I was wondering\nwhether someone would now a more standard procedure or R packages which are\nnormally used for such tasks?\n\nJuta\n\nOn Fri, Oct 21, 2016 at 2:59 PM, Tina Cormier <tcorms at gmail.com> wrote:\n\n> Hi Juta,\n>\n> It seems to me that what you have are potential predictors of riots. I\n> think you'll also need some riot location data - that is, if you are trying\n> to model vulnerability (as Jacek said) to identify important variables. If\n> you are just trying to create a map that shows potential areas (without\n> modeling - as in, you already KNOW that these are good predictors), then I\n> would probably do something simple, like create a ranking system for\n> socioeconomic status and distance from malls - add them together to ID hot\n> spots. Without knowing your goal, it's probably not worth going into too\n> much detail on those methods, but I would start by interpolating a raster\n> that shows distance to malls (ranked), and combine with census rankings. It\n> seems to me these two predictors alone are not sufficient, but if that's\n> what you're going with, this would be my simple approach.\n>\n> Good luck!\n> Tina\n>\n> On Fri, Oct 21, 2016 at 8:41 AM, Jacek Stefaniak <\n> jacek.stefaniak at gmail.com> wrote:\n>\n>> Hi,\n>>\n>> Honestly speaking I do not have clear idea what you will plan to do. You\n>> want to just create map with highlighted areas showing hypothetical\n>> \"better\n>> conditions\" for riots, or you want to use a model for finding such areas\n>> and explore potential variables causing higher risk? In any of this two\n>> cases, you will need slightly different data and approach... Can you care\n>> to elaborate?\n>>\n>> PS: Mo?esz napisa? do mnie po polsku na prywatny adres, je?li tak Ci jest\n>> ?atwiej ;)\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Thanks Tina and Jacek for your messages!\n\nMore about the problem (which hopefully I can illustrate this better now).\nI want to show that the area where 2011 rioting in London started was\nparticularly good for a quick spread of the rioting given that it was on\nthe intersection of high density of shopping malls which are targeted\nduring rioting and socio-economic deprivation. So no modelling of riots per\nse just showing that the area where the (initially peaceful) protest which\nlater turned violent happened fell into a vulnerable zone.\n\nWhat data I have:\n\nspatial points showing malls locations (see here\n<https://www.dropbox.com/s/9e9dnjcy0182txf/picture1.tiff?dl=0>)\nspatialpolygon dataframe which has a column with indices of deprivation for\neach polygon (see here\n<https://www.dropbox.com/s/3yc3sqyb9ltj7ir/picture6.tiff?dl=0> shows\nquintiles)\n\nThe concept so far is to:\n\n1. Create hotspots from shopping malls locations (here\n<https://www.dropbox.com/s/tl8x9xabxcyzp1v/picture2.tiff?dl=0>)\n2. Convert hotspots into spatial polygons (here\n<https://www.dropbox.com/s/pd7i0lz90p5pbbx/picture3.tiff?dl=0>)\n3. Calculate the mean value of deprivation within each hotspot polygon.\nBefore I would need to create a raster out of deprivation in neighbourhoods\n(here <https://www.dropbox.com/s/m43t38wywllmh2w/picture4.tiff?dl=0>)\n4. The final result would be to create a column based on multiplication of\nshopping map hotspots and mean value of deprivation in that hotspot polygon\n(here <https://www.dropbox.com/s/qune4w812sikwmr/picture5.tiff?dl=0>)\n\nI realise that this can seem quite arbitrary as a method so I was wondering\nwhether someone would now a more standard procedure or R packages which are\nnormally used for such tasks?\n\nJuta\n\nOn Fri, Oct 21, 2016 at 2:59 PM, Tina Cormier <tcorms at gmail.com> wrote:\n\n> Hi Juta,\n>\n> It seems to me that what you have are potential predictors of riots. I\n> think you'll also need some riot location data - that is, if you are trying\n> to model vulnerability (as Jacek said) to identify important variables. If\n> you are just trying to create a map that shows potential areas (without\n> modeling - as in, you already KNOW that these are good predictors), then I\n> would probably do something simple, like create a ranking system for\n> socioeconomic status and distance from malls - add them together to ID hot\n> spots. Without knowing your goal, it's probably not worth going into too\n> much detail on those methods, but I would start by interpolating a raster\n> that shows distance to malls (ranked), and combine with census rankings. It\n> seems to me these two predictors alone are not sufficient, but if that's\n> what you're going with, this would be my simple approach.\n>\n> Good luck!\n> Tina\n>\n> On Fri, Oct 21, 2016 at 8:41 AM, Jacek Stefaniak <\n> jacek.stefaniak at gmail.com> wrote:\n>\n>> Hi,\n>>\n>> Honestly speaking I do not have clear idea what you will plan to do. You\n>> want to just create map with highlighted areas showing hypothetical\n>> \"better\n>> conditions\" for riots, or you want to use a model for finding such areas\n>> and explore potential variables causing higher risk? In any of this two\n>> cases, you will need slightly different data and approach... Can you care\n>> to elaborate?\n>>\n>> PS: Możesz napisać do mnie po polsku na prywatny adres, jeśli tak Ci jest\n>> łatwiej ;)\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Thanks Tina and Jacek for your messages!\n\nMore about the problem (which hopefully I can illustrate this better now).\nI want to show that the area where 2011 rioting in London started was\nparticularly ",
       "thread_id": "thread-41f7fa12a998",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025036.html"
     },
     {
       "id": "msg-dfd9734c4e41",
@@ -1758,7 +1848,8 @@
       "body_snippet": "Hello,\n\nDoes anyone know if there's a way that the package 'spdep' can give\nstandard errors of the prediction (for either SAR or CAR model)? I'm using\nthe spautolm function.\n\nRegards,\n\nMaaz\n\nPhD Candi",
       "thread_id": "thread-dfd9734c4e41",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025037.html"
     },
     {
       "id": "msg-f887b743459a",
@@ -1774,7 +1865,8 @@
       "body_snippet": "Since the release of GDAL 2, feature IDs are 64-bit integers and fields of \nvector data may be 64-bit integers. Most often, the declarations of these \nfields are misunderstandings, as such data is alm",
       "thread_id": "thread-f887b743459a",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025038.html"
     },
     {
       "id": "msg-5e9320036295",
@@ -1792,7 +1884,8 @@
       "body_snippet": "On Thu, 27 Oct 2016, Roger Bivand wrote:\n\n> The current default assumes that users actually use ogrInfo() to examine\n> their data before reading it. Is this overly optimistic? Would it be\n> better to ",
       "thread_id": "thread-f887b743459a",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025039.html"
     },
     {
       "id": "msg-e6166e044e73",
@@ -1808,7 +1901,8 @@
       "body_snippet": "Hi All,\nI am having trouble reproducing my results exactly when I make predictions\nwith predict() and a saved gbm model object. Each time I run predict() with\nthe same model object and inputs (a raste",
       "thread_id": "thread-e6166e044e73",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025040.html"
     },
     {
       "id": "msg-2d7f85e8b627",
@@ -1826,7 +1920,8 @@
       "body_snippet": "Katie,\n\nset.seed(123) on each run thru will (should) result in reproducibility.\n\nset.seed(1234)\npred <- predict(\n\nChr\n\nOn Oct 27, 2016 7:19 PM, \"Katherine Ransom\" <lockhart.katherine at gmail.com>\nwro",
       "thread_id": "thread-e6166e044e73",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025041.html"
     },
     {
       "id": "msg-75713347c307",
@@ -1845,7 +1940,8 @@
       "body_snippet": "Roger,\n\nI concur with Rich, both that most (new) users won't quite follow the\nimplication of the transforms, clamping, work flow, nor yet have a sense of\nwhat the numbers \"should look like\". Perhaps n",
       "thread_id": "thread-f887b743459a",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025042.html"
     },
     {
       "id": "msg-af3895493599",
@@ -1861,7 +1957,8 @@
       "body_snippet": "I've read the task view pages for spatial, spatiotemporal, and\nenvirometrics packages without seeing explicit reference to censored\ngeochemical data. These are data whose values are below detection li",
       "thread_id": "thread-af3895493599",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025043.html"
     },
     {
       "id": "msg-fe83813d25c6",
@@ -1880,7 +1977,8 @@
       "body_snippet": "Hi Chris,\nThank you.\nI have tried that (should have mentioned it) and I just tried it again.\nHowever, it did not help. Also, I just tried summing the raster values in R\nrather than looking at summary ",
       "thread_id": "thread-e6166e044e73",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025044.html"
     },
     {
       "id": "msg-79f1bf7e9d2f",
@@ -1892,11 +1990,12 @@
       "subject_clean": "Error with gstat::predict [SEC=UNCLASSIFIED]",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hi All,\n\nI need to use the predict{gstat}  function in one of my functions for a R package. I use RStudio to make the package. When I specified gstat::predict in the function, I received the following error:\n\nError: 'predict' is not an exported object from 'namespace:gstat'\n\nThe session information is:\n\n> sessionInfo()\n\nR version 3.3.1 (2016-06-21)\n\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\n\nRunning under: Windows 7 x64 (build 7601) Service Pack 1\n\n\n\nlocale:\n\n[1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252\n\n[3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C\n\n[5] LC_TIME=English_Australia.1252\n\n\n\nattached base packages:\n\n[1] stats     graphics  grDevices utils     datasets  methods   base\n\n\n\nother attached packages:\n\n[1] myrpackage_0.0.0.9000 devtools_1.12.0\n\n\n\nloaded via a namespace (and not attached):\n\n[1] tools_3.3.1   withr_1.0.2   memoise_1.0.0 digest_0.6.10\n\nIs this a bug? Any suggestions? Many thanks in advance!\n\nKind regards,\nJin\n\nJin Li, PhD\nSpatial Modeller/Computational Statistician  |  National Earth and Marine Observations\nEnvironmental Geoscience Division  |  GEOSCIENCE AUSTRALIA\n____________________________________________________________\nPhone:  +61 2 6249 9899    Fax:  +61 2 6249 9999\nEmail:  Jin.Li at ga.gov.au<mailto:Jin.Li at ga.gov.au>    Web:  www.ga.gov.au<http://www.ga.gov.au/>\n101 Jerrabomberra Avenue Symonston ACT\nGPO Box 378 Canberra ACT 2601 Australia\nApplying geoscience to Australia?s most important challenges\n\n\n\nGeoscience Australia Disclaimer: This e-mail (and files transmitted with it) is intended only for the person or entity to which it is addressed. If you are not the intended recipient, then you have received this e-mail by mistake and any use, dissemination, forwarding, printing or copying of this e-mail and its file attachments is prohibited. The security of emails transmitted cannot be guaranteed; by forwarding or replying to this email, you acknowledge and accept these risks.\n-------------------------------------------------------------------------------------------------------------------------\n\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Hi All,\n\nI need to use the predict{gstat}  function in one of my functions for a R package. I use RStudio to make the package. When I specified gstat::predict in the function, I received the following error:\n\nError: 'predict' is not an exported object from 'namespace:gstat'\n\nThe session information is:\n\n> sessionInfo()\n\nR version 3.3.1 (2016-06-21)\n\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\n\nRunning under: Windows 7 x64 (build 7601) Service Pack 1\n\n\n\nlocale:\n\n[1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252\n\n[3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C\n\n[5] LC_TIME=English_Australia.1252\n\n\n\nattached base packages:\n\n[1] stats     graphics  grDevices utils     datasets  methods   base\n\n\n\nother attached packages:\n\n[1] myrpackage_0.0.0.9000 devtools_1.12.0\n\n\n\nloaded via a namespace (and not attached):\n\n[1] tools_3.3.1   withr_1.0.2   memoise_1.0.0 digest_0.6.10\n\nIs this a bug? Any suggestions? Many thanks in advance!\n\nKind regards,\nJin\n\nJin Li, PhD\nSpatial Modeller/Computational Statistician  |  National Earth and Marine Observations\nEnvironmental Geoscience Division  |  GEOSCIENCE AUSTRALIA\n____________________________________________________________\nPhone:  +61 2 6249 9899    Fax:  +61 2 6249 9999\nEmail:  Jin.Li at ga.gov.au<mailto:Jin.Li at ga.gov.au>    Web:  www.ga.gov.au<http://www.ga.gov.au/>\n101 Jerrabomberra Avenue Symonston ACT\nGPO Box 378 Canberra ACT 2601 Australia\nApplying geoscience to Australia’s most important challenges\n\n\n\nGeoscience Australia Disclaimer: This e-mail (and files transmitted with it) is intended only for the person or entity to which it is addressed. If you are not the intended recipient, then you have received this e-mail by mistake and any use, dissemination, forwarding, printing or copying of this e-mail and its file attachments is prohibited. The security of emails transmitted cannot be guaranteed; by forwarding or replying to this email, you acknowledge and accept these risks.\n-------------------------------------------------------------------------------------------------------------------------\n\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Hi All,\n\nI need to use the predict{gstat}  function in one of my functions for a R package. I use RStudio to make the package. When I specified gstat::predict in the function, I received the following",
       "thread_id": "thread-79f1bf7e9d2f",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025045.html"
     },
     {
       "id": "msg-5e6438709e1e",
@@ -1910,11 +2009,12 @@
       "references": [
         "<541880c21d784932a43e9ec6903a2b2b@win-exch-prod01.prod.lan>"
       ],
-      "body_plain": "On 31/10/16 05:09, Li Jin wrote:\n> Hi All,\n> \n> I need to use the predict{gstat}  function in one of my functions for a R package. I use RStudio to make the package. When I specified gstat::predict in the function, I received the following error:\n> \n> Error: 'predict' is not an exported object from 'namespace:gstat'\n\ngstat exports 'predict' as an S3method; if it would export 'predict' as\nan object, this would hide the generic in package stats.\n\nThe solution to your problem is to not put prepend 'predict' with\ngstat::, but instead rely on S3 method dispatch.\n\nThe actual, un-exported function called is gstat:::predict.gstat, but it\nis discouraged to call that directly.\n\n> \n> The session information is:\n> \n>> sessionInfo()\n> \n> R version 3.3.1 (2016-06-21)\n> \n> Platform: x86_64-w64-mingw32/x64 (64-bit)\n> \n> Running under: Windows 7 x64 (build 7601) Service Pack 1\n> \n> \n> \n> locale:\n> \n> [1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252\n> \n> [3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C\n> \n> [5] LC_TIME=English_Australia.1252\n> \n> \n> \n> attached base packages:\n> \n> [1] stats     graphics  grDevices utils     datasets  methods   base\n> \n> \n> \n> other attached packages:\n> \n> [1] myrpackage_0.0.0.9000 devtools_1.12.0\n> \n> \n> \n> loaded via a namespace (and not attached):\n> \n> [1] tools_3.3.1   withr_1.0.2   memoise_1.0.0 digest_0.6.10\n> \n> Is this a bug? Any suggestions? Many thanks in advance!\n> \n> Kind regards,\n> Jin\n> \n> Jin Li, PhD\n> Spatial Modeller/Computational Statistician  |  National Earth and Marine Observations\n> Environmental Geoscience Division  |  GEOSCIENCE AUSTRALIA\n> ____________________________________________________________\n> Phone:  +61 2 6249 9899    Fax:  +61 2 6249 9999\n> Email:  Jin.Li at ga.gov.au<mailto:Jin.Li at ga.gov.au>    Web:  www.ga.gov.au<http://www.ga.gov.au/>\n> 101 Jerrabomberra Avenue Symonston ACT\n> GPO Box 378 Canberra ACT 2601 Australia\n> Applying geoscience to Australia?s most important challenges\n> \n> \n> \n> Geoscience Australia Disclaimer: This e-mail (and files transmitted with it) is intended only for the person or entity to which it is addressed. If you are not the intended recipient, then you have received this e-mail by mistake and any use, dissemination, forwarding, printing or copying of this e-mail and its file attachments is prohibited. The security of emails transmitted cannot be guaranteed; by forwarding or replying to this email, you acknowledge and accept these risks.\n> -------------------------------------------------------------------------------------------------------------------------\n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics  (ifgi),  University of M?nster\nHeisenbergstra?e 2, 48149 M?nster, Germany; +49 251 83 33081\nJournal of Statistical Software:   http://www.jstatsoft.org/\nComputers & Geosciences:   http://elsevier.com/locate/cageo/\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: signature.asc\nType: application/pgp-signature\nSize: 490 bytes\nDesc: OpenPGP digital signature\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20161031/9e9e49d5/attachment.bin>",
+      "body_plain": "On 31/10/16 05:09, Li Jin wrote:\n> Hi All,\n> \n> I need to use the predict{gstat}  function in one of my functions for a R package. I use RStudio to make the package. When I specified gstat::predict in the function, I received the following error:\n> \n> Error: 'predict' is not an exported object from 'namespace:gstat'\n\ngstat exports 'predict' as an S3method; if it would export 'predict' as\nan object, this would hide the generic in package stats.\n\nThe solution to your problem is to not put prepend 'predict' with\ngstat::, but instead rely on S3 method dispatch.\n\nThe actual, un-exported function called is gstat:::predict.gstat, but it\nis discouraged to call that directly.\n\n> \n> The session information is:\n> \n>> sessionInfo()\n> \n> R version 3.3.1 (2016-06-21)\n> \n> Platform: x86_64-w64-mingw32/x64 (64-bit)\n> \n> Running under: Windows 7 x64 (build 7601) Service Pack 1\n> \n> \n> \n> locale:\n> \n> [1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252\n> \n> [3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C\n> \n> [5] LC_TIME=English_Australia.1252\n> \n> \n> \n> attached base packages:\n> \n> [1] stats     graphics  grDevices utils     datasets  methods   base\n> \n> \n> \n> other attached packages:\n> \n> [1] myrpackage_0.0.0.9000 devtools_1.12.0\n> \n> \n> \n> loaded via a namespace (and not attached):\n> \n> [1] tools_3.3.1   withr_1.0.2   memoise_1.0.0 digest_0.6.10\n> \n> Is this a bug? Any suggestions? Many thanks in advance!\n> \n> Kind regards,\n> Jin\n> \n> Jin Li, PhD\n> Spatial Modeller/Computational Statistician  |  National Earth and Marine Observations\n> Environmental Geoscience Division  |  GEOSCIENCE AUSTRALIA\n> ____________________________________________________________\n> Phone:  +61 2 6249 9899    Fax:  +61 2 6249 9999\n> Email:  Jin.Li at ga.gov.au<mailto:Jin.Li at ga.gov.au>    Web:  www.ga.gov.au<http://www.ga.gov.au/>\n> 101 Jerrabomberra Avenue Symonston ACT\n> GPO Box 378 Canberra ACT 2601 Australia\n> Applying geoscience to Australia’s most important challenges\n> \n> \n> \n> Geoscience Australia Disclaimer: This e-mail (and files transmitted with it) is intended only for the person or entity to which it is addressed. If you are not the intended recipient, then you have received this e-mail by mistake and any use, dissemination, forwarding, printing or copying of this e-mail and its file attachments is prohibited. The security of emails transmitted cannot be guaranteed; by forwarding or replying to this email, you acknowledge and accept these risks.\n> -------------------------------------------------------------------------------------------------------------------------\n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics  (ifgi),  University of Münster\nHeisenbergstraße 2, 48149 Münster, Germany; +49 251 83 33081\nJournal of Statistical Software:   http://www.jstatsoft.org/\nComputers & Geosciences:   http://elsevier.com/locate/cageo/\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: signature.asc\nType: application/pgp-signature\nSize: 490 bytes\nDesc: OpenPGP digital signature\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20161031/9e9e49d5/attachment.bin>",
       "body_snippet": "On 31/10/16 05:09, Li Jin wrote:\n> Hi All,\n> \n> I need to use the predict{gstat}  function in one of my functions for a R package. I use RStudio to make the package. When I specified gstat::predict in",
       "thread_id": "thread-79f1bf7e9d2f",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025046.html"
     },
     {
       "id": "msg-70264be08190",
@@ -1929,11 +2029,12 @@
         "<541880c21d784932a43e9ec6903a2b2b@win-exch-prod01.prod.lan>",
         "<118d1262-4dd0-3340-9aba-fef180f32642@uni-muenster.de>"
       ],
-      "body_plain": "On Mon, 31 Oct 2016, Edzer Pebesma wrote:\n\n>\n>\n> On 31/10/16 05:09, Li Jin wrote:\n>> Hi All,\n>>\n>> I need to use the predict{gstat} function in one of my functions for a \n>> R package. I use RStudio to make the package. When I specified \n>> gstat::predict in the function, I received the following error:\n>>\n>> Error: 'predict' is not an exported object from 'namespace:gstat'\n>\n> gstat exports 'predict' as an S3method; if it would export 'predict' as\n> an object, this would hide the generic in package stats.\n>\n> The solution to your problem is to not put prepend 'predict' with\n> gstat::, but instead rely on S3 method dispatch.\n\nIs it possible that the OP is not importing correctly in the NAMESPACE \nfile of the package in question?\n\nRoger\n\n>\n> The actual, un-exported function called is gstat:::predict.gstat, but it\n> is discouraged to call that directly.\n>\n>>\n>> The session information is:\n>>\n>>> sessionInfo()\n>>\n>> R version 3.3.1 (2016-06-21)\n>>\n>> Platform: x86_64-w64-mingw32/x64 (64-bit)\n>>\n>> Running under: Windows 7 x64 (build 7601) Service Pack 1\n>>\n>>\n>>\n>> locale:\n>>\n>> [1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252\n>>\n>> [3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C\n>>\n>> [5] LC_TIME=English_Australia.1252\n>>\n>>\n>>\n>> attached base packages:\n>>\n>> [1] stats     graphics  grDevices utils     datasets  methods   base\n>>\n>>\n>>\n>> other attached packages:\n>>\n>> [1] myrpackage_0.0.0.9000 devtools_1.12.0\n>>\n>>\n>>\n>> loaded via a namespace (and not attached):\n>>\n>> [1] tools_3.3.1   withr_1.0.2   memoise_1.0.0 digest_0.6.10\n>>\n>> Is this a bug? Any suggestions? Many thanks in advance!\n>>\n>> Kind regards,\n>> Jin\n>>\n>> Jin Li, PhD\n>> Spatial Modeller/Computational Statistician  |  National Earth and Marine Observations\n>> Environmental Geoscience Division  |  GEOSCIENCE AUSTRALIA\n>> ____________________________________________________________\n>> Phone:  +61 2 6249 9899    Fax:  +61 2 6249 9999\n>> Email:  Jin.Li at ga.gov.au<mailto:Jin.Li at ga.gov.au>    Web:  www.ga.gov.au<http://www.ga.gov.au/>\n>> 101 Jerrabomberra Avenue Symonston ACT\n>> GPO Box 378 Canberra ACT 2601 Australia\n>> Applying geoscience to Australia?s most important challenges\n>>\n>>\n>>\n>> Geoscience Australia Disclaimer: This e-mail (and files transmitted with it) is intended only for the person or entity to which it is addressed. If you are not the intended recipient, then you have received this e-mail by mistake and any use, dissemination, forwarding, printing or copying of this e-mail and its file attachments is prohibited. The security of emails transmitted cannot be guaranteed; by forwarding or replying to this email, you acknowledge and accept these risks.\n>> -------------------------------------------------------------------------------------------------------------------------\n>>\n>>\n>> \t[[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; fax +47 55 95 91 00\ne-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\nhttp://depsy.org/person/434412",
+      "body_plain": "On Mon, 31 Oct 2016, Edzer Pebesma wrote:\n\n>\n>\n> On 31/10/16 05:09, Li Jin wrote:\n>> Hi All,\n>>\n>> I need to use the predict{gstat} function in one of my functions for a \n>> R package. I use RStudio to make the package. When I specified \n>> gstat::predict in the function, I received the following error:\n>>\n>> Error: 'predict' is not an exported object from 'namespace:gstat'\n>\n> gstat exports 'predict' as an S3method; if it would export 'predict' as\n> an object, this would hide the generic in package stats.\n>\n> The solution to your problem is to not put prepend 'predict' with\n> gstat::, but instead rely on S3 method dispatch.\n\nIs it possible that the OP is not importing correctly in the NAMESPACE \nfile of the package in question?\n\nRoger\n\n>\n> The actual, un-exported function called is gstat:::predict.gstat, but it\n> is discouraged to call that directly.\n>\n>>\n>> The session information is:\n>>\n>>> sessionInfo()\n>>\n>> R version 3.3.1 (2016-06-21)\n>>\n>> Platform: x86_64-w64-mingw32/x64 (64-bit)\n>>\n>> Running under: Windows 7 x64 (build 7601) Service Pack 1\n>>\n>>\n>>\n>> locale:\n>>\n>> [1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252\n>>\n>> [3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C\n>>\n>> [5] LC_TIME=English_Australia.1252\n>>\n>>\n>>\n>> attached base packages:\n>>\n>> [1] stats     graphics  grDevices utils     datasets  methods   base\n>>\n>>\n>>\n>> other attached packages:\n>>\n>> [1] myrpackage_0.0.0.9000 devtools_1.12.0\n>>\n>>\n>>\n>> loaded via a namespace (and not attached):\n>>\n>> [1] tools_3.3.1   withr_1.0.2   memoise_1.0.0 digest_0.6.10\n>>\n>> Is this a bug? Any suggestions? Many thanks in advance!\n>>\n>> Kind regards,\n>> Jin\n>>\n>> Jin Li, PhD\n>> Spatial Modeller/Computational Statistician  |  National Earth and Marine Observations\n>> Environmental Geoscience Division  |  GEOSCIENCE AUSTRALIA\n>> ____________________________________________________________\n>> Phone:  +61 2 6249 9899    Fax:  +61 2 6249 9999\n>> Email:  Jin.Li at ga.gov.au<mailto:Jin.Li at ga.gov.au>    Web:  www.ga.gov.au<http://www.ga.gov.au/>\n>> 101 Jerrabomberra Avenue Symonston ACT\n>> GPO Box 378 Canberra ACT 2601 Australia\n>> Applying geoscience to Australia’s most important challenges\n>>\n>>\n>>\n>> Geoscience Australia Disclaimer: This e-mail (and files transmitted with it) is intended only for the person or entity to which it is addressed. If you are not the intended recipient, then you have received this e-mail by mistake and any use, dissemination, forwarding, printing or copying of this e-mail and its file attachments is prohibited. The security of emails transmitted cannot be guaranteed; by forwarding or replying to this email, you acknowledge and accept these risks.\n>> -------------------------------------------------------------------------------------------------------------------------\n>>\n>>\n>> \t[[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; fax +47 55 95 91 00\ne-mail: Roger.Bivand at nhh.no\nhttp://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\nhttp://depsy.org/person/434412",
       "body_snippet": "On Mon, 31 Oct 2016, Edzer Pebesma wrote:\n\n>\n>\n> On 31/10/16 05:09, Li Jin wrote:\n>> Hi All,\n>>\n>> I need to use the predict{gstat} function in one of my functions for a \n>> R package. I use RStudio t",
       "thread_id": "thread-79f1bf7e9d2f",
       "thread_depth": 2,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025047.html"
     },
     {
       "id": "msg-9c88a8724c4a",
@@ -1949,11 +2050,12 @@
         "<118d1262-4dd0-3340-9aba-fef180f32642@uni-muenster.de>",
         "<alpine.LFD.2.20.1610310911150.2648@reclus.nhh.no>"
       ],
-      "body_plain": "On 31/10/16 09:12, Roger Bivand wrote:\n> On Mon, 31 Oct 2016, Edzer Pebesma wrote:\n> \n>>\n>>\n>> On 31/10/16 05:09, Li Jin wrote:\n>>> Hi All,\n>>>\n>>> I need to use the predict{gstat} function in one of my functions for\n>>> a R package. I use RStudio to make the package. When I specified\n>>> gstat::predict in the function, I received the following error:\n>>>\n>>> Error: 'predict' is not an exported object from 'namespace:gstat'\n>>\n>> gstat exports 'predict' as an S3method; if it would export 'predict' as\n>> an object, this would hide the generic in package stats.\n>>\n>> The solution to your problem is to not put prepend 'predict' with\n>> gstat::, but instead rely on S3 method dispatch.\n> \n> Is it possible that the OP is not importing correctly in the NAMESPACE\n> file of the package in question?\n\nIndeed: your package should load (import):\n\n1. predict from package stats, if it wants to use predict\n2. package gstat if it wants to use the predict method for gstat objects.\n3. use stats::predict rather than gstat::predict if you'd insist on\nprepending package:: to a generic\n\n> \n> Roger\n> \n>>\n>> The actual, un-exported function called is gstat:::predict.gstat, but it\n>> is discouraged to call that directly.\n>>\n>>>\n>>> The session information is:\n>>>\n>>>> sessionInfo()\n>>>\n>>> R version 3.3.1 (2016-06-21)\n>>>\n>>> Platform: x86_64-w64-mingw32/x64 (64-bit)\n>>>\n>>> Running under: Windows 7 x64 (build 7601) Service Pack 1\n>>>\n>>>\n>>>\n>>> locale:\n>>>\n>>> [1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252\n>>>\n>>> [3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C\n>>>\n>>> [5] LC_TIME=English_Australia.1252\n>>>\n>>>\n>>>\n>>> attached base packages:\n>>>\n>>> [1] stats     graphics  grDevices utils     datasets  methods   base\n>>>\n>>>\n>>>\n>>> other attached packages:\n>>>\n>>> [1] myrpackage_0.0.0.9000 devtools_1.12.0\n>>>\n>>>\n>>>\n>>> loaded via a namespace (and not attached):\n>>>\n>>> [1] tools_3.3.1   withr_1.0.2   memoise_1.0.0 digest_0.6.10\n>>>\n>>> Is this a bug? Any suggestions? Many thanks in advance!\n>>>\n>>> Kind regards,\n>>> Jin\n>>>\n>>> Jin Li, PhD\n>>> Spatial Modeller/Computational Statistician  |  National Earth and\n>>> Marine Observations\n>>> Environmental Geoscience Division  |  GEOSCIENCE AUSTRALIA\n>>> ____________________________________________________________\n>>> Phone:  +61 2 6249 9899    Fax:  +61 2 6249 9999\n>>> Email:  Jin.Li at ga.gov.au<mailto:Jin.Li at ga.gov.au>    Web: \n>>> www.ga.gov.au<http://www.ga.gov.au/>\n>>> 101 Jerrabomberra Avenue Symonston ACT\n>>> GPO Box 378 Canberra ACT 2601 Australia\n>>> Applying geoscience to Australia?s most important challenges\n>>>\n>>>\n>>>\n>>> Geoscience Australia Disclaimer: This e-mail (and files transmitted\n>>> with it) is intended only for the person or entity to which it is\n>>> addressed. If you are not the intended recipient, then you have\n>>> received this e-mail by mistake and any use, dissemination,\n>>> forwarding, printing or copying of this e-mail and its file\n>>> attachments is prohibited. The security of emails transmitted cannot\n>>> be guaranteed; by forwarding or replying to this email, you\n>>> acknowledge and accept these risks.\n>>> -------------------------------------------------------------------------------------------------------------------------\n>>>\n>>>\n>>>\n>>>     [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>\n>>\n> \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics  (ifgi),  University of M?nster\nHeisenbergstra?e 2, 48149 M?nster, Germany; +49 251 83 33081\nJournal of Statistical Software:   http://www.jstatsoft.org/\nComputers & Geosciences:   http://elsevier.com/locate/cageo/\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: signature.asc\nType: application/pgp-signature\nSize: 490 bytes\nDesc: OpenPGP digital signature\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20161031/2065925f/attachment.bin>",
+      "body_plain": "On 31/10/16 09:12, Roger Bivand wrote:\n> On Mon, 31 Oct 2016, Edzer Pebesma wrote:\n> \n>>\n>>\n>> On 31/10/16 05:09, Li Jin wrote:\n>>> Hi All,\n>>>\n>>> I need to use the predict{gstat} function in one of my functions for\n>>> a R package. I use RStudio to make the package. When I specified\n>>> gstat::predict in the function, I received the following error:\n>>>\n>>> Error: 'predict' is not an exported object from 'namespace:gstat'\n>>\n>> gstat exports 'predict' as an S3method; if it would export 'predict' as\n>> an object, this would hide the generic in package stats.\n>>\n>> The solution to your problem is to not put prepend 'predict' with\n>> gstat::, but instead rely on S3 method dispatch.\n> \n> Is it possible that the OP is not importing correctly in the NAMESPACE\n> file of the package in question?\n\nIndeed: your package should load (import):\n\n1. predict from package stats, if it wants to use predict\n2. package gstat if it wants to use the predict method for gstat objects.\n3. use stats::predict rather than gstat::predict if you'd insist on\nprepending package:: to a generic\n\n> \n> Roger\n> \n>>\n>> The actual, un-exported function called is gstat:::predict.gstat, but it\n>> is discouraged to call that directly.\n>>\n>>>\n>>> The session information is:\n>>>\n>>>> sessionInfo()\n>>>\n>>> R version 3.3.1 (2016-06-21)\n>>>\n>>> Platform: x86_64-w64-mingw32/x64 (64-bit)\n>>>\n>>> Running under: Windows 7 x64 (build 7601) Service Pack 1\n>>>\n>>>\n>>>\n>>> locale:\n>>>\n>>> [1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252\n>>>\n>>> [3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C\n>>>\n>>> [5] LC_TIME=English_Australia.1252\n>>>\n>>>\n>>>\n>>> attached base packages:\n>>>\n>>> [1] stats     graphics  grDevices utils     datasets  methods   base\n>>>\n>>>\n>>>\n>>> other attached packages:\n>>>\n>>> [1] myrpackage_0.0.0.9000 devtools_1.12.0\n>>>\n>>>\n>>>\n>>> loaded via a namespace (and not attached):\n>>>\n>>> [1] tools_3.3.1   withr_1.0.2   memoise_1.0.0 digest_0.6.10\n>>>\n>>> Is this a bug? Any suggestions? Many thanks in advance!\n>>>\n>>> Kind regards,\n>>> Jin\n>>>\n>>> Jin Li, PhD\n>>> Spatial Modeller/Computational Statistician  |  National Earth and\n>>> Marine Observations\n>>> Environmental Geoscience Division  |  GEOSCIENCE AUSTRALIA\n>>> ____________________________________________________________\n>>> Phone:  +61 2 6249 9899    Fax:  +61 2 6249 9999\n>>> Email:  Jin.Li at ga.gov.au<mailto:Jin.Li at ga.gov.au>    Web: \n>>> www.ga.gov.au<http://www.ga.gov.au/>\n>>> 101 Jerrabomberra Avenue Symonston ACT\n>>> GPO Box 378 Canberra ACT 2601 Australia\n>>> Applying geoscience to Australia’s most important challenges\n>>>\n>>>\n>>>\n>>> Geoscience Australia Disclaimer: This e-mail (and files transmitted\n>>> with it) is intended only for the person or entity to which it is\n>>> addressed. If you are not the intended recipient, then you have\n>>> received this e-mail by mistake and any use, dissemination,\n>>> forwarding, printing or copying of this e-mail and its file\n>>> attachments is prohibited. The security of emails transmitted cannot\n>>> be guaranteed; by forwarding or replying to this email, you\n>>> acknowledge and accept these risks.\n>>> -------------------------------------------------------------------------------------------------------------------------\n>>>\n>>>\n>>>\n>>>     [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>\n>>\n> \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics  (ifgi),  University of Münster\nHeisenbergstraße 2, 48149 Münster, Germany; +49 251 83 33081\nJournal of Statistical Software:   http://www.jstatsoft.org/\nComputers & Geosciences:   http://elsevier.com/locate/cageo/\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: signature.asc\nType: application/pgp-signature\nSize: 490 bytes\nDesc: OpenPGP digital signature\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20161031/2065925f/attachment.bin>",
       "body_snippet": "On 31/10/16 09:12, Roger Bivand wrote:\n> On Mon, 31 Oct 2016, Edzer Pebesma wrote:\n> \n>>\n>>\n>> On 31/10/16 05:09, Li Jin wrote:\n>>> Hi All,\n>>>\n>>> I need to use the predict{gstat} function in one of ",
       "thread_id": "thread-79f1bf7e9d2f",
       "thread_depth": 3,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025048.html"
     },
     {
       "id": "msg-d3b8a80e54da",
@@ -1969,7 +2071,8 @@
       "body_snippet": "Hi all,\n\nI need to know which is the quickest way to extract values from a large\nraster datasets (> 300 layers) using polygons (SpatialPolygonsDataFrame).\n\nAlso, I need to know if worth it to use some",
       "thread_id": "thread-d3b8a80e54da",
       "thread_depth": 0,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025049.html"
     },
     {
       "id": "msg-2f539d62b0fa",
@@ -1987,7 +2090,8 @@
       "body_snippet": "Have you think about whether if the result of the extract function in the\nraster library compare to the result from other GIS software?\nI found some weird result when I compared it to the result from ",
       "thread_id": "thread-d3b8a80e54da",
       "thread_depth": 1,
-      "month": "2016-10"
+      "month": "2016-10",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2016-October/025050.html"
     }
   ],
   "threads": [

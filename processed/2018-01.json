@@ -17,7 +17,8 @@
       "body_snippet": "Good day all,\n\n\nI would like to access the source code used by the 'variogramLine' function  (Gstat package) to compute covariance matrices.\n\nThere is the following which I found : https://github.com/",
       "thread_id": "thread-d371a12f526e",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026273.html"
     },
     {
       "id": "msg-b72939cac456",
@@ -35,7 +36,8 @@
       "body_snippet": "Bernard,\n\nhttps://github.com/edzer/gstat/blob/master/src/vario_fn.c\n\ngets you all the unit functions; they get multiplied by their partial\nsill value, and added up here:\n\nhttps://github.com/edzer/gsta",
       "thread_id": "thread-d371a12f526e",
       "thread_depth": 1,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026274.html"
     },
     {
       "id": "msg-e70fe7fd039a",
@@ -54,7 +56,8 @@
       "body_snippet": "Edzer,\n\nthank you.\n\n________________________________\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.org> on behalf of Edzer Pebesma <edzer.pebesma at uni-muenster.de>\nSent: Tuesday, January 2, 2018 9",
       "thread_id": "thread-d371a12f526e",
       "thread_depth": 2,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026275.html"
     },
     {
       "id": "msg-8a2880a8287a",
@@ -70,7 +73,8 @@
       "body_snippet": "Dear all,\n\nI am using a spatial lag regression model in a paper. I know already how to\nget the total impacts of the model, but I don't know how to generate the\nstandard errors of the total impacts.\n\nI",
       "thread_id": "thread-8a2880a8287a",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026276.html"
     },
     {
       "id": "msg-c15a99b4f7ba",
@@ -88,7 +92,8 @@
       "body_snippet": "On Wed, 3 Jan 2018, Rafael Pereira wrote:\n\n> Dear all,\n>\n> I am using a spatial lag regression model in a paper. I know already how to\n> get the total impacts of the model, but I don't know how to gen",
       "thread_id": "thread-8a2880a8287a",
       "thread_depth": 1,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026277.html"
     },
     {
       "id": "msg-0f8126e35a77",
@@ -107,7 +112,8 @@
       "body_snippet": "Thank you, Roger!\n\nI will look into this .\n\nbest wishes,\n\nRafael H M Pereira\n\nOn Wed, Jan 3, 2018 at 10:32 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> On Wed, 3 Jan 2018, Rafael Pereira wrote:",
       "thread_id": "thread-8a2880a8287a",
       "thread_depth": 2,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026278.html"
     },
     {
       "id": "msg-f90df754e064",
@@ -123,7 +129,8 @@
       "body_snippet": "Dear all,\nI was trying to use the function fit.variogram.gls from gstat package, and\nI got the error below:\n\"Error in gamfn(h0, theta) : could not find function \"gamfn\"\"\n\nBelow some lines of code that",
       "thread_id": "thread-f90df754e064",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026279.html"
     },
     {
       "id": "msg-c65448c5815e",
@@ -135,11 +142,12 @@
       "subject_clean": "STKriging export",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Dear list,\n\nI am facing a doubt about what I am producing when performing STKriging.\nProbably my mistake is when setting ST prediction frame.\n\nI have groundwater monitoring time series from Sep 2014 to Sep 207 in a\nsemi-monthly observed frequency at 56 wells. I would like to have a\nprediction in the end of the series and a forecast  about 100 days in\nadvance.\n\nThis is my code and data can be found at:\nhttps://www.dropbox.com/sh/tz3lufzaup677aa/AAAC6CgkZ_XrIM2-8jvS1VbFa?dl=0\n\n##############\nlibrary(gstat)\nlibrary(sp)\nlibrary(spacetime)\n\n#data load#\n#input data, space and time#\nlevel <- read.table(\"water_level_up.csv\", header=T)\ns <- read.table(\"UTM_up.csv\", header=T, row.names=1, sep=\",\")\nd = read.table(\"dates_up.csv\",sep=\",\", header=T)\n\n#set time#\nnr = nrow(d)\ndates <- as.Date(d[1,1])\nfor (i in 2:nr){\ndates[i]<- as.Date(d[i,1])\n}\n\n#set space#\nstations <- SpatialPoints(s, proj4string=CRS(as.character(NA)), bbox = NULL)\n\n#merge time, space and data#\nwater = STFDF(stations, dates, data.frame(level = as.vector(level)))\n\n\n#GIS#\n#load area mask#\nmask = read.asciigrid(\"g_50.asc\", as.image=F, plot.image=T)\nimage(mask, col=\"black\")\n\n#shows area and sample points#\nspplot(mask, scales = list(draw=T), sp.layout=list(\"sp.points\", stations,\npch=\"+\"))\n\n\n#ST modelling#\n#empirical st-variogram#\nempVgm <- variogramST(level~1, water, tlags=0:38,cutoff=2400)\nplot(empVgm, wireframe=T,\nscales=list(arrows=F),zlab=list(rot=90),zlim=c(0,3))\n\n#covariance functions#\n#product-sum model#\nprodSumModel <- vgmST(\"productSum\",\nspace = vgm(0.75, \"Sph\", 1250, 0.05),\ntime = vgm(1.45, \"Sph\", 120, 0.0),\nk = 2)\npsFit <- fit.StVariogram(empVgm, prodSumModel, fit.method = 7,\nstAni = 117, method = \"L-BFGS-B\",\ncontrol = list(parscale=c(1,10,1,1,0.1,1,10)),\nlower = rep(0.0001,7))\n\nplot(empVgm, psFit)\nplot(empVgm, psFit, wireframe=TRUE, all=TRUE)\n\n\n#ST prediction#\n#ST kriging#\n#setting ST prediction frame#\nt <- water[,\"2017-09-04/2017-12-13\"]\ntt <- as.Date(\"2017-09-04\")\ntt[2] <- as.Date(\"2017-12-13\")\npred <- STF(sp=as(mask,\"SpatialPoints\"), time=tt)\n\n#Product-Sum model prediction#\npredPS <- krigeST(level~1, as(t,'STSDF'), pred, psFit)\nstplot(predPS)\n\n#Data export#\n#'*.csv'#\nwrite.csv(predPS, \"STkrigePS.csv\")\n############\n\nWhen I plot the maps I have one map for Sep 13 and another on for Dec 13.\nPerfect. When I export it, I have in the .cvs file two sequences of data,\none with time starting at Sep 04 and time ending at Dec13 and another one\nstarting at Dec 13 and ending at March 13.\n\nMy question is, whay am I exporting? Is these layers predictions for the\nending date based on the set up period variability? Or it is something\nelse? Of course I can have predictions for the date I choose setting the\nrigth period if that is the case, but I would like to understand better\nwhat I am missing when setting the ST prediction frame\n\nThanks in advance,\n\nRodrigo Manzione, PhD\nAssociate professor\nUNESP/FCE-Tup?\nBrazil\n\n<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\nLivre\nde v?rus. www.avast.com\n<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>.\n<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Dear list,\n\nI am facing a doubt about what I am producing when performing STKriging.\nProbably my mistake is when setting ST prediction frame.\n\nI have groundwater monitoring time series from Sep 2014 to Sep 207 in a\nsemi-monthly observed frequency at 56 wells. I would like to have a\nprediction in the end of the series and a forecast  about 100 days in\nadvance.\n\nThis is my code and data can be found at:\nhttps://www.dropbox.com/sh/tz3lufzaup677aa/AAAC6CgkZ_XrIM2-8jvS1VbFa?dl=0\n\n##############\nlibrary(gstat)\nlibrary(sp)\nlibrary(spacetime)\n\n#data load#\n#input data, space and time#\nlevel <- read.table(\"water_level_up.csv\", header=T)\ns <- read.table(\"UTM_up.csv\", header=T, row.names=1, sep=\",\")\nd = read.table(\"dates_up.csv\",sep=\",\", header=T)\n\n#set time#\nnr = nrow(d)\ndates <- as.Date(d[1,1])\nfor (i in 2:nr){\ndates[i]<- as.Date(d[i,1])\n}\n\n#set space#\nstations <- SpatialPoints(s, proj4string=CRS(as.character(NA)), bbox = NULL)\n\n#merge time, space and data#\nwater = STFDF(stations, dates, data.frame(level = as.vector(level)))\n\n\n#GIS#\n#load area mask#\nmask = read.asciigrid(\"g_50.asc\", as.image=F, plot.image=T)\nimage(mask, col=\"black\")\n\n#shows area and sample points#\nspplot(mask, scales = list(draw=T), sp.layout=list(\"sp.points\", stations,\npch=\"+\"))\n\n\n#ST modelling#\n#empirical st-variogram#\nempVgm <- variogramST(level~1, water, tlags=0:38,cutoff=2400)\nplot(empVgm, wireframe=T,\nscales=list(arrows=F),zlab=list(rot=90),zlim=c(0,3))\n\n#covariance functions#\n#product-sum model#\nprodSumModel <- vgmST(\"productSum\",\nspace = vgm(0.75, \"Sph\", 1250, 0.05),\ntime = vgm(1.45, \"Sph\", 120, 0.0),\nk = 2)\npsFit <- fit.StVariogram(empVgm, prodSumModel, fit.method = 7,\nstAni = 117, method = \"L-BFGS-B\",\ncontrol = list(parscale=c(1,10,1,1,0.1,1,10)),\nlower = rep(0.0001,7))\n\nplot(empVgm, psFit)\nplot(empVgm, psFit, wireframe=TRUE, all=TRUE)\n\n\n#ST prediction#\n#ST kriging#\n#setting ST prediction frame#\nt <- water[,\"2017-09-04/2017-12-13\"]\ntt <- as.Date(\"2017-09-04\")\ntt[2] <- as.Date(\"2017-12-13\")\npred <- STF(sp=as(mask,\"SpatialPoints\"), time=tt)\n\n#Product-Sum model prediction#\npredPS <- krigeST(level~1, as(t,'STSDF'), pred, psFit)\nstplot(predPS)\n\n#Data export#\n#'*.csv'#\nwrite.csv(predPS, \"STkrigePS.csv\")\n############\n\nWhen I plot the maps I have one map for Sep 13 and another on for Dec 13.\nPerfect. When I export it, I have in the .cvs file two sequences of data,\none with time starting at Sep 04 and time ending at Dec13 and another one\nstarting at Dec 13 and ending at March 13.\n\nMy question is, whay am I exporting? Is these layers predictions for the\nending date based on the set up period variability? Or it is something\nelse? Of course I can have predictions for the date I choose setting the\nrigth period if that is the case, but I would like to understand better\nwhat I am missing when setting the ST prediction frame\n\nThanks in advance,\n\nRodrigo Manzione, PhD\nAssociate professor\nUNESP/FCE-Tupã\nBrazil\n\n<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\nLivre\nde vírus. www.avast.com\n<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>.\n<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Dear list,\n\nI am facing a doubt about what I am producing when performing STKriging.\nProbably my mistake is when setting ST prediction frame.\n\nI have groundwater monitoring time series from Sep 2014 t",
       "thread_id": "thread-c65448c5815e",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026280.html"
     },
     {
       "id": "msg-8cc0ce9ef532",
@@ -155,7 +163,8 @@
       "body_snippet": "Last year this session was held for the first time, and it was a lot of\nfun; although it started 8:15 we had around 250 visitors pretty soon,\nand a lot of good discussions.\n\nThis year the session is a",
       "thread_id": "thread-8cc0ce9ef532",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026281.html"
     },
     {
       "id": "msg-6938eb81b388",
@@ -171,7 +180,8 @@
       "body_snippet": "Hello,\n\nI am running a negative binomial model (MASS) on count data collected on a\ngrid. The dataset is large - ~4,000 points, with many predictors. Being\ncounts, there are a lot of zeroes. All data a",
       "thread_id": "thread-6938eb81b388",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026282.html"
     },
     {
       "id": "msg-176c50f76e13",
@@ -189,7 +199,8 @@
       "body_snippet": "On Wed, 10 Jan 2018, Sima Usvyatsov wrote:\n\n> Hello,\n>\n> I am running a negative binomial model (MASS) on count data collected on a\n> grid. The dataset is large - ~4,000 points, with many predictors. ",
       "thread_id": "thread-6938eb81b388",
       "thread_depth": 1,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026283.html"
     },
     {
       "id": "msg-54e8192588a2",
@@ -208,7 +219,8 @@
       "body_snippet": "Thank you so much for your response.\n\nYes, I managed to muck up the fake data in 2 (!) ways - the 1,000 lons and\nthe fact that the lon/lats weren't repeated. Here's the correct structure.\n\ndf <- data.",
       "thread_id": "thread-6938eb81b388",
       "thread_depth": 2,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026284.html"
     },
     {
       "id": "msg-eb65cc42def3",
@@ -228,7 +240,8 @@
       "body_snippet": "On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n\n> Thank you so much for your response.\n>\n> Yes, I managed to muck up the fake data in 2 (!) ways - the 1,000 lons and\n> the fact that the lon/lats weren't r",
       "thread_id": "thread-6938eb81b388",
       "thread_depth": 3,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026285.html"
     },
     {
       "id": "msg-836f4d3949fa",
@@ -249,7 +262,8 @@
       "body_snippet": "What other GLMM options do I have, under the restrictions of count data\nwith lots of zeroes and spatial autocorrelation? I was under the impression\nthat glmmPQL was my only choice?\n\nOn Thu, Jan 11, 20",
       "thread_id": "thread-6938eb81b388",
       "thread_depth": 4,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026286.html"
     },
     {
       "id": "msg-037da5712158",
@@ -271,7 +285,8 @@
       "body_snippet": "On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n\n> What other GLMM options do I have, under the restrictions of count data\n> with lots of zeroes and spatial autocorrelation? I was under the impression\n> th",
       "thread_id": "thread-6938eb81b388",
       "thread_depth": 5,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026287.html"
     },
     {
       "id": "msg-7ea0c5537e88",
@@ -294,7 +309,8 @@
       "body_snippet": "I had no idea this was coming up - can't believe it didn't come up in any\nof my searches. Looks super useful, and I'm sure I'll be using it sooner\nthan later, whether on this analysis or not. The work",
       "thread_id": "thread-6938eb81b388",
       "thread_depth": 6,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026288.html"
     },
     {
       "id": "msg-884476c571c3",
@@ -318,7 +334,8 @@
       "body_snippet": "On Thu, 11 Jan 2018, Sima Usvyatsov wrote:\n\n> I had no idea this was coming up - can't believe it didn't come up in any\n> of my searches. Looks super useful, and I'm sure I'll be using it sooner\n> tha",
       "thread_id": "thread-6938eb81b388",
       "thread_depth": 7,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026289.html"
     },
     {
       "id": "msg-8ed7b2fae565",
@@ -330,11 +347,12 @@
       "subject_clean": "R code for rainfall isohyet map",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Dear R-sig-geo list users,\ngiven n meteorological automatic stations with rain gouge, I need to produce an image with the isohyets of the rainfall values of my region (Italy, Marche region, on the Adriatic Sea in front of Croatia).\nFor each station the available coordinates are in Gauss Boaga, Long and Lat in degrees, minutes and seconds and Long and Lat in degrees and decimals.\nIn the code below reported Long and Lat in degrees and decimals have been used.\n\nThis is an example of the input file called in the code \"pointfile.csv\":\n\nStation_code, Rainfall_value, GaussBoaga_EST, GaussBoaga_NORD, Long_degrees, Long_minutes, Long_seconds, Lat_degrees, Lat_minutes, Lat_seconds, Long_Cent, Lat_Cent\n1056, 11.8, 2328427, 4851813, 12, 37, 7.45291, 43, 47, 40.09906, 12.618737, 43.794472\n\nThe code below reported (with the precious support of Micha Silver) does compile, but the final image reports some numerical values (isohjet_map.png).\nWould please somebody be able and help me to see where the code can be improved?\n\nThank you for your help\nStefano\n\nCode:\n\nlibrary(automap)\nlibrary(ggplot2)\nlibrary(gstat)\nlibrary(rasterVis)\nlibrary(rgdal)\n\n## READ INPUT FILE\nrain_data <- read.csv(file=\"pointfile.csv\")\nstr(rain_data)\n\npoint_coords <- rain_data[c(\"Long_Cent\",\"Lat_Cent\")]\ncoordinates(rain_data) <- point_coords\np4str <- CRS(\"+init=epsg:4326\")\nproj4string(rain_data) <- p4str\n\n## CONVERTION TO UTM\np4str_UTM <- CRS(\"+init=epsg:32633\")\nrain_data_UTM <- spTransform(rain_data, p4str_UTM)\n\n## CHECK THAT THIS IS A SPDF IN THE UTM COORDINATE SYSTEM\nstr(rain_data_UTM)\n\n## CREATE GRID FOR KRIGING OUTPUT, USING THE EXTENT OF THE RAIN DATA SPDF\nminx <-  rain_data_UTM at bbox[1,1]\nmaxx <- rain_data_UTM at bbox[1,2]\nminy <- rain_data_UTM at bbox[2,1]\nmaxy <- rain_data_UTM at bbox[2,2]\n## EACH PIXEL WILL BE 1000 METERS\npixel <- 1000\ngrd <- expand.grid(x=seq(minx, maxx, by=pixel), y=seq(miny, maxy, by=pixel))\ncoordinates(grd) <- ~x+y\ngridded(grd) <- TRUE\nproj4string(grd) <- p4str_UTM\n\n## KRIGING, USING AUTOKRIGE WHICH CREATES A BEST GUESS VARIOGRAM\nOK_rain <- autoKrige(Rainfall_value ~ 1, rain_data_UTM, grd)\n\n## TRASFORM TO RASTER\nrain_rast <- raster(OK_rain$krige_output)\n\n## READ THE MARCHE BOUNDARY SHAPEFILE\nMarche_shape <- readOGR(dsn=\"Lim_reg_2012_wgs32633.shp\", layer=\"Lim_reg_2012_wgs32633\")\n\n##PLOT\npng(file=\"isohyet_map.png\")\ngplot(rain_rast) + geom_tile(aes(fill=factor(value),alpha=0.8)) + geom_polygon(data=Marche_shape, aes(x=long, y=lat, group=group), fill=NA, color=\"grey50\", size=1) + coord_equal()\ndev.off()\n\n\n\n\n         (oo)\n--oOO--( )--OOo----------------\nStefano Sofia PhD\nArea Meteorologica e  Area nivologica - Centro Funzionale\nServizio Protezione Civile - Regione Marche\nVia del Colle Ameno 5\n60126 Torrette di Ancona, Ancona\nUff: 071 806 7743\nE-mail: stefano.sofia at regione.marche.it\n---Oo---------oO----------------\n\n________________________________\n\nAVVISO IMPORTANTE: Questo messaggio di posta elettronica pu? contenere informazioni confidenziali, pertanto ? destinato solo a persone autorizzate alla ricezione. I messaggi di posta elettronica per i client di Regione Marche possono contenere informazioni confidenziali e con privilegi legali. Se non si ? il destinatario specificato, non leggere, copiare, inoltrare o archiviare questo messaggio. Se si ? ricevuto questo messaggio per errore, inoltrarlo al mittente ed eliminarlo completamente dal sistema del proprio computer. Ai sensi dell?art. 6 della DGR n. 1394/2008 si segnala che, in caso di necessit? ed urgenza, la risposta al presente messaggio di posta elettronica pu? essere visionata da persone estranee al destinatario.\nIMPORTANT NOTICE: This e-mail message is intended to be received only by persons entitled to receive the confidential information it may contain. E-mail messages to clients of Regione Marche may contain information that is confidential and legally privileged. Please do not read, copy, forward, or store this message unless you are an intended recipient of it. If you have received this message in error, please forward it to the sender and delete it completely from your computer system.\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: winmail.dat\nType: application/ms-tnef\nSize: 19973 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20180118/2c606d58/attachment.bin>",
+      "body_plain": "Dear R-sig-geo list users,\ngiven n meteorological automatic stations with rain gouge, I need to produce an image with the isohyets of the rainfall values of my region (Italy, Marche region, on the Adriatic Sea in front of Croatia).\nFor each station the available coordinates are in Gauss Boaga, Long and Lat in degrees, minutes and seconds and Long and Lat in degrees and decimals.\nIn the code below reported Long and Lat in degrees and decimals have been used.\n\nThis is an example of the input file called in the code \"pointfile.csv\":\n\nStation_code, Rainfall_value, GaussBoaga_EST, GaussBoaga_NORD, Long_degrees, Long_minutes, Long_seconds, Lat_degrees, Lat_minutes, Lat_seconds, Long_Cent, Lat_Cent\n1056, 11.8, 2328427, 4851813, 12, 37, 7.45291, 43, 47, 40.09906, 12.618737, 43.794472\n\nThe code below reported (with the precious support of Micha Silver) does compile, but the final image reports some numerical values (isohjet_map.png).\nWould please somebody be able and help me to see where the code can be improved?\n\nThank you for your help\nStefano\n\nCode:\n\nlibrary(automap)\nlibrary(ggplot2)\nlibrary(gstat)\nlibrary(rasterVis)\nlibrary(rgdal)\n\n## READ INPUT FILE\nrain_data <- read.csv(file=\"pointfile.csv\")\nstr(rain_data)\n\npoint_coords <- rain_data[c(\"Long_Cent\",\"Lat_Cent\")]\ncoordinates(rain_data) <- point_coords\np4str <- CRS(\"+init=epsg:4326\")\nproj4string(rain_data) <- p4str\n\n## CONVERTION TO UTM\np4str_UTM <- CRS(\"+init=epsg:32633\")\nrain_data_UTM <- spTransform(rain_data, p4str_UTM)\n\n## CHECK THAT THIS IS A SPDF IN THE UTM COORDINATE SYSTEM\nstr(rain_data_UTM)\n\n## CREATE GRID FOR KRIGING OUTPUT, USING THE EXTENT OF THE RAIN DATA SPDF\nminx <-  rain_data_UTM at bbox[1,1]\nmaxx <- rain_data_UTM at bbox[1,2]\nminy <- rain_data_UTM at bbox[2,1]\nmaxy <- rain_data_UTM at bbox[2,2]\n## EACH PIXEL WILL BE 1000 METERS\npixel <- 1000\ngrd <- expand.grid(x=seq(minx, maxx, by=pixel), y=seq(miny, maxy, by=pixel))\ncoordinates(grd) <- ~x+y\ngridded(grd) <- TRUE\nproj4string(grd) <- p4str_UTM\n\n## KRIGING, USING AUTOKRIGE WHICH CREATES A BEST GUESS VARIOGRAM\nOK_rain <- autoKrige(Rainfall_value ~ 1, rain_data_UTM, grd)\n\n## TRASFORM TO RASTER\nrain_rast <- raster(OK_rain$krige_output)\n\n## READ THE MARCHE BOUNDARY SHAPEFILE\nMarche_shape <- readOGR(dsn=\"Lim_reg_2012_wgs32633.shp\", layer=\"Lim_reg_2012_wgs32633\")\n\n##PLOT\npng(file=\"isohyet_map.png\")\ngplot(rain_rast) + geom_tile(aes(fill=factor(value),alpha=0.8)) + geom_polygon(data=Marche_shape, aes(x=long, y=lat, group=group), fill=NA, color=\"grey50\", size=1) + coord_equal()\ndev.off()\n\n\n\n\n         (oo)\n--oOO--( )--OOo----------------\nStefano Sofia PhD\nArea Meteorologica e  Area nivologica - Centro Funzionale\nServizio Protezione Civile - Regione Marche\nVia del Colle Ameno 5\n60126 Torrette di Ancona, Ancona\nUff: 071 806 7743\nE-mail: stefano.sofia at regione.marche.it\n---Oo---------oO----------------\n\n________________________________\n\nAVVISO IMPORTANTE: Questo messaggio di posta elettronica può contenere informazioni confidenziali, pertanto è destinato solo a persone autorizzate alla ricezione. I messaggi di posta elettronica per i client di Regione Marche possono contenere informazioni confidenziali e con privilegi legali. Se non si è il destinatario specificato, non leggere, copiare, inoltrare o archiviare questo messaggio. Se si è ricevuto questo messaggio per errore, inoltrarlo al mittente ed eliminarlo completamente dal sistema del proprio computer. Ai sensi dell’art. 6 della DGR n. 1394/2008 si segnala che, in caso di necessità ed urgenza, la risposta al presente messaggio di posta elettronica può essere visionata da persone estranee al destinatario.\nIMPORTANT NOTICE: This e-mail message is intended to be received only by persons entitled to receive the confidential information it may contain. E-mail messages to clients of Regione Marche may contain information that is confidential and legally privileged. Please do not read, copy, forward, or store this message unless you are an intended recipient of it. If you have received this message in error, please forward it to the sender and delete it completely from your computer system.\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: winmail.dat\nType: application/ms-tnef\nSize: 19973 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20180118/2c606d58/attachment.bin>",
       "body_snippet": "Dear R-sig-geo list users,\ngiven n meteorological automatic stations with rain gouge, I need to produce an image with the isohyets of the rainfall values of my region (Italy, Marche region, on the Adr",
       "thread_id": "thread-8ed7b2fae565",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026290.html"
     },
     {
       "id": "msg-ad880e15247f",
@@ -350,7 +368,8 @@
       "body_snippet": "Hello,\n\nApologies if I missed the subject in this thread, but I was wondering if there was an updated version of Applied Spatial Data Analysis with R, Bivand et al, that would reference the sf package",
       "thread_id": "thread-ad880e15247f",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026291.html"
     },
     {
       "id": "msg-2ed484d433ed",
@@ -368,7 +387,8 @@
       "body_snippet": "Dear Steven,\n\nyou might wanna take a look at https://geocompr.robinlovelace.net/index.html\nFurthermore, make sure to read the vignettes (articles) of the sf package: https://r-spatial.github.io/sf/\nCh",
       "thread_id": "thread-ad880e15247f",
       "thread_depth": 1,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026292.html"
     },
     {
       "id": "msg-02f4db44c68f",
@@ -382,11 +402,12 @@
       "references": [
         "<CAGVoNq2ZNXNB8btCt_pXwuWVNCY=H4wQD1W+yzW_tmq2k0aK3Q@mail.gmail.com>"
       ],
-      "body_plain": "Hello,\n\nWould someone know a solution for this issue:\n\nWhen I load a MapInfo file with st_read (sf) I have an issue with the\nFrisian municipality name 'S?dwest-Frysl?n'; it shows as\n'S<fa>dwest-Frysl<e2>n' :-( Some issue with the encoding...\n\nBelow you will find a reproducible example, which will also download the\ndata set used.\n\nIf I load the same data with readOGR, everything is fine.\n\nAnd if I load a comparable data set in ESRI SHP file format with st_read\n(sf) there is no issue either.\n\nSo it really has something to do with the MapInfo driver. I did not find a\nsolution yet, so any help would be appreciated.\n\nCheers,\n\nEgge-Jan Poll?\n\n\nREPRODUCIBLE EXAMPLE:\n# Download and read the data\n#\n# Make sure you have your Working Directory properly set, e.g.:\n# setwd(\"C:/RMOOC\")\n#\n# Download\nURL <- \"http://www.twiav.nl/files/NL_Municipalities2017.zip\"\ndatafile <- file.path(basename(URL))\ndir.create(\"./Data\", showWarnings = FALSE)\nworkingdirectory <- getwd()\nsetwd(\"./Data\")\ndownload.file(URL, destfile = datafile, mode = \"wb\")\nunzip(datafile)\nunlink(datafile)\nrm(URL, datafile)\nsetwd(workingdirectory)\nrm(workingdirectory)\n\n# Read\n# Make sure the package \"sf\" is properly installed:\n# install.packages(\"sf\")\nlibrary(sf)\nNL_Municipalities2017 <-\nst_read(\"Data/NL_Municipalities2017/NL_Municipalities2017.TAB\")\nView(NL_Municipalities2017)\nplot(st_geometry(NL_Municipalities2017),col = \"darkgreen\", border =\n\"lightgray\")\nView(NL_Municipalities2017) # issue with 'S?dwest-Frysl?n'; it shows as\n'S<fa>dwest-Frysl<e2>n'\n\n# Using rgdal everything is fine...\nlibrary(rgdal)\nnl2 <- readOGR(dsn = \"Data/NL_Municipalities2017\", layer =\n\"NL_Municipalities2017\")\nView(as.data.frame(nl2))\nlibrary(mapview)\nmapview(nl2)\n\n\t[[alternative HTML version deleted]]",
-      "body_snippet": "Hello,\n\nWould someone know a solution for this issue:\n\nWhen I load a MapInfo file with st_read (sf) I have an issue with the\nFrisian municipality name 'S?dwest-Frysl?n'; it shows as\n'S<fa>dwest-Frysl<",
+      "body_plain": "Hello,\n\nWould someone know a solution for this issue:\n\nWhen I load a MapInfo file with st_read (sf) I have an issue with the\nFrisian municipality name 'Súdwest-Fryslân'; it shows as\n'S<fa>dwest-Frysl<e2>n' :-( Some issue with the encoding...\n\nBelow you will find a reproducible example, which will also download the\ndata set used.\n\nIf I load the same data with readOGR, everything is fine.\n\nAnd if I load a comparable data set in ESRI SHP file format with st_read\n(sf) there is no issue either.\n\nSo it really has something to do with the MapInfo driver. I did not find a\nsolution yet, so any help would be appreciated.\n\nCheers,\n\nEgge-Jan Pollé\n\n\nREPRODUCIBLE EXAMPLE:\n# Download and read the data\n#\n# Make sure you have your Working Directory properly set, e.g.:\n# setwd(\"C:/RMOOC\")\n#\n# Download\nURL <- \"http://www.twiav.nl/files/NL_Municipalities2017.zip\"\ndatafile <- file.path(basename(URL))\ndir.create(\"./Data\", showWarnings = FALSE)\nworkingdirectory <- getwd()\nsetwd(\"./Data\")\ndownload.file(URL, destfile = datafile, mode = \"wb\")\nunzip(datafile)\nunlink(datafile)\nrm(URL, datafile)\nsetwd(workingdirectory)\nrm(workingdirectory)\n\n# Read\n# Make sure the package \"sf\" is properly installed:\n# install.packages(\"sf\")\nlibrary(sf)\nNL_Municipalities2017 <-\nst_read(\"Data/NL_Municipalities2017/NL_Municipalities2017.TAB\")\nView(NL_Municipalities2017)\nplot(st_geometry(NL_Municipalities2017),col = \"darkgreen\", border =\n\"lightgray\")\nView(NL_Municipalities2017) # issue with 'Súdwest-Fryslân'; it shows as\n'S<fa>dwest-Frysl<e2>n'\n\n# Using rgdal everything is fine...\nlibrary(rgdal)\nnl2 <- readOGR(dsn = \"Data/NL_Municipalities2017\", layer =\n\"NL_Municipalities2017\")\nView(as.data.frame(nl2))\nlibrary(mapview)\nmapview(nl2)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello,\n\nWould someone know a solution for this issue:\n\nWhen I load a MapInfo file with st_read (sf) I have an issue with the\nFrisian municipality name 'Súdwest-Fryslân'; it shows as\n'S<fa>dwest-Frysl<",
       "thread_id": "thread-02f4db44c68f",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026293.html"
     },
     {
       "id": "msg-9d535aea2fd3",
@@ -401,11 +422,12 @@
         "<CAGVoNq2ZNXNB8btCt_pXwuWVNCY=H4wQD1W+yzW_tmq2k0aK3Q@mail.gmail.com>",
         "<CAGVoNq24Tmz5x=1r7ZvhY7ONx7rSYwvLDiFb_1r37FNqbbUvwQ@mail.gmail.com>"
       ],
-      "body_plain": "try here:\nhttps://github.com/r-spatial/sf/issues/5\na similar issue with a solution ...\n\ngreetings , Peter\n\n\n\n\nOp 23-1-2018 om 21:49 schreef Egge-Jan Poll?:\n> Hello,\n>\n> Would someone know a solution for this issue:\n>\n> When I load a MapInfo file with st_read (sf) I have an issue with the\n> Frisian municipality name 'S?dwest-Frysl?n'; it shows as\n> 'S<fa>dwest-Frysl<e2>n' :-( Some issue with the encoding...\n>\n> Below you will find a reproducible example, which will also download the\n> data set used.\n>\n> If I load the same data with readOGR, everything is fine.\n>\n> And if I load a comparable data set in ESRI SHP file format with st_read\n> (sf) there is no issue either.\n>\n> So it really has something to do with the MapInfo driver. I did not find a\n> solution yet, so any help would be appreciated.\n>\n> Cheers,\n>\n> Egge-Jan Poll?\n>\n>\n> REPRODUCIBLE EXAMPLE:\n> # Download and read the data\n> #\n> # Make sure you have your Working Directory properly set, e.g.:\n> # setwd(\"C:/RMOOC\")\n> #\n> # Download\n> URL <- \"http://www.twiav.nl/files/NL_Municipalities2017.zip\"\n> datafile <- file.path(basename(URL))\n> dir.create(\"./Data\", showWarnings = FALSE)\n> workingdirectory <- getwd()\n> setwd(\"./Data\")\n> download.file(URL, destfile = datafile, mode = \"wb\")\n> unzip(datafile)\n> unlink(datafile)\n> rm(URL, datafile)\n> setwd(workingdirectory)\n> rm(workingdirectory)\n>\n> # Read\n> # Make sure the package \"sf\" is properly installed:\n> # install.packages(\"sf\")\n> library(sf)\n> NL_Municipalities2017 <-\n> st_read(\"Data/NL_Municipalities2017/NL_Municipalities2017.TAB\")\n> View(NL_Municipalities2017)\n> plot(st_geometry(NL_Municipalities2017),col = \"darkgreen\", border =\n> \"lightgray\")\n> View(NL_Municipalities2017) # issue with 'S?dwest-Frysl?n'; it shows as\n> 'S<fa>dwest-Frysl<e2>n'\n>\n> # Using rgdal everything is fine...\n> library(rgdal)\n> nl2 <- readOGR(dsn = \"Data/NL_Municipalities2017\", layer =\n> \"NL_Municipalities2017\")\n> View(as.data.frame(nl2))\n> library(mapview)\n> mapview(nl2)\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
-      "body_snippet": "try here:\nhttps://github.com/r-spatial/sf/issues/5\na similar issue with a solution ...\n\ngreetings , Peter\n\n\n\n\nOp 23-1-2018 om 21:49 schreef Egge-Jan Poll?:\n> Hello,\n>\n> Would someone know a solution f",
+      "body_plain": "try here:\nhttps://github.com/r-spatial/sf/issues/5\na similar issue with a solution ...\n\ngreetings , Peter\n\n\n\n\nOp 23-1-2018 om 21:49 schreef Egge-Jan Pollé:\n> Hello,\n>\n> Would someone know a solution for this issue:\n>\n> When I load a MapInfo file with st_read (sf) I have an issue with the\n> Frisian municipality name 'Súdwest-Fryslân'; it shows as\n> 'S<fa>dwest-Frysl<e2>n' :-( Some issue with the encoding...\n>\n> Below you will find a reproducible example, which will also download the\n> data set used.\n>\n> If I load the same data with readOGR, everything is fine.\n>\n> And if I load a comparable data set in ESRI SHP file format with st_read\n> (sf) there is no issue either.\n>\n> So it really has something to do with the MapInfo driver. I did not find a\n> solution yet, so any help would be appreciated.\n>\n> Cheers,\n>\n> Egge-Jan Pollé\n>\n>\n> REPRODUCIBLE EXAMPLE:\n> # Download and read the data\n> #\n> # Make sure you have your Working Directory properly set, e.g.:\n> # setwd(\"C:/RMOOC\")\n> #\n> # Download\n> URL <- \"http://www.twiav.nl/files/NL_Municipalities2017.zip\"\n> datafile <- file.path(basename(URL))\n> dir.create(\"./Data\", showWarnings = FALSE)\n> workingdirectory <- getwd()\n> setwd(\"./Data\")\n> download.file(URL, destfile = datafile, mode = \"wb\")\n> unzip(datafile)\n> unlink(datafile)\n> rm(URL, datafile)\n> setwd(workingdirectory)\n> rm(workingdirectory)\n>\n> # Read\n> # Make sure the package \"sf\" is properly installed:\n> # install.packages(\"sf\")\n> library(sf)\n> NL_Municipalities2017 <-\n> st_read(\"Data/NL_Municipalities2017/NL_Municipalities2017.TAB\")\n> View(NL_Municipalities2017)\n> plot(st_geometry(NL_Municipalities2017),col = \"darkgreen\", border =\n> \"lightgray\")\n> View(NL_Municipalities2017) # issue with 'Súdwest-Fryslân'; it shows as\n> 'S<fa>dwest-Frysl<e2>n'\n>\n> # Using rgdal everything is fine...\n> library(rgdal)\n> nl2 <- readOGR(dsn = \"Data/NL_Municipalities2017\", layer =\n> \"NL_Municipalities2017\")\n> View(as.data.frame(nl2))\n> library(mapview)\n> mapview(nl2)\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "try here:\nhttps://github.com/r-spatial/sf/issues/5\na similar issue with a solution ...\n\ngreetings , Peter\n\n\n\n\nOp 23-1-2018 om 21:49 schreef Egge-Jan Pollé:\n> Hello,\n>\n> Would someone know a solution f",
       "thread_id": "thread-02f4db44c68f",
       "thread_depth": 1,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026294.html"
     },
     {
       "id": "msg-14f8ae838c83",
@@ -421,11 +443,12 @@
         "<CAGVoNq24Tmz5x=1r7ZvhY7ONx7rSYwvLDiFb_1r37FNqbbUvwQ@mail.gmail.com>",
         "<f3573fe2-a295-6d33-ef31-a48fed379bcd@wxs.nl>"
       ],
-      "body_plain": "Hi Peter,\n\nThanks for your swift reaction. I followed the link you suggested and tried\nto extent my st_read statement with an encoding parameter, but\nunfortunately to no avail...\n\nThe issue has been solved, though, by following Edzer's suggestion to\nabandon the shapefile (or - in my case - the MapInfo file) and to look for\nan alternative. I have asked FME to output my sample data set to a GeoJSON\nfile, and now everything works fine in R :-)\n\nTnx again,\n\nEgge-Jan\n\n2018-01-23 22:20 GMT+01:00 Peter van Horssen <peter.vanhorssen at wxs.nl>:\n\n> try here:\n> https://github.com/r-spatial/sf/issues/5\n> a similar issue with a solution ...\n>\n> greetings , Peter\n>\n>\n>\n>\n> Op 23-1-2018 om 21:49 schreef Egge-Jan Poll?:\n>\n>> Hello,\n>>\n>> Would someone know a solution for this issue:\n>>\n>> When I load a MapInfo file with st_read (sf) I have an issue with the\n>> Frisian municipality name 'S?dwest-Frysl?n'; it shows as\n>> 'S<fa>dwest-Frysl<e2>n' :-( Some issue with the encoding...\n>>\n>> Below you will find a reproducible example, which will also download the\n>> data set used.\n>>\n>> If I load the same data with readOGR, everything is fine.\n>>\n>> And if I load a comparable data set in ESRI SHP file format with st_read\n>> (sf) there is no issue either.\n>>\n>> So it really has something to do with the MapInfo driver. I did not find a\n>> solution yet, so any help would be appreciated.\n>>\n>> Cheers,\n>>\n>> Egge-Jan Poll?\n>>\n>>\n>> REPRODUCIBLE EXAMPLE:\n>> # Download and read the data\n>> #\n>> # Make sure you have your Working Directory properly set, e.g.:\n>> # setwd(\"C:/RMOOC\")\n>> #\n>> # Download\n>> URL <- \"http://www.twiav.nl/files/NL_Municipalities2017.zip\"\n>> datafile <- file.path(basename(URL))\n>> dir.create(\"./Data\", showWarnings = FALSE)\n>> workingdirectory <- getwd()\n>> setwd(\"./Data\")\n>> download.file(URL, destfile = datafile, mode = \"wb\")\n>> unzip(datafile)\n>> unlink(datafile)\n>> rm(URL, datafile)\n>> setwd(workingdirectory)\n>> rm(workingdirectory)\n>>\n>> # Read\n>> # Make sure the package \"sf\" is properly installed:\n>> # install.packages(\"sf\")\n>> library(sf)\n>> NL_Municipalities2017 <-\n>> st_read(\"Data/NL_Municipalities2017/NL_Municipalities2017.TAB\")\n>> View(NL_Municipalities2017)\n>> plot(st_geometry(NL_Municipalities2017),col = \"darkgreen\", border =\n>> \"lightgray\")\n>> View(NL_Municipalities2017) # issue with 'S?dwest-Frysl?n'; it shows as\n>> 'S<fa>dwest-Frysl<e2>n'\n>>\n>> # Using rgdal everything is fine...\n>> library(rgdal)\n>> nl2 <- readOGR(dsn = \"Data/NL_Municipalities2017\", layer =\n>> \"NL_Municipalities2017\")\n>> View(as.data.frame(nl2))\n>> library(mapview)\n>> mapview(nl2)\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Hi Peter,\n\nThanks for your swift reaction. I followed the link you suggested and tried\nto extent my st_read statement with an encoding parameter, but\nunfortunately to no avail...\n\nThe issue has been solved, though, by following Edzer's suggestion to\nabandon the shapefile (or - in my case - the MapInfo file) and to look for\nan alternative. I have asked FME to output my sample data set to a GeoJSON\nfile, and now everything works fine in R :-)\n\nTnx again,\n\nEgge-Jan\n\n2018-01-23 22:20 GMT+01:00 Peter van Horssen <peter.vanhorssen at wxs.nl>:\n\n> try here:\n> https://github.com/r-spatial/sf/issues/5\n> a similar issue with a solution ...\n>\n> greetings , Peter\n>\n>\n>\n>\n> Op 23-1-2018 om 21:49 schreef Egge-Jan Pollé:\n>\n>> Hello,\n>>\n>> Would someone know a solution for this issue:\n>>\n>> When I load a MapInfo file with st_read (sf) I have an issue with the\n>> Frisian municipality name 'Súdwest-Fryslân'; it shows as\n>> 'S<fa>dwest-Frysl<e2>n' :-( Some issue with the encoding...\n>>\n>> Below you will find a reproducible example, which will also download the\n>> data set used.\n>>\n>> If I load the same data with readOGR, everything is fine.\n>>\n>> And if I load a comparable data set in ESRI SHP file format with st_read\n>> (sf) there is no issue either.\n>>\n>> So it really has something to do with the MapInfo driver. I did not find a\n>> solution yet, so any help would be appreciated.\n>>\n>> Cheers,\n>>\n>> Egge-Jan Pollé\n>>\n>>\n>> REPRODUCIBLE EXAMPLE:\n>> # Download and read the data\n>> #\n>> # Make sure you have your Working Directory properly set, e.g.:\n>> # setwd(\"C:/RMOOC\")\n>> #\n>> # Download\n>> URL <- \"http://www.twiav.nl/files/NL_Municipalities2017.zip\"\n>> datafile <- file.path(basename(URL))\n>> dir.create(\"./Data\", showWarnings = FALSE)\n>> workingdirectory <- getwd()\n>> setwd(\"./Data\")\n>> download.file(URL, destfile = datafile, mode = \"wb\")\n>> unzip(datafile)\n>> unlink(datafile)\n>> rm(URL, datafile)\n>> setwd(workingdirectory)\n>> rm(workingdirectory)\n>>\n>> # Read\n>> # Make sure the package \"sf\" is properly installed:\n>> # install.packages(\"sf\")\n>> library(sf)\n>> NL_Municipalities2017 <-\n>> st_read(\"Data/NL_Municipalities2017/NL_Municipalities2017.TAB\")\n>> View(NL_Municipalities2017)\n>> plot(st_geometry(NL_Municipalities2017),col = \"darkgreen\", border =\n>> \"lightgray\")\n>> View(NL_Municipalities2017) # issue with 'Súdwest-Fryslân'; it shows as\n>> 'S<fa>dwest-Frysl<e2>n'\n>>\n>> # Using rgdal everything is fine...\n>> library(rgdal)\n>> nl2 <- readOGR(dsn = \"Data/NL_Municipalities2017\", layer =\n>> \"NL_Municipalities2017\")\n>> View(as.data.frame(nl2))\n>> library(mapview)\n>> mapview(nl2)\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Hi Peter,\n\nThanks for your swift reaction. I followed the link you suggested and tried\nto extent my st_read statement with an encoding parameter, but\nunfortunately to no avail...\n\nThe issue has been s",
       "thread_id": "thread-02f4db44c68f",
       "thread_depth": 2,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026295.html"
     },
     {
       "id": "msg-1b9e64d030a7",
@@ -437,11 +460,12 @@
       "subject_clean": "Plot a raster behind a shapefile",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Dear  list users,\nI need to plot a raster behind a shapefile. Both the raster and the shapefile have been built correctly, I checked it.\n\nI created a raster called rain_rast through the command\n\nrain_rast <- raster(OK_rain$krige_output)\n\nwith the characteristics here reported\n# output:\n#class       : RasterLayer\n#dimensions  : 151, 125, 18875  (nrow, ncol, ncell)\n#resolution  : 1000, 1000  (x, y)\n#extent      : 284845.9, 409845.9, 4712479, 4863479  (xmin, xmax, ymin, ymax)\n#coord. ref. : +init=epsg:32633 +proj=utm +zone=33 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0\n#data source : in memory\n#names       : var1.pred\n#values      : 0.8162388, 46.54594  (min, max)\n\nand I loaded a shapefile  called Marche_shape through the command\n\nMarche_shape <- readOGR(dsn=\"Shapefile_regione_Marche\", layer=\"Lim_reg_2012_wgs32633\")\n\nwhich is a shapefile with reference system EPSG:32633 - WGS 84 / UTM zone 33N and a unique layer called Lim_reg_2012_wgs32633.\n\nCould somebody show me how to plot the raster behind the shapefile? (plot alone does not work, I tried with gplot but with no success).\nMaybe gglopt2? I tried to study some examples found in the web, but again I could not let them work for me.\n\nThank you for your help\nStefano\n\n\n\n         (oo)\n--oOO--( )--OOo----------------\nStefano Sofia PhD\nArea Meteorologica e  Area nivologica - Centro Funzionale\nServizio Protezione Civile - Regione Marche\nVia del Colle Ameno 5\n60126 Torrette di Ancona, Ancona\nUff: 071 806 7743\nE-mail: stefano.sofia at regione.marche.it\n---Oo---------oO----------------\n\n________________________________\n\nAVVISO IMPORTANTE: Questo messaggio di posta elettronica pu? contenere informazioni confidenziali, pertanto ? destinato solo a persone autorizzate alla ricezione. I messaggi di posta elettronica per i client di Regione Marche possono contenere informazioni confidenziali e con privilegi legali. Se non si ? il destinatario specificato, non leggere, copiare, inoltrare o archiviare questo messaggio. Se si ? ricevuto questo messaggio per errore, inoltrarlo al mittente ed eliminarlo completamente dal sistema del proprio computer. Ai sensi dell?art. 6 della DGR n. 1394/2008 si segnala che, in caso di necessit? ed urgenza, la risposta al presente messaggio di posta elettronica pu? essere visionata da persone estranee al destinatario.\nIMPORTANT NOTICE: This e-mail message is intended to be received only by persons entitled to receive the confidential information it may contain. E-mail messages to clients of Regione Marche may contain information that is confidential and legally privileged. Please do not read, copy, forward, or store this message unless you are an intended recipient of it. If you have received this message in error, please forward it to the sender and delete it completely from your computer system.\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Dear  list users,\nI need to plot a raster behind a shapefile. Both the raster and the shapefile have been built correctly, I checked it.\n\nI created a raster called rain_rast through the command\n\nrain_rast <- raster(OK_rain$krige_output)\n\nwith the characteristics here reported\n# output:\n#class       : RasterLayer\n#dimensions  : 151, 125, 18875  (nrow, ncol, ncell)\n#resolution  : 1000, 1000  (x, y)\n#extent      : 284845.9, 409845.9, 4712479, 4863479  (xmin, xmax, ymin, ymax)\n#coord. ref. : +init=epsg:32633 +proj=utm +zone=33 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0\n#data source : in memory\n#names       : var1.pred\n#values      : 0.8162388, 46.54594  (min, max)\n\nand I loaded a shapefile  called Marche_shape through the command\n\nMarche_shape <- readOGR(dsn=\"Shapefile_regione_Marche\", layer=\"Lim_reg_2012_wgs32633\")\n\nwhich is a shapefile with reference system EPSG:32633 - WGS 84 / UTM zone 33N and a unique layer called Lim_reg_2012_wgs32633.\n\nCould somebody show me how to plot the raster behind the shapefile? (plot alone does not work, I tried with gplot but with no success).\nMaybe gglopt2? I tried to study some examples found in the web, but again I could not let them work for me.\n\nThank you for your help\nStefano\n\n\n\n         (oo)\n--oOO--( )--OOo----------------\nStefano Sofia PhD\nArea Meteorologica e  Area nivologica - Centro Funzionale\nServizio Protezione Civile - Regione Marche\nVia del Colle Ameno 5\n60126 Torrette di Ancona, Ancona\nUff: 071 806 7743\nE-mail: stefano.sofia at regione.marche.it\n---Oo---------oO----------------\n\n________________________________\n\nAVVISO IMPORTANTE: Questo messaggio di posta elettronica può contenere informazioni confidenziali, pertanto è destinato solo a persone autorizzate alla ricezione. I messaggi di posta elettronica per i client di Regione Marche possono contenere informazioni confidenziali e con privilegi legali. Se non si è il destinatario specificato, non leggere, copiare, inoltrare o archiviare questo messaggio. Se si è ricevuto questo messaggio per errore, inoltrarlo al mittente ed eliminarlo completamente dal sistema del proprio computer. Ai sensi dell’art. 6 della DGR n. 1394/2008 si segnala che, in caso di necessità ed urgenza, la risposta al presente messaggio di posta elettronica può essere visionata da persone estranee al destinatario.\nIMPORTANT NOTICE: This e-mail message is intended to be received only by persons entitled to receive the confidential information it may contain. E-mail messages to clients of Regione Marche may contain information that is confidential and legally privileged. Please do not read, copy, forward, or store this message unless you are an intended recipient of it. If you have received this message in error, please forward it to the sender and delete it completely from your computer system.\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Dear  list users,\nI need to plot a raster behind a shapefile. Both the raster and the shapefile have been built correctly, I checked it.\n\nI created a raster called rain_rast through the command\n\nrain_",
       "thread_id": "thread-1b9e64d030a7",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026296.html"
     },
     {
       "id": "msg-8d5e8c1769f6",
@@ -459,7 +483,8 @@
       "body_snippet": "Hi,\nHave you tried this?\n\nplot(rain_rast)\nplot(Marche_shape, add = TRUE)\n\n\t[[alternative HTML version deleted]]",
       "thread_id": "thread-1b9e64d030a7",
       "thread_depth": 1,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026297.html"
     },
     {
       "id": "msg-f08f5b8f7d7c",
@@ -473,11 +498,12 @@
       "references": [
         "<8B435C9568170B469AE31E8891E8CC4F471EB3BB@ESINO.regionemarche.intra>"
       ],
-      "body_plain": "You can try the following:\n\nplot(rain_rast)\nplot(Marche_shape, add=TRUE)\n\nGood luck!\n\nFlo\n\nAm 25.01.2018 um 09:55 schrieb Stefano Sofia:\n> Dear  list users,\n> I need to plot a raster behind a shapefile. Both the raster and the shapefile have been built correctly, I checked it.\n>\n> I created a raster called rain_rast through the command\n>\n> rain_rast <- raster(OK_rain$krige_output)\n>\n> with the characteristics here reported\n> # output:\n> #class       : RasterLayer\n> #dimensions  : 151, 125, 18875  (nrow, ncol, ncell)\n> #resolution  : 1000, 1000  (x, y)\n> #extent      : 284845.9, 409845.9, 4712479, 4863479  (xmin, xmax, ymin, ymax)\n> #coord. ref. : +init=epsg:32633 +proj=utm +zone=33 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0\n> #data source : in memory\n> #names       : var1.pred\n> #values      : 0.8162388, 46.54594  (min, max)\n>\n> and I loaded a shapefile  called Marche_shape through the command\n>\n> Marche_shape <- readOGR(dsn=\"Shapefile_regione_Marche\", layer=\"Lim_reg_2012_wgs32633\")\n>\n> which is a shapefile with reference system EPSG:32633 - WGS 84 / UTM zone 33N and a unique layer called Lim_reg_2012_wgs32633.\n>\n> Could somebody show me how to plot the raster behind the shapefile? (plot alone does not work, I tried with gplot but with no success).\n> Maybe gglopt2? I tried to study some examples found in the web, but again I could not let them work for me.\n>\n> Thank you for your help\n> Stefano\n>\n>\n>\n>           (oo)\n> --oOO--( )--OOo----------------\n> Stefano Sofia PhD\n> Area Meteorologica e  Area nivologica - Centro Funzionale\n> Servizio Protezione Civile - Regione Marche\n> Via del Colle Ameno 5\n> 60126 Torrette di Ancona, Ancona\n> Uff: 071 806 7743\n> E-mail: stefano.sofia at regione.marche.it\n> ---Oo---------oO----------------\n>\n> ________________________________\n>\n> AVVISO IMPORTANTE: Questo messaggio di posta elettronica pu? contenere informazioni confidenziali, pertanto ? destinato solo a persone autorizzate alla ricezione. I messaggi di posta elettronica per i client di Regione Marche possono contenere informazioni confidenziali e con privilegi legali. Se non si ? il destinatario specificato, non leggere, copiare, inoltrare o archiviare questo messaggio. Se si ? ricevuto questo messaggio per errore, inoltrarlo al mittente ed eliminarlo completamente dal sistema del proprio computer. Ai sensi dell?art. 6 della DGR n. 1394/2008 si segnala che, in caso di necessit? ed urgenza, la risposta al presente messaggio di posta elettronica pu? essere visionata da persone estranee al destinatario.\n> IMPORTANT NOTICE: This e-mail message is intended to be received only by persons entitled to receive the confidential information it may contain. E-mail messages to clients of Regione Marche may contain information that is confidential and legally privileged. Please do not read, copy, forward, or store this message unless you are an intended recipient of it. If you have received this message in error, please forward it to the sender and delete it completely from your computer system.\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nFlorian Betz\nGartenstra?e 13\n86152 Augsburg, Deutschland\n\nTel.: 0176 20344096\nMail: flobetz at web.de",
+      "body_plain": "You can try the following:\n\nplot(rain_rast)\nplot(Marche_shape, add=TRUE)\n\nGood luck!\n\nFlo\n\nAm 25.01.2018 um 09:55 schrieb Stefano Sofia:\n> Dear  list users,\n> I need to plot a raster behind a shapefile. Both the raster and the shapefile have been built correctly, I checked it.\n>\n> I created a raster called rain_rast through the command\n>\n> rain_rast <- raster(OK_rain$krige_output)\n>\n> with the characteristics here reported\n> # output:\n> #class       : RasterLayer\n> #dimensions  : 151, 125, 18875  (nrow, ncol, ncell)\n> #resolution  : 1000, 1000  (x, y)\n> #extent      : 284845.9, 409845.9, 4712479, 4863479  (xmin, xmax, ymin, ymax)\n> #coord. ref. : +init=epsg:32633 +proj=utm +zone=33 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0\n> #data source : in memory\n> #names       : var1.pred\n> #values      : 0.8162388, 46.54594  (min, max)\n>\n> and I loaded a shapefile  called Marche_shape through the command\n>\n> Marche_shape <- readOGR(dsn=\"Shapefile_regione_Marche\", layer=\"Lim_reg_2012_wgs32633\")\n>\n> which is a shapefile with reference system EPSG:32633 - WGS 84 / UTM zone 33N and a unique layer called Lim_reg_2012_wgs32633.\n>\n> Could somebody show me how to plot the raster behind the shapefile? (plot alone does not work, I tried with gplot but with no success).\n> Maybe gglopt2? I tried to study some examples found in the web, but again I could not let them work for me.\n>\n> Thank you for your help\n> Stefano\n>\n>\n>\n>           (oo)\n> --oOO--( )--OOo----------------\n> Stefano Sofia PhD\n> Area Meteorologica e  Area nivologica - Centro Funzionale\n> Servizio Protezione Civile - Regione Marche\n> Via del Colle Ameno 5\n> 60126 Torrette di Ancona, Ancona\n> Uff: 071 806 7743\n> E-mail: stefano.sofia at regione.marche.it\n> ---Oo---------oO----------------\n>\n> ________________________________\n>\n> AVVISO IMPORTANTE: Questo messaggio di posta elettronica può contenere informazioni confidenziali, pertanto è destinato solo a persone autorizzate alla ricezione. I messaggi di posta elettronica per i client di Regione Marche possono contenere informazioni confidenziali e con privilegi legali. Se non si è il destinatario specificato, non leggere, copiare, inoltrare o archiviare questo messaggio. Se si è ricevuto questo messaggio per errore, inoltrarlo al mittente ed eliminarlo completamente dal sistema del proprio computer. Ai sensi dell’art. 6 della DGR n. 1394/2008 si segnala che, in caso di necessità ed urgenza, la risposta al presente messaggio di posta elettronica può essere visionata da persone estranee al destinatario.\n> IMPORTANT NOTICE: This e-mail message is intended to be received only by persons entitled to receive the confidential information it may contain. E-mail messages to clients of Regione Marche may contain information that is confidential and legally privileged. Please do not read, copy, forward, or store this message unless you are an intended recipient of it. If you have received this message in error, please forward it to the sender and delete it completely from your computer system.\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nFlorian Betz\nGartenstraße 13\n86152 Augsburg, Deutschland\n\nTel.: 0176 20344096\nMail: flobetz at web.de",
       "body_snippet": "You can try the following:\n\nplot(rain_rast)\nplot(Marche_shape, add=TRUE)\n\nGood luck!\n\nFlo\n\nAm 25.01.2018 um 09:55 schrieb Stefano Sofia:\n> Dear  list users,\n> I need to plot a raster behind a shapefil",
       "thread_id": "thread-1b9e64d030a7",
       "thread_depth": 1,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026298.html"
     },
     {
       "id": "msg-d5acf4d5c4ae",
@@ -493,7 +519,8 @@
       "body_snippet": "I have a Spatial Lines object I would like to split at every point where the\nline self-intersects (crosses or touches itself), or anywhere lines touch\neach other, if there are multiple lines. \n\nI've t",
       "thread_id": "thread-d5acf4d5c4ae",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026299.html"
     },
     {
       "id": "msg-47389c1b9abf",
@@ -511,7 +538,8 @@
       "body_snippet": "The `psp` class in spatstat consists of individual line segments and \n`selfcrossing.psp` checks whether each individual line intersects one of \nthe other lines, which happens at all the points in your",
       "thread_id": "thread-d5acf4d5c4ae",
       "thread_depth": 1,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026300.html"
     },
     {
       "id": "msg-09fb40d3ae2b",
@@ -530,7 +558,8 @@
       "body_snippet": "Ege: I don't believe that this code is enough to get coercion between sp\nand spatstat:\n\npts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\npt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,1",
       "thread_id": "thread-d5acf4d5c4ae",
       "thread_depth": 2,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026301.html"
     },
     {
       "id": "msg-840845961aaf",
@@ -546,7 +575,8 @@
       "body_snippet": "Hello Everyone,\n\nIs it possible to define and use the new correlation model in `vgm` function of `gstat` package in R, in order to simulate random fields? I need to use correlation function (as sugges",
       "thread_id": "thread-840845961aaf",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026302.html"
     },
     {
       "id": "msg-80e599db2235",
@@ -562,11 +592,12 @@
         "<2a963040-f346-22c3-f373-8e90f84e823d@math.aau.dk>",
         "<CAAcGz9-PihNn=OrrZU1-b4gh9L7TgBLsa_1SduK_tS785Vyc-g@mail.gmail.com>"
       ],
-      "body_plain": "You should load before library(maptools) and the coercion is done.\n\nCheers\n\nMarcelino\n\n\n\n\nEl 26/01/2018 a las 13:12, Michael Sumner escribi?:\n> Ege: I don't believe that this code is enough to get coercion between sp\n> and spatstat:\n>\n> pts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\n> pt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,104,106,110))\n> library(sp)\n> library(spatstat)\n> L1 <- SpatialLines(list(Lines(list(Line(pts)), \"X\")))\n> L2 <- SpatialLines(list(Lines(list(Line(pt2)), \"X\")))\n> l1 <- as.psp(L1)\n> l2 <- as.psp(L2)\n> int <- crossing.psp(l1, l2)\n>\n> Are we relying on some other code, or perhaps a specific version of\n> spatstat or its family?  (I know ways to convert from Spatial to psp, but I\n> was taken by this apparent lack of infrastructure - and I'm very keen on\n> seeing more bridges between these rich worlds).\n>\n> Cheers, Mike\n>\n>\n> On Fri, 26 Jan 2018 at 17:48 Ege Rubak <rubak at math.aau.dk> wrote:\n>\n>> The `psp` class in spatstat consists of individual line segments and\n>> `selfcrossing.psp` checks whether each individual line intersects one of\n>> the other lines, which happens at all the points in your plot.\n>>\n>> If instead you treat each of the two line sequences as a `psp` you can\n>> check find the crossings of the two `psp` objects. I.e., continuing your\n>> code (with `spatstat` and `maptools` loaded):\n>>\n>> L1 <- SpatialLines(list(Lines(list(Line(pts)), \"X\")))\n>> L2 <- SpatialLines(list(Lines(list(Line(pt2)), \"X\")))\n>> l1 <- as.psp(L1)\n>> l2 <- as.psp(L2)\n>> int <- crossing.psp(l1, l2)\n>>\n>> This gives you the four intersections between the lines. I don't know of\n>> a simple way to do the next task in `spatstat`. A useful function if you\n>> are going to try to write some code is `test.crossing.psp` which gives\n>> you a logical matrix indicating which segments cross.\n>>\n>> Cheers,\n>> Ege\n>>\n>> On 01/25/2018 11:26 PM, Glenn Stauffer wrote:\n>>> I have a Spatial Lines object I would like to split at every point where\n>> the\n>>> line self-intersects (crosses or touches itself), or anywhere lines touch\n>>> each other, if there are multiple lines.\n>>>\n>>> I've tried using spatstat to convert the SpatialLines to a psp object and\n>>> then use the selfcrossing.psp function to find the intersection points\n>> (see\n>>> example below). But that seems to identify all the nodes, not just the\n>>> points where the line crosses. Also, even if it identified only the\n>>> crossings (which is what I want), I am not sure how to perform the next\n>> step\n>>> and split the lines at those points.\n>>>\n>>> So, 1) I need to identify the crossings/touches, and 2) split the lines\n>> at\n>>> those points.\n>>>\n>>>\n>>>\n>>> Essentially, what I am looking for is an R equivalent to the planarize\n>>> function in ArgGIS. Is there a relatively easy way to do this in R?\n>>>\n>>>\n>>>\n>>> Thanks,\n>>>\n>>> Glenn\n>>>\n>>>\n>>>\n>>> Here is an example of what I have tried.\n>>>\n>>>\n>>>\n>>>\n>>>\n>>> pts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\n>>>\n>>> pt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,104,106,110))\n>>>\n>>> projstr <- \"+init=epsg:3071\"         # make everything in meters\n>>>\n>>> L <- SpatialLines(list(Lines(list(Line(pts),Line(pt2)),\"X\")),proj4string\n>> =\n>>> CRS(projstr))\n>>>\n>>> plot(L)\n>>>\n>>> PSP <- as.psp.SpatialLines(L)\n>>>\n>>> int <- selfcrossing.psp(PSP)\n>>>\n>>> plot(int,add=TRUE,col=\"red\") # identifies more than just the crossings\n>>>\n>>>\n>>>\n>>>\n>>>        [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n\n-- \nMarcelino de la Cruz Rot\nDepto. de Biolog?a y Geolog?a\nF?sica y Qu?mica Inorg?nica\nUniversidad Rey Juan Carlos\nM?stoles Espa?a",
-      "body_snippet": "You should load before library(maptools) and the coercion is done.\n\nCheers\n\nMarcelino\n\n\n\n\nEl 26/01/2018 a las 13:12, Michael Sumner escribi?:\n> Ege: I don't believe that this code is enough to get coe",
+      "body_plain": "You should load before library(maptools) and the coercion is done.\n\nCheers\n\nMarcelino\n\n\n\n\nEl 26/01/2018 a las 13:12, Michael Sumner escribió:\n> Ege: I don't believe that this code is enough to get coercion between sp\n> and spatstat:\n>\n> pts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\n> pt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,104,106,110))\n> library(sp)\n> library(spatstat)\n> L1 <- SpatialLines(list(Lines(list(Line(pts)), \"X\")))\n> L2 <- SpatialLines(list(Lines(list(Line(pt2)), \"X\")))\n> l1 <- as.psp(L1)\n> l2 <- as.psp(L2)\n> int <- crossing.psp(l1, l2)\n>\n> Are we relying on some other code, or perhaps a specific version of\n> spatstat or its family?  (I know ways to convert from Spatial to psp, but I\n> was taken by this apparent lack of infrastructure - and I'm very keen on\n> seeing more bridges between these rich worlds).\n>\n> Cheers, Mike\n>\n>\n> On Fri, 26 Jan 2018 at 17:48 Ege Rubak <rubak at math.aau.dk> wrote:\n>\n>> The `psp` class in spatstat consists of individual line segments and\n>> `selfcrossing.psp` checks whether each individual line intersects one of\n>> the other lines, which happens at all the points in your plot.\n>>\n>> If instead you treat each of the two line sequences as a `psp` you can\n>> check find the crossings of the two `psp` objects. I.e., continuing your\n>> code (with `spatstat` and `maptools` loaded):\n>>\n>> L1 <- SpatialLines(list(Lines(list(Line(pts)), \"X\")))\n>> L2 <- SpatialLines(list(Lines(list(Line(pt2)), \"X\")))\n>> l1 <- as.psp(L1)\n>> l2 <- as.psp(L2)\n>> int <- crossing.psp(l1, l2)\n>>\n>> This gives you the four intersections between the lines. I don't know of\n>> a simple way to do the next task in `spatstat`. A useful function if you\n>> are going to try to write some code is `test.crossing.psp` which gives\n>> you a logical matrix indicating which segments cross.\n>>\n>> Cheers,\n>> Ege\n>>\n>> On 01/25/2018 11:26 PM, Glenn Stauffer wrote:\n>>> I have a Spatial Lines object I would like to split at every point where\n>> the\n>>> line self-intersects (crosses or touches itself), or anywhere lines touch\n>>> each other, if there are multiple lines.\n>>>\n>>> I've tried using spatstat to convert the SpatialLines to a psp object and\n>>> then use the selfcrossing.psp function to find the intersection points\n>> (see\n>>> example below). But that seems to identify all the nodes, not just the\n>>> points where the line crosses. Also, even if it identified only the\n>>> crossings (which is what I want), I am not sure how to perform the next\n>> step\n>>> and split the lines at those points.\n>>>\n>>> So, 1) I need to identify the crossings/touches, and 2) split the lines\n>> at\n>>> those points.\n>>>\n>>>\n>>>\n>>> Essentially, what I am looking for is an R equivalent to the planarize\n>>> function in ArgGIS. Is there a relatively easy way to do this in R?\n>>>\n>>>\n>>>\n>>> Thanks,\n>>>\n>>> Glenn\n>>>\n>>>\n>>>\n>>> Here is an example of what I have tried.\n>>>\n>>>\n>>>\n>>>\n>>>\n>>> pts <- cbind(c(120:123,121,125),c(100,100,104,102,99,98))\n>>>\n>>> pt2 <- cbind(c(124,124,123,118,124,125),c(100,97,100,104,106,110))\n>>>\n>>> projstr <- \"+init=epsg:3071\"         # make everything in meters\n>>>\n>>> L <- SpatialLines(list(Lines(list(Line(pts),Line(pt2)),\"X\")),proj4string\n>> =\n>>> CRS(projstr))\n>>>\n>>> plot(L)\n>>>\n>>> PSP <- as.psp.SpatialLines(L)\n>>>\n>>> int <- selfcrossing.psp(PSP)\n>>>\n>>> plot(int,add=TRUE,col=\"red\") # identifies more than just the crossings\n>>>\n>>>\n>>>\n>>>\n>>>        [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n\n-- \nMarcelino de la Cruz Rot\nDepto. de Biología y Geología\nFísica y Química Inorgánica\nUniversidad Rey Juan Carlos\nMóstoles España",
+      "body_snippet": "You should load before library(maptools) and the coercion is done.\n\nCheers\n\nMarcelino\n\n\n\n\nEl 26/01/2018 a las 13:12, Michael Sumner escribió:\n> Ege: I don't believe that this code is enough to get coe",
       "thread_id": "thread-d5acf4d5c4ae",
       "thread_depth": 3,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026303.html"
     },
     {
       "id": "msg-97073c1d1068",
@@ -582,7 +613,8 @@
       "body_snippet": "I am working with SpatialLines in R, and want to split lines at every point\nwhere lines cross (like the Planarize function in ArcGIS). The R package\nRQGIS makes QGIS functionality accessible in R (see",
       "thread_id": "thread-97073c1d1068",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026304.html"
     },
     {
       "id": "msg-b46a6f33ee92",
@@ -598,7 +630,8 @@
       "body_snippet": "I see that WMS (\"OGC Web Map Service\") and WMTS (\"OGC Web Mab Tile\nService\") are supported within my rgdal installation , however, it is\nunclear how to call for WMTS imagery.\nPlease advise on how to a",
       "thread_id": "thread-b46a6f33ee92",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026305.html"
     },
     {
       "id": "msg-0e70fc5a6ab0",
@@ -616,7 +649,8 @@
       "body_snippet": "I still don't know why I get the Runtime Error the first time I call the\nfunction get_args_man(). \n\n \n\nBut, more importantly, it looks my issue with the second problem was as\nsimple as the fact that I",
       "thread_id": "thread-97073c1d1068",
       "thread_depth": 1,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026306.html"
     },
     {
       "id": "msg-f8d3ff0f837f",
@@ -636,7 +670,8 @@
       "body_snippet": "I think I have a solution now. \nTo recap, I wanted to planarize a line feature (split every line at every\nline crossing), and I wanted an R solution so I could iterate over many\nfeature objects. My so",
       "thread_id": "thread-f8d3ff0f837f",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026307.html"
     },
     {
       "id": "msg-45651bce82e4",
@@ -657,7 +692,8 @@
       "body_snippet": "I think rgeos::gNode will do it,  prior to decomposition, and perhaps\nrequiring a union beforehand -  there are other options, but I got side\ntracked exploring them :)\n\nOn Sat, 27 Jan 2018, 09:05 Glen",
       "thread_id": "thread-f8d3ff0f837f",
       "thread_depth": 1,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026308.html"
     },
     {
       "id": "msg-398772a2dc27",
@@ -669,11 +705,12 @@
       "subject_clean": "Breaking a polygon at a line",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hi,\n\nI?m trying to cut a polygon open into a linestring using a line string as a blade (for want of a better description). The specific use case is that I want to convert a polygon boundary into a GPX route and want to control the starting point.\n\nUsing ?sf?, an simple example of the inputs and target is:\n\npoly <- st_sfc(st_polygon(list(matrix(c(0,2,2,0,0,0,0,2,2,0), ncol=2))))\nline <- st_sfc(st_linestring(matrix(c(1,3,1,1), ncol=2)))\n\nplot(poly, xlim=c(-1,4), ylim=c(-1,3), lwd=3, border='grey70')\nplot(line, add=TRUE, col='red')\n\ntarget <- st_sfc(st_linestring(matrix(c(2,2,0,0,2,2,1,0,0,2,2,1), ncol=2)))\ntext(st_coordinates(target))\n\nOptions:\n- st_split() always returns the same feature type so it only splits if the line crosses the polygon boundary at least twice.\n- st_cast() is converts the polygon to a linestring, but uses the first coordinate in the polygon as the starting point of the line string.\n\nSo, the clunky solution I can see is to use st_intersection to find a point on both the line and polygon, find distances from all points on the polygon boundary to that and then juggle some blocks of coordinates to get the order right.\n\nAm I missing something? Bit of a fringe use-case, I suspect but I was curious if there is an existing solution.\n\nThanks,\nDavid\n\n\n\n\t[[alternative HTML version deleted]]",
-      "body_snippet": "Hi,\n\nI?m trying to cut a polygon open into a linestring using a line string as a blade (for want of a better description). The specific use case is that I want to convert a polygon boundary into a GPX",
+      "body_plain": "Hi,\n\nI’m trying to cut a polygon open into a linestring using a line string as a blade (for want of a better description). The specific use case is that I want to convert a polygon boundary into a GPX route and want to control the starting point.\n\nUsing ‘sf’, an simple example of the inputs and target is:\n\npoly <- st_sfc(st_polygon(list(matrix(c(0,2,2,0,0,0,0,2,2,0), ncol=2))))\nline <- st_sfc(st_linestring(matrix(c(1,3,1,1), ncol=2)))\n\nplot(poly, xlim=c(-1,4), ylim=c(-1,3), lwd=3, border='grey70')\nplot(line, add=TRUE, col='red')\n\ntarget <- st_sfc(st_linestring(matrix(c(2,2,0,0,2,2,1,0,0,2,2,1), ncol=2)))\ntext(st_coordinates(target))\n\nOptions:\n- st_split() always returns the same feature type so it only splits if the line crosses the polygon boundary at least twice.\n- st_cast() is converts the polygon to a linestring, but uses the first coordinate in the polygon as the starting point of the line string.\n\nSo, the clunky solution I can see is to use st_intersection to find a point on both the line and polygon, find distances from all points on the polygon boundary to that and then juggle some blocks of coordinates to get the order right.\n\nAm I missing something? Bit of a fringe use-case, I suspect but I was curious if there is an existing solution.\n\nThanks,\nDavid\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi,\n\nI’m trying to cut a polygon open into a linestring using a line string as a blade (for want of a better description). The specific use case is that I want to convert a polygon boundary into a GPX",
       "thread_id": "thread-398772a2dc27",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026309.html"
     },
     {
       "id": "msg-eddab1aef1c8",
@@ -691,7 +728,8 @@
       "body_snippet": "On Fri, 26 Jan 2018, Fischbach, Anthony wrote:\n\n> I see that WMS (\"OGC Web Map Service\") and WMTS (\"OGC Web Mab Tile\n> Service\") are supported within my rgdal installation , however, it is\n> unclear h",
       "thread_id": "thread-b46a6f33ee92",
       "thread_depth": 1,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026310.html"
     },
     {
       "id": "msg-ca59ffcf3ca6",
@@ -707,7 +745,8 @@
       "body_snippet": "Hi all,\n\n \n\nI posted a question to Stack Overflow a couple weeks ago regarding Monte\nCarlo simulation with mc2d with no replies:\n\nhttps://stackoverflow.com/questions/48306933/grid-based-monte-carlo-si",
       "thread_id": "thread-ca59ffcf3ca6",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026311.html"
     },
     {
       "id": "msg-cad52c953828",
@@ -725,7 +764,8 @@
       "body_snippet": "Return the min,mean,max values as a list of numbers and calc will create a\nRasterStack.  ?`calc` states that 'calc' returns a RasterBrick if 'fun'\nreturns more than one number.  Below are a few minor ",
       "thread_id": "thread-ca59ffcf3ca6",
       "thread_depth": 1,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026312.html"
     },
     {
       "id": "msg-12bc324952fb",
@@ -744,7 +784,8 @@
       "body_snippet": "This works great, many thanks Vijay. I have updated the code on Stack Overflow as well.\n\n \n\nTodd\n\n \n\nFrom: Vijay Lulla [mailto:vijaylulla at gmail.com] \nSent: Tuesday, January 30, 2018 11:36 AM\nTo: To",
       "thread_id": "thread-ca59ffcf3ca6",
       "thread_depth": 2,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026313.html"
     },
     {
       "id": "msg-c2dbc021a9e0",
@@ -760,7 +801,8 @@
       "body_snippet": "Dear R-sig-Geo users,\n\nI'm currently using krigeST for 3-d geostationaly sattlite data\ninterpolation, and I'm trying to estimate \"Interpolation variance\" in\nYamamoto et al, 2000.\n(https://link.springe",
       "thread_id": "thread-c2dbc021a9e0",
       "thread_depth": 0,
-      "month": "2018-01"
+      "month": "2018-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2018-January/026314.html"
     }
   ],
   "threads": [
