@@ -17,7 +17,8 @@
       "body_snippet": "Hi,\n\nI am a new R User and I am trying to write an Ascii grid file or tiff file\nfrom a matrix created in R.\n\nThis is what I am doing :\n\n1. write a matrix of x-coordinates (in degrees):\nx<-matrix(rep(s",
       "thread_id": "thread-80fa55a56448",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004123.html"
     },
     {
       "id": "msg-9250965df2f9",
@@ -35,7 +36,8 @@
       "body_snippet": "On Mon, 1 Sep 2008, Jean-Paul Kibambe Lubamba wrote:\n\n> Hi,\n>\n> I am a new R User and I am trying to write an Ascii grid file or tiff file\n> from a matrix created in R.\n>\n> This is what I am doing :\n>",
       "thread_id": "thread-80fa55a56448",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004124.html"
     },
     {
       "id": "msg-8fd62c7df64c",
@@ -52,6 +54,7 @@
       "thread_id": "thread-8fd62c7df64c",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004125.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080901/7f4c2e09/attachment.pl"
       ]
@@ -72,7 +75,8 @@
       "body_snippet": "On Mon, 1 Sep 2008, Lyndon Ang wrote:\n\n> Good day all,\n>\n> I've only recently been introduced to the useful spatial tools available in R (and indeed to GIS in general!).?? I have found reading some of",
       "thread_id": "thread-8fd62c7df64c",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004126.html"
     },
     {
       "id": "msg-6924f751b414",
@@ -92,7 +96,8 @@
       "body_snippet": "On Tue, 26 Aug 2008, Michael Friendly wrote:\n\n> Edzer Pebesma wrote:\n>> \n>>\n>>  Michael Friendly wrote:\n>> >  Two short questions about working with maps:\n>> > \n>> >  1.  I'm reading a shapefile with ",
       "thread_id": "thread-6924f751b414",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004127.html"
     },
     {
       "id": "msg-b7693eeeb4c6",
@@ -104,11 +109,12 @@
       "subject_clean": "Export Matrix to ESRI Grid or tif file",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hi,\n\nhere an alternative approach using RSAGA to write ASCII grids:\n\nlibrary(RSAGA)\nx <- matrix(rep(seq(11,13,0.5), 5), byrow=T, nrow=5)\ny <- matrix(rep(seq(3,5,0.5), 5), byrow=F, nrow=5)\nz = 0.0052 + 0.001*x - 0.00023*y + 0.0011*x*y\nhdr = list(\n    ncols = ncol(z), nrows = nrow(z),\n    xllcenter = min(x), yllcenter = min(y),\n    cellsize = 0.5, nodata_value = -9999)\nwrite.ascii.grid(x, \"x.asc\", header = hdr, digits = 1, georef = \"center\")\nwrite.ascii.grid(y, \"y.asc\", header = hdr, digits = 1, georef = \"center\")\nwrite.ascii.grid(z, \"z.asc\", header = hdr, digits = 6, georef = \"center\")\n\n\n-- \nAlexander Brenning\nDepartment of Geography and Environmental Management\nUniversity of Waterloo\n200 University Ave. W - Waterloo, ON - Canada N2L 3G1\nhttp://www.environment.uwaterloo.ca/geography/faculty/brenning/\n\n\n\n\n\n----- Urspr?ngliche Mail ----\nVon: Roger Bivand <Roger.Bivand at nhh.no>\nAn: Jean-Paul Kibambe Lubamba <jean-paul.kibambe at uclouvain.be>\nCC: r-sig-geo at stat.math.ethz.ch\nGesendet: Montag, den 1. September 2008, 13:50:41 Uhr\nBetreff: Re: [R-sig-Geo] Export Matrix to ESRI Grid or tif file\n\nOn Mon, 1 Sep 2008, Jean-Paul Kibambe Lubamba wrote:\n\n> Hi,\n>\n> I am a new R User and I am trying to write an Ascii grid file or tiff file\n> from a matrix created in R.\n>\n> This is what I am doing :\n>\n> 1. write a matrix of x-coordinates (in degrees):\n> x<-matrix(rep(seq(11,13,0.5), by row=T, nrow=5)\n>\n> 2. write a matrix of y-coordinates (in degrees):\n> y<-matrix(rep(seq(3,5,0.5), by row=T, nrow=5)\n>\n> 3. I have a function which combine my coordinates (x and y) in the\n> following way:\n> z = 0.0052 + 0.001x - 0.00023y + 0.0011xy\n>\n> z is my variable of interest and I want to put it in a GIS software,\n> ArcGIS for example, for an analysis with other geographical dataset.\n\nlibrary(sp)\ngrd <- GridTopology(cellcentre.offset=c(11,3), cellsize=c(0.5, 0.5),\n  cells.dim=c(5, 5))\ncrds <- coordinates(grd)\nz <- 0.0052 + 0.001*crds[,1] - 0.0023*crds[,2] + 0.0011*crds[,1]*crds[,2]\nSGDF <- SpatialGridDataFrame(grd, data=data.frame(z=z))\nspplot(SGDF)\nlibrary(rgdal)\nwriteGDAL(SGDF, \"SGDF.tif\")\n\nor other drivers for writeGDAL() if you prefer.\n\nHope this helps,\n\nRoger\n\n>\n> So, I want to have my matrix z as a esri grid file (or tif file or any\n> kind of image format file), with a cell size equal to the interval (0.5) I\n> gave in the 'seq' function I have previously used for x and y coordinates.\n> How can I proceed ?\n>\n> Thanks a lot for your help.\n>\n>\n> Jean-Paul Kibambe\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n__________________________________________________\nDo You Yahoo!?\nSie sind Spam leid? \n \nhttp://mail.yahoo.com",
+      "body_plain": "Hi,\n\nhere an alternative approach using RSAGA to write ASCII grids:\n\nlibrary(RSAGA)\nx <- matrix(rep(seq(11,13,0.5), 5), byrow=T, nrow=5)\ny <- matrix(rep(seq(3,5,0.5), 5), byrow=F, nrow=5)\nz = 0.0052 + 0.001*x - 0.00023*y + 0.0011*x*y\nhdr = list(\n    ncols = ncol(z), nrows = nrow(z),\n    xllcenter = min(x), yllcenter = min(y),\n    cellsize = 0.5, nodata_value = -9999)\nwrite.ascii.grid(x, \"x.asc\", header = hdr, digits = 1, georef = \"center\")\nwrite.ascii.grid(y, \"y.asc\", header = hdr, digits = 1, georef = \"center\")\nwrite.ascii.grid(z, \"z.asc\", header = hdr, digits = 6, georef = \"center\")\n\n\n-- \nAlexander Brenning\nDepartment of Geography and Environmental Management\nUniversity of Waterloo\n200 University Ave. W - Waterloo, ON - Canada N2L 3G1\nhttp://www.environment.uwaterloo.ca/geography/faculty/brenning/\n\n\n\n\n\n----- Ursprüngliche Mail ----\nVon: Roger Bivand <Roger.Bivand at nhh.no>\nAn: Jean-Paul Kibambe Lubamba <jean-paul.kibambe at uclouvain.be>\nCC: r-sig-geo at stat.math.ethz.ch\nGesendet: Montag, den 1. September 2008, 13:50:41 Uhr\nBetreff: Re: [R-sig-Geo] Export Matrix to ESRI Grid or tif file\n\nOn Mon, 1 Sep 2008, Jean-Paul Kibambe Lubamba wrote:\n\n> Hi,\n>\n> I am a new R User and I am trying to write an Ascii grid file or tiff file\n> from a matrix created in R.\n>\n> This is what I am doing :\n>\n> 1. write a matrix of x-coordinates (in degrees):\n> x<-matrix(rep(seq(11,13,0.5), by row=T, nrow=5)\n>\n> 2. write a matrix of y-coordinates (in degrees):\n> y<-matrix(rep(seq(3,5,0.5), by row=T, nrow=5)\n>\n> 3. I have a function which combine my coordinates (x and y) in the\n> following way:\n> z = 0.0052 + 0.001x - 0.00023y + 0.0011xy\n>\n> z is my variable of interest and I want to put it in a GIS software,\n> ArcGIS for example, for an analysis with other geographical dataset.\n\nlibrary(sp)\ngrd <- GridTopology(cellcentre.offset=c(11,3), cellsize=c(0.5, 0.5),\n  cells.dim=c(5, 5))\ncrds <- coordinates(grd)\nz <- 0.0052 + 0.001*crds[,1] - 0.0023*crds[,2] + 0.0011*crds[,1]*crds[,2]\nSGDF <- SpatialGridDataFrame(grd, data=data.frame(z=z))\nspplot(SGDF)\nlibrary(rgdal)\nwriteGDAL(SGDF, \"SGDF.tif\")\n\nor other drivers for writeGDAL() if you prefer.\n\nHope this helps,\n\nRoger\n\n>\n> So, I want to have my matrix z as a esri grid file (or tif file or any\n> kind of image format file), with a cell size equal to the interval (0.5) I\n> gave in the 'seq' function I have previously used for x and y coordinates.\n> How can I proceed ?\n>\n> Thanks a lot for your help.\n>\n>\n> Jean-Paul Kibambe\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n__________________________________________________\nDo You Yahoo!?\nSie sind Spam leid? \n \nhttp://mail.yahoo.com",
       "body_snippet": "Hi,\n\nhere an alternative approach using RSAGA to write ASCII grids:\n\nlibrary(RSAGA)\nx <- matrix(rep(seq(11,13,0.5), 5), byrow=T, nrow=5)\ny <- matrix(rep(seq(3,5,0.5), 5), byrow=F, nrow=5)\nz = 0.0052 +",
       "thread_id": "thread-b7693eeeb4c6",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004128.html"
     },
     {
       "id": "msg-6c7208718564",
@@ -124,7 +130,8 @@
       "body_snippet": "Hi,\n\nI am trying to explain some of my variables using a weighted linear\nregression, with x and y-coordinates as my explanatory variables.\n\nFor example, I want to explain my variable 'agri' in the fol",
       "thread_id": "thread-6c7208718564",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004129.html"
     },
     {
       "id": "msg-b7b032ab99e9",
@@ -142,7 +149,8 @@
       "body_snippet": "Dear Jean-Paul,\n\nHave a look at the weights argument in ?lm. This should do the trick:\n\nlm(agri ~poly(x, y, degree = 2), data = yourDataFrameName, weights =\nvar_agri)\n\nHTH,\n\nThierry\n\n-----------------",
       "thread_id": "thread-6c7208718564",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004130.html"
     },
     {
       "id": "msg-d29491cabbe5",
@@ -159,6 +167,7 @@
       "thread_id": "thread-d29491cabbe5",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004131.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080902/c353e090/attachment.pl"
       ]
@@ -175,11 +184,12 @@
       "references": [
         "<3aaf1a030809021104j438c105aibc362f0d2c769f2b@mail.gmail.com>"
       ],
-      "body_plain": "On Tue, 2 Sep 2008, milton ruser wrote:\n\n> Dear all,\n>\n> I know that it is a knew issue, but I have some troubles\n> on the conversion of UTM to Latlong of my shape file.\n> In fact, it apears to work but my input file is on South America Datum\n> (SAD69),\n> but I can?t find the how to indicate the datum. I tryed to include\n> \"+datum=SAD69\"\n> on the proj4string, but I received the following error: \"unknown elliptical\n> parameter name\"\n\nIt seems that SAD69 is s general description, and you will probably need \nto dig deeper to find the correct +towgs84= values for your data. Add your \nchosen +towgs84= to the CRS for your input data. There are possibly useful \nlinks in this thread:\n\nhttp://postgis.refractions.net/pipermail/postgis-users/2006-December/014064.html\n\nor here:\n\nhttp://osdir.com/ml/gis.proj-4.devel/2006-07/msg00012.html\n\nTry googling SAD69 and towgs84 for lots of different values!\n\nGood luck, don't use the results for navigation without checking, please!\n\nRoger\n\n\n> Any help are welcome.\n>\n> Best wishes,\n>\n> miltinho astronaura\n> brazil\n> -------------\n>\n> require(sp)\n> require(maptools)\n> require(rgdal)\n>\n> setwd(\"G:\\\\HDExt\\\\R_scripts_genericos\\\\converte_utm_latlong\")\n>\n> SP<-readShapePoly(\"area_infl_ind.shp\", IDvar=NULL,\n> proj4string=CRS(\"+proj=utm +zone=22 +units=m +south\"))\n>\n> SPll<-spTransform(SP, CRS(\"+proj=longlat +datum=WGS84\"))\n>\n> \t[[alternative HTML version deleted]]\n>\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_plain": "On Tue, 2 Sep 2008, milton ruser wrote:\n\n> Dear all,\n>\n> I know that it is a knew issue, but I have some troubles\n> on the conversion of UTM to Latlong of my shape file.\n> In fact, it apears to work but my input file is on South America Datum\n> (SAD69),\n> but I can´t find the how to indicate the datum. I tryed to include\n> \"+datum=SAD69\"\n> on the proj4string, but I received the following error: \"unknown elliptical\n> parameter name\"\n\nIt seems that SAD69 is s general description, and you will probably need \nto dig deeper to find the correct +towgs84= values for your data. Add your \nchosen +towgs84= to the CRS for your input data. There are possibly useful \nlinks in this thread:\n\nhttp://postgis.refractions.net/pipermail/postgis-users/2006-December/014064.html\n\nor here:\n\nhttp://osdir.com/ml/gis.proj-4.devel/2006-07/msg00012.html\n\nTry googling SAD69 and towgs84 for lots of different values!\n\nGood luck, don't use the results for navigation without checking, please!\n\nRoger\n\n\n> Any help are welcome.\n>\n> Best wishes,\n>\n> miltinho astronaura\n> brazil\n> -------------\n>\n> require(sp)\n> require(maptools)\n> require(rgdal)\n>\n> setwd(\"G:\\\\HDExt\\\\R_scripts_genericos\\\\converte_utm_latlong\")\n>\n> SP<-readShapePoly(\"area_infl_ind.shp\", IDvar=NULL,\n> proj4string=CRS(\"+proj=utm +zone=22 +units=m +south\"))\n>\n> SPll<-spTransform(SP, CRS(\"+proj=longlat +datum=WGS84\"))\n>\n> \t[[alternative HTML version deleted]]\n>\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
       "body_snippet": "On Tue, 2 Sep 2008, milton ruser wrote:\n\n> Dear all,\n>\n> I know that it is a knew issue, but I have some troubles\n> on the conversion of UTM to Latlong of my shape file.\n> In fact, it apears to work b",
       "thread_id": "thread-d29491cabbe5",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004132.html"
     },
     {
       "id": "msg-fb203f784520",
@@ -195,7 +205,8 @@
       "body_snippet": "Dear R-sig-geoers\n\n     I need some help on importing adf file--ArcGIS coverage file\nwhich is no longer supported--into R and was hoping if I could get any\ninput from you. I've searched the forum and ",
       "thread_id": "thread-fb203f784520",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004133.html"
     },
     {
       "id": "msg-64e8c93e2ffa",
@@ -214,6 +225,7 @@
       "thread_id": "thread-d29491cabbe5",
       "thread_depth": 1,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004134.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080903/a68bb5d8/attachment.pl"
       ]
@@ -234,7 +246,8 @@
       "body_snippet": "Harry,\n\nI have been able to reproduce your error and it seems that the problem\nis that there is not enough memory to load your data. Furthermore, I am\nnot sure whether RArcInfo can handle this sort of",
       "thread_id": "thread-fb203f784520",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004135.html"
     },
     {
       "id": "msg-752ab2fe6a78",
@@ -250,7 +263,8 @@
       "body_snippet": "Hi all,\n\nis there a way to plot polygons over a grid? It seems that:\n\n> spplot(myspgrid, sp.layout(list(\"sp.polygon\",mysppolygon)))\n\nalways plots the grid on top of the polygon (as in \n<http://r-spati",
       "thread_id": "thread-752ab2fe6a78",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004136.html"
     },
     {
       "id": "msg-371583359a35",
@@ -268,7 +282,8 @@
       "body_snippet": "Hi,\n\nThere are two ways to do this, one is to use the \"first = FALSE\" argument\nin the call to sp.layout. Like:\n\nspplot(myspgrid, sp.layout(list(\"sp.polygon\",mysppolygon, first = FALSE)))\n\nA more compl",
       "thread_id": "thread-752ab2fe6a78",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004137.html"
     },
     {
       "id": "msg-f8fdd863eda4",
@@ -285,6 +300,7 @@
       "thread_id": "thread-f8fdd863eda4",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004138.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080904/de85c0f1/attachment.pl"
       ]
@@ -305,7 +321,8 @@
       "body_snippet": "Hi,\n\n> I again send this below request to the List, because I do not receive  \n> an answer to it, since July 8th.\n\nA search in Goggle on \"variogram cauchy\" returns, as a first hit, the\nfollowing R man",
       "thread_id": "thread-f8fdd863eda4",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004139.html"
     },
     {
       "id": "msg-e8d1c2e794ae",
@@ -319,11 +336,12 @@
       "references": [
         "<E2303695-1B0A-4A82-8647-EBF3C3D4A0CA@supelec.fr>"
       ],
-      "body_plain": "Francois JOUVIE wrote:\n> Hello,\n>\n> I again send this below request to the List, because I do not receive  \n> an answer to it, since July 8th.\n> Perhaps anyone can help me ?\n> Thanks you.\n>\n>\n> My question:\n>\n>   I'm exploring the possibilities of the gstat package in the  \n> R_Library context, to make variograms and kriging in a problem of  \n> electromagnetic field.\n>\n>   This is my question:\n>\n>   To fit my points_variograms, the  vgm routine displays a closed set  \n> of default functions (\"Sph\", \"Gau\", \"Bes\", etc.).\n>\n>   I'd like try a different fitting model (a Cauchy function  \n> precisely). Do anyone knows if it is possible (and how to do it) to  \n> use an owner_defined function to fit a\n>   particular variogram ?\n>   \nThere's two ways to do that.\n1. you can pass an arbitrary function by computing its values and \npassing it as a table, an example is found in ?vgm:\n     vv=vgm(model = \"Tab\",  covtable =\n             variogramLine(vgm(1, \"Sph\", 1), 1, n=1e4, min = 0, \ncovariance = TRUE))\n2. you can edit the underlying C source code; if you can express the \nvariogram function in terms of a C (or R) function, this is not as hard \nas it seems -- the code has been set up for easy addition of models.\n\nYou can also start working with packages that already provide this.\n> Thanks you very much.\n>\n> (I'm new on this list and I don't know how to get the archived past  \n> questions and answers)\n>   \nJust click on the link below any list message, and it will bring you \nthere. Google searching with r-sig-geo as one of the key words should \nwork as well.\n--\nEdzer\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster,\nWeseler Stra?e 253, 48151 M?nster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/",
+      "body_plain": "Francois JOUVIE wrote:\n> Hello,\n>\n> I again send this below request to the List, because I do not receive  \n> an answer to it, since July 8th.\n> Perhaps anyone can help me ?\n> Thanks you.\n>\n>\n> My question:\n>\n>   I'm exploring the possibilities of the gstat package in the  \n> R_Library context, to make variograms and kriging in a problem of  \n> electromagnetic field.\n>\n>   This is my question:\n>\n>   To fit my points_variograms, the  vgm routine displays a closed set  \n> of default functions (\"Sph\", \"Gau\", \"Bes\", etc.).\n>\n>   I'd like try a different fitting model (a Cauchy function  \n> precisely). Do anyone knows if it is possible (and how to do it) to  \n> use an owner_defined function to fit a\n>   particular variogram ?\n>   \nThere's two ways to do that.\n1. you can pass an arbitrary function by computing its values and \npassing it as a table, an example is found in ?vgm:\n     vv=vgm(model = \"Tab\",  covtable =\n             variogramLine(vgm(1, \"Sph\", 1), 1, n=1e4, min = 0, \ncovariance = TRUE))\n2. you can edit the underlying C source code; if you can express the \nvariogram function in terms of a C (or R) function, this is not as hard \nas it seems -- the code has been set up for easy addition of models.\n\nYou can also start working with packages that already provide this.\n> Thanks you very much.\n>\n> (I'm new on this list and I don't know how to get the archived past  \n> questions and answers)\n>   \nJust click on the link below any list message, and it will bring you \nthere. Google searching with r-sig-geo as one of the key words should \nwork as well.\n--\nEdzer\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster,\nWeseler Straße 253, 48151 Münster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/",
       "body_snippet": "Francois JOUVIE wrote:\n> Hello,\n>\n> I again send this below request to the List, because I do not receive  \n> an answer to it, since July 8th.\n> Perhaps anyone can help me ?\n> Thanks you.\n>\n>\n> My que",
       "thread_id": "thread-f8fdd863eda4",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004140.html"
     },
     {
       "id": "msg-ab52bceed310",
@@ -341,7 +359,8 @@
       "body_snippet": "Wouter,\n  Superimposing polygons on a grid could be easily done in ARCGIS. \n----- Original Message ----- \nFrom: <r-sig-geo-request at stat.math.ethz.ch>\nTo: <r-sig-geo at stat.math.ethz.ch>\nSent: Thur",
       "thread_id": "thread-ab52bceed310",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004141.html"
     },
     {
       "id": "msg-bd0345461281",
@@ -358,6 +377,7 @@
       "thread_id": "thread-bd0345461281",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004142.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080905/bcc36405/attachment.pl"
       ]
@@ -376,7 +396,8 @@
       "body_snippet": "Hi Lin,\n\nI think you can simply do your selection as with any dataframe, e.g.\n\nrequire(rgdal)\nCtries=readOGR(dsn='C:/data/datasets/HornOfAfrica', layer='HornOfAfrica',\np4s=NULL)\nstr(Ctries at data)\ntr",
       "thread_id": "thread-8b952ba17b9e",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004143.html"
     },
     {
       "id": "msg-e575a15a83f3",
@@ -395,6 +416,7 @@
       "thread_id": "thread-bd0345461281",
       "thread_depth": 1,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004144.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080905/ad98be10/attachment.pl"
       ]
@@ -416,7 +438,8 @@
       "body_snippet": "Hi Roger\n\nI'm just getting around to trying this out. \n\nI must say, I'm not clear on how to work with the neighbour list object \nto accomplish this.  Specifically, how would I identify the largest \nne",
       "thread_id": "thread-f135630708d2",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004145.html"
     },
     {
       "id": "msg-31c158779424",
@@ -436,7 +459,8 @@
       "body_snippet": "On Fri, 5 Sep 2008, Murray Richardson wrote:\n\n> Hi Roger\n>\n> I'm just getting around to trying this out. \n> I must say, I'm not clear on how to work with the neighbour list object to \n> accomplish thi",
       "thread_id": "thread-f135630708d2",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004146.html"
     },
     {
       "id": "msg-d16fed482182",
@@ -457,7 +481,8 @@
       "body_snippet": "Thanks Roger,\n\nI have singletons with areas.  I think the slivers will be quite obvious \nbased on their areas relative to the rest of the polygon areas.  I could \neven compute some perimeter to area i",
       "thread_id": "thread-f135630708d2",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004147.html"
     },
     {
       "id": "msg-c0bbe389264a",
@@ -479,7 +504,8 @@
       "body_snippet": "On Fri, 5 Sep 2008, Murray Richardson wrote:\n\n> Thanks Roger,\n>\n> I have singletons with areas.  I think the slivers will be quite obvious \n> based on their areas relative to the rest of the polygon a",
       "thread_id": "thread-f135630708d2",
       "thread_depth": 3,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004148.html"
     },
     {
       "id": "msg-216fc1811c32",
@@ -496,6 +522,7 @@
       "thread_id": "thread-216fc1811c32",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004149.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080905/74ad6129/attachment.pl"
       ]
@@ -515,6 +542,7 @@
       "thread_id": "thread-b21871f6310d",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004150.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080906/dfee2b42/attachment.pl"
       ]
@@ -535,7 +563,8 @@
       "body_snippet": "Hi,\n\nA lot of people in our institute use ArcGIS. But I always advise them\nnot to use ArcGIS for kriging etc. Mainly because kriging in ArcGIS is a\nblack box tool. You only know the input and the outp",
       "thread_id": "thread-b21871f6310d",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004151.html"
     },
     {
       "id": "msg-3421589e80c7",
@@ -553,7 +582,8 @@
       "body_snippet": "2008/9/6 D G Rossiter <rossiter at itc.nl>:\n\n> Naturally we want the students to understand what the program is doing\n> for them!  Although ESRI promotes \"press the button and look at the\n> cross-vali",
       "thread_id": "thread-b21871f6310d",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004152.html"
     },
     {
       "id": "msg-ebd9f49f1805",
@@ -572,7 +602,8 @@
       "body_snippet": "On Sat, 6 Sep 2008, Barry Rowlingson wrote:\n\n> 2008/9/6 D G Rossiter <rossiter at itc.nl>:\n>\n>> Naturally we want the students to understand what the program is doing\n>> for them!  Although ESRI promo",
       "thread_id": "thread-b21871f6310d",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004153.html"
     },
     {
       "id": "msg-965abf7d076a",
@@ -592,7 +623,8 @@
       "body_snippet": "I faced the problem of collecting informations about ArcGIS Geospatial\nextension while I was following the geostatics course at university. A\nmonth looking for documentation about what was behind the ",
       "thread_id": "thread-b21871f6310d",
       "thread_depth": 3,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004154.html"
     },
     {
       "id": "msg-e776f69732af",
@@ -613,7 +645,8 @@
       "body_snippet": "This is a bit of a distant memory from a few years back when I also was trying to better understand what ArcGIS was actually doing, but I believe there is some, though probably not a large amount of, ",
       "thread_id": "thread-b21871f6310d",
       "thread_depth": 4,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004155.html"
     },
     {
       "id": "msg-e207dc7d9ed3",
@@ -635,7 +668,8 @@
       "body_snippet": "Nothing else to say after Barry's email, apart from noting yet another\nwonder of the free software world/community:\n\nwe even use our mailing lists to provide advice on commercial software!!!\nUau!\n\nWou",
       "thread_id": "thread-b21871f6310d",
       "thread_depth": 5,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004156.html"
     },
     {
       "id": "msg-f597da409d8f",
@@ -658,7 +692,8 @@
       "body_snippet": "Paulo Justiniano Ribeiro Jr wrote:\n> Nothing else to say after Barry's email, apart from noting yet another\n> wonder of the free software world/community:\n>\n> we even use our mailing lists to provide ",
       "thread_id": "thread-b21871f6310d",
       "thread_depth": 6,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004157.html"
     },
     {
       "id": "msg-d5f756561445",
@@ -677,6 +712,7 @@
       "thread_id": "thread-d5f756561445",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004158.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080907/8a32bc19/attachment.pl"
       ]
@@ -696,6 +732,7 @@
       "thread_id": "thread-c828569bf682",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004159.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080907/31d0dc41/attachment.pl"
       ]
@@ -712,11 +749,12 @@
       "references": [
         "<94F37792B434C4429AD54210EAB2D935056A5F27FA@WWFUS-EXCH11.hq.wwfinternal.org>"
       ],
-      "body_plain": "Try readGDAL in package rgdal. On my machine, gdalDrivers() returns\n\n...\n35  JPEG2000      JPEG-2000 part 1 (ISO/IEC 15444-1)  FALSE  TRUE\n...\nas one of the available drivers. Then, look into\n?image.SpatialGridDataFrame (package sp) and check the red/green/blue \narguments.\n\nHth,\n--\nEdzer\n\nNaidoo, Robin wrote:\n> Hello,\n>\n> Please forgive any breaches in protocol or the simplicity of this question.\n>\n> I would like to import and display a JPEG2000 satellite image in R.  Could someone be so kind as to advise on how to do this?  And more generally: is it possible to import multi-band satellite images and to display them in colour using a subset of 3 of the bands, as in a standard GIS program?\n>\n> Many thanks,\n>\n> Robin Naidoo\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster,\nWeseler Stra?e 253, 48151 M?nster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/",
+      "body_plain": "Try readGDAL in package rgdal. On my machine, gdalDrivers() returns\n\n...\n35  JPEG2000      JPEG-2000 part 1 (ISO/IEC 15444-1)  FALSE  TRUE\n...\nas one of the available drivers. Then, look into\n?image.SpatialGridDataFrame (package sp) and check the red/green/blue \narguments.\n\nHth,\n--\nEdzer\n\nNaidoo, Robin wrote:\n> Hello,\n>\n> Please forgive any breaches in protocol or the simplicity of this question.\n>\n> I would like to import and display a JPEG2000 satellite image in R.  Could someone be so kind as to advise on how to do this?  And more generally: is it possible to import multi-band satellite images and to display them in colour using a subset of 3 of the bands, as in a standard GIS program?\n>\n> Many thanks,\n>\n> Robin Naidoo\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster,\nWeseler Straße 253, 48151 Münster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/",
       "body_snippet": "Try readGDAL in package rgdal. On my machine, gdalDrivers() returns\n\n...\n35  JPEG2000      JPEG-2000 part 1 (ISO/IEC 15444-1)  FALSE  TRUE\n...\nas one of the available drivers. Then, look into\n?image.S",
       "thread_id": "thread-c828569bf682",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004160.html"
     },
     {
       "id": "msg-a82a3e7d1ced",
@@ -732,7 +770,8 @@
       "body_snippet": "Alexandre Camargo Martensen writes:\n\n> Subject: [R-sig-Geo] clipping psp & owin\n\n> I'm trying to \"clip\" a psp and an owin object.\n\n> My question is what should I do to get the information of what is i",
       "thread_id": "thread-a82a3e7d1ced",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004161.html"
     },
     {
       "id": "msg-245667b1bb00",
@@ -748,7 +787,8 @@
       "body_snippet": "Hello everybody,\n\nI have one GRID with my weights values over my study area. I have also an\nAdministrative boundaries shapefile of my study area with an unique value\nof my variable of interest for eac",
       "thread_id": "thread-245667b1bb00",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004162.html"
     },
     {
       "id": "msg-bc96dd35ed94",
@@ -764,7 +804,8 @@
       "body_snippet": "Hi,\n\nYou can download the geostat-manual from http://dusk2.geo.orst.edu/gis/geostat_analyst.pdf and  http://www.ci.uri.edu/projects/geostats/Using_ArcGIS_Geostat_Anal_Tutor.pdf \n\nand the spatial-analy",
       "thread_id": "thread-b21871f6310d",
       "thread_depth": 5,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004163.html"
     },
     {
       "id": "msg-75f1f5354540",
@@ -782,7 +823,8 @@
       "body_snippet": "On Mon, Sep 8, 2008 at 12:30 PM, Jean-Paul Kibambe Lubamba\n<jean-paul.kibambe at uclouvain.be> wrote:\n> Hello everybody,\n>\n> I have one GRID with my weights values over my study area. I have also an\n>",
       "thread_id": "thread-245667b1bb00",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004164.html"
     },
     {
       "id": "msg-c081b8f095f5",
@@ -798,7 +840,8 @@
       "body_snippet": "A quick question for experienced gstat users....\nCan nested variograms be fit using gstat? if so, is it simply adding to \nan existing variogram structure?\n\nThanks\n\n\n-- \nDavid Depew\nPhD Candidate\nDepar",
       "thread_id": "thread-c081b8f095f5",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004165.html"
     },
     {
       "id": "msg-5cc280b9287d",
@@ -812,11 +855,12 @@
       "references": [
         "<48C80F39.4060305@scimail.uwaterloo.ca>"
       ],
-      "body_plain": "Dave Depew wrote:\n> A quick question for experienced gstat users....\n> Can nested variograms be fit using gstat? if so, is it simply adding \n> to an existing variogram structure?\n>\n> Thanks\n>\n > library(gstat)\nLoading required package: sp\n > data(meuse)\n > coordinates(meuse) = c(\"x\", \"y\")\n > v = variogram(log(zinc) ~ 1, meuse)\n > fit.variogram(v, vgm(1, \"Exp\", 300))\n  model     psill    range\n1   Exp 0.7186595 449.7664\n > fit.variogram(v, vgm(1, \"Exp\", 300, 1))\n  model     psill    range\n1   Nug 0.0000000   0.0000\n2   Exp 0.7186528 449.7583\n > fit.variogram(v, vgm(1, \"Exp\", 300, add.to=vgm(1, \"Nug\", 0)))\n  model     psill    range\n1   Nug 0.0000000   0.0000\n2   Exp 0.7186528 449.7583\n > fit.variogram(v, vgm(1, \"Exp\", 300, 1, add.to=vgm(1, \"Exp\", 10)))\nWarning: singular model in variogram fit\n  model psill range\n1   Exp     1    10\n2   Nug     1     0\n3   Exp     1   300\n > fit.variogram(v, vgm(1, \"Exp\", 300, 1, add.to=vgm(1, \"Exp\", 10, \nadd.to=vgm(1, \"Exp\", 50))))\nWarning: singular model in variogram fit\n  model psill range\n1   Exp     1    50\n2   Exp     1    10\n3   Nug     1     0\n4   Exp     1   300\n\nOf course the fitting fails badly for this poor example, but I guess you \nget the idea. I think there is no limit to the number of nested \nstructures, but consider that feature as pretty useless.\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster,\nWeseler Stra?e 253, 48151 M?nster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/",
+      "body_plain": "Dave Depew wrote:\n> A quick question for experienced gstat users....\n> Can nested variograms be fit using gstat? if so, is it simply adding \n> to an existing variogram structure?\n>\n> Thanks\n>\n > library(gstat)\nLoading required package: sp\n > data(meuse)\n > coordinates(meuse) = c(\"x\", \"y\")\n > v = variogram(log(zinc) ~ 1, meuse)\n > fit.variogram(v, vgm(1, \"Exp\", 300))\n  model     psill    range\n1   Exp 0.7186595 449.7664\n > fit.variogram(v, vgm(1, \"Exp\", 300, 1))\n  model     psill    range\n1   Nug 0.0000000   0.0000\n2   Exp 0.7186528 449.7583\n > fit.variogram(v, vgm(1, \"Exp\", 300, add.to=vgm(1, \"Nug\", 0)))\n  model     psill    range\n1   Nug 0.0000000   0.0000\n2   Exp 0.7186528 449.7583\n > fit.variogram(v, vgm(1, \"Exp\", 300, 1, add.to=vgm(1, \"Exp\", 10)))\nWarning: singular model in variogram fit\n  model psill range\n1   Exp     1    10\n2   Nug     1     0\n3   Exp     1   300\n > fit.variogram(v, vgm(1, \"Exp\", 300, 1, add.to=vgm(1, \"Exp\", 10, \nadd.to=vgm(1, \"Exp\", 50))))\nWarning: singular model in variogram fit\n  model psill range\n1   Exp     1    50\n2   Exp     1    10\n3   Nug     1     0\n4   Exp     1   300\n\nOf course the fitting fails badly for this poor example, but I guess you \nget the idea. I think there is no limit to the number of nested \nstructures, but consider that feature as pretty useless.\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster,\nWeseler Straße 253, 48151 Münster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/",
       "body_snippet": "Dave Depew wrote:\n> A quick question for experienced gstat users....\n> Can nested variograms be fit using gstat? if so, is it simply adding \n> to an existing variogram structure?\n>\n> Thanks\n>\n > libra",
       "thread_id": "thread-c081b8f095f5",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004166.html"
     },
     {
       "id": "msg-255c87cbe544",
@@ -832,7 +876,8 @@
       "body_snippet": "Hi,\n\nI've got a question regarding distance-based neighbourhood statistics using two separate spatial data sets. What I have are municipalities and buildings within municipalities which both come with",
       "thread_id": "thread-255c87cbe544",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004167.html"
     },
     {
       "id": "msg-e3bd6886fe4f",
@@ -851,6 +896,7 @@
       "thread_id": "thread-255c87cbe544",
       "thread_depth": 1,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004168.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080911/858fbd5f/attachment.pl"
       ]
@@ -865,11 +911,12 @@
       "subject_clean": "Distance-based neighbourhood statistics problem",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hi again,\n\n\nno, the code line is not the problem - what's shown in the first message are just the first 10 lines of the data set. The problem seems to be the coordinates of the data. I have reduced the data set to only seven points to show the problem: \n\n# Example data set: \n\nd.geb <- read.table(\"geb_test.csv\", header=T, sep=\";\")\nd.geb\n\n    GEBID ANZAHLGEB ABWOW   XACH   YACH Ortsname\n1  896967         1     1 682886 226329 gebaeude\n2  915184         1     0 682949 226280 gebaeude\n3  988432         1     6 682960 226315 gebaeude\n4 1070819         1     1 682939 226282 gebaeude\n5 1070925         1     3 682991 226290 gebaeude\n6 1413991         1     0 682905 226297 gebaeude\n7     -99         0     0 682934 226299  TestOrt\n\n\n# Here ANZAHLGEB is the number of buildings per data point (= 1, except for the municipality); ABWOW is the number of flats in the building.\n\nlibrary(spdep)\n\ngeb.nb2           <- dnearneigh(as.matrix(d.geb[,4:5]), 0, 500, longlat=TRUE)\nd.geb$SUMGEB \t  <- unlist(lapply(geb.nb2, function(x) ifelse(any(x==0), 0, sum(d.geb$ANZAHLGEB[x]))))\nd.geb\n\n# The outcome 'SUMGEB' is zero (= no buildings within a distance of 500 meters) - this despite 500 m is the distance in wich all points have at least one neighbour: \n\n    GEBID ANZAHLGEB ABWOW   XACH   YACH Ortsname SUMGEB\n1  896967         1     1 682886 226329 gebaeude      0\n2  915184         1     0 682949 226280 gebaeude      0\n3  988432         1     6 682960 226315 gebaeude      0\n4 1070819         1     1 682939 226282 gebaeude      0\n5 1070925         1     3 682991 226290 gebaeude      0\n6 1413991         1     0 682905 226297 gebaeude      0\n7     -99         0     0 682934 226299  TestOrt      0\n\n\n### If I calculate the Euclidean Distanz between data point 2 and 4, it gives you the correct distance (in meters): \n\n\nd.dist <- sqrt( (682949 - 682939)^2 + (226280 - 226282)^2 )\nd.dist\n\n[1] 10.19804  \n\n# It seems to be that dnearneigh uses another coordinate system (see also the X and Y variables in the columbus data set which comes with spdep) \n\n\nBest regards,\n\nMario\n\n\n\n\n\n\n \nHi Mario,\nI don?t know if it is the problem, but the code line below need be changed:\n\nsubset(d.geb, d.geb$MUNICIP == 1)\n\nbest wishes,\n\nmiltinho astronauta\nbrazil\n\nOn Thu, Sep 11, 2008 at 8:12 AM, Gellrich Mario\n<mario.gellrich at env.ethz.ch>wrote:\n\n> Hi,\n>\n> I've got a question regarding distance-based neighbourhood statistics using\n> two separate spatial data sets. What I have are municipalities and buildings\n> within municipalities which both come with x- and y-coordinates. I merged\n> the two datasets row-wise and used the following code to obtain aggregated\n> values for the number of builings surrounding a municipality. The code hower\n> doesn't work appropriately. Can anybody help?\n>\n>\n> d.geb <- read.table(\"gebaeuderecord_selection_test.csv\", header=T, sep=\";\")\n> d.geb[1:10,]\n>\n>     MUNICIP     NAME GEBID NUMBERGEB ABPER    LON    LAT\n> 1          0 Gebaeude  4262         1     1 681864 225868\n> 2          0 Gebaeude 14168         1     7 682190 224294\n> 3          0 Gebaeude 33346         1     5 682176 224354\n> 4          0 Gebaeude 44610         1    15 681571 225189\n> 5          0 Gebaeude 62785         1     1 679800 226040\n> 6          0 Gebaeude 72287         1     1 684619 224239\n> 7          0 Gebaeude 83044         1     8 681701 224818\n> 8          0 Gebaeude 84827         1     2 684878 230975\n> 9          0 Gebaeude 86671         1     0 685733 227247\n> 10         0 Gebaeude 88022         1     1 685691 230548\n>\n>\n> # Variable description:\n>\n> # MUNICIP:   zero for buildings; one for municipalities\n> # NAME   :   if 'Gebaeude' == building; otherwise municipality name\n> # GEBID:     ID of building; -99 otherwise\n> # NUMBERGEB: number of buildings - one for each building-record; set to\n> zero if record represents municipality\n> # ABWOW:     number of flats in a building\n>\n>\n> ### Creates neighbourhood list and should provide aggregates values within\n> a distance of 1 kilometer from a municipality for the variables NUMBERGEB or\n> ABWOW\n>\n> library(spdep)\n> geb.nb2         <- dnearneigh(as.matrix(d.geb[,6:7]), 0, 1, longlat=TRUE)\n> d.geb$SUMGEB    <- unlist(lapply(geb.nb2, function(x) ifelse(any(x==0), 0,\n> sum(d.geb$ABPER[x]))))\n>\n> subset(d.geb, MUNICIP == 1)\n>\n>\n> Best regards,\n>\n> Mario\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_plain": "Hi again,\n\n\nno, the code line is not the problem - what's shown in the first message are just the first 10 lines of the data set. The problem seems to be the coordinates of the data. I have reduced the data set to only seven points to show the problem: \n\n# Example data set: \n\nd.geb <- read.table(\"geb_test.csv\", header=T, sep=\";\")\nd.geb\n\n    GEBID ANZAHLGEB ABWOW   XACH   YACH Ortsname\n1  896967         1     1 682886 226329 gebaeude\n2  915184         1     0 682949 226280 gebaeude\n3  988432         1     6 682960 226315 gebaeude\n4 1070819         1     1 682939 226282 gebaeude\n5 1070925         1     3 682991 226290 gebaeude\n6 1413991         1     0 682905 226297 gebaeude\n7     -99         0     0 682934 226299  TestOrt\n\n\n# Here ANZAHLGEB is the number of buildings per data point (= 1, except for the municipality); ABWOW is the number of flats in the building.\n\nlibrary(spdep)\n\ngeb.nb2           <- dnearneigh(as.matrix(d.geb[,4:5]), 0, 500, longlat=TRUE)\nd.geb$SUMGEB \t  <- unlist(lapply(geb.nb2, function(x) ifelse(any(x==0), 0, sum(d.geb$ANZAHLGEB[x]))))\nd.geb\n\n# The outcome 'SUMGEB' is zero (= no buildings within a distance of 500 meters) - this despite 500 m is the distance in wich all points have at least one neighbour: \n\n    GEBID ANZAHLGEB ABWOW   XACH   YACH Ortsname SUMGEB\n1  896967         1     1 682886 226329 gebaeude      0\n2  915184         1     0 682949 226280 gebaeude      0\n3  988432         1     6 682960 226315 gebaeude      0\n4 1070819         1     1 682939 226282 gebaeude      0\n5 1070925         1     3 682991 226290 gebaeude      0\n6 1413991         1     0 682905 226297 gebaeude      0\n7     -99         0     0 682934 226299  TestOrt      0\n\n\n### If I calculate the Euclidean Distanz between data point 2 and 4, it gives you the correct distance (in meters): \n\n\nd.dist <- sqrt( (682949 - 682939)^2 + (226280 - 226282)^2 )\nd.dist\n\n[1] 10.19804  \n\n# It seems to be that dnearneigh uses another coordinate system (see also the X and Y variables in the columbus data set which comes with spdep) \n\n\nBest regards,\n\nMario\n\n\n\n\n\n\n \nHi Mario,\nI don´t know if it is the problem, but the code line below need be changed:\n\nsubset(d.geb, d.geb$MUNICIP == 1)\n\nbest wishes,\n\nmiltinho astronauta\nbrazil\n\nOn Thu, Sep 11, 2008 at 8:12 AM, Gellrich Mario\n<mario.gellrich at env.ethz.ch>wrote:\n\n> Hi,\n>\n> I've got a question regarding distance-based neighbourhood statistics using\n> two separate spatial data sets. What I have are municipalities and buildings\n> within municipalities which both come with x- and y-coordinates. I merged\n> the two datasets row-wise and used the following code to obtain aggregated\n> values for the number of builings surrounding a municipality. The code hower\n> doesn't work appropriately. Can anybody help?\n>\n>\n> d.geb <- read.table(\"gebaeuderecord_selection_test.csv\", header=T, sep=\";\")\n> d.geb[1:10,]\n>\n>     MUNICIP     NAME GEBID NUMBERGEB ABPER    LON    LAT\n> 1          0 Gebaeude  4262         1     1 681864 225868\n> 2          0 Gebaeude 14168         1     7 682190 224294\n> 3          0 Gebaeude 33346         1     5 682176 224354\n> 4          0 Gebaeude 44610         1    15 681571 225189\n> 5          0 Gebaeude 62785         1     1 679800 226040\n> 6          0 Gebaeude 72287         1     1 684619 224239\n> 7          0 Gebaeude 83044         1     8 681701 224818\n> 8          0 Gebaeude 84827         1     2 684878 230975\n> 9          0 Gebaeude 86671         1     0 685733 227247\n> 10         0 Gebaeude 88022         1     1 685691 230548\n>\n>\n> # Variable description:\n>\n> # MUNICIP:   zero for buildings; one for municipalities\n> # NAME   :   if 'Gebaeude' == building; otherwise municipality name\n> # GEBID:     ID of building; -99 otherwise\n> # NUMBERGEB: number of buildings - one for each building-record; set to\n> zero if record represents municipality\n> # ABWOW:     number of flats in a building\n>\n>\n> ### Creates neighbourhood list and should provide aggregates values within\n> a distance of 1 kilometer from a municipality for the variables NUMBERGEB or\n> ABWOW\n>\n> library(spdep)\n> geb.nb2         <- dnearneigh(as.matrix(d.geb[,6:7]), 0, 1, longlat=TRUE)\n> d.geb$SUMGEB    <- unlist(lapply(geb.nb2, function(x) ifelse(any(x==0), 0,\n> sum(d.geb$ABPER[x]))))\n>\n> subset(d.geb, MUNICIP == 1)\n>\n>\n> Best regards,\n>\n> Mario\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
       "body_snippet": "Hi again,\n\n\nno, the code line is not the problem - what's shown in the first message are just the first 10 lines of the data set. The problem seems to be the coordinates of the data. I have reduced th",
       "thread_id": "thread-60721532d915",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004169.html"
     },
     {
       "id": "msg-285a9d2295e9",
@@ -885,7 +932,8 @@
       "body_snippet": "I've just received \"Applied spatial data analysis with R\" from Springer.\nI want to thanks publicly all the authors for this jewel. It will be\non my job desk from now on!\n\nGiovanni Allegri",
       "thread_id": "thread-285a9d2295e9",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004170.html"
     },
     {
       "id": "msg-839ecccb11d8",
@@ -901,7 +949,8 @@
       "body_snippet": "Hello.\n\n Currently I have developed geo-spatial mining tool using\nR with spdep, spgwr and other packages as\nOpenJUMP(http://www.openjump.org)'s plug-ins.\n\n I've already implemented contouring function",
       "thread_id": "thread-839ecccb11d8",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004171.html"
     },
     {
       "id": "msg-5d22181bac04",
@@ -915,11 +964,12 @@
       "references": [
         "<12DDB272B3619B49ACE8A185DEB6CD34165755@EX6.d.ethz.ch>"
       ],
-      "body_plain": "On Thu, 11 Sep 2008, Gellrich  Mario wrote:\n\n> Hi again,\n>\n>\n> no, the code line is not the problem - what's shown in the first message are just the first 10 lines of the data set. The problem seems to be the coordinates of the data. I have reduced the data set to only seven points to show the problem:\n>\n> # Example data set:\n>\n> d.geb <- read.table(\"geb_test.csv\", header=T, sep=\";\")\n> d.geb\n>\n>    GEBID ANZAHLGEB ABWOW   XACH   YACH Ortsname\n> 1  896967         1     1 682886 226329 gebaeude\n> 2  915184         1     0 682949 226280 gebaeude\n> 3  988432         1     6 682960 226315 gebaeude\n> 4 1070819         1     1 682939 226282 gebaeude\n> 5 1070925         1     3 682991 226290 gebaeude\n> 6 1413991         1     0 682905 226297 gebaeude\n> 7     -99         0     0 682934 226299  TestOrt\n\n                             ^^^^^^^^^^^^^\n\nThis looks like the problem - these are not decimal degrees as expected by \nthe longlat=TRUE used in dnearneigh().\n\n> xy <- cbind(c(682886, 682949, 682960, 682939, 682991, 682905, 682934),\n    c(226329, 226280, 226315, 226282, 226290, 226297, 226299))\n> dnearneigh(xy, 0, 500)\nNeighbour list object:\nNumber of regions: 7\nNumber of nonzero links: 42\nPercentage nonzero weights: 85.71429\nAverage number of links: 6\n> dnearneigh(xy, 0, 500, longlat=TRUE)\nNeighbour list object:\nNumber of regions: 7\nNumber of nonzero links: 0\nPercentage nonzero weights: 0\nAverage number of links: 0\n7 regions with no links:\n\nIf the coordinates are decimal coordinates but multiplied by 1000 to \nstore as integer, we get:\n\n> dnearneigh(xy/1000, 0, 500, longlat=TRUE)\nNeighbour list object:\nNumber of regions: 7\nNumber of nonzero links: 42\nPercentage nonzero weights: 85.71429\nAverage number of links: 6\n\nIf you get that right first, the rest should follow.\n\nRoger\n\n>\n>\n> # Here ANZAHLGEB is the number of buildings per data point (= 1, except for the municipality); ABWOW is the number of flats in the building.\n>\n> library(spdep)\n>\n> geb.nb2           <- dnearneigh(as.matrix(d.geb[,4:5]), 0, 500, longlat=TRUE)\n> d.geb$SUMGEB \t  <- unlist(lapply(geb.nb2, function(x) ifelse(any(x==0), 0, sum(d.geb$ANZAHLGEB[x]))))\n> d.geb\n>\n> # The outcome 'SUMGEB' is zero (= no buildings within a distance of 500 meters) - this despite 500 m is the distance in wich all points have at least one neighbour:\n>\n>    GEBID ANZAHLGEB ABWOW   XACH   YACH Ortsname SUMGEB\n> 1  896967         1     1 682886 226329 gebaeude      0\n> 2  915184         1     0 682949 226280 gebaeude      0\n> 3  988432         1     6 682960 226315 gebaeude      0\n> 4 1070819         1     1 682939 226282 gebaeude      0\n> 5 1070925         1     3 682991 226290 gebaeude      0\n> 6 1413991         1     0 682905 226297 gebaeude      0\n> 7     -99         0     0 682934 226299  TestOrt      0\n>\n>\n> ### If I calculate the Euclidean Distanz between data point 2 and 4, it gives you the correct distance (in meters):\n>\n>\n> d.dist <- sqrt( (682949 - 682939)^2 + (226280 - 226282)^2 )\n> d.dist\n>\n> [1] 10.19804\n>\n> # It seems to be that dnearneigh uses another coordinate system (see also the X and Y variables in the columbus data set which comes with spdep)\n>\n>\n> Best regards,\n>\n> Mario\n>\n>\n>\n>\n>\n>\n>\n> Hi Mario,\n> I don?t know if it is the problem, but the code line below need be changed:\n>\n> subset(d.geb, d.geb$MUNICIP == 1)\n>\n> best wishes,\n>\n> miltinho astronauta\n> brazil\n>\n> On Thu, Sep 11, 2008 at 8:12 AM, Gellrich Mario\n> <mario.gellrich at env.ethz.ch>wrote:\n>\n>> Hi,\n>>\n>> I've got a question regarding distance-based neighbourhood statistics using\n>> two separate spatial data sets. What I have are municipalities and buildings\n>> within municipalities which both come with x- and y-coordinates. I merged\n>> the two datasets row-wise and used the following code to obtain aggregated\n>> values for the number of builings surrounding a municipality. The code hower\n>> doesn't work appropriately. Can anybody help?\n>>\n>>\n>> d.geb <- read.table(\"gebaeuderecord_selection_test.csv\", header=T, sep=\";\")\n>> d.geb[1:10,]\n>>\n>>     MUNICIP     NAME GEBID NUMBERGEB ABPER    LON    LAT\n>> 1          0 Gebaeude  4262         1     1 681864 225868\n>> 2          0 Gebaeude 14168         1     7 682190 224294\n>> 3          0 Gebaeude 33346         1     5 682176 224354\n>> 4          0 Gebaeude 44610         1    15 681571 225189\n>> 5          0 Gebaeude 62785         1     1 679800 226040\n>> 6          0 Gebaeude 72287         1     1 684619 224239\n>> 7          0 Gebaeude 83044         1     8 681701 224818\n>> 8          0 Gebaeude 84827         1     2 684878 230975\n>> 9          0 Gebaeude 86671         1     0 685733 227247\n>> 10         0 Gebaeude 88022         1     1 685691 230548\n>>\n>>\n>> # Variable description:\n>>\n>> # MUNICIP:   zero for buildings; one for municipalities\n>> # NAME   :   if 'Gebaeude' == building; otherwise municipality name\n>> # GEBID:     ID of building; -99 otherwise\n>> # NUMBERGEB: number of buildings - one for each building-record; set to\n>> zero if record represents municipality\n>> # ABWOW:     number of flats in a building\n>>\n>>\n>> ### Creates neighbourhood list and should provide aggregates values within\n>> a distance of 1 kilometer from a municipality for the variables NUMBERGEB or\n>> ABWOW\n>>\n>> library(spdep)\n>> geb.nb2         <- dnearneigh(as.matrix(d.geb[,6:7]), 0, 1, longlat=TRUE)\n>> d.geb$SUMGEB    <- unlist(lapply(geb.nb2, function(x) ifelse(any(x==0), 0,\n>> sum(d.geb$ABPER[x]))))\n>>\n>> subset(d.geb, MUNICIP == 1)\n>>\n>>\n>> Best regards,\n>>\n>> Mario\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_plain": "On Thu, 11 Sep 2008, Gellrich  Mario wrote:\n\n> Hi again,\n>\n>\n> no, the code line is not the problem - what's shown in the first message are just the first 10 lines of the data set. The problem seems to be the coordinates of the data. I have reduced the data set to only seven points to show the problem:\n>\n> # Example data set:\n>\n> d.geb <- read.table(\"geb_test.csv\", header=T, sep=\";\")\n> d.geb\n>\n>    GEBID ANZAHLGEB ABWOW   XACH   YACH Ortsname\n> 1  896967         1     1 682886 226329 gebaeude\n> 2  915184         1     0 682949 226280 gebaeude\n> 3  988432         1     6 682960 226315 gebaeude\n> 4 1070819         1     1 682939 226282 gebaeude\n> 5 1070925         1     3 682991 226290 gebaeude\n> 6 1413991         1     0 682905 226297 gebaeude\n> 7     -99         0     0 682934 226299  TestOrt\n\n                             ^^^^^^^^^^^^^\n\nThis looks like the problem - these are not decimal degrees as expected by \nthe longlat=TRUE used in dnearneigh().\n\n> xy <- cbind(c(682886, 682949, 682960, 682939, 682991, 682905, 682934),\n    c(226329, 226280, 226315, 226282, 226290, 226297, 226299))\n> dnearneigh(xy, 0, 500)\nNeighbour list object:\nNumber of regions: 7\nNumber of nonzero links: 42\nPercentage nonzero weights: 85.71429\nAverage number of links: 6\n> dnearneigh(xy, 0, 500, longlat=TRUE)\nNeighbour list object:\nNumber of regions: 7\nNumber of nonzero links: 0\nPercentage nonzero weights: 0\nAverage number of links: 0\n7 regions with no links:\n\nIf the coordinates are decimal coordinates but multiplied by 1000 to \nstore as integer, we get:\n\n> dnearneigh(xy/1000, 0, 500, longlat=TRUE)\nNeighbour list object:\nNumber of regions: 7\nNumber of nonzero links: 42\nPercentage nonzero weights: 85.71429\nAverage number of links: 6\n\nIf you get that right first, the rest should follow.\n\nRoger\n\n>\n>\n> # Here ANZAHLGEB is the number of buildings per data point (= 1, except for the municipality); ABWOW is the number of flats in the building.\n>\n> library(spdep)\n>\n> geb.nb2           <- dnearneigh(as.matrix(d.geb[,4:5]), 0, 500, longlat=TRUE)\n> d.geb$SUMGEB \t  <- unlist(lapply(geb.nb2, function(x) ifelse(any(x==0), 0, sum(d.geb$ANZAHLGEB[x]))))\n> d.geb\n>\n> # The outcome 'SUMGEB' is zero (= no buildings within a distance of 500 meters) - this despite 500 m is the distance in wich all points have at least one neighbour:\n>\n>    GEBID ANZAHLGEB ABWOW   XACH   YACH Ortsname SUMGEB\n> 1  896967         1     1 682886 226329 gebaeude      0\n> 2  915184         1     0 682949 226280 gebaeude      0\n> 3  988432         1     6 682960 226315 gebaeude      0\n> 4 1070819         1     1 682939 226282 gebaeude      0\n> 5 1070925         1     3 682991 226290 gebaeude      0\n> 6 1413991         1     0 682905 226297 gebaeude      0\n> 7     -99         0     0 682934 226299  TestOrt      0\n>\n>\n> ### If I calculate the Euclidean Distanz between data point 2 and 4, it gives you the correct distance (in meters):\n>\n>\n> d.dist <- sqrt( (682949 - 682939)^2 + (226280 - 226282)^2 )\n> d.dist\n>\n> [1] 10.19804\n>\n> # It seems to be that dnearneigh uses another coordinate system (see also the X and Y variables in the columbus data set which comes with spdep)\n>\n>\n> Best regards,\n>\n> Mario\n>\n>\n>\n>\n>\n>\n>\n> Hi Mario,\n> I don´t know if it is the problem, but the code line below need be changed:\n>\n> subset(d.geb, d.geb$MUNICIP == 1)\n>\n> best wishes,\n>\n> miltinho astronauta\n> brazil\n>\n> On Thu, Sep 11, 2008 at 8:12 AM, Gellrich Mario\n> <mario.gellrich at env.ethz.ch>wrote:\n>\n>> Hi,\n>>\n>> I've got a question regarding distance-based neighbourhood statistics using\n>> two separate spatial data sets. What I have are municipalities and buildings\n>> within municipalities which both come with x- and y-coordinates. I merged\n>> the two datasets row-wise and used the following code to obtain aggregated\n>> values for the number of builings surrounding a municipality. The code hower\n>> doesn't work appropriately. Can anybody help?\n>>\n>>\n>> d.geb <- read.table(\"gebaeuderecord_selection_test.csv\", header=T, sep=\";\")\n>> d.geb[1:10,]\n>>\n>>     MUNICIP     NAME GEBID NUMBERGEB ABPER    LON    LAT\n>> 1          0 Gebaeude  4262         1     1 681864 225868\n>> 2          0 Gebaeude 14168         1     7 682190 224294\n>> 3          0 Gebaeude 33346         1     5 682176 224354\n>> 4          0 Gebaeude 44610         1    15 681571 225189\n>> 5          0 Gebaeude 62785         1     1 679800 226040\n>> 6          0 Gebaeude 72287         1     1 684619 224239\n>> 7          0 Gebaeude 83044         1     8 681701 224818\n>> 8          0 Gebaeude 84827         1     2 684878 230975\n>> 9          0 Gebaeude 86671         1     0 685733 227247\n>> 10         0 Gebaeude 88022         1     1 685691 230548\n>>\n>>\n>> # Variable description:\n>>\n>> # MUNICIP:   zero for buildings; one for municipalities\n>> # NAME   :   if 'Gebaeude' == building; otherwise municipality name\n>> # GEBID:     ID of building; -99 otherwise\n>> # NUMBERGEB: number of buildings - one for each building-record; set to\n>> zero if record represents municipality\n>> # ABWOW:     number of flats in a building\n>>\n>>\n>> ### Creates neighbourhood list and should provide aggregates values within\n>> a distance of 1 kilometer from a municipality for the variables NUMBERGEB or\n>> ABWOW\n>>\n>> library(spdep)\n>> geb.nb2         <- dnearneigh(as.matrix(d.geb[,6:7]), 0, 1, longlat=TRUE)\n>> d.geb$SUMGEB    <- unlist(lapply(geb.nb2, function(x) ifelse(any(x==0), 0,\n>> sum(d.geb$ABPER[x]))))\n>>\n>> subset(d.geb, MUNICIP == 1)\n>>\n>>\n>> Best regards,\n>>\n>> Mario\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
       "body_snippet": "On Thu, 11 Sep 2008, Gellrich  Mario wrote:\n\n> Hi again,\n>\n>\n> no, the code line is not the problem - what's shown in the first message are just the first 10 lines of the data set. The problem seems t",
       "thread_id": "thread-60721532d915",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004172.html"
     },
     {
       "id": "msg-350d8429d300",
@@ -937,7 +987,8 @@
       "body_snippet": "On Fri, 12 Sep 2008, Hisaji ONO wrote:\n\n> Hello.\n>\n> Currently I have developed geo-spatial mining tool using\n> R with spdep, spgwr and other packages as\n> OpenJUMP(http://www.openjump.org)'s plug-ins",
       "thread_id": "thread-839ecccb11d8",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004173.html"
     },
     {
       "id": "msg-3297b3be75c4",
@@ -956,7 +1007,8 @@
       "body_snippet": "> The filled.contour() is a different kind of function, essentially doing\n> almost everything in C, and passing nothing back. So I think the only\n> alternative is to build polygons from the contourLin",
       "thread_id": "thread-839ecccb11d8",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004174.html"
     },
     {
       "id": "msg-36ecd2c23a3b",
@@ -976,7 +1028,8 @@
       "body_snippet": "On Fri, 12 Sep 2008, hadley wickham wrote:\n\n>> The filled.contour() is a different kind of function, essentially doing\n>> almost everything in C, and passing nothing back. So I think the only\n>> alter",
       "thread_id": "thread-839ecccb11d8",
       "thread_depth": 3,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004175.html"
     },
     {
       "id": "msg-b49c0059dd1b",
@@ -992,7 +1045,8 @@
       "body_snippet": "Hi All,\n\nI'm trying to figure out exactly what output unionSpatialPolygons\ngives me - it looks like it merges my singleton polygons into\nmulti-polygons (see output of str below), but what I really wan",
       "thread_id": "thread-b49c0059dd1b",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004176.html"
     },
     {
       "id": "msg-e47094e1219d",
@@ -1008,7 +1062,8 @@
       "body_snippet": "Hello,\n\nI am trying to use 'variogram' from the gstat package to compute an empirical semivariogram for a dataset that spans the North American continent.  I have been unable to get gstat to calculate",
       "thread_id": "thread-e47094e1219d",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004177.html"
     },
     {
       "id": "msg-ed2bc07ba7e7",
@@ -1026,7 +1081,8 @@
       "body_snippet": "On Sun, 14 Sep 2008, hadley wickham wrote:\n\n> Hi All,\n>\n> I'm trying to figure out exactly what output unionSpatialPolygons\n> gives me - it looks like it merges my singleton polygons into\n> multi-poly",
       "thread_id": "thread-b49c0059dd1b",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004178.html"
     },
     {
       "id": "msg-49e485614dd1",
@@ -1045,7 +1101,8 @@
       "body_snippet": "On Sun, Sep 14, 2008 at 11:48 AM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> On Sun, 14 Sep 2008, hadley wickham wrote:\n>\n>> Hi All,\n>>\n>> I'm trying to figure out exactly what output unionSpatial",
       "thread_id": "thread-b49c0059dd1b",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004179.html"
     },
     {
       "id": "msg-77a1abdd9346",
@@ -1059,11 +1116,12 @@
       "references": [
         "<20080914164554.GA3353@abl.met.psu.edu>"
       ],
-      "body_plain": "Thanks for the bug report; indeed, distance computation for longlat data \nvariograms went wrong so far. I just uploaded a new gstat version to \n/incoming on CRAN that seems to repair this bug.\n\nNext thing I'm not 100% sure of is the direction selections for \ndirectional variograms of longlat data.\n\nI hope you don't mind I added your code below to one of the regression \ntests in the package (unproj.R).\n--\nEdzer\n\nTimothy W. Hilton wrote:\n> Hello,\n>\n> I am trying to use 'variogram' from the gstat package to compute an empirical semivariogram for a dataset that spans the North American continent.  I have been unable to get gstat to calculate the great circle distances correctly.  For example, in the example below, the first two lines of vg.foo suggest to me that the calculated distance between foo[1,] and foo[2,] is 4804, and between foo[1,] and foo[3,] is 3047.  I assume those units are km.  \n>\n> spDistsN1, however tells me that those distances should be 3115 km and 1907 km, respectively.\n>\n> Could someone suggest to me my error, or how I might use calculate an emprical variogram with correct distances?  I do not think UTM coordinates are an option for me, as my data span approximately 5000 km.\n>\n> Many thanks,\n> Tim\n>\n> =====\n>\n> code to illustrate the problem:\n>\n> library(sp)\n> library(rgdal)\n> library(gstat)\n>\n> foo <-\n> structure(list(z = c(-1.95824831109744, -1.9158901643563, 4.22211761150161, \n> 3.23356929459598, 1.12038389231868, 0.34613850821113, 1.12589932643631, \n> 23.517912251617, 3.0519158690268, 3.20261431141517, -2.10947106854739\n> ), lon = c(-125.29228, -82.1556, -98.524722, -99.948333, -104.691741, \n> -79.420833, -105.100533, -88.291867, -72.171478, -121.556944, \n> -89.34765), lat = c(49.87217, 48.2167, 55.905833, 56.635833, \n> 53.916264, 39.063333, 48.307883, 40.0061, 42.537756, 44.448889, \n> 46.242017)), .Names = c(\"z\", \"lon\", \"lat\"), row.names = c(NA, \n> -11L), class = \"data.frame\")\n>\n> coordinates(foo) <- ~lon+lat\n>\n> proj4string(foo) <- CRS('+proj=longlat')\n>\n> vg.foo <- variogram(z~1, foo, cloud=TRUE, cutoff=1e10)\n>\n> cat('==========\\nvariogram:\\n')\n> print(head(vg.foo))\n>\n> cat('==========\\nspDistsN1 Distances:\\n')\n> print(spDistsN1(coordinates(foo), coordinates(foo)[1,], longlat=T))\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster,\nWeseler Stra?e 253, 48151 M?nster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/",
+      "body_plain": "Thanks for the bug report; indeed, distance computation for longlat data \nvariograms went wrong so far. I just uploaded a new gstat version to \n/incoming on CRAN that seems to repair this bug.\n\nNext thing I'm not 100% sure of is the direction selections for \ndirectional variograms of longlat data.\n\nI hope you don't mind I added your code below to one of the regression \ntests in the package (unproj.R).\n--\nEdzer\n\nTimothy W. Hilton wrote:\n> Hello,\n>\n> I am trying to use 'variogram' from the gstat package to compute an empirical semivariogram for a dataset that spans the North American continent.  I have been unable to get gstat to calculate the great circle distances correctly.  For example, in the example below, the first two lines of vg.foo suggest to me that the calculated distance between foo[1,] and foo[2,] is 4804, and between foo[1,] and foo[3,] is 3047.  I assume those units are km.  \n>\n> spDistsN1, however tells me that those distances should be 3115 km and 1907 km, respectively.\n>\n> Could someone suggest to me my error, or how I might use calculate an emprical variogram with correct distances?  I do not think UTM coordinates are an option for me, as my data span approximately 5000 km.\n>\n> Many thanks,\n> Tim\n>\n> =====\n>\n> code to illustrate the problem:\n>\n> library(sp)\n> library(rgdal)\n> library(gstat)\n>\n> foo <-\n> structure(list(z = c(-1.95824831109744, -1.9158901643563, 4.22211761150161, \n> 3.23356929459598, 1.12038389231868, 0.34613850821113, 1.12589932643631, \n> 23.517912251617, 3.0519158690268, 3.20261431141517, -2.10947106854739\n> ), lon = c(-125.29228, -82.1556, -98.524722, -99.948333, -104.691741, \n> -79.420833, -105.100533, -88.291867, -72.171478, -121.556944, \n> -89.34765), lat = c(49.87217, 48.2167, 55.905833, 56.635833, \n> 53.916264, 39.063333, 48.307883, 40.0061, 42.537756, 44.448889, \n> 46.242017)), .Names = c(\"z\", \"lon\", \"lat\"), row.names = c(NA, \n> -11L), class = \"data.frame\")\n>\n> coordinates(foo) <- ~lon+lat\n>\n> proj4string(foo) <- CRS('+proj=longlat')\n>\n> vg.foo <- variogram(z~1, foo, cloud=TRUE, cutoff=1e10)\n>\n> cat('==========\\nvariogram:\\n')\n> print(head(vg.foo))\n>\n> cat('==========\\nspDistsN1 Distances:\\n')\n> print(spDistsN1(coordinates(foo), coordinates(foo)[1,], longlat=T))\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster,\nWeseler Straße 253, 48151 Münster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/",
       "body_snippet": "Thanks for the bug report; indeed, distance computation for longlat data \nvariograms went wrong so far. I just uploaded a new gstat version to \n/incoming on CRAN that seems to repair this bug.\n\nNext t",
       "thread_id": "thread-e47094e1219d",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004180.html"
     },
     {
       "id": "msg-9368d90ae7f6",
@@ -1082,6 +1140,7 @@
       "thread_id": "thread-9368d90ae7f6",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004181.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080916/b74d1bc4/attachment.pl"
       ]
@@ -1101,6 +1160,7 @@
       "thread_id": "thread-bc022b149b68",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004182.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080916/9793faa6/attachment.pl"
       ]
@@ -1119,7 +1179,8 @@
       "body_snippet": "Hi\n\nwhen I try to import a raster layer from grass with large integer\nvalues, I get wrong values in R (see below). When I change the\ndatatype in GRASS to double, it works.\n\nThanks,\n\nRainer\n\n\n\nGRASS 6.",
       "thread_id": "thread-dd74bc457553",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004183.html"
     },
     {
       "id": "msg-24115cf0de5d",
@@ -1137,7 +1198,8 @@
       "body_snippet": "On Tue, 2008-09-16 at 13:34 +0200, Oehler, Friderike (AGPP) wrote:\n> If a non-experienced person wanted to decide for one program in which to\n> invest time and if one was to highlight the strengths an",
       "thread_id": "thread-bc022b149b68",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004184.html"
     },
     {
       "id": "msg-3310d89b9e35",
@@ -1155,7 +1217,8 @@
       "body_snippet": "On Tue, 16 Sep 2008, Rainer M Krug wrote:\n\n> Hi\n>\n> when I try to import a raster layer from grass with large integer\n> values, I get wrong values in R (see below). When I change the\n> datatype in GRA",
       "thread_id": "thread-dd74bc457553",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004185.html"
     },
     {
       "id": "msg-4dab2396b0ab",
@@ -1174,7 +1237,8 @@
       "body_snippet": "On Tue, Sep 16, 2008 at 6:38 PM, Roger Bivand <Roger.Bivand at nhh.no> wrote:\n> On Tue, 16 Sep 2008, Rainer M Krug wrote:\n>\n>> Hi\n>>\n>> when I try to import a raster layer from grass with large intege",
       "thread_id": "thread-dd74bc457553",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004186.html"
     },
     {
       "id": "msg-20713c33643c",
@@ -1190,7 +1254,8 @@
       "body_snippet": "I'm using the function ggwr (for the first time). I want to test the\nsignificance of the coeff. estimates (global), but I can't find their\nstandard errors.  I used the following code:\nxx<-SpatialPoint",
       "thread_id": "thread-20713c33643c",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004187.html"
     },
     {
       "id": "msg-be65786b91fe",
@@ -1209,6 +1274,7 @@
       "thread_id": "thread-bc022b149b68",
       "thread_depth": 1,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004188.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080917/45fa14c4/attachment.pl"
       ]
@@ -1227,7 +1293,8 @@
       "body_snippet": "Hi ALL,\n\nI had a problem in using r Dcom to develop applications for applying\ngeostatistics using gstat. I transferred all code, which can run in R\nsuccessfully, into VB, but I could not make them run",
       "thread_id": "thread-d9af70d095a3",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004189.html"
     },
     {
       "id": "msg-50b0cd4d464f",
@@ -1245,7 +1312,8 @@
       "body_snippet": "On Tue, 16 Sep 2008, Nelson Oliveira wrote:\n\n> I'm using the function ggwr (for the first time). I want to test the\n> significance of the coeff. estimates (global), but I can't find their\n> standard e",
       "thread_id": "thread-20713c33643c",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004190.html"
     },
     {
       "id": "msg-c00a272715d9",
@@ -1263,7 +1331,8 @@
       "body_snippet": "On Wed, 17 Sep 2008, Yong Li wrote:\n\n> Hi ALL,\n>\n> I had a problem in using r Dcom to develop applications for applying\n> geostatistics using gstat. I transferred all code, which can run in R\n> succes",
       "thread_id": "thread-d9af70d095a3",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004191.html"
     },
     {
       "id": "msg-65c993d5d906",
@@ -1279,7 +1348,8 @@
       "body_snippet": "Hello All,\n\nI'm using for the first time the gstat command  krige.cv for cross  \nvalidation.\n\nHaving some problems to perform with my own data, I tried with the  \ndata included with R which are often ",
       "thread_id": "thread-65c993d5d906",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004192.html"
     },
     {
       "id": "msg-f873ef5750a1",
@@ -1293,11 +1363,12 @@
       "references": [
         "<616F9BD0-25EB-4363-8E84-BA93720A6911@supelec.fr>"
       ],
-      "body_plain": "n-fold cross validation splits the data in n parts, and each time holds \none part out to compare it with predictions from the remaining part. So, \nhaving nfold=1 does not make sense.\n\nI will add to the documentation that nfold should be 2 or larger.\n--\nEdzer\n\nFrancois JOUVIE wrote:\n> Hello All,\n>\n> I'm using for the first time the gstat command  krige.cv for cross \n> validation.\n>\n> Having some problems to perform with my own data, I tried with the \n> data included with R which are often used in presentations (meuse data \n> more precisely).\n> Then I tried the following commands which all perform:\n>\n> > data(meuse)\n> > m<-vgm(.5,\"Sph\",900,0.04)\n> > x<-krige.cv(log(zinc)~1,~x+y,meuse,m,nfold=5)\n> [using ordinary kriging]\n> [using ordinary kriging]\n> [using ordinary kriging]\n> [using ordinary kriging]\n> [using ordinary kriging]\n> >\n>\n> But if I want  nfold=1 (= not sub_divisions of the data ?) I get this \n> (in French) :\n>\n> > x<-krige.cv(log(zinc)~1,~x+y,meuse,m,nfold=1)\n> Erreur dans gstat.formula(d$formula, d$data) :\n>   no response variable present in formula\n> De plus : Warning messages:\n> 1: In min(x) : aucun argument trouv? pour min ; Inf est renvoy?\n> 2: In max(x) : aucun argument pour max ; -Inf est renvoy?\n> 3: In min(x) : aucun argument trouv? pour min ; Inf est renvoy?\n> 4: In max(x) : aucun argument pour max ; -Inf est renvoy?\n> >\n>\n> What is happens ?\n>\n> Thanks you very much if you can help me.\n>\n> Francois\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster,\nWeseler Stra?e 253, 48151 M?nster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/",
+      "body_plain": "n-fold cross validation splits the data in n parts, and each time holds \none part out to compare it with predictions from the remaining part. So, \nhaving nfold=1 does not make sense.\n\nI will add to the documentation that nfold should be 2 or larger.\n--\nEdzer\n\nFrancois JOUVIE wrote:\n> Hello All,\n>\n> I'm using for the first time the gstat command  krige.cv for cross \n> validation.\n>\n> Having some problems to perform with my own data, I tried with the \n> data included with R which are often used in presentations (meuse data \n> more precisely).\n> Then I tried the following commands which all perform:\n>\n> > data(meuse)\n> > m<-vgm(.5,\"Sph\",900,0.04)\n> > x<-krige.cv(log(zinc)~1,~x+y,meuse,m,nfold=5)\n> [using ordinary kriging]\n> [using ordinary kriging]\n> [using ordinary kriging]\n> [using ordinary kriging]\n> [using ordinary kriging]\n> >\n>\n> But if I want  nfold=1 (= not sub_divisions of the data ?) I get this \n> (in French) :\n>\n> > x<-krige.cv(log(zinc)~1,~x+y,meuse,m,nfold=1)\n> Erreur dans gstat.formula(d$formula, d$data) :\n>   no response variable present in formula\n> De plus : Warning messages:\n> 1: In min(x) : aucun argument trouvé pour min ; Inf est renvoyé\n> 2: In max(x) : aucun argument pour max ; -Inf est renvoyé\n> 3: In min(x) : aucun argument trouvé pour min ; Inf est renvoyé\n> 4: In max(x) : aucun argument pour max ; -Inf est renvoyé\n> >\n>\n> What is happens ?\n>\n> Thanks you very much if you can help me.\n>\n> Francois\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster,\nWeseler Straße 253, 48151 Münster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/",
       "body_snippet": "n-fold cross validation splits the data in n parts, and each time holds \none part out to compare it with predictions from the remaining part. So, \nhaving nfold=1 does not make sense.\n\nI will add to th",
       "thread_id": "thread-65c993d5d906",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004193.html"
     },
     {
       "id": "msg-bb9e9563e651",
@@ -1313,7 +1384,8 @@
       "body_snippet": ">I'm using the function ggwr (for the first time). I want to test the\n>significance of the coeff. estimates (global), but I can't find their\n>standard errors.\n\nI may be completely misunderstanding you",
       "thread_id": "thread-bb9e9563e651",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004194.html"
     },
     {
       "id": "msg-f03694d54ec5",
@@ -1329,7 +1401,8 @@
       "body_snippet": "Please,\n\nAgain, a question about the underlying process of krige.cv :\n\nI have a set of 42 values at different coordinates points (x,y,z) in  \n3D space.\nI put an arbitrary model of variogram and I do a",
       "thread_id": "thread-f03694d54ec5",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004195.html"
     },
     {
       "id": "msg-22509a4b016a",
@@ -1343,11 +1416,12 @@
       "references": [
         "<6E734B10-99CD-45BB-B124-1034363BB640@supelec.fr>"
       ],
-      "body_plain": "Yes, this is a very annoying \"feature\" for which I couldn't find a good \nsolution. Problem is that I chose both the old-style (pre-sp) formulation\n\nkrige(modE~1, ~x+y, dataFrame, dataFrame, model)\n\nas well as\n\nkrige(modE~1, SpData, SpNewdata, model)\n\nto be supported. As it decides on the base of the second argument, an S4 \napproach was needed:\n > showMethods(krige.cv)\nFunction: krige.cv (package gstat)\nformula=\"formula\", locations=\"formula\"\nformula=\"formula\", locations=\"Spatial\"\nformula=\"formula\", locations=\"SpatialPointsDataFrame\"\n    (inherited from: formula=\"formula\", locations=\"Spatial\")\n\nThis however completely breaks when you start to name (some) arguments \n\"data\", and that's where the nice similarity to the lm-interface stops. \nThe solution to this would have required (imo) hundreds of lines of \nunreadable code, dealing with all cases where some arguments are named, \nothers not...\n\nFrancois JOUVIE wrote:\n> Please,\n>\n> Again, a question about the underlying process of krige.cv :\n>\n> I have a set of 42 values at different coordinates points (x,y,z) in \n> 3D space.\n> I put an arbitrary model of variogram and I do a cross validation.\n>\n> This below is working:\n>\n> datacv<-read.table(\"/Users/fj/Desktop/septembre \n> 08/DonK3D_elev.txt\",header=TRUE)\n> > m1<-vgm(4,\"Exp\",2500)\n> > x<-krige.cv(modE~1,~x+y+z,data=datacv,model=m1)\n> [using ordinary kriging]\n> [using ordinary kriging]\n> [using ordinary kriging]\n> [using ordinary kriging]\n>\n> ..... 42 times.\n>\n> Now, if I had to define the coordinates in a previous work (to do a \n> variogram by example), I can't do the cross validation because there \n> is an ambiguity with these coordinates. By example:\n>\n> datacv<-read.table(\"/Users/fj/Desktop/septembre \n> 08/DonK3D_elev.txt\",header=TRUE)\n> coordinates(datacv)<-~x+y+z\n> > m1<-vgm(4,\"Exp\",2500)\n> > x<-krige.cv(modE~1,~x+y+z,data=datacv,model=m1)\n> Erreur dans `coordinates<-`(`*tmp*`, value = ~x + y + z) :\n>   setting coordinates cannot be done on Spatial objects, where they \n> have already been set\n>\nIn this case you should do\nx <- krige.cv(modE~1, datacv, m1)\n> This command neither do not work:\n>\n> x<-krige.cv(modE~1,data=datacv,model=m1)\n> Erreur dans function (classes, fdef, mtable)  :\n>   unable to find an inherited method for function \"krige.cv\", for \n> signature \"formula\", \"missing\"\nleave out the \"data=\" and it works.\n\nThe documentation of krige.cv gives:\n\n     krige.cv(formula, locations, ...)\n     krige.cv.locations(formula, locations, data, model = NULL, ..., \nbeta = NULL, nmax = Inf,\n             nmin = 0, maxdist = Inf, nfold = nrow(data), verbose = FALSE)\n     krige.cv.spatial(formula, locations, model = NULL, ..., beta = \nNULL, nmax = Inf,\n             nmin = 0, maxdist = Inf, nfold = nrow(locations), verbose = \nFALSE)\n...\nlocations: formula with only independent variables that define the\n          spatial data locations (coordinates), e.g. '~x+y', OR data\n          object deriving from class 'Spatial', which has a\n          'coordinates' method to extract its coordinates.\n    data: data frame; should contain the dependent variable,\n          independent variables, and coordinates; only to be provided\n          if 'locations' is a formula\n\nI'm moderately happy with the solution chosen, but at least it is \ndocumented...\n--\nEdzer\n> >\n> How to use the coordinates when they are known  (I have not a such \n> problem with the krige command alone...?)\n>\n> Thanks you very much\n>\n> Francois\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster,\nWeseler Stra?e 253, 48151 M?nster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/",
+      "body_plain": "Yes, this is a very annoying \"feature\" for which I couldn't find a good \nsolution. Problem is that I chose both the old-style (pre-sp) formulation\n\nkrige(modE~1, ~x+y, dataFrame, dataFrame, model)\n\nas well as\n\nkrige(modE~1, SpData, SpNewdata, model)\n\nto be supported. As it decides on the base of the second argument, an S4 \napproach was needed:\n > showMethods(krige.cv)\nFunction: krige.cv (package gstat)\nformula=\"formula\", locations=\"formula\"\nformula=\"formula\", locations=\"Spatial\"\nformula=\"formula\", locations=\"SpatialPointsDataFrame\"\n    (inherited from: formula=\"formula\", locations=\"Spatial\")\n\nThis however completely breaks when you start to name (some) arguments \n\"data\", and that's where the nice similarity to the lm-interface stops. \nThe solution to this would have required (imo) hundreds of lines of \nunreadable code, dealing with all cases where some arguments are named, \nothers not...\n\nFrancois JOUVIE wrote:\n> Please,\n>\n> Again, a question about the underlying process of krige.cv :\n>\n> I have a set of 42 values at different coordinates points (x,y,z) in \n> 3D space.\n> I put an arbitrary model of variogram and I do a cross validation.\n>\n> This below is working:\n>\n> datacv<-read.table(\"/Users/fj/Desktop/septembre \n> 08/DonK3D_elev.txt\",header=TRUE)\n> > m1<-vgm(4,\"Exp\",2500)\n> > x<-krige.cv(modE~1,~x+y+z,data=datacv,model=m1)\n> [using ordinary kriging]\n> [using ordinary kriging]\n> [using ordinary kriging]\n> [using ordinary kriging]\n>\n> ..... 42 times.\n>\n> Now, if I had to define the coordinates in a previous work (to do a \n> variogram by example), I can't do the cross validation because there \n> is an ambiguity with these coordinates. By example:\n>\n> datacv<-read.table(\"/Users/fj/Desktop/septembre \n> 08/DonK3D_elev.txt\",header=TRUE)\n> coordinates(datacv)<-~x+y+z\n> > m1<-vgm(4,\"Exp\",2500)\n> > x<-krige.cv(modE~1,~x+y+z,data=datacv,model=m1)\n> Erreur dans `coordinates<-`(`*tmp*`, value = ~x + y + z) :\n>   setting coordinates cannot be done on Spatial objects, where they \n> have already been set\n>\nIn this case you should do\nx <- krige.cv(modE~1, datacv, m1)\n> This command neither do not work:\n>\n> x<-krige.cv(modE~1,data=datacv,model=m1)\n> Erreur dans function (classes, fdef, mtable)  :\n>   unable to find an inherited method for function \"krige.cv\", for \n> signature \"formula\", \"missing\"\nleave out the \"data=\" and it works.\n\nThe documentation of krige.cv gives:\n\n     krige.cv(formula, locations, ...)\n     krige.cv.locations(formula, locations, data, model = NULL, ..., \nbeta = NULL, nmax = Inf,\n             nmin = 0, maxdist = Inf, nfold = nrow(data), verbose = FALSE)\n     krige.cv.spatial(formula, locations, model = NULL, ..., beta = \nNULL, nmax = Inf,\n             nmin = 0, maxdist = Inf, nfold = nrow(locations), verbose = \nFALSE)\n...\nlocations: formula with only independent variables that define the\n          spatial data locations (coordinates), e.g. '~x+y', OR data\n          object deriving from class 'Spatial', which has a\n          'coordinates' method to extract its coordinates.\n    data: data frame; should contain the dependent variable,\n          independent variables, and coordinates; only to be provided\n          if 'locations' is a formula\n\nI'm moderately happy with the solution chosen, but at least it is \ndocumented...\n--\nEdzer\n> >\n> How to use the coordinates when they are known  (I have not a such \n> problem with the krige command alone...?)\n>\n> Thanks you very much\n>\n> Francois\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster,\nWeseler Straße 253, 48151 Münster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/",
       "body_snippet": "Yes, this is a very annoying \"feature\" for which I couldn't find a good \nsolution. Problem is that I chose both the old-style (pre-sp) formulation\n\nkrige(modE~1, ~x+y, dataFrame, dataFrame, model)\n\nas",
       "thread_id": "thread-f03694d54ec5",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004196.html"
     },
     {
       "id": "msg-42757d445a43",
@@ -1363,7 +1437,8 @@
       "body_snippet": "Geostats gurus:\n\nDoes anyone know of a short course (2 days to a week) in spatial\nstatistics, preferably taught in R, happening within the next few months\nin North America?  I'm particularly intereste",
       "thread_id": "thread-42757d445a43",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004197.html"
     },
     {
       "id": "msg-388d92fea820",
@@ -1381,7 +1456,8 @@
       "body_snippet": "Here's a one-day course: http://www.stat.purdue.edu/envr/shortcourse.html\n\nchris\n\n----------------------------------------------------------------------------------------------\nChris Paciorek / Asst. ",
       "thread_id": "thread-42757d445a43",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004198.html"
     },
     {
       "id": "msg-f01a92e5dcfe",
@@ -1399,7 +1475,8 @@
       "body_snippet": "Mel,\n\n> Does anyone know of a short course (2 days to a week) in spatial\n> statistics, preferably taught in R, happening within the next few months\n> in North America?  I'm particularly interested in ",
       "thread_id": "thread-42757d445a43",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004199.html"
     },
     {
       "id": "msg-453b2e772b41",
@@ -1419,6 +1496,7 @@
       "thread_id": "thread-bc022b149b68",
       "thread_depth": 2,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004200.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080917/ba813c61/attachment.pl"
       ]
@@ -1437,7 +1515,8 @@
       "body_snippet": "I would like to create a color scale covering values from -0.032 to 0.0025 with a neutral color (say grey or white) at 0. I tried to use designer.colors but i understand that the values have to be bet",
       "thread_id": "thread-4f69f1f76547",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004201.html"
     },
     {
       "id": "msg-e17686d61d32",
@@ -1455,7 +1534,8 @@
       "body_snippet": "For a start, have you looked at the output of seq(-0.032,0,0.0025)?  I\ndon't think it does what yo think it does.\n\nHadley\n\nOn Wed, Sep 17, 2008 at 7:30 PM, Marie-Anne C Serve <MAServe at lbl.gov> wrot",
       "thread_id": "thread-4f69f1f76547",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004202.html"
     },
     {
       "id": "msg-7debca843bb7",
@@ -1471,7 +1551,8 @@
       "body_snippet": "Hi,\n\nSomeone could tell me how to cite the 'spgwr' package in a scientific paper ?\n\nThe command : citation (\"pkgname\") returns a warning message.\n\nThanks in advance !\n\n\nJP",
       "thread_id": "thread-7debca843bb7",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004203.html"
     },
     {
       "id": "msg-e39f4430b923",
@@ -1485,11 +1566,12 @@
       "references": [
         "<6ba444ca915c9eae0263dd164468532f.squirrel@mmp.sipr-dc.ucl.ac.be>"
       ],
-      "body_plain": "On Thu, 18 Sep 2008, Jean-Paul Kibambe Lubamba wrote:\n\n> Hi,\n>\n> Someone could tell me how to cite the 'spgwr' package in a scientific paper ?\n>\n> The command : citation (\"pkgname\") returns a warning message.\n\nI see:\n\n> citation(\"spgwr\")\nTo cite package 'spgwr' in publications use:\n\n   Roger Bivand and Danlin Yu (2008). spgwr: Geographically weighted\n   regression. R package version 0.5-4.\n...\nATTENTION: This citation information has been auto-generated from the\npackage DESCRIPTION file and may need manual editing, see\n'help(\"citation\")' .\n>\n\nIs the \"ATTENTION: ...\" your warning? There are no publications about it \nas such, though it is mentioned in several (in particular in several of \nDanlin's papers) in the course of use. I'll leave it up to readers of the \nBivand/Pebesma/G?mez-Rubio R-spatial book to see whether the section in \nCh. 10 might serve, it is pretty short, and the book is slowly starting \nto reach people. The standard citation as above is reasonable, because it \nreflects the actual work put into the package itself.\n\nRoger\n\n>\n> Thanks in advance !\n>\n>\n> JP\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_plain": "On Thu, 18 Sep 2008, Jean-Paul Kibambe Lubamba wrote:\n\n> Hi,\n>\n> Someone could tell me how to cite the 'spgwr' package in a scientific paper ?\n>\n> The command : citation (\"pkgname\") returns a warning message.\n\nI see:\n\n> citation(\"spgwr\")\nTo cite package 'spgwr' in publications use:\n\n   Roger Bivand and Danlin Yu (2008). spgwr: Geographically weighted\n   regression. R package version 0.5-4.\n...\nATTENTION: This citation information has been auto-generated from the\npackage DESCRIPTION file and may need manual editing, see\n'help(\"citation\")' .\n>\n\nIs the \"ATTENTION: ...\" your warning? There are no publications about it \nas such, though it is mentioned in several (in particular in several of \nDanlin's papers) in the course of use. I'll leave it up to readers of the \nBivand/Pebesma/Gómez-Rubio R-spatial book to see whether the section in \nCh. 10 might serve, it is pretty short, and the book is slowly starting \nto reach people. The standard citation as above is reasonable, because it \nreflects the actual work put into the package itself.\n\nRoger\n\n>\n> Thanks in advance !\n>\n>\n> JP\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
       "body_snippet": "On Thu, 18 Sep 2008, Jean-Paul Kibambe Lubamba wrote:\n\n> Hi,\n>\n> Someone could tell me how to cite the 'spgwr' package in a scientific paper ?\n>\n> The command : citation (\"pkgname\") returns a warning ",
       "thread_id": "thread-7debca843bb7",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004204.html"
     },
     {
       "id": "msg-49d862bd5176",
@@ -1504,11 +1586,12 @@
         "<6ba444ca915c9eae0263dd164468532f.squirrel@mmp.sipr-dc.ucl.ac.be>",
         "<Pine.LNX.4.64.0809181113590.31344@reclus.nhh.no>"
       ],
-      "body_plain": "Indeed, in a recently publish paper in Environment and Planning B, I \ncited the package as following:\n\nBivand R,Yu D L, 2005, \"SPGWR - an R package for geographically weighted \nregression'',\nhttp://sourceforge.net/project/showfiles.php?group id=84357&package \nid=120594\n\nAnother one in a recently submitted paper cite the package as:\n\nBivand R, Yu D (2007) SPGWR: Geographically weighted regression. \nAvailable online at:\nhttp://cran.r-project.org/bin/windows/contrib/r-release/spgwr_0.4-6.zip \n(Accessed June 17,\n2008)\n\nThe link and time surely need update, but I hope this would help.\n\nBest,\nDanlin\n\nRoger Bivand wrote:\n> On Thu, 18 Sep 2008, Jean-Paul Kibambe Lubamba wrote:\n>\n>> Hi,\n>>\n>> Someone could tell me how to cite the 'spgwr' package in a scientific \n>> paper ?\n>>\n>> The command : citation (\"pkgname\") returns a warning message.\n>\n> I see:\n>\n>> citation(\"spgwr\")\n> To cite package 'spgwr' in publications use:\n>\n>   Roger Bivand and Danlin Yu (2008). spgwr: Geographically weighted\n>   regression. R package version 0.5-4.\n> ...\n> ATTENTION: This citation information has been auto-generated from the\n> package DESCRIPTION file and may need manual editing, see\n> 'help(\"citation\")' .\n>>\n>\n> Is the \"ATTENTION: ...\" your warning? There are no publications about \n> it as such, though it is mentioned in several (in particular in \n> several of Danlin's papers) in the course of use. I'll leave it up to \n> readers of the Bivand/Pebesma/G?mez-Rubio R-spatial book to see \n> whether the section in Ch. 10 might serve, it is pretty short, and the \n> book is slowly starting to reach people. The standard citation as \n> above is reasonable, because it reflects the actual work put into the \n> package itself.\n>\n> Roger\n>\n>>\n>> Thanks in advance !\n>>\n>>\n>> JP\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n> ------------------------------------------------------------------------\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \n___________________________________________\nDanlin Yu, Ph.D.\nAssistant Professor\nDepartment of Earth & Environmental Studies\nMontclair State University\nMontclair, NJ, 07043\nTel: 973-655-4313\nFax: 973-655-4072\nemail: yud at mail.montclair.edu\nwebpage: csam.montclair.edu/~yu",
+      "body_plain": "Indeed, in a recently publish paper in Environment and Planning B, I \ncited the package as following:\n\nBivand R,Yu D L, 2005, \"SPGWR - an R package for geographically weighted \nregression'',\nhttp://sourceforge.net/project/showfiles.php?group id=84357&package \nid=120594\n\nAnother one in a recently submitted paper cite the package as:\n\nBivand R, Yu D (2007) SPGWR: Geographically weighted regression. \nAvailable online at:\nhttp://cran.r-project.org/bin/windows/contrib/r-release/spgwr_0.4-6.zip \n(Accessed June 17,\n2008)\n\nThe link and time surely need update, but I hope this would help.\n\nBest,\nDanlin\n\nRoger Bivand wrote:\n> On Thu, 18 Sep 2008, Jean-Paul Kibambe Lubamba wrote:\n>\n>> Hi,\n>>\n>> Someone could tell me how to cite the 'spgwr' package in a scientific \n>> paper ?\n>>\n>> The command : citation (\"pkgname\") returns a warning message.\n>\n> I see:\n>\n>> citation(\"spgwr\")\n> To cite package 'spgwr' in publications use:\n>\n>   Roger Bivand and Danlin Yu (2008). spgwr: Geographically weighted\n>   regression. R package version 0.5-4.\n> ...\n> ATTENTION: This citation information has been auto-generated from the\n> package DESCRIPTION file and may need manual editing, see\n> 'help(\"citation\")' .\n>>\n>\n> Is the \"ATTENTION: ...\" your warning? There are no publications about \n> it as such, though it is mentioned in several (in particular in \n> several of Danlin's papers) in the course of use. I'll leave it up to \n> readers of the Bivand/Pebesma/Gómez-Rubio R-spatial book to see \n> whether the section in Ch. 10 might serve, it is pretty short, and the \n> book is slowly starting to reach people. The standard citation as \n> above is reasonable, because it reflects the actual work put into the \n> package itself.\n>\n> Roger\n>\n>>\n>> Thanks in advance !\n>>\n>>\n>> JP\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n> ------------------------------------------------------------------------\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \n___________________________________________\nDanlin Yu, Ph.D.\nAssistant Professor\nDepartment of Earth & Environmental Studies\nMontclair State University\nMontclair, NJ, 07043\nTel: 973-655-4313\nFax: 973-655-4072\nemail: yud at mail.montclair.edu\nwebpage: csam.montclair.edu/~yu",
       "body_snippet": "Indeed, in a recently publish paper in Environment and Planning B, I \ncited the package as following:\n\nBivand R,Yu D L, 2005, \"SPGWR - an R package for geographically weighted \nregression'',\nhttp://so",
       "thread_id": "thread-7debca843bb7",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004205.html"
     },
     {
       "id": "msg-60926594da55",
@@ -1524,7 +1607,8 @@
       "body_snippet": "Forgive the earlier post to r-help.\n\n\nI'm working with a large hydrological data set stored in a netCDF format.\nThe file stores x and y coordinates in the UTM projected coordinate system,\nyet when I u",
       "thread_id": "thread-60926594da55",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004206.html"
     },
     {
       "id": "msg-873d7109883c",
@@ -1540,7 +1624,8 @@
       "body_snippet": "Is there a limit to the # of observations or size of file that can be \nco-kriged in gstat?\nI have a ~12000 observation data set (2 variables), the variograms, \ncross variogram and lmc are fit well, an",
       "thread_id": "thread-873d7109883c",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004207.html"
     },
     {
       "id": "msg-6b739b444cd0",
@@ -1554,11 +1639,12 @@
       "references": [
         "<48D3A874.3050103@scimail.uwaterloo.ca>"
       ],
-      "body_plain": "Dave,\n\n12000 observations fit, in the c representation, in less than 1 Mb (64 \nbytes per observation).\n\nThe issue is that you think that passing maxdist to predict.gstat has an \neffect. It doesn't; you need to pass it to function gstat().\n\nThe same thing happened in this\nhttps://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004182.html\nmessage, where nmax was passed to predict.gstat, and simulation took \nforever. The other issue in that question was, I suspect, lack of \nstandardization of coordinates, used in a trend surface.\n--\nEdzer\n\nDave Depew wrote:\n> Is there a limit to the # of observations or size of file that can be \n> co-kriged in gstat?\n> I have a ~12000 observation data set (2 variables), the variograms, \n> cross variogram and lmc are fit well, and co-kriging starts ok\n>\n> Linear Model of Coregionalization found. Good.\n> [using ordinary cokriging]\n>\n> then immediately outputs\n>\n> \"memory.c\", line 57: can't allocate memory in function m_get()\n> Error in predict.gstat(fit.ck, newdata = EcoSAV.grid, maxdist = 100) :\n>  m_get\n>\n> Iv tried different maxdist from 10 to 1000, with exactly the same result.\n> I recently upgraded my RAM to 4Gb and flipped the windows XP /3GB switch.\n>\n>\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster,\nWeseler Stra?e 253, 48151 M?nster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9",
+      "body_plain": "Dave,\n\n12000 observations fit, in the c representation, in less than 1 Mb (64 \nbytes per observation).\n\nThe issue is that you think that passing maxdist to predict.gstat has an \neffect. It doesn't; you need to pass it to function gstat().\n\nThe same thing happened in this\nhttps://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004182.html\nmessage, where nmax was passed to predict.gstat, and simulation took \nforever. The other issue in that question was, I suspect, lack of \nstandardization of coordinates, used in a trend surface.\n--\nEdzer\n\nDave Depew wrote:\n> Is there a limit to the # of observations or size of file that can be \n> co-kriged in gstat?\n> I have a ~12000 observation data set (2 variables), the variograms, \n> cross variogram and lmc are fit well, and co-kriging starts ok\n>\n> Linear Model of Coregionalization found. Good.\n> [using ordinary cokriging]\n>\n> then immediately outputs\n>\n> \"memory.c\", line 57: can't allocate memory in function m_get()\n> Error in predict.gstat(fit.ck, newdata = EcoSAV.grid, maxdist = 100) :\n>  m_get\n>\n> Iv tried different maxdist from 10 to 1000, with exactly the same result.\n> I recently upgraded my RAM to 4Gb and flipped the windows XP /3GB switch.\n>\n>\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster,\nWeseler Straße 253, 48151 Münster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9",
       "body_snippet": "Dave,\n\n12000 observations fit, in the c representation, in less than 1 Mb (64 \nbytes per observation).\n\nThe issue is that you think that passing maxdist to predict.gstat has an \neffect. It doesn't; yo",
       "thread_id": "thread-873d7109883c",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004208.html"
     },
     {
       "id": "msg-7334bf8e9455",
@@ -1577,7 +1663,8 @@
       "body_snippet": "Good morning Edzer and Dave,\nThanks for bringing up this point.  I had a similar issue recently using \nkrige().  Observations at 5800 locations, attempting to krige() \npredictions at 112,000 locations",
       "thread_id": "thread-873d7109883c",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004209.html"
     },
     {
       "id": "msg-9c3cfb58c3b9",
@@ -1593,11 +1680,12 @@
         "<48D3AEDD.4010007@uni-muenster.de>",
         "<48D3B4E5.9000207@noaa.gov>"
       ],
-      "body_plain": "Good morning Dave (late afternoon here),\n\nChris Taylor wrote:\n> Good morning Edzer and Dave,\n> Thanks for bringing up this point.  I had a similar issue recently \n> using krige().  Observations at 5800 locations, attempting to krige() \n> predictions at 112,000 locations resulted in the same \"memory.c\" error \n> message.  Reducing predicted locations to <<50,000 and reducing \n> max.dist seemed to help, but the predictions still took a very long \n> time (>2 hours).  (Running winxp with 4GB memory.)\n> Can you clarify your suspicion regarding the \"lack of standardization \n> of coordinates\"?\nIn this message, a trend was modelled based on x and y coordinates, as \nfollows:\n       x                y                DN4          indicator4\n Min.   :670462   Min.   :4215236   Min.   :18.00   Min.   :0.0000\n 1st Qu.:670683   1st Qu.:4215456   1st Qu.:24.00   1st Qu.:0.0000\n Median :670904   Median :4215677   Median :32.50   Median :0.0000\n Mean   :670904   Mean   :4215677   Mean   :43.26   Mean   :0.4795\n 3rd Qu.:671125   3rd Qu.:4215898   3rd Qu.:64.00   3rd Qu.:1.0000\n Max.   :671346   Max.   :4216119   Max.   :87.00   Max.   :1.0000\n > \ng<-gstat(id=\"indicator6\",formula=indicator6~x+y+x*y+sqrt(x)+sqrt(y),location=~x+y,data=band6.data,...\n\ncomputing the x*y will give numbers many orders of magnitude larger than \nsqrt(x),or the intercept. The advice is usually to (somewhat) \nstandardize coordinates before using them as a trend. But I doubt this \nhelps you very much.\n\nI find it hard to consider > 2 hours as a very long time before I know \nall the details (e.g. how many points were there within your maxdist?), \nthe reason why you want an instant answer, and preferably have heard a \ncomparison with other software. If you then tell me what your budget is, \nI might come up with possible solutions (starting very cheap, e.g. look \nat demo(snow) in package gstat, or use an OS that can assign this 4Gb to \na single process).\n--\nEdzer\n>\n> Chris\n>\n> Edzer Pebesma wrote:\n>> Dave,\n>>\n>> 12000 observations fit, in the c representation, in less than 1 Mb \n>> (64 bytes per observation).\n>>\n>> The issue is that you think that passing maxdist to predict.gstat has \n>> an effect. It doesn't; you need to pass it to function gstat().\n>>\n>> The same thing happened in this\n>> https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004182.html\n>> message, where nmax was passed to predict.gstat, and simulation took \n>> forever. The other issue in that question was, I suspect, lack of \n>> standardization of coordinates, used in a trend surface.\n>> -- \n>> Edzer\n>>\n>> Dave Depew wrote:\n>>> Is there a limit to the # of observations or size of file that can \n>>> be co-kriged in gstat?\n>>> I have a ~12000 observation data set (2 variables), the variograms, \n>>> cross variogram and lmc are fit well, and co-kriging starts ok\n>>>\n>>> Linear Model of Coregionalization found. Good.\n>>> [using ordinary cokriging]\n>>>\n>>> then immediately outputs\n>>>\n>>> \"memory.c\", line 57: can't allocate memory in function m_get()\n>>> Error in predict.gstat(fit.ck, newdata = EcoSAV.grid, maxdist = 100) :\n>>>  m_get\n>>>\n>>> Iv tried different maxdist from 10 to 1000, with exactly the same \n>>> result.\n>>> I recently upgraded my RAM to 4Gb and flipped the windows XP /3GB \n>>> switch.\n>>>\n>>>\n>>\n>\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster,\nWeseler Stra?e 253, 48151 M?nster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9",
+      "body_plain": "Good morning Dave (late afternoon here),\n\nChris Taylor wrote:\n> Good morning Edzer and Dave,\n> Thanks for bringing up this point.  I had a similar issue recently \n> using krige().  Observations at 5800 locations, attempting to krige() \n> predictions at 112,000 locations resulted in the same \"memory.c\" error \n> message.  Reducing predicted locations to <<50,000 and reducing \n> max.dist seemed to help, but the predictions still took a very long \n> time (>2 hours).  (Running winxp with 4GB memory.)\n> Can you clarify your suspicion regarding the \"lack of standardization \n> of coordinates\"?\nIn this message, a trend was modelled based on x and y coordinates, as \nfollows:\n       x                y                DN4          indicator4\n Min.   :670462   Min.   :4215236   Min.   :18.00   Min.   :0.0000\n 1st Qu.:670683   1st Qu.:4215456   1st Qu.:24.00   1st Qu.:0.0000\n Median :670904   Median :4215677   Median :32.50   Median :0.0000\n Mean   :670904   Mean   :4215677   Mean   :43.26   Mean   :0.4795\n 3rd Qu.:671125   3rd Qu.:4215898   3rd Qu.:64.00   3rd Qu.:1.0000\n Max.   :671346   Max.   :4216119   Max.   :87.00   Max.   :1.0000\n > \ng<-gstat(id=\"indicator6\",formula=indicator6~x+y+x*y+sqrt(x)+sqrt(y),location=~x+y,data=band6.data,...\n\ncomputing the x*y will give numbers many orders of magnitude larger than \nsqrt(x),or the intercept. The advice is usually to (somewhat) \nstandardize coordinates before using them as a trend. But I doubt this \nhelps you very much.\n\nI find it hard to consider > 2 hours as a very long time before I know \nall the details (e.g. how many points were there within your maxdist?), \nthe reason why you want an instant answer, and preferably have heard a \ncomparison with other software. If you then tell me what your budget is, \nI might come up with possible solutions (starting very cheap, e.g. look \nat demo(snow) in package gstat, or use an OS that can assign this 4Gb to \na single process).\n--\nEdzer\n>\n> Chris\n>\n> Edzer Pebesma wrote:\n>> Dave,\n>>\n>> 12000 observations fit, in the c representation, in less than 1 Mb \n>> (64 bytes per observation).\n>>\n>> The issue is that you think that passing maxdist to predict.gstat has \n>> an effect. It doesn't; you need to pass it to function gstat().\n>>\n>> The same thing happened in this\n>> https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004182.html\n>> message, where nmax was passed to predict.gstat, and simulation took \n>> forever. The other issue in that question was, I suspect, lack of \n>> standardization of coordinates, used in a trend surface.\n>> -- \n>> Edzer\n>>\n>> Dave Depew wrote:\n>>> Is there a limit to the # of observations or size of file that can \n>>> be co-kriged in gstat?\n>>> I have a ~12000 observation data set (2 variables), the variograms, \n>>> cross variogram and lmc are fit well, and co-kriging starts ok\n>>>\n>>> Linear Model of Coregionalization found. Good.\n>>> [using ordinary cokriging]\n>>>\n>>> then immediately outputs\n>>>\n>>> \"memory.c\", line 57: can't allocate memory in function m_get()\n>>> Error in predict.gstat(fit.ck, newdata = EcoSAV.grid, maxdist = 100) :\n>>>  m_get\n>>>\n>>> Iv tried different maxdist from 10 to 1000, with exactly the same \n>>> result.\n>>> I recently upgraded my RAM to 4Gb and flipped the windows XP /3GB \n>>> switch.\n>>>\n>>>\n>>\n>\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster,\nWeseler Straße 253, 48151 Münster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9",
       "body_snippet": "Good morning Dave (late afternoon here),\n\nChris Taylor wrote:\n> Good morning Edzer and Dave,\n> Thanks for bringing up this point.  I had a similar issue recently \n> using krige().  Observations at 580",
       "thread_id": "thread-873d7109883c",
       "thread_depth": 3,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004210.html"
     },
     {
       "id": "msg-c415627fa721",
@@ -1618,7 +1706,8 @@
       "body_snippet": "Thanks for the quick responses.\nI've often done global OK or UK that can take ~ 2-3 days to complete. I \nalways assumed that it was b/c the matrices were so large. Looking at \ntask manager indicated t",
       "thread_id": "thread-873d7109883c",
       "thread_depth": 4,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004211.html"
     },
     {
       "id": "msg-3c0b708faab7",
@@ -1641,6 +1730,7 @@
       "thread_id": "thread-873d7109883c",
       "thread_depth": 5,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004212.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080919/8a6bf36b/attachment.pl"
       ]
@@ -1662,11 +1752,12 @@
         "<48D3BE78.9020001@scimail.uwaterloo.ca>",
         "<37382E8DCB905042969BA78541F6570624D5D7@kwek.ic.uva.nl>"
       ],
-      "body_plain": "Dear Tom,\n\nHengl, T. wrote:\n>  \n> Dear Edzer,\n>  \n> I do have a similar problem (extensive computation time, memory limits). I would like to run interpolation of 60,000 points for 500,000 new points using OK and nmax of 30 closest points (I am using a windowsxp machine with 2GB RAM).\n>  \n> But I have doubts that it can ever run in less than few hours in gstat. I mean, at each new location, the algorithm has to derive distances to all locations (60,000^2 matrix) and then find the 30 closest ones. There is no more intelligent way to pick up the closest points - or is there?\n>   \nThere is, and it is being used: the short name is spatial index and \nquadtree; you'll find links and explanation on\nhttp://www.gstat.org/manual/node8.html#SECTION00351000000000000000\n\nBoth computers & geosciences papers on gstat mention this.\n\nTo see the effect of this, try to enlarge split to a number larger than \nthe number of observations, as in\n\nkrige(log(zinc)~1, meuse, meuse[1,], vgm(1, \"Exp\", 300), set = \nlist(split=1000))\n\nHere, the bucket size is 1000, and all observations will be ranked \naccording to distance to the prediction location (which does not require \nan n^2 matrix), using quick sort.\n\nOther software, such as GSLIB (iirc) put a course regular grid over the \ndomain to speed up neighbourhood selection.\n--\nEdzer\n\n>  \n> Thanx,\n>  \n> Tom\n>  \n>\n> ________________________________\n>\n> From: r-sig-geo-bounces at stat.math.ethz.ch on behalf of Dave Depew\n> Sent: Fri 9/19/2008 5:00 PM\n> To: Edzer Pebesma\n> Cc: Chris Taylor; r-sig-geo at stat.math.ethz.ch\n> Subject: Re: [R-sig-Geo] cokriging question\n>\n>\n>\n> Thanks for the quick responses.\n> I've often done global OK or UK that can take ~ 2-3 days to complete. I\n> always assumed that it was b/c the matrices were so large. Looking at\n> task manager indicated that Rgui.exe only consumed ~ 800 Mb of RAM\n> during the processes.\n> I'll try it by passing the maxdist to gstat() rather than predict.gstat().\n> The only other time I encounter the memory.c line is when I neglect to\n> remove duplicate observations.\n>\n> I think I only should have at most 500 or so points within a 100-200m\n> maxdist...\n>\n>\n>\n>\n> Edzer Pebesma wrote:\n>   \n>> Good morning Dave (late afternoon here),\n>>\n>> Chris Taylor wrote:\n>>     \n>>> Good morning Edzer and Dave,\n>>> Thanks for bringing up this point.  I had a similar issue recently\n>>> using krige().  Observations at 5800 locations, attempting to krige()\n>>> predictions at 112,000 locations resulted in the same \"memory.c\"\n>>> error message.  Reducing predicted locations to <<50,000 and reducing\n>>> max.dist seemed to help, but the predictions still took a very long\n>>> time (>2 hours).  (Running winxp with 4GB memory.)\n>>> Can you clarify your suspicion regarding the \"lack of standardization\n>>> of coordinates\"?\n>>>       \n>> In this message, a trend was modelled based on x and y coordinates, as\n>> follows:\n>>       x                y                DN4          indicator4\n>> Min.   :670462   Min.   :4215236   Min.   :18.00   Min.   :0.0000\n>> 1st Qu.:670683   1st Qu.:4215456   1st Qu.:24.00   1st Qu.:0.0000\n>> Median :670904   Median :4215677   Median :32.50   Median :0.0000\n>> Mean   :670904   Mean   :4215677   Mean   :43.26   Mean   :0.4795\n>> 3rd Qu.:671125   3rd Qu.:4215898   3rd Qu.:64.00   3rd Qu.:1.0000\n>> Max.   :671346   Max.   :4216119   Max.   :87.00   Max.   :1.0000\n>>     \n>> g<-gstat(id=\"indicator6\",formula=indicator6~x+y+x*y+sqrt(x)+sqrt(y),location=~x+y,data=band6.data,...\n>>\n>>\n>> computing the x*y will give numbers many orders of magnitude larger\n>> than sqrt(x),or the intercept. The advice is usually to (somewhat)\n>> standardize coordinates before using them as a trend. But I doubt this\n>> helps you very much.\n>>\n>> I find it hard to consider > 2 hours as a very long time before I know\n>> all the details (e.g. how many points were there within your\n>> maxdist?), the reason why you want an instant answer, and preferably\n>> have heard a comparison with other software. If you then tell me what\n>> your budget is, I might come up with possible solutions (starting very\n>> cheap, e.g. look at demo(snow) in package gstat, or use an OS that can\n>> assign this 4Gb to a single process).\n>> --\n>> Edzer\n>>     \n>>> Chris\n>>>\n>>> Edzer Pebesma wrote:\n>>>       \n>>>> Dave,\n>>>>\n>>>> 12000 observations fit, in the c representation, in less than 1 Mb\n>>>> (64 bytes per observation).\n>>>>\n>>>> The issue is that you think that passing maxdist to predict.gstat\n>>>> has an effect. It doesn't; you need to pass it to function gstat().\n>>>>\n>>>> The same thing happened in this\n>>>> https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004182.html\n>>>> message, where nmax was passed to predict.gstat, and simulation took\n>>>> forever. The other issue in that question was, I suspect, lack of\n>>>> standardization of coordinates, used in a trend surface.\n>>>> --\n>>>> Edzer\n>>>>\n>>>> Dave Depew wrote:\n>>>>         \n>>>>> Is there a limit to the # of observations or size of file that can\n>>>>> be co-kriged in gstat?\n>>>>> I have a ~12000 observation data set (2 variables), the variograms,\n>>>>> cross variogram and lmc are fit well, and co-kriging starts ok\n>>>>>\n>>>>> Linear Model of Coregionalization found. Good.\n>>>>> [using ordinary cokriging]\n>>>>>\n>>>>> then immediately outputs\n>>>>>\n>>>>> \"memory.c\", line 57: can't allocate memory in function m_get()\n>>>>> Error in predict.gstat(fit.ck, newdata = EcoSAV.grid, maxdist = 100) :\n>>>>>  m_get\n>>>>>\n>>>>> Iv tried different maxdist from 10 to 1000, with exactly the same\n>>>>> result.\n>>>>> I recently upgraded my RAM to 4Gb and flipped the windows XP /3GB\n>>>>> switch.\n>>>>>\n>>>>>\n>>>>>           \n>\n>\n> --\n> David Depew\n> PhD Candidate\n> Department of Biology\n> University of Waterloo\n> 200 University Ave W.\n> Waterloo, ON. Canada\n> N2L 3G1\n>\n> (T) 1-519-888-4567 x33895\n> (F) 1-519-746-0614\n>\n> http://www.science.uwaterloo.ca/~ddepew\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster,\nWeseler Stra?e 253, 48151 M?nster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9",
+      "body_plain": "Dear Tom,\n\nHengl, T. wrote:\n>  \n> Dear Edzer,\n>  \n> I do have a similar problem (extensive computation time, memory limits). I would like to run interpolation of 60,000 points for 500,000 new points using OK and nmax of 30 closest points (I am using a windowsxp machine with 2GB RAM).\n>  \n> But I have doubts that it can ever run in less than few hours in gstat. I mean, at each new location, the algorithm has to derive distances to all locations (60,000^2 matrix) and then find the 30 closest ones. There is no more intelligent way to pick up the closest points - or is there?\n>   \nThere is, and it is being used: the short name is spatial index and \nquadtree; you'll find links and explanation on\nhttp://www.gstat.org/manual/node8.html#SECTION00351000000000000000\n\nBoth computers & geosciences papers on gstat mention this.\n\nTo see the effect of this, try to enlarge split to a number larger than \nthe number of observations, as in\n\nkrige(log(zinc)~1, meuse, meuse[1,], vgm(1, \"Exp\", 300), set = \nlist(split=1000))\n\nHere, the bucket size is 1000, and all observations will be ranked \naccording to distance to the prediction location (which does not require \nan n^2 matrix), using quick sort.\n\nOther software, such as GSLIB (iirc) put a course regular grid over the \ndomain to speed up neighbourhood selection.\n--\nEdzer\n\n>  \n> Thanx,\n>  \n> Tom\n>  \n>\n> ________________________________\n>\n> From: r-sig-geo-bounces at stat.math.ethz.ch on behalf of Dave Depew\n> Sent: Fri 9/19/2008 5:00 PM\n> To: Edzer Pebesma\n> Cc: Chris Taylor; r-sig-geo at stat.math.ethz.ch\n> Subject: Re: [R-sig-Geo] cokriging question\n>\n>\n>\n> Thanks for the quick responses.\n> I've often done global OK or UK that can take ~ 2-3 days to complete. I\n> always assumed that it was b/c the matrices were so large. Looking at\n> task manager indicated that Rgui.exe only consumed ~ 800 Mb of RAM\n> during the processes.\n> I'll try it by passing the maxdist to gstat() rather than predict.gstat().\n> The only other time I encounter the memory.c line is when I neglect to\n> remove duplicate observations.\n>\n> I think I only should have at most 500 or so points within a 100-200m\n> maxdist...\n>\n>\n>\n>\n> Edzer Pebesma wrote:\n>   \n>> Good morning Dave (late afternoon here),\n>>\n>> Chris Taylor wrote:\n>>     \n>>> Good morning Edzer and Dave,\n>>> Thanks for bringing up this point.  I had a similar issue recently\n>>> using krige().  Observations at 5800 locations, attempting to krige()\n>>> predictions at 112,000 locations resulted in the same \"memory.c\"\n>>> error message.  Reducing predicted locations to <<50,000 and reducing\n>>> max.dist seemed to help, but the predictions still took a very long\n>>> time (>2 hours).  (Running winxp with 4GB memory.)\n>>> Can you clarify your suspicion regarding the \"lack of standardization\n>>> of coordinates\"?\n>>>       \n>> In this message, a trend was modelled based on x and y coordinates, as\n>> follows:\n>>       x                y                DN4          indicator4\n>> Min.   :670462   Min.   :4215236   Min.   :18.00   Min.   :0.0000\n>> 1st Qu.:670683   1st Qu.:4215456   1st Qu.:24.00   1st Qu.:0.0000\n>> Median :670904   Median :4215677   Median :32.50   Median :0.0000\n>> Mean   :670904   Mean   :4215677   Mean   :43.26   Mean   :0.4795\n>> 3rd Qu.:671125   3rd Qu.:4215898   3rd Qu.:64.00   3rd Qu.:1.0000\n>> Max.   :671346   Max.   :4216119   Max.   :87.00   Max.   :1.0000\n>>     \n>> g<-gstat(id=\"indicator6\",formula=indicator6~x+y+x*y+sqrt(x)+sqrt(y),location=~x+y,data=band6.data,...\n>>\n>>\n>> computing the x*y will give numbers many orders of magnitude larger\n>> than sqrt(x),or the intercept. The advice is usually to (somewhat)\n>> standardize coordinates before using them as a trend. But I doubt this\n>> helps you very much.\n>>\n>> I find it hard to consider > 2 hours as a very long time before I know\n>> all the details (e.g. how many points were there within your\n>> maxdist?), the reason why you want an instant answer, and preferably\n>> have heard a comparison with other software. If you then tell me what\n>> your budget is, I might come up with possible solutions (starting very\n>> cheap, e.g. look at demo(snow) in package gstat, or use an OS that can\n>> assign this 4Gb to a single process).\n>> --\n>> Edzer\n>>     \n>>> Chris\n>>>\n>>> Edzer Pebesma wrote:\n>>>       \n>>>> Dave,\n>>>>\n>>>> 12000 observations fit, in the c representation, in less than 1 Mb\n>>>> (64 bytes per observation).\n>>>>\n>>>> The issue is that you think that passing maxdist to predict.gstat\n>>>> has an effect. It doesn't; you need to pass it to function gstat().\n>>>>\n>>>> The same thing happened in this\n>>>> https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004182.html\n>>>> message, where nmax was passed to predict.gstat, and simulation took\n>>>> forever. The other issue in that question was, I suspect, lack of\n>>>> standardization of coordinates, used in a trend surface.\n>>>> --\n>>>> Edzer\n>>>>\n>>>> Dave Depew wrote:\n>>>>         \n>>>>> Is there a limit to the # of observations or size of file that can\n>>>>> be co-kriged in gstat?\n>>>>> I have a ~12000 observation data set (2 variables), the variograms,\n>>>>> cross variogram and lmc are fit well, and co-kriging starts ok\n>>>>>\n>>>>> Linear Model of Coregionalization found. Good.\n>>>>> [using ordinary cokriging]\n>>>>>\n>>>>> then immediately outputs\n>>>>>\n>>>>> \"memory.c\", line 57: can't allocate memory in function m_get()\n>>>>> Error in predict.gstat(fit.ck, newdata = EcoSAV.grid, maxdist = 100) :\n>>>>>  m_get\n>>>>>\n>>>>> Iv tried different maxdist from 10 to 1000, with exactly the same\n>>>>> result.\n>>>>> I recently upgraded my RAM to 4Gb and flipped the windows XP /3GB\n>>>>> switch.\n>>>>>\n>>>>>\n>>>>>           \n>\n>\n> --\n> David Depew\n> PhD Candidate\n> Department of Biology\n> University of Waterloo\n> 200 University Ave W.\n> Waterloo, ON. Canada\n> N2L 3G1\n>\n> (T) 1-519-888-4567 x33895\n> (F) 1-519-746-0614\n>\n> http://www.science.uwaterloo.ca/~ddepew\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster,\nWeseler Straße 253, 48151 Münster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9",
       "body_snippet": "Dear Tom,\n\nHengl, T. wrote:\n>  \n> Dear Edzer,\n>  \n> I do have a similar problem (extensive computation time, memory limits). I would like to run interpolation of 60,000 points for 500,000 new points u",
       "thread_id": "thread-873d7109883c",
       "thread_depth": 6,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004213.html"
     },
     {
       "id": "msg-4e3489f01107",
@@ -1683,6 +1774,7 @@
       "thread_id": "thread-4e3489f01107",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004214.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080919/29c76a0b/attachment.pl"
       ]
@@ -1702,6 +1794,7 @@
       "thread_id": "thread-3aeeace2ce47",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004215.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080920/6fb714a0/attachment.pl"
       ]
@@ -1720,7 +1813,8 @@
       "body_snippet": "Hello,\nI would like to know how i can move a color scale, now vertical and on the right of the plot, to a horizontal one at the bottom.\ni am using filled.contour().\nthanks\nMarie",
       "thread_id": "thread-20b53c88be9e",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004216.html"
     },
     {
       "id": "msg-26fba0ad55d7",
@@ -1738,7 +1832,8 @@
       "body_snippet": "I tried this, and AAIGrid is not available for creation by rgdal on my \nmachine. See gdalDrivers() for those available.\n\nIf you install FWTools you can use a workaround to convert the export \nexternal",
       "thread_id": "thread-4e3489f01107",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004217.html"
     },
     {
       "id": "msg-e9ba3641dc8e",
@@ -1756,7 +1851,8 @@
       "body_snippet": "Of course, you can use write.asciigrid() in package sp for a more \nimmediate workaround (sorry for not thinking of this previously!):\n\ne.g.\n\n\n x <- readGDAL(system.file(\"external/test.ag\", package=\"sp",
       "thread_id": "thread-4e3489f01107",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004218.html"
     },
     {
       "id": "msg-8ecd82da7dba",
@@ -1774,7 +1870,8 @@
       "body_snippet": "Hi,\n\nan alternative to using GDAL for writing ASCII grids is the \nwrite.ascii.grid function in the RSAGA package. (RSAGA is an interface \nto SAGA GIS, but this function actually doesn't require SAGA t",
       "thread_id": "thread-4e3489f01107",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004219.html"
     },
     {
       "id": "msg-8055964d8d46",
@@ -1794,6 +1891,7 @@
       "thread_id": "thread-4e3489f01107",
       "thread_depth": 2,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004220.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080919/ab835690/attachment.pl"
       ]
@@ -1816,7 +1914,8 @@
       "body_snippet": "On Fri, 19 Sep 2008, milton ruser wrote:\n\n> Dear all,\n> I tryed both suggestions and they worked fine.\n> In fact, the short solution is\n>\n> require(rgdal)\n> require(maptools)\n> mes01jan<-readGDAL(\"jan",
       "thread_id": "thread-4e3489f01107",
       "thread_depth": 3,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004221.html"
     },
     {
       "id": "msg-8d7abdd9d57f",
@@ -1833,6 +1932,7 @@
       "thread_id": "thread-8d7abdd9d57f",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004222.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080924/27487786/attachment.pl"
       ]
@@ -1853,7 +1953,8 @@
       "body_snippet": "On Wednesday 24 September 2008, Satterthwaite, Paul wrote:\n> Hello,\n>\n>\n>\n> I am a very new user of R, but have used S-Plus for about a year or so.\n> I am curious about methods of creating simulated p",
       "thread_id": "thread-8d7abdd9d57f",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004223.html"
     },
     {
       "id": "msg-20a5b6b3c3b4",
@@ -1871,7 +1972,8 @@
       "body_snippet": "On Wednesday 24 September 2008, Satterthwaite, Paul wrote:\n> Hello,\n>\n>\n>\n> I am a very new user of R, but have used S-Plus for about a year or so.\n> I am curious about methods of creating simulated p",
       "thread_id": "thread-8d7abdd9d57f",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004224.html"
     },
     {
       "id": "msg-6764c0a30d95",
@@ -1887,7 +1989,8 @@
       "body_snippet": "Hello users,\n\nThere is probably a very simple solution to this that I am missing: is \nthere a way to select polygons in one SPDF that fall within the polygons \nof another SPDF? \nThis would save me a l",
       "thread_id": "thread-6764c0a30d95",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004225.html"
     },
     {
       "id": "msg-001a46342ec7",
@@ -1903,7 +2006,8 @@
       "body_snippet": "Try \n?overlay\n\nRegards,\nFriderike\n\n\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch\n[mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Murray Richardson\nSent: 25 Sept",
       "thread_id": "thread-001a46342ec7",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004226.html"
     },
     {
       "id": "msg-37ff4acc4179",
@@ -1918,11 +2022,12 @@
         "<D7B94F0B40246740A3EFF9DBBD921B7B796B65@SAGE.forestry.oregonstate.edu>",
         "<200809241544.35192.dylan.beaudette@gmail.com>"
       ],
-      "body_plain": "... or you could try the geostatistical indicator simulation formalism \nin gstat:\n\nrequire(gstat)\ndemo(uisim)\n--\nEdzer\n\nDylan Beaudette wrote:\n> On Wednesday 24 September 2008, Satterthwaite, Paul wrote:\n>   \n>> Hello,\n>>\n>>\n>>\n>> I am a very new user of R, but have used S-Plus for about a year or so.\n>> I am curious about methods of creating simulated patch landscapes in R,\n>> and how to parameterize patch cover values and modify the\n>> periodicity/regularity of the patches in said landscapes.\n>>\n>>\n>>\n>> Can anyone point me in the right direction?\n>>\n>>     \n>\n> Forgot to mention the RandomFields package.\n>\n> require(RandomFields)\n> example(soil)\n>\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster,\nWeseler Stra?e 253, 48151 M?nster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9",
+      "body_plain": "... or you could try the geostatistical indicator simulation formalism \nin gstat:\n\nrequire(gstat)\ndemo(uisim)\n--\nEdzer\n\nDylan Beaudette wrote:\n> On Wednesday 24 September 2008, Satterthwaite, Paul wrote:\n>   \n>> Hello,\n>>\n>>\n>>\n>> I am a very new user of R, but have used S-Plus for about a year or so.\n>> I am curious about methods of creating simulated patch landscapes in R,\n>> and how to parameterize patch cover values and modify the\n>> periodicity/regularity of the patches in said landscapes.\n>>\n>>\n>>\n>> Can anyone point me in the right direction?\n>>\n>>     \n>\n> Forgot to mention the RandomFields package.\n>\n> require(RandomFields)\n> example(soil)\n>\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster,\nWeseler Straße 253, 48151 Münster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9",
       "body_snippet": "... or you could try the geostatistical indicator simulation formalism \nin gstat:\n\nrequire(gstat)\ndemo(uisim)\n--\nEdzer\n\nDylan Beaudette wrote:\n> On Wednesday 24 September 2008, Satterthwaite, Paul wro",
       "thread_id": "thread-8d7abdd9d57f",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004227.html"
     },
     {
       "id": "msg-2a67ba89360d",
@@ -1938,7 +2043,8 @@
       "body_snippet": "Hello,\n\nIs anyone can explain me how to find the degrees of freedom of OLS\nResiduals, GWR Improvement and GWR Residuals when using the LMZ.F2GWR.test\n? The result gives df1 and df2 as degrees of freed",
       "thread_id": "thread-2a67ba89360d",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004228.html"
     },
     {
       "id": "msg-892b14cf6526",
@@ -1956,7 +2062,8 @@
       "body_snippet": "On Thu, 25 Sep 2008, Jean-Paul Kibambe Lubamba wrote:\n\n> Hello,\n>\n> Is anyone can explain me how to find the degrees of freedom of OLS\n> Residuals, GWR Improvement and GWR Residuals when using the LMZ",
       "thread_id": "thread-2a67ba89360d",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004229.html"
     },
     {
       "id": "msg-47675f653e63",
@@ -1974,7 +2081,8 @@
       "body_snippet": "Thanks Friderike.  I assumed this was the answer, but it doesn't appear \nto work with two SPDF objects.  i.e.:\n\n > overlay(polysA,polysB)\nError in function (classes, fdef, mtable)  :\n  unable to find ",
       "thread_id": "thread-001a46342ec7",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004230.html"
     },
     {
       "id": "msg-0374ba0c3407",
@@ -1989,11 +2097,12 @@
         "<1A28265B00AA7E4085BB761555D3FCE8033C8B73@hqagex02.fao.org>",
         "<48DB9341.4010900@utoronto.ca>"
       ],
-      "body_plain": "That's right, it is not there; I thought this morning about a way to \nlook whether all the points of one polygon fall in another, which sp's \noverlay could do, but that's not a sufficient condition.\n\nPerhaps functions in package gpclib can do this?\n--\nEdzer\n\nMurray Richardson wrote:\n> Thanks Friderike.  I assumed this was the answer, but it doesn't \n> appear to work with two SPDF objects.  i.e.:\n>\n> > overlay(polysA,polysB)\n> Error in function (classes, fdef, mtable)  :\n>  unable to find an inherited method for function \"overlay\", for \n> signature \"SpatialPolygonsDataFrame\", \"SpatialPolygonsDataFrame\"\n>\n>\n> Murray\n>\n>\n> Oehler, Friderike (AGPP) wrote:\n>> Try ?overlay\n>>\n>> Regards,\n>> Friderike\n>>\n>>\n>> -----Original Message-----\n>> From: r-sig-geo-bounces at stat.math.ethz.ch\n>> [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Murray \n>> Richardson\n>> Sent: 25 September 2008 06:01\n>> To: r-sig-geo at stat.math.ethz.ch\n>> Subject: [R-sig-Geo] select polygons in polygons\n>>\n>>\n>> Hello users,\n>>\n>> There is probably a very simple solution to this that I am missing: \n>> is there a way to select polygons in one SPDF that fall within the \n>> polygons of another SPDF? This would save me a lot of processing time \n>> as I am having to take a very circuitous route to achieve the same \n>> outcome.\n>>\n>> Thanks!\n>>\n>> Murray\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch \n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster,\nWeseler Stra?e 253, 48151 M?nster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9",
+      "body_plain": "That's right, it is not there; I thought this morning about a way to \nlook whether all the points of one polygon fall in another, which sp's \noverlay could do, but that's not a sufficient condition.\n\nPerhaps functions in package gpclib can do this?\n--\nEdzer\n\nMurray Richardson wrote:\n> Thanks Friderike.  I assumed this was the answer, but it doesn't \n> appear to work with two SPDF objects.  i.e.:\n>\n> > overlay(polysA,polysB)\n> Error in function (classes, fdef, mtable)  :\n>  unable to find an inherited method for function \"overlay\", for \n> signature \"SpatialPolygonsDataFrame\", \"SpatialPolygonsDataFrame\"\n>\n>\n> Murray\n>\n>\n> Oehler, Friderike (AGPP) wrote:\n>> Try ?overlay\n>>\n>> Regards,\n>> Friderike\n>>\n>>\n>> -----Original Message-----\n>> From: r-sig-geo-bounces at stat.math.ethz.ch\n>> [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Murray \n>> Richardson\n>> Sent: 25 September 2008 06:01\n>> To: r-sig-geo at stat.math.ethz.ch\n>> Subject: [R-sig-Geo] select polygons in polygons\n>>\n>>\n>> Hello users,\n>>\n>> There is probably a very simple solution to this that I am missing: \n>> is there a way to select polygons in one SPDF that fall within the \n>> polygons of another SPDF? This would save me a lot of processing time \n>> as I am having to take a very circuitous route to achieve the same \n>> outcome.\n>>\n>> Thanks!\n>>\n>> Murray\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch \n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster,\nWeseler Straße 253, 48151 Münster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9",
       "body_snippet": "That's right, it is not there; I thought this morning about a way to \nlook whether all the points of one polygon fall in another, which sp's \noverlay could do, but that's not a sufficient condition.\n\n",
       "thread_id": "thread-001a46342ec7",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004231.html"
     },
     {
       "id": "msg-678e39a9bf5c",
@@ -2010,6 +2119,7 @@
       "thread_id": "thread-678e39a9bf5c",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004232.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080925/c84e3ecb/attachment.pl"
       ]
@@ -2030,7 +2140,8 @@
       "body_snippet": "2008/9/25 Markus Loecher <mao.loecher at gmail.com>:\n> Dear geo users,\n> pardon this trivial question (I did not succeed in searching the archives):\n> is there an R function in one of the many spatial",
       "thread_id": "thread-678e39a9bf5c",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004233.html"
     },
     {
       "id": "msg-89caa6b9ab25",
@@ -2048,7 +2159,8 @@
       "body_snippet": "If there's not a function within R for this, maybe there's a way to use \nthe web services from Geonames.org and parse the results.  Maybe this \ncould be done within R, or in a separate script called b",
       "thread_id": "thread-678e39a9bf5c",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004234.html"
     },
     {
       "id": "msg-94d897821392",
@@ -2068,7 +2180,8 @@
       "body_snippet": "Thanks Edzer - I looked into it but I need to coerce the SPDF objects to \ngpc.poly objects and then I will lose all the attribute data I think. \n\nI may just have to use RODBC with postGIS to speed up ",
       "thread_id": "thread-001a46342ec7",
       "thread_depth": 3,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004236.html"
     },
     {
       "id": "msg-695edd741515",
@@ -2087,7 +2200,8 @@
       "body_snippet": "2008/9/25 John Callahan <john.callahan at udel.edu>:\n> If there's not a function within R for this, maybe there's a way to use the\n> web services from Geonames.org and parse the results.  Maybe this c",
       "thread_id": "thread-678e39a9bf5c",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004235.html"
     },
     {
       "id": "msg-32acb174ea11",
@@ -2108,6 +2222,7 @@
       "thread_id": "thread-678e39a9bf5c",
       "thread_depth": 3,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004237.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080925/02cf00a7/attachment.pl"
       ]
@@ -2127,11 +2242,12 @@
         "<48DB9608.90102@uni-muenster.de>",
         "<48DBA5B9.4020207@utoronto.ca>"
       ],
-      "body_plain": "If you're thinking the PostGIS route, you might also want to look at \nread/writeOGR in package rgdal, which has a postgis driver.\n\nThere are some examples of this (for points) on \nhttp://wiki.intamap.org/index.php/PostGIS\n--\nEdzer\n\nMurray Richardson wrote:\n> Thanks Edzer - I looked into it but I need to coerce the SPDF objects \n> to gpc.poly objects and then I will lose all the attribute data I think.\n> I may just have to use RODBC with postGIS to speed up the selection \n> process, which has worked well for me in other situations, but makes \n> the scripts that much more cumbersome.\n>\n> cheers\n>\n> Murray\n>\n> Edzer Pebesma wrote:\n>> That's right, it is not there; I thought this morning about a way to \n>> look whether all the points of one polygon fall in another, which \n>> sp's overlay could do, but that's not a sufficient condition.\n>>\n>> Perhaps functions in package gpclib can do this?\n>> -- \n>> Edzer\n>>\n>> Murray Richardson wrote:\n>>> Thanks Friderike.  I assumed this was the answer, but it doesn't \n>>> appear to work with two SPDF objects.  i.e.:\n>>>\n>>> > overlay(polysA,polysB)\n>>> Error in function (classes, fdef, mtable)  :\n>>>  unable to find an inherited method for function \"overlay\", for \n>>> signature \"SpatialPolygonsDataFrame\", \"SpatialPolygonsDataFrame\"\n>>>\n>>>\n>>> Murray\n>>>\n>>>\n>>> Oehler, Friderike (AGPP) wrote:\n>>>> Try ?overlay\n>>>>\n>>>> Regards,\n>>>> Friderike\n>>>>\n>>>>\n>>>> -----Original Message-----\n>>>> From: r-sig-geo-bounces at stat.math.ethz.ch\n>>>> [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Murray \n>>>> Richardson\n>>>> Sent: 25 September 2008 06:01\n>>>> To: r-sig-geo at stat.math.ethz.ch\n>>>> Subject: [R-sig-Geo] select polygons in polygons\n>>>>\n>>>>\n>>>> Hello users,\n>>>>\n>>>> There is probably a very simple solution to this that I am missing: \n>>>> is there a way to select polygons in one SPDF that fall within the \n>>>> polygons of another SPDF? This would save me a lot of processing \n>>>> time as I am having to take a very circuitous route to achieve the \n>>>> same outcome.\n>>>>\n>>>> Thanks!\n>>>>\n>>>> Murray\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at stat.math.ethz.ch \n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>\n>>>>\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at stat.math.ethz.ch\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster,\nWeseler Stra?e 253, 48151 M?nster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9",
+      "body_plain": "If you're thinking the PostGIS route, you might also want to look at \nread/writeOGR in package rgdal, which has a postgis driver.\n\nThere are some examples of this (for points) on \nhttp://wiki.intamap.org/index.php/PostGIS\n--\nEdzer\n\nMurray Richardson wrote:\n> Thanks Edzer - I looked into it but I need to coerce the SPDF objects \n> to gpc.poly objects and then I will lose all the attribute data I think.\n> I may just have to use RODBC with postGIS to speed up the selection \n> process, which has worked well for me in other situations, but makes \n> the scripts that much more cumbersome.\n>\n> cheers\n>\n> Murray\n>\n> Edzer Pebesma wrote:\n>> That's right, it is not there; I thought this morning about a way to \n>> look whether all the points of one polygon fall in another, which \n>> sp's overlay could do, but that's not a sufficient condition.\n>>\n>> Perhaps functions in package gpclib can do this?\n>> -- \n>> Edzer\n>>\n>> Murray Richardson wrote:\n>>> Thanks Friderike.  I assumed this was the answer, but it doesn't \n>>> appear to work with two SPDF objects.  i.e.:\n>>>\n>>> > overlay(polysA,polysB)\n>>> Error in function (classes, fdef, mtable)  :\n>>>  unable to find an inherited method for function \"overlay\", for \n>>> signature \"SpatialPolygonsDataFrame\", \"SpatialPolygonsDataFrame\"\n>>>\n>>>\n>>> Murray\n>>>\n>>>\n>>> Oehler, Friderike (AGPP) wrote:\n>>>> Try ?overlay\n>>>>\n>>>> Regards,\n>>>> Friderike\n>>>>\n>>>>\n>>>> -----Original Message-----\n>>>> From: r-sig-geo-bounces at stat.math.ethz.ch\n>>>> [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Murray \n>>>> Richardson\n>>>> Sent: 25 September 2008 06:01\n>>>> To: r-sig-geo at stat.math.ethz.ch\n>>>> Subject: [R-sig-Geo] select polygons in polygons\n>>>>\n>>>>\n>>>> Hello users,\n>>>>\n>>>> There is probably a very simple solution to this that I am missing: \n>>>> is there a way to select polygons in one SPDF that fall within the \n>>>> polygons of another SPDF? This would save me a lot of processing \n>>>> time as I am having to take a very circuitous route to achieve the \n>>>> same outcome.\n>>>>\n>>>> Thanks!\n>>>>\n>>>> Murray\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at stat.math.ethz.ch \n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>\n>>>>\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at stat.math.ethz.ch\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster,\nWeseler Straße 253, 48151 Münster, Germany.  Phone: +49 251\n8333081, Fax: +49 251 8339763  http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9",
       "body_snippet": "If you're thinking the PostGIS route, you might also want to look at \nread/writeOGR in package rgdal, which has a postgis driver.\n\nThere are some examples of this (for points) on \nhttp://wiki.intamap.",
       "thread_id": "thread-001a46342ec7",
       "thread_depth": 4,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004238.html"
     },
     {
       "id": "msg-76b27bb0a17d",
@@ -2152,7 +2268,8 @@
       "body_snippet": "2008/9/25 John Callahan <john.callahan at udel.edu>:\n> That's a handy little script to have, and learn from.  Geonames.org also\n> hosts web services for finding the elevation, nearby populated places,",
       "thread_id": "thread-678e39a9bf5c",
       "thread_depth": 4,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004239.html"
     },
     {
       "id": "msg-aa187d306c3f",
@@ -2170,7 +2287,8 @@
       "body_snippet": "I found a shapefile for a timezone map at http://openmap.bbn.com/data/shape/timezone/, you can load this in using maptools and related packages, then use any of the tools to find out which polygon you",
       "thread_id": "thread-678e39a9bf5c",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004240.html"
     },
     {
       "id": "msg-4ea7ee0e5157",
@@ -2189,7 +2307,8 @@
       "body_snippet": "2008/9/25 Greg Snow <Greg.Snow at imail.org>:\n> I found a shapefile for a timezone map at http://openmap.bbn.com/data/shape/timezone/, you can load this in using maptools and related packages, then us",
       "thread_id": "thread-678e39a9bf5c",
       "thread_depth": 2,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004241.html"
     },
     {
       "id": "msg-d27143caaaf0",
@@ -2205,7 +2324,8 @@
       "body_snippet": "Hi,\n\n I use spplot to display the values of a SpatialPointsDataFrame.\n\n spplot(SPDF[,\"var1\"], col.regions=rainbow(100), pch =16)\n\n I have different types of locations (forests, pastures, etc) and woul",
       "thread_id": "thread-d27143caaaf0",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004242.html"
     },
     {
       "id": "msg-2a4be1fc95f6",
@@ -2221,7 +2341,8 @@
       "body_snippet": "I am using the readShapePoly() function in the maptools package to read \nin shape files.  I need to order an attribute in the shapefile in \nascending order. For example, I have three attributes: C1,C2",
       "thread_id": "thread-2a4be1fc95f6",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004243.html"
     },
     {
       "id": "msg-ab7971ca5bc2",
@@ -2238,6 +2359,7 @@
       "thread_id": "thread-ab7971ca5bc2",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004244.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080927/0229ba11/attachment.pl"
       ]
@@ -2258,7 +2380,8 @@
       "body_snippet": "On Fri, 2008-09-19 at 17:16 -0700, Marie-Anne C Serve wrote:\n> Hello,\n> I would like to know how i can move a color scale, now vertical and on\n> the right of the plot, to a horizontal one at the botto",
       "thread_id": "thread-20b53c88be9e",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004245.html"
     },
     {
       "id": "msg-76f492076157",
@@ -2276,7 +2399,8 @@
       "body_snippet": "On Sat, 27 Sep 2008, Roberto Patuelli wrote:\n\n> Hi All,\n>\n> I want to aggregate my NUTS-3 regions in bigger ones, for which, of \n> course, I have corresponding codes. I have two main problems:\n>\n> 1) ",
       "thread_id": "thread-ab7971ca5bc2",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004246.html"
     },
     {
       "id": "msg-66c660f3b2eb",
@@ -2294,7 +2418,8 @@
       "body_snippet": "On Fri, 26 Sep 2008, Jason Gasper wrote:\n\n> I am using the readShapePoly() function in the maptools package to read in \n> shape files.  I need to order an attribute in the shapefile in ascending \n> or",
       "thread_id": "thread-2a4be1fc95f6",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004247.html"
     },
     {
       "id": "msg-5b45f88ac3e8",
@@ -2314,6 +2439,7 @@
       "thread_id": "thread-2a4be1fc95f6",
       "thread_depth": 2,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004248.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080928/ef1bcff3/attachment.pl"
       ]
@@ -2333,6 +2459,7 @@
       "thread_id": "thread-692611fa2fe5",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004249.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/96af028e/attachment.pl"
       ]
@@ -2352,6 +2479,7 @@
       "thread_id": "thread-aec184c6f06d",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004250.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/58a50daa/attachment.pl"
       ]
@@ -2371,6 +2499,7 @@
       "thread_id": "thread-ffa5163afc8d",
       "thread_depth": 0,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004251.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/8269d11f/attachment.pl"
       ]
@@ -2392,6 +2521,7 @@
       "thread_id": "thread-ffa5163afc8d",
       "thread_depth": 1,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004252.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080930/f5e064a9/attachment.pl"
       ]
@@ -2414,6 +2544,7 @@
       "thread_id": "thread-ffa5163afc8d",
       "thread_depth": 2,
       "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004253.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080929/354e3d3c/attachment.pl"
       ]
@@ -2434,7 +2565,8 @@
       "body_snippet": "On Mon, 29 Sep 2008, milton ruser wrote:\n\n> Dear RGeo-Gurus,\n>\n> I have a ASC file, and would like that each pixel come to be a polygon.\n> Any help are welcome.\n>\n> require(rgdal)\n> require(adehabitat",
       "thread_id": "thread-ffa5163afc8d",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004254.html"
     },
     {
       "id": "msg-c4f8531244b7",
@@ -2452,7 +2584,8 @@
       "body_snippet": "On Mon, 29 Sep 2008, Mike McManus wrote:\n\n> I was able to work around my export Geoda problem by using the read.dbf\n> function in the spsurvey package.\n\nUnless there is a good reason to use the read.d",
       "thread_id": "thread-aec184c6f06d",
       "thread_depth": 1,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004255.html"
     },
     {
       "id": "msg-4d814dd546b0",
@@ -2470,7 +2603,8 @@
       "body_snippet": "Have you tried just reading the shapefile directly into R using the  \nreadShapePoly command in maptools.  spdep can form the neighbors and  \nweights matrices from the shapefile, then you don't have to",
       "thread_id": "thread-4d814dd546b0",
       "thread_depth": 0,
-      "month": "2008-09"
+      "month": "2008-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-September/004256.html"
     }
   ],
   "threads": [

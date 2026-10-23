@@ -17,7 +17,8 @@
       "body_snippet": "Hi- \n\nI just found out that if you loaded the SparseM and spgwr packages at the\nsame time in R (2.0.1), spgwr won't work. The reason is that since the\nfunction model.response() (which is intensively u",
       "thread_id": "thread-7405bff762d8",
       "thread_depth": 0,
-      "month": "2005-02"
+      "month": "2005-02",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-February/000326.html"
     },
     {
       "id": "msg-b272b2871076",
@@ -33,7 +34,8 @@
       "body_snippet": "On Tue, 1 Feb 2005, Danlin Yu wrote:\n\n> Hi- \n> \n> I just found out that if you loaded the SparseM and spgwr packages at the\n> same time in R (2.0.1), spgwr won't work. The reason is that since the\n> f",
       "thread_id": "thread-7405bff762d8",
       "thread_depth": 1,
-      "month": "2005-02"
+      "month": "2005-02",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-February/000327.html"
     },
     {
       "id": "msg-6dffdbe5880f",
@@ -49,7 +51,8 @@
       "body_snippet": "Hello,\n\nMy name is Matthew Sokol and I am writing this list serve to ask some\nhelp. Currently I am a master's student at the University of Nevada\nand have come across a problem using R that I can not ",
       "thread_id": "thread-6dffdbe5880f",
       "thread_depth": 0,
-      "month": "2005-02"
+      "month": "2005-02",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-February/000328.html"
     },
     {
       "id": "msg-b44b7b11ba4f",
@@ -63,11 +66,12 @@
       "references": [
         "<4505b2b105020112115bc059a@mail.gmail.com>"
       ],
-      "body_plain": "Matthew\n\n1. the \"grid\" argument can also taka a matrix with coordinates values.\nTerefore if you want N locations in coordinates which are not in the\n1x1 square just generate a Nx2 matrix witht the coordinates and pass it to\n\"grid\"\n\n2. grf produces \"uncoditional\" simulations.\nTo obtain conditional simulations you will need to use either\nkrige.conv (for \"tradidional\" kriging algorithms)  or\nkrige.bayes(for \"Bayesian\" kriging.)\n\nSee for instance help(krige.conv)\n\nhope this helps\n\nP.J.\n\n\nOn Tue, 1 Feb 2005, Matthew Sokol wrote:\n\n> Hello,\n>\n> My name is Matthew Sokol and I am writing this list serve to ask some\n> help. Currently I am a master's student at the University of Nevada\n> and have come across a problem using R that I can not solve.\n>\n> Here is my problem:\n> I am using the R package geoR, specifically the function grf to simulate data.\n>\n> Basically I have a data set that contains an Easting and Northing\n> coordinate system and a Z value. From this system I wish to perform\n> Ordinary Kriging. So I run the following command lines in R:\n> > dat<-read.table(\"examplepb.dat\",header=TRUE)\n> > geodat<-as.geodata(dat)\n> > plot(geodat)\n> > vario<-variog(geodat)\n> > lines.variomodel(cov.model=\"gaussian\",nugget=1800,cov.pars=c(1400,60),max.dist=150)\n>\n> Now since I know the Nugget, Sill, and Range for the variogram model,\n> I wish to simulate more data that follows the same variogram model. So\n> I run the following command line:\n>\n> > simdat<-grf(625,grid=\"reg\",nugget=1800,cov.pars=c(1400,60))\n>\n> Now, the problem with this command is that it produces data on grid\n> that is 1 x 1 (all the Northing and easting coordinates are now a\n> number 0-1). But my easting and northing coordinates have the\n> following properties:\n>\n> Easting: Min 254.4\tMax: 492\n> Northing: Min 118\tMax 315\n>\n> Which is not a 1 x 1 grid.\n>\n> I know my problem is in this statement: grid=\"reg\"\n> I tried the following commands:\n> Loci<-expand.grid(seq(250,500,l=250),seq(115,320,l=205))\n> So now I run:\n> > simdat<-grf(625,grid=loci,nugget=1800,cov.pars=c(1400,60))\n>\n> Which produces so much data that I can not R console will not display it.\n>\n> So I run the following R commands:\n> geosim<-as.geodata(simdat)\n> > variosim<-variog(geosim)\n> variog: computing omnidirectional variogram\n> Error in vector(\"double\", length) : cannot allocate vector of length 1444504375\n>\n> So now I get an error. I think i may be producing to much data with my\n> simulation?\n>\n> I am lost. I've looked through the manuals but have not found much on\n> conditional simulation. I was wondering if anyone knew of a problem\n> like this or where I can look to find more information.\n>\n> I am sorry if the question is trivial as I have been reading the posts\n> on this list serve and everyone here has a command of the language far\n> surpass mine. Thank you for your time.\n>\n>\n> -Matthew Sokol\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\nPaulo Justiniano Ribeiro Jr\nLEG (Laborat?rio de Estat?stica e Geoinforma??o)\nDepartamento de Estat?stica\nUniversidade Federal do Paran?\nCaixa Postal 19.081\nCEP 81.531-990\nCuritiba, PR  -  Brasil\nTel: (+55) 41 361 3573\nFax: (+55) 41 361 3141\ne-mail: paulojus at est.ufpr.br\nhttp://www.est.ufpr.br/~paulojus",
+      "body_plain": "Matthew\n\n1. the \"grid\" argument can also taka a matrix with coordinates values.\nTerefore if you want N locations in coordinates which are not in the\n1x1 square just generate a Nx2 matrix witht the coordinates and pass it to\n\"grid\"\n\n2. grf produces \"uncoditional\" simulations.\nTo obtain conditional simulations you will need to use either\nkrige.conv (for \"tradidional\" kriging algorithms)  or\nkrige.bayes(for \"Bayesian\" kriging.)\n\nSee for instance help(krige.conv)\n\nhope this helps\n\nP.J.\n\n\nOn Tue, 1 Feb 2005, Matthew Sokol wrote:\n\n> Hello,\n>\n> My name is Matthew Sokol and I am writing this list serve to ask some\n> help. Currently I am a master's student at the University of Nevada\n> and have come across a problem using R that I can not solve.\n>\n> Here is my problem:\n> I am using the R package geoR, specifically the function grf to simulate data.\n>\n> Basically I have a data set that contains an Easting and Northing\n> coordinate system and a Z value. From this system I wish to perform\n> Ordinary Kriging. So I run the following command lines in R:\n> > dat<-read.table(\"examplepb.dat\",header=TRUE)\n> > geodat<-as.geodata(dat)\n> > plot(geodat)\n> > vario<-variog(geodat)\n> > lines.variomodel(cov.model=\"gaussian\",nugget=1800,cov.pars=c(1400,60),max.dist=150)\n>\n> Now since I know the Nugget, Sill, and Range for the variogram model,\n> I wish to simulate more data that follows the same variogram model. So\n> I run the following command line:\n>\n> > simdat<-grf(625,grid=\"reg\",nugget=1800,cov.pars=c(1400,60))\n>\n> Now, the problem with this command is that it produces data on grid\n> that is 1 x 1 (all the Northing and easting coordinates are now a\n> number 0-1). But my easting and northing coordinates have the\n> following properties:\n>\n> Easting: Min 254.4\tMax: 492\n> Northing: Min 118\tMax 315\n>\n> Which is not a 1 x 1 grid.\n>\n> I know my problem is in this statement: grid=\"reg\"\n> I tried the following commands:\n> Loci<-expand.grid(seq(250,500,l=250),seq(115,320,l=205))\n> So now I run:\n> > simdat<-grf(625,grid=loci,nugget=1800,cov.pars=c(1400,60))\n>\n> Which produces so much data that I can not R console will not display it.\n>\n> So I run the following R commands:\n> geosim<-as.geodata(simdat)\n> > variosim<-variog(geosim)\n> variog: computing omnidirectional variogram\n> Error in vector(\"double\", length) : cannot allocate vector of length 1444504375\n>\n> So now I get an error. I think i may be producing to much data with my\n> simulation?\n>\n> I am lost. I've looked through the manuals but have not found much on\n> conditional simulation. I was wondering if anyone knew of a problem\n> like this or where I can look to find more information.\n>\n> I am sorry if the question is trivial as I have been reading the posts\n> on this list serve and everyone here has a command of the language far\n> surpass mine. Thank you for your time.\n>\n>\n> -Matthew Sokol\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\nPaulo Justiniano Ribeiro Jr\nLEG (Laboratório de Estatística e Geoinformação)\nDepartamento de Estatística\nUniversidade Federal do Paraná\nCaixa Postal 19.081\nCEP 81.531-990\nCuritiba, PR  -  Brasil\nTel: (+55) 41 361 3573\nFax: (+55) 41 361 3141\ne-mail: paulojus at est.ufpr.br\nhttp://www.est.ufpr.br/~paulojus",
       "body_snippet": "Matthew\n\n1. the \"grid\" argument can also taka a matrix with coordinates values.\nTerefore if you want N locations in coordinates which are not in the\n1x1 square just generate a Nx2 matrix witht the coo",
       "thread_id": "thread-6dffdbe5880f",
       "thread_depth": 1,
-      "month": "2005-02"
+      "month": "2005-02",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-February/000329.html"
     },
     {
       "id": "msg-5c028978c897",
@@ -84,6 +88,7 @@
       "thread_id": "thread-5c028978c897",
       "thread_depth": 0,
       "month": "2005-02",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-February/000330.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050207/c81cea3d/attachment.pl"
       ]
@@ -102,7 +107,8 @@
       "body_snippet": "On Mon, 7 Feb 2005, Sam R. Smith wrote:\n\n> \n> Hi there,\n> \n> I wonder whether there is any tutorial to teach how to use GWR in R,\n> also how to plot the related graphs?\n> \n\nPlease be more precise! Do ",
       "thread_id": "thread-5c028978c897",
       "thread_depth": 1,
-      "month": "2005-02"
+      "month": "2005-02",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-February/000331.html"
     },
     {
       "id": "msg-0c6b777bb558",
@@ -118,7 +124,8 @@
       "body_snippet": "Hi:\n\nI am interested in back-transforming the mle of parameter Beta\nand its variance when the Lambda parameter of the Box-Cox \ntransformation has been estimated and its estimate is not 0 nor \n0.5.\nIs ",
       "thread_id": "thread-0c6b777bb558",
       "thread_depth": 0,
-      "month": "2005-02"
+      "month": "2005-02",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-February/000332.html"
     },
     {
       "id": "msg-0adebee9b571",
@@ -136,7 +143,8 @@
       "body_snippet": "Dear Ruben\n\nYou don't want to do kriging here.\n\nI think the most simple solution is to this by simulation. Implicitly \nyou are saying that beta is one-dimensional.\nYou will find the mean and variance ",
       "thread_id": "thread-0c6b777bb558",
       "thread_depth": 1,
-      "month": "2005-02"
+      "month": "2005-02",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-February/000333.html"
     },
     {
       "id": "msg-c9de76efd72b",
@@ -152,7 +160,8 @@
       "body_snippet": "Dear Roger Bivand\n\nSince I noticed a new version of maptools, I upgraded the maptools and then \nchecked the changelog.\n\n> maptools(changes=T)\nmaptools, version 0.4-11, 2005-01-17\n[snip]\n0.4-10 Functio",
       "thread_id": "thread-c9de76efd72b",
       "thread_depth": 0,
-      "month": "2005-02"
+      "month": "2005-02",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-February/000334.html"
     },
     {
       "id": "msg-3fe40ee05e74",
@@ -168,7 +177,8 @@
       "body_snippet": "On Tue, 22 Feb 2005, Susumu Tanimura wrote:\n\n> Dear Roger Bivand\n> \n> Since I noticed a new version of maptools, I upgraded the maptools and then \n> checked the changelog.\n> \n> > maptools(changes=T)\n>",
       "thread_id": "thread-c9de76efd72b",
       "thread_depth": 1,
-      "month": "2005-02"
+      "month": "2005-02",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-February/000335.html"
     },
     {
       "id": "msg-26115d1e8eef",
@@ -187,7 +197,8 @@
       "body_snippet": "Dear Roger Bivand\n\nThanks for your replay.\n\n> Thanks for keeping me alert! The entry is: \"Adding checks for length()  \n> being zero\", so no changes to functionality. The problem is that when\n> length(",
       "thread_id": "thread-c9de76efd72b",
       "thread_depth": 2,
-      "month": "2005-02"
+      "month": "2005-02",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-February/000336.html"
     }
   ],
   "threads": [

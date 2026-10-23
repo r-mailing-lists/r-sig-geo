@@ -17,7 +17,8 @@
       "body_snippet": "GeoR help,\n\nBelow is the code I used to get the kriging\nfor the object Su[[1]] :\n\n> str(Su[[1]])\nList of 2\n $ x          , y          : num [1:1209, 1:2] -4.24 -5.31 -7.57 -7.42\n-6.91 ...\n  ..- attr(*",
       "thread_id": "thread-a3809c731976",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001454.html"
     },
     {
       "id": "msg-f6f5be2a9a53",
@@ -31,11 +32,12 @@
       "references": [
         "<s548c5af.075@ffdata.setur.fo>"
       ],
-      "body_plain": "Dear Luis\n\nCoud you please send an script and data/workspace such that I can try to\nreproduce the probblem here?\n\nbest\nP.J.\n\n\nPaulo Justiniano Ribeiro Jr\nLEG (Laborat?rio de Estat?stica e Geoinforma??o)\nDepartamento de Estat?stica\nUniversidade Federal do Paran?\nCaixa Postal 19.081\nCEP 81.531-990\nCuritiba, PR  -  Brasil\nTel: (+55) 41 3361 3573\nFax: (+55) 41 3361 3141\ne-mail: paulojus AT  ufpr  br\nhttp://leg.ufpr.br/~paulojus\n\nOn Wed, 1 Nov 2006, Luis Ridao Cruz wrote:\n\n> GeoR help,\n>\n> Below is the code I used to get the kriging\n> for the object Su[[1]] :\n>\n> > str(Su[[1]])\n> List of 2\n>  $ x          , y          : num [1:1209, 1:2] -4.24 -5.31 -7.57 -7.42\n> -6.91 ...\n>   ..- attr(*, \"dimnames\")=List of 2\n>   .. ..$ : chr [1:1209] \"2235\" \"2236\" \"2237\" \"2238\" ...\n>   .. ..$ : chr [1:2] \"x\" \"y\"\n>  $ data       : num [1:1209] 3.91 3 7.87 3.78 3.43 1.61 1.39 4.22 3.83\n> 4.17 ...\n>  - attr(*, \"class\")= chr \"geodata\"\n>\n> , using the  maximum likelihood estimation object \"ml\" :\n>\n> > ml\n> likfit: estimated model parameters:\n>    beta   tausq sigmasq     phi\n> \"2.901\" \"1.033\" \"1.140\" \"0.429\"\n>\n> likfit: maximised log-likelihood = -1897\n>\n>\n> ########################\n> luis <- krige.conv(Su[[1]]\n> , locations = lociLuis1\n> , krige = krige.control(obj.m = ml))\n> #######################\n>\n>\n> But when I try to plot with \"image\" :\n>\n> > image(luis, loc = test1, col = grey(seq(1, 0.1, l = 30)))\n>\n> ##################\n> test <- expand.grid(seq(-6,  -5,  l  = 10),  seq(61.5, 62, l = 10))\n> test1 <- as.matrix(test)\n> colnames(test1) <-  c('x','y')\n> ##################\n>\n>\n> I get the following:\n>\n> Warning messages:\n> 1: no non-missing arguments to min; returning Inf\n> 2: no non-missing arguments to max; returning -Inf\n>\n> What is wrorg?\n>\n> Thanks in advance\n>\n> P.S: this message (similar one ) was posted on 31/05/2006 to this list\n> but no answerwas produced\n>\n>\n> Windows XP\n>\n> > version\n>                _\n> platform       i386-pc-mingw32\n> arch           i386\n> os             mingw32\n> system         i386, mingw32\n> status\n> major          2\n> minor          3.0\n> year           2006\n> month          04\n> day            24\n> svn rev        37909\n> language       R\n> version.string Version 2.3.0 (2006-04-24)\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
-      "body_snippet": "Dear Luis\n\nCoud you please send an script and data/workspace such that I can try to\nreproduce the probblem here?\n\nbest\nP.J.\n\n\nPaulo Justiniano Ribeiro Jr\nLEG (Laborat?rio de Estat?stica e Geoinforma??",
+      "body_plain": "Dear Luis\n\nCoud you please send an script and data/workspace such that I can try to\nreproduce the probblem here?\n\nbest\nP.J.\n\n\nPaulo Justiniano Ribeiro Jr\nLEG (Laboratório de Estatística e Geoinformação)\nDepartamento de Estatística\nUniversidade Federal do Paraná\nCaixa Postal 19.081\nCEP 81.531-990\nCuritiba, PR  -  Brasil\nTel: (+55) 41 3361 3573\nFax: (+55) 41 3361 3141\ne-mail: paulojus AT  ufpr  br\nhttp://leg.ufpr.br/~paulojus\n\nOn Wed, 1 Nov 2006, Luis Ridao Cruz wrote:\n\n> GeoR help,\n>\n> Below is the code I used to get the kriging\n> for the object Su[[1]] :\n>\n> > str(Su[[1]])\n> List of 2\n>  $ x          , y          : num [1:1209, 1:2] -4.24 -5.31 -7.57 -7.42\n> -6.91 ...\n>   ..- attr(*, \"dimnames\")=List of 2\n>   .. ..$ : chr [1:1209] \"2235\" \"2236\" \"2237\" \"2238\" ...\n>   .. ..$ : chr [1:2] \"x\" \"y\"\n>  $ data       : num [1:1209] 3.91 3 7.87 3.78 3.43 1.61 1.39 4.22 3.83\n> 4.17 ...\n>  - attr(*, \"class\")= chr \"geodata\"\n>\n> , using the  maximum likelihood estimation object \"ml\" :\n>\n> > ml\n> likfit: estimated model parameters:\n>    beta   tausq sigmasq     phi\n> \"2.901\" \"1.033\" \"1.140\" \"0.429\"\n>\n> likfit: maximised log-likelihood = -1897\n>\n>\n> ########################\n> luis <- krige.conv(Su[[1]]\n> , locations = lociLuis1\n> , krige = krige.control(obj.m = ml))\n> #######################\n>\n>\n> But when I try to plot with \"image\" :\n>\n> > image(luis, loc = test1, col = grey(seq(1, 0.1, l = 30)))\n>\n> ##################\n> test <- expand.grid(seq(-6,  -5,  l  = 10),  seq(61.5, 62, l = 10))\n> test1 <- as.matrix(test)\n> colnames(test1) <-  c('x','y')\n> ##################\n>\n>\n> I get the following:\n>\n> Warning messages:\n> 1: no non-missing arguments to min; returning Inf\n> 2: no non-missing arguments to max; returning -Inf\n>\n> What is wrorg?\n>\n> Thanks in advance\n>\n> P.S: this message (similar one ) was posted on 31/05/2006 to this list\n> but no answerwas produced\n>\n>\n> Windows XP\n>\n> > version\n>                _\n> platform       i386-pc-mingw32\n> arch           i386\n> os             mingw32\n> system         i386, mingw32\n> status\n> major          2\n> minor          3.0\n> year           2006\n> month          04\n> day            24\n> svn rev        37909\n> language       R\n> version.string Version 2.3.0 (2006-04-24)\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_snippet": "Dear Luis\n\nCoud you please send an script and data/workspace such that I can try to\nreproduce the probblem here?\n\nbest\nP.J.\n\n\nPaulo Justiniano Ribeiro Jr\nLEG (Laboratório de Estatística e Geoinformaçã",
       "thread_id": "thread-a3809c731976",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001455.html"
     },
     {
       "id": "msg-1035beac5965",
@@ -51,7 +53,8 @@
       "body_snippet": ">>> Luis Ridao Cruz 24/05/2006 10:06:38 >>>\nGeoR help,\n\nAttached are the Script.R file to reproduce the example.\n\n\nFile \"luisData\" contains the observed data\n\nFile \"olsFn\" contains the fitted variogra",
       "thread_id": "thread-1035beac5965",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001456.html"
     },
     {
       "id": "msg-fba57b66e453",
@@ -69,7 +72,8 @@
       "body_snippet": "Hello all,\n\nDoes anyone know whether it is possible to specify a fixed nugget in a GLS \nmodel, while allowing the range to vary in the optimization?\n\nI am using gls() in the nlme package, with exponen",
       "thread_id": "thread-fba57b66e453",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001457.html"
     },
     {
       "id": "msg-b85af89ec723",
@@ -86,6 +90,7 @@
       "thread_id": "thread-b85af89ec723",
       "thread_depth": 0,
       "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001458.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061103/7545a667/attachment.pl"
       ]
@@ -104,7 +109,8 @@
       "body_snippet": "Replied to on R-help, but shapefiles has an undeclared dependence on \nforeign, which ought to have been made explicit properly in the package. \n\nSince read.dbf() in foreign is the shapelib function (a",
       "thread_id": "thread-b85af89ec723",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001459.html"
     },
     {
       "id": "msg-a352dd295faa",
@@ -120,7 +126,8 @@
       "body_snippet": "Hi.\n\nDoes anyone have an example of estimating Moran's I from a file with\npoint (not polygon) data?  I'm getting close(r) but I still have a few\nproblems.\n\nHere's my code so far:\n\nlibrary(spdep)\nctpoi",
       "thread_id": "thread-a352dd295faa",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001460.html"
     },
     {
       "id": "msg-a6679445c0e0",
@@ -136,7 +143,8 @@
       "body_snippet": "On Fri, 3 Nov 2006, Jeffrey Stratford wrote:\n\n> Hi.\n> \n> Does anyone have an example of estimating Moran's I from a file with\n> point (not polygon) data?  I'm getting close(r) but I still have a few\n>",
       "thread_id": "thread-a352dd295faa",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001461.html"
     },
     {
       "id": "msg-a0d68c5213f5",
@@ -153,6 +161,7 @@
       "thread_id": "thread-a0d68c5213f5",
       "thread_depth": 0,
       "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001462.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061107/c21c619f/attachment.pl"
       ]
@@ -171,7 +180,8 @@
       "body_snippet": "On Tue, 7 Nov 2006, Raphael Saldanha wrote:\n\n> Hi,\n> \n> I'm using a SpatialPolygonsDataFrame object called \"x\" derived from a\n> shapefile.\n> \n> Here is what I have:\n> \n> > x.adapt.gauss <- gwr.sel(PES",
       "thread_id": "thread-a0d68c5213f5",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001463.html"
     },
     {
       "id": "msg-5a79cc34f71d",
@@ -187,7 +197,8 @@
       "body_snippet": "The ancient uncharacteristically at\nthe Sid Morgan rooftops \nand grover of grandparents\nthe shadow horned\ndirectly to winding\ncapasity in the strand\nplus and multiple to beset\n\n-------------- next par",
       "thread_id": "thread-5a79cc34f71d",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001464.html"
     },
     {
       "id": "msg-4652c565a685",
@@ -203,7 +214,8 @@
       "body_snippet": "Salve\nl'indirizzo da lei digitato non ? pi? presente.\nSe intende comunicare con la nostra azienda pu? scrivere a info at dyrecta.com",
       "thread_id": "thread-4652c565a685",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001465.html"
     },
     {
       "id": "msg-79d30161b0e8",
@@ -219,7 +231,8 @@
       "body_snippet": "Hello all,\n\n[this is the continuation of a thread originally posted to r-help]\n\nAs recommended by Roger, I installed the rgdal package and went through\nthe description of my MIF/MID files. However, I ",
       "thread_id": "thread-79d30161b0e8",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001466.html"
     },
     {
       "id": "msg-79b42afd3eaf",
@@ -235,7 +248,8 @@
       "body_snippet": "On Wed, 8 Nov 2006, Frosch, Katharina wrote:\n\n> Hello all,\n> \n> [this is the continuation of a thread originally posted to r-help]\n> \n> As recommended by Roger, I installed the rgdal package and went ",
       "thread_id": "thread-79d30161b0e8",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001467.html"
     },
     {
       "id": "msg-eacc45d763e1",
@@ -251,7 +265,8 @@
       "body_snippet": "Hi,\n\nHow to dig out the code of the function of .spFindCG, which is used in the function\nPolygon. \n\nI also wanna to know how to calculate the area of a polygon, and how could I know if\nthere are inter",
       "thread_id": "thread-eacc45d763e1",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001468.html"
     },
     {
       "id": "msg-ede2ad5af8f1",
@@ -267,7 +282,8 @@
       "body_snippet": "On Wed, 8 Nov 2006, Wang, Hao wrote:\n\n> Hi,\n> \n> How to dig out the code of the function of .spFindCG, which is used in the function\n> Polygon. \n\nIt isn't exported from the sp namespace, so you need t",
       "thread_id": "thread-eacc45d763e1",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001469.html"
     },
     {
       "id": "msg-089a1583d934",
@@ -285,7 +301,8 @@
       "body_snippet": "Hao:\n\nThe PBSMapping package has reasonably stratightforward polygon area \ncalculations.\nIn fact, I just assembled a tutorial on this topic on my Web site:\n\nhttp://nceas.ucsb.edu/scicomp/GISSeminar/Us",
       "thread_id": "thread-eacc45d763e1",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001470.html"
     },
     {
       "id": "msg-ab992c9edb6f",
@@ -301,7 +318,8 @@
       "body_snippet": "Salve\nl'indirizzo da lei digitato non ? pi? presente.\nSe intende comunicare con la nostra azienda pu? scrivere a info at dyrecta.com",
       "thread_id": "thread-ab992c9edb6f",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001471.html"
     },
     {
       "id": "msg-0ee9bd87cd36",
@@ -318,6 +336,7 @@
       "thread_id": "thread-0ee9bd87cd36",
       "thread_depth": 0,
       "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001472.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061110/cd5a5823/attachment.pl"
       ]
@@ -336,7 +355,8 @@
       "body_snippet": "Thanks a lot for your precious help, it worked perfectly. Most probably,\nthe first errors arose from importing a shapefile where I merged some\ncounties using MapViewer - perhaps the newly created shap",
       "thread_id": "thread-1433dd7df707",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001473.html"
     },
     {
       "id": "msg-e6a96e47eb63",
@@ -352,7 +372,8 @@
       "body_snippet": "Dear all, \n\nI work with a county map of Germany and have to merge 100 out of 440\ncounties in total. I tried several ways, using unionSpatialPolygons from\nthe spgpc package and combine union and append",
       "thread_id": "thread-e6a96e47eb63",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001474.html"
     },
     {
       "id": "msg-dc11a6ed89ef",
@@ -368,7 +389,8 @@
       "body_snippet": "On Fri, 10 Nov 2006, Frosch, Katharina wrote:\n\n> Dear all, \n> \n> I work with a county map of Germany and have to merge 100 out of 440\n> counties in total. I tried several ways, using unionSpatialPolyg",
       "thread_id": "thread-e6a96e47eb63",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001475.html"
     },
     {
       "id": "msg-8b132d74aa8d",
@@ -382,11 +404,12 @@
       "references": [
         "<mailman.11.1163242805.28411.r-sig-geo@stat.math.ethz.ch>"
       ],
-      "body_plain": "Hi Carlos,\nThere are a couple of ways to do this, but you have to be a little more\nspecific\nabout what your goals/intentions are. I assume you have points p(x1,y1),\n...., p(xn,yn), where p\nis a vector of observations.\n\nIf the goal is interpolation than you have to model the spatial\ncovariance\nof the orthognal factors, and you should look at waekernagel's book.\nif your goal is to extract principal components and account for the\nvariance induced by a spatial\nprocess, a quick and dirty approach is to include polynomials of the xy\ncoordinates in the data and \ndo pca on the augmented matrix. Take a look at\n\nBorcard, D., P. Legendre & P. Drapeau. 1992. Partialling out the spatial\ncomponent of ecological variation. Ecology 73: 1045-1055\n\nM?ot, A., P. Legendre & D. Borcard. 1998. Partialling out the spatial\ncomponent of ecological variation: questions and propositions in the\nlinear modeling framework. Environmental and Ecological Statistics 5\n(1): 1-27.\n\nAnother approach is spatial factor analysis\n\nChristensen, WF, and Amemiya, Y (2001).  \"Generalized shifted-factor\nanalysis method for multivariate geo-referenced data,\" Mathematical\nGeology, 33, 801-824.\n\nChristensen, WF, and Amemiya, Y (2002).  \"Latent variable analysis of\nmultivariate spatial data,\" Journal of the American Statistical\nAssociation, 97, 302-317\n\nIf your question is there R code to do this, I think the ade4 package\ncan to the spatial variance partitioning,\nbut for factor analysis, you are on your own.\n\nNicholas\n\n> Message: 1\n> Date: Fri, 10 Nov 2006 12:19:42 -0000\n> From: \"Carlos GUERRA\" <carlosguerra at esa.ipvc.pt>\n> Subject: [R-sig-Geo] how to do a principle component analysis with\n> \tgeo-referenced points\n> To: <r-sig-geo at stat.math.ethz.ch>\n> Message-ID:\n> \t<!&!AAAAAAAAAAAYAAAAAAAAAJf1NEZJVtRHvdgUBBxUpbbCgAAAEAAAAMBFQ0P62dxKhHvfVE1zHesBAAAAAA==@esa.ipvc.pt>\n> \t\n> Content-Type: text/plain\n> \n> Dear friends,\n> \n> I wanted to know how to do a principle component analysis (PCA) from\n> geo-referenced points.\n> \n> I have a list like:\n> \n> geo$xy with coordinates,\n> \n> and geo$data with the data that I want to do the analysis\n> \n> \nis this right?\n> \n>  \n> \n>  \n> \n> +++++++++++++++++++++++++++++++\n> \n> Carlos GUERRA\n> \n>  \n> \n> Instituto Polit?cnico de Viana do Castelo\n> \n> Escola Superior Agr?ria de Ponte de Lima\n> \n>  \n> \n> Mosteiro de Ref?ios do Lima\n> \n> 4990-706 Ponte de Lima\n> \n> PORTUGAL\n> \n>  \n> \n> MAIL: carlosguerra at esa.ipvc.pt\n> \n> TEL: +351 912 407 109\n> \n> +++++++++++++++++++++++++++++++\n> \n>  \n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> \n> \n> ------------------------------",
+      "body_plain": "Hi Carlos,\nThere are a couple of ways to do this, but you have to be a little more\nspecific\nabout what your goals/intentions are. I assume you have points p(x1,y1),\n...., p(xn,yn), where p\nis a vector of observations.\n\nIf the goal is interpolation than you have to model the spatial\ncovariance\nof the orthognal factors, and you should look at waekernagel's book.\nif your goal is to extract principal components and account for the\nvariance induced by a spatial\nprocess, a quick and dirty approach is to include polynomials of the xy\ncoordinates in the data and \ndo pca on the augmented matrix. Take a look at\n\nBorcard, D., P. Legendre & P. Drapeau. 1992. Partialling out the spatial\ncomponent of ecological variation. Ecology 73: 1045-1055\n\nMéot, A., P. Legendre & D. Borcard. 1998. Partialling out the spatial\ncomponent of ecological variation: questions and propositions in the\nlinear modeling framework. Environmental and Ecological Statistics 5\n(1): 1-27.\n\nAnother approach is spatial factor analysis\n\nChristensen, WF, and Amemiya, Y (2001).  \"Generalized shifted-factor\nanalysis method for multivariate geo-referenced data,\" Mathematical\nGeology, 33, 801-824.\n\nChristensen, WF, and Amemiya, Y (2002).  \"Latent variable analysis of\nmultivariate spatial data,\" Journal of the American Statistical\nAssociation, 97, 302-317\n\nIf your question is there R code to do this, I think the ade4 package\ncan to the spatial variance partitioning,\nbut for factor analysis, you are on your own.\n\nNicholas\n\n> Message: 1\n> Date: Fri, 10 Nov 2006 12:19:42 -0000\n> From: \"Carlos GUERRA\" <carlosguerra at esa.ipvc.pt>\n> Subject: [R-sig-Geo] how to do a principle component analysis with\n> \tgeo-referenced points\n> To: <r-sig-geo at stat.math.ethz.ch>\n> Message-ID:\n> \t<!&!AAAAAAAAAAAYAAAAAAAAAJf1NEZJVtRHvdgUBBxUpbbCgAAAEAAAAMBFQ0P62dxKhHvfVE1zHesBAAAAAA==@esa.ipvc.pt>\n> \t\n> Content-Type: text/plain\n> \n> Dear friends,\n> \n> I wanted to know how to do a principle component analysis (PCA) from\n> geo-referenced points.\n> \n> I have a list like:\n> \n> geo$xy with coordinates,\n> \n> and geo$data with the data that I want to do the analysis\n> \n> \nis this right?\n> \n>  \n> \n>  \n> \n> +++++++++++++++++++++++++++++++\n> \n> Carlos GUERRA\n> \n>  \n> \n> Instituto Politécnico de Viana do Castelo\n> \n> Escola Superior Agrária de Ponte de Lima\n> \n>  \n> \n> Mosteiro de Refóios do Lima\n> \n> 4990-706 Ponte de Lima\n> \n> PORTUGAL\n> \n>  \n> \n> MAIL: carlosguerra at esa.ipvc.pt\n> \n> TEL: +351 912 407 109\n> \n> +++++++++++++++++++++++++++++++\n> \n>  \n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> \n> \n> ------------------------------",
       "body_snippet": "Hi Carlos,\nThere are a couple of ways to do this, but you have to be a little more\nspecific\nabout what your goals/intentions are. I assume you have points p(x1,y1),\n...., p(xn,yn), where p\nis a vector",
       "thread_id": "thread-8b132d74aa8d",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001476.html"
     },
     {
       "id": "msg-737af45adb9f",
@@ -403,6 +426,7 @@
       "thread_id": "thread-737af45adb9f",
       "thread_depth": 0,
       "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001477.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061111/0884ea4f/attachment.pl"
       ]
@@ -419,11 +443,12 @@
       "references": [
         "<402FD9096A2EB74AB9FDA1D3302EE35612EACA@ci04.mail2.esa.ipvc.pt>"
       ],
-      "body_plain": "Hi Carlos,\nI think that there are tools in the sp package for dealing with grids.\nIf I am understanding you correctly and you want to do \"zoning\" of your\nregion\nthan you probably are not looking to do pca, but some sort of\nclustering.\nMarie Jose Fortin had some nice papers on a technique called wombling,\nfor finding\nregions of abrupt ecological change. There are some other techniques for\nspatial partitioning,\nbut I am not sure if they are implemented in R. It has been a long time\nsince\nI worked on ecological problems.\n\nFor more information on the spatial tools in R a good place to start is \n http://cran.r-project.org/src/contrib/Views/Spatial.html\nthe CRAN task view for spatial statistics, and \nhttp://cran.r-project.org/src/contrib/Views/Environmetrics.html\nhas some more pointers.\n\nHope this helps,\n\nNicholas\nOn Sat, 11 Nov 2006 20:24:59 -0000, \"Carlos A. Bastos M.Guerra\"\n<carlosguerra at esa.ipvc.pt> said:\n> \n> Dear Nicholas,\n> \n> First of all thanks for the references, I think they will help me with my\n> current problem. :)\n> The thing is that I am used to work with AcrGIS to do the spatial\n> analysis, but the statistical methods in ArcGIS are a bit \"dummy\", namely\n> in spatial PCA. I am used to work with R with the ade4 package :) but\n> when I heard that I could do spatial analysis with R I ad to try it...but\n> its more difficult that it seams (at first)...\n> \n> What I did was: (in ArcGIS) convert the centroids of a grid into a point\n> shape file, than I have integrated all the information into different\n> columns. I converted the dbf file into a txt an then I imported the file\n> into R ... and my problems began... :)\n> \n> My objective is to do a PCA and extract the different groups of points in\n> order to make an ecological zoning.\n> \n> I am still starting with R and \"the Geo tools\" can you point me some\n> reading material that I can use?\n> \n> Best regards,\n> \n> Carlos\n> \n> \n> -----Mensagem original-----\n> De: Nicholas Lewin-Koh [mailto:nikko at hailmail.net] \n> Enviada: s?bado, 11 de Novembro de 2006 19:06\n> Para: r-sig-geo at stat.math.ethz.ch\n> Cc: Carlos GUERRA\n> Assunto: [R-sig-Geo] RE: how to do a principle component analysis with\n> geo-referenced points\n> \n> Hi Carlos,\n> There are a couple of ways to do this, but you have to be a little more\n> specific\n> about what your goals/intentions are. I assume you have points p(x1,y1),\n> ...., p(xn,yn), where p\n> is a vector of observations.\n> \n> If the goal is interpolation than you have to model the spatial\n> covariance\n> of the orthognal factors, and you should look at waekernagel's book.\n> if your goal is to extract principal components and account for the\n> variance induced by a spatial\n> process, a quick and dirty approach is to include polynomials of the xy\n> coordinates in the data and \n> do pca on the augmented matrix. Take a look at\n> \n> Borcard, D., P. Legendre & P. Drapeau. 1992. Partialling out the spatial\n> component of ecological variation. Ecology 73: 1045-1055\n> \n> M?ot, A., P. Legendre & D. Borcard. 1998. Partialling out the spatial\n> component of ecological variation: questions and propositions in the\n> linear modeling framework. Environmental and Ecological Statistics 5\n> (1): 1-27.\n> \n> Another approach is spatial factor analysis\n> \n> Christensen, WF, and Amemiya, Y (2001).  \"Generalized shifted-factor\n> analysis method for multivariate geo-referenced data,\" Mathematical\n> Geology, 33, 801-824.\n> \n> Christensen, WF, and Amemiya, Y (2002).  \"Latent variable analysis of\n> multivariate spatial data,\" Journal of the American Statistical\n> Association, 97, 302-317\n> \n> If your question is there R code to do this, I think the ade4 package\n> can to the spatial variance partitioning,\n> but for factor analysis, you are on your own.\n> \n> Nicholas",
+      "body_plain": "Hi Carlos,\nI think that there are tools in the sp package for dealing with grids.\nIf I am understanding you correctly and you want to do \"zoning\" of your\nregion\nthan you probably are not looking to do pca, but some sort of\nclustering.\nMarie Jose Fortin had some nice papers on a technique called wombling,\nfor finding\nregions of abrupt ecological change. There are some other techniques for\nspatial partitioning,\nbut I am not sure if they are implemented in R. It has been a long time\nsince\nI worked on ecological problems.\n\nFor more information on the spatial tools in R a good place to start is \n http://cran.r-project.org/src/contrib/Views/Spatial.html\nthe CRAN task view for spatial statistics, and \nhttp://cran.r-project.org/src/contrib/Views/Environmetrics.html\nhas some more pointers.\n\nHope this helps,\n\nNicholas\nOn Sat, 11 Nov 2006 20:24:59 -0000, \"Carlos A. Bastos M.Guerra\"\n<carlosguerra at esa.ipvc.pt> said:\n> \n> Dear Nicholas,\n> \n> First of all thanks for the references, I think they will help me with my\n> current problem. :)\n> The thing is that I am used to work with AcrGIS to do the spatial\n> analysis, but the statistical methods in ArcGIS are a bit \"dummy\", namely\n> in spatial PCA. I am used to work with R with the ade4 package :) but\n> when I heard that I could do spatial analysis with R I ad to try it...but\n> its more difficult that it seams (at first)...\n> \n> What I did was: (in ArcGIS) convert the centroids of a grid into a point\n> shape file, than I have integrated all the information into different\n> columns. I converted the dbf file into a txt an then I imported the file\n> into R ... and my problems began... :)\n> \n> My objective is to do a PCA and extract the different groups of points in\n> order to make an ecological zoning.\n> \n> I am still starting with R and \"the Geo tools\" can you point me some\n> reading material that I can use?\n> \n> Best regards,\n> \n> Carlos\n> \n> \n> -----Mensagem original-----\n> De: Nicholas Lewin-Koh [mailto:nikko at hailmail.net] \n> Enviada: sábado, 11 de Novembro de 2006 19:06\n> Para: r-sig-geo at stat.math.ethz.ch\n> Cc: Carlos GUERRA\n> Assunto: [R-sig-Geo] RE: how to do a principle component analysis with\n> geo-referenced points\n> \n> Hi Carlos,\n> There are a couple of ways to do this, but you have to be a little more\n> specific\n> about what your goals/intentions are. I assume you have points p(x1,y1),\n> ...., p(xn,yn), where p\n> is a vector of observations.\n> \n> If the goal is interpolation than you have to model the spatial\n> covariance\n> of the orthognal factors, and you should look at waekernagel's book.\n> if your goal is to extract principal components and account for the\n> variance induced by a spatial\n> process, a quick and dirty approach is to include polynomials of the xy\n> coordinates in the data and \n> do pca on the augmented matrix. Take a look at\n> \n> Borcard, D., P. Legendre & P. Drapeau. 1992. Partialling out the spatial\n> component of ecological variation. Ecology 73: 1045-1055\n> \n> Méot, A., P. Legendre & D. Borcard. 1998. Partialling out the spatial\n> component of ecological variation: questions and propositions in the\n> linear modeling framework. Environmental and Ecological Statistics 5\n> (1): 1-27.\n> \n> Another approach is spatial factor analysis\n> \n> Christensen, WF, and Amemiya, Y (2001).  \"Generalized shifted-factor\n> analysis method for multivariate geo-referenced data,\" Mathematical\n> Geology, 33, 801-824.\n> \n> Christensen, WF, and Amemiya, Y (2002).  \"Latent variable analysis of\n> multivariate spatial data,\" Journal of the American Statistical\n> Association, 97, 302-317\n> \n> If your question is there R code to do this, I think the ade4 package\n> can to the spatial variance partitioning,\n> but for factor analysis, you are on your own.\n> \n> Nicholas",
       "body_snippet": "Hi Carlos,\nI think that there are tools in the sp package for dealing with grids.\nIf I am understanding you correctly and you want to do \"zoning\" of your\nregion\nthan you probably are not looking to do",
       "thread_id": "thread-cb2e7cbcad55",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001478.html"
     },
     {
       "id": "msg-78e9a601a456",
@@ -439,7 +464,8 @@
       "body_snippet": "The incident adage at\nthe Molly Mansor bullheaded \nand flowed of sparks\nthe border in ideograms\nleft corn to curving\ndeepest in the ferson\nfloor and ceil to remem\n\n-------------- next part -----------",
       "thread_id": "thread-78e9a601a456",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001479.html"
     },
     {
       "id": "msg-c6d32e58aecc",
@@ -451,11 +477,12 @@
       "subject_clean": "how to do a principle component analysis with geo-referenced points",
       "in_reply_to": "<1163301764.26351.275593342@webmail.messagingengine.com>",
       "references": [],
-      "body_plain": "Some articles:\n\n>From fields to objects: A review of geographic boundary analysis\nhttp://www.springerlink.com/content/q1kxcfqegmrmjv92/\n\nIntegrating Edge Detection and Dynamic Modeling in Quantitative Analyses of Ecological Boundaries\nhttp://www.bioone.org/perlserv/?request=get-abstract&issn=0006-3568&volume=053&issue=08&page=0730\n\nMeasuring the abruptness of patchy ecotones - A simulation-based comparison of landscape pattern statistics\nhttp://www.springerlink.com/content/k556v88m62g02462/\n\n\nEdge effects in fragmented landscapes: a generic model for\ndelineating area of edge influences (D-AEI)\nhttp://scholar.google.com/url?sa=U&q=http://research.eeescience.utoledo.edu/lees/pubs/zheng2000.pdf\n\nI've got a lot more in my endnote database, I can send you the file if you want to because this copy pasting isn't exactly efficient.\n\nregards,\nKoen\n\n--\nKoen Hufkens, Phds\nDepartment of Biology\nResearch Group of Plant and Vegetation Ecology\nUniversity of Antwerp\nUniversiteitsplein 1\nB-2610 Wilrijk, Belgium\nKoen.Hufkens at ua.ac.be \n\n> -----Original Message-----\n> From: r-sig-geo-bounces at stat.math.ethz.ch \n> [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of \n> Nicholas Lewin-Koh\n> Sent: zondag 12 november 2006 4:23\n> To: Carlos A. Bastos M.Guerra\n> Cc: r-sig-geo at stat.math.ethz.ch\n> Subject: Re: [R-sig-Geo] how to do a principle component \n> analysis with geo-referenced points\n> \n> Hi Carlos,\n> I think that there are tools in the sp package for dealing with grids.\n> If I am understanding you correctly and you want to do \n> \"zoning\" of your region than you probably are not looking to \n> do pca, but some sort of clustering.\n> Marie Jose Fortin had some nice papers on a technique called \n> wombling, for finding regions of abrupt ecological change. \n> There are some other techniques for spatial partitioning, but \n> I am not sure if they are implemented in R. It has been a \n> long time since I worked on ecological problems.\n> \n> For more information on the spatial tools in R a good place \n> to start is  http://cran.r-project.org/src/contrib/Views/Spatial.html\n> the CRAN task view for spatial statistics, and \n> http://cran.r-project.org/src/contrib/Views/Environmetrics.html\n> has some more pointers.\n> \n> Hope this helps,\n> \n> Nicholas\n> On Sat, 11 Nov 2006 20:24:59 -0000, \"Carlos A. Bastos M.Guerra\"\n> <carlosguerra at esa.ipvc.pt> said:\n> > \n> > Dear Nicholas,\n> > \n> > First of all thanks for the references, I think they will \n> help me with \n> > my current problem. :) The thing is that I am used to work \n> with AcrGIS \n> > to do the spatial analysis, but the statistical methods in \n> ArcGIS are \n> > a bit \"dummy\", namely in spatial PCA. I am used to work with R with \n> > the ade4 package :) but when I heard that I could do \n> spatial analysis \n> > with R I ad to try it...but its more difficult that it seams (at \n> > first)...\n> > \n> > What I did was: (in ArcGIS) convert the centroids of a grid into a \n> > point shape file, than I have integrated all the information into \n> > different columns. I converted the dbf file into a txt an then I \n> > imported the file into R ... and my problems began... :)\n> > \n> > My objective is to do a PCA and extract the different \n> groups of points \n> > in order to make an ecological zoning.\n> > \n> > I am still starting with R and \"the Geo tools\" can you \n> point me some \n> > reading material that I can use?\n> > \n> > Best regards,\n> > \n> > Carlos\n> > \n> > \n> > -----Mensagem original-----\n> > De: Nicholas Lewin-Koh [mailto:nikko at hailmail.net]\n> > Enviada: s?bado, 11 de Novembro de 2006 19:06\n> > Para: r-sig-geo at stat.math.ethz.ch\n> > Cc: Carlos GUERRA\n> > Assunto: [R-sig-Geo] RE: how to do a principle component \n> analysis with \n> > geo-referenced points\n> > \n> > Hi Carlos,\n> > There are a couple of ways to do this, but you have to be a little \n> > more specific about what your goals/intentions are. I \n> assume you have \n> > points p(x1,y1), ...., p(xn,yn), where p is a vector of \n> observations.\n> > \n> > If the goal is interpolation than you have to model the spatial \n> > covariance of the orthognal factors, and you should look at \n> > waekernagel's book.\n> > if your goal is to extract principal components and account for the \n> > variance induced by a spatial process, a quick and dirty \n> approach is \n> > to include polynomials of the xy coordinates in the data \n> and do pca on \n> > the augmented matrix. Take a look at\n> > \n> > Borcard, D., P. Legendre & P. Drapeau. 1992. Partialling out the \n> > spatial component of ecological variation. Ecology 73: 1045-1055\n> > \n> > M?ot, A., P. Legendre & D. Borcard. 1998. Partialling out \n> the spatial \n> > component of ecological variation: questions and \n> propositions in the \n> > linear modeling framework. Environmental and Ecological Statistics 5\n> > (1): 1-27.\n> > \n> > Another approach is spatial factor analysis\n> > \n> > Christensen, WF, and Amemiya, Y (2001).  \"Generalized \n> shifted-factor \n> > analysis method for multivariate geo-referenced data,\" Mathematical \n> > Geology, 33, 801-824.\n> > \n> > Christensen, WF, and Amemiya, Y (2002).  \"Latent variable \n> analysis of \n> > multivariate spatial data,\" Journal of the American Statistical \n> > Association, 97, 302-317\n> > \n> > If your question is there R code to do this, I think the \n> ade4 package \n> > can to the spatial variance partitioning, but for factor \n> analysis, you \n> > are on your own.\n> > \n> > Nicholas\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_plain": "Some articles:\n\n>From fields to objects: A review of geographic boundary analysis\nhttp://www.springerlink.com/content/q1kxcfqegmrmjv92/\n\nIntegrating Edge Detection and Dynamic Modeling in Quantitative Analyses of Ecological Boundaries\nhttp://www.bioone.org/perlserv/?request=get-abstract&issn=0006-3568&volume=053&issue=08&page=0730\n\nMeasuring the abruptness of patchy ecotones - A simulation-based comparison of landscape pattern statistics\nhttp://www.springerlink.com/content/k556v88m62g02462/\n\n\nEdge effects in fragmented landscapes: a generic model for\ndelineating area of edge influences (D-AEI)\nhttp://scholar.google.com/url?sa=U&q=http://research.eeescience.utoledo.edu/lees/pubs/zheng2000.pdf\n\nI've got a lot more in my endnote database, I can send you the file if you want to because this copy pasting isn't exactly efficient.\n\nregards,\nKoen\n\n--\nKoen Hufkens, Phds\nDepartment of Biology\nResearch Group of Plant and Vegetation Ecology\nUniversity of Antwerp\nUniversiteitsplein 1\nB-2610 Wilrijk, Belgium\nKoen.Hufkens at ua.ac.be \n\n> -----Original Message-----\n> From: r-sig-geo-bounces at stat.math.ethz.ch \n> [mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of \n> Nicholas Lewin-Koh\n> Sent: zondag 12 november 2006 4:23\n> To: Carlos A. Bastos M.Guerra\n> Cc: r-sig-geo at stat.math.ethz.ch\n> Subject: Re: [R-sig-Geo] how to do a principle component \n> analysis with geo-referenced points\n> \n> Hi Carlos,\n> I think that there are tools in the sp package for dealing with grids.\n> If I am understanding you correctly and you want to do \n> \"zoning\" of your region than you probably are not looking to \n> do pca, but some sort of clustering.\n> Marie Jose Fortin had some nice papers on a technique called \n> wombling, for finding regions of abrupt ecological change. \n> There are some other techniques for spatial partitioning, but \n> I am not sure if they are implemented in R. It has been a \n> long time since I worked on ecological problems.\n> \n> For more information on the spatial tools in R a good place \n> to start is  http://cran.r-project.org/src/contrib/Views/Spatial.html\n> the CRAN task view for spatial statistics, and \n> http://cran.r-project.org/src/contrib/Views/Environmetrics.html\n> has some more pointers.\n> \n> Hope this helps,\n> \n> Nicholas\n> On Sat, 11 Nov 2006 20:24:59 -0000, \"Carlos A. Bastos M.Guerra\"\n> <carlosguerra at esa.ipvc.pt> said:\n> > \n> > Dear Nicholas,\n> > \n> > First of all thanks for the references, I think they will \n> help me with \n> > my current problem. :) The thing is that I am used to work \n> with AcrGIS \n> > to do the spatial analysis, but the statistical methods in \n> ArcGIS are \n> > a bit \"dummy\", namely in spatial PCA. I am used to work with R with \n> > the ade4 package :) but when I heard that I could do \n> spatial analysis \n> > with R I ad to try it...but its more difficult that it seams (at \n> > first)...\n> > \n> > What I did was: (in ArcGIS) convert the centroids of a grid into a \n> > point shape file, than I have integrated all the information into \n> > different columns. I converted the dbf file into a txt an then I \n> > imported the file into R ... and my problems began... :)\n> > \n> > My objective is to do a PCA and extract the different \n> groups of points \n> > in order to make an ecological zoning.\n> > \n> > I am still starting with R and \"the Geo tools\" can you \n> point me some \n> > reading material that I can use?\n> > \n> > Best regards,\n> > \n> > Carlos\n> > \n> > \n> > -----Mensagem original-----\n> > De: Nicholas Lewin-Koh [mailto:nikko at hailmail.net]\n> > Enviada: sábado, 11 de Novembro de 2006 19:06\n> > Para: r-sig-geo at stat.math.ethz.ch\n> > Cc: Carlos GUERRA\n> > Assunto: [R-sig-Geo] RE: how to do a principle component \n> analysis with \n> > geo-referenced points\n> > \n> > Hi Carlos,\n> > There are a couple of ways to do this, but you have to be a little \n> > more specific about what your goals/intentions are. I \n> assume you have \n> > points p(x1,y1), ...., p(xn,yn), where p is a vector of \n> observations.\n> > \n> > If the goal is interpolation than you have to model the spatial \n> > covariance of the orthognal factors, and you should look at \n> > waekernagel's book.\n> > if your goal is to extract principal components and account for the \n> > variance induced by a spatial process, a quick and dirty \n> approach is \n> > to include polynomials of the xy coordinates in the data \n> and do pca on \n> > the augmented matrix. Take a look at\n> > \n> > Borcard, D., P. Legendre & P. Drapeau. 1992. Partialling out the \n> > spatial component of ecological variation. Ecology 73: 1045-1055\n> > \n> > Méot, A., P. Legendre & D. Borcard. 1998. Partialling out \n> the spatial \n> > component of ecological variation: questions and \n> propositions in the \n> > linear modeling framework. Environmental and Ecological Statistics 5\n> > (1): 1-27.\n> > \n> > Another approach is spatial factor analysis\n> > \n> > Christensen, WF, and Amemiya, Y (2001).  \"Generalized \n> shifted-factor \n> > analysis method for multivariate geo-referenced data,\" Mathematical \n> > Geology, 33, 801-824.\n> > \n> > Christensen, WF, and Amemiya, Y (2002).  \"Latent variable \n> analysis of \n> > multivariate spatial data,\" Journal of the American Statistical \n> > Association, 97, 302-317\n> > \n> > If your question is there R code to do this, I think the \n> ade4 package \n> > can to the spatial variance partitioning, but for factor \n> analysis, you \n> > are on your own.\n> > \n> > Nicholas\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
       "body_snippet": "Some articles:\n\n>From fields to objects: A review of geographic boundary analysis\nhttp://www.springerlink.com/content/q1kxcfqegmrmjv92/\n\nIntegrating Edge Detection and Dynamic Modeling in Quantitative",
       "thread_id": "thread-cb2e7cbcad55",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001480.html"
     },
     {
       "id": "msg-1109658d07e1",
@@ -472,6 +499,7 @@
       "thread_id": "thread-1109658d07e1",
       "thread_depth": 0,
       "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001481.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061113/37d79cd2/attachment.pl"
       ]
@@ -490,7 +518,8 @@
       "body_snippet": "On Mon, 13 Nov 2006, Raphael Saldanha wrote:\n\n> Help!\n> \n> In the SDF results, what exactly means these fields:\n> \n> sum_w\n> X.Intercept\n> V04\n> V05\n> X1\n> X2\n> X3\n\nThe spgwr package is not really int",
       "thread_id": "thread-1109658d07e1",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001482.html"
     },
     {
       "id": "msg-bedbd1abdb29",
@@ -507,6 +536,7 @@
       "thread_id": "thread-bedbd1abdb29",
       "thread_depth": 0,
       "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001483.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061113/86031b0b/attachment.pl"
       ]
@@ -525,7 +555,8 @@
       "body_snippet": "On Mon, 13 Nov 2006, Raphael Saldanha wrote:\n\n> The best way to export the results to a shapefile is:\n> \n> writePolyShape(res.adpt$SDF, \"nameshape\")\n\nYes, it should work, unless there are questions ab",
       "thread_id": "thread-bedbd1abdb29",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001484.html"
     },
     {
       "id": "msg-d11b497f6c0d",
@@ -545,6 +576,7 @@
       "thread_id": "thread-1109658d07e1",
       "thread_depth": 2,
       "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001485.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061113/40a5b60b/attachment.pl"
       ]
@@ -563,7 +595,8 @@
       "body_snippet": "On Mon, 13 Nov 2006, Raphael Saldanha wrote:\n\n> Thanks Roger! I'm just making some tests with the method\n> \n> Take a look below, this is what I have.\n> \n> > summary(lm(V03 ~ V04 + V05, as.data.frame(x",
       "thread_id": "thread-1109658d07e1",
       "thread_depth": 3,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001486.html"
     },
     {
       "id": "msg-e63021934e03",
@@ -582,6 +615,7 @@
       "thread_id": "thread-e6a96e47eb63",
       "thread_depth": 2,
       "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001487.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061114/3291f410/attachment.pl"
       ]
@@ -600,7 +634,8 @@
       "body_snippet": "Hi,\ni'm tryng to write a script to use\n  R - Grass.\n\n\ni've found this tutorial :\n\nif i execute the line directly in a bash shell it give me not problem,\nbut if i try to use the same code in a bash scr",
       "thread_id": "thread-f818a7240555",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001488.html"
     },
     {
       "id": "msg-69d404fb8bd7",
@@ -616,7 +651,8 @@
       "body_snippet": "On Tue, 14 Nov 2006, massimodisasha wrote:\n\n> Hi,\n> i'm tryng to write a script to use\n>   R - Grass.\n> \n> \n> i've found this tutorial :\n> \n> if i execute the line directly in a bash shell it give me ",
       "thread_id": "thread-f818a7240555",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001489.html"
     },
     {
       "id": "msg-35fa26d63f35",
@@ -632,7 +668,8 @@
       "body_snippet": "Hello,\n\nI have looked at archives on the topic, but was not able to figure out \nif it is possible to access the GRASS/R interface when using cygwin/GRASS.\n\nIt would be nice if anybody could point me t",
       "thread_id": "thread-35fa26d63f35",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001490.html"
     },
     {
       "id": "msg-5ff0db9f64b7",
@@ -648,7 +685,8 @@
       "body_snippet": "On Tue, 14 Nov 2006, Luigi Ponti wrote:\n\n> Hello,\n> \n> I have looked at archives on the topic, but was not able to figure out \n> if it is possible to access the GRASS/R interface when using cygwin/GRA",
       "thread_id": "thread-35fa26d63f35",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001491.html"
     },
     {
       "id": "msg-3eaed036ed24",
@@ -664,7 +702,8 @@
       "body_snippet": "Dear list members,\n\na few days ago I've installed the GRASS6.1 (cygwin) and R (2.4.0) interface \npackage. everything works (nearly) perfect... but everytime i make a typing \nerror or use a wrong comma",
       "thread_id": "thread-3eaed036ed24",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001492.html"
     },
     {
       "id": "msg-72aeb22634da",
@@ -680,7 +719,8 @@
       "body_snippet": "On Wed, 15 Nov 2006, Marco Helbich wrote:\n\n> Dear list members,\n> \n> a few days ago I've installed the GRASS6.1 (cygwin) and R (2.4.0) interface \n> package. everything works (nearly) perfect... but ev",
       "thread_id": "thread-3eaed036ed24",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001493.html"
     },
     {
       "id": "msg-e4e1531d7552",
@@ -692,11 +732,12 @@
       "subject_clean": "spTransform problem",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Can anyone tell me what I am doing wrong when using spTransform?\nI need to transform points in Southern Mexico from UTM NAD27 to Long Lat \nWGS84.\n\nThree small functions.\n\nNAD27_WGS84ll<-function(points){\ncoordinates(points)<-~x+y\npoints at proj4string<-CRS(\"+proj=utm +zone=15 +ellps=clrk66 +datum=NAD27 \n+units=m\")\nspTransform(points, CRS(\"+proj=longlat +datum=WGS84\"))}\n\nNAD27_NAD27ll<-function(points){\ncoordinates(points)<-~x+y\npoints at proj4string<-CRS(\"+proj=utm +zone=15 +datum=NAD27 +units=m\")\nspTransform(points, CRS(\"+proj=longlat +datum=NAD27\"))}\n\nNAD27_WGS84<-function(points){\ncoordinates(points)<-~x+y\npoints at proj4string<-CRS(\"+proj=utm +zone=15 +datum=NAD27 +units=m\")\nspTransform(points, CRS(\"+proj=utm +zone=15 +datum=WGS84 +units=m\"))}\n\nWhen I test them I get strange results.\n\nx<-c(541987,541970)\ny<-c(1846598,1846799)\n\npoints<-data.frame(x,y)\n\nNAD27_WGS84ll(points)\n\nSpatialPoints:\n             x        y\n[1,] -92.60617 16.70272\n[2,] -92.60633 16.70454\nCoordinate Reference System (CRS) arguments:  +proj=longlat +datum=WGS84 \n+ellps=WGS84 +towgs84=0,0,0\n\nNAD27_NAD27ll(points)\n\nSpatialPoints:\n             x        y\n[1,] -92.60617 16.70272\n[2,] -92.60633 16.70454\nCoordinate Reference System (CRS) arguments:  +proj=longlat +datum=NAD27 \n+ellps=clrk66 +nadgrids=@conus, at alaska, at ntv2_0.gsb, at ntv1_can.dat\n\nThe results are the same, even though one function involves a datum \nshift and the other doesn't.\n\nThe difference between NAD27 and WGS84 in Southern Mexico should be \naround 200m N and 20m E. But I get\n\npoints-as.data.frame(NAD27_WGS84(points))\n\n          x         y\n1 0.5857494 -112.2658\n2 0.5855395 -112.2768\n\n\nThanks for any advice.\n\nDuncan Golicher\n-- \n\nDr Duncan Golicher\nEcologia y Sistematica Terrestre\nConservaci?n de la Biodiversidad\nEl Colegio de la Frontera Sur\nSan Cristobal de Las Casas, \nChiapas, Mexico\n\nEmail: dgoliche at sclc.ecosur.mx \n\nTel: 967 674 9000 ext 1310\nFax: 967 678 2322\n\nUnited Kingdom Skypein; 020 7870 6251\nSkype name: duncangolicher",
+      "body_plain": "Can anyone tell me what I am doing wrong when using spTransform?\nI need to transform points in Southern Mexico from UTM NAD27 to Long Lat \nWGS84.\n\nThree small functions.\n\nNAD27_WGS84ll<-function(points){\ncoordinates(points)<-~x+y\npoints at proj4string<-CRS(\"+proj=utm +zone=15 +ellps=clrk66 +datum=NAD27 \n+units=m\")\nspTransform(points, CRS(\"+proj=longlat +datum=WGS84\"))}\n\nNAD27_NAD27ll<-function(points){\ncoordinates(points)<-~x+y\npoints at proj4string<-CRS(\"+proj=utm +zone=15 +datum=NAD27 +units=m\")\nspTransform(points, CRS(\"+proj=longlat +datum=NAD27\"))}\n\nNAD27_WGS84<-function(points){\ncoordinates(points)<-~x+y\npoints at proj4string<-CRS(\"+proj=utm +zone=15 +datum=NAD27 +units=m\")\nspTransform(points, CRS(\"+proj=utm +zone=15 +datum=WGS84 +units=m\"))}\n\nWhen I test them I get strange results.\n\nx<-c(541987,541970)\ny<-c(1846598,1846799)\n\npoints<-data.frame(x,y)\n\nNAD27_WGS84ll(points)\n\nSpatialPoints:\n             x        y\n[1,] -92.60617 16.70272\n[2,] -92.60633 16.70454\nCoordinate Reference System (CRS) arguments:  +proj=longlat +datum=WGS84 \n+ellps=WGS84 +towgs84=0,0,0\n\nNAD27_NAD27ll(points)\n\nSpatialPoints:\n             x        y\n[1,] -92.60617 16.70272\n[2,] -92.60633 16.70454\nCoordinate Reference System (CRS) arguments:  +proj=longlat +datum=NAD27 \n+ellps=clrk66 +nadgrids=@conus, at alaska, at ntv2_0.gsb, at ntv1_can.dat\n\nThe results are the same, even though one function involves a datum \nshift and the other doesn't.\n\nThe difference between NAD27 and WGS84 in Southern Mexico should be \naround 200m N and 20m E. But I get\n\npoints-as.data.frame(NAD27_WGS84(points))\n\n          x         y\n1 0.5857494 -112.2658\n2 0.5855395 -112.2768\n\n\nThanks for any advice.\n\nDuncan Golicher\n-- \n\nDr Duncan Golicher\nEcologia y Sistematica Terrestre\nConservación de la Biodiversidad\nEl Colegio de la Frontera Sur\nSan Cristobal de Las Casas, \nChiapas, Mexico\n\nEmail: dgoliche at sclc.ecosur.mx \n\nTel: 967 674 9000 ext 1310\nFax: 967 678 2322\n\nUnited Kingdom Skypein; 020 7870 6251\nSkype name: duncangolicher",
       "body_snippet": "Can anyone tell me what I am doing wrong when using spTransform?\nI need to transform points in Southern Mexico from UTM NAD27 to Long Lat \nWGS84.\n\nThree small functions.\n\nNAD27_WGS84ll<-function(point",
       "thread_id": "thread-e4e1531d7552",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001494.html"
     },
     {
       "id": "msg-50811889c357",
@@ -712,7 +753,8 @@
       "body_snippet": "On Wed, 15 Nov 2006, Duncan Golicher wrote:\n\n> Can anyone tell me what I am doing wrong when using spTransform?\n> I need to transform points in Southern Mexico from UTM NAD27 to Long Lat \n> WGS84.\n\nBe",
       "thread_id": "thread-e4e1531d7552",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001495.html"
     },
     {
       "id": "msg-026f91afe663",
@@ -728,7 +770,8 @@
       "body_snippet": "On Thu, 16 Nov 2006, Roger Bivand wrote:\n\n> On Wed, 15 Nov 2006, Duncan Golicher wrote:\n> \n> > Can anyone tell me what I am doing wrong when using spTransform?\n> > I need to transform points in Southe",
       "thread_id": "thread-e4e1531d7552",
       "thread_depth": 2,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001496.html"
     },
     {
       "id": "msg-adac4ace967e",
@@ -744,7 +787,8 @@
       "body_snippet": "Dear list members,\n\nI am studying the SAR models and its implementation in R, step by step. For \nthe creation of the spatial lags, I found that function lag.listw calls an \ninternal function ?lagw?.\n\n",
       "thread_id": "thread-adac4ace967e",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001497.html"
     },
     {
       "id": "msg-2fa3de8c1e37",
@@ -761,6 +805,7 @@
       "thread_id": "thread-2fa3de8c1e37",
       "thread_depth": 0,
       "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001498.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20061119/8e6dd2b7/attachment.pl"
       ]
@@ -775,11 +820,12 @@
       "subject_clean": "lag.listw function in spdep package",
       "in_reply_to": "<AD51AB79BC327C40AB2C7EB75D57A3C405128D@TOLAR.valuta.nhh.no>",
       "references": [],
-      "body_plain": "Thank you very much!\n\nAlthough it?s C code, it is not so difficult to understand (with a little \nhelp from google and R manuals).\n\nThanks again,\n\nBest regards,\n\nAl? M. Santacruz\nM.Sc. Geomatics, Student\nNational University of Colombia\nE-mail: amsantac at unal.edu.co\nBogot? D.C.\n\n\n\n\n>From: \"Roger Bivand\" <Roger.Bivand at nhh.no>\n>To: Al? Santacruz <amsantac at hotmail.com>,<r-sig-geo at stat.math.ethz.ch>\n>Subject: RE: [R-sig-Geo] lag.listw function in spdep package\n>Date: Sun, 19 Nov 2006 22:44:59 +0100\n>\n>This is C code, not(yet) on a public CVS server. The only way to examine \n>the source is to download the source package from CRAN, unpack it, and look \n>in src/lagw.c\n>\n>If the macros are not clear enough, you can browse the R source code \n>including the headers at https://svn.r-project.org/R/, and please refer to \n>the relevant sections of the \"writing R extensions\" manual.\n>\n>If you have further questions (and suggestions), please write!\n>\n>(I am starting to re-implement at least listw objects as S4 (new-style) \n>classes based on sparse matrices - if anyone on the list is interested in \n>this, please let me know)\n>\n>Best wishes\n>\n>Roger\n>\n>---\n>Roger Bivand, NHH, Helleveien 30, N-5045 Bergen,\n>Roger.Bivand at nhh.no\n>\n>\n>\n>-----Original Message-----\n>From: r-sig-geo-bounces at stat.math.ethz.ch on behalf of Al? Santacruz\n>Sent: Sun 19.11.2006 22:34\n>To: r-sig-geo at stat.math.ethz.ch\n>Subject: [R-sig-Geo] lag.listw function in spdep package\n>\n>Dear list members,\n>\n>I am studying the SAR models and its implementation in R, step by step. For\n>the creation of the spatial lags, I found that function lag.listw calls an\n>internal function \"lagw\".\n>\n>I would like to know if it is possible to see the code of \"lagw\" function \n>in\n>R, is there any command to do this?\n>\n>I really appreciate your help,\n>\n>Sincerely,\n>\n>Al? M. Santacruz\n>M.Sc. Geomatics, Student\n>National University of Colombia\n>E-mail: amsantac at unal.edu.co\n>Bogot? D.C.\n>\n>_________________________________________________________________\n>MSN Amor: busca tu ? naranja http://latam.msn.com/amor/\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n_________________________________________________________________\nMSN Amor: busca tu ? naranja http://latam.msn.com/amor/",
-      "body_snippet": "Thank you very much!\n\nAlthough it?s C code, it is not so difficult to understand (with a little \nhelp from google and R manuals).\n\nThanks again,\n\nBest regards,\n\nAl? M. Santacruz\nM.Sc. Geomatics, Stude",
+      "body_plain": "Thank you very much!\n\nAlthough it’s C code, it is not so difficult to understand (with a little \nhelp from google and R manuals).\n\nThanks again,\n\nBest regards,\n\nAlí M. Santacruz\nM.Sc. Geomatics, Student\nNational University of Colombia\nE-mail: amsantac at unal.edu.co\nBogotá D.C.\n\n\n\n\n>From: \"Roger Bivand\" <Roger.Bivand at nhh.no>\n>To: Alí Santacruz <amsantac at hotmail.com>,<r-sig-geo at stat.math.ethz.ch>\n>Subject: RE: [R-sig-Geo] lag.listw function in spdep package\n>Date: Sun, 19 Nov 2006 22:44:59 +0100\n>\n>This is C code, not(yet) on a public CVS server. The only way to examine \n>the source is to download the source package from CRAN, unpack it, and look \n>in src/lagw.c\n>\n>If the macros are not clear enough, you can browse the R source code \n>including the headers at https://svn.r-project.org/R/, and please refer to \n>the relevant sections of the \"writing R extensions\" manual.\n>\n>If you have further questions (and suggestions), please write!\n>\n>(I am starting to re-implement at least listw objects as S4 (new-style) \n>classes based on sparse matrices - if anyone on the list is interested in \n>this, please let me know)\n>\n>Best wishes\n>\n>Roger\n>\n>---\n>Roger Bivand, NHH, Helleveien 30, N-5045 Bergen,\n>Roger.Bivand at nhh.no\n>\n>\n>\n>-----Original Message-----\n>From: r-sig-geo-bounces at stat.math.ethz.ch on behalf of Alí Santacruz\n>Sent: Sun 19.11.2006 22:34\n>To: r-sig-geo at stat.math.ethz.ch\n>Subject: [R-sig-Geo] lag.listw function in spdep package\n>\n>Dear list members,\n>\n>I am studying the SAR models and its implementation in R, step by step. For\n>the creation of the spatial lags, I found that function lag.listw calls an\n>internal function \"lagw\".\n>\n>I would like to know if it is possible to see the code of \"lagw\" function \n>in\n>R, is there any command to do this?\n>\n>I really appreciate your help,\n>\n>Sincerely,\n>\n>Alí M. Santacruz\n>M.Sc. Geomatics, Student\n>National University of Colombia\n>E-mail: amsantac at unal.edu.co\n>Bogotá D.C.\n>\n>_________________________________________________________________\n>MSN Amor: busca tu ½ naranja http://latam.msn.com/amor/\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n_________________________________________________________________\nMSN Amor: busca tu ½ naranja http://latam.msn.com/amor/",
+      "body_snippet": "Thank you very much!\n\nAlthough it’s C code, it is not so difficult to understand (with a little \nhelp from google and R manuals).\n\nThanks again,\n\nBest regards,\n\nAlí M. Santacruz\nM.Sc. Geomatics, Stude",
       "thread_id": "thread-2fa3de8c1e37",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001499.html"
     },
     {
       "id": "msg-60c75fbf5b51",
@@ -791,11 +837,12 @@
       "subject_clean": "GWR",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hi there,\n\nI'm new at R, but I managed to run gwr (with spgwr). However, I get only a \nSummary of GWR coefficient estimates and I would like to get them all. Is \nanyone so kind to tell me how?\n\nRegards,\n\nCarmen\n\n_________________________________________________________________\nGrandes ?xitos, superh?roes, imitaciones, cine y TV...",
+      "body_plain": "Hi there,\n\nI'm new at R, but I managed to run gwr (with spgwr). However, I get only a \nSummary of GWR coefficient estimates and I would like to get them all. Is \nanyone so kind to tell me how?\n\nRegards,\n\nCarmen\n\n_________________________________________________________________\nGrandes éxitos, superhéroes, imitaciones, cine y TV...",
       "body_snippet": "Hi there,\n\nI'm new at R, but I managed to run gwr (with spgwr). However, I get only a \nSummary of GWR coefficient estimates and I would like to get them all. Is \nanyone so kind to tell me how?\n\nRegard",
       "thread_id": "thread-60c75fbf5b51",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001500.html"
     },
     {
       "id": "msg-9b0244de01a9",
@@ -807,11 +854,12 @@
       "subject_clean": "GWR",
       "in_reply_to": "<BAY104-F20ECC1810F17D0D2AA0CA188EC0@phx.gbl>",
       "references": [],
-      "body_plain": "On Tue, 21 Nov 2006, CARMEN RODRIGUEZ wrote:\n\n> Hi there,\n> \n> I'm new at R, but I managed to run gwr (with spgwr). However, I get only a \n> Summary of GWR coefficient estimates and I would like to get them all. Is \n> anyone so kind to tell me how?\n\nThey are in the output object. If your output object is called x, then:\n\nas(x$SDF, \"data.frame\")\n\nwill give you the output columns, coefficients, standard errors, etc. \nThere was a thread about this on this list just a week ago - searching the \narchives can be fruitful!\n\nRoger\n\n> \n> Regards,\n> \n> Carmen\n> \n> _________________________________________________________________\n> Grandes ?xitos, superh?roes, imitaciones, cine y TV...\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_plain": "On Tue, 21 Nov 2006, CARMEN RODRIGUEZ wrote:\n\n> Hi there,\n> \n> I'm new at R, but I managed to run gwr (with spgwr). However, I get only a \n> Summary of GWR coefficient estimates and I would like to get them all. Is \n> anyone so kind to tell me how?\n\nThey are in the output object. If your output object is called x, then:\n\nas(x$SDF, \"data.frame\")\n\nwill give you the output columns, coefficients, standard errors, etc. \nThere was a thread about this on this list just a week ago - searching the \narchives can be fruitful!\n\nRoger\n\n> \n> Regards,\n> \n> Carmen\n> \n> _________________________________________________________________\n> Grandes éxitos, superhéroes, imitaciones, cine y TV...\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
       "body_snippet": "On Tue, 21 Nov 2006, CARMEN RODRIGUEZ wrote:\n\n> Hi there,\n> \n> I'm new at R, but I managed to run gwr (with spgwr). However, I get only a \n> Summary of GWR coefficient estimates and I would like to ge",
       "thread_id": "thread-60c75fbf5b51",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001501.html"
     },
     {
       "id": "msg-b403c6dcc75b",
@@ -827,7 +875,8 @@
       "body_snippet": "Hello.\n\n Currently GEOS C API interface has been already\navailable. And RCppTemplate package is also available.\n\n I think GEOS's functions are far better than gpclib's. It\ncan manipulate points, lines",
       "thread_id": "thread-b403c6dcc75b",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001502.html"
     },
     {
       "id": "msg-2d0159f822a8",
@@ -843,7 +892,8 @@
       "body_snippet": "Dear list,\n\nI am having troubles increasing the fontize when plotting a\nvariogram{gstat} and its model (vgm) with plot and using jpeg(). Also\nthe resolution in the jpeg call does not work. I am using ",
       "thread_id": "thread-2d0159f822a8",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001503.html"
     },
     {
       "id": "msg-b767e68aab6e",
@@ -859,7 +909,8 @@
       "body_snippet": "Dear list,\n\nI am using point data of an area as shapefile import (shp1). The\nattribute data is log(AREA) as z reflecting areas size of the polygons.\nGrid data (1000m pixel) as ascii grid imports (a100",
       "thread_id": "thread-b767e68aab6e",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001504.html"
     },
     {
       "id": "msg-2776ad124eb4",
@@ -877,7 +928,8 @@
       "body_snippet": "Herry, in\n\nk1<-krige(z ~ x+y, ~x+y, data=shp1, newdata=a1000, model=m2, nmax=40)\n\n\nshpl is alread a SpatialPointsDataFrame object, so you shouldn't specify \nit's coordinates, ~x+y. Rather, use\n\nk1<-kr",
       "thread_id": "thread-b767e68aab6e",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001505.html"
     },
     {
       "id": "msg-595c400b9589",
@@ -895,7 +947,8 @@
       "body_snippet": "plotting variograms in gstat is done through xyplot in lattice; you'll \nfind where it gets it's defaults by\n\nlibrary(lattice)\ntrellis.par.get()\n?trellis.par.set\n--\nEdzer\n\nAlexander.Herr at csiro.au wr",
       "thread_id": "thread-2d0159f822a8",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001506.html"
     },
     {
       "id": "msg-9365513a4fe0",
@@ -911,7 +964,8 @@
       "body_snippet": "On Fri, 24 Nov 2006 Alexander.Herr at csiro.au wrote:\n\n>  \n> Dear list,\n> \n> I am having troubles increasing the fontize when plotting a\n> variogram{gstat} and its model (vgm) with plot and using jpeg",
       "thread_id": "thread-2d0159f822a8",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001507.html"
     },
     {
       "id": "msg-a5d11e922605",
@@ -927,7 +981,8 @@
       "body_snippet": "Thanks Edzer,\n\nk1<-krige(z ~ x+y, shp1, a1000, model=m2, nmax=40) produces the\nfollowing:\n\nError in eval(expr. envir. enclos): object \"x\" not found\nIn addition: Warning message:\ngrid has empty columns",
       "thread_id": "thread-a5d11e922605",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001508.html"
     },
     {
       "id": "msg-d626f4359c0c",
@@ -943,7 +998,8 @@
       "body_snippet": "Thanks to Edzer and Roger,\nI can now plot with increased font sizes. However, jpeg still does not\nreproduce these, nor does it show up in high quality. What I would like\nto do is produce some highreso",
       "thread_id": "thread-d626f4359c0c",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001509.html"
     },
     {
       "id": "msg-9653eb03d994",
@@ -961,7 +1017,8 @@
       "body_snippet": "Alexander.Herr at csiro.au wrote:\n> Thanks to Edzer and Roger,\n> I can now plot with increased font sizes. However, jpeg still does not\n> reproduce these, nor does it show up in high quality. What I w",
       "thread_id": "thread-d626f4359c0c",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001510.html"
     },
     {
       "id": "msg-6e62ad442c5b",
@@ -973,11 +1030,12 @@
       "subject_clean": "Mixed GWR",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Does anyone know how tu run a mixed GWR in R?\n\nThank you\n\n_________________________________________________________________\n?Est?s pensando en cambiar de coche? Todas los modelos de serie y extras en \nMSN Motor. http://motor.msn.es/researchcentre/",
-      "body_snippet": "Does anyone know how tu run a mixed GWR in R?\n\nThank you\n\n_________________________________________________________________\n?Est?s pensando en cambiar de coche? Todas los modelos de serie y extras en ",
+      "body_plain": "Does anyone know how tu run a mixed GWR in R?\n\nThank you\n\n_________________________________________________________________\n¿Estás pensando en cambiar de coche? Todas los modelos de serie y extras en \nMSN Motor. http://motor.msn.es/researchcentre/",
+      "body_snippet": "Does anyone know how tu run a mixed GWR in R?\n\nThank you\n\n_________________________________________________________________\n¿Estás pensando en cambiar de coche? Todas los modelos de serie y extras en ",
       "thread_id": "thread-6e62ad442c5b",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001511.html"
     },
     {
       "id": "msg-3d811c5f16cf",
@@ -989,11 +1047,12 @@
       "subject_clean": "Mixed GWR",
       "in_reply_to": "<BAY104-F13332A0451A485FDF5371A88E60@phx.gbl>",
       "references": [],
-      "body_plain": "On Mon, 27 Nov 2006, CARMEN RODRIGUEZ wrote:\n\n> Does anyone know how tu run a mixed GWR in R?\n\nIf by mixed GWR you mean a model where some of the coefficients are held\nfixed at the global level, and others vary locally, this is equivalent to\nfitting a global model first and fitting the local model to the residuals,\nbut watch out for the intercept! This omits the possible covariance\nbetween the global and local subsets, treating the global as a known\noffset, so if you like, you can do steps 1-5 of pp. 67-8 in the GWR book\nby hand and see if there is a big difference.  In any case, GWR is not an\nexplanatory model, as I expect you are aware.\n\nRoger\n\n> \n> Thank you\n> \n> _________________________________________________________________\n> ?Est?s pensando en cambiar de coche? Todas los modelos de serie y extras en \n> MSN Motor. http://motor.msn.es/researchcentre/\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_plain": "On Mon, 27 Nov 2006, CARMEN RODRIGUEZ wrote:\n\n> Does anyone know how tu run a mixed GWR in R?\n\nIf by mixed GWR you mean a model where some of the coefficients are held\nfixed at the global level, and others vary locally, this is equivalent to\nfitting a global model first and fitting the local model to the residuals,\nbut watch out for the intercept! This omits the possible covariance\nbetween the global and local subsets, treating the global as a known\noffset, so if you like, you can do steps 1-5 of pp. 67-8 in the GWR book\nby hand and see if there is a big difference.  In any case, GWR is not an\nexplanatory model, as I expect you are aware.\n\nRoger\n\n> \n> Thank you\n> \n> _________________________________________________________________\n> ¿Estás pensando en cambiar de coche? Todas los modelos de serie y extras en \n> MSN Motor. http://motor.msn.es/researchcentre/\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
       "body_snippet": "On Mon, 27 Nov 2006, CARMEN RODRIGUEZ wrote:\n\n> Does anyone know how tu run a mixed GWR in R?\n\nIf by mixed GWR you mean a model where some of the coefficients are held\nfixed at the global level, and o",
       "thread_id": "thread-6e62ad442c5b",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001512.html"
     },
     {
       "id": "msg-79c3b94173b8",
@@ -1009,7 +1068,8 @@
       "body_snippet": "Hi Edzer,\n\npng also does not increase the file size. \n\nFollowing the commands. The data are located at\nftp://ftp.csiro.au/Herry, file qldproperty.Rdata.\n\nXXXXXXXXXXXXXXXXXXXX\ntrellis.par.get(\"fontsize",
       "thread_id": "thread-79c3b94173b8",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001513.html"
     },
     {
       "id": "msg-141c326abb12",
@@ -1027,7 +1087,8 @@
       "body_snippet": "Herry, you need to set font size after opening a device; try after your \nexample e.g.\n\npng(\"out.png\")\ntrellis.par.set(\"fontsize\",fontsize)\nplt1\ndev.off()\n\nHth,\n--\nEdzer\n\n\n\nAlexander.Herr at csiro.au w",
       "thread_id": "thread-79c3b94173b8",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001514.html"
     },
     {
       "id": "msg-f3b45e16221a",
@@ -1045,7 +1106,8 @@
       "body_snippet": "Hi Herry, the problem is that your trend model specifies a linear trend \nin x and y, the coordinate names of shp1, but that x and y cannot be \nresolved for the prediction locations in a1000 because th",
       "thread_id": "thread-f3b45e16221a",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001515.html"
     },
     {
       "id": "msg-732b11035aa4",
@@ -1061,7 +1123,8 @@
       "body_snippet": "Hi folks,\n\nIs it appropriate to use a negative binomial with errorsalm and\nlagsarlm?  If not is there an alternative to do spatial error and\nspatial models with a negative binomial?  \n\nThanks,\n\nJeff\n\n",
       "thread_id": "thread-732b11035aa4",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001516.html"
     },
     {
       "id": "msg-b8a21339db4c",
@@ -1077,7 +1140,8 @@
       "body_snippet": "On Tue, 28 Nov 2006, Jeffrey Stratford wrote:\n\n> Hi folks,\n> \n> Is it appropriate to use a negative binomial with errorsalm and\n> lagsarlm?  If not is there an alternative to do spatial error and\n> sp",
       "thread_id": "thread-732b11035aa4",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001517.html"
     },
     {
       "id": "msg-8b39c7a10a1e",
@@ -1093,7 +1157,8 @@
       "body_snippet": "I am beginning to get a little bit bog eyed with the myriad of options there are within the various spatial packages. I am trying to find ways of porting the results I get within R into a GIS environm",
       "thread_id": "thread-8b39c7a10a1e",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001518.html"
     },
     {
       "id": "msg-d84b537fb62d",
@@ -1109,7 +1174,8 @@
       "body_snippet": "On Wed, 29 Nov 2006, Mulholland, Tom wrote:\n\n> I am beginning to get a little bit bog eyed with the myriad of options\n> there are within the various spatial packages. I am trying to find ways\n> of por",
       "thread_id": "thread-8b39c7a10a1e",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001519.html"
     },
     {
       "id": "msg-6a3ec5a3685e",
@@ -1121,11 +1187,12 @@
       "subject_clean": "GWR",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "I insist on GWR. To run a GWR model I'm using both R and GWR 3.0. Comparing \nthe estimated coefficients for an adaptative bisquare kernel in R with the \nresults for an adaptative kernel in GWR 3.0 (which is supposed to be a \nbisquare function too), differences are very big. I check the bandwidths and \nthey are not that different (as I understand, in R the adaptative bandwidth \nis expressed as a percentage of observations, while in GWR 3.0 the bandwidth \nis the number of observations itself). But anyway, the estimated \ncoefficients shouldn't be so different, should they?\n\nThank you.\n\n_________________________________________________________________\nDescubre la descarga digital con MSN Music. M?s de un mill?n de canciones.",
+      "body_plain": "I insist on GWR. To run a GWR model I'm using both R and GWR 3.0. Comparing \nthe estimated coefficients for an adaptative bisquare kernel in R with the \nresults for an adaptative kernel in GWR 3.0 (which is supposed to be a \nbisquare function too), differences are very big. I check the bandwidths and \nthey are not that different (as I understand, in R the adaptative bandwidth \nis expressed as a percentage of observations, while in GWR 3.0 the bandwidth \nis the number of observations itself). But anyway, the estimated \ncoefficients shouldn't be so different, should they?\n\nThank you.\n\n_________________________________________________________________\nDescubre la descarga digital con MSN Music. Más de un millón de canciones.",
       "body_snippet": "I insist on GWR. To run a GWR model I'm using both R and GWR 3.0. Comparing \nthe estimated coefficients for an adaptative bisquare kernel in R with the \nresults for an adaptative kernel in GWR 3.0 (wh",
       "thread_id": "thread-6a3ec5a3685e",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001520.html"
     },
     {
       "id": "msg-caf1939079e2",
@@ -1137,11 +1204,12 @@
       "subject_clean": "GWR",
       "in_reply_to": "<BAY104-F30853618EA1984A6D6A20488E40@phx.gbl>",
       "references": [],
-      "body_plain": "On Wed, 29 Nov 2006, CARMEN RODRIGUEZ wrote:\n\n> I insist on GWR. To run a GWR model I'm using both R and GWR 3.0. Comparing \n> the estimated coefficients for an adaptative bisquare kernel in R with the \n> results for an adaptative kernel in GWR 3.0 (which is supposed to be a \n> bisquare function too), differences are very big. I check the bandwidths and \n> they are not that different (as I understand, in R the adaptative bandwidth \n> is expressed as a percentage of observations, while in GWR 3.0 the bandwidth \n> is the number of observations itself). But anyway, the estimated \n> coefficients shouldn't be so different, should they?\n\nWell, without documentation, it is impossible to tell. So please provide \ndocumentation, access to data and scripts of what you are doing that \nworries you. We cannot see over your shoulder.\n\nRoger\n\n> \n> Thank you.\n> \n> _________________________________________________________________\n> Descubre la descarga digital con MSN Music. M?s de un mill?n de canciones.\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_plain": "On Wed, 29 Nov 2006, CARMEN RODRIGUEZ wrote:\n\n> I insist on GWR. To run a GWR model I'm using both R and GWR 3.0. Comparing \n> the estimated coefficients for an adaptative bisquare kernel in R with the \n> results for an adaptative kernel in GWR 3.0 (which is supposed to be a \n> bisquare function too), differences are very big. I check the bandwidths and \n> they are not that different (as I understand, in R the adaptative bandwidth \n> is expressed as a percentage of observations, while in GWR 3.0 the bandwidth \n> is the number of observations itself). But anyway, the estimated \n> coefficients shouldn't be so different, should they?\n\nWell, without documentation, it is impossible to tell. So please provide \ndocumentation, access to data and scripts of what you are doing that \nworries you. We cannot see over your shoulder.\n\nRoger\n\n> \n> Thank you.\n> \n> _________________________________________________________________\n> Descubre la descarga digital con MSN Music. Más de un millón de canciones.\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
       "body_snippet": "On Wed, 29 Nov 2006, CARMEN RODRIGUEZ wrote:\n\n> I insist on GWR. To run a GWR model I'm using both R and GWR 3.0. Comparing \n> the estimated coefficients for an adaptative bisquare kernel in R with th",
       "thread_id": "thread-6a3ec5a3685e",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001521.html"
     },
     {
       "id": "msg-b660e6be8677",
@@ -1159,7 +1227,8 @@
       "body_snippet": "Doh! I had completely forgotten about rgdal. That's exactly the route I \nneed to take.\n\nThanks\n\nRoger Bivand wrote:\n> On Wed, 29 Nov 2006, Mulholland, Tom wrote:\n> \n>> I am beginning to get a little b",
       "thread_id": "thread-8b39c7a10a1e",
       "thread_depth": 2,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001522.html"
     },
     {
       "id": "msg-9a35872df84d",
@@ -1175,7 +1244,8 @@
       "body_snippet": "R-sig-geo-help,\n\nI have locations of fish abundance\nwhich I want to aggregate into squares.\n\nThe code below creates the grid:\n\n\nlibrary(sp)\ntest <- GridTopology(c(-10.5,60),c(0.1,0.1),c(67,35))\ncoordi",
       "thread_id": "thread-9a35872df84d",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001523.html"
     },
     {
       "id": "msg-4e0156fb0f43",
@@ -1189,11 +1259,12 @@
       "references": [
         "<s56d71b1.063@ffdata.setur.fo>"
       ],
-      "body_plain": "Dear Luis,\n\n> The code below creates the grid:\n>\n>\n> library(sp)\n> test <- GridTopology(c(-10.5,60),c(0.1,0.1),c(67,35))\n> coordinates(test)\n> coordinatevalues(test)\n> yy <-SpatialGrid(grid=test)\n> plot(yy,pch=16,cex=0.3,col=1)\n>\n> and within each cell the total abundance of fish\n> should be specified.\n>\n> How can I do this?\n>   \nYou can try the functions ascgen() and/or count.points() from the \npackage adehabitat. Then, use the function asc2spixdf to convert the \nresult to the class SpatialGridDataFrame.\nHope this helps,\n\n\nCl?ment Calenge\n\n-- \nCl?ment CALENGE\nLBBE - UMR CNRS 5558 - Universit? Claude Bernard Lyon 1 - FRANCE\ntel. (+33) 04.72.43.27.57\nfax. (+33) 04.72.43.13.88",
+      "body_plain": "Dear Luis,\n\n> The code below creates the grid:\n>\n>\n> library(sp)\n> test <- GridTopology(c(-10.5,60),c(0.1,0.1),c(67,35))\n> coordinates(test)\n> coordinatevalues(test)\n> yy <-SpatialGrid(grid=test)\n> plot(yy,pch=16,cex=0.3,col=1)\n>\n> and within each cell the total abundance of fish\n> should be specified.\n>\n> How can I do this?\n>   \nYou can try the functions ascgen() and/or count.points() from the \npackage adehabitat. Then, use the function asc2spixdf to convert the \nresult to the class SpatialGridDataFrame.\nHope this helps,\n\n\nClément Calenge\n\n-- \nClément CALENGE\nLBBE - UMR CNRS 5558 - Université Claude Bernard Lyon 1 - FRANCE\ntel. (+33) 04.72.43.27.57\nfax. (+33) 04.72.43.13.88",
       "body_snippet": "Dear Luis,\n\n> The code below creates the grid:\n>\n>\n> library(sp)\n> test <- GridTopology(c(-10.5,60),c(0.1,0.1),c(67,35))\n> coordinates(test)\n> coordinatevalues(test)\n> yy <-SpatialGrid(grid=test)\n> pl",
       "thread_id": "thread-9a35872df84d",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001524.html"
     },
     {
       "id": "msg-14cf36751c09",
@@ -1209,7 +1280,8 @@
       "body_snippet": "On Wed, 29 Nov 2006, Luis Ridao Cruz wrote:\n\n> R-sig-geo-help,\n> \n> I have locations of fish abundance\n> which I want to aggregate into squares.\n> \n> The code below creates the grid:\n> \n> \n> library(s",
       "thread_id": "thread-9a35872df84d",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001525.html"
     },
     {
       "id": "msg-dc25472cc46c",
@@ -1225,7 +1297,8 @@
       "body_snippet": "Luis Ridao Cruz <Luisr at frs.fo> wrote on 2006-11-29 03:40:25:\n\n> R-sig-geo-help,\n>\n> I have locations of fish abundance\n> which I want to aggregate into squares.\n>\n> The code below creates the grid:",
       "thread_id": "thread-9a35872df84d",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001526.html"
     },
     {
       "id": "msg-4e3e21ac6af7",
@@ -1241,7 +1314,8 @@
       "body_snippet": "Luis Ridao Cruz <Luisr at frs.fo> wrote on 2006-11-29 03:40:25:\n\n> R-sig-geo-help,\n>\n> I have locations of fish abundance\n> which I want to aggregate into squares.\n>\n> The code below creates the grid:",
       "thread_id": "thread-9a35872df84d",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001527.html"
     },
     {
       "id": "msg-590d35b293cc",
@@ -1257,7 +1331,8 @@
       "body_snippet": "I uploaded a fixed version to CRAN.  Thanks for spotting that.\n\nBen\n\n----- Original Message ----\nFrom: Roger Bivand <Roger.Bivand at nhh.no>\nTo: \"Hvidberg, Martin\" <mhv at dmu.dk>\nCc: r-sig-geo at sta",
       "thread_id": "thread-590d35b293cc",
       "thread_depth": 0,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001528.html"
     },
     {
       "id": "msg-9cd3f062b628",
@@ -1275,7 +1350,8 @@
       "body_snippet": "Here is a variant on Denis' method that scales up for large numbers of \npoints. You have to be sure no points fall outside your grid, or \ntabulate will be in error:\n\n# set up grid\nnx <- 67\nny <- 35\nte",
       "thread_id": "thread-9a35872df84d",
       "thread_depth": 2,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001529.html"
     },
     {
       "id": "msg-1b7ae05c930e",
@@ -1291,7 +1367,8 @@
       "body_snippet": "On Wed, 22 Nov 2006, Hisaji ONO wrote:\n\n> Hello.\n> \n>  Currently GEOS C API interface has been already\n> available. And RCppTemplate package is also available.\n> \n>  I think GEOS's functions are far b",
       "thread_id": "thread-b403c6dcc75b",
       "thread_depth": 1,
-      "month": "2006-11"
+      "month": "2006-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2006-November/001530.html"
     }
   ],
   "threads": [

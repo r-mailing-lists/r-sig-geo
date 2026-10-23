@@ -20,7 +20,8 @@
       "body_snippet": "Hi Edzer,\n\n> try the colorkey argument in spplot, it should get passed on to\n> spplot, which wraps levelplot.\n\nThanks for your advice.\n\nIn fact it seems that I can achieve something not too far from w",
       "thread_id": "thread-767c94b5c7b1",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003694.html"
     },
     {
       "id": "msg-34455aa51c1a",
@@ -36,7 +37,8 @@
       "body_snippet": "Hi,\n\nI keep using spplot to draw some simple maps, but I wonder if someone\nhas got a good method to draw nice and readable labels above a polygon\nmap ? More precisely, I wonder if there is a way to dr",
       "thread_id": "thread-34455aa51c1a",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003695.html"
     },
     {
       "id": "msg-868f705ad2a1",
@@ -52,7 +54,8 @@
       "body_snippet": "Dear R helper,\n\nI am trying to calculate the MLE of the Gaussian process with certain covariance structure, say, exponential, by using nlm. It works fine for small sample size like n<300, but when I i",
       "thread_id": "thread-868f705ad2a1",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003696.html"
     },
     {
       "id": "msg-5de6ef1b70ac",
@@ -69,6 +72,7 @@
       "thread_id": "thread-5de6ef1b70ac",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003697.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080603/019e775c/attachment.pl"
       ]
@@ -89,7 +93,8 @@
       "body_snippet": "Jennifer:\n\nTo calculate the moran's Index, you need a spatial weight linkage object \n(in SPDEP language, a listw object). The listw object can be obtained \nfrom the set of coordinates you have. I'll s",
       "thread_id": "thread-5de6ef1b70ac",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003698.html"
     },
     {
       "id": "msg-fb593f97b0f3",
@@ -105,7 +110,8 @@
       "body_snippet": "Dear all;\n\nI would like to have some input from anybody who have used the\ninterpolation function (interp) in the akima package and the\ntriangulation function (tri.mesh) from the tripack pakage. My pro",
       "thread_id": "thread-fb593f97b0f3",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003699.html"
     },
     {
       "id": "msg-f833140c8123",
@@ -122,6 +128,7 @@
       "thread_id": "thread-f833140c8123",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003700.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080604/397f9420/attachment.pl"
       ]
@@ -136,11 +143,12 @@
       "subject_clean": "akima interpolation + Delaunay triangulation",
       "in_reply_to": "<25944ea00806030854x141d3beexb1711adf45ca9511@mail.gmail.com>",
       "references": [],
-      "body_plain": "In answering Steven I forgot to address this list also, so here is a repost of my answer (see below). At closing the R session in Emacs/ESS I got this: \n\n\n> Save workspace image? [y/n/c]: n\n \n*** SDTRAN Error 2: The first three data points are collinear.\n\n    Error detected in SDTRAN called by SDSF3P\n\n \n*** SDTRAN Error 2: The first three data points are collinear.\n\n    Error detected in SDTRAN called by SDSF3P\n\n \n*** SDTRAN Error 2: The first three data points are collinear.\n\n    Error detected in SDTRAN called by SDSF3P\n\n\nProcess R finished at Wed Jun 04 11:05:28 2008\n\nFor this reason I have included the maintainer in the list. It support my answer.\n\n\n\nMy answer to Steven:\n\nI think that it is because you data allready is gridded.\n\nSee ?interp where it is mentioned in the section on arguments:\n\n          'x', 'y', and 'z' must be the same length and may contain no\n          fewer than four points. The points of 'x' and 'y' cannot be\n          collinear, i.e, they cannot fall on the same line (two\n          vectors 'x' and 'y' such that 'y = ax + b' for some 'a', 'b'\n          will not be accepted). 'interp' is meant for cases in which\n          you have 'x', 'y' values scattered over a plane and a 'z'\n          value for each.  If, instead, you are trying to evaluate a\n          mathematical function, or get a graphical interpretation of\n          relationships that can be described by a polynomial, try\n          'outer()'. \n\nTry:\n\npar(mfrow=c(2,1))\nplot(u,v)\nplot(jitter(u),jitter(v))\n\nsoil.interp3 <- interp(jitter(u),jitter(v),moist, linear=FALSE)\nplot.surface(soil.interp3)\n\n\nBest regards\n\nFrede Aakmann T?gersen\nScientist\n\n\nUNIVERSITY OF AARHUS\nFaculty of Agricultural Sciences\nDept. of Genetics and Biotechnology\nBlichers All? 20, P.O. BOX 50\nDK-8830 Tjele\n\nPhone:   +45 8999 1900\nDirect:  +45 8999 1878\n\nE-mail:  FredeA.Togersen at agrsci.dk\nWeb:\t   http://www.agrsci.org\t\t\t\t\n\nThis email may contain information that is confidential.\nAny use or publication of this email without written permission from Faculty of Agricultural Sciences is not allowed.\nIf you are not the intended recipient, please notify Faculty of Agricultural Sciences immediately and delete this email.\n\n\n\n\n> -----Oprindelig meddelelse-----\n> Fra: r-sig-geo-bounces at stat.math.ethz.ch \n> [mailto:r-sig-geo-bounces at stat.math.ethz.ch] P? vegne af steven wilson\n> Sendt: 3. juni 2008 5:55\n> Til: r-sig-geo at stat.math.ethz.ch\n> Emne: [R-sig-Geo] akima interpolation + Delaunay triangulation\n> \n> Dear all;\n> \n> I would like to have some input from anybody who have used \n> the interpolation function (interp) in the akima package and \n> the triangulation function (tri.mesh) from the tripack \n> pakage. My problem is that for a given data set these \n> functions return errors in R while in S-Plus they don't. The \n> versions of these functions in S-Plus\n> (S+SpatialStats) can be slightly different to those in R but \n> the output shoould be the same or approx the same because \n> they're based on the same algorithm and fortran code.\n> \n> Here is the code in R:\n> \n> library(akima)\n> library(fields)\n> library(tripack)\n> \n> soil <- \n> read.table(\"http://www.unc.edu/~zhuz/teaching/Stat890/Data/soi\n> l.txt\",header=TRUE)\n> attach(soil)\n> soil.interp <- interp(u, v, moist) # linear interpolation \n> works and the results are similar to those in S-Plus\n> plot.surface(soil.interp)\n> \n> # spline interpolation\n> soil.interp2 <- interp(u, v, moist, linear = F) # spline \n> interpolation returns only NA's in R while using S-Plus it works fine\n> \n> # triangulation\n> tri.mesh(soil$u, soil$v)  # error in R, works in S-Plus\n> \n> Any comments will be appreciated\n> \n> Thanks\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
+      "body_plain": "In answering Steven I forgot to address this list also, so here is a repost of my answer (see below). At closing the R session in Emacs/ESS I got this: \n\n\n> Save workspace image? [y/n/c]: n\n \n*** SDTRAN Error 2: The first three data points are collinear.\n\n    Error detected in SDTRAN called by SDSF3P\n\n \n*** SDTRAN Error 2: The first three data points are collinear.\n\n    Error detected in SDTRAN called by SDSF3P\n\n \n*** SDTRAN Error 2: The first three data points are collinear.\n\n    Error detected in SDTRAN called by SDSF3P\n\n\nProcess R finished at Wed Jun 04 11:05:28 2008\n\nFor this reason I have included the maintainer in the list. It support my answer.\n\n\n\nMy answer to Steven:\n\nI think that it is because you data allready is gridded.\n\nSee ?interp where it is mentioned in the section on arguments:\n\n          'x', 'y', and 'z' must be the same length and may contain no\n          fewer than four points. The points of 'x' and 'y' cannot be\n          collinear, i.e, they cannot fall on the same line (two\n          vectors 'x' and 'y' such that 'y = ax + b' for some 'a', 'b'\n          will not be accepted). 'interp' is meant for cases in which\n          you have 'x', 'y' values scattered over a plane and a 'z'\n          value for each.  If, instead, you are trying to evaluate a\n          mathematical function, or get a graphical interpretation of\n          relationships that can be described by a polynomial, try\n          'outer()'. \n\nTry:\n\npar(mfrow=c(2,1))\nplot(u,v)\nplot(jitter(u),jitter(v))\n\nsoil.interp3 <- interp(jitter(u),jitter(v),moist, linear=FALSE)\nplot.surface(soil.interp3)\n\n\nBest regards\n\nFrede Aakmann Tøgersen\nScientist\n\n\nUNIVERSITY OF AARHUS\nFaculty of Agricultural Sciences\nDept. of Genetics and Biotechnology\nBlichers Allé 20, P.O. BOX 50\nDK-8830 Tjele\n\nPhone:   +45 8999 1900\nDirect:  +45 8999 1878\n\nE-mail:  FredeA.Togersen at agrsci.dk\nWeb:\t   http://www.agrsci.org\t\t\t\t\n\nThis email may contain information that is confidential.\nAny use or publication of this email without written permission from Faculty of Agricultural Sciences is not allowed.\nIf you are not the intended recipient, please notify Faculty of Agricultural Sciences immediately and delete this email.\n\n\n\n\n> -----Oprindelig meddelelse-----\n> Fra: r-sig-geo-bounces at stat.math.ethz.ch \n> [mailto:r-sig-geo-bounces at stat.math.ethz.ch] På vegne af steven wilson\n> Sendt: 3. juni 2008 5:55\n> Til: r-sig-geo at stat.math.ethz.ch\n> Emne: [R-sig-Geo] akima interpolation + Delaunay triangulation\n> \n> Dear all;\n> \n> I would like to have some input from anybody who have used \n> the interpolation function (interp) in the akima package and \n> the triangulation function (tri.mesh) from the tripack \n> pakage. My problem is that for a given data set these \n> functions return errors in R while in S-Plus they don't. The \n> versions of these functions in S-Plus\n> (S+SpatialStats) can be slightly different to those in R but \n> the output shoould be the same or approx the same because \n> they're based on the same algorithm and fortran code.\n> \n> Here is the code in R:\n> \n> library(akima)\n> library(fields)\n> library(tripack)\n> \n> soil <- \n> read.table(\"http://www.unc.edu/~zhuz/teaching/Stat890/Data/soi\n> l.txt\",header=TRUE)\n> attach(soil)\n> soil.interp <- interp(u, v, moist) # linear interpolation \n> works and the results are similar to those in S-Plus\n> plot.surface(soil.interp)\n> \n> # spline interpolation\n> soil.interp2 <- interp(u, v, moist, linear = F) # spline \n> interpolation returns only NA's in R while using S-Plus it works fine\n> \n> # triangulation\n> tri.mesh(soil$u, soil$v)  # error in R, works in S-Plus\n> \n> Any comments will be appreciated\n> \n> Thanks\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>",
       "body_snippet": "In answering Steven I forgot to address this list also, so here is a repost of my answer (see below). At closing the R session in Emacs/ESS I got this: \n\n\n> Save workspace image? [y/n/c]: n\n \n*** SDTR",
       "thread_id": "thread-fb593f97b0f3",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003701.html"
     },
     {
       "id": "msg-5a9ffc3ae84f",
@@ -156,7 +164,8 @@
       "body_snippet": "FYI\n\nI have just finishing preparing an R script that accompanies my paper in Computers in Geosciences on\nfinding the grid cell size for various applications.\n\nThe script and the data sets can be obta",
       "thread_id": "thread-5a9ffc3ae84f",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003702.html"
     },
     {
       "id": "msg-cfe500ad811e",
@@ -172,7 +181,8 @@
       "body_snippet": "Dear R Users,\n\nI am trying to apply a function to each cell of a data frame, which can \ncontain NAs, or values between -360 to +360.\n\nThe function should test if each value fullfils one of the conditi",
       "thread_id": "thread-cfe500ad811e",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003703.html"
     },
     {
       "id": "msg-bbe324672803",
@@ -190,7 +200,8 @@
       "body_snippet": "Michal\n \nAll the if statements are evaluated in your code, so the value of xx is assigned by the final if statement.  This should be solved by using 'else if' so that the code drops out of the else bl",
       "thread_id": "thread-cfe500ad811e",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003704.html"
     },
     {
       "id": "msg-3827b2d61386",
@@ -207,6 +218,7 @@
       "thread_id": "thread-3827b2d61386",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003705.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080606/d449d602/attachment.pl"
       ]
@@ -226,6 +238,7 @@
       "thread_id": "thread-370f9584493a",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003706.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080607/45368e37/attachment.pl"
       ]
@@ -246,7 +259,8 @@
       "body_snippet": "On Sat, 7 Jun 2008, milton ruser wrote:\n\n> Dear All\n>\n>\n> I need to handly some circular-shaped polygons on R. First I adapted the\n> code from Barry Rowlingson to create a function that create the lis",
       "thread_id": "thread-370f9584493a",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003707.html"
     },
     {
       "id": "msg-8f150c4767d5",
@@ -262,7 +276,8 @@
       "body_snippet": "52north, a spin-off with strong links to our department, has written out \na contest for the innovation price in geoinformatics, see\n\nhttp://52north.org/index.php?option=com_content&task=view&id=213&It",
       "thread_id": "thread-8f150c4767d5",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003708.html"
     },
     {
       "id": "msg-a984a657680d",
@@ -281,6 +296,7 @@
       "thread_id": "thread-a984a657680d",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003709.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080609/2734aa74/attachment.pl"
       ]
@@ -300,6 +316,7 @@
       "thread_id": "thread-4104837c6181",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003710.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080609/35214a90/attachment.pl"
       ]
@@ -321,6 +338,7 @@
       "thread_id": "thread-4104837c6181",
       "thread_depth": 1,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003711.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080610/7b3bb045/attachment.pl"
       ]
@@ -339,7 +357,8 @@
       "body_snippet": "Hi everyone\n\nMy problem might be easy to deal with but I have already spent quite some\ntime and effort with no result. Any help will be appreciated\n\nMy data come from an RCM that I ran, Regcm3. My dom",
       "thread_id": "thread-e252d917abbf",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003712.html"
     },
     {
       "id": "msg-465c4896fc3a",
@@ -357,7 +376,8 @@
       "body_snippet": "On Tue, 10 Jun 2008, Costas Douvis wrote:\n\n> Hi everyone\n>\n> My problem might be easy to deal with but I have already spent quite some\n> time and effort with no result. Any help will be appreciated\n>\n",
       "thread_id": "thread-e252d917abbf",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003713.html"
     },
     {
       "id": "msg-0eb0c8722774",
@@ -373,7 +393,8 @@
       "body_snippet": "For European projects, we commonly use the official European Terrestrial Reference System\n(www.euref.eu). You can convert your data from the longlat system to the ETRS using:\n\n> library(maptools)\n> pr",
       "thread_id": "thread-e252d917abbf",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003714.html"
     },
     {
       "id": "msg-da08aa3b9787",
@@ -393,6 +414,7 @@
       "thread_id": "thread-4104837c6181",
       "thread_depth": 2,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003715.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080610/0b84e0d2/attachment.pl"
       ]
@@ -416,6 +438,7 @@
       "thread_id": "thread-4104837c6181",
       "thread_depth": 3,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003716.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080610/2f8fe60e/attachment.pl"
       ]
@@ -437,6 +460,7 @@
       "thread_id": "thread-3c39a362da36",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003717.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080611/a8223999/attachment.pl"
       ]
@@ -458,7 +482,8 @@
       "body_snippet": "On Wed, 11 Jun 2008, Laura Poggio wrote:\n\n> Dear list,\n> I managed to read an image in R and to make various elaborations on it,\n> mainly clustering. Now I would like to save the results I got as tiff",
       "thread_id": "thread-3c39a362da36",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003718.html"
     },
     {
       "id": "msg-05e6057b66d7",
@@ -474,7 +499,8 @@
       "body_snippet": "Thank you both very much for replying.\n\nThe truth is that I'm still confused. I found what is needed from my\nmodel. I believe that this script represents my grid in PROJ.4 format:\n\n\"+proj=lcc +lat_1=5",
       "thread_id": "thread-05e6057b66d7",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003719.html"
     },
     {
       "id": "msg-58c8e494817c",
@@ -490,7 +516,8 @@
       "body_snippet": "Hi All,\nI suppose this is a rather simple question...however, I'm managing to \nget more confused the more I read.\nI'm doing some OK and UK using the R-gstat package...I have some data \nthat is moderat",
       "thread_id": "thread-58c8e494817c",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003720.html"
     },
     {
       "id": "msg-aba5e8be643f",
@@ -508,7 +535,8 @@
       "body_snippet": "Dave Depew wrote:\n> Hi All,\n> I suppose this is a rather simple question...however, I'm managing to \n> get more confused the more I read.\n> I'm doing some OK and UK using the R-gstat package...I have ",
       "thread_id": "thread-58c8e494817c",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003721.html"
     },
     {
       "id": "msg-81a6eeb9a9d2",
@@ -526,7 +554,8 @@
       "body_snippet": "I ran into the same problem with spatstat and then discovered the gpclib \npackage.  I wrote a simple function below that converts an owin poly to \na gpc class (see below).  The snippet of code below s",
       "thread_id": "thread-4104837c6181",
       "thread_depth": 3,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003722.html"
     },
     {
       "id": "msg-6f8c87746b72",
@@ -542,7 +571,8 @@
       "body_snippet": "Hello,\n\nA bit of version information: I'm running  rgdal version 0.5-24, GDAL 1.5.1 \ninstalled on Debian. I'd like to read portions of USGS National Elevation \nDataset (NED) files in ArcGrid format in",
       "thread_id": "thread-6f8c87746b72",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003723.html"
     },
     {
       "id": "msg-9656e4ce01e9",
@@ -559,6 +589,7 @@
       "thread_id": "thread-9656e4ce01e9",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003724.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080612/6fd0637c/attachment.pl"
       ]
@@ -579,7 +610,8 @@
       "body_snippet": "On Thu, 12 Jun 2008, milton ruser wrote:\n\n> Dear all,\n>\n> I have a sequence of polygons as the example below. As the number of\n> polygons will change every time, I would like to add a new object of cl",
       "thread_id": "thread-9656e4ce01e9",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003725.html"
     },
     {
       "id": "msg-2731feeab2f6",
@@ -596,6 +628,7 @@
       "thread_id": "thread-2731feeab2f6",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003726.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080612/21b9d382/attachment.pl"
       ]
@@ -616,7 +649,8 @@
       "body_snippet": "On Thu, 12 Jun 2008, Laura Poggio wrote:\n\n> Dear list,\n> I am trying to do some clustering on images. And I have two main problems:\n>\n> 1) Clustering multiband images.\n> I managed to be successful wit",
       "thread_id": "thread-2731feeab2f6",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003727.html"
     },
     {
       "id": "msg-5fe39e83dacd",
@@ -636,6 +670,7 @@
       "thread_id": "thread-2731feeab2f6",
       "thread_depth": 2,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003728.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080612/777f8599/attachment.pl"
       ]
@@ -658,7 +693,8 @@
       "body_snippet": "Laura Poggio wrote:\n> However the results are quite different from what expected.\n> Then I am wondering if is it that the correct way to handle clustering of\n> remote sensing images.\n>\n> Thanks\n>\n> LP",
       "thread_id": "thread-2731feeab2f6",
       "thread_depth": 3,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003729.html"
     },
     {
       "id": "msg-78a862fac9c2",
@@ -676,7 +712,8 @@
       "body_snippet": "If your images are large (and images typically are large because pixel size\nhas to be small compared to the extent of the image for the image to\nbe of acceptable quality for our vision system), I do n",
       "thread_id": "thread-2731feeab2f6",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003730.html"
     },
     {
       "id": "msg-0781dce3a8b0",
@@ -696,6 +733,7 @@
       "thread_id": "thread-2731feeab2f6",
       "thread_depth": 2,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003731.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080612/76cf56f2/attachment.pl"
       ]
@@ -718,7 +756,8 @@
       "body_snippet": "Laura,\n\nLaura Poggio escribi?:\n> Thank you very much for your detailed answer that made me understand a \n> lot, and also it pointed out what I was thinking: R does not use the \n> spatial information f",
       "thread_id": "thread-2731feeab2f6",
       "thread_depth": 3,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003732.html"
     },
     {
       "id": "msg-1b8a5366b91b",
@@ -738,7 +777,8 @@
       "body_snippet": "(sorry I pressed the send button instead of the save as draft button,\nI go on with my comments)\n\nLaura,\n\nLaura Poggio escribi?:\n> Thank you very much for your detailed answer that made me understand a",
       "thread_id": "thread-2731feeab2f6",
       "thread_depth": 3,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003733.html"
     },
     {
       "id": "msg-363992cd2a76",
@@ -757,7 +797,8 @@
       "body_snippet": "Roger Bivand wrote:\n> On Thu, 12 Jun 2008, Laura Poggio wrote:\n>\n>> Dear list,\n>> I am trying to do some clustering on images. And I have two main \n>> problems:\n>>\n>> 1) Clustering multiband images.\n>",
       "thread_id": "thread-2731feeab2f6",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003734.html"
     },
     {
       "id": "msg-b601b885f81c",
@@ -778,6 +819,7 @@
       "thread_id": "thread-2731feeab2f6",
       "thread_depth": 3,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003735.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080612/39d42f0e/attachment.pl"
       ]
@@ -802,7 +844,8 @@
       "body_snippet": "Laura Poggio escribi?:\n.../...\n> \n> 2008/6/12 Agustin Lobo <Agustin.Lobo at ija.csic.es \n> <mailto:Agustin.Lobo at ija.csic.es>>:\n>\n> May I just ask you if you have easily available an example of code",
       "thread_id": "thread-a4f3a7438173",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003736.html"
     },
     {
       "id": "msg-7f13acc57e2c",
@@ -822,6 +865,7 @@
       "thread_id": "thread-9656e4ce01e9",
       "thread_depth": 2,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003737.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080612/96530b15/attachment.pl"
       ]
@@ -848,6 +892,7 @@
       "thread_id": "thread-a4f3a7438173",
       "thread_depth": 1,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003738.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080612/7d12a33d/attachment.pl"
       ]
@@ -874,7 +919,8 @@
       "body_snippet": "If you are interested in a (supervised) imagery classification routine\nthat takes spatial arrangement into consideration, check out the\ni.smap command in GRASS GIS.\n\nCheers,\n\nDylan\n\nOn Thu, Jun 12, 20",
       "thread_id": "thread-a4f3a7438173",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003739.html"
     },
     {
       "id": "msg-22b8c580bff7",
@@ -892,7 +938,8 @@
       "body_snippet": "Ashton, I found it worth dropping at r-sig-geo. And did so.\n\nThanks, and best wishes,\n--\nEdzer\n\nAshton Shortridge wrote:\n> Hi all,\n>\n> Not a question, but hopefully a contribution. I have been messing",
       "thread_id": "thread-22b8c580bff7",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003740.html"
     },
     {
       "id": "msg-e1bacb1c58c0",
@@ -912,7 +959,8 @@
       "body_snippet": "On Thu, 12 Jun 2008, Edzer Pebesma wrote:\n\n> Roger Bivand wrote:\n>>  On Thu, 12 Jun 2008, Laura Poggio wrote:\n>> \n>> >  Dear list,\n>> >  I am trying to do some clustering on images. And I have two mai",
       "thread_id": "thread-2731feeab2f6",
       "thread_depth": 3,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003741.html"
     },
     {
       "id": "msg-bc7d6486f150",
@@ -931,7 +979,8 @@
       "body_snippet": "Thanks Edzer,\n\nSO to confirm, the 45 deg direction is the maximum range of correlation, \nor simply just the maximum range to determine the angle of anisotropy?\n\n\nEdzer Pebesma wrote:\n> Dave Depew wrot",
       "thread_id": "thread-58c8e494817c",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003742.html"
     },
     {
       "id": "msg-c02a5fc2b7f1",
@@ -948,6 +997,7 @@
       "thread_id": "thread-c02a5fc2b7f1",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003743.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080613/3104ac44/attachment.pl"
       ]
@@ -968,7 +1018,8 @@
       "body_snippet": "Markus Loecher wrote:\n> Dear Rgeo experts,\n> what would be the most efficient way of displaying Google map tiles in R and\n> overlaying lat/lon points ? It seems that already the first elementary step\n",
       "thread_id": "thread-c02a5fc2b7f1",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003744.html"
     },
     {
       "id": "msg-f8431f640526",
@@ -987,7 +1038,8 @@
       "body_snippet": "This might be of interest too:\n\nGOOGLE CHARTS FROM R: MAPS\nhttp://www.iq.harvard.edu/blog/sss/archives/2008/04/google_charts_f_1.shtml\n\n\nrgds,\nDavid\n\n\n-----Original Message-----\nFrom: r-sig-geo-bounce",
       "thread_id": "thread-c02a5fc2b7f1",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003745.html"
     },
     {
       "id": "msg-8f9e711d7f8a",
@@ -1003,7 +1055,8 @@
       "body_snippet": "I'm getting frustrated at what I thought would be simple raster \nmanipulations...\n\n  * How can I shift a SpatialGridDataFrame? I can't just change the \ncoordinates:\n\n > coordinates(compare)=coordinate",
       "thread_id": "thread-8f9e711d7f8a",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003746.html"
     },
     {
       "id": "msg-770b21b5ff2b",
@@ -1021,7 +1074,8 @@
       "body_snippet": "I would follow this up in the elide() function of maptools.  I thought \nI'd post this as a partial answer, since I'm sure this is the most \nproductive way to go given the goals of sp/maptools.\n\nThis i",
       "thread_id": "thread-8f9e711d7f8a",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003747.html"
     },
     {
       "id": "msg-34258fb4275c",
@@ -1037,7 +1091,8 @@
       "body_snippet": "Hi all,\nI have a data set that I would like to krige to interpolate between \ntransects. There is a non-linear trend between two of the variables...my \nimpression from reading the gstat help file is th",
       "thread_id": "thread-34258fb4275c",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003748.html"
     },
     {
       "id": "msg-6b9356ce72c9",
@@ -1055,7 +1110,8 @@
       "body_snippet": "Dave,\n\nwhat is necessary for UK is a relation expressed by a linear model, not\nnecessaraly a linear relation between the variables.\ne.g. you could have a second degree polinomial and still work within",
       "thread_id": "thread-34258fb4275c",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003749.html"
     },
     {
       "id": "msg-b9d19a3450b9",
@@ -1074,7 +1130,8 @@
       "body_snippet": "Ok,\nWhat about higher order polynomials? I have fitted one using a gam to \nthe data which which helps to normalize the residuals, and reduce the \nvariance of the residuals.\nIs it simply a matter of pl",
       "thread_id": "thread-34258fb4275c",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003750.html"
     },
     {
       "id": "msg-8023344078f9",
@@ -1091,6 +1148,7 @@
       "thread_id": "thread-8023344078f9",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003751.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080616/3afc4345/attachment.pl"
       ]
@@ -1111,7 +1169,8 @@
       "body_snippet": "Dear Debarchana Ghosh:\n\nIt may be me, but when I put a double quotation on [place] (I assume \nthat's the layer's name?], writeOGR generates a folder with shapefiles \nin it. If that doesn't work or my ",
       "thread_id": "thread-8023344078f9",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003752.html"
     },
     {
       "id": "msg-778cd44288d3",
@@ -1129,7 +1188,8 @@
       "body_snippet": "On Mon, 16 Jun 2008, Debarchana Ghosh wrote:\n\n> Hi,\n>\n> I am using R 2.7 on windows with 4GB ram.\n>\n> I am trying to convert the SpatialPointsDataFrame object (SDF) from the\n> \"gwr\" output ( spgwr pac",
       "thread_id": "thread-8023344078f9",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003753.html"
     },
     {
       "id": "msg-b2405abe6ef1",
@@ -1148,7 +1208,8 @@
       "body_snippet": "Roger Bivand wrote:\n> On Mon, 16 Jun 2008, Debarchana Ghosh wrote:\n> \n>> Hi,\n>>\n>> I am using R 2.7 on windows with 4GB ram.\n>>\n>> I am trying to convert the SpatialPointsDataFrame object (SDF) from t",
       "thread_id": "thread-8023344078f9",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003754.html"
     },
     {
       "id": "msg-2baa2286efa6",
@@ -1169,6 +1230,7 @@
       "thread_id": "thread-34258fb4275c",
       "thread_depth": 3,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003755.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080617/378c288d/attachment.pl"
       ]
@@ -1187,7 +1249,8 @@
       "body_snippet": "Thanks Tom,\nI've been able to fit a polynomial function to the data quite well. The \nresiduals are behaving (i.e normal distribution and no skewness of \nvariance). I'm assuming this means that I could",
       "thread_id": "thread-63f33268c007",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003756.html"
     },
     {
       "id": "msg-0ee8bcf20a9b",
@@ -1208,6 +1271,7 @@
       "thread_id": "thread-8023344078f9",
       "thread_depth": 3,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003757.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080617/a1d74db4/attachment.pl"
       ]
@@ -1227,6 +1291,7 @@
       "thread_id": "thread-a4cd61aa75f8",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003758.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080617/9fede8c1/attachment.pl"
       ]
@@ -1247,7 +1312,8 @@
       "body_snippet": "On Tue, 17 Jun 2008, Debarchana Ghosh wrote:\n\n> Hi,\n>\n> OS: 2.70 R version on Windows with 4 GB Ram\n>\n> I have created an object of class gwr from the function 'gwr' (package\n> spgwr). But cannot find",
       "thread_id": "thread-a4cd61aa75f8",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003759.html"
     },
     {
       "id": "msg-4baa64731838",
@@ -1263,7 +1329,8 @@
       "body_snippet": "Dear Dave,\n\nI separate fitting of the deterministic (trend) and residual part of the universal kriging model all\nthe time. Adding OK of residuals to the trend is fine, as long as the regression model ",
       "thread_id": "thread-63f33268c007",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003760.html"
     },
     {
       "id": "msg-38ee0b165c0a",
@@ -1281,7 +1348,8 @@
       "body_snippet": "hi Tom,\nThat was my impression from reading some introductory texts... I'll have \nto see how the mgcv package fits the polynomial function to the \ndata...it isn't clear to me at first glance how it is",
       "thread_id": "thread-63f33268c007",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003761.html"
     },
     {
       "id": "msg-73e4a29e3e29",
@@ -1297,7 +1365,8 @@
       "body_snippet": "Hi,\n\nI'm sorry to post a rather off-topic question here, but as a new sp\nuser and total novice in coordinates and projections questions, I'm\nfacing a problem you may help me to solve. Please ignore th",
       "thread_id": "thread-73e4a29e3e29",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003762.html"
     },
     {
       "id": "msg-e9e517b359e2",
@@ -1317,6 +1386,7 @@
       "thread_id": "thread-a4cd61aa75f8",
       "thread_depth": 2,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003763.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080618/ba9e2f95/attachment.pl"
       ]
@@ -1339,7 +1409,8 @@
       "body_snippet": "Debarchana:\n\nAs Roger has pointed out, since gwr.e is the gwr residuals, it is easy \nto calculate the estimated Y from the observed Y since residual = \n(observed Y) - (estimated Y).\n\nTo extract the gw",
       "thread_id": "thread-a4cd61aa75f8",
       "thread_depth": 3,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003764.html"
     },
     {
       "id": "msg-367d2888748a",
@@ -1361,6 +1432,7 @@
       "thread_id": "thread-a4cd61aa75f8",
       "thread_depth": 4,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003765.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080618/5cac5d0b/attachment.pl"
       ]
@@ -1381,7 +1453,8 @@
       "body_snippet": "Hi,\n\nI am having a problem with segmentation fault when I run my code using \nPBSmapping. I have thought 'segfault' indicates either that my code is \nwrong or that something is missing in this package.",
       "thread_id": "thread-73e4a29e3e29",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003766.html"
     },
     {
       "id": "msg-b239b0f4cde6",
@@ -1401,7 +1474,8 @@
       "body_snippet": "On Wed, 18 Jun 2008, Debarchana Ghosh wrote:\n\n>>\n>>>\n>>> I want to clarify whether gwre ( previously it was gwr.e) is the estimated\n>>> Y\n>>> values?\n>>>\n>>>\n>> No, gwr.e is (currently) the i'th eleme",
       "thread_id": "thread-a4cd61aa75f8",
       "thread_depth": 3,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003767.html"
     },
     {
       "id": "msg-f9c93bf99eeb",
@@ -1420,7 +1494,8 @@
       "body_snippet": "On Wed, 18 Jun 2008, tkobayas at indiana.edu wrote:\n\n> Hi,\n>\n> I am having a problem with segmentation fault when I run my code using \n> PBSmapping. I have thought 'segfault' indicates either that my ",
       "thread_id": "thread-73e4a29e3e29",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003768.html"
     },
     {
       "id": "msg-803010c2a438",
@@ -1441,7 +1516,8 @@
       "body_snippet": "Hello lists,\n\nApologies for cross posting, but I thought this might be of interest to\nall groups...\n\nThanks to the excellent work of Martin Dobias on the QgsMemoryProvider, I\nhave created a simple plu",
       "thread_id": "thread-803010c2a438",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003769.html"
     },
     {
       "id": "msg-649570cc7a00",
@@ -1459,7 +1535,8 @@
       "body_snippet": "Hi,\n\nYou need to find out what the projection of the shapefile is, the \nogrinfo does not give this information for your file as you probably do \nnot have the .prj file. The R function spTransform need",
       "thread_id": "thread-73e4a29e3e29",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003770.html"
     },
     {
       "id": "msg-35554729b392",
@@ -1481,7 +1558,8 @@
       "body_snippet": "Carson,\n\nThis is geting close to my dreams, but\nwhen I try to load the plugin, I get:\nAn error has occured while executing Python code:\n\nTraceback (most recent call last):\n  File \"\", line 1, in\n  File",
       "thread_id": "thread-803010c2a438",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003771.html"
     },
     {
       "id": "msg-11d240186b32",
@@ -1496,11 +1574,12 @@
         "<87hcbqc0aq.fsf@z.nozav.org>",
         "<485A2794.5090408@geo.uu.nl>"
       ],
-      "body_plain": "On Thu, 19 Jun 2008, Paul Hiemstra wrote:\n\n> Hi,\n> You need to find out what the projection of the shapefile is, the \n> ogrinfo does not give this information for your file as you probably do \n> not have the .prj file. The R function spTransform needs the projection \n> info in a so called proj4string. The easiest way to define such a string \n> is through the epsg code, this code enables proj (the projection library \n> used in R) to find the parameter it needs. For example, the proj4string \n> for the Dutch national projection is:\n>\n> \"+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 \n> +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m \n> +towgs84=565.04,49.91,465.84,-0.409394387,0.35970519561,-1.868491,4.0772 \n> +no_defs\"\n>\n> using epsg codes:\n>\n> \"+init=epsg:28992\"\n>\n> The bottomline is to find the projection of your second shapefile as \n> this is the most likely candidate to cause the difference. A good place \n> to ask questions regarding projections is the proj4-mailing list \n> (http://lists.maptools.org/mailman/listinfo/proj).\n\nRight. In addition, do some digging into the history of coordinate \nreference systems for your country of interest, for example:\n\nhttp://www.asprs.org/resources/grids/\n\nhas France on January 2001. I think that you may be in Nouvelle \nTriangulation Fran?aise, which has a Paris meridian:\n\nEPSG <- make_EPSG()\nEPSG[grep(\"NTF\", EPSG$note), 1:2]\n\nBut that is guesswork. For enthusiasts, once you have a guess, use \nspTransform to geographical coordinates (CRS(\"+longlat +datum=WGS84\")), \nand do writeOGR(obj, \"obj.kml\", \"obj\", driver=\"KML\") of (a subset of) your \nobject and see where it lands in Google Earth.\n\nRoger\n\n>\n> hth and cheers,\n> Paul\n>\n> Julien Barnier wrote:\n>> Hi,\n>>\n>> I'm sorry to post a rather off-topic question here, but as a new sp\n>> user and total novice in coordinates and projections questions, I'm\n>> facing a problem you may help me to solve. Please ignore this post if\n>> it is too much noise.\n>>\n>> I've got two map files (a MapInfo file and an ESRI shapefile) from two\n>> different sources but which represent objects from the same french\n>> region (one represent the cities, the other rivers and water\n>> surfaces). \n>>\n>> The problem is that when imported into R and plotted together, they\n>> doesn't appear in the same place.  They seem to have the same\n>> ?longitude?, but the ?latitude? is different. If I plot them, the\n>> first map ranges in the Y axis from 70,000 to 100,000 and the second\n>> one from 2,060,000 to 2,140,000. The ranges along the x axis seem to\n>> be the same, though.\n>>\n>> Here is the output of ogrinfo on the two files :\n>>\n>> ,----\n>> | $ ogrinfo -so 69_iris.mid 69_iris\n>> | Had to open data source read-only.\n>> | INFO: Open of `69_iris.mid'\n>> |       using driver `MapInfo File' successful.\n>> | \n>> | Layer name: 69_iris\n>> | Geometry: Unknown (any)\n>> | Feature Count: 774\n>> | Extent: (747910.000000, 2053380.000000) - (819740.000000,\n>> | 2147622.300000)\n>> | Layer SRS WKT:\n>> | PROJCS[?unnamed?,\n>> |     GEOGCS[?unnamed?,\n>> |         DATUM[?MIF 9999,6,-168,-60,320,0,0,0,0,0?,\n>> |             SPHEROID[?Clarke 1880?,6378249.145,293.465],\n>> |             TOWGS84[-168,-60,320,-0,-0,-0,0]],\n>> |         PRIMEM[?non-Greenwich?,0],\n>> |         UNIT[?degree?,0.0174532925199433]],\n>> |     PROJECTION[?Lambert_Conformal_Conic_2SP?],\n>> |     PARAMETER[?standard_parallel_1?,45.90287723937],\n>> |     PARAMETER[?standard_parallel_2?,47.69712276063],\n>> |     PARAMETER[?latitude_of_origin?,46.8],\n>> |     PARAMETER[?central_meridian?,2.337229104484],\n>> |     PARAMETER[?false_easting?,600000],\n>> |     PARAMETER[?false_northing?,2200000],\n>> |     UNIT[?Meter?,1]]\n>> | DepCom: String (5.0)\n>> | Nom_Com: String (40.0)\n>> | Iris: String (4.0)\n>> | DComIris: String (9.0)\n>> | Nom_Iris: String (43.0)\n>> | Typ_Iris: String (1.0)\n>> | Indic: String (1.0)\n>> | Origine: String (1.0)\n>> `----\n>>\n>> ,----\n>> | $ ogrinfo -so Decoupage_Administratif/SURFDEAU.shp SURFDEAU\n>> | INFO: Open of `Decoupage_Administratif/SURFDEAU.shp'\n>> |       using driver `ESRI Shapefile' successful.\n>> | \n>> | Layer name: SURFDEAU\n>> | Geometry: Polygon\n>> | Feature Count: 168\n>> | Extent: (785619.190000, 68133.620000) - (818193.410000, 107443.340000)\n>> | Layer SRS WKT:\n>> | (unknown)\n>> | NUMOBJ: String (11.0)\n>> `----\n>>\n>> I've tried to play with some parameters in readShapePoly and\n>> spTransform, but without success.\n>>\n>> Any help would be greatly appreciated.\n>>\n>> Thanks in advance,\n>> \n>\n>\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_plain": "On Thu, 19 Jun 2008, Paul Hiemstra wrote:\n\n> Hi,\n> You need to find out what the projection of the shapefile is, the \n> ogrinfo does not give this information for your file as you probably do \n> not have the .prj file. The R function spTransform needs the projection \n> info in a so called proj4string. The easiest way to define such a string \n> is through the epsg code, this code enables proj (the projection library \n> used in R) to find the parameter it needs. For example, the proj4string \n> for the Dutch national projection is:\n>\n> \"+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 \n> +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m \n> +towgs84=565.04,49.91,465.84,-0.409394387,0.35970519561,-1.868491,4.0772 \n> +no_defs\"\n>\n> using epsg codes:\n>\n> \"+init=epsg:28992\"\n>\n> The bottomline is to find the projection of your second shapefile as \n> this is the most likely candidate to cause the difference. A good place \n> to ask questions regarding projections is the proj4-mailing list \n> (http://lists.maptools.org/mailman/listinfo/proj).\n\nRight. In addition, do some digging into the history of coordinate \nreference systems for your country of interest, for example:\n\nhttp://www.asprs.org/resources/grids/\n\nhas France on January 2001. I think that you may be in Nouvelle \nTriangulation Française, which has a Paris meridian:\n\nEPSG <- make_EPSG()\nEPSG[grep(\"NTF\", EPSG$note), 1:2]\n\nBut that is guesswork. For enthusiasts, once you have a guess, use \nspTransform to geographical coordinates (CRS(\"+longlat +datum=WGS84\")), \nand do writeOGR(obj, \"obj.kml\", \"obj\", driver=\"KML\") of (a subset of) your \nobject and see where it lands in Google Earth.\n\nRoger\n\n>\n> hth and cheers,\n> Paul\n>\n> Julien Barnier wrote:\n>> Hi,\n>>\n>> I'm sorry to post a rather off-topic question here, but as a new sp\n>> user and total novice in coordinates and projections questions, I'm\n>> facing a problem you may help me to solve. Please ignore this post if\n>> it is too much noise.\n>>\n>> I've got two map files (a MapInfo file and an ESRI shapefile) from two\n>> different sources but which represent objects from the same french\n>> region (one represent the cities, the other rivers and water\n>> surfaces). \n>>\n>> The problem is that when imported into R and plotted together, they\n>> doesn't appear in the same place.  They seem to have the same\n>> «longitude», but the «latitude» is different. If I plot them, the\n>> first map ranges in the Y axis from 70,000 to 100,000 and the second\n>> one from 2,060,000 to 2,140,000. The ranges along the x axis seem to\n>> be the same, though.\n>>\n>> Here is the output of ogrinfo on the two files :\n>>\n>> ,----\n>> | $ ogrinfo -so 69_iris.mid 69_iris\n>> | Had to open data source read-only.\n>> | INFO: Open of `69_iris.mid'\n>> |       using driver `MapInfo File' successful.\n>> | \n>> | Layer name: 69_iris\n>> | Geometry: Unknown (any)\n>> | Feature Count: 774\n>> | Extent: (747910.000000, 2053380.000000) - (819740.000000,\n>> | 2147622.300000)\n>> | Layer SRS WKT:\n>> | PROJCS[«unnamed»,\n>> |     GEOGCS[«unnamed»,\n>> |         DATUM[«MIF 9999,6,-168,-60,320,0,0,0,0,0»,\n>> |             SPHEROID[«Clarke 1880»,6378249.145,293.465],\n>> |             TOWGS84[-168,-60,320,-0,-0,-0,0]],\n>> |         PRIMEM[«non-Greenwich»,0],\n>> |         UNIT[«degree»,0.0174532925199433]],\n>> |     PROJECTION[«Lambert_Conformal_Conic_2SP»],\n>> |     PARAMETER[«standard_parallel_1»,45.90287723937],\n>> |     PARAMETER[«standard_parallel_2»,47.69712276063],\n>> |     PARAMETER[«latitude_of_origin»,46.8],\n>> |     PARAMETER[«central_meridian»,2.337229104484],\n>> |     PARAMETER[«false_easting»,600000],\n>> |     PARAMETER[«false_northing»,2200000],\n>> |     UNIT[«Meter»,1]]\n>> | DepCom: String (5.0)\n>> | Nom_Com: String (40.0)\n>> | Iris: String (4.0)\n>> | DComIris: String (9.0)\n>> | Nom_Iris: String (43.0)\n>> | Typ_Iris: String (1.0)\n>> | Indic: String (1.0)\n>> | Origine: String (1.0)\n>> `----\n>>\n>> ,----\n>> | $ ogrinfo -so Decoupage_Administratif/SURFDEAU.shp SURFDEAU\n>> | INFO: Open of `Decoupage_Administratif/SURFDEAU.shp'\n>> |       using driver `ESRI Shapefile' successful.\n>> | \n>> | Layer name: SURFDEAU\n>> | Geometry: Polygon\n>> | Feature Count: 168\n>> | Extent: (785619.190000, 68133.620000) - (818193.410000, 107443.340000)\n>> | Layer SRS WKT:\n>> | (unknown)\n>> | NUMOBJ: String (11.0)\n>> `----\n>>\n>> I've tried to play with some parameters in readShapePoly and\n>> spTransform, but without success.\n>>\n>> Any help would be greatly appreciated.\n>>\n>> Thanks in advance,\n>> \n>\n>\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
       "body_snippet": "On Thu, 19 Jun 2008, Paul Hiemstra wrote:\n\n> Hi,\n> You need to find out what the projection of the shapefile is, the \n> ogrinfo does not give this information for your file as you probably do \n> not h",
       "thread_id": "thread-73e4a29e3e29",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003772.html"
     },
     {
       "id": "msg-40cf8ce52009",
@@ -1522,7 +1601,8 @@
       "body_snippet": "Hi Carson,\n\nIs exporting the Spatial object to a .shp (or other vector format) and \nthen reading the file in to QGIS not an easier way to get R spatial \nlayers into QGIS. That also solves the problem ",
       "thread_id": "thread-803010c2a438",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003773.html"
     },
     {
       "id": "msg-dac73c9fbd9b",
@@ -1545,7 +1625,8 @@
       "body_snippet": "R is capable of some very limited display of geographic\ninformation and there are no interactive tools for\nthe geographic exploration of displayed geodata. If the current\nset of tools is enough for yo",
       "thread_id": "thread-803010c2a438",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003774.html"
     },
     {
       "id": "msg-4ed46909648a",
@@ -1568,7 +1649,8 @@
       "body_snippet": "> Carson,\n>\n> This is geting close to my dreams\n\nWell I'm glad I could provide something so useful!\n\n> when I try to load the plugin, I get:\n> An error has occured while executing Python code:\n> Trace",
       "thread_id": "thread-803010c2a438",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003775.html"
     },
     {
       "id": "msg-76de1b60c8ca",
@@ -1591,7 +1673,8 @@
       "body_snippet": "> Hi Carson,\n>\n> Is exporting the Spatial object to a .shp (or other vector format) and\nthen reading the file in to QGIS not an easier way to get R spatial\nlayers into QGIS.\n\nHi Paul,\n\nI have done thi",
       "thread_id": "thread-803010c2a438",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003776.html"
     },
     {
       "id": "msg-58ce2bffac8c",
@@ -1611,7 +1694,8 @@
       "body_snippet": "Hi Roger and Paul,\n\nThanks to your help, I've managed to import the files and to transform\nthem into the same projection. In fact I had the .prj file associated\nto the shapefile, but I didn't even kno",
       "thread_id": "thread-73e4a29e3e29",
       "thread_depth": 3,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003777.html"
     },
     {
       "id": "msg-6755af68c284",
@@ -1628,6 +1712,7 @@
       "thread_id": "thread-6755af68c284",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003778.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080620/78a7c97d/attachment.pl"
       ]
@@ -1646,7 +1731,8 @@
       "body_snippet": "Hi again,\nI'm getting more confused regarding the \"accepted\" forms of detrending \ndata prior to kriging. I've used a GAM (package mgcv) to detrend my \ntarget variable. The residuals from this 9th orde",
       "thread_id": "thread-8120e8706410",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003779.html"
     },
     {
       "id": "msg-6ceb98d35643",
@@ -1663,6 +1749,7 @@
       "thread_id": "thread-6ceb98d35643",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003780.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080620/dc5c75e9/attachment.pl"
       ]
@@ -1683,7 +1770,8 @@
       "body_snippet": "Dear Pujan,\n\nI believe this is not really the most appropriate list to send your \nquestion to, as it has little to do with spatial data.\n\nBriefly, with samples the size you have, the smallest deviatio",
       "thread_id": "thread-6ceb98d35643",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003781.html"
     },
     {
       "id": "msg-438dee14ff6b",
@@ -1701,7 +1789,8 @@
       "body_snippet": "I don't know about road networks, but I know of at least four groups \nthat have worked on kriging over river networks, and one or two that \nworked on coastal data using water distance instead of Eucli",
       "thread_id": "thread-6755af68c284",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003782.html"
     },
     {
       "id": "msg-6919eaf136c5",
@@ -1717,7 +1806,8 @@
       "body_snippet": "Hello.\n\n Following papaer may be helpful.\n\n OKABE, A., SATOH, T. and SUGIHARA, K. \"A KERNEL DENSITY\nESTIMATION METHOD FOR NETWORKS,\n?ITS COMPUTATIONAL METHOD, AND A GIS-BASED TOOL\",\nDiscussion Paper, ",
       "thread_id": "thread-6755af68c284",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003783.html"
     },
     {
       "id": "msg-9e8d8dd38923",
@@ -1733,7 +1823,8 @@
       "body_snippet": "Dear list,\n\nI recently implemented a smoothing algorithm that could be interesting \nfor other people. It smooths a grid by calculating an average for a n x \nn window. The input is a SpatialGrid/Pixels",
       "thread_id": "thread-9e8d8dd38923",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003784.html"
     },
     {
       "id": "msg-5bba9f0a3f31",
@@ -1753,6 +1844,7 @@
       "thread_id": "thread-6755af68c284",
       "thread_depth": 2,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003785.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080623/729096c0/attachment.pl"
       ]
@@ -1772,6 +1864,7 @@
       "thread_id": "thread-67ced841789e",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003786.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080624/16b912ff/attachment.pl"
       ]
@@ -1793,6 +1886,7 @@
       "thread_id": "thread-9e8d8dd38923",
       "thread_depth": 1,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003787.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080624/45b2f16e/attachment.pl"
       ]
@@ -1813,7 +1907,8 @@
       "body_snippet": "On Tue, 24 Jun 2008, Honey Giroday wrote:\n\n>\n>\n> Hi,\n>\n> I'm currently trying to use save() on a density plot (i.e. an image) \n> that takes a long time to generate (using density(x)).  I want to be \n>",
       "thread_id": "thread-67ced841789e",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003788.html"
     },
     {
       "id": "msg-79cc6641f342",
@@ -1829,7 +1924,8 @@
       "body_snippet": "Dear list,\n\nI'm trying to extract different oceanographic data (chlorophyll, sea \nsurface temperature, etc.) for doing habitat modelling. The input data \nare locations (lat, lon) of tracking data of m",
       "thread_id": "thread-79cc6641f342",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003789.html"
     },
     {
       "id": "msg-e0c3aa7111f0",
@@ -1847,7 +1943,8 @@
       "body_snippet": "Hello,\n\nI've worked a lot on problems of this type - here's some quick thoughts, \nnot really directly addressing your questions.\n\nHDF and netCDF can be difficult - you need to compile rgdal from again",
       "thread_id": "thread-79cc6641f342",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003790.html"
     },
     {
       "id": "msg-77e74cf00835",
@@ -1863,7 +1960,8 @@
       "body_snippet": "Hi!\n\nIs there a guide for plotting R spatial objects,\nbest dealing with all (at least several) of the\ndifferent spatial packages (sp, PBSmapping, maptools etc)?\n\nThanks\n\n-- \nDr. Agustin Lobo\nInstitut ",
       "thread_id": "thread-77e74cf00835",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003791.html"
     },
     {
       "id": "msg-4abc4323f894",
@@ -1883,6 +1981,7 @@
       "thread_id": "thread-67ced841789e",
       "thread_depth": 2,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003792.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080624/5e86a414/attachment.pl"
       ]
@@ -1905,7 +2004,8 @@
       "body_snippet": "On Tue, 24 Jun 2008, Honey Giroday wrote:\n\n>\n> Thank you for your response and assisting me with clarifying my question.  Here is a portion of the code I am using:\n>\n> xxx04 <- ppp(x=mpb04$Easting, y=",
       "thread_id": "thread-67ced841789e",
       "thread_depth": 3,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003793.html"
     },
     {
       "id": "msg-e38d314e369f",
@@ -1917,11 +2017,12 @@
       "subject_clean": "Function to smooth grids using n x n window moving average (low-pass filter)",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hi,\n\nFYI, the RSAGA package provides a function called 'focal.function', which can apply an R function operating on circular or quadratic moving windows to an entire grid. This function is currently very inefficient - but flexible.\n\nCheers\n  Alex\n\n--\nAlexander Brenning\nbrenning -at- uwaterloo.ca - T +1-519-888-4567 ext 35783\nDepartment of Geography and Environmental Management\nUniversity of Waterloo\n200 University Ave. W - Waterloo, ON - Canada N2L 3G1\nhttp://www.fes.uwaterloo.ca/geography/faculty/brenning/\n\n----- Urspr?ngliche Mail ----\nVon: \"Hengl, T.\" <T.Hengl at uva.nl>\nAn: Paul Hiemstra <p.hiemstra at geo.uu.nl>; r-sig-geo at stat.math.ethz.ch\nGesendet: Montag, den 23. Juni 2008, 22:03:17 Uhr\nBetreff: Re: [R-sig-Geo] Function to smooth grids using n x n window moving average (low-pass filter)\n\n\nHi Paul,\n\nThanks for your info and script.\n\nA year ago, I also felt that much of image processing is really missing in R. At the moment, I am increasingly using now RSAGA, which is efficient, fast and easy (+SAGA is still developing; +it works both on Linux and Windows OS). Here are few examples to run e.g. edge filter (the only extra step is to export the sp grid layers to SAGA GIS format, but we are working on improving that):\n\n> library(RSAGA)\n> rsaga.env(path=\"C:/Program Files/saga_vc\")  # Windows OS\n> # export the map to SAGA format:\n> rsaga.esri.to.sgrd(in.grids=\"DEM.asc\", out.sgrds=\"DEM.sgrd\"), in.path=\"D:/MAPS\")\n> rsaga.filter.simple(in.grid=\"DEM.sgrd\", out.grid=\"edge_filter.sgrd\", mode=\"circle\", method=\"edge\"), radius=1000)\n> # you can also run the filter using the generic module runner:\n> rsaga.get.modules(\"grid_filter\")\n$grid_filter\n  code                       name interactive\n1    0              Simple Filter       FALSE\n2    1            Gaussian Filter       FALSE\n3    2           Laplacian Filter       FALSE\n4    3 Multi Direction Lee Filter       FALSE\n5    4  User Defined Filter (3x3)       FALSE\n6    5              Filter Clumps       FALSE  \n> rsaga.get.usage(\"grid_filter\", 0)\n> rsaga.geoprocessor(lib=\"grid_filter\", module=0, param=list(INPUT=\"DEM.sgrd\",RESULT=\"edge_filter.sgrd\",METHOD=2,RADIUS=1000))\n> # import the map to R:\n> rsaga.sgrd.to.esri(in.sgrds=\"edge_filter.sgrd\", out.grids=\"edge_filter.asc\", out.path=\"D:/MAPS\", prec=3)\n> library(rgdal)\n> edgef = readGDAL(\"edge_filter.asc\")\n\n\n\nsee also: https://stat.ethz.ch/pipermail/r-sig-geo/2008-January/003078.html \n\nTom Hengl\nhttp://spatial-analyst.net\n\n\n\n\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch on behalf of Paul Hiemstra\nSent: Mon 6/23/2008 2:58 PM\nTo: r-sig-geo at stat.math.ethz.ch\nSubject: [R-sig-Geo] Function to smooth grids using n x n window moving average (low-pass filter)\n\nDear list,\n\nI recently implemented a smoothing algorithm that could be interesting \nfor other people. It smooths a grid by calculating an average for a n x \nn window. The input is a SpatialGrid/PixelsDataframe. For a 3x3 window \nthe algorithm creates 8 shifted matrices in addition to the original \nmatrix (derived from the grid-object). Adding up these 9 matrices and \ndividing them by 9 gives the smoothed matrix.  The output is a \nSpatialGridDataFrame. Because the algorithm uses just a few simple \nmatrix operations it is very fast and scalable to large grid-objects. \nMaybe the code could be added to the sp-package (Edzer or Roger?)?\n\nThis is the code, just three functions. I also provided a small but \nfunctioning example at the bottom:\n\nshift_matrix = function(m, row, col) {\n    nrow = dim(m)[1]\n    ncol = dim(m)[2]\n    if(row > 0) m = rbind(matrix(rep(NA,abs(row)*ncol), \nabs(row),ncol),m[1:(nrow-row),])\n    if(row < 0) m = \nrbind(m[-(row-1):nrow,],matrix(rep(NA,abs(row)*ncol), abs(row),ncol))\n    if(col > 0) m = cbind(matrix(rep(NA,abs(col)*nrow), nrow, \nabs(col)),m[,1:(ncol-col)])\n    if(col < 0) m = \ncbind(m[,-(col-1):ncol],matrix(rep(NA,abs(col)*nrow), nrow, abs(col)))\n    m\n}\n\nsmooth_matrix = function(m, kernel_size = 3) {\n    row_nums = rep(floor(kernel_size/2): -floor(kernel_size/2), each = \nkernel_size)\n    col_nums = rep(floor(kernel_size/2): -floor(kernel_size/2), kernel_size)\n    out = matrix(rep(0,dim(m)[1]*dim(m)[2]), dim(m))\n    for(i in 1:length(row_nums)) {\n        out = out + shift_matrix(m, row_nums[i], col_nums[i])\n    }\n    return(out / (kernel_size * kernel_size))\n}\n\nsmooth_grid = function(grd, zcol, kernel_size = 3, add_to_name = \n\"_smooth\") {\n    if(!fullgrid(grd)) fullgrid(grd) = TRUE\n    grd[[paste(zcol,add_to_name, sep = \"\")]] = \nas.vector(smooth_matrix(as.matrix(grd[zcol]), kernel_size = kernel_size))\n    grd\n}\n\n## Example script\nlibrary(gstat)\ndata(meuse)\ncoordinates(meuse) = ~x+y\ndata(meuse.grid)\ngridded(meuse.grid) = ~x+y\nmeuse.grid$log.zinc = idw(log(zinc)~1, meuse, meuse.grid)$var1.pred\nmeuse.grid = smooth_grid(meuse.grid, \"log.zinc\", kernel_size = 3)\nspplot(meuse.grid, c(\"log.zinc\",\"log.zinc_smooth\"))\n\ncheers,\nPaul\n\nps The system i run:\nR version 2.7.0 (2008-04-22)\ni486-pc-linux-gnu\n\nlocale:\nLC_CTYPE=en_US.UTF-8;LC_NUMERIC=C;LC_TIME=en_US.UTF-8;LC_COLLATE=en_US.UTF-8;LC_MONETARY=C;LC_MESSAGES=en_US.UTF-8;LC_PAPER=en_US.UTF-8;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=en_US.UTF-8;LC_IDENTIFICATION=C\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base\n\nother attached packages:\n[1] gstat_0.9-45 sp_0.9-25\n\nloaded via a namespace (and not attached):\n[1] grid_2.7.0     lattice_0.17-6 tools_2.7.0\n\n-- \nDrs. Paul Hiemstra\nDepartment of Physical Geography\nFaculty of Geosciences\nUniversity of Utrecht\nHeidelberglaan 2\nP.O. Box 80.115\n3508 TC Utrecht\nPhone:     +31302535773\nFax:    +31302531145\nhttp://intamap.geo.uu.nl/~paul\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n    [[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n      _________________________________________________\n://de.overview.mail.yahoo.com",
+      "body_plain": "Hi,\n\nFYI, the RSAGA package provides a function called 'focal.function', which can apply an R function operating on circular or quadratic moving windows to an entire grid. This function is currently very inefficient - but flexible.\n\nCheers\n  Alex\n\n--\nAlexander Brenning\nbrenning -at- uwaterloo.ca - T +1-519-888-4567 ext 35783\nDepartment of Geography and Environmental Management\nUniversity of Waterloo\n200 University Ave. W - Waterloo, ON - Canada N2L 3G1\nhttp://www.fes.uwaterloo.ca/geography/faculty/brenning/\n\n----- Ursprüngliche Mail ----\nVon: \"Hengl, T.\" <T.Hengl at uva.nl>\nAn: Paul Hiemstra <p.hiemstra at geo.uu.nl>; r-sig-geo at stat.math.ethz.ch\nGesendet: Montag, den 23. Juni 2008, 22:03:17 Uhr\nBetreff: Re: [R-sig-Geo] Function to smooth grids using n x n window moving average (low-pass filter)\n\n\nHi Paul,\n\nThanks for your info and script.\n\nA year ago, I also felt that much of image processing is really missing in R. At the moment, I am increasingly using now RSAGA, which is efficient, fast and easy (+SAGA is still developing; +it works both on Linux and Windows OS). Here are few examples to run e.g. edge filter (the only extra step is to export the sp grid layers to SAGA GIS format, but we are working on improving that):\n\n> library(RSAGA)\n> rsaga.env(path=\"C:/Program Files/saga_vc\")  # Windows OS\n> # export the map to SAGA format:\n> rsaga.esri.to.sgrd(in.grids=\"DEM.asc\", out.sgrds=\"DEM.sgrd\"), in.path=\"D:/MAPS\")\n> rsaga.filter.simple(in.grid=\"DEM.sgrd\", out.grid=\"edge_filter.sgrd\", mode=\"circle\", method=\"edge\"), radius=1000)\n> # you can also run the filter using the generic module runner:\n> rsaga.get.modules(\"grid_filter\")\n$grid_filter\n  code                       name interactive\n1    0              Simple Filter       FALSE\n2    1            Gaussian Filter       FALSE\n3    2           Laplacian Filter       FALSE\n4    3 Multi Direction Lee Filter       FALSE\n5    4  User Defined Filter (3x3)       FALSE\n6    5              Filter Clumps       FALSE  \n> rsaga.get.usage(\"grid_filter\", 0)\n> rsaga.geoprocessor(lib=\"grid_filter\", module=0, param=list(INPUT=\"DEM.sgrd\",RESULT=\"edge_filter.sgrd\",METHOD=2,RADIUS=1000))\n> # import the map to R:\n> rsaga.sgrd.to.esri(in.sgrds=\"edge_filter.sgrd\", out.grids=\"edge_filter.asc\", out.path=\"D:/MAPS\", prec=3)\n> library(rgdal)\n> edgef = readGDAL(\"edge_filter.asc\")\n\n\n\nsee also: https://stat.ethz.ch/pipermail/r-sig-geo/2008-January/003078.html \n\nTom Hengl\nhttp://spatial-analyst.net\n\n\n\n\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch on behalf of Paul Hiemstra\nSent: Mon 6/23/2008 2:58 PM\nTo: r-sig-geo at stat.math.ethz.ch\nSubject: [R-sig-Geo] Function to smooth grids using n x n window moving average (low-pass filter)\n\nDear list,\n\nI recently implemented a smoothing algorithm that could be interesting \nfor other people. It smooths a grid by calculating an average for a n x \nn window. The input is a SpatialGrid/PixelsDataframe. For a 3x3 window \nthe algorithm creates 8 shifted matrices in addition to the original \nmatrix (derived from the grid-object). Adding up these 9 matrices and \ndividing them by 9 gives the smoothed matrix.  The output is a \nSpatialGridDataFrame. Because the algorithm uses just a few simple \nmatrix operations it is very fast and scalable to large grid-objects. \nMaybe the code could be added to the sp-package (Edzer or Roger?)?\n\nThis is the code, just three functions. I also provided a small but \nfunctioning example at the bottom:\n\nshift_matrix = function(m, row, col) {\n    nrow = dim(m)[1]\n    ncol = dim(m)[2]\n    if(row > 0) m = rbind(matrix(rep(NA,abs(row)*ncol), \nabs(row),ncol),m[1:(nrow-row),])\n    if(row < 0) m = \nrbind(m[-(row-1):nrow,],matrix(rep(NA,abs(row)*ncol), abs(row),ncol))\n    if(col > 0) m = cbind(matrix(rep(NA,abs(col)*nrow), nrow, \nabs(col)),m[,1:(ncol-col)])\n    if(col < 0) m = \ncbind(m[,-(col-1):ncol],matrix(rep(NA,abs(col)*nrow), nrow, abs(col)))\n    m\n}\n\nsmooth_matrix = function(m, kernel_size = 3) {\n    row_nums = rep(floor(kernel_size/2): -floor(kernel_size/2), each = \nkernel_size)\n    col_nums = rep(floor(kernel_size/2): -floor(kernel_size/2), kernel_size)\n    out = matrix(rep(0,dim(m)[1]*dim(m)[2]), dim(m))\n    for(i in 1:length(row_nums)) {\n        out = out + shift_matrix(m, row_nums[i], col_nums[i])\n    }\n    return(out / (kernel_size * kernel_size))\n}\n\nsmooth_grid = function(grd, zcol, kernel_size = 3, add_to_name = \n\"_smooth\") {\n    if(!fullgrid(grd)) fullgrid(grd) = TRUE\n    grd[[paste(zcol,add_to_name, sep = \"\")]] = \nas.vector(smooth_matrix(as.matrix(grd[zcol]), kernel_size = kernel_size))\n    grd\n}\n\n## Example script\nlibrary(gstat)\ndata(meuse)\ncoordinates(meuse) = ~x+y\ndata(meuse.grid)\ngridded(meuse.grid) = ~x+y\nmeuse.grid$log.zinc = idw(log(zinc)~1, meuse, meuse.grid)$var1.pred\nmeuse.grid = smooth_grid(meuse.grid, \"log.zinc\", kernel_size = 3)\nspplot(meuse.grid, c(\"log.zinc\",\"log.zinc_smooth\"))\n\ncheers,\nPaul\n\nps The system i run:\nR version 2.7.0 (2008-04-22)\ni486-pc-linux-gnu\n\nlocale:\nLC_CTYPE=en_US.UTF-8;LC_NUMERIC=C;LC_TIME=en_US.UTF-8;LC_COLLATE=en_US.UTF-8;LC_MONETARY=C;LC_MESSAGES=en_US.UTF-8;LC_PAPER=en_US.UTF-8;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=en_US.UTF-8;LC_IDENTIFICATION=C\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base\n\nother attached packages:\n[1] gstat_0.9-45 sp_0.9-25\n\nloaded via a namespace (and not attached):\n[1] grid_2.7.0     lattice_0.17-6 tools_2.7.0\n\n-- \nDrs. Paul Hiemstra\nDepartment of Physical Geography\nFaculty of Geosciences\nUniversity of Utrecht\nHeidelberglaan 2\nP.O. Box 80.115\n3508 TC Utrecht\nPhone:     +31302535773\nFax:    +31302531145\nhttp://intamap.geo.uu.nl/~paul\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n    [[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n\n      _________________________________________________\n://de.overview.mail.yahoo.com",
       "body_snippet": "Hi,\n\nFYI, the RSAGA package provides a function called 'focal.function', which can apply an R function operating on circular or quadratic moving windows to an entire grid. This function is currently v",
       "thread_id": "thread-e38d314e369f",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003794.html"
     },
     {
       "id": "msg-886a336c836b",
@@ -1938,6 +2039,7 @@
       "thread_id": "thread-886a336c836b",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003795.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080625/550abb25/attachment.pl"
       ]
@@ -1956,7 +2058,8 @@
       "body_snippet": "Dear List-serve, \n\nI have written a loop that creates a Spatial Grid Dataframe from 2 other\nSGDFs. I am interested in finding out if there is a way to decrease the\nprocessing time of the entire loop. ",
       "thread_id": "thread-111970341fc5",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003796.html"
     },
     {
       "id": "msg-20f204f71123",
@@ -1974,7 +2077,8 @@
       "body_snippet": "On Wed, 25 Jun 2008, Debarchana Ghosh wrote:\n\n> Hi,\n>\n> OS: Windows with 4 GB Ram. R-2.70\n>\n> I calculated bandwidth using the gwr.sel function from the spgwr package\n>\n> dat.bw.cv<-gwr.sel(yimp00~ en",
       "thread_id": "thread-886a336c836b",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003797.html"
     },
     {
       "id": "msg-b2f4203d15fe",
@@ -1992,7 +2096,8 @@
       "body_snippet": "On Wed, 25 Jun 2008, Ilona Naujokaitis-Lewis wrote:\n\n>\n>\n> Dear List-serve,\n>\n> I have written a loop that creates a Spatial Grid Dataframe from 2 other\n> SGDFs. I am interested in finding out if ther",
       "thread_id": "thread-111970341fc5",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003798.html"
     },
     {
       "id": "msg-47e01dc14849",
@@ -2011,7 +2116,8 @@
       "body_snippet": "Dear Roger, and List-Serve, \n\nI am posting here a .RData file(IlonaQuesRgeo.RData) to help with my\nprevious query (see original email below) as per Roger's request. Please let\nme know if the attachmen",
       "thread_id": "thread-111970341fc5",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003799.html"
     },
     {
       "id": "msg-35528d93e1fb",
@@ -2031,7 +2137,8 @@
       "body_snippet": "On Wed, 25 Jun 2008, Ilona Naujokaitis-Lewis wrote:\n\n> Dear Roger, and List-Serve,\n>\n> I am posting here a .RData file(IlonaQuesRgeo.RData) to help with my\n> previous query (see original email below) ",
       "thread_id": "thread-111970341fc5",
       "thread_depth": 3,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003800.html"
     },
     {
       "id": "msg-73d6abae8e6d",
@@ -2049,7 +2156,8 @@
       "body_snippet": "Honey Giroday <girodayh at unbc.ca> writes:\n\n> xxx04 <- ppp(x=mpb04$Easting, y=mpb04$Northing, window=tpi1.win)\n> dens2004<-density(xxx04)\n> save(dens2004, file=\"dens2003.Rdata\")\n> dens2004.load<-load",
       "thread_id": "thread-73d6abae8e6d",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003801.html"
     },
     {
       "id": "msg-3ec70386ad17",
@@ -2066,6 +2174,7 @@
       "thread_id": "thread-3ec70386ad17",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003802.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080626/6a6bc92c/attachment.pl"
       ]
@@ -2085,6 +2194,7 @@
       "thread_id": "thread-259340773d4a",
       "thread_depth": 0,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003803.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080626/574bd33a/attachment.pl"
       ]
@@ -2105,7 +2215,8 @@
       "body_snippet": "How about this?\n\nlibrary(tripEstimation)\nimg <- list(x = 1:nrow(volcano), y = 1:ncol(volcano), z = volcano > 130 \n& volcano < 155)\npts <- cbind(rnorm(100, 50, 10), rnorm(100, 30, 8))\nimage(img)\npoints",
       "thread_id": "thread-e1364b068413",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003804.html"
     },
     {
       "id": "msg-c81792b0cf3e",
@@ -2124,6 +2235,7 @@
       "thread_id": "thread-3ec70386ad17",
       "thread_depth": 1,
       "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003805.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080626/a23c0c55/attachment.pl"
       ]
@@ -2146,7 +2258,8 @@
       "body_snippet": "LOUZAO wrote:\n> Hello Mike,\n>\n> Thank you for your answer but I have some questions for you:\n>>\n>> HDF and netCDF can be difficult - you need to compile rgdal from \n>> against FWTools\n> Do you mean in",
       "thread_id": "thread-86f18a924abd",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003806.html"
     },
     {
       "id": "msg-0389c9e3cf4e",
@@ -2162,7 +2275,8 @@
       "body_snippet": "Is there a website/document/other that provides a good, basic, overview of (A) the available libraries, (b) the processes they make available, and (c) some demos of how to implement them?\n\nI am quite ",
       "thread_id": "thread-0389c9e3cf4e",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003807.html"
     },
     {
       "id": "msg-70d85b6241b1",
@@ -2180,7 +2294,8 @@
       "body_snippet": "On Thu, 26 Jun 2008, Eric Peterson wrote:\n\n> Is there a website/document/other that provides a good, basic, overview \n> of (A) the available libraries, (b) the processes they make available, \n> and (c",
       "thread_id": "thread-0389c9e3cf4e",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003808.html"
     },
     {
       "id": "msg-cb8002071abb",
@@ -2196,7 +2311,8 @@
       "body_snippet": "Dear list,\n\nI am a new R user and wonder if somebody could help with this problem: \n\nThe entries in column \"currentcentroid\" in data frame \"fish\" change in relation to the entry in column \"angles\" (ex",
       "thread_id": "thread-cb8002071abb",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003809.html"
     },
     {
       "id": "msg-93b1e461cc85",
@@ -2215,7 +2331,8 @@
       "body_snippet": "Roger didn't say it but a good comprehensive book about spatial data\nhandling in R is coming out in the next 2-3 months:\n\n\"Applied Spatial Data Analysis with R\"\nhttp://www.springer.com/public+health/e",
       "thread_id": "thread-0389c9e3cf4e",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003810.html"
     },
     {
       "id": "msg-7cd3139ed367",
@@ -2231,7 +2348,8 @@
       "body_snippet": "Hi all\n\nI have a big dataset of points and am doing stuff on them that takes a\nlot of time. To speed it up, I would like to use \"thinlines\" from\nRArcinfo, which basically makes the maps \"rougher\" by t",
       "thread_id": "thread-7cd3139ed367",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003811.html"
     },
     {
       "id": "msg-b70e21c0b798",
@@ -2245,11 +2363,12 @@
       "references": [
         "<f5d848060806300700g29ee257ev3caf2a8c101e0d22@mail.gmail.com>"
       ],
-      "body_plain": "maybe you can try the function dp() in the package \"shapefiles\", which \nis an implementation of the Douglas-Peucker polyLine simplification \nalgorithm.\nHope it helps\nDavid\n\nDavid Hugh-Jones a ?crit :\n> Hi all\n>\n> I have a big dataset of points and am doing stuff on them that takes a\n> lot of time. To speed it up, I would like to use \"thinlines\" from\n> RArcinfo, which basically makes the maps \"rougher\" by throwing away\n> points. Is there an equivalent function for SpatialPolygon type\n> objects? (I assume that there's no way to convert _to_ Arcinfo, though\n> I know it's possible to read from it).\n>\n> Cheers\n>\n> David Hugh-Jones\n> PhD Candidate\n> Essex University Department of Government\n> http://davidhughjones.googlepages.com\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n>   \n\n-- \n***************************************************\nDavid PINAUD\nIng?nieur de Recherche \"Analyses spatiales\"\n\nCentre d'Etudes Biologiques de Chiz? - CNRS UPR1934\n79360 Villiers-en-Bois, France \nposte 485\nTel: +33 (0)5.49.09.35.58\nFax: +33 (0)5.49.09.65.26\nhttp://www.cebc.cnrs.fr/\n\n***************************************************\n\n\n\n\n ________\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: pinaud.vcf\nType: text/x-vcard\nSize: 324 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080630/45102c6e/attachment.vcf>",
-      "body_snippet": "maybe you can try the function dp() in the package \"shapefiles\", which \nis an implementation of the Douglas-Peucker polyLine simplification \nalgorithm.\nHope it helps\nDavid\n\nDavid Hugh-Jones a ?crit :\n",
+      "body_plain": "maybe you can try the function dp() in the package \"shapefiles\", which \nis an implementation of the Douglas-Peucker polyLine simplification \nalgorithm.\nHope it helps\nDavid\n\nDavid Hugh-Jones a écrit :\n> Hi all\n>\n> I have a big dataset of points and am doing stuff on them that takes a\n> lot of time. To speed it up, I would like to use \"thinlines\" from\n> RArcinfo, which basically makes the maps \"rougher\" by throwing away\n> points. Is there an equivalent function for SpatialPolygon type\n> objects? (I assume that there's no way to convert _to_ Arcinfo, though\n> I know it's possible to read from it).\n>\n> Cheers\n>\n> David Hugh-Jones\n> PhD Candidate\n> Essex University Department of Government\n> http://davidhughjones.googlepages.com\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>\n>   \n\n-- \n***************************************************\nDavid PINAUD\nIngénieur de Recherche \"Analyses spatiales\"\n\nCentre d'Etudes Biologiques de Chizé - CNRS UPR1934\n79360 Villiers-en-Bois, France \nposte 485\nTel: +33 (0)5.49.09.35.58\nFax: +33 (0)5.49.09.65.26\nhttp://www.cebc.cnrs.fr/\n\n***************************************************\n\n\n\n\n ________\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: pinaud.vcf\nType: text/x-vcard\nSize: 324 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20080630/45102c6e/attachment.vcf>",
+      "body_snippet": "maybe you can try the function dp() in the package \"shapefiles\", which \nis an implementation of the Douglas-Peucker polyLine simplification \nalgorithm.\nHope it helps\nDavid\n\nDavid Hugh-Jones a écrit :\n",
       "thread_id": "thread-7cd3139ed367",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003812.html"
     },
     {
       "id": "msg-dc0f31899c3f",
@@ -2261,11 +2380,12 @@
       "subject_clean": "API documentation?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Thanks David for his comment about dp.\n\nQuick question: is there any reasonably comprehensible API\ndocumentation for the \"sp\" package? I have just spent about an hour\ntrying to get a list of points from a SpatialPolygons object. I\neventually just printed everything out and found the data by hand, so\nnow I am doing:\n\ncoords <- myobject at polygons[[1]]@Polygons[[1]]@coords\n\nbut I don't assume that is right. Surely there must be some simple way\nto get a list of x and y coords out of any object?\n\nin frustration,\nDavid Hugh-Jones\nPhD Candidate\nEssex University Department of Government\nhttp://davidhughjones.googlepages.com\n\n\n2008/6/30 David PINAUD <pinaud at cebc.cnrs.fr>:\n> maybe you can try the function dp() in the package \"shapefiles\", which is an\n> implementation of the Douglas-Peucker polyLine simplification algorithm.\n> Hope it helps\n> David\n>\n> David Hugh-Jones a ?crit :\n>>\n>> Hi all\n>>\n>> I have a big dataset of points and am doing stuff on them that takes a\n>> lot of time. To speed it up, I would like to use \"thinlines\" from\n>> RArcinfo, which basically makes the maps \"rougher\" by throwing away\n>> points. Is there an equivalent function for SpatialPolygon type\n>> objects? (I assume that there's no way to convert _to_ Arcinfo, though\n>> I know it's possible to read from it).\n>>\n>> Cheers\n>>\n>> David Hugh-Jones\n>> PhD Candidate\n>> Essex University Department of Government\n>> http://davidhughjones.googlepages.com\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>\n>>\n>>\n>\n> --\n> ***************************************************\n> David PINAUD\n> Ing?nieur de Recherche \"Analyses spatiales\"\n>\n> Centre d'Etudes Biologiques de Chiz? - CNRS UPR1934\n> 79360 Villiers-en-Bois, France poste 485\n> Tel: +33 (0)5.49.09.35.58\n> Fax: +33 (0)5.49.09.65.26\n> http://www.cebc.cnrs.fr/\n>\n> ***************************************************\n>\n>\n>\n>\n> ________ Information from NOD32 ________\n> This message was checked by NOD32 Antivirus System for Linux Mail Servers.\n> http://www.eset.com",
+      "body_plain": "Thanks David for his comment about dp.\n\nQuick question: is there any reasonably comprehensible API\ndocumentation for the \"sp\" package? I have just spent about an hour\ntrying to get a list of points from a SpatialPolygons object. I\neventually just printed everything out and found the data by hand, so\nnow I am doing:\n\ncoords <- myobject at polygons[[1]]@Polygons[[1]]@coords\n\nbut I don't assume that is right. Surely there must be some simple way\nto get a list of x and y coords out of any object?\n\nin frustration,\nDavid Hugh-Jones\nPhD Candidate\nEssex University Department of Government\nhttp://davidhughjones.googlepages.com\n\n\n2008/6/30 David PINAUD <pinaud at cebc.cnrs.fr>:\n> maybe you can try the function dp() in the package \"shapefiles\", which is an\n> implementation of the Douglas-Peucker polyLine simplification algorithm.\n> Hope it helps\n> David\n>\n> David Hugh-Jones a écrit :\n>>\n>> Hi all\n>>\n>> I have a big dataset of points and am doing stuff on them that takes a\n>> lot of time. To speed it up, I would like to use \"thinlines\" from\n>> RArcinfo, which basically makes the maps \"rougher\" by throwing away\n>> points. Is there an equivalent function for SpatialPolygon type\n>> objects? (I assume that there's no way to convert _to_ Arcinfo, though\n>> I know it's possible to read from it).\n>>\n>> Cheers\n>>\n>> David Hugh-Jones\n>> PhD Candidate\n>> Essex University Department of Government\n>> http://davidhughjones.googlepages.com\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>\n>>\n>>\n>\n> --\n> ***************************************************\n> David PINAUD\n> Ingénieur de Recherche \"Analyses spatiales\"\n>\n> Centre d'Etudes Biologiques de Chizé - CNRS UPR1934\n> 79360 Villiers-en-Bois, France poste 485\n> Tel: +33 (0)5.49.09.35.58\n> Fax: +33 (0)5.49.09.65.26\n> http://www.cebc.cnrs.fr/\n>\n> ***************************************************\n>\n>\n>\n>\n> ________ Information from NOD32 ________\n> This message was checked by NOD32 Antivirus System for Linux Mail Servers.\n> http://www.eset.com",
       "body_snippet": "Thanks David for his comment about dp.\n\nQuick question: is there any reasonably comprehensible API\ndocumentation for the \"sp\" package? I have just spent about an hour\ntrying to get a list of points fr",
       "thread_id": "thread-dc0f31899c3f",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003813.html"
     },
     {
       "id": "msg-4aee6d8621a7",
@@ -2279,11 +2399,12 @@
       "references": [
         "<f5d848060806300948k61b21090v587ee3f33969d1e0@mail.gmail.com>"
       ],
-      "body_plain": "Dear David,\n\nProbably the best way to start is by checking the HTML documentation. It\nshould be installed locally but it is also accesible, for example, here:\n\nhttp://finzi.psych.upenn.edu/R/library/sp/html/00Index.html\n\nHope this helps.\n\nVirgilio\n\nOn Mon, 2008-06-30 at 18:48 +0200, David Hugh-Jones wrote:\n> Thanks David for his comment about dp.\n> \n> Quick question: is there any reasonably comprehensible API\n> documentation for the \"sp\" package? I have just spent about an hour\n> trying to get a list of points from a SpatialPolygons object. I\n> eventually just printed everything out and found the data by hand, so\n> now I am doing:\n> \n> coords <- myobject at polygons[[1]]@Polygons[[1]]@coords\n> \n> but I don't assume that is right. Surely there must be some simple way\n> to get a list of x and y coords out of any object?\n> \n> in frustration,\n> David Hugh-Jones\n> PhD Candidate\n> Essex University Department of Government\n> http://davidhughjones.googlepages.com\n> \n> \n> 2008/6/30 David PINAUD <pinaud at cebc.cnrs.fr>:\n> > maybe you can try the function dp() in the package \"shapefiles\", which is an\n> > implementation of the Douglas-Peucker polyLine simplification algorithm.\n> > Hope it helps\n> > David\n> >\n> > David Hugh-Jones a ?crit :\n> >>\n> >> Hi all\n> >>\n> >> I have a big dataset of points and am doing stuff on them that takes a\n> >> lot of time. To speed it up, I would like to use \"thinlines\" from\n> >> RArcinfo, which basically makes the maps \"rougher\" by throwing away\n> >> points. Is there an equivalent function for SpatialPolygon type\n> >> objects? (I assume that there's no way to convert _to_ Arcinfo, though\n> >> I know it's possible to read from it).\n> >>\n> >> Cheers\n> >>\n> >> David Hugh-Jones\n> >> PhD Candidate\n> >> Essex University Department of Government\n> >> http://davidhughjones.googlepages.com\n> >>\n> >> _______________________________________________\n> >> R-sig-Geo mailing list\n> >> R-sig-Geo at stat.math.ethz.ch\n> >> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>\n> >>\n> >>\n> >>\n> >\n> > --\n> > ***************************************************\n> > David PINAUD\n> > Ing?nieur de Recherche \"Analyses spatiales\"\n> >\n> > Centre d'Etudes Biologiques de Chiz? - CNRS UPR1934\n> > 79360 Villiers-en-Bois, France poste 485\n> > Tel: +33 (0)5.49.09.35.58\n> > Fax: +33 (0)5.49.09.65.26\n> > http://www.cebc.cnrs.fr/\n> >\n> > ***************************************************\n> >\n> >\n> >\n> >\n> > ________ Information from NOD32 ________\n> > This message was checked by NOD32 Antivirus System for Linux Mail Servers.\n> > http://www.eset.com\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_plain": "Dear David,\n\nProbably the best way to start is by checking the HTML documentation. It\nshould be installed locally but it is also accesible, for example, here:\n\nhttp://finzi.psych.upenn.edu/R/library/sp/html/00Index.html\n\nHope this helps.\n\nVirgilio\n\nOn Mon, 2008-06-30 at 18:48 +0200, David Hugh-Jones wrote:\n> Thanks David for his comment about dp.\n> \n> Quick question: is there any reasonably comprehensible API\n> documentation for the \"sp\" package? I have just spent about an hour\n> trying to get a list of points from a SpatialPolygons object. I\n> eventually just printed everything out and found the data by hand, so\n> now I am doing:\n> \n> coords <- myobject at polygons[[1]]@Polygons[[1]]@coords\n> \n> but I don't assume that is right. Surely there must be some simple way\n> to get a list of x and y coords out of any object?\n> \n> in frustration,\n> David Hugh-Jones\n> PhD Candidate\n> Essex University Department of Government\n> http://davidhughjones.googlepages.com\n> \n> \n> 2008/6/30 David PINAUD <pinaud at cebc.cnrs.fr>:\n> > maybe you can try the function dp() in the package \"shapefiles\", which is an\n> > implementation of the Douglas-Peucker polyLine simplification algorithm.\n> > Hope it helps\n> > David\n> >\n> > David Hugh-Jones a écrit :\n> >>\n> >> Hi all\n> >>\n> >> I have a big dataset of points and am doing stuff on them that takes a\n> >> lot of time. To speed it up, I would like to use \"thinlines\" from\n> >> RArcinfo, which basically makes the maps \"rougher\" by throwing away\n> >> points. Is there an equivalent function for SpatialPolygon type\n> >> objects? (I assume that there's no way to convert _to_ Arcinfo, though\n> >> I know it's possible to read from it).\n> >>\n> >> Cheers\n> >>\n> >> David Hugh-Jones\n> >> PhD Candidate\n> >> Essex University Department of Government\n> >> http://davidhughjones.googlepages.com\n> >>\n> >> _______________________________________________\n> >> R-sig-Geo mailing list\n> >> R-sig-Geo at stat.math.ethz.ch\n> >> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>\n> >>\n> >>\n> >>\n> >\n> > --\n> > ***************************************************\n> > David PINAUD\n> > Ingénieur de Recherche \"Analyses spatiales\"\n> >\n> > Centre d'Etudes Biologiques de Chizé - CNRS UPR1934\n> > 79360 Villiers-en-Bois, France poste 485\n> > Tel: +33 (0)5.49.09.35.58\n> > Fax: +33 (0)5.49.09.65.26\n> > http://www.cebc.cnrs.fr/\n> >\n> > ***************************************************\n> >\n> >\n> >\n> >\n> > ________ Information from NOD32 ________\n> > This message was checked by NOD32 Antivirus System for Linux Mail Servers.\n> > http://www.eset.com\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
       "body_snippet": "Dear David,\n\nProbably the best way to start is by checking the HTML documentation. It\nshould be installed locally but it is also accesible, for example, here:\n\nhttp://finzi.psych.upenn.edu/R/library/s",
       "thread_id": "thread-dc0f31899c3f",
       "thread_depth": 1,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003814.html"
     },
     {
       "id": "msg-c4026717cac2",
@@ -2298,11 +2419,12 @@
         "<f5d848060806300948k61b21090v587ee3f33969d1e0@mail.gmail.com>",
         "<1214846674.6005.11.camel@fh-vrubio>"
       ],
-      "body_plain": "Guys\n\nI don't mean to rant, but believe me, I've spent plenty of time with\nthe documentation and it's really not helping.\n\nPartly this is a problem of R's doc format which treats package\ndocumentation as an alphabetical list of functions - which gives me no\nidea where to start.\n\nThis then interacts badly with the OO structure. For example, look at\nthe 20+ pages on \"coerce\". Hmm, what does \"coerce\" actually do? In\nfact that's in a whole different library. But I didn't know that, so I\nclick on a page at random, say\n\ncoerce,SpatialGrid,data.frame-method\n\nand this takes me to SpatialGrid class - which doesn't mention coerce\nat all. (Nor does it tell me what SpatialGrid is, or what it is used\nfor.)\n\nOn the other hand, maybe I might guess that to get a list of\ncoordinates, I'd use \"coordinates\". So I click on that method, and it\ntells me yes, this \"retrieves spatial coordinates\". But unfortunately\nit retrieves them hidden inside another object (\"an object of class\nSpatialPointsDataFrame\"). OK, but how do I get the _actual_data_?\nMaybe the SpatialPointsDataFrame class page will tell me. Nope. Et\ncetera.\n\nRick: yes, I agree that using the internal data structures is how to\ndo things, but this is broken isn't it? The whole point of having OO\nis to be able to use it _without_ understanding the internal data\nstructures. The ideal, in other words, would be to have a \"thin.lines\"\nmethod that I could just run on any polygon or set of polygons.\nFailing that, then I should be able to get at the internal data\nwithout hours of head scratching.\n\nRight now, it's like, everything is hidden behind a layer of classes\nand slots and methods, but I still need to go behind that layer to get\nat the actual raw data, and this is so complicated and confusing that\nit would be easier just to work with the raw data.\n\nOK, I'll stop venting. If there's anything I could do to improve this\nsituation, I would gladly try.\n\nDavid Hugh-Jones\nPhD Candidate\nEssex University Department of Government\nhttp://davidhughjones.googlepages.com\n\n\n2008/6/30 Virgilio Gomez-Rubio <v.gomezrubio at imperial.ac.uk>:\n> Dear David,\n>\n> Probably the best way to start is by checking the HTML documentation. It\n> should be installed locally but it is also accesible, for example, here:\n>\n> http://finzi.psych.upenn.edu/R/library/sp/html/00Index.html\n>\n> Hope this helps.\n>\n> Virgilio\n>\n> On Mon, 2008-06-30 at 18:48 +0200, David Hugh-Jones wrote:\n>> Thanks David for his comment about dp.\n>>\n>> Quick question: is there any reasonably comprehensible API\n>> documentation for the \"sp\" package? I have just spent about an hour\n>> trying to get a list of points from a SpatialPolygons object. I\n>> eventually just printed everything out and found the data by hand, so\n>> now I am doing:\n>>\n>> coords <- myobject at polygons[[1]]@Polygons[[1]]@coords\n>>\n>> but I don't assume that is right. Surely there must be some simple way\n>> to get a list of x and y coords out of any object?\n>>\n>> in frustration,\n>> David Hugh-Jones\n>> PhD Candidate\n>> Essex University Department of Government\n>> http://davidhughjones.googlepages.com\n>>\n>>\n>> 2008/6/30 David PINAUD <pinaud at cebc.cnrs.fr>:\n>> > maybe you can try the function dp() in the package \"shapefiles\", which is an\n>> > implementation of the Douglas-Peucker polyLine simplification algorithm.\n>> > Hope it helps\n>> > David\n>> >\n>> > David Hugh-Jones a ?crit :\n>> >>\n>> >> Hi all\n>> >>\n>> >> I have a big dataset of points and am doing stuff on them that takes a\n>> >> lot of time. To speed it up, I would like to use \"thinlines\" from\n>> >> RArcinfo, which basically makes the maps \"rougher\" by throwing away\n>> >> points. Is there an equivalent function for SpatialPolygon type\n>> >> objects? (I assume that there's no way to convert _to_ Arcinfo, though\n>> >> I know it's possible to read from it).\n>> >>\n>> >> Cheers\n>> >>\n>> >> David Hugh-Jones\n>> >> PhD Candidate\n>> >> Essex University Department of Government\n>> >> http://davidhughjones.googlepages.com\n>> >>\n>> >> _______________________________________________\n>> >> R-sig-Geo mailing list\n>> >> R-sig-Geo at stat.math.ethz.ch\n>> >> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> >>\n>> >>\n>> >>\n>> >>\n>> >\n>> > --\n>> > ***************************************************\n>> > David PINAUD\n>> > Ing?nieur de Recherche \"Analyses spatiales\"\n>> >\n>> > Centre d'Etudes Biologiques de Chiz? - CNRS UPR1934\n>> > 79360 Villiers-en-Bois, France poste 485\n>> > Tel: +33 (0)5.49.09.35.58\n>> > Fax: +33 (0)5.49.09.65.26\n>> > http://www.cebc.cnrs.fr/\n>> >\n>> > ***************************************************\n>> >\n>> >\n>> >\n>> >\n>> > ________ Information from NOD32 ________\n>> > This message was checked by NOD32 Antivirus System for Linux Mail Servers.\n>> > http://www.eset.com\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>",
+      "body_plain": "Guys\n\nI don't mean to rant, but believe me, I've spent plenty of time with\nthe documentation and it's really not helping.\n\nPartly this is a problem of R's doc format which treats package\ndocumentation as an alphabetical list of functions - which gives me no\nidea where to start.\n\nThis then interacts badly with the OO structure. For example, look at\nthe 20+ pages on \"coerce\". Hmm, what does \"coerce\" actually do? In\nfact that's in a whole different library. But I didn't know that, so I\nclick on a page at random, say\n\ncoerce,SpatialGrid,data.frame-method\n\nand this takes me to SpatialGrid class - which doesn't mention coerce\nat all. (Nor does it tell me what SpatialGrid is, or what it is used\nfor.)\n\nOn the other hand, maybe I might guess that to get a list of\ncoordinates, I'd use \"coordinates\". So I click on that method, and it\ntells me yes, this \"retrieves spatial coordinates\". But unfortunately\nit retrieves them hidden inside another object (\"an object of class\nSpatialPointsDataFrame\"). OK, but how do I get the _actual_data_?\nMaybe the SpatialPointsDataFrame class page will tell me. Nope. Et\ncetera.\n\nRick: yes, I agree that using the internal data structures is how to\ndo things, but this is broken isn't it? The whole point of having OO\nis to be able to use it _without_ understanding the internal data\nstructures. The ideal, in other words, would be to have a \"thin.lines\"\nmethod that I could just run on any polygon or set of polygons.\nFailing that, then I should be able to get at the internal data\nwithout hours of head scratching.\n\nRight now, it's like, everything is hidden behind a layer of classes\nand slots and methods, but I still need to go behind that layer to get\nat the actual raw data, and this is so complicated and confusing that\nit would be easier just to work with the raw data.\n\nOK, I'll stop venting. If there's anything I could do to improve this\nsituation, I would gladly try.\n\nDavid Hugh-Jones\nPhD Candidate\nEssex University Department of Government\nhttp://davidhughjones.googlepages.com\n\n\n2008/6/30 Virgilio Gomez-Rubio <v.gomezrubio at imperial.ac.uk>:\n> Dear David,\n>\n> Probably the best way to start is by checking the HTML documentation. It\n> should be installed locally but it is also accesible, for example, here:\n>\n> http://finzi.psych.upenn.edu/R/library/sp/html/00Index.html\n>\n> Hope this helps.\n>\n> Virgilio\n>\n> On Mon, 2008-06-30 at 18:48 +0200, David Hugh-Jones wrote:\n>> Thanks David for his comment about dp.\n>>\n>> Quick question: is there any reasonably comprehensible API\n>> documentation for the \"sp\" package? I have just spent about an hour\n>> trying to get a list of points from a SpatialPolygons object. I\n>> eventually just printed everything out and found the data by hand, so\n>> now I am doing:\n>>\n>> coords <- myobject at polygons[[1]]@Polygons[[1]]@coords\n>>\n>> but I don't assume that is right. Surely there must be some simple way\n>> to get a list of x and y coords out of any object?\n>>\n>> in frustration,\n>> David Hugh-Jones\n>> PhD Candidate\n>> Essex University Department of Government\n>> http://davidhughjones.googlepages.com\n>>\n>>\n>> 2008/6/30 David PINAUD <pinaud at cebc.cnrs.fr>:\n>> > maybe you can try the function dp() in the package \"shapefiles\", which is an\n>> > implementation of the Douglas-Peucker polyLine simplification algorithm.\n>> > Hope it helps\n>> > David\n>> >\n>> > David Hugh-Jones a écrit :\n>> >>\n>> >> Hi all\n>> >>\n>> >> I have a big dataset of points and am doing stuff on them that takes a\n>> >> lot of time. To speed it up, I would like to use \"thinlines\" from\n>> >> RArcinfo, which basically makes the maps \"rougher\" by throwing away\n>> >> points. Is there an equivalent function for SpatialPolygon type\n>> >> objects? (I assume that there's no way to convert _to_ Arcinfo, though\n>> >> I know it's possible to read from it).\n>> >>\n>> >> Cheers\n>> >>\n>> >> David Hugh-Jones\n>> >> PhD Candidate\n>> >> Essex University Department of Government\n>> >> http://davidhughjones.googlepages.com\n>> >>\n>> >> _______________________________________________\n>> >> R-sig-Geo mailing list\n>> >> R-sig-Geo at stat.math.ethz.ch\n>> >> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> >>\n>> >>\n>> >>\n>> >>\n>> >\n>> > --\n>> > ***************************************************\n>> > David PINAUD\n>> > Ingénieur de Recherche \"Analyses spatiales\"\n>> >\n>> > Centre d'Etudes Biologiques de Chizé - CNRS UPR1934\n>> > 79360 Villiers-en-Bois, France poste 485\n>> > Tel: +33 (0)5.49.09.35.58\n>> > Fax: +33 (0)5.49.09.65.26\n>> > http://www.cebc.cnrs.fr/\n>> >\n>> > ***************************************************\n>> >\n>> >\n>> >\n>> >\n>> > ________ Information from NOD32 ________\n>> > This message was checked by NOD32 Antivirus System for Linux Mail Servers.\n>> > http://www.eset.com\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>",
       "body_snippet": "Guys\n\nI don't mean to rant, but believe me, I've spent plenty of time with\nthe documentation and it's really not helping.\n\nPartly this is a problem of R's doc format which treats package\ndocumentation",
       "thread_id": "thread-dc0f31899c3f",
       "thread_depth": 2,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-June/003815.html"
     },
     {
       "id": "msg-50f3b29e0677",
@@ -2319,11 +2441,12 @@
         "<f5d848060806301039j5609156bj730d78e391e42d57@mail.gmail.com>",
         "<Pine.LNX.4.64.0807010026260.12805@reclus.nhh.no>"
       ],
-      "body_plain": "Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n\n> > I don't mean to rant, but believe me, I've spent plenty of time with\n> > the documentation and it's really not helping.\n> >\n> > Partly this is a problem of R's doc format which treats package\n> > documentation as an alphabetical list of functions - which gives me no\n> > idea where to start.\n\nI would tend to second this.  I've been lurking on the list for a few\nmonths, hoping to learn a bit, but so far without much success, since\nthe conversation and the documentation are so far above where I am and\nwhat I need.  I am almost familiar with R, using it for time-series\nstatistics, and learned early on that the Dalgaard book was a better\nintro than any of the real R documents.  It doesn't cover nearly\neverything, but it seems to cover what I needed, so I use what is\nprobably a baby-level set of R functions, but it's adequate.  Without a\nprofessor lurking over my shoulder to explain stuff, I am perpetually\nslightly lost, because all the documentation assumes I know stuff that I\ndon't.\n\nI still use R because I know that with enough poking around it will\neventually provide a solution.  But if the alternatives were not very\nexpensive, I would have given up a while ago.\n\nI joined this group when I wanted to expand into making maps of\ngeographical economic data, and after a month of working on the problem,\nI essentially had to give up for the time being.  I wish there were an\nintroduction that showed me how to use R with a GIS program, but to my\nknowledge, there is not.  I did run across a GRASS book that claimed it\nwould help, but as I recall, it cost upward of US$100.\n\nTo make this more useful than just a rant, I would second David's point.\nWhat is missing is only what David misses: an introduction that says\nwhere to start to deal with simple geographic data, maybe providing a\nfew examples of common techniques and frequent problems, and pushing\ndata back and forth to some GIS.  I was not able to find that, and\nwithout it, found the R documentation pretty much useless.  I'd be happy\nto know of some source I hadn't found before, so if you have one to\nrecommend, please do.\n\n -tom\n\n\n\n> \n> This is an inherent (and perhaps ugly) characteristic of the S4\n> object/class structure as you suggest below. New style classes are not\n> as well integrated into the documentation as straight functions\n> are. Here, coerce is as(), but the issue of how to improve\n> documentation is not resolved.\n> \n> >\n> > This then interacts badly with the OO structure. For example, look at\n> > the 20+ pages on \"coerce\". Hmm, what does \"coerce\" actually do? In\n> > fact that's in a whole different library. But I didn't know that, so I\n> > click on a page at random, say\n> >\n> > coerce,SpatialGrid,data.frame-method\n> >\n> > and this takes me to SpatialGrid class - which doesn't mention coerce\n> > at all. (Nor does it tell me what SpatialGrid is, or what it is used\n> > for.)\n> >\n> > On the other hand, maybe I might guess that to get a list of\n> > coordinates, I'd use \"coordinates\". So I click on that method, and it\n> > tells me yes, this \"retrieves spatial coordinates\". But unfortunately\n> > it retrieves them hidden inside another object (\"an object of class\n> > SpatialPointsDataFrame\"). OK, but how do I get the _actual_data_?\n> > Maybe the SpatialPointsDataFrame class page will tell me. Nope. Et\n> > cetera.\n> >\n> > Rick: yes, I agree that using the internal data structures is how to\n> > do things, but this is broken isn't it? The whole point of having OO\n> > is to be able to use it _without_ understanding the internal data\n> > structures. The ideal, in other words, would be to have a \"thin.lines\"\n> > method that I could just run on any polygon or set of polygons.\n> > Failing that, then I should be able to get at the internal data\n> > without hours of head scratching.\n> >\n> \n> No, because the underlying understanding of dp and other methods for\n> thinning is that the objects implement an arc-node topological model,\n> so that each arc can be thinned without different thinning happening\n> on otherwise identical boundaries of neighbouring polygons. But we do\n> not have an arc-node representation, so there cannot be line thinning\n> for polygon boundaries in a spaghetti world.\n> \n> > Right now, it's like, everything is hidden behind a layer of classes\n> > and slots and methods, but I still need to go behind that layer to get\n> > at the actual raw data, and this is so complicated and confusing that\n> > it would be easier just to work with the raw data.\n> >\n> \n> You need to build topology first, so if need be take the data out to a\n> GIS that does topology properly, do the arc line thinning there, and\n> bring it back in. Building topology from a stream of straight line\n> segments is a serious challenge, especially if you want to retain the\n> association with attribute data.\n> \n> Roger\n> \n> > OK, I'll stop venting. If there's anything I could do to improve this\n> > situation, I would gladly try.\n> >\n> > David Hugh-Jones\n> > PhD Candidate\n> > Essex University Department of Government\n> > http://davidhughjones.googlepages.com\n> >\n> >\n> > 2008/6/30 Virgilio Gomez-Rubio <v.gomezrubio at imperial.ac.uk>:\n> >> Dear David,\n> >>\n> >> Probably the best way to start is by checking the HTML documentation. It\n> >> should be installed locally but it is also accesible, for example, here:\n> >>\n> >> http://finzi.psych.upenn.edu/R/library/sp/html/00Index.html\n> >>\n> >> Hope this helps.\n> >>\n> >> Virgilio\n> >>\n> >> On Mon, 2008-06-30 at 18:48 +0200, David Hugh-Jones wrote:\n> >>> Thanks David for his comment about dp.\n> >>>\n> >>> Quick question: is there any reasonably comprehensible API\n> >>> documentation for the \"sp\" package? I have just spent about an hour\n> >>> trying to get a list of points from a SpatialPolygons object. I\n> >>> eventually just printed everything out and found the data by hand, so\n> >>> now I am doing:\n> >>>\n> >>> coords <- myobject at polygons[[1]]@Polygons[[1]]@coords\n> >>>\n> >>> but I don't assume that is right. Surely there must be some simple way\n> >>> to get a list of x and y coords out of any object?\n> >>>\n> >>> in frustration,\n> >>> David Hugh-Jones\n> >>> PhD Candidate\n> >>> Essex University Department of Government\n> >>> http://davidhughjones.googlepages.com\n> >>>\n> >>>\n> >>> 2008/6/30 David PINAUD <pinaud at cebc.cnrs.fr>:\n> >>>> maybe you can try the function dp() in the package \"shapefiles\", which is an\n> >>>> implementation of the Douglas-Peucker polyLine simplification algorithm.\n> >>>> Hope it helps\n> >>>> David\n> >>>>\n> >>>> David Hugh-Jones a ?crit :\n> >>>>>\n> >>>>> Hi all\n> >>>>>\n> >>>>> I have a big dataset of points and am doing stuff on them that takes a\n> >>>>> lot of time. To speed it up, I would like to use \"thinlines\" from\n> >>>>> RArcinfo, which basically makes the maps \"rougher\" by throwing away\n> >>>>> points. Is there an equivalent function for SpatialPolygon type\n> >>>>> objects? (I assume that there's no way to convert _to_ Arcinfo, though\n> >>>>> I know it's possible to read from it).\n> >>>>>\n> >>>>> Cheers\n> >>>>>\n> >>>>> David Hugh-Jones\n> >>>>> PhD Candidate\n> >>>>> Essex University Department of Government\n> >>>>> http://davidhughjones.googlepages.com\n> >>>>>\n> >>>>> _______________________________________________\n> >>>>> R-sig-Geo mailing list\n> >>>>> R-sig-Geo at stat.math.ethz.ch\n> >>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>>>>\n> >>>>>\n> >>>>>\n> >>>>>\n> >>>>\n> >>>> --\n> >>>> ***************************************************\n> >>>> David PINAUD\n> >>>> Ing?nieur de Recherche \"Analyses spatiales\"\n> >>>>\n> >>>> Centre d'Etudes Biologiques de Chiz? - CNRS UPR1934\n> >>>> 79360 Villiers-en-Bois, France poste 485\n> >>>> Tel: +33 (0)5.49.09.35.58\n> >>>> Fax: +33 (0)5.49.09.65.26\n> >>>> http://www.cebc.cnrs.fr/\n> >>>>\n> >>>> ***************************************************\n> >>>>\n> >>>>\n> >>>>\n> >>>>\n> >>>> ________ Information from NOD32 ________\n> >>>> This message was checked by NOD32 Antivirus System for Linux Mail Servers.\n> >>>> http://www.eset.com\n> >>>\n> >>> _______________________________________________\n> >>> R-sig-Geo mailing list\n> >>> R-sig-Geo at stat.math.ethz.ch\n> >>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>\n> >>\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> \n> -- \n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n-- \n ------------------------\n tomfool at as220 dot org\n http://sgouros.com  \n http://whatcheer.net",
+      "body_plain": "Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n\n> > I don't mean to rant, but believe me, I've spent plenty of time with\n> > the documentation and it's really not helping.\n> >\n> > Partly this is a problem of R's doc format which treats package\n> > documentation as an alphabetical list of functions - which gives me no\n> > idea where to start.\n\nI would tend to second this.  I've been lurking on the list for a few\nmonths, hoping to learn a bit, but so far without much success, since\nthe conversation and the documentation are so far above where I am and\nwhat I need.  I am almost familiar with R, using it for time-series\nstatistics, and learned early on that the Dalgaard book was a better\nintro than any of the real R documents.  It doesn't cover nearly\neverything, but it seems to cover what I needed, so I use what is\nprobably a baby-level set of R functions, but it's adequate.  Without a\nprofessor lurking over my shoulder to explain stuff, I am perpetually\nslightly lost, because all the documentation assumes I know stuff that I\ndon't.\n\nI still use R because I know that with enough poking around it will\neventually provide a solution.  But if the alternatives were not very\nexpensive, I would have given up a while ago.\n\nI joined this group when I wanted to expand into making maps of\ngeographical economic data, and after a month of working on the problem,\nI essentially had to give up for the time being.  I wish there were an\nintroduction that showed me how to use R with a GIS program, but to my\nknowledge, there is not.  I did run across a GRASS book that claimed it\nwould help, but as I recall, it cost upward of US$100.\n\nTo make this more useful than just a rant, I would second David's point.\nWhat is missing is only what David misses: an introduction that says\nwhere to start to deal with simple geographic data, maybe providing a\nfew examples of common techniques and frequent problems, and pushing\ndata back and forth to some GIS.  I was not able to find that, and\nwithout it, found the R documentation pretty much useless.  I'd be happy\nto know of some source I hadn't found before, so if you have one to\nrecommend, please do.\n\n -tom\n\n\n\n> \n> This is an inherent (and perhaps ugly) characteristic of the S4\n> object/class structure as you suggest below. New style classes are not\n> as well integrated into the documentation as straight functions\n> are. Here, coerce is as(), but the issue of how to improve\n> documentation is not resolved.\n> \n> >\n> > This then interacts badly with the OO structure. For example, look at\n> > the 20+ pages on \"coerce\". Hmm, what does \"coerce\" actually do? In\n> > fact that's in a whole different library. But I didn't know that, so I\n> > click on a page at random, say\n> >\n> > coerce,SpatialGrid,data.frame-method\n> >\n> > and this takes me to SpatialGrid class - which doesn't mention coerce\n> > at all. (Nor does it tell me what SpatialGrid is, or what it is used\n> > for.)\n> >\n> > On the other hand, maybe I might guess that to get a list of\n> > coordinates, I'd use \"coordinates\". So I click on that method, and it\n> > tells me yes, this \"retrieves spatial coordinates\". But unfortunately\n> > it retrieves them hidden inside another object (\"an object of class\n> > SpatialPointsDataFrame\"). OK, but how do I get the _actual_data_?\n> > Maybe the SpatialPointsDataFrame class page will tell me. Nope. Et\n> > cetera.\n> >\n> > Rick: yes, I agree that using the internal data structures is how to\n> > do things, but this is broken isn't it? The whole point of having OO\n> > is to be able to use it _without_ understanding the internal data\n> > structures. The ideal, in other words, would be to have a \"thin.lines\"\n> > method that I could just run on any polygon or set of polygons.\n> > Failing that, then I should be able to get at the internal data\n> > without hours of head scratching.\n> >\n> \n> No, because the underlying understanding of dp and other methods for\n> thinning is that the objects implement an arc-node topological model,\n> so that each arc can be thinned without different thinning happening\n> on otherwise identical boundaries of neighbouring polygons. But we do\n> not have an arc-node representation, so there cannot be line thinning\n> for polygon boundaries in a spaghetti world.\n> \n> > Right now, it's like, everything is hidden behind a layer of classes\n> > and slots and methods, but I still need to go behind that layer to get\n> > at the actual raw data, and this is so complicated and confusing that\n> > it would be easier just to work with the raw data.\n> >\n> \n> You need to build topology first, so if need be take the data out to a\n> GIS that does topology properly, do the arc line thinning there, and\n> bring it back in. Building topology from a stream of straight line\n> segments is a serious challenge, especially if you want to retain the\n> association with attribute data.\n> \n> Roger\n> \n> > OK, I'll stop venting. If there's anything I could do to improve this\n> > situation, I would gladly try.\n> >\n> > David Hugh-Jones\n> > PhD Candidate\n> > Essex University Department of Government\n> > http://davidhughjones.googlepages.com\n> >\n> >\n> > 2008/6/30 Virgilio Gomez-Rubio <v.gomezrubio at imperial.ac.uk>:\n> >> Dear David,\n> >>\n> >> Probably the best way to start is by checking the HTML documentation. It\n> >> should be installed locally but it is also accesible, for example, here:\n> >>\n> >> http://finzi.psych.upenn.edu/R/library/sp/html/00Index.html\n> >>\n> >> Hope this helps.\n> >>\n> >> Virgilio\n> >>\n> >> On Mon, 2008-06-30 at 18:48 +0200, David Hugh-Jones wrote:\n> >>> Thanks David for his comment about dp.\n> >>>\n> >>> Quick question: is there any reasonably comprehensible API\n> >>> documentation for the \"sp\" package? I have just spent about an hour\n> >>> trying to get a list of points from a SpatialPolygons object. I\n> >>> eventually just printed everything out and found the data by hand, so\n> >>> now I am doing:\n> >>>\n> >>> coords <- myobject at polygons[[1]]@Polygons[[1]]@coords\n> >>>\n> >>> but I don't assume that is right. Surely there must be some simple way\n> >>> to get a list of x and y coords out of any object?\n> >>>\n> >>> in frustration,\n> >>> David Hugh-Jones\n> >>> PhD Candidate\n> >>> Essex University Department of Government\n> >>> http://davidhughjones.googlepages.com\n> >>>\n> >>>\n> >>> 2008/6/30 David PINAUD <pinaud at cebc.cnrs.fr>:\n> >>>> maybe you can try the function dp() in the package \"shapefiles\", which is an\n> >>>> implementation of the Douglas-Peucker polyLine simplification algorithm.\n> >>>> Hope it helps\n> >>>> David\n> >>>>\n> >>>> David Hugh-Jones a écrit :\n> >>>>>\n> >>>>> Hi all\n> >>>>>\n> >>>>> I have a big dataset of points and am doing stuff on them that takes a\n> >>>>> lot of time. To speed it up, I would like to use \"thinlines\" from\n> >>>>> RArcinfo, which basically makes the maps \"rougher\" by throwing away\n> >>>>> points. Is there an equivalent function for SpatialPolygon type\n> >>>>> objects? (I assume that there's no way to convert _to_ Arcinfo, though\n> >>>>> I know it's possible to read from it).\n> >>>>>\n> >>>>> Cheers\n> >>>>>\n> >>>>> David Hugh-Jones\n> >>>>> PhD Candidate\n> >>>>> Essex University Department of Government\n> >>>>> http://davidhughjones.googlepages.com\n> >>>>>\n> >>>>> _______________________________________________\n> >>>>> R-sig-Geo mailing list\n> >>>>> R-sig-Geo at stat.math.ethz.ch\n> >>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>>>>\n> >>>>>\n> >>>>>\n> >>>>>\n> >>>>\n> >>>> --\n> >>>> ***************************************************\n> >>>> David PINAUD\n> >>>> Ingénieur de Recherche \"Analyses spatiales\"\n> >>>>\n> >>>> Centre d'Etudes Biologiques de Chizé - CNRS UPR1934\n> >>>> 79360 Villiers-en-Bois, France poste 485\n> >>>> Tel: +33 (0)5.49.09.35.58\n> >>>> Fax: +33 (0)5.49.09.65.26\n> >>>> http://www.cebc.cnrs.fr/\n> >>>>\n> >>>> ***************************************************\n> >>>>\n> >>>>\n> >>>>\n> >>>>\n> >>>> ________ Information from NOD32 ________\n> >>>> This message was checked by NOD32 Antivirus System for Linux Mail Servers.\n> >>>> http://www.eset.com\n> >>>\n> >>> _______________________________________________\n> >>> R-sig-Geo mailing list\n> >>> R-sig-Geo at stat.math.ethz.ch\n> >>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >>\n> >>\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at stat.math.ethz.ch\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n> \n> -- \n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n\n-- \n ------------------------\n tomfool at as220 dot org\n http://sgouros.com  \n http://whatcheer.net",
       "body_snippet": "Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n\n> > I don't mean to rant, but believe me, I've spent plenty of time with\n> > the documentation and it's really not helping.\n> >\n> > Partly this is a prob",
       "thread_id": "thread-50f3b29e0677",
       "thread_depth": 0,
-      "month": "2008-06"
+      "month": "2008-06",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-July/003817.html"
     }
   ],
   "threads": [

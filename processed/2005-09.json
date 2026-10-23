@@ -17,7 +17,8 @@
       "body_snippet": "Dear Md. Moshiur Rahman,\n\nYou sent your question to the list administrator, not to the list, so I am \nsending my reply to you and the list.\n\nThe simple answer is at the end, but first the complicated ",
       "thread_id": "thread-24d8faa3b547",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000551.html"
     },
     {
       "id": "msg-66d88645ce3c",
@@ -34,6 +35,7 @@
       "thread_id": "thread-66d88645ce3c",
       "thread_depth": 0,
       "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000552.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050905/ac0fd4c6/attachment.pl"
       ]
@@ -50,11 +52,12 @@
       "references": [
         "<001d01c5b33b$a1b62b80$94dc6f80@mission>"
       ],
-      "body_plain": "I think I've solved the problem. I used the maptools library to read the\npoints from a shapefile and the fields library to obtain the grid. Here is\nthe script:\n\nlibrary(maptools)\npoints <- read.shape(\"points2d\")\nx <- array(0, c(length(points$Shapes),2))\nfor (i in 1:length(points$Shapes)) { x[i,1] <-\npoints$Shapes[[i]]$verts[,1] }\nfor (i in 1:length(points$Shapes)) { x[i,2] <-\npoints$Shapes[[i]]$verts[,2] }\ny = points$att.data[[2]]\nlibrary(fields)\nfit <- Tps(x, y)\nfit.prediction <- predict.se(fit)\nout <- predict.surface(fit, nx=1000, ny=1000)\npng()\npar(mai=c(0,0,0,0))\nimage(out, axes=FALSE, col=gray((100 - 0:100) / 100))\ndev.off()\n\nBye\n\n----- Original Message ----- \nFrom: \"Rick Reeves\" <reeves at nceas.ucsb.edu>\nTo: \"'Fernando Gonz?lez Cort?s'\" <fernando.gonzalez at iver.es>\nSent: Wednesday, September 07, 2005 1:35 AM\nSubject: RE: [R-sig-Geo] help with spatial interpolation\n\n\nFernando:\n\nThe shapefiles package is a likely candidate.\n\nRegards,\n\nRick Reeves\nScientific Programmer/Analyst\nNational Center for Ecological Analysis and Synthesis (NCEAS)\nUniversity of California, Santa Barbara CA 93101\n805 892 2534\nreeves at nceas.ucsb.edu\n\n\n\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch\n[mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Fernando Gonz?lez\nCort?s\nSent: Monday, September 05, 2005 4:43 AM\nTo: r-sig-geo at stat.math.ethz.ch\nSubject: [R-sig-Geo] help with spatial interpolation\n\nHello,\n\n    I have the following problem: I have a set of 3d points irregularly\nspaced. I have to obtain a grid with the interpolated values between the\npoints and I have to use a spline interpolation. I have seen some R packages\nthat perform some kind of interpolation but I don't know which one should I\nuse. Can anyone help me to find the right one?\n    I just used the 'Tps' method of the 'fields' package and i've obtained a\nnice graphic. Does anyone knows how to export the result of the\ninterpolation to be used in a GIS application?\n\nThanks in advance\nFernando\n[[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_plain": "I think I've solved the problem. I used the maptools library to read the\npoints from a shapefile and the fields library to obtain the grid. Here is\nthe script:\n\nlibrary(maptools)\npoints <- read.shape(\"points2d\")\nx <- array(0, c(length(points$Shapes),2))\nfor (i in 1:length(points$Shapes)) { x[i,1] <-\npoints$Shapes[[i]]$verts[,1] }\nfor (i in 1:length(points$Shapes)) { x[i,2] <-\npoints$Shapes[[i]]$verts[,2] }\ny = points$att.data[[2]]\nlibrary(fields)\nfit <- Tps(x, y)\nfit.prediction <- predict.se(fit)\nout <- predict.surface(fit, nx=1000, ny=1000)\npng()\npar(mai=c(0,0,0,0))\nimage(out, axes=FALSE, col=gray((100 - 0:100) / 100))\ndev.off()\n\nBye\n\n----- Original Message ----- \nFrom: \"Rick Reeves\" <reeves at nceas.ucsb.edu>\nTo: \"'Fernando González Cortés'\" <fernando.gonzalez at iver.es>\nSent: Wednesday, September 07, 2005 1:35 AM\nSubject: RE: [R-sig-Geo] help with spatial interpolation\n\n\nFernando:\n\nThe shapefiles package is a likely candidate.\n\nRegards,\n\nRick Reeves\nScientific Programmer/Analyst\nNational Center for Ecological Analysis and Synthesis (NCEAS)\nUniversity of California, Santa Barbara CA 93101\n805 892 2534\nreeves at nceas.ucsb.edu\n\n\n\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch\n[mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of Fernando González\nCortés\nSent: Monday, September 05, 2005 4:43 AM\nTo: r-sig-geo at stat.math.ethz.ch\nSubject: [R-sig-Geo] help with spatial interpolation\n\nHello,\n\n    I have the following problem: I have a set of 3d points irregularly\nspaced. I have to obtain a grid with the interpolated values between the\npoints and I have to use a spline interpolation. I have seen some R packages\nthat perform some kind of interpolation but I don't know which one should I\nuse. Can anyone help me to find the right one?\n    I just used the 'Tps' method of the 'fields' package and i've obtained a\nnice graphic. Does anyone knows how to export the result of the\ninterpolation to be used in a GIS application?\n\nThanks in advance\nFernando\n[[alternative HTML version deleted]]\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo",
       "body_snippet": "I think I've solved the problem. I used the maptools library to read the\npoints from a shapefile and the fields library to obtain the grid. Here is\nthe script:\n\nlibrary(maptools)\npoints <- read.shape(",
       "thread_id": "thread-12c468eb8f67",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000553.html"
     },
     {
       "id": "msg-f62ba82d6cbd",
@@ -70,7 +73,8 @@
       "body_snippet": "Hi all,\n\nIs it possible to conduct a logistic regression in R\nusing a range of probabilities in a response variable,\nand subsequently will it be possible to apply weights\nto each observation and rerun",
       "thread_id": "thread-f62ba82d6cbd",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000554.html"
     },
     {
       "id": "msg-ef0c85cb57b6",
@@ -86,7 +90,8 @@
       "body_snippet": "Package sp, with classes and methods for spatial data, has version 0.8-1\nnow released on CRAN. The new version contains a number of incompatible\nchanges w.r.t. 0.7-10, both at the binary level (slot n",
       "thread_id": "thread-ef0c85cb57b6",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000555.html"
     },
     {
       "id": "msg-be027a41be63",
@@ -104,7 +109,8 @@
       "body_snippet": "This is not related really to \"Geo\" AFAICS, so why don't ask such a\nquestion on R-help, instead?\n\n>>>>> \"Narendran\" == Narendran Kodandapani <naren_svk at yahoo.com>\n>>>>>     on Wed, 7 Sep 2005 08:39",
       "thread_id": "thread-f62ba82d6cbd",
       "thread_depth": 1,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000556.html"
     },
     {
       "id": "msg-7e215cbe2e61",
@@ -120,7 +126,8 @@
       "body_snippet": "On Fri, 9 Sep 2005, justin bem wrote:\n\n> cheers ,\n>  I need help in shapefile manipulations. I have two shapefiles of my\n> country Cameroon. The first contain 10 provinces and each province\n> contains",
       "thread_id": "thread-7e215cbe2e61",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000557.html"
     },
     {
       "id": "msg-05cfaaaaee93",
@@ -136,7 +143,8 @@
       "body_snippet": "Dear Roger and all members in this list,\n\nThis is request for the next version of maptools.  \n\nA polygon map sometime has so small polygon that its fg color is\ninvisible because boundary color covers ",
       "thread_id": "thread-05cfaaaaee93",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000558.html"
     },
     {
       "id": "msg-6499d2c03b3e",
@@ -154,7 +162,8 @@
       "body_snippet": "Hello,\n\n>My at hoc solution is to edit output eps file with emacs, and change\n>the value of linewidth directory.  It is, however, troublesome job.\n>\n>  \n>\nYou might try this (here lwd is being passed ",
       "thread_id": "thread-05cfaaaaee93",
       "thread_depth": 1,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000559.html"
     },
     {
       "id": "msg-73e71127d0ab",
@@ -170,7 +179,8 @@
       "body_snippet": "On Fri, 9 Sep 2005, Michael Sumner wrote:\n\n> Hello,\n> \n> >My at hoc solution is to edit output eps file with emacs, and change\n> >the value of linewidth directory.  It is, however, troublesome job.\n> ",
       "thread_id": "thread-05cfaaaaee93",
       "thread_depth": 2,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000560.html"
     },
     {
       "id": "msg-2c692f39b303",
@@ -189,7 +199,8 @@
       "body_snippet": "Dear Roger and Mike,\n\nThank you for advice.  \n\n>  I'll add the ... to plot.Map calls to polygon(),\n> which will  permit thicker borders, will be in 0.5-2.\n\nThis is what I expected. Thanks.  \n\n> > This",
       "thread_id": "thread-05cfaaaaee93",
       "thread_depth": 3,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000561.html"
     },
     {
       "id": "msg-df3ec090cd10",
@@ -205,7 +216,8 @@
       "body_snippet": "Hello, what datum and unit is used by the mapproject function?\n\nI'm trying to georegister the coordinates returned by mapproject() in a \nGIS (Manifold). \n\nI'm using\n\nproj='azequalarea',orient=c(-36.92",
       "thread_id": "thread-df3ec090cd10",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000562.html"
     },
     {
       "id": "msg-4ba05502e759",
@@ -221,7 +233,8 @@
       "body_snippet": "Hello,\n \nI've imported a file from ArcView which should contain around 300 administrative entities.   However, I have over 600 polygons, mainly because of islands.  I can do mapping and so on by using",
       "thread_id": "thread-4ba05502e759",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000563.html"
     },
     {
       "id": "msg-031f1b11380a",
@@ -237,7 +250,8 @@
       "body_snippet": "On Tue, 13 Sep 2005, Paul Hewson wrote:\n\n> Hello,\n\n>  I've imported a file from ArcView which should contain around 300\n> administrative entities.  However, I have over 600 polygons, mainly\n> because ",
       "thread_id": "thread-4ba05502e759",
       "thread_depth": 1,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000564.html"
     },
     {
       "id": "msg-d1f8cb052e30",
@@ -253,7 +267,8 @@
       "body_snippet": "On Sun, 11 Sep 2005, Michael Sumner wrote:\n\n> \n> Hello, what datum and unit is used by the mapproject function?\n> \n> I'm trying to georegister the coordinates returned by mapproject() in a \n> GIS (Man",
       "thread_id": "thread-df3ec090cd10",
       "thread_depth": 1,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000565.html"
     },
     {
       "id": "msg-dfe9b49238c8",
@@ -265,11 +280,12 @@
       "subject_clean": "Generating random points",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hi,\n\nI need to generate (randomly) n points inside the boundary of a polygon,\n\nis there any function that can handle this?\n\nSincerely,\n\nAl? M. Santacruz\nCorporaci?n Centro de Investigaci?n en Ecosistemas y Cambio Global (C&B)\nhttp://www.carbonoybosques.org\nTel: (574) 230 08 76\nCalle 51 72-07 Int. 708\nMedell?n (Colombia)",
-      "body_snippet": "Hi,\n\nI need to generate (randomly) n points inside the boundary of a polygon,\n\nis there any function that can handle this?\n\nSincerely,\n\nAl? M. Santacruz\nCorporaci?n Centro de Investigaci?n en Ecosiste",
+      "body_plain": "Hi,\n\nI need to generate (randomly) n points inside the boundary of a polygon,\n\nis there any function that can handle this?\n\nSincerely,\n\nAlí M. Santacruz\nCorporación Centro de Investigación en Ecosistemas y Cambio Global (C&B)\nhttp://www.carbonoybosques.org\nTel: (574) 230 08 76\nCalle 51 72-07 Int. 708\nMedellín (Colombia)",
+      "body_snippet": "Hi,\n\nI need to generate (randomly) n points inside the boundary of a polygon,\n\nis there any function that can handle this?\n\nSincerely,\n\nAlí M. Santacruz\nCorporación Centro de Investigación en Ecosiste",
       "thread_id": "thread-dfe9b49238c8",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000566.html"
     },
     {
       "id": "msg-b89cca72b08b",
@@ -281,11 +297,12 @@
       "subject_clean": "Generating random points",
       "in_reply_to": "<BAY20-F1522190DBA1B61E21F13C4C99C0@phx.gbl>",
       "references": [],
-      "body_plain": "csr                 package:splancs                 R Documentation\n\nGenerate completely spatially random points on a polygon\n\nDescription:\n\n     Generate completely spatially random points on a polygon.\n\nUsage:\n\n     csr(poly,npoints)\n\nArguments:\n\n    poly: A polygon data set.\n\n npoints: The number of points to generate.\n\nDetails:\n\n     'csr' generates points randomly in the bounding box of 'poly,'\n     then uses  'pip' to extract those in the polygon. If the number of\n     points remaining is less than that required, 'csr' generates some\n     more points in the bounding box until at least 'npoints' remain\n     inside the polygon. If too many points are generated then the list\n     of points is truncated.\n\n     Uses 'runif()' to generate random numbers and so updates\n     '.Random.seed', the standard S random number generator seed.\n\n... etc.\n\n\nr-sig-geo-bounces at stat.math.ethz.ch wrote on 2005-09-13 15:34:27:\n\n> Hi,\n>\n> I need to generate (randomly) n points inside the boundary of a\npolygon,\n>\n> is there any function that can handle this?\n>\n> Sincerely,\n>\n> Al? M. Santacruz\n> Corporaci?n Centro de Investigaci?n en Ecosistemas y Cambio Global\n(C&B)\n> http://www.carbonoybosques.org\n> Tel: (574) 230 08 76\n> Calle 51 72-07 Int. 708\n> Medell?n (Colombia)\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_plain": "csr                 package:splancs                 R Documentation\n\nGenerate completely spatially random points on a polygon\n\nDescription:\n\n     Generate completely spatially random points on a polygon.\n\nUsage:\n\n     csr(poly,npoints)\n\nArguments:\n\n    poly: A polygon data set.\n\n npoints: The number of points to generate.\n\nDetails:\n\n     'csr' generates points randomly in the bounding box of 'poly,'\n     then uses  'pip' to extract those in the polygon. If the number of\n     points remaining is less than that required, 'csr' generates some\n     more points in the bounding box until at least 'npoints' remain\n     inside the polygon. If too many points are generated then the list\n     of points is truncated.\n\n     Uses 'runif()' to generate random numbers and so updates\n     '.Random.seed', the standard S random number generator seed.\n\n... etc.\n\n\nr-sig-geo-bounces at stat.math.ethz.ch wrote on 2005-09-13 15:34:27:\n\n> Hi,\n>\n> I need to generate (randomly) n points inside the boundary of a\npolygon,\n>\n> is there any function that can handle this?\n>\n> Sincerely,\n>\n> Alí M. Santacruz\n> Corporación Centro de Investigación en Ecosistemas y Cambio Global\n(C&B)\n> http://www.carbonoybosques.org\n> Tel: (574) 230 08 76\n> Calle 51 72-07 Int. 708\n> Medellín (Colombia)\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
       "body_snippet": "csr                 package:splancs                 R Documentation\n\nGenerate completely spatially random points on a polygon\n\nDescription:\n\n     Generate completely spatially random points on a polyg",
       "thread_id": "thread-dfe9b49238c8",
       "thread_depth": 1,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000567.html"
     },
     {
       "id": "msg-d9d0c1146fed",
@@ -301,7 +318,8 @@
       "body_snippet": "> I need to generate (randomly) n points inside the boundary of a polygon,\n> is there any function that can handle this?\n\nFor this kind of functionality, use the `spatstat' package\nwhich offers (for e",
       "thread_id": "thread-d9d0c1146fed",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000568.html"
     },
     {
       "id": "msg-2efd91ff04b9",
@@ -317,7 +335,8 @@
       "body_snippet": "On Fri, 16 Sep 2005, Susumu Tanimura wrote:\n\n> Dear Roger Bivand,\n> \n> Thank you for maintaining maptools.  \n> \n> No changelog of 0.5-2 was given when\n> > maptools(TRUE).\n\nSorry, I'll put it in, but i",
       "thread_id": "thread-2efd91ff04b9",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000569.html"
     },
     {
       "id": "msg-a825506ba646",
@@ -333,7 +352,8 @@
       "body_snippet": "On Sat, 17 Sep 2005, kostas karis wrote:\n\n> Thank you for your advice but i still have a problem...Everything goes fine \n> till the plotting (as usual).When i try the code you posted for the \n> conver",
       "thread_id": "thread-a825506ba646",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000570.html"
     },
     {
       "id": "msg-590ccd3d7b8d",
@@ -349,7 +369,8 @@
       "body_snippet": "I ran the commands as you suggested and it rans ok, until the ploting\n\n>akto<-readShapePoly(\"akto.shp\")\n>quakes<-readShapePoints(\"QD15.shp\")\n>ls()\n[1] \"akto\"   \"quakes\"\n>sp_quakes<-coordinates(quakes)",
       "thread_id": "thread-a825506ba646",
       "thread_depth": 1,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000571.html"
     },
     {
       "id": "msg-4d4a0f6c5791",
@@ -365,7 +386,8 @@
       "body_snippet": "On Mon, 19 Sep 2005, kostas karis wrote:\n\n> I ran the commands as you suggested and it rans ok, until the ploting\n> \n> >akto<-readShapePoly(\"akto.shp\")\n> >quakes<-readShapePoints(\"QD15.shp\")\n> >ls()\n>",
       "thread_id": "thread-a825506ba646",
       "thread_depth": 2,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000572.html"
     },
     {
       "id": "msg-9c714937f8ef",
@@ -381,7 +403,8 @@
       "body_snippet": "Dear Roger,\nThis is my fourth mail to u (we can call it a date :))\nOk, u are right that my mails were vague..It's the first time i ask help \nfrom a a mailing list so i'am a little unfamiliar with the ",
       "thread_id": "thread-9c714937f8ef",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000573.html"
     },
     {
       "id": "msg-571a065a23aa",
@@ -397,7 +420,8 @@
       "body_snippet": "On Mon, 19 Sep 2005, kostas karis wrote:\n\n> Dear Roger,\n> This is my fourth mail to u (we can call it a date :))\n> Ok, u are right that my mails were vague..It's the first time i ask help \n> from a a ",
       "thread_id": "thread-9c714937f8ef",
       "thread_depth": 1,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000574.html"
     },
     {
       "id": "msg-0ca18f45332d",
@@ -413,7 +437,8 @@
       "body_snippet": "Roger hi,\nFirst of all, i finally made the code ran thanks to your advices.Thank u \nvery much.U are right that i need the coastline only for display and \nspecifically, i need only the mainland as my m",
       "thread_id": "thread-9c714937f8ef",
       "thread_depth": 2,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000575.html"
     },
     {
       "id": "msg-9f78c151dce5",
@@ -429,7 +454,8 @@
       "body_snippet": "On Tue, 20 Sep 2005, kostas karis wrote:\n\n> Roger hi,\n> First of all, i finally made the code ran thanks to your advices.Thank u \n> very much.U are right that i need the coastline only for display and",
       "thread_id": "thread-9c714937f8ef",
       "thread_depth": 3,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000576.html"
     },
     {
       "id": "msg-cd1c09b0e650",
@@ -445,7 +471,8 @@
       "body_snippet": "Hi all,\n\nI have obtained the variogram and model for a set of\ncounties in my study area for a z attribute.  I would\nnow like to estimate the pairwise covariances among\nthe counties by using the parame",
       "thread_id": "thread-cd1c09b0e650",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000577.html"
     },
     {
       "id": "msg-96e5c4a40ba4",
@@ -461,7 +488,8 @@
       "body_snippet": "On Wed, 21 Sep 2005, Narendran Kodandapani wrote:\n\n> Hi all,\n> \n> I have obtained the variogram and model for a set of\n> counties in my study area for a z attribute.  I would\n> now like to estimate th",
       "thread_id": "thread-cd1c09b0e650",
       "thread_depth": 1,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000578.html"
     },
     {
       "id": "msg-81bd3e035a95",
@@ -477,7 +505,8 @@
       "body_snippet": "Hello.\n\n Currently C API of GEOS seems to be available according\nto http://geos.refractions.net/ro/CVS.txt.\n\n Current spgpclib cannot be used for commercial use.\n\n I think it will be better to use GEO",
       "thread_id": "thread-81bd3e035a95",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000579.html"
     },
     {
       "id": "msg-c00db0f52e24",
@@ -493,7 +522,8 @@
       "body_snippet": "Hello,\n\nI am new in this list. I have a problem and I think that the solution to\nthis problem can be found using spatial statistics, but I do not know how.\n\nMy problem is the following: I have a matri",
       "thread_id": "thread-c00db0f52e24",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000580.html"
     },
     {
       "id": "msg-831c9b61fe94",
@@ -511,7 +541,8 @@
       "body_snippet": "Hisaji ONO wrote:\n\n>Hello.\n>\n> Currently C API of GEOS seems to be available according\n>to http://geos.refractions.net/ro/CVS.txt.\n>\n> Current spgpclib cannot be used for commercial use.\n>\n> I think i",
       "thread_id": "thread-81bd3e035a95",
       "thread_depth": 1,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000581.html"
     },
     {
       "id": "msg-21a44a0677a0",
@@ -527,7 +558,8 @@
       "body_snippet": "Just an addition to the question I have asked before:\n\none easy way would be to fit:\n\n- a global constant (to account for the average of the points of the\nmatrix);\n- a plane to account for linear term",
       "thread_id": "thread-21a44a0677a0",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000582.html"
     },
     {
       "id": "msg-b004d754bd12",
@@ -543,7 +575,8 @@
       "body_snippet": "On Tue, 27 Sep 2005, Hisaji ONO wrote:\n\n> Hello.\n> \n>  Currently C API of GEOS seems to be available according\n> to http://geos.refractions.net/ro/CVS.txt.\n> \n>  Current spgpclib cannot be used for co",
       "thread_id": "thread-81bd3e035a95",
       "thread_depth": 1,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000583.html"
     },
     {
       "id": "msg-c3d4dfba4b4f",
@@ -559,7 +592,8 @@
       "body_snippet": "Thank you for your response for my question.\n\n I have another question of loading \"rmap_1.1.0.zip\" to R\n2.1.1 on Windows XP.\n\n R2.1.1 said \"'Rmap' is not valid package. It was probably\ninstalled in < ",
       "thread_id": "thread-81bd3e035a95",
       "thread_depth": 2,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000584.html"
     },
     {
       "id": "msg-6fcf50930f83",
@@ -575,7 +609,8 @@
       "body_snippet": "On Wed, 28 Sep 2005, Hisaji ONO wrote:\n\n> Thank you for your response for my question.\n> \n>  I have another question of loading \"rmap_1.1.0.zip\" to R\n> 2.1.1 on Windows XP.\n> \n>  R2.1.1 said \"'Rmap' i",
       "thread_id": "thread-81bd3e035a95",
       "thread_depth": 3,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000585.html"
     },
     {
       "id": "msg-188dfe43fa17",
@@ -591,7 +626,8 @@
       "body_snippet": "THank your for your response.\n\n> Please remind me where the Windows binary package\n> came from - is it the \n> product of your own success with MSYS? Part of the\n\n I've used Rmap binaries available in ",
       "thread_id": "thread-81bd3e035a95",
       "thread_depth": 4,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000586.html"
     },
     {
       "id": "msg-db7a3a3e56ef",
@@ -607,7 +643,8 @@
       "body_snippet": "On Wed, 28 Sep 2005, Hisaji ONO wrote:\n\n> THank your for your response.\n> \n> > Please remind me where the Windows binary package\n> > came from - is it the \n> > product of your own success with MSYS? P",
       "thread_id": "thread-81bd3e035a95",
       "thread_depth": 5,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000587.html"
     },
     {
       "id": "msg-894997266b69",
@@ -623,7 +660,8 @@
       "body_snippet": "Thank your for your quick response.\n\n If possible, keep old version for R1.9.x, please.\n\n Regards.\n\n \n> Oops! The package needs a fair bit of attention to\n> get it to pass R CMD\n> check (which has got",
       "thread_id": "thread-81bd3e035a95",
       "thread_depth": 6,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000588.html"
     },
     {
       "id": "msg-10ed437285f5",
@@ -639,7 +677,8 @@
       "body_snippet": "Hi,\nI'm Michela Cameletti from University of Bergamo (Italy); \nI'm a Phd student.\nI'd like to do a geostatistical analysis of air pollution \ndata: I have daily PM10 data (particulate matters with a \nd",
       "thread_id": "thread-10ed437285f5",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000589.html"
     },
     {
       "id": "msg-d49cc737958b",
@@ -653,11 +692,12 @@
       "references": [
         "<web-8468736@pablo.unimib.it>"
       ],
-      "body_plain": "Michela\n\nthe option for realisations in geoR (in particular in the function likfit)\nuses data in a different format: you need a vector indicating the \nrealisations for each datum\n\nIf you have further enquires feel free to contact me directly\n\nP.J.\n\n\n\nOn Wed, 28 Sep 2005, michela.cameletti wrote:\n\n> Hi,\n> I'm Michela Cameletti from University of Bergamo (Italy);\n> I'm a Phd student.\n> I'd like to do a geostatistical analysis of air pollution\n> data: I have daily PM10 data (particulate matters with a\n> diameter under 10 micron) for 10 monitoring stations (with\n> x-y coordinates) and for a year.\n> For example, I have data in such a matrix (first and\n> second columns contain the coordinates, the following\n> columns cointain the data for the days of the year 203-one\n> column for one day, the monitors are the same):\n> x\t        y\t  01/01/2003\t 02/01/2003\t,,,\n> 555239\t4988304\t45\t47\n> 557204\t4989070\t53\t53\n> 604029\t4961961\t32\t32\n> 605812\t4960410\t30\t30\n> 628704\t4950970\t29\t29\n> 629112\t4949311\t50\t22\n> 631916\t4950046\t38\t11\n> So I think I have 365 realisations of the same process but\n> can't handle this data with geoR package neither with the\n> \"realisations\" options.\n> Can you help me please?\n> Thank you in advance,\n> best regards,\n> Michela CAmeletti\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\nPaulo Justiniano Ribeiro Jr\nLEG (Laborat?rio de Estat?stica e Geoinforma??o)\nDepartamento de Estat?stica\nUniversidade Federal do Paran?\nCaixa Postal 19.081\nCEP 81.531-990\nCuritiba, PR  -  Brasil\nTel: (+55) 41 3361 3573\nFax: (+55) 41 3361 3141\ne-mail: paulojus at est.ufpr.br\nhttp://www.est.ufpr.br/~paulojus",
+      "body_plain": "Michela\n\nthe option for realisations in geoR (in particular in the function likfit)\nuses data in a different format: you need a vector indicating the \nrealisations for each datum\n\nIf you have further enquires feel free to contact me directly\n\nP.J.\n\n\n\nOn Wed, 28 Sep 2005, michela.cameletti wrote:\n\n> Hi,\n> I'm Michela Cameletti from University of Bergamo (Italy);\n> I'm a Phd student.\n> I'd like to do a geostatistical analysis of air pollution\n> data: I have daily PM10 data (particulate matters with a\n> diameter under 10 micron) for 10 monitoring stations (with\n> x-y coordinates) and for a year.\n> For example, I have data in such a matrix (first and\n> second columns contain the coordinates, the following\n> columns cointain the data for the days of the year 203-one\n> column for one day, the monitors are the same):\n> x\t        y\t  01/01/2003\t 02/01/2003\t,,,\n> 555239\t4988304\t45\t47\n> 557204\t4989070\t53\t53\n> 604029\t4961961\t32\t32\n> 605812\t4960410\t30\t30\n> 628704\t4950970\t29\t29\n> 629112\t4949311\t50\t22\n> 631916\t4950046\t38\t11\n> So I think I have 365 realisations of the same process but\n> can't handle this data with geoR package neither with the\n> \"realisations\" options.\n> Can you help me please?\n> Thank you in advance,\n> best regards,\n> Michela CAmeletti\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\nPaulo Justiniano Ribeiro Jr\nLEG (Laboratório de Estatística e Geoinformação)\nDepartamento de Estatística\nUniversidade Federal do Paraná\nCaixa Postal 19.081\nCEP 81.531-990\nCuritiba, PR  -  Brasil\nTel: (+55) 41 3361 3573\nFax: (+55) 41 3361 3141\ne-mail: paulojus at est.ufpr.br\nhttp://www.est.ufpr.br/~paulojus",
       "body_snippet": "Michela\n\nthe option for realisations in geoR (in particular in the function likfit)\nuses data in a different format: you need a vector indicating the \nrealisations for each datum\n\nIf you have further ",
       "thread_id": "thread-10ed437285f5",
       "thread_depth": 1,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000590.html"
     },
     {
       "id": "msg-43d7a884b584",
@@ -673,7 +713,8 @@
       "body_snippet": "Thank you for your reply.\nunfortunately I haven't understood how to put the data in \nthe matrix and the realisations in the vector.\nCould you be so kind to give me a little example? (I've \ndone a lot ",
       "thread_id": "thread-43d7a884b584",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000591.html"
     },
     {
       "id": "msg-fdf7713d26cc",
@@ -687,11 +728,12 @@
       "references": [
         "<web-8470571@pablo.unimib.it>"
       ],
-      "body_plain": "Supose you have a data-frame \"foo\" which is something like:\n\nCoordX  CoordY Var  Real\n    1       1   10   1\n    1       2   11   1\n    2       1   9    1\n    2       2   8    1\n    1       1   11   2\n    1       2   13   2\n    1       3   8    1\n\nthen you can read it as a geodata with:\n\nfoo.gd <- as.geodata(foo, realizations = 4)\n\nand your geodata will be ready to be used.\nFor instance in likfit():\n\nlikfit(foo.gd, ini=c(2, .5), real=realisations)\n\n\n\nOn Wed, 28 Sep 2005, michela.cameletti wrote:\n\n> Thank you for your reply.\n> unfortunately I haven't understood how to put the data in\n> the matrix and the realisations in the vector.\n> Could you be so kind to give me a little example? (I've\n> done a lot of tries but I didn't succeed in doing it).\n> Thank you so much for your help,\n> Michela\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\nPaulo Justiniano Ribeiro Jr\nLEG (Laborat?rio de Estat?stica e Geoinforma??o)\nDepartamento de Estat?stica\nUniversidade Federal do Paran?\nCaixa Postal 19.081\nCEP 81.531-990\nCuritiba, PR  -  Brasil\nTel: (+55) 41 3361 3573\nFax: (+55) 41 3361 3141\ne-mail: paulojus at est.ufpr.br\nhttp://www.est.ufpr.br/~paulojus",
+      "body_plain": "Supose you have a data-frame \"foo\" which is something like:\n\nCoordX  CoordY Var  Real\n    1       1   10   1\n    1       2   11   1\n    2       1   9    1\n    2       2   8    1\n    1       1   11   2\n    1       2   13   2\n    1       3   8    1\n\nthen you can read it as a geodata with:\n\nfoo.gd <- as.geodata(foo, realizations = 4)\n\nand your geodata will be ready to be used.\nFor instance in likfit():\n\nlikfit(foo.gd, ini=c(2, .5), real=realisations)\n\n\n\nOn Wed, 28 Sep 2005, michela.cameletti wrote:\n\n> Thank you for your reply.\n> unfortunately I haven't understood how to put the data in\n> the matrix and the realisations in the vector.\n> Could you be so kind to give me a little example? (I've\n> done a lot of tries but I didn't succeed in doing it).\n> Thank you so much for your help,\n> Michela\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\nPaulo Justiniano Ribeiro Jr\nLEG (Laboratório de Estatística e Geoinformação)\nDepartamento de Estatística\nUniversidade Federal do Paraná\nCaixa Postal 19.081\nCEP 81.531-990\nCuritiba, PR  -  Brasil\nTel: (+55) 41 3361 3573\nFax: (+55) 41 3361 3141\ne-mail: paulojus at est.ufpr.br\nhttp://www.est.ufpr.br/~paulojus",
       "body_snippet": "Supose you have a data-frame \"foo\" which is something like:\n\nCoordX  CoordY Var  Real\n    1       1   10   1\n    1       2   11   1\n    2       1   9    1\n    2       2   8    1\n    1       1   11   2",
       "thread_id": "thread-43d7a884b584",
       "thread_depth": 1,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000592.html"
     },
     {
       "id": "msg-5c0be7251f12",
@@ -707,7 +749,8 @@
       "body_snippet": "Hi.\n\n Recently I couldn't access to DCluster support site,\nhttp://matheron.uv.es/~virgil/Rpackages/DCluster.\n\n Had this site been moved?\n\n\n Regards.",
       "thread_id": "thread-5c0be7251f12",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000593.html"
     },
     {
       "id": "msg-beaf247c72d1",
@@ -723,7 +766,8 @@
       "body_snippet": "On Thu, 29 Sep 2005, Joao Pedro Azevedo wrote:\n\n> I'm having trouble posting the message below on R-geo mailing list, and\n> maybe you could easily help me.\n> \n> \n> Hello all,\n> I've been using the syn",
       "thread_id": "thread-beaf247c72d1",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000594.html"
     },
     {
       "id": "msg-e9e4fa9088cb",
@@ -740,6 +784,7 @@
       "thread_id": "thread-e9e4fa9088cb",
       "thread_depth": 0,
       "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000595.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20050929/f7a277be/attachment.pl"
       ]
@@ -758,7 +803,8 @@
       "body_snippet": "",
       "thread_id": "thread-6c3e601261a8",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000596.html"
     },
     {
       "id": "msg-0ad1415492c0",
@@ -774,7 +820,8 @@
       "body_snippet": "On Thu, 29 Sep 2005, JP Azevedo wrote:\n\n> Dear all,\n> \n>  \n> \n> I'm trying to use maptools to produce some figures using the Brazilian\n> municipalities shape files (5,500 municipalities and ~9mb).\n> \n",
       "thread_id": "thread-e9e4fa9088cb",
       "thread_depth": 1,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000597.html"
     },
     {
       "id": "msg-7fd5d6342cf0",
@@ -790,7 +837,8 @@
       "body_snippet": "Hi,\n\nI am trying to plot a filled contour map and overlay it with a map, but I'm having trouble with the map. The map is plotted, but it is stretched out over the color bar, and doesn't stay within th",
       "thread_id": "thread-7fd5d6342cf0",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000598.html"
     },
     {
       "id": "msg-45a1dab066f0",
@@ -806,7 +854,8 @@
       "body_snippet": "On Thu, 29 Sep 2005, Roger Bivand wrote:\n\n> On Thu, 29 Sep 2005, JP Azevedo wrote:\n> \n> > Dear all,\n> > \n> >  \n> > \n> > I'm trying to use maptools to produce some figures using the Brazilian\n> > munic",
       "thread_id": "thread-e9e4fa9088cb",
       "thread_depth": 2,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000599.html"
     },
     {
       "id": "msg-54e28ca4d259",
@@ -822,7 +871,8 @@
       "body_snippet": "Dear Roger,\n\nMany thanks for your attention on this matter.\n\nLast night I was trying to implement your suggestions but things did not get\ngot as I expected. I've only manage to load the shape files us",
       "thread_id": "thread-e9e4fa9088cb",
       "thread_depth": 3,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000600.html"
     },
     {
       "id": "msg-2fb85d1cc5aa",
@@ -838,7 +888,8 @@
       "body_snippet": "On Fri, 30 Sep 2005, JP Azevedo wrote:\n\n> Dear Roger,\n> \n> Many thanks for your attention on this matter.\n> \n> Last night I was trying to implement your suggestions but things did not get\n> got as I e",
       "thread_id": "thread-e9e4fa9088cb",
       "thread_depth": 4,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000601.html"
     },
     {
       "id": "msg-f9c3e2867fef",
@@ -854,7 +905,8 @@
       "body_snippet": "try this:\n\nfilled.contour(cor.enso.map,\nx=seq(-126.5625,-64.6875,,23),y=seq(23.720175,51.625732,,11),xlab='longitude',ylab='latitude',\nplot.axes={map(xlim=c(-127,-65),ylim=c(23,52),add=T)  } )\n\nThe pr",
       "thread_id": "thread-f9c3e2867fef",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000602.html"
     },
     {
       "id": "msg-46a6f10e7760",
@@ -870,7 +922,8 @@
       "body_snippet": "Hi,\n\nI'm using package maptools for reading and plotting shape files, and am\nlooking for a way to \"clip\" the shapes for plotting only.  More\nprecisely, I need to plot only a certain region of the orig",
       "thread_id": "thread-46a6f10e7760",
       "thread_depth": 0,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000603.html"
     },
     {
       "id": "msg-fbde7cb6c314",
@@ -886,7 +939,8 @@
       "body_snippet": "On Fri, 30 Sep 2005, Sebastian Luque wrote:\n\n> Hi,\n> \n> I'm using package maptools for reading and plotting shape files, and am\n> looking for a way to \"clip\" the shapes for plotting only.  More\n> prec",
       "thread_id": "thread-46a6f10e7760",
       "thread_depth": 1,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-September/000604.html"
     },
     {
       "id": "msg-936fdc17d8c4",
@@ -904,7 +958,8 @@
       "body_snippet": "On Fri, 30 Sep 2005 23:38:39 +0200 (CEST),\nRoger Bivand <Roger.Bivand at nhh.no> wrote:\n\n[...]\n\n> Using the plot method for sp class SpatialPolygons, the xlim= and ylim=\n> arguments do what you want. ",
       "thread_id": "thread-46a6f10e7760",
       "thread_depth": 2,
-      "month": "2005-09"
+      "month": "2005-09",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2005-October/000605.html"
     }
   ],
   "threads": [
