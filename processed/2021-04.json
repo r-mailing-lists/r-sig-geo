@@ -17,7 +17,8 @@
       "body_snippet": "Hello,\n\nI am using sf for the project below, but am open to non-sf solutions. \n\nGiven an sf data.frame of polygons sorted into n contiguous groups (e.g., a column in the df identifies each polygon as ",
       "thread_id": "thread-9de770d092cd",
       "thread_depth": 0,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028638.html"
     },
     {
       "id": "msg-fdecd0f98a61",
@@ -35,7 +36,8 @@
       "body_snippet": "On 01/04/2021 17:01, Sean Trende wrote:\n> Hello,\n> \n> I am using sf for the project below, but am open to non-sf solutions.\n> \n> Given an sf data.frame of polygons sorted into n contiguous groups (e.g",
       "thread_id": "thread-9de770d092cd",
       "thread_depth": 1,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028639.html"
     },
     {
       "id": "msg-d3c5c972d479",
@@ -54,7 +56,8 @@
       "body_snippet": "Thank you so much!\n\n-----Original Message-----\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.org> On Behalf Of Edzer Pebesma\nSent: Thursday, April 1, 2021 3:27 PM\nTo: r-sig-geo at r-project.org\nSubj",
       "thread_id": "thread-9de770d092cd",
       "thread_depth": 2,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028640.html"
     },
     {
       "id": "msg-937b7dd0de8f",
@@ -72,11 +75,12 @@
         "<3437c0d-6676-f678-a399-be1bc8db7c0@reclus.nhh.no>",
         "<CABkCotTCZFgrU-tvj6c5Ss+mGzzsHZ625Jyu_QUP5TTURj7zKg@mail.gmail.com>"
       ],
-      "body_plain": "On Wed, 31 Mar 2021, Manuel Sp?nola wrote:\n\n> Thank you very much Roger.\n>\n> I can read shapefile without any problem with st_read.\n>\n> I think it works for both versions, but definitely is working with the\n> binary version.\n\nI really feel that you should remove all traces of your source installs of \nPROJ, GDAL and GEOS and anything they installed, and should rely only on \nCRAN binary packages. Do not accept any suggestions to install R packages \nfrom source. However, if other software that you use regularly needs PROJ, \nGDAL, GEOS, they may be present and may interfere with R packages. CRAN \nbinary packages are built static, so do not need other dylibs, but have \nfiles under share/ in their own space that may conflict.\n\n>\n> How can I work around the problem with libsqlite3?\n\nHow was the version of libsqlite3 that GDAL links to installed? How would \none\n\n>\n> How can I install the GDAL, PROJ and GEOS without being from source?\n>\n\nWhat do you need them for - if only for R packages, just don't install \nthem.\n\nA further alternative - consider installing from\n\nhttps://r-spatial.r-universe.dev/ui#builds\n\nThese track the development versions of packages, but should be OK.\n\nPlease report back whether any of these can read (and write) GPKG.\n\nRoger\n\n> Best,\n>\n> Manuel\n>\n>\n> El mi?, 31 mar 2021 a las 13:07, Roger Bivand (<Roger.Bivand at nhh.no>)\n> escribi?:\n>\n>> On Wed, 31 Mar 2021, Manuel Sp?nola wrote:\n>>\n>>> Thank you very much Roger.\n>>>\n>>> I reinstalled the sf and rgdal packages from binaries and the problem\n>>> persisted.\n>>\n>> This must be either because you did not remove all of the traces of the\n>> previous attempts. If sf failed, then\n>> https://cran.r-project.org/web/checks/check_results_sf.html\n>> would show errors for MacOS.\n>>\n>>>\n>>> To install GDAL, PROJ and GEOS i followed the instructions in the sf\n>> github\n>>> site.\n>>\n>> Please avoid installing the source package unless there is functionality\n>> not provided by the CRAN binary.\n>>\n>>>\n>>> Yes, the problem is with several geopackages files.  I see the problem\n>> also\n>>> with st_write when working trying to save a file in geopackage format.\n>>>\n>>\n>> Which other drivers are affected - if only GPKG, then libsqlite3 is the\n>> most likely culprit. However, unless you must have facilities only\n>> available by source install, avoid source installs.\n>>\n>>> I can read the files without problem with readOGR.\n>>>\n>>\n>> Installed as the CRAN binary or source?\n>>\n>> Roger\n>>\n>>> Manuel\n>>>\n>>> El mi?, 31 mar 2021 a las 10:26, Roger Bivand (<Roger.Bivand at nhh.no>)\n>>> escribi?:\n>>>\n>>>> Please refer to the associated sf issue on github:\n>>>> https://github.com/r-spatial/sf/issues/1606 for completeness. Please\n>>>> confirm that you are not using the MacOS sf CRAN binary package, but\n>> have\n>>>> installed GDAL, PROJ and GEOS yourself. Please also confirm that you see\n>>>> the same error with every GPKG file.\n>>>>\n>>>> --\n>>>> Roger Bivand\n>>>> Norwegian School of Economics\n>>>> Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway\n>>>> Roger.Bivand at nhh.no\n>>>>\n>>>>\n>>>> ________________________________________\n>>>> Fra: R-sig-Geo <r-sig-geo-bounces at r-project.org> p? vegne av Manuel\n>>>> Sp?nola <mspinola10 at gmail.com>\n>>>> Sendt: onsdag 31. mars 2021 17.55\n>>>> Til: r-sig-geo\n>>>> Emne: [R-sig-Geo] R crashes when reading geopackage files with st_read\n>> (sf\n>>>> package) in macOS\n>>>>\n>>>> Dear list members,\n>>>>\n>>>> When reading geopackages files with st_read (sf package) RStudio\n>> crashes (R\n>>>> session aborted) in macOS.  Any suggestions to fix this problem?\n>>>>\n>>>> Should I ask this question to the macOS group (r-sig-mac)?\n>>>>\n>>>> library(sf)\n>>>> Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1\n>>>>\n>>>>\n>>>> library(spData)\n>>>>\n>>>>\n>>>> world = st_read(system.file(\"shapes/world.gpkg\", package = \"spData\"))\n>>>>\n>>>>\n>>>>\n>>>>\n>>>> --\n>>>> *Manuel Sp?nola, Ph.D.*\n>>>> Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre\n>>>> Universidad Nacional\n>>>> Apartado 1350-3000\n>>>> Heredia\n>>>> COSTA RICA\n>>>> mspinola at una.cr <mspinola at una.ac.cr>\n>>>> mspinola10 at gmail.com\n>>>> Tel?fono: (506) 8706 - 4662\n>>>> Personal website: Lobito de r?o <\n>>>> https://sites.google.com/site/lobitoderio/>\n>>>> Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n>>>>\n>>>>         [[alternative HTML version deleted]]\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>\n>>>\n>>>\n>>>\n>>\n>> --\n>> Roger Bivand\n>> Department of Economics, Norwegian School of Economics,\n>> Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\n>> e-mail: Roger.Bivand at nhh.no\n>> https://orcid.org/0000-0003-2392-6140\n>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n>\n>\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
-      "body_snippet": "On Wed, 31 Mar 2021, Manuel Sp?nola wrote:\n\n> Thank you very much Roger.\n>\n> I can read shapefile without any problem with st_read.\n>\n> I think it works for both versions, but definitely is working wi",
+      "body_plain": "On Wed, 31 Mar 2021, Manuel Spínola wrote:\n\n> Thank you very much Roger.\n>\n> I can read shapefile without any problem with st_read.\n>\n> I think it works for both versions, but definitely is working with the\n> binary version.\n\nI really feel that you should remove all traces of your source installs of \nPROJ, GDAL and GEOS and anything they installed, and should rely only on \nCRAN binary packages. Do not accept any suggestions to install R packages \nfrom source. However, if other software that you use regularly needs PROJ, \nGDAL, GEOS, they may be present and may interfere with R packages. CRAN \nbinary packages are built static, so do not need other dylibs, but have \nfiles under share/ in their own space that may conflict.\n\n>\n> How can I work around the problem with libsqlite3?\n\nHow was the version of libsqlite3 that GDAL links to installed? How would \none\n\n>\n> How can I install the GDAL, PROJ and GEOS without being from source?\n>\n\nWhat do you need them for - if only for R packages, just don't install \nthem.\n\nA further alternative - consider installing from\n\nhttps://r-spatial.r-universe.dev/ui#builds\n\nThese track the development versions of packages, but should be OK.\n\nPlease report back whether any of these can read (and write) GPKG.\n\nRoger\n\n> Best,\n>\n> Manuel\n>\n>\n> El mié, 31 mar 2021 a las 13:07, Roger Bivand (<Roger.Bivand at nhh.no>)\n> escribió:\n>\n>> On Wed, 31 Mar 2021, Manuel Spínola wrote:\n>>\n>>> Thank you very much Roger.\n>>>\n>>> I reinstalled the sf and rgdal packages from binaries and the problem\n>>> persisted.\n>>\n>> This must be either because you did not remove all of the traces of the\n>> previous attempts. If sf failed, then\n>> https://cran.r-project.org/web/checks/check_results_sf.html\n>> would show errors for MacOS.\n>>\n>>>\n>>> To install GDAL, PROJ and GEOS i followed the instructions in the sf\n>> github\n>>> site.\n>>\n>> Please avoid installing the source package unless there is functionality\n>> not provided by the CRAN binary.\n>>\n>>>\n>>> Yes, the problem is with several geopackages files.  I see the problem\n>> also\n>>> with st_write when working trying to save a file in geopackage format.\n>>>\n>>\n>> Which other drivers are affected - if only GPKG, then libsqlite3 is the\n>> most likely culprit. However, unless you must have facilities only\n>> available by source install, avoid source installs.\n>>\n>>> I can read the files without problem with readOGR.\n>>>\n>>\n>> Installed as the CRAN binary or source?\n>>\n>> Roger\n>>\n>>> Manuel\n>>>\n>>> El mié, 31 mar 2021 a las 10:26, Roger Bivand (<Roger.Bivand at nhh.no>)\n>>> escribió:\n>>>\n>>>> Please refer to the associated sf issue on github:\n>>>> https://github.com/r-spatial/sf/issues/1606 for completeness. Please\n>>>> confirm that you are not using the MacOS sf CRAN binary package, but\n>> have\n>>>> installed GDAL, PROJ and GEOS yourself. Please also confirm that you see\n>>>> the same error with every GPKG file.\n>>>>\n>>>> --\n>>>> Roger Bivand\n>>>> Norwegian School of Economics\n>>>> Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway\n>>>> Roger.Bivand at nhh.no\n>>>>\n>>>>\n>>>> ________________________________________\n>>>> Fra: R-sig-Geo <r-sig-geo-bounces at r-project.org> på vegne av Manuel\n>>>> Spínola <mspinola10 at gmail.com>\n>>>> Sendt: onsdag 31. mars 2021 17.55\n>>>> Til: r-sig-geo\n>>>> Emne: [R-sig-Geo] R crashes when reading geopackage files with st_read\n>> (sf\n>>>> package) in macOS\n>>>>\n>>>> Dear list members,\n>>>>\n>>>> When reading geopackages files with st_read (sf package) RStudio\n>> crashes (R\n>>>> session aborted) in macOS.  Any suggestions to fix this problem?\n>>>>\n>>>> Should I ask this question to the macOS group (r-sig-mac)?\n>>>>\n>>>> library(sf)\n>>>> Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1\n>>>>\n>>>>\n>>>> library(spData)\n>>>>\n>>>>\n>>>> world = st_read(system.file(\"shapes/world.gpkg\", package = \"spData\"))\n>>>>\n>>>>\n>>>>\n>>>>\n>>>> --\n>>>> *Manuel Spínola, Ph.D.*\n>>>> Instituto Internacional en Conservación y Manejo de Vida Silvestre\n>>>> Universidad Nacional\n>>>> Apartado 1350-3000\n>>>> Heredia\n>>>> COSTA RICA\n>>>> mspinola at una.cr <mspinola at una.ac.cr>\n>>>> mspinola10 at gmail.com\n>>>> Teléfono: (506) 8706 - 4662\n>>>> Personal website: Lobito de río <\n>>>> https://sites.google.com/site/lobitoderio/>\n>>>> Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n>>>>\n>>>>         [[alternative HTML version deleted]]\n>>>>\n>>>> _______________________________________________\n>>>> R-sig-Geo mailing list\n>>>> R-sig-Geo at r-project.org\n>>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>>\n>>>\n>>>\n>>>\n>>\n>> --\n>> Roger Bivand\n>> Department of Economics, Norwegian School of Economics,\n>> Postboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\n>> e-mail: Roger.Bivand at nhh.no\n>> https://orcid.org/0000-0003-2392-6140\n>> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n>\n>\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Wed, 31 Mar 2021, Manuel Spínola wrote:\n\n> Thank you very much Roger.\n>\n> I can read shapefile without any problem with st_read.\n>\n> I think it works for both versions, but definitely is working wi",
       "thread_id": "thread-937b7dd0de8f",
       "thread_depth": 0,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028641.html"
     },
     {
       "id": "msg-85ec2e8ab2db",
@@ -92,7 +96,8 @@
       "body_snippet": "please consider the following reproducible example\n\n# set the origin of the grid\n# in cartesian coordinates (epsg 32632)\nxmin<-742966\nymin<-5037923\n\n# set x and y axis\nx<-seq(xmin, xmin+25*39, by=25)\n",
       "thread_id": "thread-85ec2e8ab2db",
       "thread_depth": 0,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028642.html"
     },
     {
       "id": "msg-b55400b14bdd",
@@ -108,7 +113,8 @@
       "body_snippet": "Hi! I have drone footage on a still position I want to analyze as separate image frames in Google Earth Engine. Nothing was geolocated. I georeferenced an image frame with ground control points in Glo",
       "thread_id": "thread-b55400b14bdd",
       "thread_depth": 0,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028643.html"
     },
     {
       "id": "msg-5a72ab982126",
@@ -120,11 +126,12 @@
       "subject_clean": ".raw format",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hi everyone,\n\nthere is an extended workflow/tutorial to work on .raw files?\nI just found this thread:\nhttps://community.rstudio.com/t/solution-to-reading-raw-images-into-r/45435/5\nThank you.\n\nBest,\n\n-- \nMatteo Lattuada, PhD\n\nTechnische Universit?t Braunschweig\nInstitute of Geoecology\nDepartment Landscape Ecology and Environmental Systems Analysis\nLanger Kamp 19c, D-38106 Braunschweig\n\nPhone: +49 (0) 15 78 15 055 54\nE-mail: m.lattuada87 at gmail.com\nLinkedIn: Matteo Lattuada <https://www.linkedin.com/in/matteolattuada1987/>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Hi everyone,\n\nthere is an extended workflow/tutorial to work on .raw files?\nI just found this thread:\nhttps://community.rstudio.com/t/solution-to-reading-raw-images-into-r/45435/5\nThank you.\n\nBest,\n\n-- \nMatteo Lattuada, PhD\n\nTechnische Universität Braunschweig\nInstitute of Geoecology\nDepartment Landscape Ecology and Environmental Systems Analysis\nLanger Kamp 19c, D-38106 Braunschweig\n\nPhone: +49 (0) 15 78 15 055 54\nE-mail: m.lattuada87 at gmail.com\nLinkedIn: Matteo Lattuada <https://www.linkedin.com/in/matteolattuada1987/>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Hi everyone,\n\nthere is an extended workflow/tutorial to work on .raw files?\nI just found this thread:\nhttps://community.rstudio.com/t/solution-to-reading-raw-images-into-r/45435/5\nThank you.\n\nBest,\n\n-",
       "thread_id": "thread-5a72ab982126",
       "thread_depth": 0,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028644.html"
     },
     {
       "id": "msg-1829855312bd",
@@ -140,7 +147,8 @@
       "body_snippet": "The issue raised at https://github.com/rsbivand/rgrass7/issues/27 is \ndifficult to address. On Windows, using the latest CRAN binary rgdal and \nrgrass7 for reading the WinGRASS 7.8.5 location projecti",
       "thread_id": "thread-1829855312bd",
       "thread_depth": 0,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028645.html"
     },
     {
       "id": "msg-7e1a08e3f95d",
@@ -156,7 +164,8 @@
       "body_snippet": "Dear listers,\n\nI did not find the way to open a geopackage using rgdal::readOGR.\n\nThe package name is 'trspixNarati_alt_UTM44.gpkg' (with two companion \nfiles: 'trspixNarati_alt_UTM44.gpkg-shm' and \n'",
       "thread_id": "thread-7e1a08e3f95d",
       "thread_depth": 0,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028646.html"
     },
     {
       "id": "msg-b8bfbb5f88bc",
@@ -170,11 +179,12 @@
       "references": [
         "<8a6dc330-967f-71ae-5138-db734386d3db@univ-fcomte.fr>"
       ],
-      "body_plain": "Dear Patrick,\nplease take a look at sf::st_layers(dsn), this gives you the name of, \nand basic information on, the layers found in the specific file/folder \n(dsn).\nHTH,\n?kos Bede-Fazekas\n\n2021.04.13. 8:35 keltez?ssel, Patrick Giraudoux ?rta:\n> Dear listers,\n>\n> I did not find the way to open a geopackage using rgdal::readOGR.\n>\n> The package name is 'trspixNarati_alt_UTM44.gpkg' (with two companion\n> files: 'trspixNarati_alt_UTM44.gpkg-shm' and\n> 'trspixNarati_alt_UTM44.gpkg-wal') stored in a folder 'Shapes'\n>\n> The corresponding object should be a SpatialPointsDataFrame.\n>\n> I have tried several combinations (a bit blind) with\n>\n> readOGR(\"./Shapes/trspixNaratiUTM44_alt_UTM44.gpkg\")\n>\n> readOGR(\"./Shapes/\",\"trspixNaratiUTM44_alt_UTM44.gpkg\")\n>\n> readOGR(\"./Shapes/\",\"trspixNaratiUTM44_alt_UTM44\")\n>\n> with no success...\n>\n> This link https://jsta.github.io/2016/07/14/geopackage-r.html gives\n> indications on the how to to it, but supposes that one knows a layer\n> name (which is not my case)\n>\n> Any idea about the syntax of this driver ?\n>\n> Best,\n>\n> Patrick\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
-      "body_snippet": "Dear Patrick,\nplease take a look at sf::st_layers(dsn), this gives you the name of, \nand basic information on, the layers found in the specific file/folder \n(dsn).\nHTH,\n?kos Bede-Fazekas\n\n2021.04.13. ",
+      "body_plain": "Dear Patrick,\nplease take a look at sf::st_layers(dsn), this gives you the name of, \nand basic information on, the layers found in the specific file/folder \n(dsn).\nHTH,\nÁkos Bede-Fazekas\n\n2021.04.13. 8:35 keltezéssel, Patrick Giraudoux írta:\n> Dear listers,\n>\n> I did not find the way to open a geopackage using rgdal::readOGR.\n>\n> The package name is 'trspixNarati_alt_UTM44.gpkg' (with two companion\n> files: 'trspixNarati_alt_UTM44.gpkg-shm' and\n> 'trspixNarati_alt_UTM44.gpkg-wal') stored in a folder 'Shapes'\n>\n> The corresponding object should be a SpatialPointsDataFrame.\n>\n> I have tried several combinations (a bit blind) with\n>\n> readOGR(\"./Shapes/trspixNaratiUTM44_alt_UTM44.gpkg\")\n>\n> readOGR(\"./Shapes/\",\"trspixNaratiUTM44_alt_UTM44.gpkg\")\n>\n> readOGR(\"./Shapes/\",\"trspixNaratiUTM44_alt_UTM44\")\n>\n> with no success...\n>\n> This link https://jsta.github.io/2016/07/14/geopackage-r.html gives\n> indications on the how to to it, but supposes that one knows a layer\n> name (which is not my case)\n>\n> Any idea about the syntax of this driver ?\n>\n> Best,\n>\n> Patrick\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Dear Patrick,\nplease take a look at sf::st_layers(dsn), this gives you the name of, \nand basic information on, the layers found in the specific file/folder \n(dsn).\nHTH,\nÁkos Bede-Fazekas\n\n2021.04.13. ",
       "thread_id": "thread-7e1a08e3f95d",
       "thread_depth": 1,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028647.html"
     },
     {
       "id": "msg-c203c2152232",
@@ -189,11 +199,12 @@
         "<8a6dc330-967f-71ae-5138-db734386d3db@univ-fcomte.fr>",
         "<c7d64267-d194-a210-dc70-d2ee27431b92@gmail.com>"
       ],
-      "body_plain": "On Tue, 13 Apr 2021, Bede-Fazekas ?kos wrote:\n\n> Dear Patrick,\n\nIn rgdal, the available drivers are found with ogrDrivers(), which  you \nmay check. Which platform is  this and if a source install, how was GDAL \ninstalled? Layers in vector data sources (dsn) are found with\n\nogrListLayers(dsn)\n\nwhere dsn is the (path to and) GPKG name. \nogrListLayers(\"./Shapes/trspixNaratiUTM44_alt_UTM44.gpkg\") may show \nseveral layers (but should choose the first by default when reading). are \nthere any other messages?\n\nRoger\n\n> please take a look at sf::st_layers(dsn), this gives you the name of, and \n> basic information on, the layers found in the specific file/folder (dsn).\n> HTH,\n> ?kos Bede-Fazekas\n>\n> 2021.04.13. 8:35 keltez?ssel, Patrick Giraudoux ?rta:\n>>  Dear listers,\n>>\n>>  I did not find the way to open a geopackage using rgdal::readOGR.\n>>\n>>  The package name is 'trspixNarati_alt_UTM44.gpkg' (with two companion\n>>  files: 'trspixNarati_alt_UTM44.gpkg-shm' and\n>>  'trspixNarati_alt_UTM44.gpkg-wal') stored in a folder 'Shapes'\n>>\n>>  The corresponding object should be a SpatialPointsDataFrame.\n>>\n>>  I have tried several combinations (a bit blind) with\n>>\n>>  readOGR(\"./Shapes/trspixNaratiUTM44_alt_UTM44.gpkg\")\n>>\n>>  readOGR(\"./Shapes/\",\"trspixNaratiUTM44_alt_UTM44.gpkg\")\n>>\n>>  readOGR(\"./Shapes/\",\"trspixNaratiUTM44_alt_UTM44\")\n>>\n>>  with no success...\n>>\n>>  This link https://jsta.github.io/2016/07/14/geopackage-r.html gives\n>>  indications on the how to to it, but supposes that one knows a layer\n>>  name (which is not my case)\n>>\n>>  Any idea about the syntax of this driver ?\n>>\n>>  Best,\n>>\n>>  Patrick\n>> \n>>\n>>   [[alternative HTML version deleted]]\n>>\n>>  _______________________________________________\n>>  R-sig-Geo mailing list\n>>  R-sig-Geo at r-project.org\n>>  https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
-      "body_snippet": "On Tue, 13 Apr 2021, Bede-Fazekas ?kos wrote:\n\n> Dear Patrick,\n\nIn rgdal, the available drivers are found with ogrDrivers(), which  you \nmay check. Which platform is  this and if a source install, how",
+      "body_plain": "On Tue, 13 Apr 2021, Bede-Fazekas Ákos wrote:\n\n> Dear Patrick,\n\nIn rgdal, the available drivers are found with ogrDrivers(), which  you \nmay check. Which platform is  this and if a source install, how was GDAL \ninstalled? Layers in vector data sources (dsn) are found with\n\nogrListLayers(dsn)\n\nwhere dsn is the (path to and) GPKG name. \nogrListLayers(\"./Shapes/trspixNaratiUTM44_alt_UTM44.gpkg\") may show \nseveral layers (but should choose the first by default when reading). are \nthere any other messages?\n\nRoger\n\n> please take a look at sf::st_layers(dsn), this gives you the name of, and \n> basic information on, the layers found in the specific file/folder (dsn).\n> HTH,\n> Ákos Bede-Fazekas\n>\n> 2021.04.13. 8:35 keltezéssel, Patrick Giraudoux írta:\n>>  Dear listers,\n>>\n>>  I did not find the way to open a geopackage using rgdal::readOGR.\n>>\n>>  The package name is 'trspixNarati_alt_UTM44.gpkg' (with two companion\n>>  files: 'trspixNarati_alt_UTM44.gpkg-shm' and\n>>  'trspixNarati_alt_UTM44.gpkg-wal') stored in a folder 'Shapes'\n>>\n>>  The corresponding object should be a SpatialPointsDataFrame.\n>>\n>>  I have tried several combinations (a bit blind) with\n>>\n>>  readOGR(\"./Shapes/trspixNaratiUTM44_alt_UTM44.gpkg\")\n>>\n>>  readOGR(\"./Shapes/\",\"trspixNaratiUTM44_alt_UTM44.gpkg\")\n>>\n>>  readOGR(\"./Shapes/\",\"trspixNaratiUTM44_alt_UTM44\")\n>>\n>>  with no success...\n>>\n>>  This link https://jsta.github.io/2016/07/14/geopackage-r.html gives\n>>  indications on the how to to it, but supposes that one knows a layer\n>>  name (which is not my case)\n>>\n>>  Any idea about the syntax of this driver ?\n>>\n>>  Best,\n>>\n>>  Patrick\n>> \n>>\n>>   [[alternative HTML version deleted]]\n>>\n>>  _______________________________________________\n>>  R-sig-Geo mailing list\n>>  R-sig-Geo at r-project.org\n>>  https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Tue, 13 Apr 2021, Bede-Fazekas Ákos wrote:\n\n> Dear Patrick,\n\nIn rgdal, the available drivers are found with ogrDrivers(), which  you \nmay check. Which platform is  this and if a source install, how",
       "thread_id": "thread-7e1a08e3f95d",
       "thread_depth": 2,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028648.html"
     },
     {
       "id": "msg-33957d68730d",
@@ -211,7 +222,8 @@
       "body_snippet": "Apologize to answer to myself, but this morning I had advise from a \ncolleague who confirmed that *.gpkg files can be read straightfully with\n\nst_read(\"trspixNarati_alt_UTM44.gpkg\")\n\nreadOGR(\"trspixNa",
       "thread_id": "thread-7e1a08e3f95d",
       "thread_depth": 1,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028649.html"
     },
     {
       "id": "msg-164a58b92d7f",
@@ -227,7 +239,8 @@
       "body_snippet": "I am attempting to use the sarorderedprobit function (within the\n\"spatialprobit\" package) to perform a SAR Ordered Probit estimation using\npanel data.\n\nI have imported my spatial weight matrix (repres",
       "thread_id": "thread-164a58b92d7f",
       "thread_depth": 0,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028650.html"
     },
     {
       "id": "msg-6635d3738a4a",
@@ -245,7 +258,8 @@
       "body_snippet": "On Sat, 17 Apr 2021, Ryan, Alex via R-sig-Geo wrote:\n\n> I am attempting to use the sarorderedprobit function (within the\n> \"spatialprobit\" package) to perform a SAR Ordered Probit estimation using\n> p",
       "thread_id": "thread-164a58b92d7f",
       "thread_depth": 1,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028651.html"
     },
     {
       "id": "msg-7acda8548f09",
@@ -264,7 +278,8 @@
       "body_snippet": "Hi Roger,\n\nThank you for the recommendation, I see now that you have previously shared\nsimilar advice on the r-sig-geo forum. The kronecker calculation worked\nwell and resolved the error message previ",
       "thread_id": "thread-164a58b92d7f",
       "thread_depth": 2,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028652.html"
     },
     {
       "id": "msg-126a8ef6ecb8",
@@ -284,7 +299,8 @@
       "body_snippet": "On Mon, 19 Apr 2021, Ryan, Alex wrote:\n\n> Hi Roger,\n>\n> Thank you for the recommendation, I see now that you have previously shared\n> similar advice on the r-sig-geo forum. The kronecker calculation w",
       "thread_id": "thread-164a58b92d7f",
       "thread_depth": 3,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028653.html"
     },
     {
       "id": "msg-bb653b22105d",
@@ -300,7 +316,8 @@
       "body_snippet": "Hei,\n\nis there an approved way how to partition variance into explained vs unexplained at the level of sites?\n\nAfter performing a constrained ordination (CCA or dbRDA) I want to check if explained var",
       "thread_id": "thread-bb653b22105d",
       "thread_depth": 0,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028654.html"
     },
     {
       "id": "msg-3f70d2f8682e",
@@ -316,7 +333,8 @@
       "body_snippet": "Hi Roger et al,\n\nWe are experiencing some problems with committing plotKML to CRAN. \nAutomated check reports:\n\n\"Error in CRS(\"EPSG:4326\") : no arguments in initialization list\"\n\nSee:\n\nhttps://www.r-pr",
       "thread_id": "thread-3f70d2f8682e",
       "thread_depth": 0,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028655.html"
     },
     {
       "id": "msg-c1f09b23b3de",
@@ -334,7 +352,8 @@
       "body_snippet": "Tom,\n\nYour package code itself runs lots of stuff in R/AAA.R that it doesn't \nneed to. Here you could simply put the output string of:\n\n> rgdal::CRSargs(sp::CRS(\"EPSG:4326\"))\n[1] \"+proj=longlat +datum",
       "thread_id": "thread-3f70d2f8682e",
       "thread_depth": 1,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028656.html"
     },
     {
       "id": "msg-1363656663fc",
@@ -353,7 +372,8 @@
       "body_snippet": "Thanks Roger. If I understand correctly, I should simply replace \n'CRS(\"EPSG:4326\")' with 'CRS(\"+proj=longlat +datum=WGS84 +no_defs\")'. \nOtherwise the EPSG codes should work in R with any version corr",
       "thread_id": "thread-3f70d2f8682e",
       "thread_depth": 2,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028657.html"
     },
     {
       "id": "msg-974b4a8b0d87",
@@ -373,7 +393,8 @@
       "body_snippet": "On Thu, 29 Apr 2021, Tomislav Hengl wrote:\n\n>\n> Thanks Roger. If I understand correctly, I should simply replace \n> 'CRS(\"EPSG:4326\")' with 'CRS(\"+proj=longlat +datum=WGS84 +no_defs\")'. \n> Otherwise t",
       "thread_id": "thread-3f70d2f8682e",
       "thread_depth": 3,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028658.html"
     },
     {
       "id": "msg-40e95711d339",
@@ -389,7 +410,8 @@
       "body_snippet": "We are running a 5-day workshop with 2 days of training sessions at \nWageningen Int. Conference Centre, the Netherlands from 6-10 September \n2021. For more info please refer to:\n\nhttps://opendatascien",
       "thread_id": "thread-40e95711d339",
       "thread_depth": 0,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028659.html"
     },
     {
       "id": "msg-b1dce9227b2c",
@@ -410,7 +432,8 @@
       "body_snippet": "OK got it.\n\nI've resubmitted to CRAN so hopefully this time it will work on all \nversions.\n\n\nOn 4/29/21 3:13 PM, Roger Bivand wrote:\n> On Thu, 29 Apr 2021, Tomislav Hengl wrote:\n> \n>>\n>> Thanks Roger.",
       "thread_id": "thread-3f70d2f8682e",
       "thread_depth": 4,
-      "month": "2021-04"
+      "month": "2021-04",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-April/028660.html"
     }
   ],
   "threads": [

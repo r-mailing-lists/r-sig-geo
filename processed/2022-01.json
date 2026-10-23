@@ -13,11 +13,12 @@
       "subject_clean": "leaflet in shiny error message",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hello everyone!\n\nI am trying to create a shiny app with leaflet stuff in it. I have a problem when I am displaying the application, I got this error message :\n\n\"Error in dispatch: argument \"map\" is missing, with no default\".\n\nI searched some clues on the net, I found some examples which are working but I do not get where I going wrong. I double checked the brackets, try to change the name of the map, put the name of the spatial data frame that I am using, etc.\n\nIf someone can give me some clues I will be really glad.\nHave a great day,\nthank you for your time,\nBasile.\n\nHere is my code:\n\nui <- fluidPage(\ntitlePanel(\"\"),\n\nsidebarLayout(\nsidebarPanel(\nhelpText(\"\"),\n\nselectInput(\"var\",\nlabel = \"Choose a variable to display\",\nchoices = spdf$koppen,\nselected = \"\"\n),\nsliderInput(\"range\", \"surface br?l?e en hectare\", min(spdf$V11), max(spdf$V11),\nvalue = range(df$V11), step = 2500\n),\nsliderInput(\"range\", \"Nombre d'incendie\", min(spdf$n), max(spdf$n),\nvalue = range(df$V11), step = 2\n),\ncheckboxInput(\"legend\", \"Show legend\", TRUE)),\nmainPanel(leafletOutput(\"map\"))\n)\n)\n\nserver <- function(input, output, session) {\noutput$map <- renderLeaflet({\nleaflet(df) %>%\naddTiles(group = \"OSM\") %>%\naddProviderTiles(\"Esri.NatGeoWorldMap\", group=\"ESRI\") %>%\naddProviderTiles(\"CartoDB.DarkMatter\", group= \"CartoDB\") %>%\n#fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))%>%\naddPolygons(\ndata=spdf,\nfillColor = \"viridis\",\nweight = 0,\nopacity = 1,\ncolor = \"white\",\ndashArray = \"3\",\nfillOpacity = 0.7)#%>%\nsetView(lat= 44.2, lng=5.9, zoom=5)\n})\n}\nshinyApp(ui, server)\n\nSent with [ProtonMail](https://protonmail.com) Secure Email.\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Hello everyone!\n\nI am trying to create a shiny app with leaflet stuff in it. I have a problem when I am displaying the application, I got this error message :\n\n\"Error in dispatch: argument \"map\" is missing, with no default\".\n\nI searched some clues on the net, I found some examples which are working but I do not get where I going wrong. I double checked the brackets, try to change the name of the map, put the name of the spatial data frame that I am using, etc.\n\nIf someone can give me some clues I will be really glad.\nHave a great day,\nthank you for your time,\nBasile.\n\nHere is my code:\n\nui <- fluidPage(\ntitlePanel(\"\"),\n\nsidebarLayout(\nsidebarPanel(\nhelpText(\"\"),\n\nselectInput(\"var\",\nlabel = \"Choose a variable to display\",\nchoices = spdf$koppen,\nselected = \"\"\n),\nsliderInput(\"range\", \"surface brûlée en hectare\", min(spdf$V11), max(spdf$V11),\nvalue = range(df$V11), step = 2500\n),\nsliderInput(\"range\", \"Nombre d'incendie\", min(spdf$n), max(spdf$n),\nvalue = range(df$V11), step = 2\n),\ncheckboxInput(\"legend\", \"Show legend\", TRUE)),\nmainPanel(leafletOutput(\"map\"))\n)\n)\n\nserver <- function(input, output, session) {\noutput$map <- renderLeaflet({\nleaflet(df) %>%\naddTiles(group = \"OSM\") %>%\naddProviderTiles(\"Esri.NatGeoWorldMap\", group=\"ESRI\") %>%\naddProviderTiles(\"CartoDB.DarkMatter\", group= \"CartoDB\") %>%\n#fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))%>%\naddPolygons(\ndata=spdf,\nfillColor = \"viridis\",\nweight = 0,\nopacity = 1,\ncolor = \"white\",\ndashArray = \"3\",\nfillOpacity = 0.7)#%>%\nsetView(lat= 44.2, lng=5.9, zoom=5)\n})\n}\nshinyApp(ui, server)\n\nSent with [ProtonMail](https://protonmail.com) Secure Email.\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Hello everyone!\n\nI am trying to create a shiny app with leaflet stuff in it. I have a problem when I am displaying the application, I got this error message :\n\n\"Error in dispatch: argument \"map\" is mi",
       "thread_id": "thread-2ba03126586f",
       "thread_depth": 0,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028875.html"
     },
     {
       "id": "msg-6661b15ee681",
@@ -31,11 +32,12 @@
       "references": [
         "<qdUNnkgf98u86-_wu1ShZGxNiyWu1JqtBlahiHURDE7-TEoaUaf9d42M7qZiV5aP_9j-oAp4Mj7XPSHDnAtT3M3pNFECucT0-oGFvZD6x4U=@protonmail.com>"
       ],
-      "body_plain": "Dear Basile,\n\nthe %>% operator is accidentally commented out! Change\nfillOpacity = 0.7)#%>%\nto\nfillOpacity = 0.7) %>%\nand then setView() will get its first parameter called \"map\".\n\nHTH,\n?kos Bede-Fazekas\nCentre for Ecological Research, Hungary\n\n2022.01.03. 1:49 keltez?ssel, basile.lenormand via R-sig-Geo ?rta:\n> Hello everyone!\n>\n> I am trying to create a shiny app with leaflet stuff in it. I have a problem when I am displaying the application, I got this error message :\n>\n> \"Error in dispatch: argument \"map\" is missing, with no default\".\n>\n> I searched some clues on the net, I found some examples which are working but I do not get where I going wrong. I double checked the brackets, try to change the name of the map, put the name of the spatial data frame that I am using, etc.\n>\n> If someone can give me some clues I will be really glad.\n> Have a great day,\n> thank you for your time,\n> Basile.\n>\n> Here is my code:\n>\n> ui <- fluidPage(\n> titlePanel(\"\"),\n>\n> sidebarLayout(\n> sidebarPanel(\n> helpText(\"\"),\n>\n> selectInput(\"var\",\n> label = \"Choose a variable to display\",\n> choices = spdf$koppen,\n> selected = \"\"\n> ),\n> sliderInput(\"range\", \"surface br?l?e en hectare\", min(spdf$V11), max(spdf$V11),\n> value = range(df$V11), step = 2500\n> ),\n> sliderInput(\"range\", \"Nombre d'incendie\", min(spdf$n), max(spdf$n),\n> value = range(df$V11), step = 2\n> ),\n> checkboxInput(\"legend\", \"Show legend\", TRUE)),\n> mainPanel(leafletOutput(\"map\"))\n> )\n> )\n>\n> server <- function(input, output, session) {\n> output$map <- renderLeaflet({\n> leaflet(df) %>%\n> addTiles(group = \"OSM\") %>%\n> addProviderTiles(\"Esri.NatGeoWorldMap\", group=\"ESRI\") %>%\n> addProviderTiles(\"CartoDB.DarkMatter\", group= \"CartoDB\") %>%\n> #fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))%>%\n> addPolygons(\n> data=spdf,\n> fillColor = \"viridis\",\n> weight = 0,\n> opacity = 1,\n> color = \"white\",\n> dashArray = \"3\",\n> fillOpacity = 0.7)#%>%\n> setView(lat= 44.2, lng=5.9, zoom=5)\n> })\n> }\n> shinyApp(ui, server)\n>\n> Sent with [ProtonMail](https://protonmail.com) Secure Email.\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
-      "body_snippet": "Dear Basile,\n\nthe %>% operator is accidentally commented out! Change\nfillOpacity = 0.7)#%>%\nto\nfillOpacity = 0.7) %>%\nand then setView() will get its first parameter called \"map\".\n\nHTH,\n?kos Bede-Faze",
+      "body_plain": "Dear Basile,\n\nthe %>% operator is accidentally commented out! Change\nfillOpacity = 0.7)#%>%\nto\nfillOpacity = 0.7) %>%\nand then setView() will get its first parameter called \"map\".\n\nHTH,\nÁkos Bede-Fazekas\nCentre for Ecological Research, Hungary\n\n2022.01.03. 1:49 keltezéssel, basile.lenormand via R-sig-Geo írta:\n> Hello everyone!\n>\n> I am trying to create a shiny app with leaflet stuff in it. I have a problem when I am displaying the application, I got this error message :\n>\n> \"Error in dispatch: argument \"map\" is missing, with no default\".\n>\n> I searched some clues on the net, I found some examples which are working but I do not get where I going wrong. I double checked the brackets, try to change the name of the map, put the name of the spatial data frame that I am using, etc.\n>\n> If someone can give me some clues I will be really glad.\n> Have a great day,\n> thank you for your time,\n> Basile.\n>\n> Here is my code:\n>\n> ui <- fluidPage(\n> titlePanel(\"\"),\n>\n> sidebarLayout(\n> sidebarPanel(\n> helpText(\"\"),\n>\n> selectInput(\"var\",\n> label = \"Choose a variable to display\",\n> choices = spdf$koppen,\n> selected = \"\"\n> ),\n> sliderInput(\"range\", \"surface brûlée en hectare\", min(spdf$V11), max(spdf$V11),\n> value = range(df$V11), step = 2500\n> ),\n> sliderInput(\"range\", \"Nombre d'incendie\", min(spdf$n), max(spdf$n),\n> value = range(df$V11), step = 2\n> ),\n> checkboxInput(\"legend\", \"Show legend\", TRUE)),\n> mainPanel(leafletOutput(\"map\"))\n> )\n> )\n>\n> server <- function(input, output, session) {\n> output$map <- renderLeaflet({\n> leaflet(df) %>%\n> addTiles(group = \"OSM\") %>%\n> addProviderTiles(\"Esri.NatGeoWorldMap\", group=\"ESRI\") %>%\n> addProviderTiles(\"CartoDB.DarkMatter\", group= \"CartoDB\") %>%\n> #fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))%>%\n> addPolygons(\n> data=spdf,\n> fillColor = \"viridis\",\n> weight = 0,\n> opacity = 1,\n> color = \"white\",\n> dashArray = \"3\",\n> fillOpacity = 0.7)#%>%\n> setView(lat= 44.2, lng=5.9, zoom=5)\n> })\n> }\n> shinyApp(ui, server)\n>\n> Sent with [ProtonMail](https://protonmail.com) Secure Email.\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Dear Basile,\n\nthe %>% operator is accidentally commented out! Change\nfillOpacity = 0.7)#%>%\nto\nfillOpacity = 0.7) %>%\nand then setView() will get its first parameter called \"map\".\n\nHTH,\nÁkos Bede-Faze",
       "thread_id": "thread-2ba03126586f",
       "thread_depth": 1,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028876.html"
     },
     {
       "id": "msg-8fc7d08c7da2",
@@ -50,11 +52,12 @@
         "<qdUNnkgf98u86-_wu1ShZGxNiyWu1JqtBlahiHURDE7-TEoaUaf9d42M7qZiV5aP_9j-oAp4Mj7XPSHDnAtT3M3pNFECucT0-oGFvZD6x4U=@protonmail.com>",
         "<0b88935c-a7dc-1325-6510-795ec523c394@gmail.com>"
       ],
-      "body_plain": "Thank you ?kos!\nIt works!\nHave a great day!\nBasile.\n\n\nSent with ProtonMail Secure Email.\n\n??????? Original Message ???????\nOn Monday 3 January 2022 09:22, Bede-Fazekas ?kos <bfalevlist at gmail.com> wrote:\n\n> Dear Basile,\n>\n> the %>% operator is accidentally commented out! Change\n> fillOpacity = 0.7)#%>%\n> to\n> fillOpacity = 0.7) %>%\n> and then setView() will get its first parameter called \"map\".\n>\n> HTH,\n> ?kos Bede-Fazekas\n> Centre for Ecological Research, Hungary\n>\n> 2022.01.03. 1:49 keltez?ssel, basile.lenormand via R-sig-Geo ?rta:\n>\n> > Hello everyone!\n> > I am trying to create a shiny app with leaflet stuff in it. I have a problem when I am displaying the application, I got this error message :\n> > \"Error in dispatch: argument \"map\" is missing, with no default\".\n> > I searched some clues on the net, I found some examples which are working but I do not get where I going wrong. I double checked the brackets, try to change the name of the map, put the name of the spatial data frame that I am using, etc.\n> > If someone can give me some clues I will be really glad.\n> > Have a great day,\n> > thank you for your time,\n> > Basile.\n> > Here is my code:\n> > ui <- fluidPage(\n> > titlePanel(\"\"),\n> > sidebarLayout(\n> > sidebarPanel(\n> > helpText(\"\"),\n> > selectInput(\"var\",\n> > label = \"Choose a variable to display\",\n> > choices = spdf$koppen,\n> > selected = \"\"\n> > ),\n> > sliderInput(\"range\", \"surface br?l?e en hectare\", min(spdf$V11), max(spdf$V11),\n> > value = range(df$V11), step = 2500\n> > ),\n> > sliderInput(\"range\", \"Nombre d'incendie\", min(spdf$n), max(spdf$n),\n> > value = range(df$V11), step = 2\n> > ),\n> > checkboxInput(\"legend\", \"Show legend\", TRUE)),\n> > mainPanel(leafletOutput(\"map\"))\n> > )\n> > )\n> > server <- function(input, output, session) {\n> > output$map <- renderLeaflet({\n> > leaflet(df) %>%\n> > addTiles(group = \"OSM\") %>%\n> > addProviderTiles(\"Esri.NatGeoWorldMap\", group=\"ESRI\") %>%\n> > addProviderTiles(\"CartoDB.DarkMatter\", group= \"CartoDB\") %>%\n> > #fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))%>%\n> > addPolygons(\n> > data=spdf,\n> > fillColor = \"viridis\",\n> > weight = 0,\n> > opacity = 1,\n> > color = \"white\",\n> > dashArray = \"3\",\n> > fillOpacity = 0.7)#%>%\n> > setView(lat= 44.2, lng=5.9, zoom=5)\n> > })\n> > }\n> > shinyApp(ui, server)\n> > Sent with ProtonMail Secure Email.\n> > [[alternative HTML version deleted]]\n> >\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
-      "body_snippet": "Thank you ?kos!\nIt works!\nHave a great day!\nBasile.\n\n\nSent with ProtonMail Secure Email.\n\n??????? Original Message ???????\nOn Monday 3 January 2022 09:22, Bede-Fazekas ?kos <bfalevlist at gmail.com> w",
+      "body_plain": "Thank you Ákos!\nIt works!\nHave a great day!\nBasile.\n\n\nSent with ProtonMail Secure Email.\n\n‐????‐‐ Original Message ‐‐‐‐??‐\nOn Monday 3 January 2022 09:22, Bede-Fazekas Ákos <bfalevlist at gmail.com> wrote:\n\n> Dear Basile,\n>\n> the %>% operator is accidentally commented out! Change\n> fillOpacity = 0.7)#%>%\n> to\n> fillOpacity = 0.7) %>%\n> and then setView() will get its first parameter called \"map\".\n>\n> HTH,\n> Ákos Bede-Fazekas\n> Centre for Ecological Research, Hungary\n>\n> 2022.01.03. 1:49 keltezéssel, basile.lenormand via R-sig-Geo írta:\n>\n> > Hello everyone!\n> > I am trying to create a shiny app with leaflet stuff in it. I have a problem when I am displaying the application, I got this error message :\n> > \"Error in dispatch: argument \"map\" is missing, with no default\".\n> > I searched some clues on the net, I found some examples which are working but I do not get where I going wrong. I double checked the brackets, try to change the name of the map, put the name of the spatial data frame that I am using, etc.\n> > If someone can give me some clues I will be really glad.\n> > Have a great day,\n> > thank you for your time,\n> > Basile.\n> > Here is my code:\n> > ui <- fluidPage(\n> > titlePanel(\"\"),\n> > sidebarLayout(\n> > sidebarPanel(\n> > helpText(\"\"),\n> > selectInput(\"var\",\n> > label = \"Choose a variable to display\",\n> > choices = spdf$koppen,\n> > selected = \"\"\n> > ),\n> > sliderInput(\"range\", \"surface brûlée en hectare\", min(spdf$V11), max(spdf$V11),\n> > value = range(df$V11), step = 2500\n> > ),\n> > sliderInput(\"range\", \"Nombre d'incendie\", min(spdf$n), max(spdf$n),\n> > value = range(df$V11), step = 2\n> > ),\n> > checkboxInput(\"legend\", \"Show legend\", TRUE)),\n> > mainPanel(leafletOutput(\"map\"))\n> > )\n> > )\n> > server <- function(input, output, session) {\n> > output$map <- renderLeaflet({\n> > leaflet(df) %>%\n> > addTiles(group = \"OSM\") %>%\n> > addProviderTiles(\"Esri.NatGeoWorldMap\", group=\"ESRI\") %>%\n> > addProviderTiles(\"CartoDB.DarkMatter\", group= \"CartoDB\") %>%\n> > #fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))%>%\n> > addPolygons(\n> > data=spdf,\n> > fillColor = \"viridis\",\n> > weight = 0,\n> > opacity = 1,\n> > color = \"white\",\n> > dashArray = \"3\",\n> > fillOpacity = 0.7)#%>%\n> > setView(lat= 44.2, lng=5.9, zoom=5)\n> > })\n> > }\n> > shinyApp(ui, server)\n> > Sent with ProtonMail Secure Email.\n> > [[alternative HTML version deleted]]\n> >\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_snippet": "Thank you Ákos!\nIt works!\nHave a great day!\nBasile.\n\n\nSent with ProtonMail Secure Email.\n\n‐????‐‐ Original Message ‐‐‐‐??‐\nOn Monday 3 January 2022 09:22, Bede-Fazekas Ákos <bfalevlist at gmail.com> w",
       "thread_id": "thread-2ba03126586f",
       "thread_depth": 2,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028877.html"
     },
     {
       "id": "msg-dc20b9b06526",
@@ -66,11 +69,12 @@
       "subject_clean": "reactive map on shiny",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "It is me again, sorry I am a bit lost.\n\nI am trying to make my polygones reacting to my widgets. But I do not find how to make polygones react to sliders. I reached to do it for the second slider, but not for the others widgets. I do not reach to display the checkbox legend neither.\n\nI do not understand when I have to use reactives, also I do not find the function that plot the output of the widget for the observer on the map. Do I have to use renderPlot?\n\nIf you got some time I would be pleased,\nhave a great day,\nBasile\n\nHere is my code:\n\nui <- bootstrapPage(\ntitlePanel(\"Incendie en PACA ? l'?chelle des communes\"),\nsidebarLayout(\n\nsidebarPanel(\nhelpText(\"Cr?ez votre propre visualisation du risque\"),\nselectInput(\"climate\",\nlabel = \"Choose a variable to display\",\nchoices = spdf$koppen,\nselected = \"Csa_Clipped\"),\nsliderInput(\"range1\", \"surface br?l?e en hectare\", min(spdf$V11), max(spdf$V11),\nvalue = range(spdf$V11), step = 2500),\nsliderInput(\"range2\", \"Nombre d'incendie\", min(spdf$n), max(spdf$n),\nvalue = range(spdf$n), step = 2),\ncheckboxInput(\"legend\", \"Show legend\", TRUE)),\n\nmainPanel(\ntextOutput(\"selected_var\"),\nleafletOutput(\"map\",width = 600, height = 300)),\n)\n)\n\nserver <- function(input, output, session) {\n\noutput$map <-renderLeaflet({\nleaflet() %>%\naddTiles(group = \"OSM\") %>%\n#fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))%>%\naddPolygons(\ndata=my_summary_84,\nfillColor =~colorQuantile(\"YlOrRd\", spdfV11),\nfillOpacity = 0.7,\npopup = ~Nom_Commun) %>%\nsetView(lat= 44.2, lng=5.9, zoom=5)\n})\n\ndf_filtered <- reactive({\nspdf[spdf >= input$range2, ]\n})\n\nobserve({\nleafletProxy(mapId = \"map\", data = df_filtered()) %>%\nclearShapes() %>% ## clear previous markers\naddPolygons()\n})\n\n}\nshinyApp(ui, server)\n\nSent with [ProtonMail](https://protonmail.com) Secure Email.\n\t[[alternative HTML version deleted]]",
+      "body_plain": "It is me again, sorry I am a bit lost.\n\nI am trying to make my polygones reacting to my widgets. But I do not find how to make polygones react to sliders. I reached to do it for the second slider, but not for the others widgets. I do not reach to display the checkbox legend neither.\n\nI do not understand when I have to use reactives, also I do not find the function that plot the output of the widget for the observer on the map. Do I have to use renderPlot?\n\nIf you got some time I would be pleased,\nhave a great day,\nBasile\n\nHere is my code:\n\nui <- bootstrapPage(\ntitlePanel(\"Incendie en PACA à l'échelle des communes\"),\nsidebarLayout(\n\nsidebarPanel(\nhelpText(\"Créez votre propre visualisation du risque\"),\nselectInput(\"climate\",\nlabel = \"Choose a variable to display\",\nchoices = spdf$koppen,\nselected = \"Csa_Clipped\"),\nsliderInput(\"range1\", \"surface brûlée en hectare\", min(spdf$V11), max(spdf$V11),\nvalue = range(spdf$V11), step = 2500),\nsliderInput(\"range2\", \"Nombre d'incendie\", min(spdf$n), max(spdf$n),\nvalue = range(spdf$n), step = 2),\ncheckboxInput(\"legend\", \"Show legend\", TRUE)),\n\nmainPanel(\ntextOutput(\"selected_var\"),\nleafletOutput(\"map\",width = 600, height = 300)),\n)\n)\n\nserver <- function(input, output, session) {\n\noutput$map <-renderLeaflet({\nleaflet() %>%\naddTiles(group = \"OSM\") %>%\n#fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))%>%\naddPolygons(\ndata=my_summary_84,\nfillColor =~colorQuantile(\"YlOrRd\", spdfV11),\nfillOpacity = 0.7,\npopup = ~Nom_Commun) %>%\nsetView(lat= 44.2, lng=5.9, zoom=5)\n})\n\ndf_filtered <- reactive({\nspdf[spdf >= input$range2, ]\n})\n\nobserve({\nleafletProxy(mapId = \"map\", data = df_filtered()) %>%\nclearShapes() %>% ## clear previous markers\naddPolygons()\n})\n\n}\nshinyApp(ui, server)\n\nSent with [ProtonMail](https://protonmail.com) Secure Email.\n\t[[alternative HTML version deleted]]",
       "body_snippet": "It is me again, sorry I am a bit lost.\n\nI am trying to make my polygones reacting to my widgets. But I do not find how to make polygones react to sliders. I reached to do it for the second slider, but",
       "thread_id": "thread-dc20b9b06526",
       "thread_depth": 0,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028878.html"
     },
     {
       "id": "msg-04b356eeeed6",
@@ -86,7 +90,8 @@
       "body_snippet": "Dear all,\n\nI am thinking of applying spatial filetring to panel data model. Therefore\nI would like to ask if you might know of some packages/codes or any other\nresources for panel data that I could ap",
       "thread_id": "thread-04b356eeeed6",
       "thread_depth": 0,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028879.html"
     },
     {
       "id": "msg-f71140b822b0",
@@ -100,11 +105,12 @@
       "references": [
         "<CAOfb+wpC7_B4yeidy8uVhTbWnEX=Bfnqrom2vF0e6rtQ3aZTVQ@mail.gmail.com>"
       ],
-      "body_plain": "On Mon, 3 Jan 2022, Martin Hul?nyi wrote:\n\n> Dear all,\n>\n> I am thinking of applying spatial filetring to panel data model. Therefore\n> I would like to ask if you might know of some packages/codes or any other\n> resources for panel data that I could apply for my analysis.\n\nIt might be worth looking at the spmoran package (not panel, but under \nactive development). You can also look at adespatial for PCNM. In general, \nthe eigenvectors for the time-invariant neighbour object are also \ntime-invariant, unless your panel model is dynamic. Also find examples in \nthe literature and see whether they provide references or links to \nsoftware, for example but without direct software references:\nhttps://research.vu.nl/ws/portalfiles/portal/73350412/06049, \nhttps://doi.org/10.1177%2F0160017610386482. \nhttps://scholar.google.no/scholar?oi=bibs&hl=en&cites=15767057313182942537&as_sdt=5 \ngives citations of Patuelli et al. (2011).\n\nHope this helps,\n\nRoger\n\n>\n> Best,\n>\n> Martin Hulenyi\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=04%7C01%7CRoger.Bivand%40nhh.no%7C6c9307111ec74c16969508d9ced2d73b%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637768228115992524%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000&amp;sdata=jqOHHKrl6SxZ441roWZNQKU5hTtS76nZFJ%2FEL56xGRI%3D&amp;reserved=0\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
-      "body_snippet": "On Mon, 3 Jan 2022, Martin Hul?nyi wrote:\n\n> Dear all,\n>\n> I am thinking of applying spatial filetring to panel data model. Therefore\n> I would like to ask if you might know of some packages/codes or ",
+      "body_plain": "On Mon, 3 Jan 2022, Martin Hulényi wrote:\n\n> Dear all,\n>\n> I am thinking of applying spatial filetring to panel data model. Therefore\n> I would like to ask if you might know of some packages/codes or any other\n> resources for panel data that I could apply for my analysis.\n\nIt might be worth looking at the spmoran package (not panel, but under \nactive development). You can also look at adespatial for PCNM. In general, \nthe eigenvectors for the time-invariant neighbour object are also \ntime-invariant, unless your panel model is dynamic. Also find examples in \nthe literature and see whether they provide references or links to \nsoftware, for example but without direct software references:\nhttps://research.vu.nl/ws/portalfiles/portal/73350412/06049, \nhttps://doi.org/10.1177%2F0160017610386482. \nhttps://scholar.google.no/scholar?oi=bibs&hl=en&cites=15767057313182942537&as_sdt=5 \ngives citations of Patuelli et al. (2011).\n\nHope this helps,\n\nRoger\n\n>\n> Best,\n>\n> Martin Hulenyi\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fstat.ethz.ch%2Fmailman%2Flistinfo%2Fr-sig-geo&amp;data=04%7C01%7CRoger.Bivand%40nhh.no%7C6c9307111ec74c16969508d9ced2d73b%7C33a15b2f849941998d56f20b5aa91af2%7C0%7C0%7C637768228115992524%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000&amp;sdata=jqOHHKrl6SxZ441roWZNQKU5hTtS76nZFJ%2FEL56xGRI%3D&amp;reserved=0\n>\n\n-- \nRoger Bivand\nEmeritus Professor\nDepartment of Economics, Norwegian School of Economics,\nPostboks 3490 Ytre Sandviken, 5045 Bergen, Norway.\ne-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Mon, 3 Jan 2022, Martin Hulényi wrote:\n\n> Dear all,\n>\n> I am thinking of applying spatial filetring to panel data model. Therefore\n> I would like to ask if you might know of some packages/codes or ",
       "thread_id": "thread-04b356eeeed6",
       "thread_depth": 1,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028880.html"
     },
     {
       "id": "msg-c864a8786649",
@@ -120,7 +126,8 @@
       "body_snippet": "Hello R-sig-Geo friends & happy 2022!\n\nRunning EBlocal() on US county sf dataset and getting NaN values where\nEmpirical Bayes and a BYM model are returning values and I do not\nunderstand why. Addition",
       "thread_id": "thread-c864a8786649",
       "thread_depth": 0,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028881.html"
     },
     {
       "id": "msg-4ca317411487",
@@ -138,7 +145,8 @@
       "body_snippet": "On Tue, 4 Jan 2022, Erin Stearns wrote:\n\n> Hello R-sig-Geo friends & happy 2022!\n>\n> Running EBlocal() on US county sf dataset and getting NaN values where\n> Empirical Bayes and a BYM model are return",
       "thread_id": "thread-c864a8786649",
       "thread_depth": 1,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028882.html"
     },
     {
       "id": "msg-b323424904cc",
@@ -154,7 +162,8 @@
       "body_snippet": "Dear Colleagues,\n\nIn view of enhancing computation skills in the geographic domain, Spatial\nEcology <http://spatial-ecology.net/>  is organising a two-month training\ncourse: Geocomputation and Machine",
       "thread_id": "thread-b323424904cc",
       "thread_depth": 0,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028883.html"
     },
     {
       "id": "msg-ca5397b7ddb4",
@@ -172,7 +181,8 @@
       "body_snippet": "Dear all - \nClassically, if I want to create a spatial model and make a prediction for an area within the extent of my raster stack my approach would be to crop all predictor rasters to the area of in",
       "thread_id": "thread-ca5397b7ddb4",
       "thread_depth": 0,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028884.html"
     },
     {
       "id": "msg-42a1eb2ab06b",
@@ -191,7 +201,8 @@
       "body_snippet": "Hello everybody,\nI cannot answer Tim's questions, but here is a way to do the terra bit much\nfaster, by not writing intermediate steps to disk.\nCheers, Robert\n\nlibrary(terra)\nlibrary(stars)\nlibrary(sf",
       "thread_id": "thread-ca5397b7ddb4",
       "thread_depth": 1,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028885.html"
     },
     {
       "id": "msg-6b03786a4d8b",
@@ -211,7 +222,8 @@
       "body_snippet": "Robert, \nThank you for the reply and the tips. That's a big improvement! I'll have cases where the masked raster stack (mras) won't fit in RAM so that's why I was explicitly writing out the intermedia",
       "thread_id": "thread-ca5397b7ddb4",
       "thread_depth": 2,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028886.html"
     },
     {
       "id": "msg-4cececc1d2f8",
@@ -227,7 +239,8 @@
       "body_snippet": "I'm trying to simplify my R spatial code to use only terra functions, and I'm almost there. The one function I'm missing is a replacement for rgeos::gDistance for point-polygon distances. I'd be grate",
       "thread_id": "thread-4cececc1d2f8",
       "thread_depth": 0,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028887.html"
     },
     {
       "id": "msg-462799e6a11a",
@@ -243,7 +256,8 @@
       "body_snippet": "Hello Everyone,\n\nPlease pardon my ignorance, but as I am new to spatial analysis,\nI am writing for some guidance to approach a particular spatial analysis\nproblem\nand would really appreciate it if I c",
       "thread_id": "thread-462799e6a11a",
       "thread_depth": 0,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028888.html"
     },
     {
       "id": "msg-b6ad649b815d",
@@ -259,7 +273,8 @@
       "body_snippet": "Hello!\n\nHow a raster image can be exported as a 8 bit GeoTIFF image?\n\nI'm downloading a 8 bit image from this link:\nhttp://geoinfo.cnps.embrapa.br/documents/2918/download, cropping it with a\nvector ma",
       "thread_id": "thread-b6ad649b815d",
       "thread_depth": 0,
-      "month": "2022-01"
+      "month": "2022-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-January/028889.html"
     }
   ],
   "threads": [

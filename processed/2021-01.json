@@ -17,7 +17,8 @@
       "body_snippet": "I have a marked ppp object, about 5300 points. One of the marks is\ncalled period and has values 1:13.  What is an efficient way to make 13\nperiod-specific subset point patterns?  All I've been able to",
       "thread_id": "thread-da5adea23060",
       "thread_depth": 0,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028528.html"
     },
     {
       "id": "msg-a29f37c2fef8",
@@ -35,7 +36,8 @@
       "body_snippet": "Ah, it's split(), of course. That was silly of me.\n\n--Chris Ryan\n\nChristopher W. Ryan wrote:\n> I have a marked ppp object, about 5300 points. One of the marks is\n> called period and has values 1:13.  ",
       "thread_id": "thread-da5adea23060",
       "thread_depth": 1,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028529.html"
     },
     {
       "id": "msg-c5a4543b1ced",
@@ -47,11 +49,12 @@
       "subject_clean": "Doubt about extract climate variables from raster.",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hello everyone, I'm extracting climate variables (precipitation and temperature) from a grid (CRU data) to my shapefile.\n\nTo do this I'm using the function extract from the raster package.\n\nIn the extraction, I saw if the CRS are the same in the raster and in the shape (I change the crs of shape for the same as raster).\n\nInitially, I tried to extract considering the weighted average of pixels with centroid inside the polygon, as I got more missings values, I ended up opting for the simple average. Still, I got less than 1% of the values ??as missings (5 of 557 regions) that I completed using the value of the nearest neighbor.\n\nI decided this because as I am not from this area I am trying to keep it as simple as possible so as not to make mistakes. I believe that to get the weighted average of some form I would have to change the resolution of the raster, or something like that.\n\nI asked the opinion of a geographer and he said that the way I did it is correct.\n\nIn this way I am putting my code for extraction if someone can verify that it is correct, I would also like an opinion if the way that I extract is correct. This is very important for me and I'll appreciate if anyone can take a look.\n\nIf anyone can help, I can make the data available directly.\n\nIn general my code is:\n\nsetwd(\"mypath\")\nshape <- readOGR(dsn = \".\", layer = \"microfinal\")\n\nfn<-file.path(\"mypath\\\\cru_ts4.04.2011.2019.tmp.dat.nc\")\n\nncfile <- nc_open(fn)\nrasbrick <- stack(fn)\n\nTo get only the layers that I want:\nrasbrick <- rasbrick[[70:81]]\n\nchanging to the same crs\n\nshape2<- spTransform(shape, crs(rasbrick))\n\nweath_dt = as.data.frame(matrix(NA,nrow(shape2 at data),12))\n\nFirst I got the ID regions of shape:\n\nweath_dt[,1] = shape2 at data[,1]\n\nand extract:\n\nfor (i in 1:length(rasbrick at layers)) {\n  weath_dt[,1+i] = raster::extract(rasbrick[[i]], shape2, mean)\n}\n\nAfter that I only pick the values for the missings by near neighbour.\n\nThank you.\n\nPietro Andre Telatin Paschoalino\nDoutorando em Ci?ncias Econ?micas da Universidade Estadual de Maring? - PCE.\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Hello everyone, I'm extracting climate variables (precipitation and temperature) from a grid (CRU data) to my shapefile.\n\nTo do this I'm using the function extract from the raster package.\n\nIn the extraction, I saw if the CRS are the same in the raster and in the shape (I change the crs of shape for the same as raster).\n\nInitially, I tried to extract considering the weighted average of pixels with centroid inside the polygon, as I got more missings values, I ended up opting for the simple average. Still, I got less than 1% of the values ​​as missings (5 of 557 regions) that I completed using the value of the nearest neighbor.\n\nI decided this because as I am not from this area I am trying to keep it as simple as possible so as not to make mistakes. I believe that to get the weighted average of some form I would have to change the resolution of the raster, or something like that.\n\nI asked the opinion of a geographer and he said that the way I did it is correct.\n\nIn this way I am putting my code for extraction if someone can verify that it is correct, I would also like an opinion if the way that I extract is correct. This is very important for me and I'll appreciate if anyone can take a look.\n\nIf anyone can help, I can make the data available directly.\n\nIn general my code is:\n\nsetwd(\"mypath\")\nshape <- readOGR(dsn = \".\", layer = \"microfinal\")\n\nfn<-file.path(\"mypath\\\\cru_ts4.04.2011.2019.tmp.dat.nc\")\n\nncfile <- nc_open(fn)\nrasbrick <- stack(fn)\n\nTo get only the layers that I want:\nrasbrick <- rasbrick[[70:81]]\n\nchanging to the same crs\n\nshape2<- spTransform(shape, crs(rasbrick))\n\nweath_dt = as.data.frame(matrix(NA,nrow(shape2 at data),12))\n\nFirst I got the ID regions of shape:\n\nweath_dt[,1] = shape2 at data[,1]\n\nand extract:\n\nfor (i in 1:length(rasbrick at layers)) {\n  weath_dt[,1+i] = raster::extract(rasbrick[[i]], shape2, mean)\n}\n\nAfter that I only pick the values for the missings by near neighbour.\n\nThank you.\n\nPietro Andre Telatin Paschoalino\nDoutorando em Ciências Econômicas da Universidade Estadual de Maringá - PCE.\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Hello everyone, I'm extracting climate variables (precipitation and temperature) from a grid (CRU data) to my shapefile.\n\nTo do this I'm using the function extract from the raster package.\n\nIn the ext",
       "thread_id": "thread-c5a4543b1ced",
       "thread_depth": 0,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028530.html"
     },
     {
       "id": "msg-0c70786394a8",
@@ -65,11 +68,12 @@
       "references": [
         "<BN8PR17MB298089B234BDEA8A708267EB82AF0@BN8PR17MB2980.namprd17.prod.outlook.com>"
       ],
-      "body_plain": "Dear Pietro,\n\nI think that, technically, your code is correct (although using a for \nloop is unnecessary, function extract() can deal with \nRasterStacks/RasterBricks and returns a matrix in this case). And, \ntechnically, also the following solutions would be correct:\n- mean with na.rm,\n- weighted mean without na.rm,\n- weighted mean with na.rm.\nAlso you should consider using package 'exactextract', which can quickly \nand accurately extract values over polygons in a way that it handles \ngrid cells that are partially covered by a polygon.\nThe \"best\" solution depends on your data and your aim.\n\nHTH,\n?kos Bede-Fazekas\nHungarian Academy of Sciences\n\n2021.01.07. 23:51 keltez?ssel, Pietro Andre Telatin Paschoalino ?rta:\n> Hello everyone, I'm extracting climate variables (precipitation and temperature) from a grid (CRU data) to my shapefile.\n>\n> To do this I'm using the function extract from the raster package.\n>\n> In the extraction, I saw if the CRS are the same in the raster and in the shape (I change the crs of shape for the same as raster).\n>\n> Initially, I tried to extract considering the weighted average of pixels with centroid inside the polygon, as I got more missings values, I ended up opting for the simple average. Still, I got less than 1% of the values ??as missings (5 of 557 regions) that I completed using the value of the nearest neighbor.\n>\n> I decided this because as I am not from this area I am trying to keep it as simple as possible so as not to make mistakes. I believe that to get the weighted average of some form I would have to change the resolution of the raster, or something like that.\n>\n> I asked the opinion of a geographer and he said that the way I did it is correct.\n>\n> In this way I am putting my code for extraction if someone can verify that it is correct, I would also like an opinion if the way that I extract is correct. This is very important for me and I'll appreciate if anyone can take a look.\n>\n> If anyone can help, I can make the data available directly.\n>\n> In general my code is:\n>\n> setwd(\"mypath\")\n> shape <- readOGR(dsn = \".\", layer = \"microfinal\")\n>\n> fn<-file.path(\"mypath\\\\cru_ts4.04.2011.2019.tmp.dat.nc\")\n>\n> ncfile <- nc_open(fn)\n> rasbrick <- stack(fn)\n>\n> To get only the layers that I want:\n> rasbrick <- rasbrick[[70:81]]\n>\n> changing to the same crs\n>\n> shape2<- spTransform(shape, crs(rasbrick))\n>\n> weath_dt = as.data.frame(matrix(NA,nrow(shape2 at data),12))\n>\n> First I got the ID regions of shape:\n>\n> weath_dt[,1] = shape2 at data[,1]\n>\n> and extract:\n>\n> for (i in 1:length(rasbrick at layers)) {\n>    weath_dt[,1+i] = raster::extract(rasbrick[[i]], shape2, mean)\n> }\n>\n> After that I only pick the values for the missings by near neighbour.\n>\n> Thank you.\n>\n> Pietro Andre Telatin Paschoalino\n> Doutorando em Ci?ncias Econ?micas da Universidade Estadual de Maring? - PCE.\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_plain": "Dear Pietro,\n\nI think that, technically, your code is correct (although using a for \nloop is unnecessary, function extract() can deal with \nRasterStacks/RasterBricks and returns a matrix in this case). And, \ntechnically, also the following solutions would be correct:\n- mean with na.rm,\n- weighted mean without na.rm,\n- weighted mean with na.rm.\nAlso you should consider using package 'exactextract', which can quickly \nand accurately extract values over polygons in a way that it handles \ngrid cells that are partially covered by a polygon.\nThe \"best\" solution depends on your data and your aim.\n\nHTH,\nÁkos Bede-Fazekas\nHungarian Academy of Sciences\n\n2021.01.07. 23:51 keltezéssel, Pietro Andre Telatin Paschoalino írta:\n> Hello everyone, I'm extracting climate variables (precipitation and temperature) from a grid (CRU data) to my shapefile.\n>\n> To do this I'm using the function extract from the raster package.\n>\n> In the extraction, I saw if the CRS are the same in the raster and in the shape (I change the crs of shape for the same as raster).\n>\n> Initially, I tried to extract considering the weighted average of pixels with centroid inside the polygon, as I got more missings values, I ended up opting for the simple average. Still, I got less than 1% of the values ​​as missings (5 of 557 regions) that I completed using the value of the nearest neighbor.\n>\n> I decided this because as I am not from this area I am trying to keep it as simple as possible so as not to make mistakes. I believe that to get the weighted average of some form I would have to change the resolution of the raster, or something like that.\n>\n> I asked the opinion of a geographer and he said that the way I did it is correct.\n>\n> In this way I am putting my code for extraction if someone can verify that it is correct, I would also like an opinion if the way that I extract is correct. This is very important for me and I'll appreciate if anyone can take a look.\n>\n> If anyone can help, I can make the data available directly.\n>\n> In general my code is:\n>\n> setwd(\"mypath\")\n> shape <- readOGR(dsn = \".\", layer = \"microfinal\")\n>\n> fn<-file.path(\"mypath\\\\cru_ts4.04.2011.2019.tmp.dat.nc\")\n>\n> ncfile <- nc_open(fn)\n> rasbrick <- stack(fn)\n>\n> To get only the layers that I want:\n> rasbrick <- rasbrick[[70:81]]\n>\n> changing to the same crs\n>\n> shape2<- spTransform(shape, crs(rasbrick))\n>\n> weath_dt = as.data.frame(matrix(NA,nrow(shape2 at data),12))\n>\n> First I got the ID regions of shape:\n>\n> weath_dt[,1] = shape2 at data[,1]\n>\n> and extract:\n>\n> for (i in 1:length(rasbrick at layers)) {\n>    weath_dt[,1+i] = raster::extract(rasbrick[[i]], shape2, mean)\n> }\n>\n> After that I only pick the values for the missings by near neighbour.\n>\n> Thank you.\n>\n> Pietro Andre Telatin Paschoalino\n> Doutorando em Ciências Econômicas da Universidade Estadual de Maringá - PCE.\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
       "body_snippet": "Dear Pietro,\n\nI think that, technically, your code is correct (although using a for \nloop is unnecessary, function extract() can deal with \nRasterStacks/RasterBricks and returns a matrix in this case)",
       "thread_id": "thread-c5a4543b1ced",
       "thread_depth": 1,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028531.html"
     },
     {
       "id": "msg-7e267abd3f3b",
@@ -81,11 +85,12 @@
       "subject_clean": "New GIS Courses: Field Mapping Workflow and UAVs for Environmental",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hi everyone.  If you?re getting stir crazy and want some learning\nnourishment, please check out a couple new courses authored by you, the\nsubject matter experts.\n\nLeveraging UAV data for environmental projects\n<https://platform.bootcampgis.com/>\n\nDesign a field data collection workflow: smartphone to dashboard\n<https://platform.bootcampgis.com/>\n\nAnd if you have a project you think others can learn from, let me know and\nwe can help author it for the benefit of the entire GIS community.\n\n\n*Charlie Davis*\n*GIS Analyst, Bootcamp GIS*\n*Turning real GIS projects into marketable education*\n619-640-2330\nwww.bootcampgis.com\n\n\t[[alternative HTML version deleted]]",
-      "body_snippet": "Hi everyone.  If you?re getting stir crazy and want some learning\nnourishment, please check out a couple new courses authored by you, the\nsubject matter experts.\n\nLeveraging UAV data for environmental",
+      "body_plain": "Hi everyone.  If you’re getting stir crazy and want some learning\nnourishment, please check out a couple new courses authored by you, the\nsubject matter experts.\n\nLeveraging UAV data for environmental projects\n<https://platform.bootcampgis.com/>\n\nDesign a field data collection workflow: smartphone to dashboard\n<https://platform.bootcampgis.com/>\n\nAnd if you have a project you think others can learn from, let me know and\nwe can help author it for the benefit of the entire GIS community.\n\n\n*Charlie Davis*\n*GIS Analyst, Bootcamp GIS*\n*Turning real GIS projects into marketable education*\n619-640-2330\nwww.bootcampgis.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hi everyone.  If you’re getting stir crazy and want some learning\nnourishment, please check out a couple new courses authored by you, the\nsubject matter experts.\n\nLeveraging UAV data for environmental",
       "thread_id": "thread-7e267abd3f3b",
       "thread_depth": 0,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028532.html"
     },
     {
       "id": "msg-b1aa62d1443a",
@@ -99,11 +104,12 @@
       "references": [
         "<CAMKizoZwZQy00jAdaQys-eSSTb_PfRim0Trum+Hgsg7bMx1XHA@mail.gmail.com>"
       ],
-      "body_plain": "Please note that advertising courses of this kind on this list is not \npermitted, and list subscribers should ignore this message. Should a \nfurther post appear of this kind, the poster will be unsubscribed.\n\nShould any further subscribers wish to draw attention to non-profit events \nor courses (as OpenGeoHub does), please ask list admin. first for \nguidance. For-profit ads are not acceptable under any circumstances.\n\nRoger Bivand\n(list admin.)\n\nOn Fri, 8 Jan 2021, ??? wrote:\n\n> Hi everyone.  If you?re getting stir crazy and want some learning\n> nourishment, please check out a couple new courses authored by you, the\n> subject matter experts.\n>\n> Leveraging UAV data for environmental projects\n> <https://platform.bootcampgis.com/>\n>\n> Design a field data collection workflow: smartphone to dashboard\n> <https://platform.bootcampgis.com/>\n>\n> And if you have a project you think others can learn from, let me know and\n> we can help author it for the benefit of the entire GIS community.\n>\n>\n> *Charlie Davis*\n> *GIS Analyst, Bootcamp GIS*\n> *Turning real GIS projects into marketable education*\n> 619-640-2330\n> www.bootcampgis.com\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_plain": "Please note that advertising courses of this kind on this list is not \npermitted, and list subscribers should ignore this message. Should a \nfurther post appear of this kind, the poster will be unsubscribed.\n\nShould any further subscribers wish to draw attention to non-profit events \nor courses (as OpenGeoHub does), please ask list admin. first for \nguidance. For-profit ads are not acceptable under any circumstances.\n\nRoger Bivand\n(list admin.)\n\nOn Fri, 8 Jan 2021, 詹凌菲 wrote:\n\n> Hi everyone.  If you’re getting stir crazy and want some learning\n> nourishment, please check out a couple new courses authored by you, the\n> subject matter experts.\n>\n> Leveraging UAV data for environmental projects\n> <https://platform.bootcampgis.com/>\n>\n> Design a field data collection workflow: smartphone to dashboard\n> <https://platform.bootcampgis.com/>\n>\n> And if you have a project you think others can learn from, let me know and\n> we can help author it for the benefit of the entire GIS community.\n>\n>\n> *Charlie Davis*\n> *GIS Analyst, Bootcamp GIS*\n> *Turning real GIS projects into marketable education*\n> 619-640-2330\n> www.bootcampgis.com\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
       "body_snippet": "Please note that advertising courses of this kind on this list is not \npermitted, and list subscribers should ignore this message. Should a \nfurther post appear of this kind, the poster will be unsubs",
       "thread_id": "thread-7e267abd3f3b",
       "thread_depth": 1,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028533.html"
     },
     {
       "id": "msg-1e17d72f5ad8",
@@ -123,7 +129,8 @@
       "body_snippet": "Dr. Bivand and the R Sig Geo team,\n\nThank you again for the replies to the question.\n\nI kindly request removing my signature including the affiliation and\ncontact details from this thread. I'm OK havi",
       "thread_id": "thread-1e17d72f5ad8",
       "thread_depth": 0,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028534.html"
     },
     {
       "id": "msg-f222f959b6f5",
@@ -144,7 +151,8 @@
       "body_snippet": "On Sat, 16 Jan 2021, Kaushi Kanankege wrote:\n\n> Dr. Bivand and the R Sig Geo team,\n>\n> Thank you again for the replies to the question.\n>\n> I kindly request removing my signature including the affilia",
       "thread_id": "thread-1e17d72f5ad8",
       "thread_depth": 1,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028535.html"
     },
     {
       "id": "msg-06ffe73ce8bb",
@@ -160,7 +168,8 @@
       "body_snippet": "Dear all,\n\nI recently updated my  linux system. I am running R 4.0.3\n\nSince this update, I get this error with the CRS function:\n\nCRS(SRS_string='EPSG:4326')\nproj_create: SQLite error on SELECT name, ",
       "thread_id": "thread-06ffe73ce8bb",
       "thread_depth": 0,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028536.html"
     },
     {
       "id": "msg-b5d77df1dc1f",
@@ -178,7 +187,8 @@
       "body_snippet": "On Tue, 19 Jan 2021, Nicolas Saby wrote:\n\n> Dear all,\n>\n> I recently updated my  linux system. I am running R 4.0.3\n>\n> Since this update, I get this error with the CRS function:\n>\n> CRS(SRS_string='E",
       "thread_id": "thread-06ffe73ce8bb",
       "thread_depth": 1,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028537.html"
     },
     {
       "id": "msg-d1fea8d069d8",
@@ -197,7 +207,8 @@
       "body_snippet": "On Tue, 19 Jan 2021, Roger Bivand wrote:\n\n> On Tue, 19 Jan 2021, Nicolas Saby wrote:\n>\n>>  Dear all,\n>>\n>>  I recently updated my  linux system. I am running R 4.0.3\n>>\n>>  Since this update, I get th",
       "thread_id": "thread-06ffe73ce8bb",
       "thread_depth": 2,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028538.html"
     },
     {
       "id": "msg-3dbdea171bc9",
@@ -216,7 +227,8 @@
       "body_snippet": "Yes, thanks it clarifies. \nI need now to find how to uninstall the older version of proj-bin\nI have already tried sudo apt remove package_name but it did not fixed the pb\nMany thanks\n\n-----Message d'o",
       "thread_id": "thread-06ffe73ce8bb",
       "thread_depth": 2,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028539.html"
     },
     {
       "id": "msg-677aaae1d53e",
@@ -231,11 +243,12 @@
         "<a2e8217c763c4f6c8ec2d2453c91c97b@IDFDCPRIPEXMU04.inra.local>",
         "<a15e1285-e326-c369-8a82-1eb181c83ec1@reclus.nhh.no>"
       ],
-      "body_plain": "> library(rgdal)\nLe chargement a n?cessit? le package : sp\nrgdal: version: 1.5-19, (SVN revision 1092)\nGeospatial Data Abstraction Library extensions to R successfully loaded\nLoaded GDAL runtime: GDAL 3.0.4, released 2020/01/28\nPath to GDAL shared files: /usr/share/gdal\nGDAL binary built with GEOS: TRUE\nLoaded PROJ runtime: Rel. 6.3.1, February 10th, 2020, [PJ_VERSION: 631]\nPath to PROJ shared files: /usr/share/proj\nLinking to sp version:1.4-4\nTo mute warnings of possible GDAL/OSR exportToProj4() degradation,\nuse options(\"rgdal_show_exportToProj4_warnings\"=\"none\") before loading rgdal.\n\n----------------\nI have uninstall and reinstall proj, sf and rgdal\n\nBut it is still not possible to pick up the latest version of PROJ... should be 7.2 instead of 6.3\n\nThanks\n\n-----Message d'origine-----\nDe?: Nicolas Saby \nEnvoy??: mardi 19 janvier 2021 11:25\n??: 'Roger.Bivand at nhh.no' <Roger.Bivand at nhh.no>\nCc?: r-sig-geo at r-project.org\nObjet?: RE: [R-sig-Geo] gdal error\n\nYes, thanks it clarifies. \nI need now to find how to uninstall the older version of proj-bin I have already tried sudo apt remove package_name but it did not fixed the pb Many thanks\n\n-----Message d'origine-----\nDe?: Roger Bivand <Roger.Bivand at nhh.no> Envoy??: mardi 19 janvier 2021 10:17 ??: Nicolas Saby <nicolas.saby at inrae.fr> Cc?: r-sig-geo at r-project.org Objet?: Re: [R-sig-Geo] gdal error\n\nOn Tue, 19 Jan 2021, Nicolas Saby wrote:\n\n> Dear all,\n>\n> I recently updated my  linux system. I am running R 4.0.3\n>\n> Since this update, I get this error with the CRS function:\n>\n> CRS(SRS_string='EPSG:4326')\n> proj_create: SQLite error on SELECT name, type, \n> coordinate_system_auth_name, coordinate_system_code, datum_auth_name, \n> datum_code, area_of_use_auth_name, area_of_use_code, text_definition, \n> deprecated FROM geodetic_crs WHERE auth_name = ? AND code = ?: no such\n> column: area_of_use_auth_name\n> proj_create: SQLite error on SELECT name, type, \n> coordinate_system_auth_name, coordinate_system_code, datum_auth_name, \n> datum_code, area_of_use_auth_name, area_of_use_code, text_definition, \n> deprecated FROM geodetic_crs WHERE auth_name = ? AND code = ?: no such\n> column: area_of_use_auth_name Error in CRS(SRS_string = \"EPSG:4326\") : \n> NA\n>\n> I checked the proj package with the command apt-cache show proj-bin, I \n> got this. I think I have 2 packages installed\n\nWith only 7.2.1 installed, I see:\n\n> library(sp)\n> CRS(SRS_string='EPSG:4326')\nCRS arguments: +proj=longlat +datum=WGS84 +no_defs\n> cat(wkt(CRS(SRS_string='EPSG:4326')), \"\\n\")\nGEOGCRS[\"WGS 84 (with axis order normalized for visualization)\",\n     DATUM[\"World Geodetic System 1984\",\n         ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n             LENGTHUNIT[\"metre\",1]],\n         ID[\"EPSG\",6326]],\n     PRIMEM[\"Greenwich\",0,\n         ANGLEUNIT[\"degree\",0.0174532925199433],\n         ID[\"EPSG\",8901]],\n     CS[ellipsoidal,2],\n         AXIS[\"geodetic longitude (Lon)\",east,\n             ORDER[1],\n             ANGLEUNIT[\"degree\",0.0174532925199433,\n                 ID[\"EPSG\",9122]]],\n         AXIS[\"geodetic latitude (Lat)\",north,\n             ORDER[2],\n             ANGLEUNIT[\"degree\",0.0174532925199433,\n                 ID[\"EPSG\",9122]]]]\n\nYou are probably right that your two proj-bin (and other proj) ununtu packages are confusing each other. There should be one only, and rgdal (and sf) should be re-installed from source to pick up the correct unique version.\n\nHope this clarifies,\n\nRoger\n\n>\n> Package: proj-bin\n> Source: proj\n> Priority: optional\n> Section: science\n> Installed-Size: 470\n> Maintainer: Debian GIS Project\n> <pkg-grass-devel at lists.alioth.debian.org>\n> Architecture: amd64\n> Version: 7.2.0-1~focal0\n> Depends: libc6 (>= 2.29), libgcc-s1 (>= 3.0), libproj19 (>= 7.2.0), libstdc++6 (                >= 5.2)\n> Filename: pool/main/p/proj/proj-bin_7.2.0-1~focal0_amd64.deb\n>\n> Package: proj-bin\n> Architecture: amd64\n> Version: 6.3.1-1\n> Priority: extra\n> Section: universe/science\n> Source: proj\n> Origin: Ubuntu\n> Maintainer: Ubuntu Developers <ubuntu-devel-discuss at lists.ubuntu.com>\n> Original-Maintainer: Debian GIS Project <pkg-grass-devel at lists.alioth.debian.org                                                                             >\n> Bugs: https://bugs.launchpad.net/ubuntu/+filebug\n> Installed-Size: 319\n> Depends: libc6 (>= 2.29), libgcc-s1 (>= 3.0), libproj15 (>= 6.2.1), libstdc++6 (                >= 5.2)\n> Filename: pool/universe/p/proj/proj-bin_6.3.1-1_amd64.deb\n> Task: ubuntustudio-video, ubuntustudio-publishing, ubuntustudio-photography, ubu                                                                             ntustudio-graphics\n>\n>\n> Thank you\n> Nicolas\n>\n> [Logo-Signature-INRAE]\n>\n> Bdat.gissol.fr\n>\n> Nicolas Saby\n> Chef de projet en information statistique\n> https://orcid.org/0000-0001-8964-1194\n>\n>\n>\n\n--\nRoger Bivand\nDepartment of Economics, Norwegian School of Economics, Helleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
-      "body_snippet": "> library(rgdal)\nLe chargement a n?cessit? le package : sp\nrgdal: version: 1.5-19, (SVN revision 1092)\nGeospatial Data Abstraction Library extensions to R successfully loaded\nLoaded GDAL runtime: GDAL",
+      "body_plain": "> library(rgdal)\nLe chargement a nécessité le package : sp\nrgdal: version: 1.5-19, (SVN revision 1092)\nGeospatial Data Abstraction Library extensions to R successfully loaded\nLoaded GDAL runtime: GDAL 3.0.4, released 2020/01/28\nPath to GDAL shared files: /usr/share/gdal\nGDAL binary built with GEOS: TRUE\nLoaded PROJ runtime: Rel. 6.3.1, February 10th, 2020, [PJ_VERSION: 631]\nPath to PROJ shared files: /usr/share/proj\nLinking to sp version:1.4-4\nTo mute warnings of possible GDAL/OSR exportToProj4() degradation,\nuse options(\"rgdal_show_exportToProj4_warnings\"=\"none\") before loading rgdal.\n\n----------------\nI have uninstall and reinstall proj, sf and rgdal\n\nBut it is still not possible to pick up the latest version of PROJ... should be 7.2 instead of 6.3\n\nThanks\n\n-----Message d'origine-----\nDe : Nicolas Saby \nEnvoyé : mardi 19 janvier 2021 11:25\nÀ : 'Roger.Bivand at nhh.no' <Roger.Bivand at nhh.no>\nCc : r-sig-geo at r-project.org\nObjet : RE: [R-sig-Geo] gdal error\n\nYes, thanks it clarifies. \nI need now to find how to uninstall the older version of proj-bin I have already tried sudo apt remove package_name but it did not fixed the pb Many thanks\n\n-----Message d'origine-----\nDe : Roger Bivand <Roger.Bivand at nhh.no> Envoyé : mardi 19 janvier 2021 10:17 À : Nicolas Saby <nicolas.saby at inrae.fr> Cc : r-sig-geo at r-project.org Objet : Re: [R-sig-Geo] gdal error\n\nOn Tue, 19 Jan 2021, Nicolas Saby wrote:\n\n> Dear all,\n>\n> I recently updated my  linux system. I am running R 4.0.3\n>\n> Since this update, I get this error with the CRS function:\n>\n> CRS(SRS_string='EPSG:4326')\n> proj_create: SQLite error on SELECT name, type, \n> coordinate_system_auth_name, coordinate_system_code, datum_auth_name, \n> datum_code, area_of_use_auth_name, area_of_use_code, text_definition, \n> deprecated FROM geodetic_crs WHERE auth_name = ? AND code = ?: no such\n> column: area_of_use_auth_name\n> proj_create: SQLite error on SELECT name, type, \n> coordinate_system_auth_name, coordinate_system_code, datum_auth_name, \n> datum_code, area_of_use_auth_name, area_of_use_code, text_definition, \n> deprecated FROM geodetic_crs WHERE auth_name = ? AND code = ?: no such\n> column: area_of_use_auth_name Error in CRS(SRS_string = \"EPSG:4326\") : \n> NA\n>\n> I checked the proj package with the command apt-cache show proj-bin, I \n> got this. I think I have 2 packages installed\n\nWith only 7.2.1 installed, I see:\n\n> library(sp)\n> CRS(SRS_string='EPSG:4326')\nCRS arguments: +proj=longlat +datum=WGS84 +no_defs\n> cat(wkt(CRS(SRS_string='EPSG:4326')), \"\\n\")\nGEOGCRS[\"WGS 84 (with axis order normalized for visualization)\",\n     DATUM[\"World Geodetic System 1984\",\n         ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n             LENGTHUNIT[\"metre\",1]],\n         ID[\"EPSG\",6326]],\n     PRIMEM[\"Greenwich\",0,\n         ANGLEUNIT[\"degree\",0.0174532925199433],\n         ID[\"EPSG\",8901]],\n     CS[ellipsoidal,2],\n         AXIS[\"geodetic longitude (Lon)\",east,\n             ORDER[1],\n             ANGLEUNIT[\"degree\",0.0174532925199433,\n                 ID[\"EPSG\",9122]]],\n         AXIS[\"geodetic latitude (Lat)\",north,\n             ORDER[2],\n             ANGLEUNIT[\"degree\",0.0174532925199433,\n                 ID[\"EPSG\",9122]]]]\n\nYou are probably right that your two proj-bin (and other proj) ununtu packages are confusing each other. There should be one only, and rgdal (and sf) should be re-installed from source to pick up the correct unique version.\n\nHope this clarifies,\n\nRoger\n\n>\n> Package: proj-bin\n> Source: proj\n> Priority: optional\n> Section: science\n> Installed-Size: 470\n> Maintainer: Debian GIS Project\n> <pkg-grass-devel at lists.alioth.debian.org>\n> Architecture: amd64\n> Version: 7.2.0-1~focal0\n> Depends: libc6 (>= 2.29), libgcc-s1 (>= 3.0), libproj19 (>= 7.2.0), libstdc++6 (                >= 5.2)\n> Filename: pool/main/p/proj/proj-bin_7.2.0-1~focal0_amd64.deb\n>\n> Package: proj-bin\n> Architecture: amd64\n> Version: 6.3.1-1\n> Priority: extra\n> Section: universe/science\n> Source: proj\n> Origin: Ubuntu\n> Maintainer: Ubuntu Developers <ubuntu-devel-discuss at lists.ubuntu.com>\n> Original-Maintainer: Debian GIS Project <pkg-grass-devel at lists.alioth.debian.org                                                                             >\n> Bugs: https://bugs.launchpad.net/ubuntu/+filebug\n> Installed-Size: 319\n> Depends: libc6 (>= 2.29), libgcc-s1 (>= 3.0), libproj15 (>= 6.2.1), libstdc++6 (                >= 5.2)\n> Filename: pool/universe/p/proj/proj-bin_6.3.1-1_amd64.deb\n> Task: ubuntustudio-video, ubuntustudio-publishing, ubuntustudio-photography, ubu                                                                             ntustudio-graphics\n>\n>\n> Thank you\n> Nicolas\n>\n> [Logo-Signature-INRAE]\n>\n> Bdat.gissol.fr\n>\n> Nicolas Saby\n> Chef de projet en information statistique\n> https://orcid.org/0000-0001-8964-1194\n>\n>\n>\n\n--\nRoger Bivand\nDepartment of Economics, Norwegian School of Economics, Helleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "> library(rgdal)\nLe chargement a nécessité le package : sp\nrgdal: version: 1.5-19, (SVN revision 1092)\nGeospatial Data Abstraction Library extensions to R successfully loaded\nLoaded GDAL runtime: GDAL",
       "thread_id": "thread-06ffe73ce8bb",
       "thread_depth": 2,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028540.html"
     },
     {
       "id": "msg-973d46c8f1a2",
@@ -251,11 +264,12 @@
         "<a15e1285-e326-c369-8a82-1eb181c83ec1@reclus.nhh.no>",
         "<a6c74f04866d4d94a720fc0f3410153e@IDFDCPRIPEXMU04.inra.local>"
       ],
-      "body_plain": "On Tue, 19 Jan 2021, Nicolas Saby wrote:\n\n>> library(rgdal)\n> Le chargement a n?cessit? le package : sp\n> rgdal: version: 1.5-19, (SVN revision 1092)\n> Geospatial Data Abstraction Library extensions to R successfully loaded\n> Loaded GDAL runtime: GDAL 3.0.4, released 2020/01/28\n> Path to GDAL shared files: /usr/share/gdal\n> GDAL binary built with GEOS: TRUE\n> Loaded PROJ runtime: Rel. 6.3.1, February 10th, 2020, [PJ_VERSION: 631]\n> Path to PROJ shared files: /usr/share/proj\n> Linking to sp version:1.4-4\n> To mute warnings of possible GDAL/OSR exportToProj4() degradation,\n> use options(\"rgdal_show_exportToProj4_warnings\"=\"none\") before loading rgdal.\n>\n> ----------------\n> I have uninstall and reinstall proj, sf and rgdal\n>\n> But it is still not possible to pick up the latest version of PROJ... \n> should be 7.2 instead of 6.3\n\nThe sf README contains some install instructions:\n\nhttps://github.com/r-spatial/sf\n\nPossibly you are not using ubuntugis-unstable? I only ever install from \nsource, to keep control of what I actually have installed, but both PROJ \nand GDAL now take much longer to compile.\n\nRoger\n\n>\n> Thanks\n>\n> -----Message d'origine-----\n> De?: Nicolas Saby\n> Envoy??: mardi 19 janvier 2021 11:25\n> ??: 'Roger.Bivand at nhh.no' <Roger.Bivand at nhh.no>\n> Cc?: r-sig-geo at r-project.org\n> Objet?: RE: [R-sig-Geo] gdal error\n>\n> Yes, thanks it clarifies.\n> I need now to find how to uninstall the older version of proj-bin I have already tried sudo apt remove package_name but it did not fixed the pb Many thanks\n>\n> -----Message d'origine-----\n> De?: Roger Bivand <Roger.Bivand at nhh.no> Envoy??: mardi 19 janvier 2021 10:17 ??: Nicolas Saby <nicolas.saby at inrae.fr> Cc?: r-sig-geo at r-project.org Objet?: Re: [R-sig-Geo] gdal error\n>\n> On Tue, 19 Jan 2021, Nicolas Saby wrote:\n>\n>> Dear all,\n>>\n>> I recently updated my  linux system. I am running R 4.0.3\n>>\n>> Since this update, I get this error with the CRS function:\n>>\n>> CRS(SRS_string='EPSG:4326')\n>> proj_create: SQLite error on SELECT name, type,\n>> coordinate_system_auth_name, coordinate_system_code, datum_auth_name,\n>> datum_code, area_of_use_auth_name, area_of_use_code, text_definition,\n>> deprecated FROM geodetic_crs WHERE auth_name = ? AND code = ?: no such\n>> column: area_of_use_auth_name\n>> proj_create: SQLite error on SELECT name, type,\n>> coordinate_system_auth_name, coordinate_system_code, datum_auth_name,\n>> datum_code, area_of_use_auth_name, area_of_use_code, text_definition,\n>> deprecated FROM geodetic_crs WHERE auth_name = ? AND code = ?: no such\n>> column: area_of_use_auth_name Error in CRS(SRS_string = \"EPSG:4326\") :\n>> NA\n>>\n>> I checked the proj package with the command apt-cache show proj-bin, I\n>> got this. I think I have 2 packages installed\n>\n> With only 7.2.1 installed, I see:\n>\n>> library(sp)\n>> CRS(SRS_string='EPSG:4326')\n> CRS arguments: +proj=longlat +datum=WGS84 +no_defs\n>> cat(wkt(CRS(SRS_string='EPSG:4326')), \"\\n\")\n> GEOGCRS[\"WGS 84 (with axis order normalized for visualization)\",\n>     DATUM[\"World Geodetic System 1984\",\n>         ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n>             LENGTHUNIT[\"metre\",1]],\n>         ID[\"EPSG\",6326]],\n>     PRIMEM[\"Greenwich\",0,\n>         ANGLEUNIT[\"degree\",0.0174532925199433],\n>         ID[\"EPSG\",8901]],\n>     CS[ellipsoidal,2],\n>         AXIS[\"geodetic longitude (Lon)\",east,\n>             ORDER[1],\n>             ANGLEUNIT[\"degree\",0.0174532925199433,\n>                 ID[\"EPSG\",9122]]],\n>         AXIS[\"geodetic latitude (Lat)\",north,\n>             ORDER[2],\n>             ANGLEUNIT[\"degree\",0.0174532925199433,\n>                 ID[\"EPSG\",9122]]]]\n>\n> You are probably right that your two proj-bin (and other proj) ununtu packages are confusing each other. There should be one only, and rgdal (and sf) should be re-installed from source to pick up the correct unique version.\n>\n> Hope this clarifies,\n>\n> Roger\n>\n>>\n>> Package: proj-bin\n>> Source: proj\n>> Priority: optional\n>> Section: science\n>> Installed-Size: 470\n>> Maintainer: Debian GIS Project\n>> <pkg-grass-devel at lists.alioth.debian.org>\n>> Architecture: amd64\n>> Version: 7.2.0-1~focal0\n>> Depends: libc6 (>= 2.29), libgcc-s1 (>= 3.0), libproj19 (>= 7.2.0), libstdc++6 (                >= 5.2)\n>> Filename: pool/main/p/proj/proj-bin_7.2.0-1~focal0_amd64.deb\n>>\n>> Package: proj-bin\n>> Architecture: amd64\n>> Version: 6.3.1-1\n>> Priority: extra\n>> Section: universe/science\n>> Source: proj\n>> Origin: Ubuntu\n>> Maintainer: Ubuntu Developers <ubuntu-devel-discuss at lists.ubuntu.com>\n>> Original-Maintainer: Debian GIS Project <pkg-grass-devel at lists.alioth.debian.org                                                                             >\n>> Bugs: https://bugs.launchpad.net/ubuntu/+filebug\n>> Installed-Size: 319\n>> Depends: libc6 (>= 2.29), libgcc-s1 (>= 3.0), libproj15 (>= 6.2.1), libstdc++6 (                >= 5.2)\n>> Filename: pool/universe/p/proj/proj-bin_6.3.1-1_amd64.deb\n>> Task: ubuntustudio-video, ubuntustudio-publishing, ubuntustudio-photography, ubu                                                                             ntustudio-graphics\n>>\n>>\n>> Thank you\n>> Nicolas\n>>\n>> [Logo-Signature-INRAE]\n>>\n>> Bdat.gissol.fr\n>>\n>> Nicolas Saby\n>> Chef de projet en information statistique\n>> https://orcid.org/0000-0001-8964-1194\n>>\n>>\n>>\n>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics, Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> https://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
-      "body_snippet": "On Tue, 19 Jan 2021, Nicolas Saby wrote:\n\n>> library(rgdal)\n> Le chargement a n?cessit? le package : sp\n> rgdal: version: 1.5-19, (SVN revision 1092)\n> Geospatial Data Abstraction Library extensions t",
+      "body_plain": "On Tue, 19 Jan 2021, Nicolas Saby wrote:\n\n>> library(rgdal)\n> Le chargement a nécessité le package : sp\n> rgdal: version: 1.5-19, (SVN revision 1092)\n> Geospatial Data Abstraction Library extensions to R successfully loaded\n> Loaded GDAL runtime: GDAL 3.0.4, released 2020/01/28\n> Path to GDAL shared files: /usr/share/gdal\n> GDAL binary built with GEOS: TRUE\n> Loaded PROJ runtime: Rel. 6.3.1, February 10th, 2020, [PJ_VERSION: 631]\n> Path to PROJ shared files: /usr/share/proj\n> Linking to sp version:1.4-4\n> To mute warnings of possible GDAL/OSR exportToProj4() degradation,\n> use options(\"rgdal_show_exportToProj4_warnings\"=\"none\") before loading rgdal.\n>\n> ----------------\n> I have uninstall and reinstall proj, sf and rgdal\n>\n> But it is still not possible to pick up the latest version of PROJ... \n> should be 7.2 instead of 6.3\n\nThe sf README contains some install instructions:\n\nhttps://github.com/r-spatial/sf\n\nPossibly you are not using ubuntugis-unstable? I only ever install from \nsource, to keep control of what I actually have installed, but both PROJ \nand GDAL now take much longer to compile.\n\nRoger\n\n>\n> Thanks\n>\n> -----Message d'origine-----\n> De : Nicolas Saby\n> Envoyé : mardi 19 janvier 2021 11:25\n> À : 'Roger.Bivand at nhh.no' <Roger.Bivand at nhh.no>\n> Cc : r-sig-geo at r-project.org\n> Objet : RE: [R-sig-Geo] gdal error\n>\n> Yes, thanks it clarifies.\n> I need now to find how to uninstall the older version of proj-bin I have already tried sudo apt remove package_name but it did not fixed the pb Many thanks\n>\n> -----Message d'origine-----\n> De : Roger Bivand <Roger.Bivand at nhh.no> Envoyé : mardi 19 janvier 2021 10:17 À : Nicolas Saby <nicolas.saby at inrae.fr> Cc : r-sig-geo at r-project.org Objet : Re: [R-sig-Geo] gdal error\n>\n> On Tue, 19 Jan 2021, Nicolas Saby wrote:\n>\n>> Dear all,\n>>\n>> I recently updated my  linux system. I am running R 4.0.3\n>>\n>> Since this update, I get this error with the CRS function:\n>>\n>> CRS(SRS_string='EPSG:4326')\n>> proj_create: SQLite error on SELECT name, type,\n>> coordinate_system_auth_name, coordinate_system_code, datum_auth_name,\n>> datum_code, area_of_use_auth_name, area_of_use_code, text_definition,\n>> deprecated FROM geodetic_crs WHERE auth_name = ? AND code = ?: no such\n>> column: area_of_use_auth_name\n>> proj_create: SQLite error on SELECT name, type,\n>> coordinate_system_auth_name, coordinate_system_code, datum_auth_name,\n>> datum_code, area_of_use_auth_name, area_of_use_code, text_definition,\n>> deprecated FROM geodetic_crs WHERE auth_name = ? AND code = ?: no such\n>> column: area_of_use_auth_name Error in CRS(SRS_string = \"EPSG:4326\") :\n>> NA\n>>\n>> I checked the proj package with the command apt-cache show proj-bin, I\n>> got this. I think I have 2 packages installed\n>\n> With only 7.2.1 installed, I see:\n>\n>> library(sp)\n>> CRS(SRS_string='EPSG:4326')\n> CRS arguments: +proj=longlat +datum=WGS84 +no_defs\n>> cat(wkt(CRS(SRS_string='EPSG:4326')), \"\\n\")\n> GEOGCRS[\"WGS 84 (with axis order normalized for visualization)\",\n>     DATUM[\"World Geodetic System 1984\",\n>         ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n>             LENGTHUNIT[\"metre\",1]],\n>         ID[\"EPSG\",6326]],\n>     PRIMEM[\"Greenwich\",0,\n>         ANGLEUNIT[\"degree\",0.0174532925199433],\n>         ID[\"EPSG\",8901]],\n>     CS[ellipsoidal,2],\n>         AXIS[\"geodetic longitude (Lon)\",east,\n>             ORDER[1],\n>             ANGLEUNIT[\"degree\",0.0174532925199433,\n>                 ID[\"EPSG\",9122]]],\n>         AXIS[\"geodetic latitude (Lat)\",north,\n>             ORDER[2],\n>             ANGLEUNIT[\"degree\",0.0174532925199433,\n>                 ID[\"EPSG\",9122]]]]\n>\n> You are probably right that your two proj-bin (and other proj) ununtu packages are confusing each other. There should be one only, and rgdal (and sf) should be re-installed from source to pick up the correct unique version.\n>\n> Hope this clarifies,\n>\n> Roger\n>\n>>\n>> Package: proj-bin\n>> Source: proj\n>> Priority: optional\n>> Section: science\n>> Installed-Size: 470\n>> Maintainer: Debian GIS Project\n>> <pkg-grass-devel at lists.alioth.debian.org>\n>> Architecture: amd64\n>> Version: 7.2.0-1~focal0\n>> Depends: libc6 (>= 2.29), libgcc-s1 (>= 3.0), libproj19 (>= 7.2.0), libstdc++6 (                >= 5.2)\n>> Filename: pool/main/p/proj/proj-bin_7.2.0-1~focal0_amd64.deb\n>>\n>> Package: proj-bin\n>> Architecture: amd64\n>> Version: 6.3.1-1\n>> Priority: extra\n>> Section: universe/science\n>> Source: proj\n>> Origin: Ubuntu\n>> Maintainer: Ubuntu Developers <ubuntu-devel-discuss at lists.ubuntu.com>\n>> Original-Maintainer: Debian GIS Project <pkg-grass-devel at lists.alioth.debian.org                                                                             >\n>> Bugs: https://bugs.launchpad.net/ubuntu/+filebug\n>> Installed-Size: 319\n>> Depends: libc6 (>= 2.29), libgcc-s1 (>= 3.0), libproj15 (>= 6.2.1), libstdc++6 (                >= 5.2)\n>> Filename: pool/universe/p/proj/proj-bin_6.3.1-1_amd64.deb\n>> Task: ubuntustudio-video, ubuntustudio-publishing, ubuntustudio-photography, ubu                                                                             ntustudio-graphics\n>>\n>>\n>> Thank you\n>> Nicolas\n>>\n>> [Logo-Signature-INRAE]\n>>\n>> Bdat.gissol.fr\n>>\n>> Nicolas Saby\n>> Chef de projet en information statistique\n>> https://orcid.org/0000-0001-8964-1194\n>>\n>>\n>>\n>\n> --\n> Roger Bivand\n> Department of Economics, Norwegian School of Economics, Helleveien 30, N-5045 Bergen, Norway.\n> voice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\n> https://orcid.org/0000-0003-2392-6140\n> https://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Tue, 19 Jan 2021, Nicolas Saby wrote:\n\n>> library(rgdal)\n> Le chargement a nécessité le package : sp\n> rgdal: version: 1.5-19, (SVN revision 1092)\n> Geospatial Data Abstraction Library extensions t",
       "thread_id": "thread-06ffe73ce8bb",
       "thread_depth": 3,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028541.html"
     },
     {
       "id": "msg-27ff1882d138",
@@ -273,7 +287,8 @@
       "body_snippet": "Hi all,\nI'm loading a large (~30GB) geojson file into R using readOGR on a HPC. I am also loading a small shapefile, and then trying to undertake some processing on the large geojson using gBuffer fro",
       "thread_id": "thread-27ff1882d138",
       "thread_depth": 0,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028542.html"
     },
     {
       "id": "msg-7f7c55c36f26",
@@ -289,7 +304,8 @@
       "body_snippet": "The RAINLINK package [1] derives rain rate from the attenuation of\nsignal strength between microwave towers. Data typically comes from\ncellular network providers, and the location of the towers is\ntyp",
       "thread_id": "thread-7f7c55c36f26",
       "thread_depth": 0,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028543.html"
     },
     {
       "id": "msg-a360bf2bd497",
@@ -307,7 +323,8 @@
       "body_snippet": "On Wed, 20 Jan 2021, Micha Silver wrote:\n\n> The RAINLINK package [1] derives rain rate from the attenuation of\n> signal strength between microwave towers. Data typically comes from\n> cellular network ",
       "thread_id": "thread-7f7c55c36f26",
       "thread_depth": 1,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028544.html"
     },
     {
       "id": "msg-db8b705ded6e",
@@ -326,7 +343,8 @@
       "body_snippet": "On Wed, 20 Jan 2021, Christopher Lloyd via R-sig-Geo wrote:\n\n> Hi all,\n\n> I'm loading a large (~30GB) geojson file into R using readOGR on a HPC. \n> I am also loading a small shapefile, and then tryin",
       "thread_id": "thread-27ff1882d138",
       "thread_depth": 1,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028545.html"
     },
     {
       "id": "msg-dbbcd92450d3",
@@ -346,7 +364,8 @@
       "body_snippet": "Thanks for the tips, Roger. I shall look into the possibilities that you discuss. Best wishes, Chris\n    On Wednesday, 20 January 2021, 10:57:26 GMT, Roger Bivand <roger.bivand at nhh.no> wrote:  \n \n ",
       "thread_id": "thread-27ff1882d138",
       "thread_depth": 2,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028546.html"
     },
     {
       "id": "msg-e0e8e765ed11",
@@ -368,7 +387,8 @@
       "body_snippet": "*Dr.Bivand,*\n\n*I didn't realize the post until recently. It has listed my personal phone\nnumber. I'd appreciate it if you can remove this. Thanks*\n\n\n*Kaushi*\n\n\t[[alternative HTML version deleted]]",
       "thread_id": "thread-1e17d72f5ad8",
       "thread_depth": 2,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028547.html"
     },
     {
       "id": "msg-0823a6033605",
@@ -387,7 +407,8 @@
       "body_snippet": "Hello Roger:\n\n\nOn 1/20/21 12:39 PM, Roger Bivand wrote:\n> On Wed, 20 Jan 2021, Micha Silver wrote:\n>\n>> The RAINLINK package [1] derives rain rate from the attenuation of\n>> signal strength between mi",
       "thread_id": "thread-7f7c55c36f26",
       "thread_depth": 2,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028548.html"
     },
     {
       "id": "msg-a31585998946",
@@ -407,7 +428,8 @@
       "body_snippet": "On Fri, 22 Jan 2021, Micha Silver wrote:\n\n> Hello Roger:\n>\n>\n> On 1/20/21 12:39 PM, Roger Bivand wrote:\n>>  On Wed, 20 Jan 2021, Micha Silver wrote:\n>>\n>>>  The RAINLINK package [1] derives rain rate ",
       "thread_id": "thread-7f7c55c36f26",
       "thread_depth": 3,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028549.html"
     },
     {
       "id": "msg-fba2c60f221f",
@@ -428,7 +450,8 @@
       "body_snippet": "On Fri, 22 Jan 2021, Roger Bivand wrote:\n\n> On Fri, 22 Jan 2021, Micha Silver wrote:\n>\n>>  Hello Roger:\n>> \n>>\n>>  On 1/20/21 12:39 PM, Roger Bivand wrote:\n>>>   On Wed, 20 Jan 2021, Micha Silver wrot",
       "thread_id": "thread-7f7c55c36f26",
       "thread_depth": 4,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028550.html"
     },
     {
       "id": "msg-bd4af5b155ec",
@@ -450,7 +473,8 @@
       "body_snippet": "On Fri, 22 Jan 2021, Roger Bivand wrote:\n\n> On Fri, 22 Jan 2021, Roger Bivand wrote:\n>\n>>  On Fri, 22 Jan 2021, Micha Silver wrote:\n>>\n>>>   Hello Roger:\n>>> \n>>>\n>>>   On 1/20/21 12:39 PM, Roger Biva",
       "thread_id": "thread-7f7c55c36f26",
       "thread_depth": 5,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028551.html"
     },
     {
       "id": "msg-a0fd8ba69e6e",
@@ -472,7 +496,8 @@
       "body_snippet": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20210123/d31df2c7/attachment.html>",
       "thread_id": "thread-7f7c55c36f26",
       "thread_depth": 5,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028552.html"
     },
     {
       "id": "msg-98d5bb4d6f64",
@@ -495,7 +520,8 @@
       "body_snippet": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20210123/0c2c5785/attachment.html>",
       "thread_id": "thread-7f7c55c36f26",
       "thread_depth": 6,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028553.html"
     },
     {
       "id": "msg-7e1b76227840",
@@ -518,7 +544,8 @@
       "body_snippet": "On Sat, 23 Jan 2021, Micha Silver wrote:\n\n> \n> Roger:\n> \n> \n> Thanks for your double effort to help.\n> \n> Sorry about the line breaks.\n> \n> (please see inline)\n> \n> \n> On 1/22/21 6:19 PM, Roger Bivand",
       "thread_id": "thread-7f7c55c36f26",
       "thread_depth": 6,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028554.html"
     },
     {
       "id": "msg-f27a7b8bcbf9",
@@ -542,7 +569,8 @@
       "body_snippet": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20210123/305924c7/attachment.html>",
       "thread_id": "thread-7f7c55c36f26",
       "thread_depth": 7,
-      "month": "2021-01"
+      "month": "2021-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2021-January/028555.html"
     }
   ],
   "threads": [

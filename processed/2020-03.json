@@ -17,7 +17,8 @@
       "body_snippet": "I'm asking out of interest and in anticipation of students and others\nasking, and am wondering if my default answer needs to be re-assessed. For\ndetails see here: https://github.com/r-spatial/discuss/",
       "thread_id": "thread-fcdf575480e3",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027948.html"
     },
     {
       "id": "msg-8f6a6825c9e2",
@@ -35,7 +36,8 @@
       "body_snippet": "Hi Robin,\nthanks for opening this discussion here too. Actually the right set-up \nis trivial for many of us.\nI have always used the ubuntugis-unstable repository with the repository \n\"https://cloud.r-",
       "thread_id": "thread-8f6a6825c9e2",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027949.html"
     },
     {
       "id": "msg-789ccd9e5491",
@@ -49,11 +51,12 @@
       "references": [
         "<1584570425.4649277.1583168578387.ref@mail.yahoo.com>"
       ],
-      "body_plain": "Dear all,\nI am working on a research project that uses spatial panel econometric models.\n\nAt this moment I am facing some difficulties because I guess there are some issues with the function impacts() in spatialreg package and also with impacts.splm() of the splm package.\n\nI already have used these codes previously.\n\nBut at this time I have endogenous regressors in Cliff-Ord spatial panel model.?\nThe major issue I have found is to calculate the impacts when I have one endogenous variable (~pcap) and two exogenous instruments (~hwy+water) in a SARAR spatial panel model.\n\nBelow I present a simple reproducible example:?library(plm)\nlibrary(splm)\nlibrary(spdep)data(\"Produc\",package='plm') # Panel data.\nhead(Produc)data(\"usaww\", package=\"splm\")\nhead(usaww) ?usalw <- mat2listw(usaww,style='W') # mat2listw() X nb2listw() \nsummary(usalw)fm <- log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp?GM_sarar.w2sls <- spgm(formula=fm,data=Produc,listw=usalw,lag=TRUE,\n                 model=\"random\",spatial.error=TRUE,\n                 endog = ~pcap,instruments= ~hwy+water,\n                 lag.instruments = TRUE,method=\"w2sls\")\nsummary(GM_sarar.w2sls)?data(usaww)\nlwstates <- mat2listw(usaww, style =\"W\")\nsparse.W <- listw2dgCMatrix(lwstates)\n\ntime <- length(unique(Produc$year))\ns.lwstates <- kronecker(Diagonal(time), sparse.W)\n\nset.seed(12345)\ntrMatc <- spatialreg:::trW(s.lwstates, type=\"mult\")\nimp <- impacts(GM_sarar.w2sls, tr = trMatc, R = 200)\nsummary(imp, zstats=TRUE, short=T)\n\nclass(GM_sarar.ec2sls)\n\n[1] \"splm\"??Could someone please try to solve this issue by a reproducible example?\n\n\nBest regards,\n\nAndr? M. Marques\n\nFederal University of Paraiba\nDepartment of Economics\nGraduate Program of Economics\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Dear all,\nI am working on a research project that uses spatial panel econometric models.\n\nAt this moment I am facing some difficulties because I guess there are some issues with the function impacts() in spatialreg package and also with impacts.splm() of the splm package.\n\nI already have used these codes previously.\n\nBut at this time I have endogenous regressors in Cliff-Ord spatial panel model. \nThe major issue I have found is to calculate the impacts when I have one endogenous variable (~pcap) and two exogenous instruments (~hwy+water) in a SARAR spatial panel model.\n\nBelow I present a simple reproducible example: library(plm)\nlibrary(splm)\nlibrary(spdep)data(\"Produc\",package='plm') # Panel data.\nhead(Produc)data(\"usaww\", package=\"splm\")\nhead(usaww)  usalw <- mat2listw(usaww,style='W') # mat2listw() X nb2listw() \nsummary(usalw)fm <- log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp GM_sarar.w2sls <- spgm(formula=fm,data=Produc,listw=usalw,lag=TRUE,\n                 model=\"random\",spatial.error=TRUE,\n                 endog = ~pcap,instruments= ~hwy+water,\n                 lag.instruments = TRUE,method=\"w2sls\")\nsummary(GM_sarar.w2sls) data(usaww)\nlwstates <- mat2listw(usaww, style =\"W\")\nsparse.W <- listw2dgCMatrix(lwstates)\n\ntime <- length(unique(Produc$year))\ns.lwstates <- kronecker(Diagonal(time), sparse.W)\n\nset.seed(12345)\ntrMatc <- spatialreg:::trW(s.lwstates, type=\"mult\")\nimp <- impacts(GM_sarar.w2sls, tr = trMatc, R = 200)\nsummary(imp, zstats=TRUE, short=T)\n\nclass(GM_sarar.ec2sls)\n\n[1] \"splm\"  Could someone please try to solve this issue by a reproducible example?\n\n\nBest regards,\n\nAndré M. Marques\n\nFederal University of Paraiba\nDepartment of Economics\nGraduate Program of Economics\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Dear all,\nI am working on a research project that uses spatial panel econometric models.\n\nAt this moment I am facing some difficulties because I guess there are some issues with the function impacts()",
       "thread_id": "thread-789ccd9e5491",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027950.html"
     },
     {
       "id": "msg-136068dbffc4",
@@ -68,11 +71,12 @@
         "<1584570425.4649277.1583168578387.ref@mail.yahoo.com>",
         "<1584570425.4649277.1583168578387@mail.yahoo.com>"
       ],
-      "body_plain": "On Mon, 2 Mar 2020, Andr? M. Marques via R-sig-Geo wrote:\n\n> Dear all, I am working on a research project that uses spatial panel \n> econometric models.\n>\n> At this moment I am facing some difficulties because I guess there are \n> some issues with the function impacts() in spatialreg package and also \n> with impacts.splm() of the splm package.\n>\n> I already have used these codes previously.\n>\n> But at this time I have endogenous regressors in Cliff-Ord spatial panel \n> model. The major issue I have found is to calculate the impacts when I \n> have one endogenous variable (~pcap) and two exogenous instruments \n> (~hwy+water) in a SARAR spatial panel model.\n\nI do not think that impacts methods have been implemented for this case. \nThe error message should lead you through traceback() and \ndebug(splm:::impacts.splm) to\n\nError in impacts.splm(GM_sarar.w2sls, tr = trMatc, R = 200) :\n   object type not recognized\n\nContributions welcome!\n\nRoger\n\nPS. Do not post in HTML, as HTML always destroys the plain-text nature of \ncode - this example was OK, but getting it to run cost a lot of \nunecessarily wasted time.\n\n>\n> Below I present a simple reproducible example:?library(plm)\n> library(splm)\n> library(spdep)data(\"Produc\",package='plm') # Panel data.\n> head(Produc)data(\"usaww\", package=\"splm\")\n> head(usaww) ?usalw <- mat2listw(usaww,style='W') # mat2listw() X nb2listw()\n> summary(usalw)fm <- log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp?GM_sarar.w2sls <- spgm(formula=fm,data=Produc,listw=usalw,lag=TRUE,\n>                 model=\"random\",spatial.error=TRUE,\n>                 endog = ~pcap,instruments= ~hwy+water,\n>                 lag.instruments = TRUE,method=\"w2sls\")\n> summary(GM_sarar.w2sls)?data(usaww)\n> lwstates <- mat2listw(usaww, style =\"W\")\n> sparse.W <- listw2dgCMatrix(lwstates)\n>\n> time <- length(unique(Produc$year))\n> s.lwstates <- kronecker(Diagonal(time), sparse.W)\n>\n> set.seed(12345)\n> trMatc <- spatialreg:::trW(s.lwstates, type=\"mult\")\n> imp <- impacts(GM_sarar.w2sls, tr = trMatc, R = 200)\n> summary(imp, zstats=TRUE, short=T)\n>\n> class(GM_sarar.ec2sls)\n>\n> [1] \"splm\"  Could someone please try to solve this issue by a \n> reproducible example?\n>\n>\n> Best regards,\n>\n> Andr? M. Marques\n>\n> Federal University of Paraiba\n> Department of Economics\n> Graduate Program of Economics\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
-      "body_snippet": "On Mon, 2 Mar 2020, Andr? M. Marques via R-sig-Geo wrote:\n\n> Dear all, I am working on a research project that uses spatial panel \n> econometric models.\n>\n> At this moment I am facing some difficultie",
+      "body_plain": "On Mon, 2 Mar 2020, André M. Marques via R-sig-Geo wrote:\n\n> Dear all, I am working on a research project that uses spatial panel \n> econometric models.\n>\n> At this moment I am facing some difficulties because I guess there are \n> some issues with the function impacts() in spatialreg package and also \n> with impacts.splm() of the splm package.\n>\n> I already have used these codes previously.\n>\n> But at this time I have endogenous regressors in Cliff-Ord spatial panel \n> model. The major issue I have found is to calculate the impacts when I \n> have one endogenous variable (~pcap) and two exogenous instruments \n> (~hwy+water) in a SARAR spatial panel model.\n\nI do not think that impacts methods have been implemented for this case. \nThe error message should lead you through traceback() and \ndebug(splm:::impacts.splm) to\n\nError in impacts.splm(GM_sarar.w2sls, tr = trMatc, R = 200) :\n   object type not recognized\n\nContributions welcome!\n\nRoger\n\nPS. Do not post in HTML, as HTML always destroys the plain-text nature of \ncode - this example was OK, but getting it to run cost a lot of \nunecessarily wasted time.\n\n>\n> Below I present a simple reproducible example: library(plm)\n> library(splm)\n> library(spdep)data(\"Produc\",package='plm') # Panel data.\n> head(Produc)data(\"usaww\", package=\"splm\")\n> head(usaww)  usalw <- mat2listw(usaww,style='W') # mat2listw() X nb2listw()\n> summary(usalw)fm <- log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp GM_sarar.w2sls <- spgm(formula=fm,data=Produc,listw=usalw,lag=TRUE,\n>                 model=\"random\",spatial.error=TRUE,\n>                 endog = ~pcap,instruments= ~hwy+water,\n>                 lag.instruments = TRUE,method=\"w2sls\")\n> summary(GM_sarar.w2sls) data(usaww)\n> lwstates <- mat2listw(usaww, style =\"W\")\n> sparse.W <- listw2dgCMatrix(lwstates)\n>\n> time <- length(unique(Produc$year))\n> s.lwstates <- kronecker(Diagonal(time), sparse.W)\n>\n> set.seed(12345)\n> trMatc <- spatialreg:::trW(s.lwstates, type=\"mult\")\n> imp <- impacts(GM_sarar.w2sls, tr = trMatc, R = 200)\n> summary(imp, zstats=TRUE, short=T)\n>\n> class(GM_sarar.ec2sls)\n>\n> [1] \"splm\"  Could someone please try to solve this issue by a \n> reproducible example?\n>\n>\n> Best regards,\n>\n> André M. Marques\n>\n> Federal University of Paraiba\n> Department of Economics\n> Graduate Program of Economics\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nDepartment of Economics, Norwegian School of Economics,\nHelleveien 30, N-5045 Bergen, Norway.\nvoice: +47 55 95 93 55; e-mail: Roger.Bivand at nhh.no\nhttps://orcid.org/0000-0003-2392-6140\nhttps://scholar.google.no/citations?user=AWeghB0AAAAJ&hl=en",
+      "body_snippet": "On Mon, 2 Mar 2020, André M. Marques via R-sig-Geo wrote:\n\n> Dear all, I am working on a research project that uses spatial panel \n> econometric models.\n>\n> At this moment I am facing some difficultie",
       "thread_id": "thread-789ccd9e5491",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027951.html"
     },
     {
       "id": "msg-338c5daa3d91",
@@ -88,7 +92,8 @@
       "body_snippet": "Dear all,\n\nI am working on a digital soil fertility mapping project, and I would like\nto make a comparison between the method of interpolation by kriging and the\ninterpolation by artificial neural net",
       "thread_id": "thread-338c5daa3d91",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027952.html"
     },
     {
       "id": "msg-7c4a76a53763",
@@ -106,7 +111,8 @@
       "body_snippet": "Hi Abdelkrim,\n\nyou may have a look into\n\nRammer W and Seidl R (2019) Harnessing Deep Learning in Ecology: An \nExample Predicting Bark Beetle Outbreaks. Front. Plant Sci. 10:1327.\ndoi: 10.3389/fpls.201",
       "thread_id": "thread-338c5daa3d91",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027953.html"
     },
     {
       "id": "msg-b421bfbbda39",
@@ -122,7 +128,8 @@
       "body_snippet": "I'm trying to install rgdal using ubuntu-unstable. First I do:\n\nsudo apt-get install libproj-dev libgdal-dev\n\nThen I get 2 different messages depending on the rgdal version:\n\nR CMD INSTALL rgdal_1.4-8",
       "thread_id": "thread-b421bfbbda39",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027954.html"
     },
     {
       "id": "msg-8c3a0234dae8",
@@ -138,7 +145,8 @@
       "body_snippet": "Sorry, no idea, only ever install PROJ and GDAL from source. Multiple PROJ installs? Does rgdal install from R-Forge?\n\n\nRoger Bivand\nNorwegian School of Economics\nBergen, Norway\n\n_____________________",
       "thread_id": "thread-8c3a0234dae8",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027955.html"
     },
     {
       "id": "msg-764d85b5b063",
@@ -156,7 +164,8 @@
       "body_snippet": "The example below is with the rgdal from R-Forge:\n\nR CMD INSTALL rgdal_1.4-8.tar.gz\n* installing to library ?/home/tomislav/R/x86_64-pc-linux-gnu-library/3.5?\n* installing *source* package ?rgdal? ...",
       "thread_id": "thread-8c3a0234dae8",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027956.html"
     },
     {
       "id": "msg-96d169f2a7dd",
@@ -175,7 +184,8 @@
       "body_snippet": "On Mon, 9 Mar 2020, Tomislav Hengl wrote:\n\n>\n> The example below is with the rgdal from R-Forge:\n>\n> R CMD INSTALL rgdal_1.4-8.tar.gz\n> * installing to library ?/home/tomislav/R/x86_64-pc-linux-gnu-li",
       "thread_id": "thread-8c3a0234dae8",
       "thread_depth": 2,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027957.html"
     },
     {
       "id": "msg-a5c7373b1d9c",
@@ -191,7 +201,8 @@
       "body_snippet": "Dear all,\n\nRe-sending because the message was too big due to the attachment,\n\nI am trying to match a large number of coordinates (attached) sub-national\nregions using GADM shapefile.\n\nCoordinates:\nhtt",
       "thread_id": "thread-a5c7373b1d9c",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027958.html"
     },
     {
       "id": "msg-70c8e2d1c5e8",
@@ -209,7 +220,8 @@
       "body_snippet": "On Tue, 10 Mar 2020, Miluji Sb wrote:\n\n> Dear all,\n>\n> Re-sending because the message was too big due to the attachment,\n>\n> I am trying to match a large number of coordinates (attached) sub-national\n",
       "thread_id": "thread-a5c7373b1d9c",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027959.html"
     },
     {
       "id": "msg-8f10d8a569b2",
@@ -227,7 +239,8 @@
       "body_snippet": "Hi, are you working on a fresh R system? This because some duplicated \nfiles might occur when adding new repositories such as the \nubuntugis/unstable.\nI suggest you to remove all the old installations",
       "thread_id": "thread-8f10d8a569b2",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027960.html"
     },
     {
       "id": "msg-47c4eaf829c4",
@@ -243,7 +256,8 @@
       "body_snippet": "I am working on a shiny/ leaflet map project which requires display of a\nlarge polygon dataset  (40,000 polygons ~92MB sf object).\nNeedless to say it take quite a time to render the sf object and zoom",
       "thread_id": "thread-47c4eaf829c4",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027961.html"
     },
     {
       "id": "msg-91777d79827d",
@@ -261,7 +275,8 @@
       "body_snippet": "Hi Nevil,\nwhile not being able to help with mbtiles, maybe you want to try\nleafgl to view your polygons.\n\nhttps://github.com/r-spatial/leafgl\n\nIt should have no problems with 40k polygons.\n\nRegarding ",
       "thread_id": "thread-47c4eaf829c4",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027962.html"
     },
     {
       "id": "msg-64d76dccd297",
@@ -280,7 +295,8 @@
       "body_snippet": "Hi Tim,\n\nThanks for you suggestions.  I have looked at the leafgl package, and yes\nit does speed the rendering of  my polygons, however  it still has to\nrender them all, rather than using the tiling o",
       "thread_id": "thread-47c4eaf829c4",
       "thread_depth": 2,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027963.html"
     },
     {
       "id": "msg-288ad4456f12",
@@ -300,7 +316,8 @@
       "body_snippet": "Dear Nevil,\n\nRegarding serving tiles locally a while ago I made a small package that can do this fully in R based on plumbr (https://gitlab.com/bartk/starsTileServer/). It is not really finished yet b",
       "thread_id": "thread-47c4eaf829c4",
       "thread_depth": 3,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027964.html"
     },
     {
       "id": "msg-e9660e1954fb",
@@ -316,7 +333,8 @@
       "body_snippet": "Dear All.\n\nKindly assist me with the proper code for the following. I have converted\nthe dose to factor and grouped it into 5 levels. I need to assign a color\ncode to each of the levels and use is for",
       "thread_id": "thread-e9660e1954fb",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027965.html"
     },
     {
       "id": "msg-e584eb0ba45d",
@@ -334,7 +352,8 @@
       "body_snippet": "On Mon, 16 Mar 2020, PAMELLA KAGELIZA KILAVI wrote:\n\n> Dear All.\n>\n> Kindly assist me with the proper code for the following. I have converted\n> the dose to factor and grouped it into 5 levels. I need",
       "thread_id": "thread-e9660e1954fb",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027966.html"
     },
     {
       "id": "msg-017080ba3a7e",
@@ -353,7 +372,8 @@
       "body_snippet": "Thank you. I actually have converted Mrima into sf to be able to use the\nlon and lat after filtering it from the main file fetched by readxl of\ndifferent files downloaded from Safecast bGeiger nano Co",
       "thread_id": "thread-e9660e1954fb",
       "thread_depth": 2,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027967.html"
     },
     {
       "id": "msg-11096587fd31",
@@ -369,7 +389,8 @@
       "body_snippet": "Dear readers,\nI downloaded a shapefile with data on crime incidents in Washington DC in\n2016 (available here:\nhttps://opendata.dc.gov/datasets/crime-incidents-in-2016) and another\nshapefile with data ",
       "thread_id": "thread-11096587fd31",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027968.html"
     },
     {
       "id": "msg-e33e542afc15",
@@ -385,7 +406,8 @@
       "body_snippet": "Dear all,\n\nHope everyone is keeping safe.\n\nI am trying to extract/read VIIRS nighttime lights data but the output\nseems rather strange.\n\nI have uploaded the file here\n<https://drive.google.com/open?id",
       "thread_id": "thread-e33e542afc15",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027969.html"
     },
     {
       "id": "msg-20438fe2e319",
@@ -403,7 +425,8 @@
       "body_snippet": "Within st_join() see the options like \"left = TRUE\".\n\nYou may also want to look at st_intersects()\n\nHere are other helpful reference websites:\nhttps://r-spatial.github.io/sf/reference/geos_binary_pred",
       "thread_id": "thread-11096587fd31",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027970.html"
     },
     {
       "id": "msg-db56ff66051e",
@@ -419,7 +442,8 @@
       "body_snippet": "A new blog: \"R spatial follows GDAL and PROJ development\" has been\npublished: https://www.r-spatial.org/r/2020/03/17/wkt.html.\n\nThose maintaining packages using sf or sp/rgdal, and authors of scripts\n",
       "thread_id": "thread-db56ff66051e",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027971.html"
     },
     {
       "id": "msg-7950e1e18d54",
@@ -433,11 +457,12 @@
       "references": [
         "<CAMLwc7OgUxHWk1Q+T4zNhG2FoTu_Gg+xHr37LvuFvJ3vm=B+BA@mail.gmail.com>"
       ],
-      "body_plain": "Hi Miluji,\n\nthe R in general do not handle very well with netCDF. However I\nrecommend you use the netcdf4 package before try others.\nThis link is a good start:\nhttp://geog.uoregon.edu/bartlein/courses/geog490/week04-netCDF.html#get-coordinate-including-time-variables\n.\nThe coordinates of this file is not in longitude and latitude, it use\n\"number_of_lines\" for X Axis and \"number_of_pixels\" for Y Axis. This way\nthe difference between the cells is always one and raster package\ninterprete the difference as one degree and return an warning about it.\nI open the file in the software Panoply (design to work with netCDF)  and\neverything is OK apparently.\nCheck bellow some exploration of the data in R.\n\nlibrary(raster)\nlibrary(ncdf4)\nlibrary(rgdal)\n\n# netcdf4 package\nnetcdf_file <- \"VNP02DNB_NRT.A2020069.1048.001.nc\"\nnc <- nc_open(netcdf_file)\nprint(nc)\n# check your variable is structured as:\nobservation_data/DNB_observations[number_of_pixels,number_of_lines]\n# variables available\nnames(nc[[\"var\"]])\n# properties from your variable\nncatt_get(nc, \"observation_data/DNB_observations\")\n# get the variables values and check the structure\nobs_matrix <- ncvar_get(nc, \"observation_data/DNB_observations\")\nstr(obs_matrix)\n\n# raster package\nnc_r <- brick(netcdf_file, lvar=0, values=TRUE,\nvarname=\"observation_data/DNB_observations\")\n# [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\ndimension named number_of_pixels BUT this dimension HAS NO DIMVAR! Code\nwill probably fail at this point\"\n# [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\ndimension named number_of_lines BUT this dimension HAS NO DIMVAR! Code will\nprobably fail at this point\"\n\nBest regards,\n\nFrederico Faleiro\nPostdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\nFederal University of Goi?s | Brazil\nRG: https://www.researchgate.net/profile/Frederico_Faleiro\n\nOn Tue, Mar 17, 2020 at 11:39 AM Miluji Sb <milujisb at gmail.com> wrote:\n\n> Dear all,\n>\n> Hope everyone is keeping safe.\n>\n> I am trying to extract/read VIIRS nighttime lights data but the output\n> seems rather strange.\n>\n> I have uploaded the file here\n> <https://drive.google.com/open?id=1zpqXJ8AlEcnk6ApRb75tfQc4-Y8AfK5h> so as\n> not exceed the size limit of the email.\n>\n> ## Code ##\n> library(ncdf4)\n> library(rgdal)\n>\n> netcdf_file <- c(\"VNP02DNB_NRT.A2020069.1048.001.nc\")\n> nl <- brick(netcdf_file, lvar=0, values=TRUE,\n> varname=\"observation_data/DNB_observations\")\n>\n> ## Detail ##\n> class      : RasterLayer\n> dimensions : 3232, 4064, 13134848  (nrow, ncol, ncell)\n> resolution : 1, 1  (x, y)\n> extent     : 0.5, 4064.5, 0.5, 3232.5  (xmin, xmax, ymin, ymax)\n> crs        : NA\n> source     : C:/Users/shour/Desktop/VNP02DNB_NRT.A2020069.1048.001.nc\n> names      : DNB.observations.at.pixel.locations\n> zvar       : observation_data/DNB_observations\n>\n> The spatial resolution is supposed to be 750m but this shows 1?. What am I\n> doing wrong? Any help will be greatly appreciated. Thank you.\n>\n> Sincerely,\n>\n> Millu\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Hi Miluji,\n\nthe R in general do not handle very well with netCDF. However I\nrecommend you use the netcdf4 package before try others.\nThis link is a good start:\nhttp://geog.uoregon.edu/bartlein/courses/geog490/week04-netCDF.html#get-coordinate-including-time-variables\n.\nThe coordinates of this file is not in longitude and latitude, it use\n\"number_of_lines\" for X Axis and \"number_of_pixels\" for Y Axis. This way\nthe difference between the cells is always one and raster package\ninterprete the difference as one degree and return an warning about it.\nI open the file in the software Panoply (design to work with netCDF)  and\neverything is OK apparently.\nCheck bellow some exploration of the data in R.\n\nlibrary(raster)\nlibrary(ncdf4)\nlibrary(rgdal)\n\n# netcdf4 package\nnetcdf_file <- \"VNP02DNB_NRT.A2020069.1048.001.nc\"\nnc <- nc_open(netcdf_file)\nprint(nc)\n# check your variable is structured as:\nobservation_data/DNB_observations[number_of_pixels,number_of_lines]\n# variables available\nnames(nc[[\"var\"]])\n# properties from your variable\nncatt_get(nc, \"observation_data/DNB_observations\")\n# get the variables values and check the structure\nobs_matrix <- ncvar_get(nc, \"observation_data/DNB_observations\")\nstr(obs_matrix)\n\n# raster package\nnc_r <- brick(netcdf_file, lvar=0, values=TRUE,\nvarname=\"observation_data/DNB_observations\")\n# [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\ndimension named number_of_pixels BUT this dimension HAS NO DIMVAR! Code\nwill probably fail at this point\"\n# [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\ndimension named number_of_lines BUT this dimension HAS NO DIMVAR! Code will\nprobably fail at this point\"\n\nBest regards,\n\nFrederico Faleiro\nPostdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\nFederal University of Goiás | Brazil\nRG: https://www.researchgate.net/profile/Frederico_Faleiro\n\nOn Tue, Mar 17, 2020 at 11:39 AM Miluji Sb <milujisb at gmail.com> wrote:\n\n> Dear all,\n>\n> Hope everyone is keeping safe.\n>\n> I am trying to extract/read VIIRS nighttime lights data but the output\n> seems rather strange.\n>\n> I have uploaded the file here\n> <https://drive.google.com/open?id=1zpqXJ8AlEcnk6ApRb75tfQc4-Y8AfK5h> so as\n> not exceed the size limit of the email.\n>\n> ## Code ##\n> library(ncdf4)\n> library(rgdal)\n>\n> netcdf_file <- c(\"VNP02DNB_NRT.A2020069.1048.001.nc\")\n> nl <- brick(netcdf_file, lvar=0, values=TRUE,\n> varname=\"observation_data/DNB_observations\")\n>\n> ## Detail ##\n> class      : RasterLayer\n> dimensions : 3232, 4064, 13134848  (nrow, ncol, ncell)\n> resolution : 1, 1  (x, y)\n> extent     : 0.5, 4064.5, 0.5, 3232.5  (xmin, xmax, ymin, ymax)\n> crs        : NA\n> source     : C:/Users/shour/Desktop/VNP02DNB_NRT.A2020069.1048.001.nc\n> names      : DNB.observations.at.pixel.locations\n> zvar       : observation_data/DNB_observations\n>\n> The spatial resolution is supposed to be 750m but this shows 1°. What am I\n> doing wrong? Any help will be greatly appreciated. Thank you.\n>\n> Sincerely,\n>\n> Millu\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Hi Miluji,\n\nthe R in general do not handle very well with netCDF. However I\nrecommend you use the netcdf4 package before try others.\nThis link is a good start:\nhttp://geog.uoregon.edu/bartlein/courses",
       "thread_id": "thread-e33e542afc15",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027972.html"
     },
     {
       "id": "msg-c90e7ea13682",
@@ -455,7 +480,8 @@
       "body_snippet": "Dear Millu,\n\nThe data they use is not with the CRS set, so the displayed result is showing the grid points (extent: 0.5, 4064.5, 0.5, 3232.5). Then you should consult the VIIRS data guide so that you ",
       "thread_id": "thread-e33e542afc15",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027973.html"
     },
     {
       "id": "msg-526c8931166f",
@@ -471,7 +497,8 @@
       "body_snippet": "Hi,\n\nI'm testing a package using travis and I keep getting an error message\nabout rgdal not being found or executable. I've been trying to piece\ntogether things I've found online but to no avail.\n\nhtt",
       "thread_id": "thread-526c8931166f",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027974.html"
     },
     {
       "id": "msg-2993316d136a",
@@ -489,7 +516,8 @@
       "body_snippet": "You won't find much on this kind of file in the R community, this is\nrelatively new NetCDF-4 with \"groups\", and contains a satellite \"granule\" -\na kind of pre-mapping raw data array with only technica",
       "thread_id": "thread-e33e542afc15",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027975.html"
     },
     {
       "id": "msg-0b7055dc50ea",
@@ -504,11 +532,12 @@
         "<CAMLwc7OgUxHWk1Q+T4zNhG2FoTu_Gg+xHr37LvuFvJ3vm=B+BA@mail.gmail.com>",
         "<CAL+ycWnZPpOTN8YW3Shaq_aYCV9szV_6n5cntfMeEx28NqTgLA@mail.gmail.com>"
       ],
-      "body_plain": "This is might help you:\n\nhttps://zia207.github.io/geospatial-r-github.io/netCDF-data-processing.html\n\nZia\n\nOn Wed, Mar 18, 2020, 9:34 AM Frederico Faleiro <fvfaleiro at gmail.com> wrote:\n\n> Hi Miluji,\n>\n> the R in general do not handle very well with netCDF. However I\n> recommend you use the netcdf4 package before try others.\n> This link is a good start:\n>\n> http://geog.uoregon.edu/bartlein/courses/geog490/week04-netCDF.html#get-coordinate-including-time-variables\n> .\n> The coordinates of this file is not in longitude and latitude, it use\n> \"number_of_lines\" for X Axis and \"number_of_pixels\" for Y Axis. This way\n> the difference between the cells is always one and raster package\n> interprete the difference as one degree and return an warning about it.\n> I open the file in the software Panoply (design to work with netCDF)  and\n> everything is OK apparently.\n> Check bellow some exploration of the data in R.\n>\n> library(raster)\n> library(ncdf4)\n> library(rgdal)\n>\n> # netcdf4 package\n> netcdf_file <- \"VNP02DNB_NRT.A2020069.1048.001.nc\"\n> nc <- nc_open(netcdf_file)\n> print(nc)\n> # check your variable is structured as:\n> observation_data/DNB_observations[number_of_pixels,number_of_lines]\n> # variables available\n> names(nc[[\"var\"]])\n> # properties from your variable\n> ncatt_get(nc, \"observation_data/DNB_observations\")\n> # get the variables values and check the structure\n> obs_matrix <- ncvar_get(nc, \"observation_data/DNB_observations\")\n> str(obs_matrix)\n>\n> # raster package\n> nc_r <- brick(netcdf_file, lvar=0, values=TRUE,\n> varname=\"observation_data/DNB_observations\")\n> # [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\n> dimension named number_of_pixels BUT this dimension HAS NO DIMVAR! Code\n> will probably fail at this point\"\n> # [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\n> dimension named number_of_lines BUT this dimension HAS NO DIMVAR! Code will\n> probably fail at this point\"\n>\n> Best regards,\n>\n> Frederico Faleiro\n> Postdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\n> Federal University of Goi?s | Brazil\n> RG: https://www.researchgate.net/profile/Frederico_Faleiro\n>\n> On Tue, Mar 17, 2020 at 11:39 AM Miluji Sb <milujisb at gmail.com> wrote:\n>\n> > Dear all,\n> >\n> > Hope everyone is keeping safe.\n> >\n> > I am trying to extract/read VIIRS nighttime lights data but the output\n> > seems rather strange.\n> >\n> > I have uploaded the file here\n> > <https://drive.google.com/open?id=1zpqXJ8AlEcnk6ApRb75tfQc4-Y8AfK5h> so\n> as\n> > not exceed the size limit of the email.\n> >\n> > ## Code ##\n> > library(ncdf4)\n> > library(rgdal)\n> >\n> > netcdf_file <- c(\"VNP02DNB_NRT.A2020069.1048.001.nc\")\n> > nl <- brick(netcdf_file, lvar=0, values=TRUE,\n> > varname=\"observation_data/DNB_observations\")\n> >\n> > ## Detail ##\n> > class      : RasterLayer\n> > dimensions : 3232, 4064, 13134848  (nrow, ncol, ncell)\n> > resolution : 1, 1  (x, y)\n> > extent     : 0.5, 4064.5, 0.5, 3232.5  (xmin, xmax, ymin, ymax)\n> > crs        : NA\n> > source     : C:/Users/shour/Desktop/VNP02DNB_NRT.A2020069.1048.001.nc\n> > names      : DNB.observations.at.pixel.locations\n> > zvar       : observation_data/DNB_observations\n> >\n> > The spatial resolution is supposed to be 750m but this shows 1?. What am\n> I\n> > doing wrong? Any help will be greatly appreciated. Thank you.\n> >\n> > Sincerely,\n> >\n> > Millu\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "This is might help you:\n\nhttps://zia207.github.io/geospatial-r-github.io/netCDF-data-processing.html\n\nZia\n\nOn Wed, Mar 18, 2020, 9:34 AM Frederico Faleiro <fvfaleiro at gmail.com> wrote:\n\n> Hi Miluji,\n>\n> the R in general do not handle very well with netCDF. However I\n> recommend you use the netcdf4 package before try others.\n> This link is a good start:\n>\n> http://geog.uoregon.edu/bartlein/courses/geog490/week04-netCDF.html#get-coordinate-including-time-variables\n> .\n> The coordinates of this file is not in longitude and latitude, it use\n> \"number_of_lines\" for X Axis and \"number_of_pixels\" for Y Axis. This way\n> the difference between the cells is always one and raster package\n> interprete the difference as one degree and return an warning about it.\n> I open the file in the software Panoply (design to work with netCDF)  and\n> everything is OK apparently.\n> Check bellow some exploration of the data in R.\n>\n> library(raster)\n> library(ncdf4)\n> library(rgdal)\n>\n> # netcdf4 package\n> netcdf_file <- \"VNP02DNB_NRT.A2020069.1048.001.nc\"\n> nc <- nc_open(netcdf_file)\n> print(nc)\n> # check your variable is structured as:\n> observation_data/DNB_observations[number_of_pixels,number_of_lines]\n> # variables available\n> names(nc[[\"var\"]])\n> # properties from your variable\n> ncatt_get(nc, \"observation_data/DNB_observations\")\n> # get the variables values and check the structure\n> obs_matrix <- ncvar_get(nc, \"observation_data/DNB_observations\")\n> str(obs_matrix)\n>\n> # raster package\n> nc_r <- brick(netcdf_file, lvar=0, values=TRUE,\n> varname=\"observation_data/DNB_observations\")\n> # [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\n> dimension named number_of_pixels BUT this dimension HAS NO DIMVAR! Code\n> will probably fail at this point\"\n> # [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\n> dimension named number_of_lines BUT this dimension HAS NO DIMVAR! Code will\n> probably fail at this point\"\n>\n> Best regards,\n>\n> Frederico Faleiro\n> Postdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\n> Federal University of Goiás | Brazil\n> RG: https://www.researchgate.net/profile/Frederico_Faleiro\n>\n> On Tue, Mar 17, 2020 at 11:39 AM Miluji Sb <milujisb at gmail.com> wrote:\n>\n> > Dear all,\n> >\n> > Hope everyone is keeping safe.\n> >\n> > I am trying to extract/read VIIRS nighttime lights data but the output\n> > seems rather strange.\n> >\n> > I have uploaded the file here\n> > <https://drive.google.com/open?id=1zpqXJ8AlEcnk6ApRb75tfQc4-Y8AfK5h> so\n> as\n> > not exceed the size limit of the email.\n> >\n> > ## Code ##\n> > library(ncdf4)\n> > library(rgdal)\n> >\n> > netcdf_file <- c(\"VNP02DNB_NRT.A2020069.1048.001.nc\")\n> > nl <- brick(netcdf_file, lvar=0, values=TRUE,\n> > varname=\"observation_data/DNB_observations\")\n> >\n> > ## Detail ##\n> > class      : RasterLayer\n> > dimensions : 3232, 4064, 13134848  (nrow, ncol, ncell)\n> > resolution : 1, 1  (x, y)\n> > extent     : 0.5, 4064.5, 0.5, 3232.5  (xmin, xmax, ymin, ymax)\n> > crs        : NA\n> > source     : C:/Users/shour/Desktop/VNP02DNB_NRT.A2020069.1048.001.nc\n> > names      : DNB.observations.at.pixel.locations\n> > zvar       : observation_data/DNB_observations\n> >\n> > The spatial resolution is supposed to be 750m but this shows 1°. What am\n> I\n> > doing wrong? Any help will be greatly appreciated. Thank you.\n> >\n> > Sincerely,\n> >\n> > Millu\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "This is might help you:\n\nhttps://zia207.github.io/geospatial-r-github.io/netCDF-data-processing.html\n\nZia\n\nOn Wed, Mar 18, 2020, 9:34 AM Frederico Faleiro <fvfaleiro at gmail.com> wrote:\n\n> Hi Miluji,",
       "thread_id": "thread-e33e542afc15",
       "thread_depth": 2,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027976.html"
     },
     {
       "id": "msg-080b7a59e876",
@@ -527,7 +556,8 @@
       "body_snippet": "Please  check this:\n\nhttps://zia207.github.io/geospatial-r-github.io/geoprocessing-vector-data.html\nBest\nZia\n\nOn Tue, Mar 17, 2020, 10:39 AM Dexter Locke <dexter.locke at gmail.com> wrote:\n\n> Within s",
       "thread_id": "thread-11096587fd31",
       "thread_depth": 2,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027977.html"
     },
     {
       "id": "msg-fce63b674dd4",
@@ -545,7 +575,8 @@
       "body_snippet": "This is very helpful - thank you!\n\nOn Wed, Mar 18, 2020 at 9:12 AM Roger Bivand <Roger.Bivand at nhh.no> wrote:\n\n> A new blog: \"R spatial follows GDAL and PROJ development\" has been\n> published: https",
       "thread_id": "thread-db56ff66051e",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027978.html"
     },
     {
       "id": "msg-c2d857d37af2",
@@ -561,11 +592,12 @@
         "<CAL+ycWnZPpOTN8YW3Shaq_aYCV9szV_6n5cntfMeEx28NqTgLA@mail.gmail.com>",
         "<CAKqUiGkSN9m2tc8e+Y4aPCV4K-Jx7ujMir+eQwoyYP=aYQDtew@mail.gmail.com>"
       ],
-      "body_plain": "Dear all,\n\nThank you everyone. The issue (as pointed out) is the following;\n\n# [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\ndimension named number_of_pixels BUT this dimension HAS NO DIMVAR! Code\nwill probably fail at this point\"\n\nI have contacted the VIIRS people and will keep you posted here. Thank you\nagain!\n\nBest,\n\nMilu\n\nOn Wed, Mar 18, 2020 at 3:34 PM Zia Ahmed <zia207 at gmail.com> wrote:\n\n> This is might help you:\n>\n> https://zia207.github.io/geospatial-r-github.io/netCDF-data-processing.html\n>\n>\n> Zia\n>\n> On Wed, Mar 18, 2020, 9:34 AM Frederico Faleiro <fvfaleiro at gmail.com>\n> wrote:\n>\n>> Hi Miluji,\n>>\n>> the R in general do not handle very well with netCDF. However I\n>> recommend you use the netcdf4 package before try others.\n>> This link is a good start:\n>>\n>> http://geog.uoregon.edu/bartlein/courses/geog490/week04-netCDF.html#get-coordinate-including-time-variables\n>> .\n>> The coordinates of this file is not in longitude and latitude, it use\n>> \"number_of_lines\" for X Axis and \"number_of_pixels\" for Y Axis. This way\n>> the difference between the cells is always one and raster package\n>> interprete the difference as one degree and return an warning about it.\n>> I open the file in the software Panoply (design to work with netCDF)  and\n>> everything is OK apparently.\n>> Check bellow some exploration of the data in R.\n>>\n>> library(raster)\n>> library(ncdf4)\n>> library(rgdal)\n>>\n>> # netcdf4 package\n>> netcdf_file <- \"VNP02DNB_NRT.A2020069.1048.001.nc\"\n>> nc <- nc_open(netcdf_file)\n>> print(nc)\n>> # check your variable is structured as:\n>> observation_data/DNB_observations[number_of_pixels,number_of_lines]\n>> # variables available\n>> names(nc[[\"var\"]])\n>> # properties from your variable\n>> ncatt_get(nc, \"observation_data/DNB_observations\")\n>> # get the variables values and check the structure\n>> obs_matrix <- ncvar_get(nc, \"observation_data/DNB_observations\")\n>> str(obs_matrix)\n>>\n>> # raster package\n>> nc_r <- brick(netcdf_file, lvar=0, values=TRUE,\n>> varname=\"observation_data/DNB_observations\")\n>> # [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\n>> dimension named number_of_pixels BUT this dimension HAS NO DIMVAR! Code\n>> will probably fail at this point\"\n>> # [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\n>> dimension named number_of_lines BUT this dimension HAS NO DIMVAR! Code\n>> will\n>> probably fail at this point\"\n>>\n>> Best regards,\n>>\n>> Frederico Faleiro\n>> Postdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\n>> Federal University of Goi?s | Brazil\n>> RG: https://www.researchgate.net/profile/Frederico_Faleiro\n>>\n>> On Tue, Mar 17, 2020 at 11:39 AM Miluji Sb <milujisb at gmail.com> wrote:\n>>\n>> > Dear all,\n>> >\n>> > Hope everyone is keeping safe.\n>> >\n>> > I am trying to extract/read VIIRS nighttime lights data but the output\n>> > seems rather strange.\n>> >\n>> > I have uploaded the file here\n>> > <https://drive.google.com/open?id=1zpqXJ8AlEcnk6ApRb75tfQc4-Y8AfK5h>\n>> so as\n>> > not exceed the size limit of the email.\n>> >\n>> > ## Code ##\n>> > library(ncdf4)\n>> > library(rgdal)\n>> >\n>> > netcdf_file <- c(\"VNP02DNB_NRT.A2020069.1048.001.nc\")\n>> > nl <- brick(netcdf_file, lvar=0, values=TRUE,\n>> > varname=\"observation_data/DNB_observations\")\n>> >\n>> > ## Detail ##\n>> > class      : RasterLayer\n>> > dimensions : 3232, 4064, 13134848  (nrow, ncol, ncell)\n>> > resolution : 1, 1  (x, y)\n>> > extent     : 0.5, 4064.5, 0.5, 3232.5  (xmin, xmax, ymin, ymax)\n>> > crs        : NA\n>> > source     : C:/Users/shour/Desktop/VNP02DNB_NRT.A2020069.1048.001.nc\n>> > names      : DNB.observations.at.pixel.locations\n>> > zvar       : observation_data/DNB_observations\n>> >\n>> > The spatial resolution is supposed to be 750m but this shows 1?. What\n>> am I\n>> > doing wrong? Any help will be greatly appreciated. Thank you.\n>> >\n>> > Sincerely,\n>> >\n>> > Millu\n>> >\n>> >         [[alternative HTML version deleted]]\n>> >\n>> > _______________________________________________\n>> > R-sig-Geo mailing list\n>> > R-sig-Geo at r-project.org\n>> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> >\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Dear all,\n\nThank you everyone. The issue (as pointed out) is the following;\n\n# [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\ndimension named number_of_pixels BUT this dimension HAS NO DIMVAR! Code\nwill probably fail at this point\"\n\nI have contacted the VIIRS people and will keep you posted here. Thank you\nagain!\n\nBest,\n\nMilu\n\nOn Wed, Mar 18, 2020 at 3:34 PM Zia Ahmed <zia207 at gmail.com> wrote:\n\n> This is might help you:\n>\n> https://zia207.github.io/geospatial-r-github.io/netCDF-data-processing.html\n>\n>\n> Zia\n>\n> On Wed, Mar 18, 2020, 9:34 AM Frederico Faleiro <fvfaleiro at gmail.com>\n> wrote:\n>\n>> Hi Miluji,\n>>\n>> the R in general do not handle very well with netCDF. However I\n>> recommend you use the netcdf4 package before try others.\n>> This link is a good start:\n>>\n>> http://geog.uoregon.edu/bartlein/courses/geog490/week04-netCDF.html#get-coordinate-including-time-variables\n>> .\n>> The coordinates of this file is not in longitude and latitude, it use\n>> \"number_of_lines\" for X Axis and \"number_of_pixels\" for Y Axis. This way\n>> the difference between the cells is always one and raster package\n>> interprete the difference as one degree and return an warning about it.\n>> I open the file in the software Panoply (design to work with netCDF)  and\n>> everything is OK apparently.\n>> Check bellow some exploration of the data in R.\n>>\n>> library(raster)\n>> library(ncdf4)\n>> library(rgdal)\n>>\n>> # netcdf4 package\n>> netcdf_file <- \"VNP02DNB_NRT.A2020069.1048.001.nc\"\n>> nc <- nc_open(netcdf_file)\n>> print(nc)\n>> # check your variable is structured as:\n>> observation_data/DNB_observations[number_of_pixels,number_of_lines]\n>> # variables available\n>> names(nc[[\"var\"]])\n>> # properties from your variable\n>> ncatt_get(nc, \"observation_data/DNB_observations\")\n>> # get the variables values and check the structure\n>> obs_matrix <- ncvar_get(nc, \"observation_data/DNB_observations\")\n>> str(obs_matrix)\n>>\n>> # raster package\n>> nc_r <- brick(netcdf_file, lvar=0, values=TRUE,\n>> varname=\"observation_data/DNB_observations\")\n>> # [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\n>> dimension named number_of_pixels BUT this dimension HAS NO DIMVAR! Code\n>> will probably fail at this point\"\n>> # [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\n>> dimension named number_of_lines BUT this dimension HAS NO DIMVAR! Code\n>> will\n>> probably fail at this point\"\n>>\n>> Best regards,\n>>\n>> Frederico Faleiro\n>> Postdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\n>> Federal University of Goiás | Brazil\n>> RG: https://www.researchgate.net/profile/Frederico_Faleiro\n>>\n>> On Tue, Mar 17, 2020 at 11:39 AM Miluji Sb <milujisb at gmail.com> wrote:\n>>\n>> > Dear all,\n>> >\n>> > Hope everyone is keeping safe.\n>> >\n>> > I am trying to extract/read VIIRS nighttime lights data but the output\n>> > seems rather strange.\n>> >\n>> > I have uploaded the file here\n>> > <https://drive.google.com/open?id=1zpqXJ8AlEcnk6ApRb75tfQc4-Y8AfK5h>\n>> so as\n>> > not exceed the size limit of the email.\n>> >\n>> > ## Code ##\n>> > library(ncdf4)\n>> > library(rgdal)\n>> >\n>> > netcdf_file <- c(\"VNP02DNB_NRT.A2020069.1048.001.nc\")\n>> > nl <- brick(netcdf_file, lvar=0, values=TRUE,\n>> > varname=\"observation_data/DNB_observations\")\n>> >\n>> > ## Detail ##\n>> > class      : RasterLayer\n>> > dimensions : 3232, 4064, 13134848  (nrow, ncol, ncell)\n>> > resolution : 1, 1  (x, y)\n>> > extent     : 0.5, 4064.5, 0.5, 3232.5  (xmin, xmax, ymin, ymax)\n>> > crs        : NA\n>> > source     : C:/Users/shour/Desktop/VNP02DNB_NRT.A2020069.1048.001.nc\n>> > names      : DNB.observations.at.pixel.locations\n>> > zvar       : observation_data/DNB_observations\n>> >\n>> > The spatial resolution is supposed to be 750m but this shows 1°. What\n>> am I\n>> > doing wrong? Any help will be greatly appreciated. Thank you.\n>> >\n>> > Sincerely,\n>> >\n>> > Millu\n>> >\n>> >         [[alternative HTML version deleted]]\n>> >\n>> > _______________________________________________\n>> > R-sig-Geo mailing list\n>> > R-sig-Geo at r-project.org\n>> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>> >\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Dear all,\n\nThank you everyone. The issue (as pointed out) is the following;\n\n# [1] \"vobjtovarid4: **** WARNING **** I was asked to get a varid for\ndimension named number_of_pixels BUT this dimension H",
       "thread_id": "thread-e33e542afc15",
       "thread_depth": 3,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027979.html"
     },
     {
       "id": "msg-5e15b6aa385f",
@@ -586,7 +618,8 @@
       "body_snippet": "You welcome.\n\nIf you are interested in geospatial analysis in python, you check this:\n\nhttps://zia207.github.io/geospatial-python.io/\n\nBest\nZia\n\nOn Wed, Mar 18, 2020, 10:45 AM Dexter Locke <dexter.loc",
       "thread_id": "thread-5e15b6aa385f",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027980.html"
     },
     {
       "id": "msg-8517e3324065",
@@ -604,7 +637,8 @@
       "body_snippet": "At least libgdal-dev and libproj-dev are missing. You can have a look at\nhttps://github.com/r-spatial/sf/blob/master/.travis.yml (but that tries\nto do quite a bit more).\n\nOn 3/18/20 3:21 PM, Joe Lewis",
       "thread_id": "thread-526c8931166f",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027981.html"
     },
     {
       "id": "msg-dce90e9749b8",
@@ -623,7 +657,8 @@
       "body_snippet": "If the product info is in this document:\nhttps://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/viirs/NASAVIIRSL1BUGAug2019.pdf\n\nthen it sounds like these data are distributed as curvilinear",
       "thread_id": "thread-e33e542afc15",
       "thread_depth": 2,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027982.html"
     },
     {
       "id": "msg-0bdf59761b02",
@@ -641,7 +676,8 @@
       "body_snippet": "Dear R-Sig-Geo members,\n\nI've like to fitting an Inhomogeneous Poisson model and I have one \nquestion about better approaches and/or steps order for this.\n\n### Simulating Inhomogeneous Poisson process",
       "thread_id": "thread-0bdf59761b02",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027983.html"
     },
     {
       "id": "msg-047826539c3e",
@@ -660,7 +696,8 @@
       "body_snippet": "Hi,\n\nThanks for the help.\n\nI've incorporated some from sf's travis file, but it's still failing\nunfortunately.\n\n# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r\n\nlangua",
       "thread_id": "thread-526c8931166f",
       "thread_depth": 2,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027984.html"
     },
     {
       "id": "msg-4e6b35912125",
@@ -680,7 +717,8 @@
       "body_snippet": "Maybe this:\nhttps://github.com/edzer/sf_dep/blob/master/.travis.yml\n\nOn 3/19/20 8:26 PM, Joe Lewis wrote:\n> Hi,\n> \n> Thanks for the help.\n> \n> I've incorporated some from sf's travis file, but it's st",
       "thread_id": "thread-526c8931166f",
       "thread_depth": 3,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027985.html"
     },
     {
       "id": "msg-7ac291249e78",
@@ -702,7 +740,8 @@
       "body_snippet": "Dear Edzer,\n\nThank you for your reply and the suggestions. Apologies for not copying the\nlist, I forgot to hit 'reply all'.\n\nThe data is Nighttime lights from Black Marble.\n\nSource of the geo-location",
       "thread_id": "thread-7ac291249e78",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027986.html"
     },
     {
       "id": "msg-55d0ca3b5303",
@@ -718,7 +757,8 @@
       "body_snippet": "Dear all,\n\nI have estimated a spatial error model via the \"spdep\" package. The spatial weights are determined based on the inverse distance between an observation and its 50 nearest neighbors (knearne",
       "thread_id": "thread-55d0ca3b5303",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027987.html"
     },
     {
       "id": "msg-15d4bc423b91",
@@ -736,7 +776,8 @@
       "body_snippet": "On Sat, 21 Mar 2020, Gary Dong wrote:\n\n> Dear all,\n>\n> I have estimated a spatial error model via the \"spdep\" package. The \n> spatial weights are determined based on the inverse distance between an \n>",
       "thread_id": "thread-55d0ca3b5303",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027988.html"
     },
     {
       "id": "msg-b196c5f13791",
@@ -752,7 +793,8 @@
       "body_snippet": "Hi\nDoes anyone know of a way to transform an sf from equatorial (RA, DEC) into galactic (b, l) coordinates please?\n\n\nThanks\nEugene\n\nThis email originated from TU Dublin. If you received this email in ",
       "thread_id": "thread-b196c5f13791",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027989.html"
     },
     {
       "id": "msg-53b44d9e5633",
@@ -771,7 +813,8 @@
       "body_snippet": "Dear Roger, thank you very much for your advice.\n\nI ran Lagrange tests. The tests yielded very small p-values for both spatial lag and error models. Both RLMerr and RLMlag are all very significant (wi",
       "thread_id": "thread-55d0ca3b5303",
       "thread_depth": 2,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027990.html"
     },
     {
       "id": "msg-5b827d16089b",
@@ -791,7 +834,8 @@
       "body_snippet": "On Sun, 22 Mar 2020, Gary Dong wrote:\n\n> Dear Roger, thank you very much for your advice.\n>\n> I ran Lagrange tests. The tests yielded very small p-values for both \n> spatial lag and error models. Both",
       "thread_id": "thread-55d0ca3b5303",
       "thread_depth": 3,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027991.html"
     },
     {
       "id": "msg-d8f27b9f5d4a",
@@ -812,7 +856,8 @@
       "body_snippet": "Thank you, Roger.\n\nI ran Hausman.test() for both my spatial error model (p-value < 2.2e-16) and my spatial Durbin error model (p-value = 3.693e-11). My understanding of these two tests is that my SDEM",
       "thread_id": "thread-55d0ca3b5303",
       "thread_depth": 4,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027992.html"
     },
     {
       "id": "msg-6a369067c912",
@@ -826,11 +871,12 @@
       "references": [
         "<DB8PR05MB5961F742FE03BECC1CE3893AE3F20@DB8PR05MB5961.eurprd05.prod.outlook.com>"
       ],
-      "body_plain": "Eugene,\n\nI don't think this can be done using the PROJ library that does most\ncoordinate transformations for sf objects. The `astrolibR` package has\nfunctions for converting coordinates on various astronomical systems\n\n https://cran.r-project.org/web/packages/astrolibR/astrolibR.pdf\n\nbut you have to feed it vectors of RA and declination rather than entire\nspatial objects. This isn't much of a problem if you are dealing with\npoints (extract coords with st_coordinates, convert, make a new geometry)\nbut for lines of polygons you need to extract all the vertex points,\nconvert them, then rebuild the features.\n\nYou might also have problems if you have lines or polygons going across the\ncosmic coordinate equivalent of the -180/+180 longitude line...\n\n Having another look, it *might* be possible to do this with PROJ by\nconstructing an appropriate spherical rotated coordinate system,  and you\nmight even be able to convert degrees to RA hours with a +units parameter...\n\nBarry\n\n\n\nOn Sat, Mar 21, 2020 at 6:06 PM Eugene Hickey <Eugene.Hickey at tudublin.ie>\nwrote:\n\n> Hi\n> Does anyone know of a way to transform an sf from equatorial (RA, DEC)\n> into galactic (b, l) coordinates please?\n>\n>\n> Thanks\n> Eugene\n>\n> This email originated from TU Dublin. If you received this email in error,\n> please delete it from your system. Please note that if you are not the\n> named addressee, disclosing, copying, distributing or taking any action\n> based on the contents of this email or attachments is prohibited.\n>\n> Is ? OT Baile ?tha Cliath a th?inig an r?omhphost seo. M? fuair t? an\n> r?omhphost seo tr? earr?id, scrios de do ch?ras ? le do thoil. Tabhair ar\n> aird, mura t? an seola? ainmnithe, go bhfuil dianchosc ar aon nochtadh, aon\n> ch?ipe?il, aon d?ileadh n? ar aon ghn?omh a dh?anfar bunaithe ar an ?bhar\n> at? sa r?omhphost n? sna hiat?in seo.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Eugene,\n\nI don't think this can be done using the PROJ library that does most\ncoordinate transformations for sf objects. The `astrolibR` package has\nfunctions for converting coordinates on various astronomical systems\n\n https://cran.r-project.org/web/packages/astrolibR/astrolibR.pdf\n\nbut you have to feed it vectors of RA and declination rather than entire\nspatial objects. This isn't much of a problem if you are dealing with\npoints (extract coords with st_coordinates, convert, make a new geometry)\nbut for lines of polygons you need to extract all the vertex points,\nconvert them, then rebuild the features.\n\nYou might also have problems if you have lines or polygons going across the\ncosmic coordinate equivalent of the -180/+180 longitude line...\n\n Having another look, it *might* be possible to do this with PROJ by\nconstructing an appropriate spherical rotated coordinate system,  and you\nmight even be able to convert degrees to RA hours with a +units parameter...\n\nBarry\n\n\n\nOn Sat, Mar 21, 2020 at 6:06 PM Eugene Hickey <Eugene.Hickey at tudublin.ie>\nwrote:\n\n> Hi\n> Does anyone know of a way to transform an sf from equatorial (RA, DEC)\n> into galactic (b, l) coordinates please?\n>\n>\n> Thanks\n> Eugene\n>\n> This email originated from TU Dublin. If you received this email in error,\n> please delete it from your system. Please note that if you are not the\n> named addressee, disclosing, copying, distributing or taking any action\n> based on the contents of this email or attachments is prohibited.\n>\n> Is ó OT Baile Átha Cliath a tháinig an ríomhphost seo. Má fuair tú an\n> ríomhphost seo trí earráid, scrios de do chóras é le do thoil. Tabhair ar\n> aird, mura tú an seolaí ainmnithe, go bhfuil dianchosc ar aon nochtadh, aon\n> chóipeáil, aon dáileadh nó ar aon ghníomh a dhéanfar bunaithe ar an ábhar\n> atá sa ríomhphost nó sna hiatáin seo.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Eugene,\n\nI don't think this can be done using the PROJ library that does most\ncoordinate transformations for sf objects. The `astrolibR` package has\nfunctions for converting coordinates on various ast",
       "thread_id": "thread-b196c5f13791",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027993.html"
     },
     {
       "id": "msg-af38b247d22f",
@@ -852,7 +898,8 @@
       "body_snippet": "On Sun, 22 Mar 2020, Gary Dong wrote:\n\n> Thank you, Roger.\n>\n> I ran Hausman.test() for both my spatial error model (p-value < 2.2e-16) \n> and my spatial Durbin error model (p-value = 3.693e-11). My \n",
       "thread_id": "thread-55d0ca3b5303",
       "thread_depth": 5,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027994.html"
     },
     {
       "id": "msg-eacaa039581d",
@@ -870,7 +917,8 @@
       "body_snippet": "Dear r-sig-geo members,\n\n ??? I?ve like to know the possibility of make some modifications in \nresample() function in raster package. First, in \"bilinear\" method by \ndefault is assigns a weighted aver",
       "thread_id": "thread-eacaa039581d",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027995.html"
     },
     {
       "id": "msg-17ac8bbe9c96",
@@ -886,7 +934,8 @@
       "body_snippet": "Hello,\n\nI am running an ENFA analysis and am having trouble interpreting the specialization values. Do the specialization values correspond to each ecogeographical variable? If so they don't make sens",
       "thread_id": "thread-17ac8bbe9c96",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027996.html"
     },
     {
       "id": "msg-5812dfb65053",
@@ -898,11 +947,12 @@
       "subject_clean": "Convert rectilinear to regular grid in R (stars and raster)",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Dear all,\n\nI am trying convert netCDF data from rectilinear to regular grid in R, but\nI am not sure what is the best approach for it.\nI would like to convert the grid modifying the original resolution only\nwhen necessary. In some cases I must change resolution to keep regular cell\nsize and cover all the world extent.\nI have tried without success st_warp from stars and I find a way with\nrasterize from raster package (see script bellow).\n\nI have the following questions:\n1. What am I doing wrong in stars package (see script bellow)?\n2. Is there a way to rasterize points to raster using metrics that consider\ndistance (e.g. bilinear, nearest neighbor, etc)? Note that I need\nuse points in raster package because it do not handle with rectilinear grid.\n3. Do you recommend any other approach?\n\nThe data are available in:\nGDrive:\nhttps://drive.google.com/file/d/1HKxFpAwvY9k_cFbasagKHAwi1luzLv90/view?usp=sharing\nCMIP5 portal (you must make a login):\nhttp://aims3.llnl.gov/thredds/fileServer/cmip5_css01_data/cmip5/output1/BCC/bcc-csm1-1/rcp45/mon/atmos/Amon/r1i1p1/v20120705/pr/pr_Amon_bcc-csm1-1_rcp45_r1i1p1_200601-209912.nc\n\n# script\nlibrary(stars)\nlibrary(raster)\n\n# prepare data\nbc <- read_ncdf(\"pr_Amon_bcc-csm1-1_rcp45_r1i1p1_200601-209912.nc\")\n# get coordinates and data from the first time period\nbc1 <- as.data.frame(bc[, , , 1])\n# convert longitude to variate between -180 and 180\nbc1$lon <- ifelse(bc1$lon > 180, bc1$lon - 360, bc1$lon)\n\n# original resolution\nbc1$lon %>% diff %>% table\nbc1$lat %>% diff %>% table\n# new resolution\nnew_res <- c(2.8125, 2.8125)\n# Is it multiple of 180 or 360?\n180 %% new_res\n\n# create a new standard grid\nwgs84 <- \"+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs\"\ngrid_r <- raster(res = new_res, crs = wgs84)\ngrid_st <- st_as_stars(grid_r)\n\n# change from rectilinear to regular grid\n# stars package: use st_warp to change from rectilinear to regular raster\nwith different methods\nbc_reg <- bc %>% st_warp(grid_st, method = \"average\")\nbc_reg <- bc %>% st_warp(grid_st, method = \"near\")\nbc_reg <- bc %>% st_warp(grid_st, method = \"bilinear\")\n# In all cases I have this error: Error in 1:prod(dims[dxy]) : NA/NaN\nargument\n\n# raster package: rasterize the points values to the new regular grid\nbc1_sp <- bc1\ncoordinates(bc1_sp) <- ~ lon + lat\nbc1_reg <- rasterize(bc1_sp, grid_r, field = \"pr\", fun = mean)\n\n# plot the first time period\ndev.new(title = \"rectilinear\")\nplot(bc[, , , 1])\ndev.new(title = \"regular with raster package\")\nplot(bc1_mn_reg)\n\nBest regards,\n\nFrederico Faleiro\nPostdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\nFederal University of Goi?s | Brazil\nRG: https://www.researchgate.net/profile/Frederico_Faleiro\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Dear all,\n\nI am trying convert netCDF data from rectilinear to regular grid in R, but\nI am not sure what is the best approach for it.\nI would like to convert the grid modifying the original resolution only\nwhen necessary. In some cases I must change resolution to keep regular cell\nsize and cover all the world extent.\nI have tried without success st_warp from stars and I find a way with\nrasterize from raster package (see script bellow).\n\nI have the following questions:\n1. What am I doing wrong in stars package (see script bellow)?\n2. Is there a way to rasterize points to raster using metrics that consider\ndistance (e.g. bilinear, nearest neighbor, etc)? Note that I need\nuse points in raster package because it do not handle with rectilinear grid.\n3. Do you recommend any other approach?\n\nThe data are available in:\nGDrive:\nhttps://drive.google.com/file/d/1HKxFpAwvY9k_cFbasagKHAwi1luzLv90/view?usp=sharing\nCMIP5 portal (you must make a login):\nhttp://aims3.llnl.gov/thredds/fileServer/cmip5_css01_data/cmip5/output1/BCC/bcc-csm1-1/rcp45/mon/atmos/Amon/r1i1p1/v20120705/pr/pr_Amon_bcc-csm1-1_rcp45_r1i1p1_200601-209912.nc\n\n# script\nlibrary(stars)\nlibrary(raster)\n\n# prepare data\nbc <- read_ncdf(\"pr_Amon_bcc-csm1-1_rcp45_r1i1p1_200601-209912.nc\")\n# get coordinates and data from the first time period\nbc1 <- as.data.frame(bc[, , , 1])\n# convert longitude to variate between -180 and 180\nbc1$lon <- ifelse(bc1$lon > 180, bc1$lon - 360, bc1$lon)\n\n# original resolution\nbc1$lon %>% diff %>% table\nbc1$lat %>% diff %>% table\n# new resolution\nnew_res <- c(2.8125, 2.8125)\n# Is it multiple of 180 or 360?\n180 %% new_res\n\n# create a new standard grid\nwgs84 <- \"+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs\"\ngrid_r <- raster(res = new_res, crs = wgs84)\ngrid_st <- st_as_stars(grid_r)\n\n# change from rectilinear to regular grid\n# stars package: use st_warp to change from rectilinear to regular raster\nwith different methods\nbc_reg <- bc %>% st_warp(grid_st, method = \"average\")\nbc_reg <- bc %>% st_warp(grid_st, method = \"near\")\nbc_reg <- bc %>% st_warp(grid_st, method = \"bilinear\")\n# In all cases I have this error: Error in 1:prod(dims[dxy]) : NA/NaN\nargument\n\n# raster package: rasterize the points values to the new regular grid\nbc1_sp <- bc1\ncoordinates(bc1_sp) <- ~ lon + lat\nbc1_reg <- rasterize(bc1_sp, grid_r, field = \"pr\", fun = mean)\n\n# plot the first time period\ndev.new(title = \"rectilinear\")\nplot(bc[, , , 1])\ndev.new(title = \"regular with raster package\")\nplot(bc1_mn_reg)\n\nBest regards,\n\nFrederico Faleiro\nPostdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\nFederal University of Goiás | Brazil\nRG: https://www.researchgate.net/profile/Frederico_Faleiro\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Dear all,\n\nI am trying convert netCDF data from rectilinear to regular grid in R, but\nI am not sure what is the best approach for it.\nI would like to convert the grid modifying the original resolution",
       "thread_id": "thread-5812dfb65053",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027997.html"
     },
     {
       "id": "msg-402ad000706c",
@@ -917,11 +967,12 @@
         "<b8be3171-cc85-cc3e-2cfb-973bb42a8eb6.ref@yahoo.com.br>",
         "<b8be3171-cc85-cc3e-2cfb-973bb42a8eb6@yahoo.com.br>"
       ],
-      "body_plain": "Hi Alexandre,\n\nyou can use extract from raster (check the examples in the help page).\nDepending of your data you can create a spatial polygon that cover the\nnumber of cells you want and define the summary function or use the buffer\nargument.\n\nBest regards,\n\nFrederico Faleiro\nPostdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\nFederal University of Goi?s | Brazil\nRG: https://www.researchgate.net/profile/Frederico_Faleiro\n\n\n\nEm seg., 23 de mar. de 2020 ?s 10:41, ASANTOS via R-sig-Geo <\nr-sig-geo at r-project.org> escreveu:\n\n> Dear r-sig-geo members,\n>\n>  ??? I?ve like to know the possibility of make some modifications in\n> resample() function in raster package. First, in \"bilinear\" method by\n> default is assigns a weighted average of the four nearest cells, and\n> I?ll like to change for five and six nearest cells, too, is possible?\n> Second, is it possible too to create the mean method to calculate the\n> arithmetic average of the four, five, and six nearest cells?\n>\n> Thanks in advanced,\n> Alexandre\n>\n> --\n> Alexandre dos Santos\n> Geotechnologies and Spatial Statistics applied to Forest Entomology\n> Instituto Federal de Mato Grosso (IFMT) - Campus Caceres\n> Caixa Postal 244 (PO Box)\n> Avenida dos Ramires, s/n - Vila Real\n> Caceres - MT - CEP 78201-380 (ZIP code)\n> Phone: (+55) 65 99686-6970 / (+55) 65 3221-2674\n> Lattes CV: http://lattes.cnpq.br/1360403201088680\n> OrcID: orcid.org/0000-0001-8232-6722\n> ResearchGate: www.researchgate.net/profile/Alexandre_Santos10\n> Publons: https://publons.com/researcher/3085587/alexandre-dos-santos/\n> --\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Hi Alexandre,\n\nyou can use extract from raster (check the examples in the help page).\nDepending of your data you can create a spatial polygon that cover the\nnumber of cells you want and define the summary function or use the buffer\nargument.\n\nBest regards,\n\nFrederico Faleiro\nPostdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\nFederal University of Goiás | Brazil\nRG: https://www.researchgate.net/profile/Frederico_Faleiro\n\n\n\nEm seg., 23 de mar. de 2020 às 10:41, ASANTOS via R-sig-Geo <\nr-sig-geo at r-project.org> escreveu:\n\n> Dear r-sig-geo members,\n>\n>  ??? I?ve like to know the possibility of make some modifications in\n> resample() function in raster package. First, in \"bilinear\" method by\n> default is assigns a weighted average of the four nearest cells, and\n> I?ll like to change for five and six nearest cells, too, is possible?\n> Second, is it possible too to create the mean method to calculate the\n> arithmetic average of the four, five, and six nearest cells?\n>\n> Thanks in advanced,\n> Alexandre\n>\n> --\n> Alexandre dos Santos\n> Geotechnologies and Spatial Statistics applied to Forest Entomology\n> Instituto Federal de Mato Grosso (IFMT) - Campus Caceres\n> Caixa Postal 244 (PO Box)\n> Avenida dos Ramires, s/n - Vila Real\n> Caceres - MT - CEP 78201-380 (ZIP code)\n> Phone: (+55) 65 99686-6970 / (+55) 65 3221-2674\n> Lattes CV: http://lattes.cnpq.br/1360403201088680\n> OrcID: orcid.org/0000-0001-8232-6722\n> ResearchGate: www.researchgate.net/profile/Alexandre_Santos10\n> Publons: https://publons.com/researcher/3085587/alexandre-dos-santos/\n> --\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Hi Alexandre,\n\nyou can use extract from raster (check the examples in the help page).\nDepending of your data you can create a spatial polygon that cover the\nnumber of cells you want and define the sum",
       "thread_id": "thread-eacaa039581d",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027998.html"
     },
     {
       "id": "msg-bb30072d80b2",
@@ -937,7 +988,8 @@
       "body_snippet": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20200323/60dbb834/attachment.html>",
       "thread_id": "thread-bb30072d80b2",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/027999.html"
     },
     {
       "id": "msg-45684563c921",
@@ -973,7 +1025,8 @@
       "body_snippet": "I opened a Geotiff image in R using the raster function. However, the image\nseems to be rescaled. The minimum and maximum values should be 13607 and\n15461 but are 275 and 305. The Geotiff image when o",
       "thread_id": "thread-c07f35bbd2e7",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028002.html"
     },
     {
       "id": "msg-02f269e74a6b",
@@ -989,7 +1042,8 @@
       "body_snippet": "Please make the file in question available for download (url), or the url you downloaded it from (no login), on this list. It looks as though the unsigned 16 bit integer is not right.\n\nRoger Bivand\nNo",
       "thread_id": "thread-02f269e74a6b",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028003.html"
     },
     {
       "id": "msg-bd767b3e404f",
@@ -1005,7 +1059,8 @@
       "body_snippet": "Hello Everyone,\n\nI have written a loop which reads hundreds of .nc files\nand extract information from each .nc file and\nexports that corresponding information as a csv file.\n\nThe loop works fine until",
       "thread_id": "thread-bd767b3e404f",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028004.html"
     },
     {
       "id": "msg-cca48586a37b",
@@ -1023,7 +1078,8 @@
       "body_snippet": "On 24/03/20 10:52 am, Bhaskar Mitra wrote:\n\n> Hello Everyone,\n> \n> I have written a loop which reads hundreds of .nc files\n> and extract information from each .nc file and\n> exports that corresponding",
       "thread_id": "thread-bd767b3e404f",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028005.html"
     },
     {
       "id": "msg-13de673cf0c1",
@@ -1041,7 +1097,8 @@
       "body_snippet": "Hi,\n\nRolf is correct that you might consider enclosing your nc_open(...) with\ntry(nc_open(...)), and then testing if the value returned by try() inherits\nfrom the \"try-error\" class. If there is no pro",
       "thread_id": "thread-bd767b3e404f",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028006.html"
     },
     {
       "id": "msg-3429c5ef1941",
@@ -1060,7 +1117,8 @@
       "body_snippet": "Hi Ben, Rolf,\n\nThanks for your help.\n\nBen : the code works perfectly.\n\nthanks once again,\n\nbhaskar\n\nOn Mon, Mar 23, 2020 at 4:17 PM Ben Tupper <btupper at bigelow.org> wrote:\n\n> Hi,\n>\n> Rolf is correc",
       "thread_id": "thread-bd767b3e404f",
       "thread_depth": 2,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028007.html"
     },
     {
       "id": "msg-213f82ebe441",
@@ -1078,7 +1136,8 @@
       "body_snippet": "Hi Roger, the link to he image is given below. This image was generated\nfrom a .hdf file using the function gdal_translate.\n\ngdal_translate(sds[1], dst_dataset=paste0(substr(filename, 1,\nnchar(filenam",
       "thread_id": "thread-02f269e74a6b",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028008.html"
     },
     {
       "id": "msg-f01fd1c9975c",
@@ -1097,7 +1156,8 @@
       "body_snippet": "Please put the original file on the link too, so that we can track where \nthe misconfiguration occurs, and provide more of the workflow code. I \nthink we'll also need sessionInfo() output and GDAL ver",
       "thread_id": "thread-02f269e74a6b",
       "thread_depth": 2,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028009.html"
     },
     {
       "id": "msg-bc4370b0afdc",
@@ -1116,7 +1176,8 @@
       "body_snippet": "Opening in stars shows that the read data are interpreted as degrees \nKelvin:\n\n> library(stars)\n> ss <- read_stars(\"MOD11A2.A2000049.h17v05.006.2015058135048.tif\")\n> print(ss, n=1e8)\nstars object with",
       "thread_id": "thread-02f269e74a6b",
       "thread_depth": 2,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028010.html"
     },
     {
       "id": "msg-fdf5a28cb96c",
@@ -1136,7 +1197,8 @@
       "body_snippet": "On Tue, 24 Mar 2020, Roger Bivand wrote:\n\n> Opening in stars shows that the read data are interpreted as degrees Kelvin:\n>\n>>  library(stars)\n>>  ss <- read_stars(\"MOD11A2.A2000049.h17v05.006.20150581",
       "thread_id": "thread-02f269e74a6b",
       "thread_depth": 3,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028011.html"
     },
     {
       "id": "msg-42236cf3aadd",
@@ -1156,7 +1218,8 @@
       "body_snippet": "I see at the end of the output obtained with running gdalinfo on the file:\n\nBand 1 Block=1200x3 Type=UInt16, ColorInterp=Gray\n  NoData Value=0\n  Unit Type: K\n  Offset: 0,   Scale:0.02\n  Metadata:\n    ",
       "thread_id": "thread-02f269e74a6b",
       "thread_depth": 3,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028012.html"
     },
     {
       "id": "msg-1390aa69e3cb",
@@ -1170,11 +1233,12 @@
       "references": [
         "<CAL+ycWmLeAz-x+TkZcPgUEmmqnE0NB3wBUPk7gGdt5wpG70jcg@mail.gmail.com>"
       ],
-      "body_plain": "The stars part of this question has also been sent as an issue on\ngithub, and that is where it has been answered (partially solved):\n\nhttps://github.com/r-spatial/stars/issues/264\n\nplease feel free to send follow-up's here, or there.\n\nOn 3/23/20 6:45 PM, Frederico Faleiro wrote:\n> Dear all,\n> \n> I am trying convert netCDF data from rectilinear to regular grid in R, but\n> I am not sure what is the best approach for it.\n> I would like to convert the grid modifying the original resolution only\n> when necessary. In some cases I must change resolution to keep regular cell\n> size and cover all the world extent.\n> I have tried without success st_warp from stars and I find a way with\n> rasterize from raster package (see script bellow).\n> \n> I have the following questions:\n> 1. What am I doing wrong in stars package (see script bellow)?\n> 2. Is there a way to rasterize points to raster using metrics that consider\n> distance (e.g. bilinear, nearest neighbor, etc)? Note that I need\n> use points in raster package because it do not handle with rectilinear grid.\n> 3. Do you recommend any other approach?\n> \n> The data are available in:\n> GDrive:\n> https://drive.google.com/file/d/1HKxFpAwvY9k_cFbasagKHAwi1luzLv90/view?usp=sharing\n> CMIP5 portal (you must make a login):\n> http://aims3.llnl.gov/thredds/fileServer/cmip5_css01_data/cmip5/output1/BCC/bcc-csm1-1/rcp45/mon/atmos/Amon/r1i1p1/v20120705/pr/pr_Amon_bcc-csm1-1_rcp45_r1i1p1_200601-209912.nc\n> \n> # script\n> library(stars)\n> library(raster)\n> \n> # prepare data\n> bc <- read_ncdf(\"pr_Amon_bcc-csm1-1_rcp45_r1i1p1_200601-209912.nc\")\n> # get coordinates and data from the first time period\n> bc1 <- as.data.frame(bc[, , , 1])\n> # convert longitude to variate between -180 and 180\n> bc1$lon <- ifelse(bc1$lon > 180, bc1$lon - 360, bc1$lon)\n> \n> # original resolution\n> bc1$lon %>% diff %>% table\n> bc1$lat %>% diff %>% table\n> # new resolution\n> new_res <- c(2.8125, 2.8125)\n> # Is it multiple of 180 or 360?\n> 180 %% new_res\n> \n> # create a new standard grid\n> wgs84 <- \"+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs\"\n> grid_r <- raster(res = new_res, crs = wgs84)\n> grid_st <- st_as_stars(grid_r)\n> \n> # change from rectilinear to regular grid\n> # stars package: use st_warp to change from rectilinear to regular raster\n> with different methods\n> bc_reg <- bc %>% st_warp(grid_st, method = \"average\")\n> bc_reg <- bc %>% st_warp(grid_st, method = \"near\")\n> bc_reg <- bc %>% st_warp(grid_st, method = \"bilinear\")\n> # In all cases I have this error: Error in 1:prod(dims[dxy]) : NA/NaN\n> argument\n> \n> # raster package: rasterize the points values to the new regular grid\n> bc1_sp <- bc1\n> coordinates(bc1_sp) <- ~ lon + lat\n> bc1_reg <- rasterize(bc1_sp, grid_r, field = \"pr\", fun = mean)\n> \n> # plot the first time period\n> dev.new(title = \"rectilinear\")\n> plot(bc[, , , 1])\n> dev.new(title = \"regular with raster package\")\n> plot(bc1_mn_reg)\n> \n> Best regards,\n> \n> Frederico Faleiro\n> Postdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\n> Federal University of Goi?s | Brazil\n> RG: https://www.researchgate.net/profile/Frederico_Faleiro\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48149 Muenster, Germany\nPhone: +49 251 8333081\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: pEpkey.asc\nType: application/pgp-keys\nSize: 3110 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20200324/c58f7c25/attachment.bin>",
+      "body_plain": "The stars part of this question has also been sent as an issue on\ngithub, and that is where it has been answered (partially solved):\n\nhttps://github.com/r-spatial/stars/issues/264\n\nplease feel free to send follow-up's here, or there.\n\nOn 3/23/20 6:45 PM, Frederico Faleiro wrote:\n> Dear all,\n> \n> I am trying convert netCDF data from rectilinear to regular grid in R, but\n> I am not sure what is the best approach for it.\n> I would like to convert the grid modifying the original resolution only\n> when necessary. In some cases I must change resolution to keep regular cell\n> size and cover all the world extent.\n> I have tried without success st_warp from stars and I find a way with\n> rasterize from raster package (see script bellow).\n> \n> I have the following questions:\n> 1. What am I doing wrong in stars package (see script bellow)?\n> 2. Is there a way to rasterize points to raster using metrics that consider\n> distance (e.g. bilinear, nearest neighbor, etc)? Note that I need\n> use points in raster package because it do not handle with rectilinear grid.\n> 3. Do you recommend any other approach?\n> \n> The data are available in:\n> GDrive:\n> https://drive.google.com/file/d/1HKxFpAwvY9k_cFbasagKHAwi1luzLv90/view?usp=sharing\n> CMIP5 portal (you must make a login):\n> http://aims3.llnl.gov/thredds/fileServer/cmip5_css01_data/cmip5/output1/BCC/bcc-csm1-1/rcp45/mon/atmos/Amon/r1i1p1/v20120705/pr/pr_Amon_bcc-csm1-1_rcp45_r1i1p1_200601-209912.nc\n> \n> # script\n> library(stars)\n> library(raster)\n> \n> # prepare data\n> bc <- read_ncdf(\"pr_Amon_bcc-csm1-1_rcp45_r1i1p1_200601-209912.nc\")\n> # get coordinates and data from the first time period\n> bc1 <- as.data.frame(bc[, , , 1])\n> # convert longitude to variate between -180 and 180\n> bc1$lon <- ifelse(bc1$lon > 180, bc1$lon - 360, bc1$lon)\n> \n> # original resolution\n> bc1$lon %>% diff %>% table\n> bc1$lat %>% diff %>% table\n> # new resolution\n> new_res <- c(2.8125, 2.8125)\n> # Is it multiple of 180 or 360?\n> 180 %% new_res\n> \n> # create a new standard grid\n> wgs84 <- \"+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs\"\n> grid_r <- raster(res = new_res, crs = wgs84)\n> grid_st <- st_as_stars(grid_r)\n> \n> # change from rectilinear to regular grid\n> # stars package: use st_warp to change from rectilinear to regular raster\n> with different methods\n> bc_reg <- bc %>% st_warp(grid_st, method = \"average\")\n> bc_reg <- bc %>% st_warp(grid_st, method = \"near\")\n> bc_reg <- bc %>% st_warp(grid_st, method = \"bilinear\")\n> # In all cases I have this error: Error in 1:prod(dims[dxy]) : NA/NaN\n> argument\n> \n> # raster package: rasterize the points values to the new regular grid\n> bc1_sp <- bc1\n> coordinates(bc1_sp) <- ~ lon + lat\n> bc1_reg <- rasterize(bc1_sp, grid_r, field = \"pr\", fun = mean)\n> \n> # plot the first time period\n> dev.new(title = \"rectilinear\")\n> plot(bc[, , , 1])\n> dev.new(title = \"regular with raster package\")\n> plot(bc1_mn_reg)\n> \n> Best regards,\n> \n> Frederico Faleiro\n> Postdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\n> Federal University of Goiás | Brazil\n> RG: https://www.researchgate.net/profile/Frederico_Faleiro\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics\nHeisenbergstrasse 2, 48149 Muenster, Germany\nPhone: +49 251 8333081\n\n-------------- next part --------------\nA non-text attachment was scrubbed...\nName: pEpkey.asc\nType: application/pgp-keys\nSize: 3110 bytes\nDesc: not available\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20200324/c58f7c25/attachment.bin>",
       "body_snippet": "The stars part of this question has also been sent as an issue on\ngithub, and that is where it has been answered (partially solved):\n\nhttps://github.com/r-spatial/stars/issues/264\n\nplease feel free to",
       "thread_id": "thread-5812dfb65053",
       "thread_depth": 1,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028013.html"
     },
     {
       "id": "msg-aa6ab659ccb0",
@@ -1189,11 +1253,12 @@
         "<CAL+ycWmLeAz-x+TkZcPgUEmmqnE0NB3wBUPk7gGdt5wpG70jcg@mail.gmail.com>",
         "<40b2112d-e781-b7e9-6f64-96b93b13045f@uni-muenster.de>"
       ],
-      "body_plain": "Hi Edzer,\n\nthank you for your reply and modifications in the function.\nNow the code is working fine, but the structure of the output was changed.\nWhen I try extract the values converting to data.frame all values was\nreplaced by NA. However the plot is OK as you have tested.\n\n1. How can I create a new grid with the new resolution in stars? Am I doing\nit correctly (see bellow)?\n2. How can I get the data.frame with the new values?\n3. I have tried the function sf::st_interpolate_aw (see bellow), but there\nis some warnings that I do not know the consequences for the calculation.\n\n# update packages\nlibrary(devtools)\ninstall_github(\"r-spatial/sf\")\ninstall_github(\"r-spatial/stars\")\n\nlibrary(stars)\n\n# read file\nbc <- read_ncdf(\"pr_Amon_bcc-csm1-1_rcp45_r1i1p1_200601-209912.nc\")\n# create the new grid\ngrid_st <- st_as_stars(st_bbox(c(xmin=0,xmax=360,ymin=-90,ymax=90))) %>%\nst_set_crs(4326)\n# change resolution. Is it right?\nattr(grid_st, \"dimensions\")[[1]]$delta <- 2.8125\nattr(grid_st, \"dimensions\")[[2]]$delta <- - 2.8125\n\n# change from rectilinear to regular grid with stars\nbc_reg <- bc %>% st_warp(grid_st, method = \"near\")\n# plot\nplot(bc_reg[, , , 1:12])\n\n# convert to data.frame\nbc_reg_df <- as.data.frame(bc_reg_st)\n# there is only NA in the variable\nstr(bc_reg_df)\nrange(bc_reg_df$pr)\n\n# change from rectilinear to regular grid with sf\ngrid_sf <- st_as_sf(grid_st)\nplot(grid_sf)\nbc_sf <- st_as_sf(bc)\nplot(bc_sf)\nbc_sf_reg <- st_interpolate_aw(bc_sf, grid_sf, F)\n#although coordinates are longitude/latitude, st_intersection assumes that\nthey are planar\n#Warning message:\n#In st_interpolate_aw.sf(bc_sf, grid_sf, F) :\n#  st_interpolate_aw assumes attributes are constant over areas of x\n\nBest regards,\nFrederico Faleiro\nPostdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\nFederal University of Goi?s | Brazil\nRG: https://www.researchgate.net/profile/Frederico_Faleiro\n\n\nEm ter., 24 de mar. de 2020 ?s 11:59, Edzer Pebesma <\nedzer.pebesma at uni-muenster.de> escreveu:\n\n> The stars part of this question has also been sent as an issue on\n> github, and that is where it has been answered (partially solved):\n>\n> https://github.com/r-spatial/stars/issues/264\n>\n> please feel free to send follow-up's here, or there.\n>\n> On 3/23/20 6:45 PM, Frederico Faleiro wrote:\n> > Dear all,\n> >\n> > I am trying convert netCDF data from rectilinear to regular grid in R,\n> but\n> > I am not sure what is the best approach for it.\n> > I would like to convert the grid modifying the original resolution only\n> > when necessary. In some cases I must change resolution to keep regular\n> cell\n> > size and cover all the world extent.\n> > I have tried without success st_warp from stars and I find a way with\n> > rasterize from raster package (see script bellow).\n> >\n> > I have the following questions:\n> > 1. What am I doing wrong in stars package (see script bellow)?\n> > 2. Is there a way to rasterize points to raster using metrics that\n> consider\n> > distance (e.g. bilinear, nearest neighbor, etc)? Note that I need\n> > use points in raster package because it do not handle with rectilinear\n> grid.\n> > 3. Do you recommend any other approach?\n> >\n> > The data are available in:\n> > GDrive:\n> >\n> https://drive.google.com/file/d/1HKxFpAwvY9k_cFbasagKHAwi1luzLv90/view?usp=sharing\n> > CMIP5 portal (you must make a login):\n> >\n> http://aims3.llnl.gov/thredds/fileServer/cmip5_css01_data/cmip5/output1/BCC/bcc-csm1-1/rcp45/mon/atmos/Amon/r1i1p1/v20120705/pr/pr_Amon_bcc-csm1-1_rcp45_r1i1p1_200601-209912.nc\n> >\n> > # script\n> > library(stars)\n> > library(raster)\n> >\n> > # prepare data\n> > bc <- read_ncdf(\"pr_Amon_bcc-csm1-1_rcp45_r1i1p1_200601-209912.nc\")\n> > # get coordinates and data from the first time period\n> > bc1 <- as.data.frame(bc[, , , 1])\n> > # convert longitude to variate between -180 and 180\n> > bc1$lon <- ifelse(bc1$lon > 180, bc1$lon - 360, bc1$lon)\n> >\n> > # original resolution\n> > bc1$lon %>% diff %>% table\n> > bc1$lat %>% diff %>% table\n> > # new resolution\n> > new_res <- c(2.8125, 2.8125)\n> > # Is it multiple of 180 or 360?\n> > 180 %% new_res\n> >\n> > # create a new standard grid\n> > wgs84 <- \"+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs\"\n> > grid_r <- raster(res = new_res, crs = wgs84)\n> > grid_st <- st_as_stars(grid_r)\n> >\n> > # change from rectilinear to regular grid\n> > # stars package: use st_warp to change from rectilinear to regular raster\n> > with different methods\n> > bc_reg <- bc %>% st_warp(grid_st, method = \"average\")\n> > bc_reg <- bc %>% st_warp(grid_st, method = \"near\")\n> > bc_reg <- bc %>% st_warp(grid_st, method = \"bilinear\")\n> > # In all cases I have this error: Error in 1:prod(dims[dxy]) : NA/NaN\n> > argument\n> >\n> > # raster package: rasterize the points values to the new regular grid\n> > bc1_sp <- bc1\n> > coordinates(bc1_sp) <- ~ lon + lat\n> > bc1_reg <- rasterize(bc1_sp, grid_r, field = \"pr\", fun = mean)\n> >\n> > # plot the first time period\n> > dev.new(title = \"rectilinear\")\n> > plot(bc[, , , 1])\n> > dev.new(title = \"regular with raster package\")\n> > plot(bc1_mn_reg)\n> >\n> > Best regards,\n> >\n> > Frederico Faleiro\n> > Postdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\n> > Federal University of Goi?s | Brazil\n> > RG: https://www.researchgate.net/profile/Frederico_Faleiro\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n> --\n> Edzer Pebesma\n> Institute for Geoinformatics\n> Heisenbergstrasse 2, 48149 Muenster, Germany\n> Phone: +49 251 8333081\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Hi Edzer,\n\nthank you for your reply and modifications in the function.\nNow the code is working fine, but the structure of the output was changed.\nWhen I try extract the values converting to data.frame all values was\nreplaced by NA. However the plot is OK as you have tested.\n\n1. How can I create a new grid with the new resolution in stars? Am I doing\nit correctly (see bellow)?\n2. How can I get the data.frame with the new values?\n3. I have tried the function sf::st_interpolate_aw (see bellow), but there\nis some warnings that I do not know the consequences for the calculation.\n\n# update packages\nlibrary(devtools)\ninstall_github(\"r-spatial/sf\")\ninstall_github(\"r-spatial/stars\")\n\nlibrary(stars)\n\n# read file\nbc <- read_ncdf(\"pr_Amon_bcc-csm1-1_rcp45_r1i1p1_200601-209912.nc\")\n# create the new grid\ngrid_st <- st_as_stars(st_bbox(c(xmin=0,xmax=360,ymin=-90,ymax=90))) %>%\nst_set_crs(4326)\n# change resolution. Is it right?\nattr(grid_st, \"dimensions\")[[1]]$delta <- 2.8125\nattr(grid_st, \"dimensions\")[[2]]$delta <- - 2.8125\n\n# change from rectilinear to regular grid with stars\nbc_reg <- bc %>% st_warp(grid_st, method = \"near\")\n# plot\nplot(bc_reg[, , , 1:12])\n\n# convert to data.frame\nbc_reg_df <- as.data.frame(bc_reg_st)\n# there is only NA in the variable\nstr(bc_reg_df)\nrange(bc_reg_df$pr)\n\n# change from rectilinear to regular grid with sf\ngrid_sf <- st_as_sf(grid_st)\nplot(grid_sf)\nbc_sf <- st_as_sf(bc)\nplot(bc_sf)\nbc_sf_reg <- st_interpolate_aw(bc_sf, grid_sf, F)\n#although coordinates are longitude/latitude, st_intersection assumes that\nthey are planar\n#Warning message:\n#In st_interpolate_aw.sf(bc_sf, grid_sf, F) :\n#  st_interpolate_aw assumes attributes are constant over areas of x\n\nBest regards,\nFrederico Faleiro\nPostdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\nFederal University of Goiás | Brazil\nRG: https://www.researchgate.net/profile/Frederico_Faleiro\n\n\nEm ter., 24 de mar. de 2020 às 11:59, Edzer Pebesma <\nedzer.pebesma at uni-muenster.de> escreveu:\n\n> The stars part of this question has also been sent as an issue on\n> github, and that is where it has been answered (partially solved):\n>\n> https://github.com/r-spatial/stars/issues/264\n>\n> please feel free to send follow-up's here, or there.\n>\n> On 3/23/20 6:45 PM, Frederico Faleiro wrote:\n> > Dear all,\n> >\n> > I am trying convert netCDF data from rectilinear to regular grid in R,\n> but\n> > I am not sure what is the best approach for it.\n> > I would like to convert the grid modifying the original resolution only\n> > when necessary. In some cases I must change resolution to keep regular\n> cell\n> > size and cover all the world extent.\n> > I have tried without success st_warp from stars and I find a way with\n> > rasterize from raster package (see script bellow).\n> >\n> > I have the following questions:\n> > 1. What am I doing wrong in stars package (see script bellow)?\n> > 2. Is there a way to rasterize points to raster using metrics that\n> consider\n> > distance (e.g. bilinear, nearest neighbor, etc)? Note that I need\n> > use points in raster package because it do not handle with rectilinear\n> grid.\n> > 3. Do you recommend any other approach?\n> >\n> > The data are available in:\n> > GDrive:\n> >\n> https://drive.google.com/file/d/1HKxFpAwvY9k_cFbasagKHAwi1luzLv90/view?usp=sharing\n> > CMIP5 portal (you must make a login):\n> >\n> http://aims3.llnl.gov/thredds/fileServer/cmip5_css01_data/cmip5/output1/BCC/bcc-csm1-1/rcp45/mon/atmos/Amon/r1i1p1/v20120705/pr/pr_Amon_bcc-csm1-1_rcp45_r1i1p1_200601-209912.nc\n> >\n> > # script\n> > library(stars)\n> > library(raster)\n> >\n> > # prepare data\n> > bc <- read_ncdf(\"pr_Amon_bcc-csm1-1_rcp45_r1i1p1_200601-209912.nc\")\n> > # get coordinates and data from the first time period\n> > bc1 <- as.data.frame(bc[, , , 1])\n> > # convert longitude to variate between -180 and 180\n> > bc1$lon <- ifelse(bc1$lon > 180, bc1$lon - 360, bc1$lon)\n> >\n> > # original resolution\n> > bc1$lon %>% diff %>% table\n> > bc1$lat %>% diff %>% table\n> > # new resolution\n> > new_res <- c(2.8125, 2.8125)\n> > # Is it multiple of 180 or 360?\n> > 180 %% new_res\n> >\n> > # create a new standard grid\n> > wgs84 <- \"+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs\"\n> > grid_r <- raster(res = new_res, crs = wgs84)\n> > grid_st <- st_as_stars(grid_r)\n> >\n> > # change from rectilinear to regular grid\n> > # stars package: use st_warp to change from rectilinear to regular raster\n> > with different methods\n> > bc_reg <- bc %>% st_warp(grid_st, method = \"average\")\n> > bc_reg <- bc %>% st_warp(grid_st, method = \"near\")\n> > bc_reg <- bc %>% st_warp(grid_st, method = \"bilinear\")\n> > # In all cases I have this error: Error in 1:prod(dims[dxy]) : NA/NaN\n> > argument\n> >\n> > # raster package: rasterize the points values to the new regular grid\n> > bc1_sp <- bc1\n> > coordinates(bc1_sp) <- ~ lon + lat\n> > bc1_reg <- rasterize(bc1_sp, grid_r, field = \"pr\", fun = mean)\n> >\n> > # plot the first time period\n> > dev.new(title = \"rectilinear\")\n> > plot(bc[, , , 1])\n> > dev.new(title = \"regular with raster package\")\n> > plot(bc1_mn_reg)\n> >\n> > Best regards,\n> >\n> > Frederico Faleiro\n> > Postdoctoral Researcher in the INCT-EECBio (https://www.eecbio.ufg.br/)\n> > Federal University of Goiás | Brazil\n> > RG: https://www.researchgate.net/profile/Frederico_Faleiro\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n> >\n>\n> --\n> Edzer Pebesma\n> Institute for Geoinformatics\n> Heisenbergstrasse 2, 48149 Muenster, Germany\n> Phone: +49 251 8333081\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Hi Edzer,\n\nthank you for your reply and modifications in the function.\nNow the code is working fine, but the structure of the output was changed.\nWhen I try extract the values converting to data.frame",
       "thread_id": "thread-5812dfb65053",
       "thread_depth": 2,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028014.html"
     },
     {
       "id": "msg-3f12c5959109",
@@ -1212,7 +1277,8 @@
       "body_snippet": "Thanks to the CRAN team, sf 0.9-0 has been published. Windows and OSX \nbinaries should follow before long. Script authors and package \nmaintainers using sf should note the changes in this version, whi",
       "thread_id": "thread-db56ff66051e",
       "thread_depth": 2,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028015.html"
     },
     {
       "id": "msg-f3da207acd00",
@@ -1228,7 +1294,8 @@
       "body_snippet": "Dear All\n\nI have been able to move one step forward but still haven't been able to\nassign the correct color to the levels created\n\nThe r-code is as below with the output  in the url\nI assigned Blue, g",
       "thread_id": "thread-f3da207acd00",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028016.html"
     },
     {
       "id": "msg-053f3943973d",
@@ -1240,11 +1307,12 @@
       "subject_clean": "Introducing new local spatial statistic, ELSA, and Entrogram (a variogram-like graph)",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Dear All,\n\nHope you are safe and well!\n\nI am writing to inform you that the new R package, elsa, is released on\nCRAN. This package is a framework that provides the methods for quantifying\nthe new local spatial statictic, named \"entropy-based local indicator of\nspatial association\" (ELSA), that can be used for both continuous and\ncategorical data. In addition, global spatial structure can be measured\nusing a new variogram-like diagram, called entrogram.\n\nThe package vignette provides a quick demonstration of some main functions\nin the package:\n\nhttps://cran.r-project.org/web/packages/elsa/vignettes/elsa.html\n\nThe paper that introduces ELSA is published in the journal of spatial\nstatistics and is available here:\n\nhttps://www.sciencedirect.com/science/article/abs/pii/S2211675318300228\n\nThe package, elsa, is also followed with functions to calculate other LISAs\nand global statistics for different types of spatial datasets (i.e.,\nRaster, SpatialPointsDataFrame, SpatialPolygonsDataFrame).\n\nBest regards,\n\nBabak Naimi\n\n\n\n\n\n\n*University Researcher, Department of Geosciences and Geography,The\nUniversity of Helsinki,Gustaf H?llstr?min Katu 2, 00014\nHelsinkiFinlandHomepage I: http://r-gis.net <http://r-gis.net/>  Homepage\nII: http://biogeoinformatics.org <http://biogeoinformatics.org/>  *\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Dear All,\n\nHope you are safe and well!\n\nI am writing to inform you that the new R package, elsa, is released on\nCRAN. This package is a framework that provides the methods for quantifying\nthe new local spatial statictic, named \"entropy-based local indicator of\nspatial association\" (ELSA), that can be used for both continuous and\ncategorical data. In addition, global spatial structure can be measured\nusing a new variogram-like diagram, called entrogram.\n\nThe package vignette provides a quick demonstration of some main functions\nin the package:\n\nhttps://cran.r-project.org/web/packages/elsa/vignettes/elsa.html\n\nThe paper that introduces ELSA is published in the journal of spatial\nstatistics and is available here:\n\nhttps://www.sciencedirect.com/science/article/abs/pii/S2211675318300228\n\nThe package, elsa, is also followed with functions to calculate other LISAs\nand global statistics for different types of spatial datasets (i.e.,\nRaster, SpatialPointsDataFrame, SpatialPolygonsDataFrame).\n\nBest regards,\n\nBabak Naimi\n\n\n\n\n\n\n*University Researcher, Department of Geosciences and Geography,The\nUniversity of Helsinki,Gustaf Hällströmin Katu 2, 00014\nHelsinkiFinlandHomepage I: http://r-gis.net <http://r-gis.net/>  Homepage\nII: http://biogeoinformatics.org <http://biogeoinformatics.org/>  *\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Dear All,\n\nHope you are safe and well!\n\nI am writing to inform you that the new R package, elsa, is released on\nCRAN. This package is a framework that provides the methods for quantifying\nthe new loca",
       "thread_id": "thread-053f3943973d",
       "thread_depth": 0,
-      "month": "2020-03"
+      "month": "2020-03",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2020-March/028017.html"
     }
   ],
   "threads": [

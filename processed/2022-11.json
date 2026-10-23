@@ -13,11 +13,12 @@
       "subject_clean": "getting data from an nc file",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hello\n\nI am trying to get rainfall data from the UK chess-met site\n\nhttps://catalogue.ceh.ac.uk/datastore/eidchub/2ab15bf0-ad08-415c-ba64-831168be7293/precip/\n\nand here there are a large number of nc files eg\n\n\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\"\n\nI?ve found various sources on the net for opening nc files, and getting the\ndata but when I try instructions like\n\nnc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\n\nlon <- ncvar_get(nc_data, \"lon\")\n\nlon\n\n\n\nthe code works but all I get is a series of element numbers and no data:\n\n[,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]     [,8]     [,9]\n[,10]    [,11]    [,12]\n\n          [,13]    [,14]    [,15]    [,16]    [,17]    [,18]    [,19]\n[,20]    [,21]    [,22]    [,23]    [,24]\n\n\n\nAnd similarly for latitude\n\nBut if I open the nc file as a raster I get a raster precipitation plot of\nGreat Britain, which rather suggests that the lat and long values are in\nthere somewhere\n\nCan anyone help with getting the actual data sets out of an nc file?\n\nThanks Nick Wray\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Hello\n\nI am trying to get rainfall data from the UK chess-met site\n\nhttps://catalogue.ceh.ac.uk/datastore/eidchub/2ab15bf0-ad08-415c-ba64-831168be7293/precip/\n\nand here there are a large number of nc files eg\n\n\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\"\n\nI’ve found various sources on the net for opening nc files, and getting the\ndata but when I try instructions like\n\nnc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\n\nlon <- ncvar_get(nc_data, \"lon\")\n\nlon\n\n\n\nthe code works but all I get is a series of element numbers and no data:\n\n[,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]     [,8]     [,9]\n[,10]    [,11]    [,12]\n\n          [,13]    [,14]    [,15]    [,16]    [,17]    [,18]    [,19]\n[,20]    [,21]    [,22]    [,23]    [,24]\n\n\n\nAnd similarly for latitude\n\nBut if I open the nc file as a raster I get a raster precipitation plot of\nGreat Britain, which rather suggests that the lat and long values are in\nthere somewhere\n\nCan anyone help with getting the actual data sets out of an nc file?\n\nThanks Nick Wray\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Hello\n\nI am trying to get rainfall data from the UK chess-met site\n\nhttps://catalogue.ceh.ac.uk/datastore/eidchub/2ab15bf0-ad08-415c-ba64-831168be7293/precip/\n\nand here there are a large number of nc ",
       "thread_id": "thread-e5f431f65fda",
       "thread_depth": 0,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029132.html"
     },
     {
       "id": "msg-c3252d762f02",
@@ -31,11 +32,12 @@
       "references": [
         "<CABxY9BNs6Fz6M_0wHy37BRR420jWOhqqg6vEevsLdreQxrvBfQ@mail.gmail.com>"
       ],
-      "body_plain": "have a look at the output of printing nc_data, you are looking for\ndimensions that belong to a 2D (or higher) variable of interest .\n\nThey can be called anything, but longitude, lon, x, etc are common. you can\nuse ncdf4 functions to find them (without reading the output), but it's all\nstored in a nested list in nc_data).\n\nSee ncmeta package for an alternative way to access the metadata.\n\nHth, Mike\n\nOn Wed, 9 Nov 2022, 21:54 Nick Wray, <nickmwray at gmail.com> wrote:\n\n> Hello\n>\n> I am trying to get rainfall data from the UK chess-met site\n>\n>\n> https://catalogue.ceh.ac.uk/datastore/eidchub/2ab15bf0-ad08-415c-ba64-831168be7293/precip/\n>\n> and here there are a large number of nc files eg\n>\n> \"chess-met_precip_gb_1km_daily_20150101-20150131.nc\"\n>\n> I?ve found various sources on the net for opening nc files, and getting the\n> data but when I try instructions like\n>\n> nc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\n>\n> lon <- ncvar_get(nc_data, \"lon\")\n>\n> lon\n>\n>\n>\n> the code works but all I get is a series of element numbers and no data:\n>\n> [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]     [,8]\n>  [,9]\n> [,10]    [,11]    [,12]\n>\n>           [,13]    [,14]    [,15]    [,16]    [,17]    [,18]    [,19]\n> [,20]    [,21]    [,22]    [,23]    [,24]\n>\n>\n>\n> And similarly for latitude\n>\n> But if I open the nc file as a raster I get a raster precipitation plot of\n> Great Britain, which rather suggests that the lat and long values are in\n> there somewhere\n>\n> Can anyone help with getting the actual data sets out of an nc file?\n>\n> Thanks Nick Wray\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "have a look at the output of printing nc_data, you are looking for\ndimensions that belong to a 2D (or higher) variable of interest .\n\nThey can be called anything, but longitude, lon, x, etc are common. you can\nuse ncdf4 functions to find them (without reading the output), but it's all\nstored in a nested list in nc_data).\n\nSee ncmeta package for an alternative way to access the metadata.\n\nHth, Mike\n\nOn Wed, 9 Nov 2022, 21:54 Nick Wray, <nickmwray at gmail.com> wrote:\n\n> Hello\n>\n> I am trying to get rainfall data from the UK chess-met site\n>\n>\n> https://catalogue.ceh.ac.uk/datastore/eidchub/2ab15bf0-ad08-415c-ba64-831168be7293/precip/\n>\n> and here there are a large number of nc files eg\n>\n> \"chess-met_precip_gb_1km_daily_20150101-20150131.nc\"\n>\n> I’ve found various sources on the net for opening nc files, and getting the\n> data but when I try instructions like\n>\n> nc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\n>\n> lon <- ncvar_get(nc_data, \"lon\")\n>\n> lon\n>\n>\n>\n> the code works but all I get is a series of element numbers and no data:\n>\n> [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]     [,8]\n>  [,9]\n> [,10]    [,11]    [,12]\n>\n>           [,13]    [,14]    [,15]    [,16]    [,17]    [,18]    [,19]\n> [,20]    [,21]    [,22]    [,23]    [,24]\n>\n>\n>\n> And similarly for latitude\n>\n> But if I open the nc file as a raster I get a raster precipitation plot of\n> Great Britain, which rather suggests that the lat and long values are in\n> there somewhere\n>\n> Can anyone help with getting the actual data sets out of an nc file?\n>\n> Thanks Nick Wray\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "have a look at the output of printing nc_data, you are looking for\ndimensions that belong to a 2D (or higher) variable of interest .\n\nThey can be called anything, but longitude, lon, x, etc are common",
       "thread_id": "thread-e5f431f65fda",
       "thread_depth": 1,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029133.html"
     },
     {
       "id": "msg-7e93939e5662",
@@ -49,11 +51,12 @@
       "references": [
         "<CABxY9BNs6Fz6M_0wHy37BRR420jWOhqqg6vEevsLdreQxrvBfQ@mail.gmail.com>"
       ],
-      "body_plain": "Maybe you are looking for something like this:\n\nnc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\nlon<-lon<-nc_data$dim$LON$vals\nlat<-nc_data$dim$LAT$vals\n\nor\n\nlon<-ncvar_get(nc_data,nc_data$dim$LON)\nlat<-ncvar_get(nc_data,nc_data$dim$LAT)\n\nNote that the LON and LAT can be anything as Mike said. Hope it's helps.\n\nAni\n\nOn Wed, Nov 9, 2022 at 7:54 PM Nick Wray <nickmwray at gmail.com> wrote:\n>\n> Hello\n>\n> I am trying to get rainfall data from the UK chess-met site\n>\n> https://catalogue.ceh.ac.uk/datastore/eidchub/2ab15bf0-ad08-415c-ba64-831168be7293/precip/\n>\n> and here there are a large number of nc files eg\n>\n> \"chess-met_precip_gb_1km_daily_20150101-20150131.nc\"\n>\n> I?ve found various sources on the net for opening nc files, and getting the\n> data but when I try instructions like\n>\n> nc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\n>\n> lon <- ncvar_get(nc_data, \"lon\")\n>\n> lon\n>\n>\n>\n> the code works but all I get is a series of element numbers and no data:\n>\n> [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]     [,8]     [,9]\n> [,10]    [,11]    [,12]\n>\n>           [,13]    [,14]    [,15]    [,16]    [,17]    [,18]    [,19]\n> [,20]    [,21]    [,22]    [,23]    [,24]\n>\n>\n>\n> And similarly for latitude\n>\n> But if I open the nc file as a raster I get a raster precipitation plot of\n> Great Britain, which rather suggests that the lat and long values are in\n> there somewhere\n>\n> Can anyone help with getting the actual data sets out of an nc file?\n>\n> Thanks Nick Wray\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_plain": "Maybe you are looking for something like this:\n\nnc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\nlon<-lon<-nc_data$dim$LON$vals\nlat<-nc_data$dim$LAT$vals\n\nor\n\nlon<-ncvar_get(nc_data,nc_data$dim$LON)\nlat<-ncvar_get(nc_data,nc_data$dim$LAT)\n\nNote that the LON and LAT can be anything as Mike said. Hope it's helps.\n\nAni\n\nOn Wed, Nov 9, 2022 at 7:54 PM Nick Wray <nickmwray at gmail.com> wrote:\n>\n> Hello\n>\n> I am trying to get rainfall data from the UK chess-met site\n>\n> https://catalogue.ceh.ac.uk/datastore/eidchub/2ab15bf0-ad08-415c-ba64-831168be7293/precip/\n>\n> and here there are a large number of nc files eg\n>\n> \"chess-met_precip_gb_1km_daily_20150101-20150131.nc\"\n>\n> I’ve found various sources on the net for opening nc files, and getting the\n> data but when I try instructions like\n>\n> nc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\n>\n> lon <- ncvar_get(nc_data, \"lon\")\n>\n> lon\n>\n>\n>\n> the code works but all I get is a series of element numbers and no data:\n>\n> [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]     [,8]     [,9]\n> [,10]    [,11]    [,12]\n>\n>           [,13]    [,14]    [,15]    [,16]    [,17]    [,18]    [,19]\n> [,20]    [,21]    [,22]    [,23]    [,24]\n>\n>\n>\n> And similarly for latitude\n>\n> But if I open the nc file as a raster I get a raster precipitation plot of\n> Great Britain, which rather suggests that the lat and long values are in\n> there somewhere\n>\n> Can anyone help with getting the actual data sets out of an nc file?\n>\n> Thanks Nick Wray\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo",
       "body_snippet": "Maybe you are looking for something like this:\n\nnc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\nlon<-lon<-nc_data$dim$LON$vals\nlat<-nc_data$dim$LAT$vals\n\nor\n\nlon<-ncvar_get(nc_d",
       "thread_id": "thread-e5f431f65fda",
       "thread_depth": 1,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029134.html"
     },
     {
       "id": "msg-cf8ee1e8cabe",
@@ -68,11 +71,12 @@
         "<CABxY9BNs6Fz6M_0wHy37BRR420jWOhqqg6vEevsLdreQxrvBfQ@mail.gmail.com>",
         "<CAHXS41zrq_nR72SLhqVo0eDq8KodoCqqJuPO3eYAsCBGBjZCnA@mail.gmail.com>"
       ],
-      "body_plain": "Hi,\n\nOr you can try witty terra library :\n\nlibrary(terra)\n\nr <- terra::rast(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\nif the nc file has more than one parameters like precipitation,\ntemperature, humidity etc, try this:\nr.sub <- terra::rast(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\",\nsubds = \"yourvarname\")\n\nor with raster library:\nr1 <- raster::brick(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\nsame,\nr1.sub <- raster::brick(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\",\nvarname  = \"yourvarname\")\n\nI hope this helps.\nBest,\nVlad Amihaesei\n\n\n\nOn Wed, Nov 9, 2022 at 6:49 PM ani jaya <gaaauul at gmail.com> wrote:\n\n> Maybe you are looking for something like this:\n>\n> nc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\n> lon<-lon<-nc_data$dim$LON$vals\n> lat<-nc_data$dim$LAT$vals\n>\n> or\n>\n> lon<-ncvar_get(nc_data,nc_data$dim$LON)\n> lat<-ncvar_get(nc_data,nc_data$dim$LAT)\n>\n> Note that the LON and LAT can be anything as Mike said. Hope it's helps.\n>\n> Ani\n>\n> On Wed, Nov 9, 2022 at 7:54 PM Nick Wray <nickmwray at gmail.com> wrote:\n> >\n> > Hello\n> >\n> > I am trying to get rainfall data from the UK chess-met site\n> >\n> >\n> https://catalogue.ceh.ac.uk/datastore/eidchub/2ab15bf0-ad08-415c-ba64-831168be7293/precip/\n> >\n> > and here there are a large number of nc files eg\n> >\n> > \"chess-met_precip_gb_1km_daily_20150101-20150131.nc\"\n> >\n> > I?ve found various sources on the net for opening nc files, and getting\n> the\n> > data but when I try instructions like\n> >\n> > nc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\n> >\n> > lon <- ncvar_get(nc_data, \"lon\")\n> >\n> > lon\n> >\n> >\n> >\n> > the code works but all I get is a series of element numbers and no data:\n> >\n> > [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]     [,8]\n>  [,9]\n> > [,10]    [,11]    [,12]\n> >\n> >           [,13]    [,14]    [,15]    [,16]    [,17]    [,18]    [,19]\n> > [,20]    [,21]    [,22]    [,23]    [,24]\n> >\n> >\n> >\n> > And similarly for latitude\n> >\n> > But if I open the nc file as a raster I get a raster precipitation plot\n> of\n> > Great Britain, which rather suggests that the lat and long values are in\n> > there somewhere\n> >\n> > Can anyone help with getting the actual data sets out of an nc file?\n> >\n> > Thanks Nick Wray\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Hi,\n\nOr you can try witty terra library :\n\nlibrary(terra)\n\nr <- terra::rast(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\nif the nc file has more than one parameters like precipitation,\ntemperature, humidity etc, try this:\nr.sub <- terra::rast(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\",\nsubds = \"yourvarname\")\n\nor with raster library:\nr1 <- raster::brick(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\nsame,\nr1.sub <- raster::brick(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\",\nvarname  = \"yourvarname\")\n\nI hope this helps.\nBest,\nVlad Amihaesei\n\n\n\nOn Wed, Nov 9, 2022 at 6:49 PM ani jaya <gaaauul at gmail.com> wrote:\n\n> Maybe you are looking for something like this:\n>\n> nc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\n> lon<-lon<-nc_data$dim$LON$vals\n> lat<-nc_data$dim$LAT$vals\n>\n> or\n>\n> lon<-ncvar_get(nc_data,nc_data$dim$LON)\n> lat<-ncvar_get(nc_data,nc_data$dim$LAT)\n>\n> Note that the LON and LAT can be anything as Mike said. Hope it's helps.\n>\n> Ani\n>\n> On Wed, Nov 9, 2022 at 7:54 PM Nick Wray <nickmwray at gmail.com> wrote:\n> >\n> > Hello\n> >\n> > I am trying to get rainfall data from the UK chess-met site\n> >\n> >\n> https://catalogue.ceh.ac.uk/datastore/eidchub/2ab15bf0-ad08-415c-ba64-831168be7293/precip/\n> >\n> > and here there are a large number of nc files eg\n> >\n> > \"chess-met_precip_gb_1km_daily_20150101-20150131.nc\"\n> >\n> > I’ve found various sources on the net for opening nc files, and getting\n> the\n> > data but when I try instructions like\n> >\n> > nc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\n> >\n> > lon <- ncvar_get(nc_data, \"lon\")\n> >\n> > lon\n> >\n> >\n> >\n> > the code works but all I get is a series of element numbers and no data:\n> >\n> > [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]     [,8]\n>  [,9]\n> > [,10]    [,11]    [,12]\n> >\n> >           [,13]    [,14]    [,15]    [,16]    [,17]    [,18]    [,19]\n> > [,20]    [,21]    [,22]    [,23]    [,24]\n> >\n> >\n> >\n> > And similarly for latitude\n> >\n> > But if I open the nc file as a raster I get a raster precipitation plot\n> of\n> > Great Britain, which rather suggests that the lat and long values are in\n> > there somewhere\n> >\n> > Can anyone help with getting the actual data sets out of an nc file?\n> >\n> > Thanks Nick Wray\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-sig-Geo mailing list\n> > R-sig-Geo at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Hi,\n\nOr you can try witty terra library :\n\nlibrary(terra)\n\nr <- terra::rast(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\nif the nc file has more than one parameters like precipitation,\ntemper",
       "thread_id": "thread-e5f431f65fda",
       "thread_depth": 2,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029135.html"
     },
     {
       "id": "msg-6c88e577b66b",
@@ -86,11 +90,12 @@
       "references": [
         "<CABxY9BNs6Fz6M_0wHy37BRR420jWOhqqg6vEevsLdreQxrvBfQ@mail.gmail.com>"
       ],
-      "body_plain": "Unfortunately you need to register to look at one of those files,  but what I could dig up on the internet suggest the data are on x,y coordinates.  You can find that just giving the command\n\nnc_data \n\nor for more complete info\n\nstr(nc_data)\n\nAlso since they say they follow the CF conventions,  so that printout should contain information about the coordinate system.  I can't offhand find the description except a comment somewhere to be careful because of a use fo a different datum.  \n\nHTH,\n\n-Roy\n\n> On Nov 9, 2022, at 2:53 AM, Nick Wray <nickmwray at gmail.com> wrote:\n> \n> Hello\n> \n> I am trying to get rainfall data from the UK chess-met site\n> \n> https://catalogue.ceh.ac.uk/datastore/eidchub/2ab15bf0-ad08-415c-ba64-831168be7293/precip/\n> \n> and here there are a large number of nc files eg\n> \n> \"chess-met_precip_gb_1km_daily_20150101-20150131.nc\"\n> \n> I?ve found various sources on the net for opening nc files, and getting the\n> data but when I try instructions like\n> \n> nc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\n> \n> lon <- ncvar_get(nc_data, \"lon\")\n> \n> lon\n> \n> \n> \n> the code works but all I get is a series of element numbers and no data:\n> \n> [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]     [,8]     [,9]\n> [,10]    [,11]    [,12]\n> \n>          [,13]    [,14]    [,15]    [,16]    [,17]    [,18]    [,19]\n> [,20]    [,21]    [,22]    [,23]    [,24]\n> \n> \n> \n> And similarly for latitude\n> \n> But if I open the nc file as a raster I get a raster precipitation plot of\n> Great Britain, which rather suggests that the lat and long values are in\n> there somewhere\n> \n> Can anyone help with getting the actual data sets out of an nc file?\n> \n> Thanks Nick Wray\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n**********************\n\"The contents of this message do not reflect any position of the U.S. Government or NOAA.\"\n**********************\nRoy Mendelssohn\nSupervisory Operations Research Analyst\nNOAA/NMFS\nEnvironmental Research Division\nSouthwest Fisheries Science Center\n***Note new street address***\n110 McAllister Way\nSanta Cruz, CA 95060\nPhone: (831)-420-3666\nFax: (831) 420-3980\ne-mail: Roy.Mendelssohn at noaa.gov www: https://www.pfeg.noaa.gov/\n\n\"Old age and treachery will overcome youth and skill.\"\n\"From those who have been given much, much will be expected\" \n\"the arc of the moral universe is long, but it bends toward justice\" -MLK Jr.",
+      "body_plain": "Unfortunately you need to register to look at one of those files,  but what I could dig up on the internet suggest the data are on x,y coordinates.  You can find that just giving the command\n\nnc_data \n\nor for more complete info\n\nstr(nc_data)\n\nAlso since they say they follow the CF conventions,  so that printout should contain information about the coordinate system.  I can't offhand find the description except a comment somewhere to be careful because of a use fo a different datum.  \n\nHTH,\n\n-Roy\n\n> On Nov 9, 2022, at 2:53 AM, Nick Wray <nickmwray at gmail.com> wrote:\n> \n> Hello\n> \n> I am trying to get rainfall data from the UK chess-met site\n> \n> https://catalogue.ceh.ac.uk/datastore/eidchub/2ab15bf0-ad08-415c-ba64-831168be7293/precip/\n> \n> and here there are a large number of nc files eg\n> \n> \"chess-met_precip_gb_1km_daily_20150101-20150131.nc\"\n> \n> I’ve found various sources on the net for opening nc files, and getting the\n> data but when I try instructions like\n> \n> nc_data<-nc_open(\"chess-met_precip_gb_1km_daily_20150101-20150131.nc\")\n> \n> lon <- ncvar_get(nc_data, \"lon\")\n> \n> lon\n> \n> \n> \n> the code works but all I get is a series of element numbers and no data:\n> \n> [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]     [,8]     [,9]\n> [,10]    [,11]    [,12]\n> \n>          [,13]    [,14]    [,15]    [,16]    [,17]    [,18]    [,19]\n> [,20]    [,21]    [,22]    [,23]    [,24]\n> \n> \n> \n> And similarly for latitude\n> \n> But if I open the nc file as a raster I get a raster precipitation plot of\n> Great Britain, which rather suggests that the lat and long values are in\n> there somewhere\n> \n> Can anyone help with getting the actual data sets out of an nc file?\n> \n> Thanks Nick Wray\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n**********************\n\"The contents of this message do not reflect any position of the U.S. Government or NOAA.\"\n**********************\nRoy Mendelssohn\nSupervisory Operations Research Analyst\nNOAA/NMFS\nEnvironmental Research Division\nSouthwest Fisheries Science Center\n***Note new street address***\n110 McAllister Way\nSanta Cruz, CA 95060\nPhone: (831)-420-3666\nFax: (831) 420-3980\ne-mail: Roy.Mendelssohn at noaa.gov www: https://www.pfeg.noaa.gov/\n\n\"Old age and treachery will overcome youth and skill.\"\n\"From those who have been given much, much will be expected\" \n\"the arc of the moral universe is long, but it bends toward justice\" -MLK Jr.",
       "body_snippet": "Unfortunately you need to register to look at one of those files,  but what I could dig up on the internet suggest the data are on x,y coordinates.  You can find that just giving the command\n\nnc_data ",
       "thread_id": "thread-e5f431f65fda",
       "thread_depth": 1,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029136.html"
     },
     {
       "id": "msg-fb8224f213ee",
@@ -106,7 +111,8 @@
       "body_snippet": "Greetings everyone,\n\nI would like to convert the geojson file (\nhttps://drive.google.com/file/d/18h3sOjZg5jp5euLTWRi5mC40Sja8TZDN/view?usp=sharing)\nto a dataframe - essentially obtain which has coordi",
       "thread_id": "thread-fb8224f213ee",
       "thread_depth": 0,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029137.html"
     },
     {
       "id": "msg-f19611d8df1a",
@@ -124,7 +130,8 @@
       "body_snippet": "You're going to want to read the file with sf.\n\nTry object <- sf::st_read(\"~countrymasks.geojson\")\n\nOn Mon, Nov 28, 2022 at 7:09 AM Miluji Sb <milujisb at gmail.com> wrote:\n\n> Greetings everyone,\n>\n> ",
       "thread_id": "thread-fb8224f213ee",
       "thread_depth": 1,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029138.html"
     },
     {
       "id": "msg-b14450b53d12",
@@ -143,7 +150,8 @@
       "body_snippet": "Thank you for reply. When I try using sf, I get the following error;\n\nError in CPL_read_ogr(dsn, layer, query, as.character(options), quiet,  :\n  attempt to set index 210/210 in SET_STRING_ELT.\n\nThank",
       "thread_id": "thread-fb8224f213ee",
       "thread_depth": 2,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029139.html"
     },
     {
       "id": "msg-80f977e7960b",
@@ -163,7 +171,8 @@
       "body_snippet": "This seems to be a weird bug in `st_read`. If you read it with an SQL\nquery that matches every row it works:\n\n> js = st_read(\"./countrymasks.geojson\", query=\"select * from countrymasks where 1 = 1\")\nR",
       "thread_id": "thread-fb8224f213ee",
       "thread_depth": 3,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029140.html"
     },
     {
       "id": "msg-5aeec620f7e6",
@@ -184,7 +193,8 @@
       "body_snippet": "Thank you. I will report this bug (I did not have the confidence to call\nthis a bug before).\n\nEven using your code, I get the same output.\n\nstructure(list(X = c(-67.3804401, -67.36091, -67.38058999999",
       "thread_id": "thread-fb8224f213ee",
       "thread_depth": 4,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029141.html"
     },
     {
       "id": "msg-1a256cd0f4a6",
@@ -206,7 +216,8 @@
       "body_snippet": "Interestingly, what seems to works is\n\nreadLines('countrymasks.geojson') |> st_read() -> r\n\nwith a warning:\n\nWarning message:\nIn readLines(\"countrymasks.geojson\") :\n   incomplete final line found on '",
       "thread_id": "thread-fb8224f213ee",
       "thread_depth": 5,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029142.html"
     },
     {
       "id": "msg-ec204bf102cb",
@@ -229,7 +240,8 @@
       "body_snippet": "Ah ha, its a file with no line endings. Count the lines, zero:\n\n$ wc -l countrymasks.geojson\n0 countrymasks.geojson\n\nAlthough adding a line ending to the file still produces the error.\nHmm. Even runni",
       "thread_id": "thread-fb8224f213ee",
       "thread_depth": 6,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029143.html"
     },
     {
       "id": "msg-276a1a06265e",
@@ -245,7 +257,8 @@
       "body_snippet": "Hello   I have shapefile data (of the river Tweed catchment in N England\nand Scotland) which I have been able to plot precipitation and temperature\ndata onto without too many problems.  These data hav",
       "thread_id": "thread-276a1a06265e",
       "thread_depth": 0,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029144.html"
     },
     {
       "id": "msg-3c6ce46ea42c",
@@ -263,7 +276,8 @@
       "body_snippet": "Try:\n\nlibrary(raster)\n\nnew_raster<-spTransform(old_raster,CRS(\"+proj=longlat +ellps=airy +no_defs\"))\n\nGood luck\nAlaba\n\n________________________________\nFrom: R-sig-Geo <r-sig-geo-bounces at r-project.",
       "thread_id": "thread-276a1a06265e",
       "thread_depth": 1,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029145.html"
     },
     {
       "id": "msg-828fe89e9938",
@@ -282,7 +296,8 @@
       "body_snippet": "Or use\n?stars::st_transform\n\nThe EPSG for OSGB36 is 27700 (https://epsg.io/27700), so something like...\nnewraster <- st_transform(raster, CRS=27700)\nshould work, but you might also want to look at st_",
       "thread_id": "thread-276a1a06265e",
       "thread_depth": 2,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029146.html"
     },
     {
       "id": "msg-8f845cf865b8",
@@ -300,7 +315,8 @@
       "body_snippet": "As I said on gis.stackoverflow, these two things are probably in the\nsame CRS anyway.\n\nBut also some people have replied suggesting you transform the raster.\nDONT! (Unless you really have to...). If y",
       "thread_id": "thread-276a1a06265e",
       "thread_depth": 1,
-      "month": "2022-11"
+      "month": "2022-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2022-November/029147.html"
     }
   ],
   "threads": [
