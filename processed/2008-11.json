@@ -18,6 +18,7 @@
       "thread_id": "thread-c43032ba30ec",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004471.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081101/e5ffd9f5/attachment.pl"
       ]
@@ -36,7 +37,8 @@
       "body_snippet": "I think that you should avoid importing to R the whole\nraster, which is not required for classIntervals(). Just\nmake an stats table with r.stats -c, export the resulting table (DN,freq \nfor each DN)\nt",
       "thread_id": "thread-e664402a206c",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004472.html"
     },
     {
       "id": "msg-cff9106226fb",
@@ -52,7 +54,8 @@
       "body_snippet": "Dear R-sig-geo users,\n\n    I have a question about extracting information from a raster file\nafter I read it in using rgdal package, and I would be infinitely\ngrateful if someone could help me.\n    Th",
       "thread_id": "thread-cff9106226fb",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004473.html"
     },
     {
       "id": "msg-bbeb96559656",
@@ -70,7 +73,8 @@
       "body_snippet": "On Sun, 2 Nov 2008, Harry Kim wrote:\n\n> Dear R-sig-geo users,\n>\n>    I have a question about extracting information from a raster file\n> after I read it in using rgdal package, and I would be infinite",
       "thread_id": "thread-cff9106226fb",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004474.html"
     },
     {
       "id": "msg-df25d28aa966",
@@ -88,7 +92,8 @@
       "body_snippet": "Hi Harry,\n\nI think what you want can be achieved using the overlay function \n(package sp). Code example:\n\nsgdf    #SpatialGridDataframe\nsp       # SpatialPoints (can also be SpatialPointsDataFrame), p",
       "thread_id": "thread-cff9106226fb",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004475.html"
     },
     {
       "id": "msg-85606cc70617",
@@ -102,11 +107,12 @@
       "references": [
         "<91b8161f0811022343p3099f0f1ydaf936453708a29e@mail.gmail.com>"
       ],
-      "body_plain": "We (the developers from sp) tried hard to relieve you from writing such \ncode. Please try the following code, which requires you to click on the \ngrid map after locator(1):\n\nlibrary(sp)\ndata(meuse.grid)\ncoordinates(meuse.grid)=~x+y\ngridded(meuse.grid)=TRUE\nfullgrid(meuse.grid) = TRUE\nimage(meuse.grid[\"dist\"])\npt = locator(1)\npt\npt.sp = SpatialPoints(matrix(c(pt[[1]], pt[[2]]), 1, 2))\npt.sp\noverlay(meuse.grid, pt.sp)\n\nBesides being equally efficient, this code should remain working even if \nsome internal representations of the sp classes were to change.\n\nWhile looking at your code below, I have the feeling you forget that R \narrays start with index 1, whereas C arrays start with index 0. You can \ncheck the sp sources to be 100% certain, but I also believe that the sp \norganization lets vary x first, then y.\n--\nEdzer\n\nHarry Kim wrote:\n> Dear R-sig-geo users,\n>\n>     I have a question about extracting information from a raster file\n> after I read it in using rgdal package, and I would be infinitely\n> grateful if someone could help me.\n>     The summary of raster file looks like this:\n>\n> #summary of raster file\n>   \n>> summary(xxx)\n>>     \n> Object of class SpatialGridDataFrame\n> Coordinates:\n>    min max\n> x -180 180\n> y  -90  90\n> Is projected: FALSE\n> proj4string :\n> [+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0]\n> Number of points: 2\n> Grid attributes:\n>   cellcentre.offset cellsize cells.dim\n> x           -179.10      1.8       200\n> y            -89.55      0.9       200\n> Data attributes:\n>      Min.   1st Qu.    Median      Mean   3rd Qu.      Max.      NA's\n>     0.000     0.000     0.000    47.010     3.264 13540.000 26563.000\n>\n> I would like to write a code that extracts the value of associated\n> cell given a specific location in latitude and longitude. I've noticed\n> that xxx at data contains the values as 40000 x 1 matrix. I've wrote the\n> following code assuming that the values are stored as in C programing\n> (column wise seperation):\n>\n>\n> #initiate values\n> x_inc=xxx at grid@cellsize[1]\n> y_inc=xxx at grid@cellsize[2]\n>\n> x_start=xxx at grid@cellcentre.offset[1]\n> y_start=xxx at grid@cellcentre.offset[2]\n>\n> x_dim=xxx at grid@cells.dim[1]\n> y_dim=xxx at grid@cells.dim[2]\n>\n> #given coordinate\n> x=26\n> y=45\n>\n> #find the index\n> index=floor((x-x_start)/x_inc)*y_dim + floor( (y-y_start)/y_inc )\n> xxx at data[index,1]\n>\n> The result does not seem to match what I should get. Could anybody\n> explain to me how the data is stored in SpatialGridDataFrame? Your\n> help would be much much appreciated.\n>\n> Thank you and have a good night\n> Harry\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster\nWeseler Stra?e 253, 48151 M?nster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
+      "body_plain": "We (the developers from sp) tried hard to relieve you from writing such \ncode. Please try the following code, which requires you to click on the \ngrid map after locator(1):\n\nlibrary(sp)\ndata(meuse.grid)\ncoordinates(meuse.grid)=~x+y\ngridded(meuse.grid)=TRUE\nfullgrid(meuse.grid) = TRUE\nimage(meuse.grid[\"dist\"])\npt = locator(1)\npt\npt.sp = SpatialPoints(matrix(c(pt[[1]], pt[[2]]), 1, 2))\npt.sp\noverlay(meuse.grid, pt.sp)\n\nBesides being equally efficient, this code should remain working even if \nsome internal representations of the sp classes were to change.\n\nWhile looking at your code below, I have the feeling you forget that R \narrays start with index 1, whereas C arrays start with index 0. You can \ncheck the sp sources to be 100% certain, but I also believe that the sp \norganization lets vary x first, then y.\n--\nEdzer\n\nHarry Kim wrote:\n> Dear R-sig-geo users,\n>\n>     I have a question about extracting information from a raster file\n> after I read it in using rgdal package, and I would be infinitely\n> grateful if someone could help me.\n>     The summary of raster file looks like this:\n>\n> #summary of raster file\n>   \n>> summary(xxx)\n>>     \n> Object of class SpatialGridDataFrame\n> Coordinates:\n>    min max\n> x -180 180\n> y  -90  90\n> Is projected: FALSE\n> proj4string :\n> [+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0]\n> Number of points: 2\n> Grid attributes:\n>   cellcentre.offset cellsize cells.dim\n> x           -179.10      1.8       200\n> y            -89.55      0.9       200\n> Data attributes:\n>      Min.   1st Qu.    Median      Mean   3rd Qu.      Max.      NA's\n>     0.000     0.000     0.000    47.010     3.264 13540.000 26563.000\n>\n> I would like to write a code that extracts the value of associated\n> cell given a specific location in latitude and longitude. I've noticed\n> that xxx at data contains the values as 40000 x 1 matrix. I've wrote the\n> following code assuming that the values are stored as in C programing\n> (column wise seperation):\n>\n>\n> #initiate values\n> x_inc=xxx at grid@cellsize[1]\n> y_inc=xxx at grid@cellsize[2]\n>\n> x_start=xxx at grid@cellcentre.offset[1]\n> y_start=xxx at grid@cellcentre.offset[2]\n>\n> x_dim=xxx at grid@cells.dim[1]\n> y_dim=xxx at grid@cells.dim[2]\n>\n> #given coordinate\n> x=26\n> y=45\n>\n> #find the index\n> index=floor((x-x_start)/x_inc)*y_dim + floor( (y-y_start)/y_inc )\n> xxx at data[index,1]\n>\n> The result does not seem to match what I should get. Could anybody\n> explain to me how the data is stored in SpatialGridDataFrame? Your\n> help would be much much appreciated.\n>\n> Thank you and have a good night\n> Harry\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster\nWeseler Straße 253, 48151 Münster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
       "body_snippet": "We (the developers from sp) tried hard to relieve you from writing such \ncode. Please try the following code, which requires you to click on the \ngrid map after locator(1):\n\nlibrary(sp)\ndata(meuse.gri",
       "thread_id": "thread-cff9106226fb",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004476.html"
     },
     {
       "id": "msg-0cb5f58fa705",
@@ -122,7 +128,8 @@
       "body_snippet": "An HTML attachment was scrubbed...\nURL: <https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081103/a1cd4ea2/attachment.html>",
       "thread_id": "thread-0cb5f58fa705",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004477.html"
     },
     {
       "id": "msg-f1babac44253",
@@ -141,6 +148,7 @@
       "thread_id": "thread-0cb5f58fa705",
       "thread_depth": 1,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004478.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081104/3d15236f/attachment.pl"
       ]
@@ -161,7 +169,8 @@
       "body_snippet": "On Mon, 3 Nov 2008, Mikael Carlsson wrote:\n\n> \n> Hi,\n> \n> ?\n> \n> First, thanks for all help so far...but I still have some problems.\n> Here is the code:\n> cumark <- read.table(\"k:/test/helamarkcu.txt\"",
       "thread_id": "thread-0cb5f58fa705",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004479.html"
     },
     {
       "id": "msg-7cd79160d6ea",
@@ -178,6 +187,7 @@
       "thread_id": "thread-7cd79160d6ea",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004480.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081105/7b8e6798/attachment.pl"
       ]
@@ -198,7 +208,8 @@
       "body_snippet": "Hi,\n\nMy experience with the fisher method of calculating intervals is that it \nbecomes very slow if applied to a larger dataset. Your dataset is much \nmuch larger than what I have tried to do with sty",
       "thread_id": "thread-7cd79160d6ea",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004481.html"
     },
     {
       "id": "msg-16e867a20511",
@@ -215,6 +226,7 @@
       "thread_id": "thread-16e867a20511",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004482.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081104/11b51aba/attachment.pl"
       ]
@@ -235,7 +247,8 @@
       "body_snippet": "Alessandro wrote:\n> Hi all,\n> \n>  \n> \n> I have two txt file with X,Y,Z column and I need to merge together\n> \n>  \n> \n> I tried \n> \n> file_all <- merge(\"file1.txt\",\"file2.txt\")\n> \n> but I don't sure ab",
       "thread_id": "thread-16e867a20511",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004483.html"
     },
     {
       "id": "msg-609090560678",
@@ -251,7 +264,8 @@
       "body_snippet": "I too have seen the style=\"fisher\" method take a long time, e.g.  \n~30min for only ~3000 polygons.\nCorey\n\nCorey Sparks\nAssistant Professor\nDepartment of Demography and Organization Studies\nCollege of ",
       "thread_id": "thread-609090560678",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004484.html"
     },
     {
       "id": "msg-d794d9ec5ccb",
@@ -267,7 +281,8 @@
       "body_snippet": "R-geographers...\n\nI'm trying to solve a problem to implement a line-by-line tiled \nprocessing using RGDAL (read 1 line of an image, process the one line, \nwrite one line of the image to a binary file)",
       "thread_id": "thread-d794d9ec5ccb",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004485.html"
     },
     {
       "id": "msg-7def8ab5d7e4",
@@ -285,7 +300,8 @@
       "body_snippet": "Hi Ale,\n\nWhen you say merge, do you mean you want to append one onto the other, or you \nreally want to merge elements that have common x and y values?\n\nIf it's the first case, then I'd probably read b",
       "thread_id": "thread-16e867a20511",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004486.html"
     },
     {
       "id": "msg-ec68cf2d5997",
@@ -303,7 +319,8 @@
       "body_snippet": "On Wed, 5 Nov 2008, Jonathan Greenberg wrote:\n\n> R-geographers...\n>\n> I'm trying to solve a problem to implement a line-by-line tiled processing \n> using RGDAL (read 1 line of an image, process the on",
       "thread_id": "thread-d794d9ec5ccb",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004487.html"
     },
     {
       "id": "msg-52e09743419e",
@@ -319,7 +336,8 @@
       "body_snippet": "Jonathan\n\nYou might be interested in the raster package available from r-forge\n(within the Rgis project). You would need to download, build and\ninstall it 'manually'\n\nThe below code example reads a li",
       "thread_id": "thread-52e09743419e",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004488.html"
     },
     {
       "id": "msg-4a14ef4151d9",
@@ -337,7 +355,8 @@
       "body_snippet": "Sorry, I hit the send button unintentionally\n\nNext try:\n\n> Jonathan\n>\n> You might be interested in the raster package available from r-forge\n> (within the Rgis project). You would need to dwnload, bui",
       "thread_id": "thread-52e09743419e",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004489.html"
     },
     {
       "id": "msg-ae4c5a9d51ff",
@@ -354,6 +373,7 @@
       "thread_id": "thread-ae4c5a9d51ff",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004490.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081107/a970898b/attachment.pl"
       ]
@@ -373,6 +393,7 @@
       "thread_id": "thread-ec83799b796b",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004491.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081106/4d5f5212/attachment.pl"
       ]
@@ -391,7 +412,8 @@
       "body_snippet": "Hi all\n\nThe tutorial/workshop on\n     'Analysing spatial point patterns in R'\navailable at\n    <www.csiro.au/resources/pf16h.html>\nhas now been revised, rewritten and updated for the\ncurrent version o",
       "thread_id": "thread-120f926a9d36",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004492.html"
     },
     {
       "id": "msg-2a522f8ee85f",
@@ -410,7 +432,8 @@
       "body_snippet": "Hi I \n\nThe problem is this: when i merge ground1 and ground2 in one txt file\n(ground) I lost many rows\n\nEX: file ground1.txt, ground2.txt\nFormat file: X,Y,Z with header row and sep=\",\" \n\n*************",
       "thread_id": "thread-16e867a20511",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004493.html"
     },
     {
       "id": "msg-3389cab2b008",
@@ -430,7 +453,8 @@
       "body_snippet": "On Fri, 7 Nov 2008, Alessandro wrote:\n\n> Hi I\n>\n> The problem is this: when i merge ground1 and ground2 in one txt file\n> (ground) I lost many rows\n>\n> EX: file ground1.txt, ground2.txt\n> Format file:",
       "thread_id": "thread-16e867a20511",
       "thread_depth": 3,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004494.html"
     },
     {
       "id": "msg-5c5cc6611340",
@@ -446,7 +470,8 @@
       "body_snippet": "Dear List,\n\nI am attempting to generate some county level species distribution maps for a publication. The idea is to show three different categories on one map; one for species A, one for species B a",
       "thread_id": "thread-5c5cc6611340",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004495.html"
     },
     {
       "id": "msg-cee1202c094c",
@@ -462,7 +487,8 @@
       "body_snippet": "Michael\nadding fill = TRUE  (so that polygon is used) works for me.\nDavid\n\nDavid Maxwell\nCefas\t\nLowestoft Laboratory\t\t\nSuffolk\t\t\t\t\nNR33 OHT\t\t\t   \nUK\n \nwww.cefas.co.uk\n\n\n-----Original Message-----\nFrom",
       "thread_id": "thread-5c5cc6611340",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004496.html"
     },
     {
       "id": "msg-fca3f794f34d",
@@ -479,6 +505,7 @@
       "thread_id": "thread-fca3f794f34d",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004497.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081110/bfab6153/attachment.pl"
       ]
@@ -498,6 +525,7 @@
       "thread_id": "thread-40f50a163573",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004498.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081110/d5f7e2fd/attachment.pl"
       ]
@@ -518,7 +546,8 @@
       "body_snippet": "Hi,\n\nWhat platform are you using, 64 bit? What kind of dataset? What kind of \noperation do you want to perform on the data? Quite a lot has been said \non memory usage in R on the \"normal\" R-help list.",
       "thread_id": "thread-40f50a163573",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004499.html"
     },
     {
       "id": "msg-515b1daa02ca",
@@ -536,7 +565,8 @@
       "body_snippet": "Raphael Saldanha schreef:\n> Hi!\n>\n> Is there any way to estimate model with instrumental variables in R?\n>\n> Regards,\n>\n> Raphael Saldanha\n> saldanha.plangeo at gmail.com\n>\n> \t[[alternative HTML versi",
       "thread_id": "thread-fca3f794f34d",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004500.html"
     },
     {
       "id": "msg-bf67b04783a5",
@@ -548,11 +578,12 @@
       "subject_clean": "using gwr",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "I have some questions:\n\nI got an error. I dont't know why.\n\nSomebody to help me?\n\nThanks,\n\n   Virginia Ragoni\n\nrequire(spgwr)\nrequire(foreign)\nx <- read.shape(\"cidade.shp\")\nplot(x)\nmappolys <- Map2poly1(x,as.character(x$att.data$ID9100),raw=FALSE)\n\nmapbbs=Map2bbs(x)\nmapcents=get.Pcent(x)\ntab= x$att.data\n\n# c?lculo da largura da banda\nsjc.bw <- gwr.sel((tab$TX_CRESC~tab$LOGDEN),data=tab,coords=mapcents)\n\n# error -  Erro em spDistsN1(bbox, bbox[2, ], longlat) :\n#  NA/NaN/Inf em chamada de fun??o externa (argumento 1)\n\nsp.gauss  <- gwr((tab$PERIDOSO~tab$PERREN20),data=tab,coords=mapcents, \nbandwidth=sjc.bw, hatmatrix=TRUE)",
+      "body_plain": "I have some questions:\n\nI got an error. I dont't know why.\n\nSomebody to help me?\n\nThanks,\n\n   Virginia Ragoni\n\nrequire(spgwr)\nrequire(foreign)\nx <- read.shape(\"cidade.shp\")\nplot(x)\nmappolys <- Map2poly1(x,as.character(x$att.data$ID9100),raw=FALSE)\n\nmapbbs=Map2bbs(x)\nmapcents=get.Pcent(x)\ntab= x$att.data\n\n# cálculo da largura da banda\nsjc.bw <- gwr.sel((tab$TX_CRESC~tab$LOGDEN),data=tab,coords=mapcents)\n\n# error -  Erro em spDistsN1(bbox, bbox[2, ], longlat) :\n#  NA/NaN/Inf em chamada de função externa (argumento 1)\n\nsp.gauss  <- gwr((tab$PERIDOSO~tab$PERREN20),data=tab,coords=mapcents, \nbandwidth=sjc.bw, hatmatrix=TRUE)",
       "body_snippet": "I have some questions:\n\nI got an error. I dont't know why.\n\nSomebody to help me?\n\nThanks,\n\n   Virginia Ragoni\n\nrequire(spgwr)\nrequire(foreign)\nx <- read.shape(\"cidade.shp\")\nplot(x)\nmappolys <- Map2pol",
       "thread_id": "thread-bf67b04783a5",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004501.html"
     },
     {
       "id": "msg-dc78058a2836",
@@ -571,6 +602,7 @@
       "thread_id": "thread-bf67b04783a5",
       "thread_depth": 1,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004502.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081111/51dd23b3/attachment.pl"
       ]
@@ -588,11 +620,12 @@
         "<49198355.6020808@dpi.inpe.br>",
         "<c85849370811110519u65a4a9c6u359f88e925b5423a@mail.gmail.com>"
       ],
-      "body_plain": "It is no problem for us to read all this Brazilian (eh, sorry, \nPortugese), but it is hard to reproduce your error without having access \nto your, or similar, data.\n--\nEdzer\n\nRaphael Saldanha wrote:\n> Ol? Virg?nia!\n>\n> Legal ver brazileiros nessa lista! Vou dar uma olhada no seu problema e lhe\n> escrevo.\n>\n> On Tue, Nov 11, 2008 at 10:06 AM, Virginia <virginia at dpi.inpe.br> wrote:\n>\n>   \n>> I have some questions:\n>>\n>> I got an error. I dont't know why.\n>>\n>> Somebody to help me?\n>>\n>> Thanks,\n>>\n>>  Virginia Ragoni\n>>\n>> require(spgwr)\n>> require(foreign)\n>> x <- read.shape(\"cidade.shp\")\n>> plot(x)\n>> mappolys <- Map2poly1(x,as.character(x$att.data$ID9100),raw=FALSE)\n>>\n>> mapbbs=Map2bbs(x)\n>> mapcents=get.Pcent(x)\n>> tab= x$att.data\n>>\n>> # c?lculo da largura da banda\n>> sjc.bw <- gwr.sel((tab$TX_CRESC~tab$LOGDEN),data=tab,coords=mapcents)\n>>\n>> # error -  Erro em spDistsN1(bbox, bbox[2, ], longlat) :\n>> #  NA/NaN/Inf em chamada de fun??o externa (argumento 1)\n>>\n>> sp.gauss  <- gwr((tab$PERIDOSO~tab$PERREN20),data=tab,coords=mapcents,\n>> bandwidth=sjc.bw, hatmatrix=TRUE)\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>     \n>\n>\n>\n>   \n> ------------------------------------------------------------------------\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster\nWeseler Stra?e 253, 48151 M?nster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
+      "body_plain": "It is no problem for us to read all this Brazilian (eh, sorry, \nPortugese), but it is hard to reproduce your error without having access \nto your, or similar, data.\n--\nEdzer\n\nRaphael Saldanha wrote:\n> Olá Virgínia!\n>\n> Legal ver brazileiros nessa lista! Vou dar uma olhada no seu problema e lhe\n> escrevo.\n>\n> On Tue, Nov 11, 2008 at 10:06 AM, Virginia <virginia at dpi.inpe.br> wrote:\n>\n>   \n>> I have some questions:\n>>\n>> I got an error. I dont't know why.\n>>\n>> Somebody to help me?\n>>\n>> Thanks,\n>>\n>>  Virginia Ragoni\n>>\n>> require(spgwr)\n>> require(foreign)\n>> x <- read.shape(\"cidade.shp\")\n>> plot(x)\n>> mappolys <- Map2poly1(x,as.character(x$att.data$ID9100),raw=FALSE)\n>>\n>> mapbbs=Map2bbs(x)\n>> mapcents=get.Pcent(x)\n>> tab= x$att.data\n>>\n>> # cálculo da largura da banda\n>> sjc.bw <- gwr.sel((tab$TX_CRESC~tab$LOGDEN),data=tab,coords=mapcents)\n>>\n>> # error -  Erro em spDistsN1(bbox, bbox[2, ], longlat) :\n>> #  NA/NaN/Inf em chamada de função externa (argumento 1)\n>>\n>> sp.gauss  <- gwr((tab$PERIDOSO~tab$PERREN20),data=tab,coords=mapcents,\n>> bandwidth=sjc.bw, hatmatrix=TRUE)\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>     \n>\n>\n>\n>   \n> ------------------------------------------------------------------------\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster\nWeseler Straße 253, 48151 Münster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
       "body_snippet": "It is no problem for us to read all this Brazilian (eh, sorry, \nPortugese), but it is hard to reproduce your error without having access \nto your, or similar, data.\n--\nEdzer\n\nRaphael Saldanha wrote:\n>",
       "thread_id": "thread-bf67b04783a5",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004503.html"
     },
     {
       "id": "msg-a0da8235c7a3",
@@ -606,11 +639,12 @@
       "references": [
         "<49198355.6020808@dpi.inpe.br>"
       ],
-      "body_plain": "On Tue, 11 Nov 2008, Virginia wrote:\n\n> I have some questions:\n> I got an error. I dont't know why.\n> Somebody to help me?\n\nYour code template is not helpful. A more recent version below, which will \nprobably show that your input data are in error:\n\n>\n> Thanks,\n>\n>  Virginia Ragoni\n>\n> require(spgwr)\n> require(foreign)\n> x <- read.shape(\"cidade.shp\")\n> plot(x)\n> mappolys <- Map2poly1(x,as.character(x$att.data$ID9100),raw=FALSE)\n>\n> mapbbs=Map2bbs(x)\n> mapcents=get.Pcent(x)\n> tab= x$att.data\n>\n> # c?lculo da largura da banda\n> sjc.bw <- gwr.sel((tab$TX_CRESC~tab$LOGDEN),data=tab,coords=mapcents)\n>\n\nlibrary(maptools)\nlibrary(spgwr)\ntab <- readShapeSpatial(\"cidade.shp\")\n# my guess is that there are non-finite centroids in the earlier version, \n# certainly the distance calculation is failing\nsjc.bw <- gwr.sel(TX_CRESC ~ LOGDEN, data=tab)\n\n> # error -  Erro em spDistsN1(bbox, bbox[2, ], longlat) :\n> #  NA/NaN/Inf em chamada de fun??o externa (argumento 1)\n>\n\nPlease always include the output of traceback() after an error, and of\nsessionInfo() to show your platform and package versions.\n\nRoger\n\n> sp.gauss  <- gwr((tab$PERIDOSO~tab$PERREN20),data=tab,coords=mapcents, \n> bandwidth=sjc.bw, hatmatrix=TRUE)\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_plain": "On Tue, 11 Nov 2008, Virginia wrote:\n\n> I have some questions:\n> I got an error. I dont't know why.\n> Somebody to help me?\n\nYour code template is not helpful. A more recent version below, which will \nprobably show that your input data are in error:\n\n>\n> Thanks,\n>\n>  Virginia Ragoni\n>\n> require(spgwr)\n> require(foreign)\n> x <- read.shape(\"cidade.shp\")\n> plot(x)\n> mappolys <- Map2poly1(x,as.character(x$att.data$ID9100),raw=FALSE)\n>\n> mapbbs=Map2bbs(x)\n> mapcents=get.Pcent(x)\n> tab= x$att.data\n>\n> # cálculo da largura da banda\n> sjc.bw <- gwr.sel((tab$TX_CRESC~tab$LOGDEN),data=tab,coords=mapcents)\n>\n\nlibrary(maptools)\nlibrary(spgwr)\ntab <- readShapeSpatial(\"cidade.shp\")\n# my guess is that there are non-finite centroids in the earlier version, \n# certainly the distance calculation is failing\nsjc.bw <- gwr.sel(TX_CRESC ~ LOGDEN, data=tab)\n\n> # error -  Erro em spDistsN1(bbox, bbox[2, ], longlat) :\n> #  NA/NaN/Inf em chamada de função externa (argumento 1)\n>\n\nPlease always include the output of traceback() after an error, and of\nsessionInfo() to show your platform and package versions.\n\nRoger\n\n> sp.gauss  <- gwr((tab$PERIDOSO~tab$PERREN20),data=tab,coords=mapcents, \n> bandwidth=sjc.bw, hatmatrix=TRUE)\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
       "body_snippet": "On Tue, 11 Nov 2008, Virginia wrote:\n\n> I have some questions:\n> I got an error. I dont't know why.\n> Somebody to help me?\n\nYour code template is not helpful. A more recent version below, which will \n",
       "thread_id": "thread-bf67b04783a5",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004504.html"
     },
     {
       "id": "msg-c28fa91fde3e",
@@ -626,11 +660,12 @@
         "<c85849370811110519u65a4a9c6u359f88e925b5423a@mail.gmail.com>",
         "<49198D03.8@uni-muenster.de>"
       ],
-      "body_plain": "I can't read this Brazilian (Portugese :)), but it seems that the \ndistance calculation is in error (possibly some coordinates were missing \ncausing distance calculation yield NA/NaN/Inf value), which leads to \ndistance not being able to calculated.\n\nLike Edzer mentioned, if a sample set of your data is provided, we might \nbe able to track the source.\n\nHope this helps.\n\nBest,\nDanlin\n\nEdzer Pebesma wrote:\n> It is no problem for us to read all this Brazilian (eh, sorry, \n> Portugese), but it is hard to reproduce your error without having \n> access to your, or similar, data.\n> -- \n> Edzer\n>\n> Raphael Saldanha wrote:\n>> Ol? Virg?nia!\n>>\n>> Legal ver brazileiros nessa lista! Vou dar uma olhada no seu problema \n>> e lhe\n>> escrevo.\n>>\n>> On Tue, Nov 11, 2008 at 10:06 AM, Virginia <virginia at dpi.inpe.br> wrote:\n>>\n>>  \n>>> I have some questions:\n>>>\n>>> I got an error. I dont't know why.\n>>>\n>>> Somebody to help me?\n>>>\n>>> Thanks,\n>>>\n>>>  Virginia Ragoni\n>>>\n>>> require(spgwr)\n>>> require(foreign)\n>>> x <- read.shape(\"cidade.shp\")\n>>> plot(x)\n>>> mappolys <- Map2poly1(x,as.character(x$att.data$ID9100),raw=FALSE)\n>>>\n>>> mapbbs=Map2bbs(x)\n>>> mapcents=get.Pcent(x)\n>>> tab= x$att.data\n>>>\n>>> # c?lculo da largura da banda\n>>> sjc.bw <- gwr.sel((tab$TX_CRESC~tab$LOGDEN),data=tab,coords=mapcents)\n>>>\n>>> # error -  Erro em spDistsN1(bbox, bbox[2, ], longlat) :\n>>> #  NA/NaN/Inf em chamada de fun??o externa (argumento 1)\n>>>\n>>> sp.gauss  <- gwr((tab$PERIDOSO~tab$PERREN20),data=tab,coords=mapcents,\n>>> bandwidth=sjc.bw, hatmatrix=TRUE)\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at stat.math.ethz.ch\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>>     \n>>\n>>\n>>\n>>   \n>> ------------------------------------------------------------------------\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>   \n>\n\n-- \n___________________________________________\nDanlin Yu, Ph.D.\nAssistant Professor\nDepartment of Earth & Environmental Studies\nMontclair State University\nMontclair, NJ, 07043\nTel: 973-655-4313\nFax: 973-655-4072\nemail: yud at mail.montclair.edu\nwebpage: csam.montclair.edu/~yu",
+      "body_plain": "I can't read this Brazilian (Portugese :)), but it seems that the \ndistance calculation is in error (possibly some coordinates were missing \ncausing distance calculation yield NA/NaN/Inf value), which leads to \ndistance not being able to calculated.\n\nLike Edzer mentioned, if a sample set of your data is provided, we might \nbe able to track the source.\n\nHope this helps.\n\nBest,\nDanlin\n\nEdzer Pebesma wrote:\n> It is no problem for us to read all this Brazilian (eh, sorry, \n> Portugese), but it is hard to reproduce your error without having \n> access to your, or similar, data.\n> -- \n> Edzer\n>\n> Raphael Saldanha wrote:\n>> Olá Virgínia!\n>>\n>> Legal ver brazileiros nessa lista! Vou dar uma olhada no seu problema \n>> e lhe\n>> escrevo.\n>>\n>> On Tue, Nov 11, 2008 at 10:06 AM, Virginia <virginia at dpi.inpe.br> wrote:\n>>\n>>  \n>>> I have some questions:\n>>>\n>>> I got an error. I dont't know why.\n>>>\n>>> Somebody to help me?\n>>>\n>>> Thanks,\n>>>\n>>>  Virginia Ragoni\n>>>\n>>> require(spgwr)\n>>> require(foreign)\n>>> x <- read.shape(\"cidade.shp\")\n>>> plot(x)\n>>> mappolys <- Map2poly1(x,as.character(x$att.data$ID9100),raw=FALSE)\n>>>\n>>> mapbbs=Map2bbs(x)\n>>> mapcents=get.Pcent(x)\n>>> tab= x$att.data\n>>>\n>>> # cálculo da largura da banda\n>>> sjc.bw <- gwr.sel((tab$TX_CRESC~tab$LOGDEN),data=tab,coords=mapcents)\n>>>\n>>> # error -  Erro em spDistsN1(bbox, bbox[2, ], longlat) :\n>>> #  NA/NaN/Inf em chamada de função externa (argumento 1)\n>>>\n>>> sp.gauss  <- gwr((tab$PERIDOSO~tab$PERREN20),data=tab,coords=mapcents,\n>>> bandwidth=sjc.bw, hatmatrix=TRUE)\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at stat.math.ethz.ch\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>>     \n>>\n>>\n>>\n>>   \n>> ------------------------------------------------------------------------\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>   \n>\n\n-- \n___________________________________________\nDanlin Yu, Ph.D.\nAssistant Professor\nDepartment of Earth & Environmental Studies\nMontclair State University\nMontclair, NJ, 07043\nTel: 973-655-4313\nFax: 973-655-4072\nemail: yud at mail.montclair.edu\nwebpage: csam.montclair.edu/~yu",
       "body_snippet": "I can't read this Brazilian (Portugese :)), but it seems that the \ndistance calculation is in error (possibly some coordinates were missing \ncausing distance calculation yield NA/NaN/Inf value), which",
       "thread_id": "thread-bf67b04783a5",
       "thread_depth": 3,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004505.html"
     },
     {
       "id": "msg-8c438da4f57e",
@@ -653,7 +688,8 @@
       "body_snippet": "Dear Roger or others,\n\nYou may recall this thread in which you helped me work out a region \nmerging routine for dealing with sliver polygons, or to simplify the \npolygons resulting from an image analy",
       "thread_id": "thread-8c438da4f57e",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004506.html"
     },
     {
       "id": "msg-b8522a16cad7",
@@ -669,7 +705,8 @@
       "body_snippet": "Dear listers,\n\nI am using GRASS6 embedded within QGIS under Windows for teaching \npurpose. This prevents reading GRASS objects from R within GRASS (R \ncannot be launched within GRASS in this configura",
       "thread_id": "thread-b8522a16cad7",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004507.html"
     },
     {
       "id": "msg-643cf056454c",
@@ -685,7 +722,8 @@
       "body_snippet": "Hi All\n\nwhen I use this function with R and SAGA:\n\nrsaga.get.usage(\"grid_tools\", 3)\nrsaga.geoprocessor(lib=\"grid_tools\", module=3,  \nparam=list(GRIDS=\"DSM1.sgrd,DSM2.sgrd,DSM3.sgrd\",GRID_TARGET=\"DSM.s",
       "thread_id": "thread-643cf056454c",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004508.html"
     },
     {
       "id": "msg-a2a1b6294094",
@@ -703,7 +741,8 @@
       "body_snippet": "On Thu, 13 Nov 2008, Patrick Giraudoux wrote:\n\n> Dear listers,\n>\n> I am using GRASS6 embedded within QGIS under Windows for teaching purpose. \n> This prevents reading GRASS objects from R within GRASS",
       "thread_id": "thread-b8522a16cad7",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004509.html"
     },
     {
       "id": "msg-efb1addd68bf",
@@ -721,7 +760,8 @@
       "body_snippet": "Alessandro,\n\nYou need to separate the put the list of input grids as a character vector e.g.:\n\nGRIDS=c(\"DSM1.sgrd,DSM2.sgrd,DSM3.sgrd\")\n\n\nSee also:\nhttp://spatial-analyst.net/wiki/index.php?title=Soft",
       "thread_id": "thread-643cf056454c",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004510.html"
     },
     {
       "id": "msg-2eb96780044f",
@@ -740,7 +780,8 @@
       "body_snippet": "Tomislav Hengl wrote:\n> Alessandro,\n> \n> You need to separate the put the list of input grids as a character vector e.g.:\n> \n> GRIDS=c(\"DSM1.sgrd,DSM2.sgrd,DSM3.sgrd\")\n\n...not when calling the rsaga.g",
       "thread_id": "thread-643cf056454c",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004511.html"
     },
     {
       "id": "msg-bc0ca79e91ef",
@@ -759,7 +800,8 @@
       "body_snippet": "Roger Bivand a ?crit :\n> On Thu, 13 Nov 2008, Patrick Giraudoux wrote:\n>\n>> Dear listers,\n>>\n>> I am using GRASS6 embedded within QGIS under Windows for teaching \n>> purpose. This prevents reading GRA",
       "thread_id": "thread-b8522a16cad7",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004512.html"
     },
     {
       "id": "msg-141adcc7d275",
@@ -779,7 +821,8 @@
       "body_snippet": "On Thu, 13 Nov 2008, Patrick Giraudoux wrote:\n\n> Roger Bivand a ?crit :\n>> On Thu, 13 Nov 2008, Patrick Giraudoux wrote:\n>> \n>>> Dear listers,\n>>> \n>>> I am using GRASS6 embedded within QGIS under Win",
       "thread_id": "thread-b8522a16cad7",
       "thread_depth": 3,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004513.html"
     },
     {
       "id": "msg-9d39d3a98035",
@@ -800,7 +843,8 @@
       "body_snippet": "Roger Bivand wrote:\n> On Thu, 13 Nov 2008, Patrick Giraudoux wrote:\n> \n>> Roger Bivand a ?crit :\n>>> On Thu, 13 Nov 2008, Patrick Giraudoux wrote:\n>>>\n>>>> Dear listers,\n>>>>\n>>>> I am using GRASS6 em",
       "thread_id": "thread-b8522a16cad7",
       "thread_depth": 4,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004514.html"
     },
     {
       "id": "msg-8b16c577e3bf",
@@ -817,6 +861,7 @@
       "thread_id": "thread-8b16c577e3bf",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004515.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081114/8c24066a/attachment.pl"
       ]
@@ -833,11 +878,12 @@
       "references": [
         "<E2A409BABC575E458D4D8A88A9D317E71B5AFD@officeho2.bom.gov.au>"
       ],
-      "body_plain": "Alison,\n\nthere's two ways for this:\n\n1. provide krige() with regression coordinates, by\n\nObsSat.rk <- krige(Obs_rain~sat_rain, ObsSat_UTM, SatDat_UTM,\nObsSat.rvgm, beta = c(a,b))\n\nwith a and b your \"manual\" intercept and slope, or\n\n2. by kriging manually computed residuals and adding them to the \nmanually computed regression surface.\n\nProbably, 1. is simplest; the results are identical if under 2. you \nspecify beta = 0.0, thereby forcing simple kriging over ordinary \nkriging. Some might prefer 2. with ordinary kriging, e.g. to allow for a \nlocally adapting mean, but you didn't use local kriging in the first place.\n--\nEdzer\n\nAlison Oke wrote:\n> Hello list,\n>\n> I am trying to use universal kriging (gstat, R) to create a gridded\n> daily rainfall surface. I have rain gauge data and satellite grid data\n> and have applied the following script successfully. I would now like to\n> manually define the regression model that defines the relationship\n> between the gauge and satellite at the collocated points so I can apply\n> the same model to a series of days. Is it possible to manually define\n> the regression equation and have it applied within the krige function? \n>\n>  \n>\n> Datasets\n>\n> ObsSat_UTM = collocated gauge and satellite data.\n>\n> SatDat_UTM = Satellite grid. \n>\n>  \n>\n> # Define the regression model to define relationships between dependent\n> (gauge) and independent (sat) variables at collocated points. \n>\n> ObsSat.lm <-lm(formula = Obs_rain~sat_rain, ObsSat_UTM)\n>\n>  \n>\n> #Variogram of residuals of regression between obs and sat data a gauge\n> sites\n>\n> ObsSat.rev <- variogram(Obs_rain~sat_rain, ObsSat_UTM)\n>\n> ObsSat.rvgm <- fit.variogram(ObsSat.rev, vgm(20,\"Exp\", 50,0))\n>\n>  \n>\n> #predict onto the Sat grid\n>\n> ObsSat.rk <- krige(Obs_rain~sat_rain, ObsSat_UTM, SatDat_UTM,\n> ObsSat.rvgm)\n>\n>  \n>\n> If this question has already been answered I apologise. I have had\n> trouble finding any examples of how to include this into my script.\n>\n> Thanks very much \n>\n> Alison Oke\n>\n>  \n>\n> Hydrologist\n>\n> Water Division\n>\n> Bureau of Meteorology\n>\n> GPO Box 1289\n>\n> Melbourne, VIC 3001\n>\n>  \n>\n> Phone:  +61 (0) 3 8638 8212\n>\n> Fax:      +61 (0) 3 8638 8200\n>\n> E-mail:   a.oke at bom.gov.au\n>\n>  \n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster\nWeseler Stra?e 253, 48151 M?nster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
+      "body_plain": "Alison,\n\nthere's two ways for this:\n\n1. provide krige() with regression coordinates, by\n\nObsSat.rk <- krige(Obs_rain~sat_rain, ObsSat_UTM, SatDat_UTM,\nObsSat.rvgm, beta = c(a,b))\n\nwith a and b your \"manual\" intercept and slope, or\n\n2. by kriging manually computed residuals and adding them to the \nmanually computed regression surface.\n\nProbably, 1. is simplest; the results are identical if under 2. you \nspecify beta = 0.0, thereby forcing simple kriging over ordinary \nkriging. Some might prefer 2. with ordinary kriging, e.g. to allow for a \nlocally adapting mean, but you didn't use local kriging in the first place.\n--\nEdzer\n\nAlison Oke wrote:\n> Hello list,\n>\n> I am trying to use universal kriging (gstat, R) to create a gridded\n> daily rainfall surface. I have rain gauge data and satellite grid data\n> and have applied the following script successfully. I would now like to\n> manually define the regression model that defines the relationship\n> between the gauge and satellite at the collocated points so I can apply\n> the same model to a series of days. Is it possible to manually define\n> the regression equation and have it applied within the krige function? \n>\n>  \n>\n> Datasets\n>\n> ObsSat_UTM = collocated gauge and satellite data.\n>\n> SatDat_UTM = Satellite grid. \n>\n>  \n>\n> # Define the regression model to define relationships between dependent\n> (gauge) and independent (sat) variables at collocated points. \n>\n> ObsSat.lm <-lm(formula = Obs_rain~sat_rain, ObsSat_UTM)\n>\n>  \n>\n> #Variogram of residuals of regression between obs and sat data a gauge\n> sites\n>\n> ObsSat.rev <- variogram(Obs_rain~sat_rain, ObsSat_UTM)\n>\n> ObsSat.rvgm <- fit.variogram(ObsSat.rev, vgm(20,\"Exp\", 50,0))\n>\n>  \n>\n> #predict onto the Sat grid\n>\n> ObsSat.rk <- krige(Obs_rain~sat_rain, ObsSat_UTM, SatDat_UTM,\n> ObsSat.rvgm)\n>\n>  \n>\n> If this question has already been answered I apologise. I have had\n> trouble finding any examples of how to include this into my script.\n>\n> Thanks very much \n>\n> Alison Oke\n>\n>  \n>\n> Hydrologist\n>\n> Water Division\n>\n> Bureau of Meteorology\n>\n> GPO Box 1289\n>\n> Melbourne, VIC 3001\n>\n>  \n>\n> Phone:  +61 (0) 3 8638 8212\n>\n> Fax:      +61 (0) 3 8638 8200\n>\n> E-mail:   a.oke at bom.gov.au\n>\n>  \n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster\nWeseler Straße 253, 48151 Münster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
       "body_snippet": "Alison,\n\nthere's two ways for this:\n\n1. provide krige() with regression coordinates, by\n\nObsSat.rk <- krige(Obs_rain~sat_rain, ObsSat_UTM, SatDat_UTM,\nObsSat.rvgm, beta = c(a,b))\n\nwith a and b your \"m",
       "thread_id": "thread-8b16c577e3bf",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004516.html"
     },
     {
       "id": "msg-add315bd0380",
@@ -853,7 +899,8 @@
       "body_snippet": "Hi,\n\nI have made an updated version of worldHires in the mapdata package. I \nhave inserted additional lines and polygons for all new countries from \nformer Yugoslavia, USSR and Czechoslovakia.\n\nThe ne",
       "thread_id": "thread-add315bd0380",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004517.html"
     },
     {
       "id": "msg-b8183e29d40a",
@@ -869,7 +916,8 @@
       "body_snippet": "Dear all,\nI would like legend cut-offs that are prettier that just executing\nspplot(SpatialPolygonsDataFrame(karta, \nas.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])))\n\nI try\nspplot(SpatialPolygons",
       "thread_id": "thread-b8183e29d40a",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004518.html"
     },
     {
       "id": "msg-175eb66836b2",
@@ -883,11 +931,12 @@
       "references": [
         "<491D5D8B.4010507@ekol.slu.se>"
       ],
-      "body_plain": "> pretty()\nError in pretty() : argument \"x\" is missing, with no default\n\nHow about reading the documentation of pretty?\n--\nEdzer\n\nTord Sn?ll wrote:\n> Dear all,\n> I would like legend cut-offs that are prettier that just executing\n> spplot(SpatialPolygonsDataFrame(karta, \n> as.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])))\n>\n> I try\n> spplot(SpatialPolygonsDataFrame(karta, \n> as.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])),at=pretty())\n> , though without sucess.\n>\n> Could someone give a clue on how to do it?\n>\n> Thanks!\n>\n> /Tord\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster\nWeseler Stra?e 253, 48151 M?nster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
-      "body_snippet": "> pretty()\nError in pretty() : argument \"x\" is missing, with no default\n\nHow about reading the documentation of pretty?\n--\nEdzer\n\nTord Sn?ll wrote:\n> Dear all,\n> I would like legend cut-offs that are ",
+      "body_plain": "> pretty()\nError in pretty() : argument \"x\" is missing, with no default\n\nHow about reading the documentation of pretty?\n--\nEdzer\n\nTord Snäll wrote:\n> Dear all,\n> I would like legend cut-offs that are prettier that just executing\n> spplot(SpatialPolygonsDataFrame(karta, \n> as.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])))\n>\n> I try\n> spplot(SpatialPolygonsDataFrame(karta, \n> as.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])),at=pretty())\n> , though without sucess.\n>\n> Could someone give a clue on how to do it?\n>\n> Thanks!\n>\n> /Tord\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster\nWeseler Straße 253, 48151 Münster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
+      "body_snippet": "> pretty()\nError in pretty() : argument \"x\" is missing, with no default\n\nHow about reading the documentation of pretty?\n--\nEdzer\n\nTord Snäll wrote:\n> Dear all,\n> I would like legend cut-offs that are ",
       "thread_id": "thread-b8183e29d40a",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004520.html"
     },
     {
       "id": "msg-c14ed5c42e2c",
@@ -901,11 +950,12 @@
       "references": [
         "<491D5D8B.4010507@ekol.slu.se>"
       ],
-      "body_plain": "Dear Tord,\n\nYou need to supply the datavalues to the pretty function. An untested example as your example was not reproducible with a (dummy) dataset.\n\nPrettyBreaks <- pretty(as.vector(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")]))\nspplot(SpatialPolygonsDataFrame(karta, as.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])),at=PrettyBreaks)\n\nHTH,\n\nThierry\n\n----------------------------------------------------------------------------\nir. Thierry Onkelinx\nInstituut voor natuur- en bosonderzoek / Research Institute for Nature and Forest\nCel biometrie, methodologie en kwaliteitszorg / Section biometrics, methodology and quality assurance\nGaverstraat 4\n9500 Geraardsbergen\nBelgium \ntel. + 32 54/436 185\nThierry.Onkelinx at inbo.be \nwww.inbo.be \n\nTo call in the statistician after the experiment is done may be no more than asking him to perform a post-mortem examination: he may be able to say what the experiment died of.\n~ Sir Ronald Aylmer Fisher\n\nThe plural of anecdote is not data.\n~ Roger Brinner\n\nThe combination of some data and an aching desire for an answer does not ensure that a reasonable answer can be extracted from a given body of data.\n~ John Tukey\n\n-----Oorspronkelijk bericht-----\nVan: r-sig-geo-bounces at stat.math.ethz.ch [mailto:r-sig-geo-bounces at stat.math.ethz.ch] Namens Tord Sn?ll\nVerzonden: vrijdag 14 november 2008 12:14\nAan: r-sig-geo at stat.math.ethz.ch\nOnderwerp: [R-sig-Geo] pretty in spplot()\n\nDear all,\nI would like legend cut-offs that are prettier that just executing\nspplot(SpatialPolygonsDataFrame(karta, \nas.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])))\n\nI try\nspplot(SpatialPolygonsDataFrame(karta, \nas.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])),at=pretty())\n, though without sucess.\n\nCould someone give a clue on how to do it?\n\nThanks!\n\n/Tord\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\nDit bericht en eventuele bijlagen geven enkel de visie van de schrijver weer \nen binden het INBO onder geen enkel beding, zolang dit bericht niet bevestigd is\ndoor een geldig ondertekend document. The views expressed in  this message \nand any annex are purely those of the writer and may not be regarded as stating \nan official position of INBO, as long as the message is not confirmed by a duly \nsigned document.",
+      "body_plain": "Dear Tord,\n\nYou need to supply the datavalues to the pretty function. An untested example as your example was not reproducible with a (dummy) dataset.\n\nPrettyBreaks <- pretty(as.vector(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")]))\nspplot(SpatialPolygonsDataFrame(karta, as.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])),at=PrettyBreaks)\n\nHTH,\n\nThierry\n\n----------------------------------------------------------------------------\nir. Thierry Onkelinx\nInstituut voor natuur- en bosonderzoek / Research Institute for Nature and Forest\nCel biometrie, methodologie en kwaliteitszorg / Section biometrics, methodology and quality assurance\nGaverstraat 4\n9500 Geraardsbergen\nBelgium \ntel. + 32 54/436 185\nThierry.Onkelinx at inbo.be \nwww.inbo.be \n\nTo call in the statistician after the experiment is done may be no more than asking him to perform a post-mortem examination: he may be able to say what the experiment died of.\n~ Sir Ronald Aylmer Fisher\n\nThe plural of anecdote is not data.\n~ Roger Brinner\n\nThe combination of some data and an aching desire for an answer does not ensure that a reasonable answer can be extracted from a given body of data.\n~ John Tukey\n\n-----Oorspronkelijk bericht-----\nVan: r-sig-geo-bounces at stat.math.ethz.ch [mailto:r-sig-geo-bounces at stat.math.ethz.ch] Namens Tord Snäll\nVerzonden: vrijdag 14 november 2008 12:14\nAan: r-sig-geo at stat.math.ethz.ch\nOnderwerp: [R-sig-Geo] pretty in spplot()\n\nDear all,\nI would like legend cut-offs that are prettier that just executing\nspplot(SpatialPolygonsDataFrame(karta, \nas.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])))\n\nI try\nspplot(SpatialPolygonsDataFrame(karta, \nas.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])),at=pretty())\n, though without sucess.\n\nCould someone give a clue on how to do it?\n\nThanks!\n\n/Tord\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\nDit bericht en eventuele bijlagen geven enkel de visie van de schrijver weer \nen binden het INBO onder geen enkel beding, zolang dit bericht niet bevestigd is\ndoor een geldig ondertekend document. The views expressed in  this message \nand any annex are purely those of the writer and may not be regarded as stating \nan official position of INBO, as long as the message is not confirmed by a duly \nsigned document.",
       "body_snippet": "Dear Tord,\n\nYou need to supply the datavalues to the pretty function. An untested example as your example was not reproducible with a (dummy) dataset.\n\nPrettyBreaks <- pretty(as.vector(resdf[,c(\"TempE",
       "thread_id": "thread-b8183e29d40a",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004519.html"
     },
     {
       "id": "msg-bc8af51a62a0",
@@ -920,11 +970,12 @@
         "<491D5D8B.4010507@ekol.slu.se>",
         "<2E9C414912813E4EB981326983E0A10405C255EF@inboexch.inbo.be>"
       ],
-      "body_plain": "Dear Thierry,\nThanks very much. This was helpful. The code work with some changes.\n\nTord\n\nONKELINX, Thierry wrote:\n> Dear Tord,\n>\n> You need to supply the datavalues to the pretty function. An untested example as your example was not reproducible with a (dummy) dataset.\n>\n> PrettyBreaks <- pretty(as.vector(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")]))\n> spplot(SpatialPolygonsDataFrame(karta, as.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])),at=PrettyBreaks)\n>\n> HTH,\n>\n> Thierry\n>\n> ----------------------------------------------------------------------------\n> ir. Thierry Onkelinx\n> Instituut voor natuur- en bosonderzoek / Research Institute for Nature and Forest\n> Cel biometrie, methodologie en kwaliteitszorg / Section biometrics, methodology and quality assurance\n> Gaverstraat 4\n> 9500 Geraardsbergen\n> Belgium \n> tel. + 32 54/436 185\n> Thierry.Onkelinx at inbo.be \n> www.inbo.be \n>\n> To call in the statistician after the experiment is done may be no more than asking him to perform a post-mortem examination: he may be able to say what the experiment died of.\n> ~ Sir Ronald Aylmer Fisher\n>\n> The plural of anecdote is not data.\n> ~ Roger Brinner\n>\n> The combination of some data and an aching desire for an answer does not ensure that a reasonable answer can be extracted from a given body of data.\n> ~ John Tukey\n>\n> -----Oorspronkelijk bericht-----\n> Van: r-sig-geo-bounces at stat.math.ethz.ch [mailto:r-sig-geo-bounces at stat.math.ethz.ch] Namens Tord Sn?ll\n> Verzonden: vrijdag 14 november 2008 12:14\n> Aan: r-sig-geo at stat.math.ethz.ch\n> Onderwerp: [R-sig-Geo] pretty in spplot()\n>\n> Dear all,\n> I would like legend cut-offs that are prettier that just executing\n> spplot(SpatialPolygonsDataFrame(karta, \n> as.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])))\n>\n> I try\n> spplot(SpatialPolygonsDataFrame(karta, \n> as.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])),at=pretty())\n> , though without sucess.\n>\n> Could someone give a clue on how to do it?\n>\n> Thanks!\n>\n> /Tord\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> Dit bericht en eventuele bijlagen geven enkel de visie van de schrijver weer \n> en binden het INBO onder geen enkel beding, zolang dit bericht niet bevestigd is\n> door een geldig ondertekend document. The views expressed in  this message \n> and any annex are purely those of the writer and may not be regarded as stating \n> an official position of INBO, as long as the message is not confirmed by a duly \n> signed document.\n>",
+      "body_plain": "Dear Thierry,\nThanks very much. This was helpful. The code work with some changes.\n\nTord\n\nONKELINX, Thierry wrote:\n> Dear Tord,\n>\n> You need to supply the datavalues to the pretty function. An untested example as your example was not reproducible with a (dummy) dataset.\n>\n> PrettyBreaks <- pretty(as.vector(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")]))\n> spplot(SpatialPolygonsDataFrame(karta, as.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])),at=PrettyBreaks)\n>\n> HTH,\n>\n> Thierry\n>\n> ----------------------------------------------------------------------------\n> ir. Thierry Onkelinx\n> Instituut voor natuur- en bosonderzoek / Research Institute for Nature and Forest\n> Cel biometrie, methodologie en kwaliteitszorg / Section biometrics, methodology and quality assurance\n> Gaverstraat 4\n> 9500 Geraardsbergen\n> Belgium \n> tel. + 32 54/436 185\n> Thierry.Onkelinx at inbo.be \n> www.inbo.be \n>\n> To call in the statistician after the experiment is done may be no more than asking him to perform a post-mortem examination: he may be able to say what the experiment died of.\n> ~ Sir Ronald Aylmer Fisher\n>\n> The plural of anecdote is not data.\n> ~ Roger Brinner\n>\n> The combination of some data and an aching desire for an answer does not ensure that a reasonable answer can be extracted from a given body of data.\n> ~ John Tukey\n>\n> -----Oorspronkelijk bericht-----\n> Van: r-sig-geo-bounces at stat.math.ethz.ch [mailto:r-sig-geo-bounces at stat.math.ethz.ch] Namens Tord Snäll\n> Verzonden: vrijdag 14 november 2008 12:14\n> Aan: r-sig-geo at stat.math.ethz.ch\n> Onderwerp: [R-sig-Geo] pretty in spplot()\n>\n> Dear all,\n> I would like legend cut-offs that are prettier that just executing\n> spplot(SpatialPolygonsDataFrame(karta, \n> as.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])))\n>\n> I try\n> spplot(SpatialPolygonsDataFrame(karta, \n> as.data.frame(resdf[,c(\"TempEst.t\",\"TempEst.tM1\")])),at=pretty())\n> , though without sucess.\n>\n> Could someone give a clue on how to do it?\n>\n> Thanks!\n>\n> /Tord\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n> Dit bericht en eventuele bijlagen geven enkel de visie van de schrijver weer \n> en binden het INBO onder geen enkel beding, zolang dit bericht niet bevestigd is\n> door een geldig ondertekend document. The views expressed in  this message \n> and any annex are purely those of the writer and may not be regarded as stating \n> an official position of INBO, as long as the message is not confirmed by a duly \n> signed document.\n>",
       "body_snippet": "Dear Thierry,\nThanks very much. This was helpful. The code work with some changes.\n\nTord\n\nONKELINX, Thierry wrote:\n> Dear Tord,\n>\n> You need to supply the datavalues to the pretty function. An unteste",
       "thread_id": "thread-b8183e29d40a",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004521.html"
     },
     {
       "id": "msg-feb353d34c60",
@@ -941,6 +992,7 @@
       "thread_id": "thread-feb353d34c60",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004522.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081114/b3ade0c3/attachment.pl"
       ]
@@ -961,7 +1013,8 @@
       "body_snippet": "Dear listers,\n\nI am writing a R function to upload waypoints to a GPS Garmin Etrex \nwith  gpsbabel. This works quite well reading from a text file as following:\n\ndf<-\"mytabfile.txt\"\nsystem(paste(\"gpsb",
       "thread_id": "thread-ba983d5c700e",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004523.html"
     },
     {
       "id": "msg-22b39756c246",
@@ -979,7 +1032,8 @@
       "body_snippet": "Hi Alessandro,\n\nPlease do submit such and similar bugs to Olaf Conrad (the main developer of SAGA). For your\ninformation, the C++ code of SAGA (SAGA 2.0.2 API - Python Interface) is available from\nhtt",
       "thread_id": "thread-feb353d34c60",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004524.html"
     },
     {
       "id": "msg-da527bb71ca5",
@@ -999,6 +1053,7 @@
       "thread_id": "thread-ba983d5c700e",
       "thread_depth": 1,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004525.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081117/f1f91c90/attachment.pl"
       ]
@@ -1021,7 +1076,8 @@
       "body_snippet": "James Nylen a ?crit :\n> The easiest thing to do is probably to write the data.frame to a \n> tab-delimited text file using write.table and then read in the written \n> file like you have done above.  Se",
       "thread_id": "thread-ba983d5c700e",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004526.html"
     },
     {
       "id": "msg-326c9cc2752b",
@@ -1038,6 +1094,7 @@
       "thread_id": "thread-326c9cc2752b",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004527.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081117/1024e463/attachment.pl"
       ]
@@ -1058,7 +1115,8 @@
       "body_snippet": "On Mon, 17 Nov 2008, Raphael Saldanha wrote:\n\n> Hi!\n>\n> Running some models, I'm having, pratically, the same results with the\n> models *spautolm(TX07 ~ X35A39 + TXPIB05, data=mg, family=\"SAR\",\n> list",
       "thread_id": "thread-326c9cc2752b",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004528.html"
     },
     {
       "id": "msg-3f0304631bc4",
@@ -1078,6 +1136,7 @@
       "thread_id": "thread-326c9cc2752b",
       "thread_depth": 2,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004529.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081117/7f759ab2/attachment.pl"
       ]
@@ -1096,7 +1155,8 @@
       "body_snippet": "Hi,\n\nI have run a metaMDS(vegan) on ecological community data and have a nice \nplot in xy space.\nWhat I want to do next is to assign a unique color to each point in the \nplot and then look at how thes",
       "thread_id": "thread-30ffe7096179",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004530.html"
     },
     {
       "id": "msg-5a9797fda965",
@@ -1114,7 +1174,8 @@
       "body_snippet": "Dear Holger,\n\nThis is a small script that uses [colorspace] library to run calculations with colors (some methods\nare limited to 256 colors only):\n\nhttp://spatial-analyst.net/scripts/whitening.R\n\nIf y",
       "thread_id": "thread-30ffe7096179",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004531.html"
     },
     {
       "id": "msg-711e6c794580",
@@ -1131,6 +1192,7 @@
       "thread_id": "thread-711e6c794580",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004532.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081118/ddb9b932/attachment.pl"
       ]
@@ -1149,7 +1211,8 @@
       "body_snippet": "Hi,\n\nI have surfaces in ascii grid format that represent the elevation of the\nupper boundary of material types.  I have multiple ascii grid files, one\nfor each surface.  The ascii grid files have the ",
       "thread_id": "thread-f90ea59c6ff0",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004533.html"
     },
     {
       "id": "msg-32c0e815682d",
@@ -1168,7 +1231,8 @@
       "body_snippet": "Dear Tom,\n\nThanks a lot for your swift reply. While your script wasn't exactly \ndoing what I wanted, it brought me on the right track. Here is the code \nthat I finally used.\nProbably not super elegant",
       "thread_id": "thread-30ffe7096179",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004534.html"
     },
     {
       "id": "msg-49b068718b4d",
@@ -1184,7 +1248,8 @@
       "body_snippet": "Hi there, \n\n\nI can recomend the following text \n\nHierarchical Modeling and Analysis for Spatial Data by Gelfland et al. \n\nAlso there is a course being run in Southampton next year: \n\nhttp://www.s3ri.s",
       "thread_id": "thread-711e6c794580",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004535.html"
     },
     {
       "id": "msg-eed20d294873",
@@ -1200,11 +1265,12 @@
         "<AF2E678FF9484ACDAA5CF491DCDFD750@pcibed193>",
         "<4923C132.9080003@ucsd.edu>"
       ],
-      "body_plain": "Nice plot!\n\nIt could be even more similar to  the one in \nhttp://www.flickr.com/photos/erniebooth/183647844/ \nif you substitute pch=15 for pch =19\n\nCheers,\n\nMarcelino\n\n\nAt 08:33 19/11/2008, Holger Kreft wrote:\n>Dear Tom,\n>\n>Thanks a lot for your swift reply. While your \n>script wasn't exactly doing what I wanted, it \n>brought me on the right track. Here is the code that I finally used.\n>Probably not super elegant, but it does the job \n>and I thought it be useful for others.\n>\n>Cheers,\n>\n>Holger\n>\n>--\n>\n>my.data<-seq(0,1,.01)\n>\n>my.class<-classIntervals(my.data,n=100,style=\"equal\")\n>my.pal.1<-findColours(my.class,c(\"yellow\",\"red\"))\n>my.pal.2<-findColours(my.class,c(\"green\",\"blue\"))\n>\n>plot(rep(0,101),my.data,pch=19,col=my.pal.1, cex=1, xlim=c(0,1),ylim=c(0,1))\n>points(rep(1,101),my.data,pch=19,col=my.pal.2, cex=1)\n>\n>#------------------------------------\n># loop: use left and right vertical\n># color ramp & interpolate horizontally\n>#------------------------------------\n>\n>col.matrix<-matrix(nrow = 101, ncol = 101, NA)\n>\n>for(i in 1:101){\n>my.col<-c(paste(my.pal.1[i]),paste(my.pal.2[i])) # choose colors\n>col.matrix[102-i,]<-findColours(my.class,my.col)\n>}\n>\n>#------------------------------------\n># plot full grid\n>#------------------------------------\n>\n>plot(rep(0,101),my.data,pch=19,col=my.pal.1, cex=0.5, xlim=c(0,1),ylim=c(0,1))\n>\n>for(i in 1:101){\n>col.temp<-col.matrix[i-1,]\n>points(my.data,rep((i-1)/100,101),pch=19,col=col.temp, cex=1)\n>}\n>\n>\n>\n>\n>Tomislav Hengl schrieb:\n>>Dear Holger,\n>>\n>>This is a small script that uses [colorspace] \n>>library to run calculations with colors (some methods\n>>are limited to 256 colors only):\n>>\n>>http://spatial-analyst.net/scripts/whitening.R\n>>\n>>If you assign R,G,B values spatially and then \n>>interpolate them (they have to be in the 0-1 range),\n>>then it is relatively easy to produce an RGB image.\n>>\n>>cheers,\n>>\n>>Tom Hengl\n>>http://spatial-analyst.net/wiki/index.php?title=Uncertainty_visualization\n>>\n>>PS: maybe you should also consider color mixing:\n>>\n>>Hengl T., Walvoort D.J.J., Brown A. 2004. A \n>>double continuous approach to visualisation and analysis\n>>of categorical maps. Int. Jou. of Geographical \n>>Information Science, 18(2): 183-202.\n>>http://dx.doi.org/10.1080/13658810310001620924\n>>\n>>-----Original Message-----\n>>From: r-sig-geo-bounces at stat.math.ethz.ch \n>>[mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of\n>>Holger Kreft\n>>Sent: Tuesday, November 18, 2008 9:38 AM\n>>To: R-sig-Geo at stat.math.ethz.ch\n>>Subject: [R-sig-Geo] ramping four color in xy space\n>>\n>>Hi,\n>>\n>>I have run a metaMDS(vegan) on ecological \n>>community data and have a nice plot in xy space.\n>>What I want to do next is to assign a unique \n>>color to each point in the plot and then look \n>>at how these communities map out in geographic space.\n>>So, each corner of the plot has a color (let's \n>>say green, blue, red and yellow). I guess I \n>>have to ramp the colors for the space inbetween.\n>>The right plot here illustrate how the palette \n>>should look like: http://www.flickr.com/photos/erniebooth/183647844/\n>>\n>>Does anyone have experience in ramping four \n>>colours in 2-D? I looked at a lot of packages, \n>>but they are all not doing what I want.\n>>\n>>Any hint / help is greatly appreciated!\n>>\n>>Thanks,\n>>\n>>Holger\n>>\n>>_______________________________________________\n>>R-sig-Geo mailing list\n>>R-sig-Geo at stat.math.ethz.ch\n>>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>_______________________________________________\n>>R-sig-Geo mailing list\n>>R-sig-Geo at stat.math.ethz.ch\n>>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>\n>\n>\n>--\n>****************************************************************\n>Dr. Holger Kreft\n>Phone:  ++1-858-5346659\n>Email:  hkreft at ucsd.edu\n>www.uni-bonn.de/~uzsxeg\n>Ecology Behavior & Evolution Section\n>Division of Biological Sciences\n>University of California, San Diego\n>9500 Gilman Drive, MC 0116\n>La Jolla, CA 92093-0116, USA\n>http://www-biology.ucsd.edu/labs/jetz/\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>---------------------------------------------------------------------------------------------------\n>Texto a?adido por Panda IS 2008:\n>\n>Este mensaje NO ha sido clasificado como SPAM. \n>Si se trata de un mensaje de correo no \n>solicitado (SPAM), haz clic en el siguiente \n>v?nculo para reclasificarlo: \n>http://localhost:6083/Panda?ID=pav_2562&SPAM=true&path=C:\\Documents%20and%20Settings\\mcr\\Configuraci?n%20local\\Datos%20de%20programa\\Panda%20Software\\AntiSpam\n>---------------------------------------------------------------------------------------------------\n\n________________________________\n\nMarcelino de la Cruz Rot\n\nDepartamento de  Biolog?a Vegetal\nE.U.T.I. Agr?cola\nUniversidad Polit?cnica de Madrid\n28040-Madrid\nTel.: 91 336 54 35\nFax: 91 336 56 56\nmarcelino.delacruz at upm.es",
+      "body_plain": "Nice plot!\n\nIt could be even more similar to  the one in \nhttp://www.flickr.com/photos/erniebooth/183647844/ \nif you substitute pch=15 for pch =19\n\nCheers,\n\nMarcelino\n\n\nAt 08:33 19/11/2008, Holger Kreft wrote:\n>Dear Tom,\n>\n>Thanks a lot for your swift reply. While your \n>script wasn't exactly doing what I wanted, it \n>brought me on the right track. Here is the code that I finally used.\n>Probably not super elegant, but it does the job \n>and I thought it be useful for others.\n>\n>Cheers,\n>\n>Holger\n>\n>--\n>\n>my.data<-seq(0,1,.01)\n>\n>my.class<-classIntervals(my.data,n=100,style=\"equal\")\n>my.pal.1<-findColours(my.class,c(\"yellow\",\"red\"))\n>my.pal.2<-findColours(my.class,c(\"green\",\"blue\"))\n>\n>plot(rep(0,101),my.data,pch=19,col=my.pal.1, cex=1, xlim=c(0,1),ylim=c(0,1))\n>points(rep(1,101),my.data,pch=19,col=my.pal.2, cex=1)\n>\n>#------------------------------------\n># loop: use left and right vertical\n># color ramp & interpolate horizontally\n>#------------------------------------\n>\n>col.matrix<-matrix(nrow = 101, ncol = 101, NA)\n>\n>for(i in 1:101){\n>my.col<-c(paste(my.pal.1[i]),paste(my.pal.2[i])) # choose colors\n>col.matrix[102-i,]<-findColours(my.class,my.col)\n>}\n>\n>#------------------------------------\n># plot full grid\n>#------------------------------------\n>\n>plot(rep(0,101),my.data,pch=19,col=my.pal.1, cex=0.5, xlim=c(0,1),ylim=c(0,1))\n>\n>for(i in 1:101){\n>col.temp<-col.matrix[i-1,]\n>points(my.data,rep((i-1)/100,101),pch=19,col=col.temp, cex=1)\n>}\n>\n>\n>\n>\n>Tomislav Hengl schrieb:\n>>Dear Holger,\n>>\n>>This is a small script that uses [colorspace] \n>>library to run calculations with colors (some methods\n>>are limited to 256 colors only):\n>>\n>>http://spatial-analyst.net/scripts/whitening.R\n>>\n>>If you assign R,G,B values spatially and then \n>>interpolate them (they have to be in the 0-1 range),\n>>then it is relatively easy to produce an RGB image.\n>>\n>>cheers,\n>>\n>>Tom Hengl\n>>http://spatial-analyst.net/wiki/index.php?title=Uncertainty_visualization\n>>\n>>PS: maybe you should also consider color mixing:\n>>\n>>Hengl T., Walvoort D.J.J., Brown A. 2004. A \n>>double continuous approach to visualisation and analysis\n>>of categorical maps. Int. Jou. of Geographical \n>>Information Science, 18(2): 183-202.\n>>http://dx.doi.org/10.1080/13658810310001620924\n>>\n>>-----Original Message-----\n>>From: r-sig-geo-bounces at stat.math.ethz.ch \n>>[mailto:r-sig-geo-bounces at stat.math.ethz.ch] On Behalf Of\n>>Holger Kreft\n>>Sent: Tuesday, November 18, 2008 9:38 AM\n>>To: R-sig-Geo at stat.math.ethz.ch\n>>Subject: [R-sig-Geo] ramping four color in xy space\n>>\n>>Hi,\n>>\n>>I have run a metaMDS(vegan) on ecological \n>>community data and have a nice plot in xy space.\n>>What I want to do next is to assign a unique \n>>color to each point in the plot and then look \n>>at how these communities map out in geographic space.\n>>So, each corner of the plot has a color (let's \n>>say green, blue, red and yellow). I guess I \n>>have to ramp the colors for the space inbetween.\n>>The right plot here illustrate how the palette \n>>should look like: http://www.flickr.com/photos/erniebooth/183647844/\n>>\n>>Does anyone have experience in ramping four \n>>colours in 2-D? I looked at a lot of packages, \n>>but they are all not doing what I want.\n>>\n>>Any hint / help is greatly appreciated!\n>>\n>>Thanks,\n>>\n>>Holger\n>>\n>>_______________________________________________\n>>R-sig-Geo mailing list\n>>R-sig-Geo at stat.math.ethz.ch\n>>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>_______________________________________________\n>>R-sig-Geo mailing list\n>>R-sig-Geo at stat.math.ethz.ch\n>>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>>\n>\n>\n>--\n>****************************************************************\n>Dr. Holger Kreft\n>Phone:  ++1-858-5346659\n>Email:  hkreft at ucsd.edu\n>www.uni-bonn.de/~uzsxeg\n>Ecology Behavior & Evolution Section\n>Division of Biological Sciences\n>University of California, San Diego\n>9500 Gilman Drive, MC 0116\n>La Jolla, CA 92093-0116, USA\n>http://www-biology.ucsd.edu/labs/jetz/\n>\n>_______________________________________________\n>R-sig-Geo mailing list\n>R-sig-Geo at stat.math.ethz.ch\n>https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n>---------------------------------------------------------------------------------------------------\n>Texto añadido por Panda IS 2008:\n>\n>Este mensaje NO ha sido clasificado como SPAM. \n>Si se trata de un mensaje de correo no \n>solicitado (SPAM), haz clic en el siguiente \n>vínculo para reclasificarlo: \n>http://localhost:6083/Panda?ID=pav_2562&SPAM=true&path=C:\\Documents%20and%20Settings\\mcr\\Configuración%20local\\Datos%20de%20programa\\Panda%20Software\\AntiSpam\n>---------------------------------------------------------------------------------------------------\n\n________________________________\n\nMarcelino de la Cruz Rot\n\nDepartamento de  Biología Vegetal\nE.U.T.I. Agrícola\nUniversidad Politécnica de Madrid\n28040-Madrid\nTel.: 91 336 54 35\nFax: 91 336 56 56\nmarcelino.delacruz at upm.es",
       "body_snippet": "Nice plot!\n\nIt could be even more similar to  the one in \nhttp://www.flickr.com/photos/erniebooth/183647844/ \nif you substitute pch=15 for pch =19\n\nCheers,\n\nMarcelino\n\n\nAt 08:33 19/11/2008, Holger Kre",
       "thread_id": "thread-30ffe7096179",
       "thread_depth": 3,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004536.html"
     },
     {
       "id": "msg-c30c50693fbe",
@@ -1220,7 +1286,8 @@
       "body_snippet": "Dear All,\n\nAfter running a GWR model, I have my local coefficient estimates and I\nwould like to test if there is any correlation between the local\ncoefficients. So, it will be great if I could map the",
       "thread_id": "thread-c30c50693fbe",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004537.html"
     },
     {
       "id": "msg-94de70b09aa7",
@@ -1237,6 +1304,7 @@
       "thread_id": "thread-94de70b09aa7",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004538.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081119/4ccc9799/attachment.pl"
       ]
@@ -1257,7 +1325,8 @@
       "body_snippet": "On Wednesday 19 November 2008 02:33:46 pm Alessandro wrote:\n> I have a points shape and I wish to calculate the geometric centre of this\n> points shape and create a new points with R. But It's over my",
       "thread_id": "thread-94de70b09aa7",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004539.html"
     },
     {
       "id": "msg-8d6d49b5148a",
@@ -1276,7 +1345,8 @@
       "body_snippet": "On Wednesday 19 November 2008, Ashton Shortridge wrote:\n> On Wednesday 19 November 2008 02:33:46 pm Alessandro wrote:\n> > I have a points shape and I wish to calculate the geometric centre of\n> > this",
       "thread_id": "thread-94de70b09aa7",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004540.html"
     },
     {
       "id": "msg-968b6524fe1d",
@@ -1295,7 +1365,8 @@
       "body_snippet": "2008/11/19 Dylan Beaudette <debeaudette at ucdavis.edu>:\n> On Wednesday 19 November 2008, Ashton Shortridge wrote:\n>> On Wednesday 19 November 2008 02:33:46 pm Alessandro wrote:\n>> > I have a points s",
       "thread_id": "thread-94de70b09aa7",
       "thread_depth": 3,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004541.html"
     },
     {
       "id": "msg-6a7152b98e4d",
@@ -1315,7 +1386,8 @@
       "body_snippet": ">  The maptools package has a function for computing the centroids of\n> polygons - install that and try help.search(\"centroid\").\n\nx <- read.shape(system.file(\"shapes/sids.shp\", package=\"maptools\")\nmyc",
       "thread_id": "thread-94de70b09aa7",
       "thread_depth": 4,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004542.html"
     },
     {
       "id": "msg-2db68f03ad17",
@@ -1332,6 +1404,7 @@
       "thread_id": "thread-2db68f03ad17",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004543.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081119/790f3374/attachment.pl"
       ]
@@ -1352,7 +1425,8 @@
       "body_snippet": "Alessandro,\nI suggest to read some startup tutorials before asking in ML.\nAnyway you can do this:\n\n for(i in 1:500){\ncp <- paste(sep=\"\",\"centre_plot\",i)\ncoordinates(cp) =~X+Y\nproj4string(cp) <- CRS(\"+",
       "thread_id": "thread-88e6dda9bfc0",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004544.html"
     },
     {
       "id": "msg-f5178b66c67d",
@@ -1371,7 +1445,8 @@
       "body_snippet": "A correction.\ncp[\"Z\"] should be get(cp)[z], to evaluate the string to a variable name...\n\n2008/11/19 G. Allegri <giohappy at gmail.com>:\n> Alessandro,\n> I suggest to read some startup tutorials before",
       "thread_id": "thread-88e6dda9bfc0",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004545.html"
     },
     {
       "id": "msg-93a2a6260555",
@@ -1392,6 +1467,7 @@
       "thread_id": "thread-88e6dda9bfc0",
       "thread_depth": 2,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004546.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081119/96b8ef5a/attachment.pl"
       ]
@@ -1406,11 +1482,12 @@
       "subject_clean": "Spatial Join Point and Polygon",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hi geolist,\n\nI am trying to add attribute values of a polygon layer to an overlying point layer. But I didn`t \nfind a way to do this so far. I tried for example the pick.from.shapefile command in the \nRSAGA package, but I wasn`t successful.\nAny ideas?\n\nThanks a lot\nTIM\n\n-- \nDipl.-Geogr. Tim H?ring\nSachgebiet Standort und Bodenschutz (SG 2.1)\nBayerische Landesanstalt f?r Wald und Forstwirtschaft\nAm Hochanger 11\nD-85354 Freising\n\nE-Mail: haering at lwf.uni-muenchen.de\nhttp://www.lwf.bayern.de",
+      "body_plain": "Hi geolist,\n\nI am trying to add attribute values of a polygon layer to an overlying point layer. But I didn`t \nfind a way to do this so far. I tried for example the pick.from.shapefile command in the \nRSAGA package, but I wasn`t successful.\nAny ideas?\n\nThanks a lot\nTIM\n\n-- \nDipl.-Geogr. Tim Häring\nSachgebiet Standort und Bodenschutz (SG 2.1)\nBayerische Landesanstalt für Wald und Forstwirtschaft\nAm Hochanger 11\nD-85354 Freising\n\nE-Mail: haering at lwf.uni-muenchen.de\nhttp://www.lwf.bayern.de",
       "body_snippet": "Hi geolist,\n\nI am trying to add attribute values of a polygon layer to an overlying point layer. But I didn`t \nfind a way to do this so far. I tried for example the pick.from.shapefile command in the ",
       "thread_id": "thread-67f5ce30b7c5",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004547.html"
     },
     {
       "id": "msg-d1178ddb350d",
@@ -1428,7 +1505,8 @@
       "body_snippet": "Hi list,\n\nI would like to know if R does kernel smooth with borders restriction.\n\nVirginia",
       "thread_id": "thread-bf67b04783a5",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004548.html"
     },
     {
       "id": "msg-df4b15a3930b",
@@ -1445,6 +1523,7 @@
       "thread_id": "thread-df4b15a3930b",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004549.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081120/c720d079/attachment.pl"
       ]
@@ -1466,7 +1545,8 @@
       "body_snippet": "On Thu, 20 Nov 2008, Virginia wrote:\n\n> Hi list,\n>\n> I would like to know if R does kernel smooth with borders restriction.\n\nPlease use the list as described in the posting guide for all R lists:\n\nhtt",
       "thread_id": "thread-bf67b04783a5",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004550.html"
     },
     {
       "id": "msg-d7372cffbcf8",
@@ -1484,7 +1564,8 @@
       "body_snippet": "On Thu, 20 Nov 2008, Mikael Carlsson wrote:\n\n> Hello!\n>\n> I'm running R2.8.0 , Solaris and a Sparc machine\n>\n> Get the following error, and don't know what to do...\n\nThe problem is in loading spatstat",
       "thread_id": "thread-df4b15a3930b",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004551.html"
     },
     {
       "id": "msg-03ff3ea12852",
@@ -1501,6 +1582,7 @@
       "thread_id": "thread-df4b15a3930b",
       "thread_depth": 2,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004552.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081120/1c3ba956/attachment.pl"
       ]
@@ -1517,11 +1599,12 @@
       "references": [
         "<OFB13E5F9C.450801AA-ONC1257507.00455EBE-C1257507.0045DDBE@sgu.se>"
       ],
-      "body_plain": "On Thu, 20 Nov 2008, Mikael Carlsson wrote:\n\n> Couldn't load using library(spatstat)\n> got this error:\n>> library(spatstat)\n> Error in dyn.load(file, DLLpath = DLLpath, ...) :\n>  unable to load shared library\n> '/usr/local/R-2.8.0/lib/R/library/spatstat/libs/spatstat.so':\n>  ld.so.1: R: fatal: relocation error: file\n> /usr/local/R-2.8.0/lib/R/library/spatstat/libs/spatstat.so: symbol\n> __gxx_personality_v0: referenced symbol not found\n\nAs I wrote earlier, resolve this problem first. I suggest reinstalling \nspatstat on your current system - you have most likely updated the g++ \nlibraries since spatstat was installed.\n\nRoger\n\n> Error in library(spatstat) : .First.lib failed for 'spatstat'\n>>\n>\n> Regards,\n> /M\n>\n>\n>\n> Roger Bivand <Roger.Bivand at nhh.no>\n> 2008-11-20 13:33\n> S?nd svar till\n> Roger.Bivand at nhh.no\n>\n>\n> Till\n> Mikael Carlsson <Mikael.Carlsson at sgu.se>\n> Kopia\n> r-sig-geo at stat.math.ethz.ch\n> ?rende\n> Re: [R-sig-Geo] Missing library\n>\n>\n>\n>\n>\n>\n> On Thu, 20 Nov 2008, Mikael Carlsson wrote:\n>\n>> Hello!\n>>\n>> I'm running R2.8.0 , Solaris and a Sparc machine\n>>\n>> Get the following error, and don't know what to do...\n>\n> The problem is in loading spatstat. Can you load spatstat manually:\n>\n> library(spatstat)\n>\n> When that works, the coercion should work too. I expect that spatstat\n> isn't installed adequately (built against an older version of some\n> library, probably the g++ runtime library from googling on the missing\n> function).\n>\n> Roger\n>\n>>\n>> Regards,\n>> Mikael\n>> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n> -\n>> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n> -\n>> - - - - - - - - - - - - - - - - - - - - - -\n>> library(akima)\n>> library(maptools)\n>> library(sp)\n>>\n>> cumark <- read.table(\"sydnorr5000.txt\", header=T, sep = \";\")\n>> attach(cumark)\n>> vew <- as.vector(ew)\n>> vns <- as.vector(ns)\n>> vcu <- as.vector(cu)\n>>\n>> fcumark <- data.frame(vew, vns, vcu)\n>>\n>> coordinates(fcumark) <- ~vew+vns\n>>\n>> L1 <-round((max(vew)- min(vew))/100,0)\n>> L2 <-round((max(vns)- min(vns))/100,0)\n>>\n>>\n>> fcumark.interp.old <- interp.old(vew, vns, vcu,\n>>                xo= seq(min(vew), max(vew), length = L1),\n>>                yo= seq(min(vns), max(vns), length = L2),\n>>                ncp = 0,\n>>                extrap= FALSE,\n>>                duplicate = \"mean\",\n>>                dupfun = NULL)\n>>\n>> fcumark.interp.old.grid <-\n>> as.SpatialGridDataFrame.im(as.im(fcumark.interp.old))\n>>\n>> Loading required package: deldir\n>> deldir 0.0-7\n>> Error in dyn.load(file, DLLpath = DLLpath, ...) :\n>>  unable to load shared library\n>> '/usr/local/R-2.8.0/lib/R/library/spatstat/libs/spatstat.so':\n>>  ld.so.1: R: fatal: relocation error: file\n>> /usr/local/R-2.8.0/lib/R/library/spatstat/libs/spatstat.so: symbol\n>> __gxx_personality_v0: referenced symbol not found\n>> Error in as.SpatialGridDataFrame.im(as.im(fcumark.interp.old)) :\n>>  could not find function \"as.im\"\n>>\n>> (program stop!)\n>>\n>>                [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_plain": "On Thu, 20 Nov 2008, Mikael Carlsson wrote:\n\n> Couldn't load using library(spatstat)\n> got this error:\n>> library(spatstat)\n> Error in dyn.load(file, DLLpath = DLLpath, ...) :\n>  unable to load shared library\n> '/usr/local/R-2.8.0/lib/R/library/spatstat/libs/spatstat.so':\n>  ld.so.1: R: fatal: relocation error: file\n> /usr/local/R-2.8.0/lib/R/library/spatstat/libs/spatstat.so: symbol\n> __gxx_personality_v0: referenced symbol not found\n\nAs I wrote earlier, resolve this problem first. I suggest reinstalling \nspatstat on your current system - you have most likely updated the g++ \nlibraries since spatstat was installed.\n\nRoger\n\n> Error in library(spatstat) : .First.lib failed for 'spatstat'\n>>\n>\n> Regards,\n> /M\n>\n>\n>\n> Roger Bivand <Roger.Bivand at nhh.no>\n> 2008-11-20 13:33\n> Sänd svar till\n> Roger.Bivand at nhh.no\n>\n>\n> Till\n> Mikael Carlsson <Mikael.Carlsson at sgu.se>\n> Kopia\n> r-sig-geo at stat.math.ethz.ch\n> Ärende\n> Re: [R-sig-Geo] Missing library\n>\n>\n>\n>\n>\n>\n> On Thu, 20 Nov 2008, Mikael Carlsson wrote:\n>\n>> Hello!\n>>\n>> I'm running R2.8.0 , Solaris and a Sparc machine\n>>\n>> Get the following error, and don't know what to do...\n>\n> The problem is in loading spatstat. Can you load spatstat manually:\n>\n> library(spatstat)\n>\n> When that works, the coercion should work too. I expect that spatstat\n> isn't installed adequately (built against an older version of some\n> library, probably the g++ runtime library from googling on the missing\n> function).\n>\n> Roger\n>\n>>\n>> Regards,\n>> Mikael\n>> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n> -\n>> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n> -\n>> - - - - - - - - - - - - - - - - - - - - - -\n>> library(akima)\n>> library(maptools)\n>> library(sp)\n>>\n>> cumark <- read.table(\"sydnorr5000.txt\", header=T, sep = \";\")\n>> attach(cumark)\n>> vew <- as.vector(ew)\n>> vns <- as.vector(ns)\n>> vcu <- as.vector(cu)\n>>\n>> fcumark <- data.frame(vew, vns, vcu)\n>>\n>> coordinates(fcumark) <- ~vew+vns\n>>\n>> L1 <-round((max(vew)- min(vew))/100,0)\n>> L2 <-round((max(vns)- min(vns))/100,0)\n>>\n>>\n>> fcumark.interp.old <- interp.old(vew, vns, vcu,\n>>                xo= seq(min(vew), max(vew), length = L1),\n>>                yo= seq(min(vns), max(vns), length = L2),\n>>                ncp = 0,\n>>                extrap= FALSE,\n>>                duplicate = \"mean\",\n>>                dupfun = NULL)\n>>\n>> fcumark.interp.old.grid <-\n>> as.SpatialGridDataFrame.im(as.im(fcumark.interp.old))\n>>\n>> Loading required package: deldir\n>> deldir 0.0-7\n>> Error in dyn.load(file, DLLpath = DLLpath, ...) :\n>>  unable to load shared library\n>> '/usr/local/R-2.8.0/lib/R/library/spatstat/libs/spatstat.so':\n>>  ld.so.1: R: fatal: relocation error: file\n>> /usr/local/R-2.8.0/lib/R/library/spatstat/libs/spatstat.so: symbol\n>> __gxx_personality_v0: referenced symbol not found\n>> Error in as.SpatialGridDataFrame.im(as.im(fcumark.interp.old)) :\n>>  could not find function \"as.im\"\n>>\n>> (program stop!)\n>>\n>>                [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
       "body_snippet": "On Thu, 20 Nov 2008, Mikael Carlsson wrote:\n\n> Couldn't load using library(spatstat)\n> got this error:\n>> library(spatstat)\n> Error in dyn.load(file, DLLpath = DLLpath, ...) :\n>  unable to load shared",
       "thread_id": "thread-df4b15a3930b",
       "thread_depth": 3,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004553.html"
     },
     {
       "id": "msg-05f256678610",
@@ -1537,7 +1620,8 @@
       "body_snippet": "When I inspect the table of a shp in QGIS I can see a field\n\"id\" with unique values for each row (polygon), but\nonce I import it into R, that first field is not there:\n\n > metrop1spdf <- readOGR(\"/med",
       "thread_id": "thread-05f256678610",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004554.html"
     },
     {
       "id": "msg-fed0cf729724",
@@ -1549,11 +1633,12 @@
       "subject_clean": "examples",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hi all!\n\nI am just trying to show how R could be also an powerful tool in the\nsig-geo arena.\n\nPlease, could anybody be so kind as to pointing to me to any nice free\nexample out there? I've been some 3-D rendered surfaces here and there, \nbut I don't know where, if possible, could I find their data and code. \nThanks for your help!\n\nAll the best,\n\nRicardo\n\n-- \nRicardo Rodr?guez\nYour XEN ICT Team",
+      "body_plain": "Hi all!\n\nI am just trying to show how R could be also an powerful tool in the\nsig-geo arena.\n\nPlease, could anybody be so kind as to pointing to me to any nice free\nexample out there? I've been some 3-D rendered surfaces here and there, \nbut I don't know where, if possible, could I find their data and code. \nThanks for your help!\n\nAll the best,\n\nRicardo\n\n-- \nRicardo Rodríguez\nYour XEN ICT Team",
       "body_snippet": "Hi all!\n\nI am just trying to show how R could be also an powerful tool in the\nsig-geo arena.\n\nPlease, could anybody be so kind as to pointing to me to any nice free\nexample out there? I've been some 3",
       "thread_id": "thread-fed0cf729724",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004555.html"
     },
     {
       "id": "msg-1a23b3fbf5b3",
@@ -1569,7 +1654,8 @@
       "body_snippet": "Hello.\n\n There are lots of services of OGC(Open Geospatial\nConsortium:http://www.opengeospatial.org/)'s standard\nbased Geo-Web ervices incluing WMS(Web Map Service),\nWFS(Web Feature Service), WCS(Web ",
       "thread_id": "thread-1a23b3fbf5b3",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004556.html"
     },
     {
       "id": "msg-3fd6074ec9b4",
@@ -1587,7 +1673,8 @@
       "body_snippet": "2008/11/22 Hisaji ONO <hi_ono2001 at ybb.ne.jp>:\n> Hello.\n>\n>  There are lots of services of OGC(Open Geospatial\n> Consortium:http://www.opengeospatial.org/)'s standard\n> based Geo-Web ervices incluin",
       "thread_id": "thread-1a23b3fbf5b3",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004557.html"
     },
     {
       "id": "msg-5f154f53c904",
@@ -1603,7 +1690,8 @@
       "body_snippet": "Dear experts\n\nI'm in the middle of giving a course on geostatistics and GIS (I am doing the geostatistics part, \nsomeone else the GIS part). We are using Webster and Oliver as text book.\n\nI am conside",
       "thread_id": "thread-5f154f53c904",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004558.html"
     },
     {
       "id": "msg-d945e1bdec55",
@@ -1620,6 +1708,7 @@
       "thread_id": "thread-d945e1bdec55",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004559.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081122/1548fd90/attachment.pl"
       ]
@@ -1638,7 +1727,8 @@
       "body_snippet": "I'm posting this on behalf Kevin, Yen - the same text was trapped \nyesterday as spam, so this is also a technical issue, and the reason for \nhelping in this way:\n-----------------------\nHi, lists,\n\nI ",
       "thread_id": "thread-59028f59358b",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004560.html"
     },
     {
       "id": "msg-cba2cb362972",
@@ -1653,11 +1743,12 @@
         "<20081122091037.96631.qmail@web10714.mail.bbt.yahoo.co.jp>",
         "<d8ad40b50811220135p6a32a0e3p658d78541db074b8@mail.gmail.com>"
       ],
-      "body_plain": "On Sat, 22 Nov 2008, Barry Rowlingson wrote:\n\n> 2008/11/22 Hisaji ONO <hi_ono2001 at ybb.ne.jp>:\n>> Hello.\n>>\n>>  There are lots of services of OGC(Open Geospatial\n>> Consortium:http://www.opengeospatial.org/)'s standard\n>> based Geo-Web ervices incluing WMS(Web Map Service),\n>> WFS(Web Feature Service), WCS(Web Coverage Service) and\n>> WPS(Web Processing Service) all over the world.\n>>\n>>  Does anyone try to use these services from R?\n>\n> Any access to WMS and WFS would probably be best done using GDAL and\n> OGR via the rgdal package.... Let's see...\n>\n> GDAL has a WMS driver, but it seems you do have to create a 'local\n> service description' file. www.gdal.org seems down at the moment, so\n> here's a google cache link:\n>\n> http://216.239.59.132/search?q=cache:21OOLtr9yj0J:www.gdal.org/frmt_wms.html+gdal+wms&hl=en&ct=clnk&cd=1&gl=uk\n>\n> For WFS, there's some recent discussion on the gdal-dev list:\n>\n> http://www.nabble.com/OGR-WFS-driver-td20485363.html\n>\n> so it might be coming soon. Can you wait?\n>\n> To do WFS from scratch in R is probably going to need XML parsing,\n> and then it'll probably also need OGR too unless you want to hand-code\n> understanding the returned GML...\n\nYes, so OGR needs to be built against the Xerces libraries. I agree that \nWMS and WFS are best handled by using work that is already going on in the \nOSGeo community. An example of R in a a WPS setting is:\n\nKatharina Henneb?hl, Edzer Pebesma:\nProviding R functionality through the OGC Web Processing Service\n\ngiven at useR! 2008 in Dortmund in August - there is an abstract on the \nconference website. I think that their trial site may be ready before \nlong, together with the underlying software.\n\nRoger\n\n>\n> Barry\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
+      "body_plain": "On Sat, 22 Nov 2008, Barry Rowlingson wrote:\n\n> 2008/11/22 Hisaji ONO <hi_ono2001 at ybb.ne.jp>:\n>> Hello.\n>>\n>>  There are lots of services of OGC(Open Geospatial\n>> Consortium:http://www.opengeospatial.org/)'s standard\n>> based Geo-Web ervices incluing WMS(Web Map Service),\n>> WFS(Web Feature Service), WCS(Web Coverage Service) and\n>> WPS(Web Processing Service) all over the world.\n>>\n>>  Does anyone try to use these services from R?\n>\n> Any access to WMS and WFS would probably be best done using GDAL and\n> OGR via the rgdal package.... Let's see...\n>\n> GDAL has a WMS driver, but it seems you do have to create a 'local\n> service description' file. www.gdal.org seems down at the moment, so\n> here's a google cache link:\n>\n> http://216.239.59.132/search?q=cache:21OOLtr9yj0J:www.gdal.org/frmt_wms.html+gdal+wms&hl=en&ct=clnk&cd=1&gl=uk\n>\n> For WFS, there's some recent discussion on the gdal-dev list:\n>\n> http://www.nabble.com/OGR-WFS-driver-td20485363.html\n>\n> so it might be coming soon. Can you wait?\n>\n> To do WFS from scratch in R is probably going to need XML parsing,\n> and then it'll probably also need OGR too unless you want to hand-code\n> understanding the returned GML...\n\nYes, so OGR needs to be built against the Xerces libraries. I agree that \nWMS and WFS are best handled by using work that is already going on in the \nOSGeo community. An example of R in a a WPS setting is:\n\nKatharina Henneböhl, Edzer Pebesma:\nProviding R functionality through the OGC Web Processing Service\n\ngiven at useR! 2008 in Dortmund in August - there is an abstract on the \nconference website. I think that their trial site may be ready before \nlong, together with the underlying software.\n\nRoger\n\n>\n> Barry\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n\n-- \nRoger Bivand\nEconomic Geography Section, Department of Economics, Norwegian School of\nEconomics and Business Administration, Helleveien 30, N-5045 Bergen,\nNorway. voice: +47 55 95 93 55; fax +47 55 95 95 43\ne-mail: Roger.Bivand at nhh.no",
       "body_snippet": "On Sat, 22 Nov 2008, Barry Rowlingson wrote:\n\n> 2008/11/22 Hisaji ONO <hi_ono2001 at ybb.ne.jp>:\n>> Hello.\n>>\n>>  There are lots of services of OGC(Open Geospatial\n>> Consortium:http://www.opengeospat",
       "thread_id": "thread-1a23b3fbf5b3",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004561.html"
     },
     {
       "id": "msg-6f7d096d9aff",
@@ -1671,11 +1762,12 @@
       "references": [
         "<EA09C4B2B0F16E44B8F3311629493C0D02D76D98@DJFPOST01.djf.agrsci.dk>"
       ],
-      "body_plain": "Hi Ole,\n\nYou're completely right -- it is hard to explain why the model you get \nwhen fitting different ranges is useful. If you had tried to use it in a \nkriging context, you would have seen the following:\n\n > predict(meuse.fit3, meuse[1,])\nWarning: No Intrinsic Correlation or Linear Model of Coregionalization found\nReason: ranges differ\nWarning: [add `set nocheck = 1;' to the command file to ignore the \nfollowing error]\n\nError in predict.gstat(meuse.fit3, meuse[1, ]) :\n  gstat: value not allowed for: variograms do not satisfy a legal model\n\nOnly few on this list will know that you can override this error by:\n > meuse.fit3$set=list(nocheck=1)\n > predict(meuse.fit3, meuse[1,])\nWarning: No Intrinsic Correlation or Linear Model of Coregionalization found\nReason: ranges differ\nNow checking for Cauchy-Schwartz inequalities:\nvariogram(var0,var1) passed Cauchy-Schwartz\nvariogram(var0,var2) passed Cauchy-Schwartz\nvariogram(var1,var2) passed Cauchy-Schwartz\nvariogram(var0,var3) passed Cauchy-Schwartz\nvariogram(var1,var3) passed Cauchy-Schwartz\nvariogram(var2,var3) passed Cauchy-Schwartz\n[using ordinary cokriging]\n       x      y  zn.pred       zn.var  cu.pred       cu.var  cd.pred\n1 181072 333611 6.929517 1.004906e-26 4.442651 1.665335e-16 2.459589\n        cd.var  pb.pred       pb.var    cov.zn.cu    cov.zn.cd    cov.cu.cd\n1 8.881784e-16 5.700444 1.110223e-16 1.110223e-16 4.440892e-16 3.330669e-16\n     cov.zn.pb    cov.cu.pb    cov.cd.pb\n1 1.110223e-16 5.551115e-17 1.110223e-15\n\nwhich may be useful to some. IIRC, I left this option in because some \npeople at some stage advocated to use cokriging of indicators for \nseveral thresholds of a single continuous variable, where the LMC makes \nless sense because extremes show smaller correlation distance--all this \nis definitely not in the Webster & Oliver book.\n\nThe reason why fit.lmc was not cleanly implemented the way you would \nlike is that it uses consecutive calls to fits for individual \nvariograms, and if necessary corrects for positive definiteness of \nsills/nuggets. This setup doesn't make fitting of a common sill easy. \nNobody has volunteered to do it better so far.\n\nA larger worry I have now is that the gstat code allows you to predict \nvalues on a sphere with all the regular variogram models that are not \npositive on the sphere--without this kind of error/warning.\n--\nEdzer\n\nOle Fredslund Christensen wrote:\n> Dear experts\n>\n> I'm in the middle of giving a course on geostatistics and GIS (I am doing the geostatistics part, \n> someone else the GIS part). We are using Webster and Oliver as text book.\n>\n> I am considering to make a small exercise related to Multivariate geostatistics and cokriging.\n> In Webster and Oliver they present the linear model of coregionalisation \n> such that \n> 1) it is a sum of components\n> 2) for component the covariances and crosscovarainces share same correlation function,\n> but have different scalars associated to them (these scalar are chosen consistently to make \n> up a covariance matrix) I can understand why this construction is a valid one \n> (and I hope to able to explain it to the students)\n>\n>\n> In gstat I can do the following :\n>\n> data(meuse)\n>\n> pdf(file=\"meuse.pdf\")\n> meuse.g <- gstat(id = \"zn\", formula = log(zinc) ~ 1, loc = ~x + y, data = meuse)\n> meuse.g <- gstat(meuse.g, \"cu\", log(copper) ~ 1, ~x + y, meuse)\n> meuse.g <- gstat(meuse.g, \"cd\", log(cadmium) ~ 1, ~x + y, meuse)\n> meuse.g <- gstat(meuse.g, \"pb\", log(lead) ~ 1, ~x + y, meuse)\n>\n> data(meuse)\n>\n> pdf(file=\"meuse.pdf\")\n> meuse.g <- gstat(id = \"zn\", formula = log(zinc) ~ 1, loc = ~x + y, data = meuse)\n> meuse.g <- gstat(meuse.g, \"cu\", log(copper) ~ 1, ~x + y, meuse)\n> meuse.g <- gstat(meuse.g, \"cd\", log(cadmium) ~ 1, ~x + y, meuse)\n> meuse.g <- gstat(meuse.g, \"pb\", log(lead) ~ 1, ~x + y, meuse)\n>\n>\n> meuse.g2 <- gstat(meuse.g, model = vgm(1, \"Sph\", 900,1), fill.all = T)\n>   \nyou forgot:\nx = variogram(meuse.g)\n> meuse.fit2 <- fit.lmc(x, meuse.g2)\n> meuse.fit2\n>\n> variograms:\n>          model      psill range\n> zn[1]      Nug 0.05838220     0\n> zn[2]      Sph 0.57717809   900\n> cu[1]      Nug 0.06127586     0\n> cu[2]      Sph 0.24767761   900\n> cd[1]      Nug 0.48904863     0\n> cd[2]      Sph 1.22387180   900\n> pb[1]      Nug 0.05924609     0\n> pb[2]      Sph 0.47945611   900\n> zn.cu[1]   Nug 0.04630670     0\n> zn.cu[2]   Sph 0.35863043   900\n> zn.cd[1]   Nug 0.12881136     0\n> zn.cd[2]   Sph 0.78603818   900\n> cu.cd[1]   Nug 0.12206442     0\n> cu.cd[2]   Sph 0.49782101   900\n> zn.pb[1]   Nug 0.05197207     0\n> zn.pb[2]   Sph 0.51367619   900\n> cu.pb[1]   Nug 0.03932104     0\n> cu.pb[2]   Sph 0.30882315   900\n> cd.pb[1]   Nug 0.10175399     0\n> cd.pb[2]   Sph 0.68735760   900\n> ~x + y\n>\n>\n> ## same range, but it not fit.\n>\n> meuse.fit3 <- fit.lmc(x, meuse.g2, fit.ranges =TRUE)\n> mesure.fit3\n>\n> variograms:\n>          model      psill     range\n> zn[1]      Nug 0.06390664    0.0000\n> zn[2]      Sph 0.59513904  965.6013\n> cu[1]      Nug 0.05466579    0.0000\n> cu[2]      Sph 0.23630293  773.4431\n> cd[1]      Nug 0.51350775    0.0000\n> cd[2]      Sph 1.32830734 1063.0889\n> pb[1]      Nug 0.07325686    0.0000\n> pb[2]      Sph 0.56031923 1193.4988\n> zn.cu[1]   Nug 0.04619022    0.0000\n> zn.cu[2]   Sph 0.35832564  898.0459\n> zn.cd[1]   Nug 0.14318935    0.0000\n> zn.cd[2]   Sph 0.84453467 1044.6003\n> cu.cd[1]   Nug 0.12402376    0.0000\n> cu.cd[2]   Sph 0.50344066  924.9874\n> zn.pb[1]   Nug 0.06218012    0.0000\n> zn.pb[2]   Sph 0.55728401 1062.1928\n> cu.pb[1]   Nug 0.04216347    0.0000\n> cu.pb[2]   Sph 0.31801824  962.8714\n> cd.pb[1]   Nug 0.11849857    0.0000\n> cd.pb[2]   Sph 0.76933704 1117.9877\n>\n>\n> fit different ranges !!!\n> (and I have difficulties to understand why this construction neccessarily is valid, \n> and clearly would have problems explaining it to students).\n>\n> What I really would like to be able to do is to fit the range also, but restrict it to be the same for\n> all varoigrams and crossvariograms\n> (requring a simultaneous fitting of variograms and cross-variograms, I guess).\n>\n> I can see a solution,  where I chose 5 different fixed ranges and make a visual inspection of this\n> for each of them, but I worry about draging students through an exercise where they inspect a number of \n> different variograms and for each of these have to consider five fitted variograms\n>\n> Anyone aware of a more elegant solution to this problem ?\n>\n>\n> Ole Christensen\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster\nWeseler Stra?e 253, 48151 M?nster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
+      "body_plain": "Hi Ole,\n\nYou're completely right -- it is hard to explain why the model you get \nwhen fitting different ranges is useful. If you had tried to use it in a \nkriging context, you would have seen the following:\n\n > predict(meuse.fit3, meuse[1,])\nWarning: No Intrinsic Correlation or Linear Model of Coregionalization found\nReason: ranges differ\nWarning: [add `set nocheck = 1;' to the command file to ignore the \nfollowing error]\n\nError in predict.gstat(meuse.fit3, meuse[1, ]) :\n  gstat: value not allowed for: variograms do not satisfy a legal model\n\nOnly few on this list will know that you can override this error by:\n > meuse.fit3$set=list(nocheck=1)\n > predict(meuse.fit3, meuse[1,])\nWarning: No Intrinsic Correlation or Linear Model of Coregionalization found\nReason: ranges differ\nNow checking for Cauchy-Schwartz inequalities:\nvariogram(var0,var1) passed Cauchy-Schwartz\nvariogram(var0,var2) passed Cauchy-Schwartz\nvariogram(var1,var2) passed Cauchy-Schwartz\nvariogram(var0,var3) passed Cauchy-Schwartz\nvariogram(var1,var3) passed Cauchy-Schwartz\nvariogram(var2,var3) passed Cauchy-Schwartz\n[using ordinary cokriging]\n       x      y  zn.pred       zn.var  cu.pred       cu.var  cd.pred\n1 181072 333611 6.929517 1.004906e-26 4.442651 1.665335e-16 2.459589\n        cd.var  pb.pred       pb.var    cov.zn.cu    cov.zn.cd    cov.cu.cd\n1 8.881784e-16 5.700444 1.110223e-16 1.110223e-16 4.440892e-16 3.330669e-16\n     cov.zn.pb    cov.cu.pb    cov.cd.pb\n1 1.110223e-16 5.551115e-17 1.110223e-15\n\nwhich may be useful to some. IIRC, I left this option in because some \npeople at some stage advocated to use cokriging of indicators for \nseveral thresholds of a single continuous variable, where the LMC makes \nless sense because extremes show smaller correlation distance--all this \nis definitely not in the Webster & Oliver book.\n\nThe reason why fit.lmc was not cleanly implemented the way you would \nlike is that it uses consecutive calls to fits for individual \nvariograms, and if necessary corrects for positive definiteness of \nsills/nuggets. This setup doesn't make fitting of a common sill easy. \nNobody has volunteered to do it better so far.\n\nA larger worry I have now is that the gstat code allows you to predict \nvalues on a sphere with all the regular variogram models that are not \npositive on the sphere--without this kind of error/warning.\n--\nEdzer\n\nOle Fredslund Christensen wrote:\n> Dear experts\n>\n> I'm in the middle of giving a course on geostatistics and GIS (I am doing the geostatistics part, \n> someone else the GIS part). We are using Webster and Oliver as text book.\n>\n> I am considering to make a small exercise related to Multivariate geostatistics and cokriging.\n> In Webster and Oliver they present the linear model of coregionalisation \n> such that \n> 1) it is a sum of components\n> 2) for component the covariances and crosscovarainces share same correlation function,\n> but have different scalars associated to them (these scalar are chosen consistently to make \n> up a covariance matrix) I can understand why this construction is a valid one \n> (and I hope to able to explain it to the students)\n>\n>\n> In gstat I can do the following :\n>\n> data(meuse)\n>\n> pdf(file=\"meuse.pdf\")\n> meuse.g <- gstat(id = \"zn\", formula = log(zinc) ~ 1, loc = ~x + y, data = meuse)\n> meuse.g <- gstat(meuse.g, \"cu\", log(copper) ~ 1, ~x + y, meuse)\n> meuse.g <- gstat(meuse.g, \"cd\", log(cadmium) ~ 1, ~x + y, meuse)\n> meuse.g <- gstat(meuse.g, \"pb\", log(lead) ~ 1, ~x + y, meuse)\n>\n> data(meuse)\n>\n> pdf(file=\"meuse.pdf\")\n> meuse.g <- gstat(id = \"zn\", formula = log(zinc) ~ 1, loc = ~x + y, data = meuse)\n> meuse.g <- gstat(meuse.g, \"cu\", log(copper) ~ 1, ~x + y, meuse)\n> meuse.g <- gstat(meuse.g, \"cd\", log(cadmium) ~ 1, ~x + y, meuse)\n> meuse.g <- gstat(meuse.g, \"pb\", log(lead) ~ 1, ~x + y, meuse)\n>\n>\n> meuse.g2 <- gstat(meuse.g, model = vgm(1, \"Sph\", 900,1), fill.all = T)\n>   \nyou forgot:\nx = variogram(meuse.g)\n> meuse.fit2 <- fit.lmc(x, meuse.g2)\n> meuse.fit2\n>\n> variograms:\n>          model      psill range\n> zn[1]      Nug 0.05838220     0\n> zn[2]      Sph 0.57717809   900\n> cu[1]      Nug 0.06127586     0\n> cu[2]      Sph 0.24767761   900\n> cd[1]      Nug 0.48904863     0\n> cd[2]      Sph 1.22387180   900\n> pb[1]      Nug 0.05924609     0\n> pb[2]      Sph 0.47945611   900\n> zn.cu[1]   Nug 0.04630670     0\n> zn.cu[2]   Sph 0.35863043   900\n> zn.cd[1]   Nug 0.12881136     0\n> zn.cd[2]   Sph 0.78603818   900\n> cu.cd[1]   Nug 0.12206442     0\n> cu.cd[2]   Sph 0.49782101   900\n> zn.pb[1]   Nug 0.05197207     0\n> zn.pb[2]   Sph 0.51367619   900\n> cu.pb[1]   Nug 0.03932104     0\n> cu.pb[2]   Sph 0.30882315   900\n> cd.pb[1]   Nug 0.10175399     0\n> cd.pb[2]   Sph 0.68735760   900\n> ~x + y\n>\n>\n> ## same range, but it not fit.\n>\n> meuse.fit3 <- fit.lmc(x, meuse.g2, fit.ranges =TRUE)\n> mesure.fit3\n>\n> variograms:\n>          model      psill     range\n> zn[1]      Nug 0.06390664    0.0000\n> zn[2]      Sph 0.59513904  965.6013\n> cu[1]      Nug 0.05466579    0.0000\n> cu[2]      Sph 0.23630293  773.4431\n> cd[1]      Nug 0.51350775    0.0000\n> cd[2]      Sph 1.32830734 1063.0889\n> pb[1]      Nug 0.07325686    0.0000\n> pb[2]      Sph 0.56031923 1193.4988\n> zn.cu[1]   Nug 0.04619022    0.0000\n> zn.cu[2]   Sph 0.35832564  898.0459\n> zn.cd[1]   Nug 0.14318935    0.0000\n> zn.cd[2]   Sph 0.84453467 1044.6003\n> cu.cd[1]   Nug 0.12402376    0.0000\n> cu.cd[2]   Sph 0.50344066  924.9874\n> zn.pb[1]   Nug 0.06218012    0.0000\n> zn.pb[2]   Sph 0.55728401 1062.1928\n> cu.pb[1]   Nug 0.04216347    0.0000\n> cu.pb[2]   Sph 0.31801824  962.8714\n> cd.pb[1]   Nug 0.11849857    0.0000\n> cd.pb[2]   Sph 0.76933704 1117.9877\n>\n>\n> fit different ranges !!!\n> (and I have difficulties to understand why this construction neccessarily is valid, \n> and clearly would have problems explaining it to students).\n>\n> What I really would like to be able to do is to fit the range also, but restrict it to be the same for\n> all varoigrams and crossvariograms\n> (requring a simultaneous fitting of variograms and cross-variograms, I guess).\n>\n> I can see a solution,  where I chose 5 different fixed ranges and make a visual inspection of this\n> for each of them, but I worry about draging students through an exercise where they inspect a number of \n> different variograms and for each of these have to consider five fitted variograms\n>\n> Anyone aware of a more elegant solution to this problem ?\n>\n>\n> Ole Christensen\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster\nWeseler Straße 253, 48151 Münster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
       "body_snippet": "Hi Ole,\n\nYou're completely right -- it is hard to explain why the model you get \nwhen fitting different ranges is useful. If you had tried to use it in a \nkriging context, you would have seen the foll",
       "thread_id": "thread-5f154f53c904",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004562.html"
     },
     {
       "id": "msg-fbe094606fab",
@@ -1691,11 +1783,12 @@
         "<d8ad40b50811220135p6a32a0e3p658d78541db074b8@mail.gmail.com>",
         "<alpine.LRH.2.00.0811221357040.7189@reclus.nhh.no>"
       ],
-      "body_plain": "Interesting question!\n\nOf course, all these are services, and R is not typically a service or a \nclient, but rather an environment to do statistical computing. Reading \nand writing can, as mentioned, be done to some extent through OGR (WFS, \ne.g. by writing gml) and GDAL (WCS, reading). Note that gml has many \nversions, and the more recent ones are typically monsters of complexity; \nOSGEO seems to support mainly older versions or subsets for specific \napplication areas. WMS is more something of an output, useful for those \nwho want to see the map rather than have the data.\n\nWe're currently working in the intamap project (http://www.intamap.org) \nto provide R interpolation facilities through a web processing standard, \nwhich basically means GIS (or any other) processing through an OGC \ncomplient web service (WPS, as opposed to e.g. SOAP). Here, R does the \nback end work, and the WPS front-end takes care of input (an O&M, \nobservations and measurements document, xml) and output (gml for \ngeometry, UncertML for probability distributions). If someone is \ninterested in testing this, please let me know.\n\nOther OGC services to check out are those in the SWE area: SOS, SPS, \nSAS, this list is growing faster than an adult can learn remembering \nabbreviations.\n--\nEdzer\n\n\nRoger Bivand wrote:\n> On Sat, 22 Nov 2008, Barry Rowlingson wrote:\n>\n>> 2008/11/22 Hisaji ONO <hi_ono2001 at ybb.ne.jp>:\n>>> Hello.\n>>>\n>>>  There are lots of services of OGC(Open Geospatial\n>>> Consortium:http://www.opengeospatial.org/)'s standard\n>>> based Geo-Web ervices incluing WMS(Web Map Service),\n>>> WFS(Web Feature Service), WCS(Web Coverage Service) and\n>>> WPS(Web Processing Service) all over the world.\n>>>\n>>>  Does anyone try to use these services from R?\n>>\n>> Any access to WMS and WFS would probably be best done using GDAL and\n>> OGR via the rgdal package.... Let's see...\n>>\n>> GDAL has a WMS driver, but it seems you do have to create a 'local\n>> service description' file. www.gdal.org seems down at the moment, so\n>> here's a google cache link:\n>>\n>> http://216.239.59.132/search?q=cache:21OOLtr9yj0J:www.gdal.org/frmt_wms.html+gdal+wms&hl=en&ct=clnk&cd=1&gl=uk \n>>\n>>\n>> For WFS, there's some recent discussion on the gdal-dev list:\n>>\n>> http://www.nabble.com/OGR-WFS-driver-td20485363.html\n>>\n>> so it might be coming soon. Can you wait?\n>>\n>> To do WFS from scratch in R is probably going to need XML parsing,\n>> and then it'll probably also need OGR too unless you want to hand-code\n>> understanding the returned GML...\n>\n> Yes, so OGR needs to be built against the Xerces libraries. I agree \n> that WMS and WFS are best handled by using work that is already going \n> on in the OSGeo community. An example of R in a a WPS setting is:\n>\n> Katharina Henneb?hl, Edzer Pebesma:\n> Providing R functionality through the OGC Web Processing Service\n>\n> given at useR! 2008 in Dortmund in August - there is an abstract on \n> the conference website. I think that their trial site may be ready \n> before long, together with the underlying software.\n>\n> Roger\n>\n>>\n>> Barry\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n> ------------------------------------------------------------------------\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster\nWeseler Stra?e 253, 48151 M?nster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
+      "body_plain": "Interesting question!\n\nOf course, all these are services, and R is not typically a service or a \nclient, but rather an environment to do statistical computing. Reading \nand writing can, as mentioned, be done to some extent through OGR (WFS, \ne.g. by writing gml) and GDAL (WCS, reading). Note that gml has many \nversions, and the more recent ones are typically monsters of complexity; \nOSGEO seems to support mainly older versions or subsets for specific \napplication areas. WMS is more something of an output, useful for those \nwho want to see the map rather than have the data.\n\nWe're currently working in the intamap project (http://www.intamap.org) \nto provide R interpolation facilities through a web processing standard, \nwhich basically means GIS (or any other) processing through an OGC \ncomplient web service (WPS, as opposed to e.g. SOAP). Here, R does the \nback end work, and the WPS front-end takes care of input (an O&M, \nobservations and measurements document, xml) and output (gml for \ngeometry, UncertML for probability distributions). If someone is \ninterested in testing this, please let me know.\n\nOther OGC services to check out are those in the SWE area: SOS, SPS, \nSAS, this list is growing faster than an adult can learn remembering \nabbreviations.\n--\nEdzer\n\n\nRoger Bivand wrote:\n> On Sat, 22 Nov 2008, Barry Rowlingson wrote:\n>\n>> 2008/11/22 Hisaji ONO <hi_ono2001 at ybb.ne.jp>:\n>>> Hello.\n>>>\n>>>  There are lots of services of OGC(Open Geospatial\n>>> Consortium:http://www.opengeospatial.org/)'s standard\n>>> based Geo-Web ervices incluing WMS(Web Map Service),\n>>> WFS(Web Feature Service), WCS(Web Coverage Service) and\n>>> WPS(Web Processing Service) all over the world.\n>>>\n>>>  Does anyone try to use these services from R?\n>>\n>> Any access to WMS and WFS would probably be best done using GDAL and\n>> OGR via the rgdal package.... Let's see...\n>>\n>> GDAL has a WMS driver, but it seems you do have to create a 'local\n>> service description' file. www.gdal.org seems down at the moment, so\n>> here's a google cache link:\n>>\n>> http://216.239.59.132/search?q=cache:21OOLtr9yj0J:www.gdal.org/frmt_wms.html+gdal+wms&hl=en&ct=clnk&cd=1&gl=uk \n>>\n>>\n>> For WFS, there's some recent discussion on the gdal-dev list:\n>>\n>> http://www.nabble.com/OGR-WFS-driver-td20485363.html\n>>\n>> so it might be coming soon. Can you wait?\n>>\n>> To do WFS from scratch in R is probably going to need XML parsing,\n>> and then it'll probably also need OGR too unless you want to hand-code\n>> understanding the returned GML...\n>\n> Yes, so OGR needs to be built against the Xerces libraries. I agree \n> that WMS and WFS are best handled by using work that is already going \n> on in the OSGeo community. An example of R in a a WPS setting is:\n>\n> Katharina Henneböhl, Edzer Pebesma:\n> Providing R functionality through the OGC Web Processing Service\n>\n> given at useR! 2008 in Dortmund in August - there is an abstract on \n> the conference website. I think that their trial site may be ready \n> before long, together with the underlying software.\n>\n> Roger\n>\n>>\n>> Barry\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n> ------------------------------------------------------------------------\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster\nWeseler Straße 253, 48151 Münster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
       "body_snippet": "Interesting question!\n\nOf course, all these are services, and R is not typically a service or a \nclient, but rather an environment to do statistical computing. Reading \nand writing can, as mentioned, ",
       "thread_id": "thread-1a23b3fbf5b3",
       "thread_depth": 3,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004563.html"
     },
     {
       "id": "msg-0532e7575d47",
@@ -1712,6 +1805,7 @@
       "thread_id": "thread-0532e7575d47",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004564.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081123/e09636c7/attachment.pl"
       ]
@@ -1732,7 +1826,8 @@
       "body_snippet": "[Ricardo Rodriguez] Your XEN ICT Team schreef:\n> Hi all!\n>\n> I am just trying to show how R could be also an powerful tool in the\n> sig-geo arena.\n>\n> Please, could anybody be so kind as to pointing t",
       "thread_id": "thread-fed0cf729724",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004565.html"
     },
     {
       "id": "msg-68087147aca9",
@@ -1750,7 +1845,8 @@
       "body_snippet": "Well, it's easy to find the rgdal package, it's on CRAN. However, as \nnoted there, rgdal is not available from CRAN in binary form for OS \nX, so you have to build it from source. In order to do that y",
       "thread_id": "thread-0532e7575d47",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004566.html"
     },
     {
       "id": "msg-1cd27ea5a1e6",
@@ -1762,11 +1858,12 @@
       "subject_clean": "calculating integral for spectral signatures",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Enrico,\n\nI think something like this should work for your purpose:\n\nx <- c(1,2,3,5,7,12,13)\ny <- c(1,2,9,11,7,20,10)\n\ny1 <- y[-length(y)]\ny2 <- y[-1]\ndy <- y2 - y1\ndx <- x[-1] - x[-length(x)]\ndxy <- dx * (y1 + 0.5 * dy)\nintegral <- sum(dxy)\n\nRobert\n\n> Today's Topics:\n>\n>   1.  calculating integral for spectral signatures (Enrico Guastaldi)\n>   2. posting on behalf of Kevin, Yen (Roger Bivand)\n>   3. Re: WMS, WFS, WCS an WPS for R (Roger Bivand)\n>\n>\n> ----------------------------------------------------------------------\n>\n> Message: 1\n> Date: Sat, 22 Nov 2008 12:59:51 +0100\n> From: \"Enrico Guastaldi\" <enrico.guastaldi at gmail.com>\n> Subject: [R-sig-Geo]  calculating integral for spectral signatures\n> To: r-sig-geo at stat.math.ethz.ch\n> Message-ID:\n>        <7ce8d7d30811220359n755d2e22k488ca33c10a6d509 at mail.gmail.com>\n> Content-Type: text/plain\n>\n> Dear list members,\n> Does anyone know how to calculate in R integral of bivariate distribution of\n> discrete points suche as the following\n> x       y\n> 1       1\n> 2       2\n> 3       9\n> 5       11\n> 7       7\n> 12      20\n> 13      10\n> But I've thousands of x,y points with x always increasing: I'm talking about\n> spectral signature.\n> I think I need some function that \"constructs\" (not interpolates) a polyline\n> from these x,y points and then calculate the underlying area, because I've\n> to compare several distributions.\n>\n> Could anyone help me?\n>\n> Thanks\n>\n> --\n> Enrico Guastaldi\n> Centro di GeoTecnologie dell'Universit? degli Studi Siena,\n> Via Vetri Vecchi, 34\n> 52027 - San Giovanni Valdarno (AR)\n> Italy\n>\n> Tel.   +39 349 4025017\n> Fax.   +39 055 9119439\n> url:   www.geotecnologie.unisi.it\n>\n> Io uso Linux!\n> user #466775 counter.li.org\n>\n>\n> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n> Please try to avoid to send me .dwg, .doc, .xls, .ppt files.\n> I prefer free formats.\n> http://en.wikipedia.org/wiki/Open_format\n>\n> Please consider the environment before printing this e-mail\n> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n>\n>        [[alternative HTML version deleted]]\n>\n>\n>\n> ------------------------------\n>\n> Message: 2\n> Date: Sat, 22 Nov 2008 13:42:39 +0100 (CET)\n> From: Roger Bivand <Roger.Bivand at nhh.no>\n> Subject: [R-sig-Geo] posting on behalf of Kevin, Yen\n> To: r-sig-geo at stat.math.ethz.ch\n> Message-ID: <alpine.LRH.2.00.0811221337310.7189 at reclus.nhh.no>\n> Content-Type: text/plain; charset=\"iso-8859-15\"; Format=\"flowed\"\n>\n> I'm posting this on behalf Kevin, Yen - the same text was trapped\n> yesterday as spam, so this is also a technical issue, and the reason for\n> helping in this way:\n> -----------------------\n> Hi, lists,\n>\n> I am reading meterials about GWR, but there are some problems puzzling me\n> very much:\n>\n> If there are N observations at N locations g(g1,????gn),the dependent and\n> independent variables are Y(y1,...yn) and X(x1,...xn). The formula for the\n> regression is Y=X*Beta, where Beta is the function of location g.\n>\n> My questions are as follows:\n>   1.How many groups should be grouped for regressing? N groups for the N\n> locations or M groups (M is a arbitrary number less than N)?\n>   2.When the parameter beta(gi) at location gi is estimated, weight Wi is\n> used. So how is W used? Are the neighboring k(with in the bandwidth h)\n> observations used for calculation?\n>   3.Beta is the function of location. Is Beta same as W or expressed as a\n> function including W like Beta=W*f(g)?\n>\n> Many thanks and best wishes\n>\n> Kevin,Yen\n> LIESMARS,Wuhan University,China\n>\n> --\n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>\n> ------------------------------\n>\n> Message: 3\n> Date: Sat, 22 Nov 2008 14:01:16 +0100 (CET)\n> From: Roger Bivand <Roger.Bivand at nhh.no>\n> Subject: Re: [R-sig-Geo] WMS, WFS, WCS an WPS for R\n> To: Barry Rowlingson <b.rowlingson at lancaster.ac.uk>\n> Cc: r-sig-geo at stat.math.ethz.ch\n> Message-ID: <alpine.LRH.2.00.0811221357040.7189 at reclus.nhh.no>\n> Content-Type: text/plain; charset=\"iso-8859-15\"; Format=\"flowed\"\n>\n> On Sat, 22 Nov 2008, Barry Rowlingson wrote:\n>\n>> 2008/11/22 Hisaji ONO <hi_ono2001 at ybb.ne.jp>:\n>>> Hello.\n>>>\n>>>  There are lots of services of OGC(Open Geospatial\n>>> Consortium:http://www.opengeospatial.org/)'s standard\n>>> based Geo-Web ervices incluing WMS(Web Map Service),\n>>> WFS(Web Feature Service), WCS(Web Coverage Service) and\n>>> WPS(Web Processing Service) all over the world.\n>>>\n>>>  Does anyone try to use these services from R?\n>>\n>> Any access to WMS and WFS would probably be best done using GDAL and\n>> OGR via the rgdal package.... Let's see...\n>>\n>> GDAL has a WMS driver, but it seems you do have to create a 'local\n>> service description' file. www.gdal.org seems down at the moment, so\n>> here's a google cache link:\n>>\n>> http://216.239.59.132/search?q=cache:21OOLtr9yj0J:www.gdal.org/frmt_wms.html+gdal+wms&hl=en&ct=clnk&cd=1&gl=uk\n>>\n>> For WFS, there's some recent discussion on the gdal-dev list:\n>>\n>> http://www.nabble.com/OGR-WFS-driver-td20485363.html\n>>\n>> so it might be coming soon. Can you wait?\n>>\n>> To do WFS from scratch in R is probably going to need XML parsing,\n>> and then it'll probably also need OGR too unless you want to hand-code\n>> understanding the returned GML...\n>\n> Yes, so OGR needs to be built against the Xerces libraries. I agree that\n> WMS and WFS are best handled by using work that is already going on in the\n> OSGeo community. An example of R in a a WPS setting is:\n>\n> Katharina Henneb?hl, Edzer Pebesma:\n> Providing R functionality through the OGC Web Processing Service\n>\n> given at useR! 2008 in Dortmund in August - there is an abstract on the\n> conference website. I think that their trial site may be ready before\n> long, together with the underlying software.\n>\n> Roger\n>\n>>\n>> Barry\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n> --\n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>\n> ------------------------------\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> End of R-sig-Geo Digest, Vol 63, Issue 20\n> *****************************************\n>",
+      "body_plain": "Enrico,\n\nI think something like this should work for your purpose:\n\nx <- c(1,2,3,5,7,12,13)\ny <- c(1,2,9,11,7,20,10)\n\ny1 <- y[-length(y)]\ny2 <- y[-1]\ndy <- y2 - y1\ndx <- x[-1] - x[-length(x)]\ndxy <- dx * (y1 + 0.5 * dy)\nintegral <- sum(dxy)\n\nRobert\n\n> Today's Topics:\n>\n>   1.  calculating integral for spectral signatures (Enrico Guastaldi)\n>   2. posting on behalf of Kevin, Yen (Roger Bivand)\n>   3. Re: WMS, WFS, WCS an WPS for R (Roger Bivand)\n>\n>\n> ----------------------------------------------------------------------\n>\n> Message: 1\n> Date: Sat, 22 Nov 2008 12:59:51 +0100\n> From: \"Enrico Guastaldi\" <enrico.guastaldi at gmail.com>\n> Subject: [R-sig-Geo]  calculating integral for spectral signatures\n> To: r-sig-geo at stat.math.ethz.ch\n> Message-ID:\n>        <7ce8d7d30811220359n755d2e22k488ca33c10a6d509 at mail.gmail.com>\n> Content-Type: text/plain\n>\n> Dear list members,\n> Does anyone know how to calculate in R integral of bivariate distribution of\n> discrete points suche as the following\n> x       y\n> 1       1\n> 2       2\n> 3       9\n> 5       11\n> 7       7\n> 12      20\n> 13      10\n> But I've thousands of x,y points with x always increasing: I'm talking about\n> spectral signature.\n> I think I need some function that \"constructs\" (not interpolates) a polyline\n> from these x,y points and then calculate the underlying area, because I've\n> to compare several distributions.\n>\n> Could anyone help me?\n>\n> Thanks\n>\n> --\n> Enrico Guastaldi\n> Centro di GeoTecnologie dell'Università degli Studi Siena,\n> Via Vetri Vecchi, 34\n> 52027 - San Giovanni Valdarno (AR)\n> Italy\n>\n> Tel.   +39 349 4025017\n> Fax.   +39 055 9119439\n> url:   www.geotecnologie.unisi.it\n>\n> Io uso Linux!\n> user #466775 counter.li.org\n>\n>\n> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n> Please try to avoid to send me .dwg, .doc, .xls, .ppt files.\n> I prefer free formats.\n> http://en.wikipedia.org/wiki/Open_format\n>\n> Please consider the environment before printing this e-mail\n> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n>\n>        [[alternative HTML version deleted]]\n>\n>\n>\n> ------------------------------\n>\n> Message: 2\n> Date: Sat, 22 Nov 2008 13:42:39 +0100 (CET)\n> From: Roger Bivand <Roger.Bivand at nhh.no>\n> Subject: [R-sig-Geo] posting on behalf of Kevin, Yen\n> To: r-sig-geo at stat.math.ethz.ch\n> Message-ID: <alpine.LRH.2.00.0811221337310.7189 at reclus.nhh.no>\n> Content-Type: text/plain; charset=\"iso-8859-15\"; Format=\"flowed\"\n>\n> I'm posting this on behalf Kevin, Yen - the same text was trapped\n> yesterday as spam, so this is also a technical issue, and the reason for\n> helping in this way:\n> -----------------------\n> Hi, lists,\n>\n> I am reading meterials about GWR, but there are some problems puzzling me\n> very much:\n>\n> If there are N observations at N locations g(g1,????gn),the dependent and\n> independent variables are Y(y1,...yn) and X(x1,...xn). The formula for the\n> regression is Y=X*Beta, where Beta is the function of location g.\n>\n> My questions are as follows:\n>   1.How many groups should be grouped for regressing? N groups for the N\n> locations or M groups (M is a arbitrary number less than N)?\n>   2.When the parameter beta(gi) at location gi is estimated, weight Wi is\n> used. So how is W used? Are the neighboring k(with in the bandwidth h)\n> observations used for calculation?\n>   3.Beta is the function of location. Is Beta same as W or expressed as a\n> function including W like Beta=W*f(g)?\n>\n> Many thanks and best wishes\n>\n> Kevin,Yen\n> LIESMARS,Wuhan University,China\n>\n> --\n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>\n> ------------------------------\n>\n> Message: 3\n> Date: Sat, 22 Nov 2008 14:01:16 +0100 (CET)\n> From: Roger Bivand <Roger.Bivand at nhh.no>\n> Subject: Re: [R-sig-Geo] WMS, WFS, WCS an WPS for R\n> To: Barry Rowlingson <b.rowlingson at lancaster.ac.uk>\n> Cc: r-sig-geo at stat.math.ethz.ch\n> Message-ID: <alpine.LRH.2.00.0811221357040.7189 at reclus.nhh.no>\n> Content-Type: text/plain; charset=\"iso-8859-15\"; Format=\"flowed\"\n>\n> On Sat, 22 Nov 2008, Barry Rowlingson wrote:\n>\n>> 2008/11/22 Hisaji ONO <hi_ono2001 at ybb.ne.jp>:\n>>> Hello.\n>>>\n>>>  There are lots of services of OGC(Open Geospatial\n>>> Consortium:http://www.opengeospatial.org/)'s standard\n>>> based Geo-Web ervices incluing WMS(Web Map Service),\n>>> WFS(Web Feature Service), WCS(Web Coverage Service) and\n>>> WPS(Web Processing Service) all over the world.\n>>>\n>>>  Does anyone try to use these services from R?\n>>\n>> Any access to WMS and WFS would probably be best done using GDAL and\n>> OGR via the rgdal package.... Let's see...\n>>\n>> GDAL has a WMS driver, but it seems you do have to create a 'local\n>> service description' file. www.gdal.org seems down at the moment, so\n>> here's a google cache link:\n>>\n>> http://216.239.59.132/search?q=cache:21OOLtr9yj0J:www.gdal.org/frmt_wms.html+gdal+wms&hl=en&ct=clnk&cd=1&gl=uk\n>>\n>> For WFS, there's some recent discussion on the gdal-dev list:\n>>\n>> http://www.nabble.com/OGR-WFS-driver-td20485363.html\n>>\n>> so it might be coming soon. Can you wait?\n>>\n>> To do WFS from scratch in R is probably going to need XML parsing,\n>> and then it'll probably also need OGR too unless you want to hand-code\n>> understanding the returned GML...\n>\n> Yes, so OGR needs to be built against the Xerces libraries. I agree that\n> WMS and WFS are best handled by using work that is already going on in the\n> OSGeo community. An example of R in a a WPS setting is:\n>\n> Katharina Henneb?hl, Edzer Pebesma:\n> Providing R functionality through the OGC Web Processing Service\n>\n> given at useR! 2008 in Dortmund in August - there is an abstract on the\n> conference website. I think that their trial site may be ready before\n> long, together with the underlying software.\n>\n> Roger\n>\n>>\n>> Barry\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>\n>\n> --\n> Roger Bivand\n> Economic Geography Section, Department of Economics, Norwegian School of\n> Economics and Business Administration, Helleveien 30, N-5045 Bergen,\n> Norway. voice: +47 55 95 93 55; fax +47 55 95 95 43\n> e-mail: Roger.Bivand at nhh.no\n>\n> ------------------------------\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>\n>\n> End of R-sig-Geo Digest, Vol 63, Issue 20\n> *****************************************\n>",
       "body_snippet": "Enrico,\n\nI think something like this should work for your purpose:\n\nx <- c(1,2,3,5,7,12,13)\ny <- c(1,2,9,11,7,20,10)\n\ny1 <- y[-length(y)]\ny2 <- y[-1]\ndy <- y2 - y1\ndx <- x[-1] - x[-length(x)]\ndxy <- d",
       "thread_id": "thread-1cd27ea5a1e6",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004567.html"
     },
     {
       "id": "msg-ba8a10b8226d",
@@ -1778,11 +1875,12 @@
       "subject_clean": "examples",
       "in_reply_to": "<4927C89A.60204@xen.net>",
       "references": [],
-      "body_plain": "Have a look at the CRAN task view for spatial statistics. \nThis gives a very good overview of what pakages are available for spatial statistics.\n\nSee: \nhttp://cran.r-project.org/web/views/Spatial.html\n\nRegards\n\nWayne\n\n\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch\n[mailto:r-sig-geo-bounces at stat.math.ethz.ch]On Behalf Of [Ricardo\nRodriguez] Your XEN ICT Team\nSent: 22 November 2008 08:54\nTo: r-sig-geo at stat.math.ethz.ch\nSubject: [R-sig-Geo] examples\n\n\nHi all!\n\nI am just trying to show how R could be also an powerful tool in the\nsig-geo arena.\n\nPlease, could anybody be so kind as to pointing to me to any nice free\nexample out there? I've been some 3-D rendered surfaces here and there, \nbut I don't know where, if possible, could I find their data and code. \nThanks for your help!\n\nAll the best,\n\nRicardo\n\n-- \nRicardo Rodr?guez\nYour XEN ICT Team\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo",
+      "body_plain": "Have a look at the CRAN task view for spatial statistics. \nThis gives a very good overview of what pakages are available for spatial statistics.\n\nSee: \nhttp://cran.r-project.org/web/views/Spatial.html\n\nRegards\n\nWayne\n\n\n-----Original Message-----\nFrom: r-sig-geo-bounces at stat.math.ethz.ch\n[mailto:r-sig-geo-bounces at stat.math.ethz.ch]On Behalf Of [Ricardo\nRodriguez] Your XEN ICT Team\nSent: 22 November 2008 08:54\nTo: r-sig-geo at stat.math.ethz.ch\nSubject: [R-sig-Geo] examples\n\n\nHi all!\n\nI am just trying to show how R could be also an powerful tool in the\nsig-geo arena.\n\nPlease, could anybody be so kind as to pointing to me to any nice free\nexample out there? I've been some 3-D rendered surfaces here and there, \nbut I don't know where, if possible, could I find their data and code. \nThanks for your help!\n\nAll the best,\n\nRicardo\n\n-- \nRicardo Rodríguez\nYour XEN ICT Team\n\n_______________________________________________\nR-sig-Geo mailing list\nR-sig-Geo at stat.math.ethz.ch\nhttps://stat.ethz.ch/mailman/listinfo/r-sig-geo",
       "body_snippet": "Have a look at the CRAN task view for spatial statistics. \nThis gives a very good overview of what pakages are available for spatial statistics.\n\nSee: \nhttp://cran.r-project.org/web/views/Spatial.html",
       "thread_id": "thread-fed0cf729724",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004568.html"
     },
     {
       "id": "msg-623992303655",
@@ -1799,11 +1897,12 @@
         "<alpine.LRH.2.00.0811221357040.7189@reclus.nhh.no>",
         "<4929B1D0.8040906@uni-muenster.de>"
       ],
-      "body_plain": "Hi\n\nEverything concerning the OGC standards and R are covered in the last\nposts.  It is possible to assemble specific WxS/WPS requests and deal\nwith the response from the servers, using the RCurl package. Also the\nr-cran-xml package should have any problems parsing the returned results\n\nUsing Rcurl, means more work and more technical skills that using some\nclient specific for one of the WxS/WPS services.\nBest\nJorge\n\n\nEdzer Pebesma wrote:\n> Interesting question!\n>\n> Of course, all these are services, and R is not typically a service or\n> a client, but rather an environment to do statistical computing.\n> Reading and writing can, as mentioned, be done to some extent through\n> OGR (WFS, e.g. by writing gml) and GDAL (WCS, reading). Note that gml\n> has many versions, and the more recent ones are typically monsters of\n> complexity; OSGEO seems to support mainly older versions or subsets\n> for specific application areas. WMS is more something of an output,\n> useful for those who want to see the map rather than have the data.\n>\n> We're currently working in the intamap project\n> (http://www.intamap.org) to provide R interpolation facilities through\n> a web processing standard, which basically means GIS (or any other)\n> processing through an OGC complient web service (WPS, as opposed to\n> e.g. SOAP). Here, R does the back end work, and the WPS front-end\n> takes care of input (an O&M, observations and measurements document,\n> xml) and output (gml for geometry, UncertML for probability\n> distributions). If someone is interested in testing this, please let\n> me know.\n>\n> Other OGC services to check out are those in the SWE area: SOS, SPS,\n> SAS, this list is growing faster than an adult can learn remembering\n> abbreviations.\n> -- \n> Edzer\n>\n>\n> Roger Bivand wrote:\n>> On Sat, 22 Nov 2008, Barry Rowlingson wrote:\n>>\n>>> 2008/11/22 Hisaji ONO <hi_ono2001 at ybb.ne.jp>:\n>>>> Hello.\n>>>>\n>>>>  There are lots of services of OGC(Open Geospatial\n>>>> Consortium:http://www.opengeospatial.org/)'s standard\n>>>> based Geo-Web ervices incluing WMS(Web Map Service),\n>>>> WFS(Web Feature Service), WCS(Web Coverage Service) and\n>>>> WPS(Web Processing Service) all over the world.\n>>>>\n>>>>  Does anyone try to use these services from R?\n>>>\n>>> Any access to WMS and WFS would probably be best done using GDAL and\n>>> OGR via the rgdal package.... Let's see...\n>>>\n>>> GDAL has a WMS driver, but it seems you do have to create a 'local\n>>> service description' file. www.gdal.org seems down at the moment, so\n>>> here's a google cache link:\n>>>\n>>> http://216.239.59.132/search?q=cache:21OOLtr9yj0J:www.gdal.org/frmt_wms.html+gdal+wms&hl=en&ct=clnk&cd=1&gl=uk\n>>>\n>>>\n>>> For WFS, there's some recent discussion on the gdal-dev list:\n>>>\n>>> http://www.nabble.com/OGR-WFS-driver-td20485363.html\n>>>\n>>> so it might be coming soon. Can you wait?\n>>>\n>>> To do WFS from scratch in R is probably going to need XML parsing,\n>>> and then it'll probably also need OGR too unless you want to hand-code\n>>> understanding the returned GML...\n>>\n>> Yes, so OGR needs to be built against the Xerces libraries. I agree\n>> that WMS and WFS are best handled by using work that is already going\n>> on in the OSGeo community. An example of R in a a WPS setting is:\n>>\n>> Katharina Henneb?hl, Edzer Pebesma:\n>> Providing R functionality through the OGC Web Processing Service\n>>\n>> given at useR! 2008 in Dortmund in August - there is an abstract on\n>> the conference website. I think that their trial site may be ready\n>> before long, together with the underlying software.\n>>\n>> Roger\n>>\n>>>\n>>> Barry\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at stat.math.ethz.ch\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>\n>> ------------------------------------------------------------------------\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>   \n>\n\n\n-- \nPh.D. Jorge Samuel Mendes de Jesus\n\nEuropean Commission (EC)\nJoint Research Centre Directorate (DG JRC)\nInstitute for Environment and Sustainability (IES)\nTP 441, Via Fermi 1\n21020 Ispra (VA)\nItaly\n\nPhone: +39 0332 78 3536\nFax:   +39 0332 78 5466\n\nhttp://rem.jrc.ec.europa.eu\n\n\"The views expressed are purely those of the writer and may not in any circumstances be regarded as stating an official position of the European Commission\"",
+      "body_plain": "Hi\n\nEverything concerning the OGC standards and R are covered in the last\nposts.  It is possible to assemble specific WxS/WPS requests and deal\nwith the response from the servers, using the RCurl package. Also the\nr-cran-xml package should have any problems parsing the returned results\n\nUsing Rcurl, means more work and more technical skills that using some\nclient specific for one of the WxS/WPS services.\nBest\nJorge\n\n\nEdzer Pebesma wrote:\n> Interesting question!\n>\n> Of course, all these are services, and R is not typically a service or\n> a client, but rather an environment to do statistical computing.\n> Reading and writing can, as mentioned, be done to some extent through\n> OGR (WFS, e.g. by writing gml) and GDAL (WCS, reading). Note that gml\n> has many versions, and the more recent ones are typically monsters of\n> complexity; OSGEO seems to support mainly older versions or subsets\n> for specific application areas. WMS is more something of an output,\n> useful for those who want to see the map rather than have the data.\n>\n> We're currently working in the intamap project\n> (http://www.intamap.org) to provide R interpolation facilities through\n> a web processing standard, which basically means GIS (or any other)\n> processing through an OGC complient web service (WPS, as opposed to\n> e.g. SOAP). Here, R does the back end work, and the WPS front-end\n> takes care of input (an O&M, observations and measurements document,\n> xml) and output (gml for geometry, UncertML for probability\n> distributions). If someone is interested in testing this, please let\n> me know.\n>\n> Other OGC services to check out are those in the SWE area: SOS, SPS,\n> SAS, this list is growing faster than an adult can learn remembering\n> abbreviations.\n> -- \n> Edzer\n>\n>\n> Roger Bivand wrote:\n>> On Sat, 22 Nov 2008, Barry Rowlingson wrote:\n>>\n>>> 2008/11/22 Hisaji ONO <hi_ono2001 at ybb.ne.jp>:\n>>>> Hello.\n>>>>\n>>>>  There are lots of services of OGC(Open Geospatial\n>>>> Consortium:http://www.opengeospatial.org/)'s standard\n>>>> based Geo-Web ervices incluing WMS(Web Map Service),\n>>>> WFS(Web Feature Service), WCS(Web Coverage Service) and\n>>>> WPS(Web Processing Service) all over the world.\n>>>>\n>>>>  Does anyone try to use these services from R?\n>>>\n>>> Any access to WMS and WFS would probably be best done using GDAL and\n>>> OGR via the rgdal package.... Let's see...\n>>>\n>>> GDAL has a WMS driver, but it seems you do have to create a 'local\n>>> service description' file. www.gdal.org seems down at the moment, so\n>>> here's a google cache link:\n>>>\n>>> http://216.239.59.132/search?q=cache:21OOLtr9yj0J:www.gdal.org/frmt_wms.html+gdal+wms&hl=en&ct=clnk&cd=1&gl=uk\n>>>\n>>>\n>>> For WFS, there's some recent discussion on the gdal-dev list:\n>>>\n>>> http://www.nabble.com/OGR-WFS-driver-td20485363.html\n>>>\n>>> so it might be coming soon. Can you wait?\n>>>\n>>> To do WFS from scratch in R is probably going to need XML parsing,\n>>> and then it'll probably also need OGR too unless you want to hand-code\n>>> understanding the returned GML...\n>>\n>> Yes, so OGR needs to be built against the Xerces libraries. I agree\n>> that WMS and WFS are best handled by using work that is already going\n>> on in the OSGeo community. An example of R in a a WPS setting is:\n>>\n>> Katharina Henneböhl, Edzer Pebesma:\n>> Providing R functionality through the OGC Web Processing Service\n>>\n>> given at useR! 2008 in Dortmund in August - there is an abstract on\n>> the conference website. I think that their trial site may be ready\n>> before long, together with the underlying software.\n>>\n>> Roger\n>>\n>>>\n>>> Barry\n>>>\n>>> _______________________________________________\n>>> R-sig-Geo mailing list\n>>> R-sig-Geo at stat.math.ethz.ch\n>>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>>\n>>\n>> ------------------------------------------------------------------------\n>>\n>> _______________________________________________\n>> R-sig-Geo mailing list\n>> R-sig-Geo at stat.math.ethz.ch\n>> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>>   \n>\n\n\n-- \nPh.D. Jorge Samuel Mendes de Jesus\n\nEuropean Commission (EC)\nJoint Research Centre Directorate (DG JRC)\nInstitute for Environment and Sustainability (IES)\nTP 441, Via Fermi 1\n21020 Ispra (VA)\nItaly\n\nPhone: +39 0332 78 3536\nFax:   +39 0332 78 5466\n\nhttp://rem.jrc.ec.europa.eu\n\n\"The views expressed are purely those of the writer and may not in any circumstances be regarded as stating an official position of the European Commission\"",
       "body_snippet": "Hi\n\nEverything concerning the OGC standards and R are covered in the last\nposts.  It is possible to assemble specific WxS/WPS requests and deal\nwith the response from the servers, using the RCurl pack",
       "thread_id": "thread-1a23b3fbf5b3",
       "thread_depth": 4,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004569.html"
     },
     {
       "id": "msg-d657485faa73",
@@ -1822,6 +1921,7 @@
       "thread_id": "thread-1cd27ea5a1e6",
       "thread_depth": 1,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004570.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081124/fda4e023/attachment.pl"
       ]
@@ -1840,7 +1940,8 @@
       "body_snippet": "you can find rgdal here\n\nhttp://www.kyngchaos.com/wiki/doku.php?id=software:frameworks\n\nOnce that is installed you should be able to use spgrass6 without  \nproblems. I've been using it on my mac for q",
       "thread_id": "thread-57422f1ed1f0",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004571.html"
     },
     {
       "id": "msg-7d39370f9571",
@@ -1858,7 +1959,8 @@
       "body_snippet": "On Mon, 24 Nov 2008, Ken Nussear wrote:\n\n> you can find rgdal here\n>\n> http://www.kyngchaos.com/wiki/doku.php?id=software:frameworks\n>\n> Once that is installed you should be able to use spgrass6 witho",
       "thread_id": "thread-57422f1ed1f0",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004572.html"
     },
     {
       "id": "msg-72420d843744",
@@ -1874,7 +1976,8 @@
       "body_snippet": "Hi,\n\nI did a kernel map using Script R:\n\nimage (kernel2d  \n(casos.spp,contorno.poa,h0=7000,nx=250,ny=250),add=TRUE,col=terrain.colors  \n(20))\n\nAnd I need to put in this map legend, north arrow and sca",
       "thread_id": "thread-72420d843744",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004573.html"
     },
     {
       "id": "msg-159ea4f0d344",
@@ -1890,7 +1993,8 @@
       "body_snippet": "Dear List,\n\nI am hoping that someone can help me with the GNsrtm3 function in the Geonames package. I am trying to get elevation values for more than one lat,long stored in a data frame. I am not sure",
       "thread_id": "thread-159ea4f0d344",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004574.html"
     },
     {
       "id": "msg-4295c7bde0d6",
@@ -1908,7 +2012,8 @@
       "body_snippet": "2008/11/25 Michael Denslow <mwdenslow at yahoo.com>:\n\n> I am hoping that someone can help me with the GNsrtm3 function in the Geonames package. I am trying to get elevation values for more than one la",
       "thread_id": "thread-159ea4f0d344",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004575.html"
     },
     {
       "id": "msg-f7f4a43302ed",
@@ -1927,7 +2032,8 @@
       "body_snippet": "You could also loop e.g. (this way you have a bit more control):\n\n> long <- c(-81.66,-82.66)\n> lat <- c(36.21,37.21)\n> df <- data.frame(lat,long)\n> df$srtm <- rep(NA, length(df$lat))\n> for(i in 1:leng",
       "thread_id": "thread-159ea4f0d344",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004576.html"
     },
     {
       "id": "msg-4e10a2294ede",
@@ -1941,11 +2047,12 @@
       "references": [
         "<20081125105613.9yivwxeh3r4coosc@agenda.dpi.inpe.br>"
       ],
-      "body_plain": "The r-spatial web site http://r-spatial.sourceforge.net/ has a graph\ngallery; I think it only works for spplot which takes data in sp\nclasses. You could us it by coercing your objects to it as\n\nlibrary(maptools)\nas(casos.spp, \"SpatialPointsDataFrame\")\n\nmight work.\n--\nEdzer\n\nizareis at dpi.inpe.br wrote:\n> Hi,\n>\n> I did a kernel map using Script R:\n>\n> image (kernel2d \n> (casos.spp,contorno.poa,h0=7000,nx=250,ny=250),add=TRUE,col=terrain.colors \n> (20))\n>\n> And I need to put in this map legend, north arrow and scale bar.\n>\n> I tried some scripts but I fail to do.\n> Thanks\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster\nWeseler Stra?e 253, 48151 M?nster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
+      "body_plain": "The r-spatial web site http://r-spatial.sourceforge.net/ has a graph\ngallery; I think it only works for spplot which takes data in sp\nclasses. You could us it by coercing your objects to it as\n\nlibrary(maptools)\nas(casos.spp, \"SpatialPointsDataFrame\")\n\nmight work.\n--\nEdzer\n\nizareis at dpi.inpe.br wrote:\n> Hi,\n>\n> I did a kernel map using Script R:\n>\n> image (kernel2d \n> (casos.spp,contorno.poa,h0=7000,nx=250,ny=250),add=TRUE,col=terrain.colors \n> (20))\n>\n> And I need to put in this map legend, north arrow and scale bar.\n>\n> I tried some scripts but I fail to do.\n> Thanks\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster\nWeseler Straße 253, 48151 Münster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
       "body_snippet": "The r-spatial web site http://r-spatial.sourceforge.net/ has a graph\ngallery; I think it only works for spplot which takes data in sp\nclasses. You could us it by coercing your objects to it as\n\nlibrar",
       "thread_id": "thread-72420d843744",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004577.html"
     },
     {
       "id": "msg-3cd70a200d09",
@@ -1964,7 +2071,8 @@
       "body_snippet": "On Tue, 25 Nov 2008, Edzer Pebesma wrote:\n\n> The r-spatial web site http://r-spatial.sourceforge.net/ has a graph\n> gallery; I think it only works for spplot which takes data in sp\n> classes. You coul",
       "thread_id": "thread-72420d843744",
       "thread_depth": 2,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004578.html"
     },
     {
       "id": "msg-f4d5a35c795d",
@@ -1980,7 +2088,8 @@
       "body_snippet": "The following code runs fine on Linux, but not on my Mac.  The error\nmessage is given below, after the levelplot() call.  I was able to run\nlattice functions previously on the Mac without any problems",
       "thread_id": "thread-f4d5a35c795d",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004579.html"
     },
     {
       "id": "msg-8e4d7d36b78a",
@@ -1994,11 +2103,12 @@
       "references": [
         "<12A8FC4D0563D1468AD23AAAED861A3E0BB642@EMAIL02.pnl.gov>"
       ],
-      "body_plain": "It seems that the R graphics system cannot find the font mentioned. \nMaybe try r-sig-mac for this question?\n--\nEdzer\n\nWaichler, Scott R wrote:\n> The following code runs fine on Linux, but not on my Mac.  The error\n> message is given below, after the levelplot() call.  I was able to run\n> lattice functions previously on the Mac without any problems.  The only\n> change I'm aware of is that my Mac was recently worked on by a system\n> administrator to implement some system and security changes.  I don't\n> know how that would be related to this problem.  I searched R-help and\n> found a similar problem that wasn't answered.\n>\n>   \n>> sessionInfo()\n>>     \n> R version 2.8.0 (2008-10-20)\n> powerpc-apple-darwin8.11.1\n>\n> locale:\n> C\n>\n> attached base packages:\n> [1] stats     graphics  grDevices utils     datasets  methods   base\n>\n> loaded via a namespace (and not attached):\n> [1] tools_2.8.0\n>\n> library(lattice)\n> # code from help(levelplot)\n> x <- seq(pi/4, 5 * pi, length = 100)\n> y <- seq(pi/4, 5 * pi, length = 100)\n> r <- as.vector(sqrt(outer(x^2, y^2, \"+\")))\n> grid <- expand.grid(x=x, y=y)\n> grid$z <- cos(r^2) * exp(-r/(pi^3))\n> png(file = \"junk.png\", width=8.5, height=11, units=\"in\", res=75,\n> pointsize=12)  # letter\n> levelplot(z~x*y, grid, cuts = 50, scales=list(log=\"e\"), xlab=\"\",\n>          ylab=\"\", main=\"Weird Function\", sub=\"with log scales\",\n>          colorkey = FALSE, region = TRUE)\n>\n> Error in grid.Call(\"L_textBounds\", as.graphicsAnnot(x$label), x$x, x$y,\n> :\n>   Polygon edge not found\n> In addition: Warning message:\n> In grid.Call(\"L_textBounds\", as.graphicsAnnot(x$label), x$x, x$y,  :\n>   no font could be found for family \"Arial\"\n>\n> dev.off()\n>\n> Thanks for any help you can provide,\n>\n> Scott Waichler\n> Pacific Northwest National Laboratory\n> scott.waichler at pnl.gov\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of M?nster\nWeseler Stra?e 253, 48151 M?nster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
+      "body_plain": "It seems that the R graphics system cannot find the font mentioned. \nMaybe try r-sig-mac for this question?\n--\nEdzer\n\nWaichler, Scott R wrote:\n> The following code runs fine on Linux, but not on my Mac.  The error\n> message is given below, after the levelplot() call.  I was able to run\n> lattice functions previously on the Mac without any problems.  The only\n> change I'm aware of is that my Mac was recently worked on by a system\n> administrator to implement some system and security changes.  I don't\n> know how that would be related to this problem.  I searched R-help and\n> found a similar problem that wasn't answered.\n>\n>   \n>> sessionInfo()\n>>     \n> R version 2.8.0 (2008-10-20)\n> powerpc-apple-darwin8.11.1\n>\n> locale:\n> C\n>\n> attached base packages:\n> [1] stats     graphics  grDevices utils     datasets  methods   base\n>\n> loaded via a namespace (and not attached):\n> [1] tools_2.8.0\n>\n> library(lattice)\n> # code from help(levelplot)\n> x <- seq(pi/4, 5 * pi, length = 100)\n> y <- seq(pi/4, 5 * pi, length = 100)\n> r <- as.vector(sqrt(outer(x^2, y^2, \"+\")))\n> grid <- expand.grid(x=x, y=y)\n> grid$z <- cos(r^2) * exp(-r/(pi^3))\n> png(file = \"junk.png\", width=8.5, height=11, units=\"in\", res=75,\n> pointsize=12)  # letter\n> levelplot(z~x*y, grid, cuts = 50, scales=list(log=\"e\"), xlab=\"\",\n>          ylab=\"\", main=\"Weird Function\", sub=\"with log scales\",\n>          colorkey = FALSE, region = TRUE)\n>\n> Error in grid.Call(\"L_textBounds\", as.graphicsAnnot(x$label), x$x, x$y,\n> :\n>   Polygon edge not found\n> In addition: Warning message:\n> In grid.Call(\"L_textBounds\", as.graphicsAnnot(x$label), x$x, x$y,  :\n>   no font could be found for family \"Arial\"\n>\n> dev.off()\n>\n> Thanks for any help you can provide,\n>\n> Scott Waichler\n> Pacific Northwest National Laboratory\n> scott.waichler at pnl.gov\n>\n> _______________________________________________\n> R-sig-Geo mailing list\n> R-sig-Geo at stat.math.ethz.ch\n> https://stat.ethz.ch/mailman/listinfo/r-sig-geo\n>   \n\n-- \nEdzer Pebesma\nInstitute for Geoinformatics (ifgi), University of Münster\nWeseler Straße 253, 48151 Münster, Germany. Phone: +49 251\n8333081, Fax: +49 251 8339763 http://ifgi.uni-muenster.de/\nhttp://www.springer.com/978-0-387-78170-9 e.pebesma at wwu.de",
       "body_snippet": "It seems that the R graphics system cannot find the font mentioned. \nMaybe try r-sig-mac for this question?\n--\nEdzer\n\nWaichler, Scott R wrote:\n> The following code runs fine on Linux, but not on my Ma",
       "thread_id": "thread-f4d5a35c795d",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004580.html"
     },
     {
       "id": "msg-0ed7ee312186",
@@ -2014,7 +2124,8 @@
       "body_snippet": "Thank you for useful info.\n\n For \"RCurl\", though not for OGC's web services, there\nwere some example for geocoding in following URL(sorry in\nJapanese only.)\n\nhttp://www.okada.jp.org/RWiki/?R%A4%C7%A5%",
       "thread_id": "thread-1a23b3fbf5b3",
       "thread_depth": 5,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004581.html"
     },
     {
       "id": "msg-597bbfab2a4a",
@@ -2031,6 +2142,7 @@
       "thread_id": "thread-597bbfab2a4a",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004582.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081127/692d255a/attachment.pl"
       ]
@@ -2051,7 +2163,8 @@
       "body_snippet": "Dear Pritam,\n\nPlease forward us the R code, and, if possible, upload your data to some ftp server.\n\nThe coordinate system string of the maps imported to R can be set using:\n\n> data(meuse)\n> coordinate",
       "thread_id": "thread-597bbfab2a4a",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004583.html"
     },
     {
       "id": "msg-187bb68a92d1",
@@ -2067,7 +2180,8 @@
       "body_snippet": "Apologies for cross postings! \n?\nFIRST CALL FOR PAPERS\n\n\nGeomorphometry 2009\n29 August - 2 September 2009\nZurich, Switzerland\nhttp://2009.GEOMORPHOMETRY.ORG  \n?\ne-mail: 2009 at geomorphometry.org \n?\nP",
       "thread_id": "thread-187bb68a92d1",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004584.html"
     },
     {
       "id": "msg-cb39949f522e",
@@ -2083,7 +2197,8 @@
       "body_snippet": "Greetings,\n\nI would like to assign spatial points in a large dataset to an area  \ndefined by complex polygon's.  These are 'statistical reference' areas  \nand are helpful in indexing my data.  Current",
       "thread_id": "thread-cb39949f522e",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004585.html"
     },
     {
       "id": "msg-49b12677624e",
@@ -2101,7 +2216,8 @@
       "body_snippet": "On Fri, 28 Nov 2008, Jon Loehrke wrote:\n\n> Greetings,\n>\n> I would like to assign spatial points in a large dataset to an area defined \n> by complex polygon's.  These are 'statistical reference' areas ",
       "thread_id": "thread-cb39949f522e",
       "thread_depth": 1,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-November/004586.html"
     },
     {
       "id": "msg-d7252a6f7d71",
@@ -2122,7 +2238,8 @@
       "body_snippet": "Hello, \n\nI am a beginner with R, and have 2 questions concerning\nspatial/geostatistics. \n\nI have an artificial landscape composed of a binary grid of patches\n(patch=1) or gaps (patch=0), which leads t",
       "thread_id": "thread-d7252a6f7d71",
       "thread_depth": 0,
-      "month": "2008-11"
+      "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-December/004587.html"
     },
     {
       "id": "msg-64c9cbbea36f",
@@ -2139,6 +2256,7 @@
       "thread_id": "thread-64c9cbbea36f",
       "thread_depth": 0,
       "month": "2008-11",
+      "source_url": "https://stat.ethz.ch/pipermail/r-sig-geo/2008-December/004588.html",
       "restored_from": [
         "https://stat.ethz.ch/pipermail/r-sig-geo/attachments/20081130/eb11b0e3/attachment.pl"
       ]
