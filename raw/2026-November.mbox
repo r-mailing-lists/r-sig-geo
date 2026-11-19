@@ -1,0 +1,95 @@
+From |err@n@oro @end|ng |rom uv|c@c@t  Wed Nov 18 12:19:52 2026
+From: |err@n@oro @end|ng |rom uv|c@c@t (=?Windows-1252?Q?Ferran_Or=F3_Ar=E1n?=)
+Date: Wed, 18 Nov 2026 11:19:52 +0000
+Subject: [R-sig-Geo] [SpatialML] grf.bw tends to select the lower bound of
+ the bandwidth range
+Message-ID: <DB7PR04MB457229376821E769EDF19243FB7A2@DB7PR04MB4572.eurprd04.prod.outlook.com>
+
+Dear list members,
+
+I am using the SpatialML package (geographical random forests) and have a question about bandwidth selection with grf.bw().
+
+When I select the bandwidth that maximises the local R-squared, I almost always end up with the smallest value in the range I test. In my latest run (adaptive kernel, 50 to 400 nearest neighbours), the local R-squared is noisy from one bandwidth to the next, but its overall trend falls steadily as the bandwidth grows: from about 0.25 at 50 neighbours to about 0.20 at 100, and then levelling off around 0.155 between 300 and 400. The maximum therefore lands at or very near the lower bound, and when I lower that bound (e.g. to 10 neighbours), the selected bandwidth moves down with it. By contrast, when I fit other geographically weighted models (e.g. GWR) to the same data, the optimal bandwidths are considerably larger.
+
+In Georganos et al. (2021), "A Forest of Forests: A Spatially Weighted and Computationally Efficient Formulation of Geographical Random Forests", the authors used a range of 20 to 50 nearest neighbours as a proof of concept and noted that smaller bandwidths can give unstable results, because the local sub-models are trained on too few observations. With the 264 NUTS-2 regions in that example, 20-50 neighbours correspond to roughly 7.6-18.9% of the data. My dataset has 1068 observations, and I am concerned that the small bandwidths selected in my case may produce unstable local models.
+
+I would be grateful for any guidance on the following points:
+
+1. Is there a recommended way to set the minimum and maximum of the search range for grf.bw()? For instance, would it be reasonable to define the range as a proportion of the sample size (in my case roughly 81-202 neighbours, mirroring the proportions in the package authors' paper)?
+
+2. How should one interpret the local R-squared favouring the smallest bandwidths? Could this reflect overfitting, with the local forests fitting the few observations in each small neighbourhood too closely, so that the bandwidth should be chosen on other grounds?
+
+Thank you very much for your time. Any suggestions, references, or experiences with similar behaviour would be much appreciated.
+
+Best regards,
+
+Ferran Or? Ar?n
+?
+Data Analysis and Modelling (DAM) Research Group
+https://mon.uvic.cat/dam/
+?
+UVic
+Universitat de Vic ? Universitat Central de Catalunya
+T +34 938 861 222
+www.uvic.cat<http://www.uvic.cat>
+www.uvic-ucc.cat<http://www.uvic-ucc.cat>
+?
+LinkedIn<https://www.linkedin.com/in/ferran-or%C3%B3-ar%C3%A1n-18631916a/>
+
+
+	[[alternative HTML version deleted]]
+
+
+From i@io m@iii@g oii phys@ii@-courses@org  Wed Nov 18 16:09:10 2026
+From: i@io m@iii@g oii phys@ii@-courses@org (i@io m@iii@g oii phys@ii@-courses@org)
+Date: Wed, 18 Nov 2026 16:09:10 +0100 (CET)
+Subject: [R-sig-Geo] =?utf-8?q?Online_course=3A_Generalized_Additive_Mode?=
+ =?utf-8?q?ls_=28GAMs=29_in_R?=
+Message-ID: <1795014550.6237688@webmail.jimdo.com>
+
+
+ 
+Hi everyone,
+ 
+Are you interested in learning how to apply Generalized Additive Models (GAMs) to your research data?
+ 
+ 
+ 
+There is only ONE SEAT LEFT on our upcoming GAMs in R course with Gavin Simpson, taking place this December!
+ 
+ 
+ 
+This is a great opportunity to develop your statistical modelling skills and gain practical experience using GAMs in R, guided by an expert in the field.
+ 
+ 
+ 
+Don't miss out! Book your place today before the last seat is gone.
+ 
+ [ https://www.physalia-courses.org/courses-workshops/gams-in-r/ ]( https://www.physalia-courses.org/courses-workshops/gams-in-r/ )
+ 
+ 
+ 
+Best regards,
+ 
+Carlo
+ 
+ 
+ 
+ 
+ 
+--------------------
+
+Carlo Pecoraro, Ph.D
+
+
+Physalia-courses DIRECTOR
+
+info at physalia-courses.org
+
+mobile: +49 17645230846
+
+[ Bluesky ]( https://bsky.app/profile/physaliacourses.bsky.social ) [ Linkedin ]( https://www.linkedin.com/in/physalia-courses-a64418127/ )
+ 
+	[[alternative HTML version deleted]]
+
+
